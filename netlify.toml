@@ -8,3 +8,7 @@ poetry config virtualenvs.in-project true &&
 poetry install -v &&
 mkdocs build -d site
 """
+
+
+[build.environment]
+  PYTHON_VERSION = "3.8"
