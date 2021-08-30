@@ -1,7 +1,8 @@
 nav:
     - Home: index.md
     - Getting started:
-          - KServe Quickstart: started/quickstart.md
+          - KServe Quickstart: get_started/README.md
+          - First InferenceService: get_started/first_isvc.md
     - Administration Guide:
           - Install KServe:
                 - Serverless installation: admin/serverless.md

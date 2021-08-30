@@ -1,6 +1,4 @@
-# Architecture Overview
-
-## Data Plane
+# Data Plane
 The InferenceService Data Plane architecture consists of a static graph of components which coordinate requests for a single model. Advanced features such as Ensembling, A/B testing, and Multi-Arm-Bandits should compose InferenceServices together.
 
 ![Data Plane](../images/dataplane.jpg)
