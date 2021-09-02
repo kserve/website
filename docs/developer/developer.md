@@ -148,8 +148,8 @@ make deploy
 !!! Optional
      you can change CPU and memory limits when deploying `KServe`.
      ```bash
-     export KFSERVING_CONTROLLER_CPU_LIMIT=<cpu_limit>
-     export KFSERVING_CONTROLLER_MEMORY_LIMIT=<memory_limit>
+     export KSERVE_CONTROLLER_CPU_LIMIT=<cpu_limit>
+     export KSERVE_CONTROLLER_MEMORY_LIMIT=<memory_limit>
      make deploy
      ```
 
@@ -247,7 +247,7 @@ Run `kubectl create namespace kfserving-ci-e2e-test`
 
 For KIND/minikube:
 
-* Run `export KFSERVING_INGRESS_HOST_PORT=localhost:8080`
+* Run `export KSERVE_INGRESS_HOST_PORT=localhost:8080`
 * In a different window run `kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80`
 * Note that not all tests will pass as the pytorch test requires gpu. These will show as pending pods at the end or you can add marker to skip the test.
 

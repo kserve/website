@@ -1,47 +1,12 @@
-## Determine the ingress IP and ports
-Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
-```bash
-$ kubectl get svc istio-ingressgateway -n istio-system
-NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
-istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
-```
-If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.
+## Run your first `InferenceService`
 
-```bash
-export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
-```
-
-If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway. In this case, you can access the gateway using the service’s node port.
-```bash
-# GKE
-export INGRESS_HOST=worker-node-address
-# Minikube
-export INGRESS_HOST=$(minikube ip)
-# Other environment(On Prem)
-export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
-
-export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
-```
-
-Alternatively you can do `Port Forward` for testing purpose
-```bash
-INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="app=istio-ingressgateway" --output jsonpath='{.items[0].metadata.name}')
-kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
-# start another terminal
-export INGRESS_HOST=localhost
-export INGRESS_PORT=8080
-```
-
-## Run your first InferenceService
-
-### Create test InferenceService
+### 1. Create test `InferenceService`
 ```bash
 kubectl create namespace kserve-test
 kubectl apply -f docs/modelserving/v1beta1/sklearn/v1/sklearn.yaml -n kserve-test
 ```
 
-### Check `InferenceService` status.
+### 2. Check `InferenceService` status.
 ```bash
 kubectl get inferenceservices sklearn-iris -n kserve-test
 NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
@@ -49,8 +14,47 @@ sklearn-iris   http://sklearn-iris.kserve-test.example.com         True         
 ```
 If your DNS contains example.com please consult your admin for configuring DNS or using [custom domain](https://knative.dev/docs/serving/using-a-custom-domain).
 
-### Curl the `InferenceService`
-=== "real DNS"
+### 3. Determine the ingress IP and ports
+Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
+```bash
+$ kubectl get svc istio-ingressgateway -n istio-system
+NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
+istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
+```
+
+=== "Load Balancer"
+    If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.
+    
+    ```bash
+    export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
+    ```
+
+=== "Node Port"
+    If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway. 
+    In this case, you can access the gateway using the service’s node port.
+    ```bash
+    # GKE
+    export INGRESS_HOST=worker-node-address
+    # Minikube
+    export INGRESS_HOST=$(minikube ip)
+    # Other environment(On Prem)
+    export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
+    export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+    ```
+
+=== "Port Forward"
+    Alternatively you can do `Port Forward` for testing purpose
+    ```bash
+    INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="app=istio-ingressgateway" --output jsonpath='{.items[0].metadata.name}')
+    kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
+    # start another terminal
+    export INGRESS_HOST=localhost
+    export INGRESS_PORT=8080
+    ```
+
+### 4. Curl the `InferenceService`
+=== "Real DNS"
 
     If you have configured the DNS, you can directly curl the `InferenceService` with the URL obtained from the status print.
     e.g
@@ -58,10 +62,10 @@ If your DNS contains example.com please consult your admin for configuring DNS o
     curl -v http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./docs/modelserving/v1beta1/sklearn/v1/iris-input.json
     ```
 
-=== "magic DNS"
+=== "Magic DNS"
 
     If you don't want to go through the trouble to get a real domain, you can instead use "magic" dns [xip.io](http://xip.io/).
-    The key is to get the external IP for your KFServing cluster.
+    The key is to get the external IP for your cluster.
     ```
     kubectl get svc istio-ingressgateway --namespace istio-system
     ```
@@ -99,7 +103,7 @@ If your DNS contains example.com please consult your admin for configuring DNS o
     curl -v http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./docs/modelserving/v1beta1/sklearn/v1/iris-input.json
     ```
 
-### Run Performance Test
+### 5. Run Performance Test
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
 kubectl create -f docs/modelserving/v1beta1/sklearn/v1/perf.yaml -n kserve-test
