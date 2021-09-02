@@ -1,11 +1,11 @@
-# Deploying SKLearn models
+# Serve SKLearn models with InferenceService
 
 This example walks you through how to deploy a `scikit-learn` model leveraging
 the `v1beta1` version of the `InferenceService` CRD.
 Note that, by default the `v1beta1` version will expose your model through an
 API compatible with the existing V1 Dataplane.
 However, this example will show you how to serve a model through an API
-compatible with the new [V2 Dataplane](https://github.com/kubeflow/kfserving/tree/master/docs/predict-api/v2).
+compatible with the new [V2 Dataplane](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
 
 ## Training
 
@@ -28,13 +28,12 @@ dump(clf, 'model.joblib')
 
 ## Testing locally
 
-Once we've got our model serialised `model.joblib`, we can then use
+Once you've got your model serialised `model.joblib`, we can then use
 [MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
-For more details on MLServer, feel free to check the [SKLearn example in their
-docs](https://github.com/SeldonIO/MLServer/tree/master/examples/sklearn).
+For more details on MLServer, feel free to check the [SKLearn example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/sklearn/README.md).
 
-> Note that this step is optional and just meant for testing.
-> Feel free to jump straight to [deploying your trained model](#deployment).
+!!! Note
+    this step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
 
 ### Pre-requisites
 
@@ -50,9 +49,8 @@ pip install mlserver mlserver-sklearn
 The next step will be providing some model settings so that
 MLServer knows:
 
-- The inference runtime that we want our model to use (i.e.
-  `mlserver_sklearn.SKLearnModel`)
-- Our model's name and version
+- The inference runtime to serve your model (i.e. `mlserver_sklearn.SKLearnModel`)
+- The model's name and version
 
 These can be specified through environment variables or by creating a local
 `model-settings.json` file:
@@ -65,28 +63,28 @@ These can be specified through environment variables or by creating a local
 }
 ```
 
-Note that, when we [deploy our model](#deployment), **KFServing will already
+Note that, when you [deploy your model](#deployment), **KServe will already
 inject some sensible defaults** so that it runs out-of-the-box without any
 further configuration.
 However, you can still override these defaults by providing a
 `model-settings.json` file similar to your local one.
 You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/examples/mms).
+models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
 
 ### Serving our model locally
 
 With the `mlserver` package installed locally and a local `model-settings.json`
-file, we should now be ready to start our server as:
+file, you should now be ready to start our server as:
 
 ```bash
 mlserver start .
 ```
 
-## Deployment
+## Deploy with InferenceService 
 
-Lastly, we will use KFServing to deploy our trained model.
-For this, we will just need to use **version `v1beta1`** of the
-`InferenceService` CRD and set the the **`protocolVersion` field to `v2`**.
+Lastly, you will use KServe to deploy the trained model.
+For this, you will just need to use **version `v1beta1`** of the
+`InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
 
 ```yaml
 apiVersion: "serving.kubeflow.org/v1beta1"
@@ -106,22 +104,20 @@ Note that this makes the following assumptions:
   to a "model repository" (GCS in this example) and can be accessed as
   `gs://seldon-models/sklearn/iris`.
 - There is a K8s cluster available, accessible through `kubectl`.
-- KFServing has already been [installed in your
-  cluster](https://github.com/kubeflow/kfserving/#install-kfserving).
+- KServe has already been [installed in your cluster](../../../../get_started/README.md).
 
-Assuming that we've got a cluster accessible through `kubectl` with KFServing
-already installed, we can deploy our model as:
 
-```
-kubectl apply -f ./sklearn.yaml
-```
+=== "kubectl"
+    ```
+    kubectl apply -f ./sklearn.yaml
+    ```
 
-### Testing deployed model
+## Testing deployed model
 
-We can now test our deployed model by sending a sample request.
+You can now test your deployed model by sending a sample request.
 
 Note that this request **needs to follow the [V2 Dataplane
-protocol](https://github.com/kubeflow/kfserving/tree/master/docs/predict-api/v2)**.
+protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
 You can see an example payload below:
 
 ```json
@@ -140,13 +136,12 @@ You can see an example payload below:
 }
 ```
 
-Now, assuming that our ingress can be accessed at
-`${INGRESS_HOST}:${INGRESS_PORT}`, we can use `curl` to send our inference
-request as:
+Now, assuming that your ingress can be accessed at
+`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports)
+to find out your ingress IP and port.
 
-> You can follow [these instructions](../../../../README.md#determine-the-ingress-ip-and-ports) to find
-> out your ingress IP and port.
-
+you can use `curl` to send the inference request as:
+ 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-irisv2 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
@@ -156,7 +151,7 @@ curl -v \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/sklearn-irisv2/infer
 ```
 
-The output will be something similar to:
+==** Expected Output **==
 
 ```json
 {
