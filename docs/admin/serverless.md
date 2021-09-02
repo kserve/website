@@ -8,9 +8,7 @@ Kubernetes 1.17 is the minimally recommended version and Knative Serving and Ist
 The minimally required Istio version is 1.9.5 and you can refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
 
 ## 2. Install Knative Serving
-The minimally required `Knative Serving` version is 0.19.0 and you can refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
-!!! note
-    If you are running Service Mesh mode with Authorization please follow [knative doc]() to setup the authorization policies.
+The minimally required Knative Serving version is 0.19.0 and you can refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
 
 !!! note
     If you are looking to use PodSpec fields such as nodeSelector, affinity or tolerations which are now supported in the v1beta1 API spec, 
@@ -21,3 +19,9 @@ The minimally required Cert Manager version is 1.3.0 and you can refer to [Cert 
 
 !!! note
     Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.
+    
+## 4. Install KServe
+=== "kubectl"
+    ```bash
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.7.0-rc0/kserve.yaml
+    ```

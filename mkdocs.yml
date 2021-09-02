@@ -99,14 +99,9 @@ extra:
       link: https://github.com/kserve/community
       name: KServe Community on Github
     - icon: fontawesome/brands/slack
-      link: https://slack.knative.dev
+      link: https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#
       name: Slack
   # TODO: Replace with https://github.com/mkdocs/mkdocs/pull/2267 once mkdocs 1.2 is out.
   version_warning: !!python/object/apply:os.getenv ["VERSION_WARNING"]
-  knative_version: !!python/object/apply:os.getenv ["KNATIVE_VERSION"]
+  kserve_version: !!python/object/apply:os.getenv ["KSERVE_VERSION"]
   branch: !!python/object/apply:os.getenv ["SAMPLES_BRANCH", "mkdocs"]
-  analytics:
-    provider: google
-    property: G-YRMNFYE32R
-  version:
-    provider: mike
