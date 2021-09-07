@@ -4,7 +4,7 @@ In this example, we use a trained pytorch mnist model to predict handwritten dig
 
 ## Setup
 
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Creating model storage with model archive file
@@ -45,7 +45,7 @@ via local socket.
 
 
 ## TorchServe with KFS envelope inference endpoints
-The KFServing/TorchServe integration supports KServe v1 protocol and we are working on to support v2 protocol.
+The KServe/TorchServe integration supports KServe v1 protocol and we are working on to support v2 protocol.
 
 | API  | Verb | Path | Payload |
 | ------------- | ------------- | ------------- | ------------- |
@@ -74,14 +74,14 @@ $inferenceservice.serving.kserve.io/torchserve created
 
 ## Inference
 
-The first step is to [determine the ingress IP and ports](../../../../README.md#determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=mnist
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchserve -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-Use [image converter](../imgconv/README.md) to create input request for mnist. 
+Use [image converter](./imgconv/README.md) to create input request for mnist. 
 For other models please refer to [input request](https://github.com/pytorch/serve/tree/master/kubernetes/kfserving/kf_request_json)
 
 ```bash

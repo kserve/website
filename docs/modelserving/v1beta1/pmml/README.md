@@ -6,13 +6,13 @@ To test the [PMMLServer](http://dmg.org/pmml/pmml_examples/#Iris) server, first 
 
 ## Disadvantages
 
-Because the `pmmlserver` based on [Py4J](https://github.com/bartdag/py4j) and that isn't support multi-process mode. So we can't set `spec.predictor.containerConcurrency`.
+The `pmmlserver` is based on [Py4J](https://github.com/bartdag/py4j) and that doesn't support multi-process mode. So we can't set `spec.predictor.containerConcurrency`.
 
-If you want to scale the PMMLServer to improve predict performance, you should to set the InferenceService's `resources.limits.cpu` to 1 and scale it replica size.
+If you want to scale the PMMLServer to improve prediction performance, you should set the InferenceService's `resources.limits.cpu` to 1 and scale it replica size.
 
 
 ## Setup
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Create the InferenceService
@@ -24,10 +24,10 @@ kubectl apply -f pmml.yaml
 
 Expected Output
 ```
-$ inferenceservice.serving.kubeflow.org/pmml-demo created
+$ inferenceservice.serving.kserve.io/pmml-demo created
 ```
 ## Run a prediction
-The first step is to [determine the ingress IP and ports](../../../../README.md#determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```
 MODEL_NAME=pmml-demo

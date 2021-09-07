@@ -117,9 +117,9 @@ Note that this makes the following assumptions:
   `gs://kfserving-samples/models/xgboost/iris`.
 - There is a K8s cluster available, accessible through `kubectl`.
 - KServe has already been [installed in your
-  cluster](../../../../get_started/README.md#4-Install-kserve).
+  cluster](../../../get_started/README.md#4-Install-kserve).
 
-Assuming that we've got a cluster accessible through `kubectl` with KFServing
+Assuming that we've got a cluster accessible through `kubectl` with KServe
 already installed, we can deploy our model as:
 
 ```
@@ -154,7 +154,7 @@ Now, assuming that our ingress can be accessed at
 `${INGRESS_HOST}:${INGRESS_PORT}`, we can use `curl` to send our inference
 request as:
 
-> You can follow [these instructions](../../../../README.md#determine-the-ingress-ip-and-ports) to find
+> You can follow [these instructions](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) to find
 > out your ingress IP and port.
 
 ```bash
