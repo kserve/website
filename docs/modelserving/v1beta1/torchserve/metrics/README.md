@@ -4,7 +4,7 @@ This adds prometheus and granfana to the cluster with some default metrics.
 
 ## Setup
 
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-Install-kserve).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ##  Open the Istio Dashboard via the Grafana UI and Prometheus UI
@@ -57,7 +57,7 @@ $inferenceservice.serving.kserve.io/torch-metrics created
 
 ## Run a prediction
 
-The first step is to [determine the ingress IP and ports](../../../../../README.md#determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ## Inference
 
