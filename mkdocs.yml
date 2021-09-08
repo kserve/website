@@ -32,8 +32,8 @@ nav:
                 - Feast: modelserving/v1beta1/transformer/feast/README.md
                 - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
           - Explainers:
-                - Alibi Explainer: modelserving/explainer/alibi.md
-                - AIX Explainer: modelserving/explainer/aix.md
+                - Alibi Explainer: modelserving/explainer/alibi/alibi.md
+                - AIX Explainer: modelserving/explainer/aix/mnist/aix.md
           - Drift/Outlier Detection:
                 - Alibi Detect: modelserving/detect/alibi_detect.md
     - API Reference:
