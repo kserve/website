@@ -27,7 +27,7 @@ spec:
         - args:
             - gs://kfserving-examples/models/sparkpmml
             - /mnt/models
-          image: gcr.io/kfserving/storage-initializer:v0.5.1
+          image: kserve/storage-initializer:latest
           imagePullPolicy: IfNotPresent
           name: storage-initializer
           resources:
@@ -41,13 +41,13 @@ spec:
           terminationMessagePolicy: FallbackToLogsOnError
           volumeMounts:
             - mountPath: /mnt/models
-              name: kfserving-provision-location
+              name: kserve-provision-location
       containers:
         - args:
             - --model_name=spark-pmml-iris
             - --model_dir=/mnt/models
             - --http_port=8080
-          image: kfserving/pmmlserver:v0.5.1
+          image: kserve/pmmlserver:latest
           imagePullPolicy: IfNotPresent
           name: kserve-container
           ports:
