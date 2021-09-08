@@ -4,7 +4,7 @@ input tensors model server expects. In this example we demonstrate an example of
 
 ## Setup
 
-1. Your ~/.kube/config should point to a cluster with [KServe installed](https://github.com/kserve/kserve/#install-kfserving).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Build Transformer image

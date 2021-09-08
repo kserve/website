@@ -3,7 +3,7 @@ Transformer is an `InferenceService` component which does pre/post processing al
 
 ## Setup
 
-1. Your ~/.kube/config should point to a cluster with [KServe installed](https://github.com/kserve/kserve/#install-kfserving).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 3. Your Feast online store is populated with driver [data](https://github.com/tedhtchang/populate_feast_online_store/blob/main/driver_stats.parquet), instructions available [here](https://github.com/tedhtchang/populate_feast_online_store), and network accessible.
 

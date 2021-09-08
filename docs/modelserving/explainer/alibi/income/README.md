@@ -1,6 +1,6 @@
 # Example Anchors Tabular Explaination for Income Prediction
 
-For users of KFServing v0.3.0 please follow [the README and notebook for v0.3.0 branch](https://github.com/kubeflow/kfserving/tree/v0.3.0/docs/samples/explanation/alibi/income).
+For users of KFServing v0.3.0 please follow [the README and notebook for v0.3.0 branch](https://github.com/kserve/kserve/tree/v0.3.0/docs/samples/explanation/alibi/income).
 
 This example uses a [US income dataset](https://archive.ics.uci.edu/ml/datasets/adult)
 
