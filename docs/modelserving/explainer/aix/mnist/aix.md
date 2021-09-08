@@ -1,6 +1,6 @@
 # Using AIX to get explanations for MNIST classifications
 
-This is an example of how to explain model predictions using [AI Explainability 360 (AIX360)](https://ai-explainability-360.org/) on KFServing. We will be using mnist dataset for handwritten digits for this model and explain how the model decides the predicted results.
+This is an example of how to explain model predictions using [AI Explainability 360 (AIX360)](https://ai-explainability-360.org/) on KServe. We will be using mnist dataset for handwritten digits for this model and explain how the model decides the predicted results.
 
 To deploy the inferenceservice with v1beta1 API
 

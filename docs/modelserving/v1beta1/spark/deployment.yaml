@@ -4,7 +4,7 @@ metadata:
   labels:
     app: spark-pmml-iris
     component: predictor
-    serving.kubeflow.org/inferenceservice: spark-pmml-iris
+    serving.kserve.io/inferenceservice: spark-pmml-iris
   name: spark-pmml-iris
 spec:
   replicas: 1
@@ -21,7 +21,7 @@ spec:
       labels:
         app: spark-pmml-iris
         component: predictor
-        serving.kubeflow.org/inferenceservice: spark-pmml-iris
+        serving.kserve.io/inferenceservice: spark-pmml-iris
     spec:
       initContainers:
         - args:
@@ -75,7 +75,7 @@ metadata:
   labels:
     app: spark-pmml-iris
     component: predictor
-    serving.kubeflow.org/inferenceservice: spark-pmml-iris
+    serving.kserve.io/inferenceservice: spark-pmml-iris
   name: spark-pmml-iris
 spec:
   ports:

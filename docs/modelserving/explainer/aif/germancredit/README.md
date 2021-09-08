@@ -2,7 +2,7 @@
 
 ## End-to-end bias detection with german-credit dataset
 
-This is an example of how to get bias metrics using [AI Fairness 360 (AIF360)](https://ai-fairness-360.org/) on KFServing. AI Fairness 360, an LF AI incubation project, is an extensible open source toolkit that can help users examine, report, and mitigate discrimination and bias in machine learning models throughout the AI application lifecycle. 
+This is an example of how to get bias metrics using [AI Fairness 360 (AIF360)](https://ai-fairness-360.org/) on KServe. AI Fairness 360, an LF AI incubation project, is an extensible open source toolkit that can help users examine, report, and mitigate discrimination and bias in machine learning models throughout the AI application lifecycle. 
 
 We will be using the German Credit dataset maintained by the [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php). The German Credit dataset is a dataset that contains data as to whether or not a creditor gave a loan applicant access to a loan along with data about the applicant. The data includes relevant data on an applicant's credit history, savings, and employment as well as some data on the applicant's demographic such as age, sex, and marital status. Data like credit history, savings, and employment can be used by creditors to accurately predict the probability that an applicant will repay their loans, however, data such as age and sex should not be used to decide whether an applicant should be given a loan. 
 
