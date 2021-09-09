@@ -1,7 +1,7 @@
 
 # Predict on an InferenceService with a saved model on PVC
 
-The doc shows how to train model and create InferenceService for the trained model for on-prem cluster.
+This doc shows how to train model and create InferenceService for the trained model for on-prem cluster.
 
 ## Prerequisites
 

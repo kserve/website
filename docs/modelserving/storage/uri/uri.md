@@ -4,12 +4,6 @@ This doc guides to specify a model object via the URI (Uniform Resource Identifi
 
 This `storageUri` option supports single file models, like `sklearn` which is specified by a [joblib](https://joblib.readthedocs.io/en/latest/) file, or artifacts (e.g. `tar` or `zip`) which contain all the necessary dependencies for other model types (e.g. `tensorflow` or `pytorch`). Here, we'll show examples from both of the above.
 
-## Setup
-
-1. Kubernets ~/.kube/config should point to a cluster with [KServe installed](../../../admin/serverless.md).
-2. Kubernets cluster's Istio Ingress gateway must be network accessible.
-3. Kubernets cluster's Istio Egress gateway must [allow http / https traffic](https://knative.dev/docs/serving/outbound-network-access/)
-
 ## Create HTTP/HTTPS header Secret and attach to Service account
 
 The HTTP/HTTPS service request headers can be defined as secret and attached to service account. This is optional.
