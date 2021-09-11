@@ -21,21 +21,32 @@ nav:
           - Single Model Serving:
             - Tensorflow: modelserving/v1beta1/tensorflow/README.md
             - PyTorch: modelserving/v1beta1/torchserve/README.md
-            - ScikitLearn: modelserving/v1beta1/sklearn/v2/README.md
+            - scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
             - XGBoost: modelserving/v1beta1/xgboost/README.md
             - PMML: modelserving/v1beta1/pmml/README.md
+            - Spark: modelserving/v1beta1/spark/README.md
+            - Lightgbm: modelserving/v1beta1/lightgbm/README.md
+            - PaddleServer: modelserving/v1beta1/paddle/README.md
             - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
-          - Multi Model Serving:
-                - Triton: modelserving/mms/triton.md
-                - MLServer: modelserving/mms/mlserver.md
+          - Multi Model Serving: 
+                - Concept: modelserving/mms/multi-model-serving.md
+                - Model Server Runtime:
+                  - Triton inference server: modelserving/mms/triton/README.md
+                  - scikit-learn: modelserving/mms/sklearn/README.md
           - Transformers:
                 - Feast: modelserving/v1beta1/transformer/feast/README.md
                 - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
           - Explainers:
-                - Alibi Explainer: modelserving/explainer/alibi.md
-                - AIX Explainer: modelserving/explainer/aix.md
-          - Drift/Outlier Detection:
-                - Alibi Detect: modelserving/detect/alibi_detect.md
+                - Concept: modelserving/explainer/explainer.md
+                - Alibi Explainer: 
+                  - Image Explainer: modelserving/explainer/alibi/cifar10/README.md
+                  - Income Explainer: modelserving/explainer/alibi/income/README.md
+                  - Text Explainer: modelserving/explainer/alibi/moviesentiment/README.md
+                - AIX Explainer: modelserving/explainer/aix/mnist/aix.md
+          - Detectors:
+                - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
+                - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
+                - ART Adversial Detector: modelserving/detect/art/mnist/README.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Python Client SDK: reference/client.md

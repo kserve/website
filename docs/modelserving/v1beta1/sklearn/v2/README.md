@@ -1,4 +1,4 @@
-# Serve SKLearn models with InferenceService
+# Deploy sklearn-learn models with InferenceService
 
 This example walks you through how to deploy a `scikit-learn` model leveraging
 the `v1beta1` version of the `InferenceService` CRD.
@@ -87,7 +87,7 @@ For this, you will just need to use **version `v1beta1`** of the
 `InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
 
 ```yaml
-apiVersion: "serving.kubeflow.org/v1beta1"
+apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "sklearn-irisv2"
