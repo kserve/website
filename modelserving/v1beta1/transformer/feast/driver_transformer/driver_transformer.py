@@ -23,10 +23,10 @@ logging.basicConfig(level=kserve.constants.KSERVE_LOGLEVEL)
 
 class DriverTransformer(kserve.KFModel):
     """ A class object for the data handling activities of driver ranking
-    Task and returns a KFServing compatible response.
+    Task and returns a KServe compatible response.
 
     Args:
-        kfserving (class object): The KFModel class from the KFServing
+        kserve (class object): The KFModel class from the KServe
         modeule is passed here.
     """
     def __init__(self, name: str,
@@ -78,7 +78,7 @@ class DriverTransformer(kserve.KFModel):
         """Build the predict request for all entitys and return it as a dict.
 
         Args:
-            inputs (Dict): entity ids from KFServing http request
+            inputs (Dict): entity ids from KServe http request
             features (Dict): entity features extracted from the feature store
 
         Returns:
@@ -98,7 +98,7 @@ class DriverTransformer(kserve.KFModel):
         """Pre-process activity of the driver input data.
 
         Args:
-            inputs (Dict): KFServing http request
+            inputs (Dict): KServe http request
 
         Returns:
             Dict: Returns the request input after ingesting online features

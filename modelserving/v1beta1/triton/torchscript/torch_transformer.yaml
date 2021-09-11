@@ -1,4 +1,4 @@
-apiVersion: serving.kubeflow.org/v1beta1
+apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   name: torch-transformer
@@ -15,7 +15,7 @@ spec:
   transformer:
     containers:
     - image: kfserving/image-transformer-v2:latest
-      name: kfserving-container
+      name: kserve-container
       command:
       - "python"
       - "-m"

@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#predict-on-an-inferenceservice-with-tensorflow-model" class="md-skip">
+        <a href="#deploy-tensorflow-model-with-inferenceservice" class="md-skip">
           Skip to content
         </a>
       
@@ -728,18 +728,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    Setup
+  <a href="#create-the-http-inferenceservice" class="md-nav__link">
+    Create the HTTP InferenceService
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-the-inferenceservice-with-http" class="md-nav__link">
-    Create the InferenceService with HTTP
-  </a>
-  
-    <nav class="md-nav" aria-label="Create the InferenceService with HTTP">
+    <nav class="md-nav" aria-label="Create the HTTP InferenceService">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -762,11 +755,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-inferenceservice-with-grpc" class="md-nav__link">
-    Create the InferenceService with gRPC
+  <a href="#create-the-grpc-inferenceservice" class="md-nav__link">
+    Create the gRPC InferenceService
   </a>
   
-    <nav class="md-nav" aria-label="Create the InferenceService with gRPC">
+    <nav class="md-nav" aria-label="Create the gRPC InferenceService">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -807,7 +800,7 @@
   
     <li class="md-nav__item">
       <a href="../sklearn/v2/" class="md-nav__link">
-        ScikitLearn
+        scikit-learn
       </a>
     </li>
   
@@ -832,6 +825,42 @@
     <li class="md-nav__item">
       <a href="../pmml/" class="md-nav__link">
         PMML
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spark/" class="md-nav__link">
+        Spark
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lightgbm/" class="md-nav__link">
+        Lightgbm
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paddle/" class="md-nav__link">
+        PaddleServer
       </a>
     </li>
   
@@ -881,8 +910,41 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mms/triton.md" class="md-nav__link">
-        Triton
+      <a href="../../mms/multi-model-serving/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" type="checkbox" id="__nav_4_3_2" >
+      
+      <label class="md-nav__link" for="__nav_4_3_2">
+        Model Server Runtime
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Model Server Runtime" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Model Server Runtime
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mms/triton/" class="md-nav__link">
+        Triton inference server
       </a>
     </li>
   
@@ -893,9 +955,15 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mms/mlserver.md" class="md-nav__link">
-        MLServer
+      <a href="../../mms/sklearn/" class="md-nav__link">
+        scikit-learn
       </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -983,8 +1051,41 @@
   
   
     <li class="md-nav__item">
-      <a href="../../explainer/alibi.md" class="md-nav__link">
+      <a href="../../explainer/explainer/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5_2" type="checkbox" id="__nav_4_5_2" >
+      
+      <label class="md-nav__link" for="__nav_4_5_2">
         Alibi Explainer
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/cifar10/" class="md-nav__link">
+        Image Explainer
       </a>
     </li>
   
@@ -995,7 +1096,37 @@
   
   
     <li class="md-nav__item">
-      <a href="../../explainer/aix.md" class="md-nav__link">
+      <a href="../../explainer/alibi/income/" class="md-nav__link">
+        Income Explainer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/moviesentiment/" class="md-nav__link">
+        Text Explainer
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/aix/mnist/aix/" class="md-nav__link">
         AIX Explainer
       </a>
     </li>
@@ -1019,13 +1150,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
       
       <label class="md-nav__link" for="__nav_4_6">
-        Drift/Outlier Detection
+        Detectors
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Drift/Outlier Detection" data-md-level="2">
+      <nav class="md-nav" aria-label="Detectors" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_6">
           <span class="md-nav__icon md-icon"></span>
-          Drift/Outlier Detection
+          Detectors
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1034,8 +1165,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../../detect/alibi_detect.md" class="md-nav__link">
-        Alibi Detect
+      <a href="../../detect/alibi_detect/alibi_detect/" class="md-nav__link">
+        Alibi Detector
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/aif/germancredit/" class="md-nav__link">
+        AIF Bias Detector
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/art/mnist/" class="md-nav__link">
+        ART Adversial Detector
       </a>
     </li>
   
@@ -1253,18 +1408,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    Setup
+  <a href="#create-the-http-inferenceservice" class="md-nav__link">
+    Create the HTTP InferenceService
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-the-inferenceservice-with-http" class="md-nav__link">
-    Create the InferenceService with HTTP
-  </a>
-  
-    <nav class="md-nav" aria-label="Create the InferenceService with HTTP">
+    <nav class="md-nav" aria-label="Create the HTTP InferenceService">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1287,11 +1435,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-the-inferenceservice-with-grpc" class="md-nav__link">
-    Create the InferenceService with gRPC
+  <a href="#create-the-grpc-inferenceservice" class="md-nav__link">
+    Create the gRPC InferenceService
   </a>
   
-    <nav class="md-nav" aria-label="Create the InferenceService with gRPC">
+    <nav class="md-nav" aria-label="Create the gRPC InferenceService">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1323,16 +1471,11 @@
                   </a>
                 
                 
-                <h1 id="predict-on-an-inferenceservice-with-tensorflow-model">Predict on an InferenceService with Tensorflow model<a class="headerlink" href="#predict-on-an-inferenceservice-with-tensorflow-model" title="Permanent link">&para;</a></h1>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="https://github.com/kubeflow/kfserving/blob/master/docs/DEVELOPER_GUIDE.md#deploy-kfserving">KFServing installed</a>.</li>
-<li>Your cluster's Istio Ingress gateway must be network accessible.</li>
-</ol>
-<h2 id="create-the-inferenceservice-with-http">Create the InferenceService with HTTP<a class="headerlink" href="#create-the-inferenceservice-with-http" title="Permanent link">&para;</a></h2>
-<p>Create an <code>InferenceService</code> yaml which specifies the framework <code>tensorflow</code> and <code>storageUri</code> that is pointed to a saved tensorflow model,
-by default it exposes a HTTP/REST endpoint.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kubeflow.org/v1beta1&quot;</span>
+                <h1 id="deploy-tensorflow-model-with-inferenceservice">Deploy Tensorflow Model with InferenceService<a class="headerlink" href="#deploy-tensorflow-model-with-inferenceservice" title="Permanent link">&para;</a></h1>
+<h2 id="create-the-http-inferenceservice">Create the HTTP InferenceService<a class="headerlink" href="#create-the-http-inferenceservice" title="Permanent link">&para;</a></h2>
+<p>Create an <code>InferenceService</code> yaml which specifies the framework <code>tensorflow</code> and <code>storageUri</code> that is pointed to a
+<a href="https://www.tensorflow.org/guide/saved_model">saved tensorflow model</a>, and name it as <code>tensorflow.yaml</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
 <span class="nt">metadata</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;flower-sample&quot;</span>
@@ -1340,26 +1483,28 @@ by default it exposes a HTTP/REST endpoint.
   <span class="nt">predictor</span><span class="p">:</span>
     <span class="nt">tensorflow</span><span class="p">:</span>
       <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span>
-</code></pre></div></p>
-<p>Apply the <code>tensorflow.yaml</code> to create the <code>InferenceService</code>.
+</code></pre></div>
+<p>Apply the <code>tensorflow.yaml</code> to create the <code>InferenceService</code>, by default it exposes a HTTP/REST endpoint.</p>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">kubectl</label><div class="tabbed-content"></div>
+</div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f tensorflow.yaml 
+</code></pre></div>
+<p><mark><strong> Expected Output </strong></mark>
+<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flower-sample created
 </code></pre></div></p>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kubeflow.org/flower-sample created
-</code></pre></div></p>
-<p>Wait the <code>InferenceService</code> to be in ready state
+<p>Wait for the <code>InferenceService</code> to be in ready state
 <div class="highlight"><pre><span></span><code>kubectl get isvc flower-sample
 NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION        LATESTREADYREVISION                     AGE
 flower-sample   http://flower-sample.default.example.com   True           <span class="m">100</span>                                   flower-sample-predictor-default-n9zs6   7m15s
 </code></pre></div></p>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../../README.md#determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>
+<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=flower-sample
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
 curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 </code></pre></div></p>
-<p>Expected Output
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>* Connected to localhost (::1) port 8080 (#0)
 &gt; POST /v1/models/tensorflow-sample:predict HTTP/1.1
 &gt; Host: tensorflow-sample.default.example.com
@@ -1390,7 +1535,7 @@ curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRES
 <h2 id="canary-rollout">Canary Rollout<a class="headerlink" href="#canary-rollout" title="Permanent link">&para;</a></h2>
 <p>Canary rollout is a great way to control the risk of rolling out a new model by first moving a small percent of the traffic to it and then gradually increase the percentage. 
 To run a canary rollout, you can apply the <code>canary.yaml</code> with the <code>canaryTrafficPercent</code> field specified.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kubeflow.org/v1beta1&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
 <span class="nt">metadata</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;flower-example&quot;</span>
@@ -1400,18 +1545,22 @@ To run a canary rollout, you can apply the <code>canary.yaml</code> with the <co
     <span class="nt">tensorflow</span><span class="p">:</span>
       <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers-2&quot;</span>
 </code></pre></div>
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">kubectl</label><div class="tabbed-content"></div>
+</div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f canary.yaml 
 </code></pre></div>
 <p>To verify if the traffic split percentage is applied correctly, you can run the following command:</p>
+<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">kubectl</label><div class="tabbed-content"></div>
+</div>
 <div class="highlight"><pre><span></span><code>kubectl get isvc flower-sample
 NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION                   LATESTREADYREVISION                     AGE
 flower-sample   http://flower-sample.default.example.com   True    80     20       flower-sample-predictor-default-n9zs6   flower-sample-predictor-default-2kwtr   7m15s
 </code></pre></div>
-<p>As you can see the traffic is split between the last rolled out revision and the current latest ready revision, KFServing automatically tracks the last rolled out(stable) revision for you so you
+<p>As you can see the traffic is split between the last rolled out revision and the current latest ready revision, KServe automatically tracks the last rolled out(stable) revision for you so you
 do not need to maintain both default and canary on the <code>InferenceService</code> as in v1alpha2.</p>
-<h2 id="create-the-inferenceservice-with-grpc">Create the InferenceService with gRPC<a class="headerlink" href="#create-the-inferenceservice-with-grpc" title="Permanent link">&para;</a></h2>
+<h2 id="create-the-grpc-inferenceservice">Create the gRPC InferenceService<a class="headerlink" href="#create-the-grpc-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Create <code>InferenceService</code> which exposes the gRPC port and by default it listens on port 9000.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kubeflow.org/v1beta1&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
 <span class="nt">metadata</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;flower-grpc&quot;</span>
@@ -1424,11 +1573,13 @@ do not need to maintain both default and canary on the <code>InferenceService</c
           <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">h2c</span>
           <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
 </code></pre></div></p>
-<p>Apply <code>grpc.yaml</code> to create the gRPC InferenceService.
+<p>Apply <code>grpc.yaml</code> to create the gRPC InferenceService.</p>
+<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">kubectl</label><div class="tabbed-content"></div>
+</div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f grpc.yaml 
-</code></pre></div></p>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kubeflow.org/flower-grpc created
+</code></pre></div>
+<p><mark><strong> Expected Output </strong></mark>
+<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flower-grpc created
 </code></pre></div></p>
 <h3 id="run-a-prediction_1">Run a prediction<a class="headerlink" href="#run-a-prediction_1" title="Permanent link">&para;</a></h3>
 <p>We use a python gRPC client for the prediction, so you need to create a python virtual environment and
@@ -1442,7 +1593,7 @@ pip install tensorflow-serving-api&gt;<span class="o">=</span><span class="m">1<
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 python grpc_client.py --host <span class="nv">$INGRESS_HOST</span> --port <span class="nv">$INGRESS_PORT</span> --model <span class="nv">$MODEL_NAME</span> --hostname <span class="nv">$SERVICE_HOSTNAME</span> --input_path <span class="nv">$INPUT_PATH</span>
 </code></pre></div></p>
-<p>Expected Output
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>outputs {
   key: &quot;key&quot;
   value {

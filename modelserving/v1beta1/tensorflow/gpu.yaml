@@ -1,4 +1,4 @@
-apiVersion: "serving.kubeflow.org/v1alpha3"
+apiVersion: "serving.kserve.io/v1alpha3"
 kind: "Service"
 metadata:
   name: "tensorflow-gpu"

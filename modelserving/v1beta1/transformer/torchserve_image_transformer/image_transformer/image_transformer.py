@@ -53,10 +53,10 @@ def image_transform(instance):
 
 class ImageTransformer(kserve.KFModel):
     """ A class object for the data handling activities of Image Classification
-    Task and returns a KFServing compatible response.
+    Task and returns a KServe compatible response.
 
     Args:
-        kfserving (class object): The KFModel class from the KFServing
+        kserve (class object): The KFModel class from the KServe
         modeule is passed here.
     """
     def __init__(self, name: str, predictor_host: str):
@@ -78,7 +78,7 @@ class ImageTransformer(kserve.KFModel):
         """Pre-process activity of the Image Input data.
 
         Args:
-            inputs (Dict): KFServing http request
+            inputs (Dict): KServe http request
 
         Returns:
             Dict: Returns the request input after converting it into a tensor
@@ -86,7 +86,7 @@ class ImageTransformer(kserve.KFModel):
         return {'instances': [image_transform(instance) for instance in inputs['instances']]}
 
     def postprocess(self, inputs: List) -> List:
-        """Post process function of Torchserve on the KFServing side is
+        """Post process function of Torchserve on the KServe side is
         written here.
 
         Args:

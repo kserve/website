@@ -13,7 +13,7 @@ class TransformerModelRepository(KFModelRepository):
 
     Args:
         KFModelRepository (class): KFModel Repository class object of
-        kfserving is passed here.
+        kserve is passed here.
     """
 
     def __init__(self, predictor_host: str):

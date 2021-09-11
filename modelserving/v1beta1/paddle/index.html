@@ -18,7 +18,7 @@
     
     
       
-        <title>Predict on an InferenceService using PaddleServer - KServe</title>
+        <title>PaddleServer - KServe</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#predict-on-an-inferenceservice-using-paddleserver" class="md-skip">
+        <a href="#deploy-paddle-model-with-inferenceservice" class="md-skip">
           Skip to content
         </a>
       
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Predict on an InferenceService using PaddleServer
+              PaddleServer
             
           </span>
         </div>
@@ -213,6 +213,8 @@
         
   
   
+    
+  
 
 
   
@@ -224,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../control_plane/" class="md-tabs__link">
+      <a href="../../control_plane/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
@@ -594,12 +596,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       <label class="md-nav__link" for="__nav_4">
         User Guide
@@ -666,12 +670,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
       
       <label class="md-nav__link" for="__nav_4_2">
         Single Model Serving
@@ -714,7 +720,7 @@
   
     <li class="md-nav__item">
       <a href="../sklearn/v2/" class="md-nav__link">
-        ScikitLearn
+        scikit-learn
       </a>
     </li>
   
@@ -740,6 +746,89 @@
       <a href="../pmml/" class="md-nav__link">
         PMML
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spark/" class="md-nav__link">
+        Spark
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lightgbm/" class="md-nav__link">
+        Lightgbm
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          PaddleServer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        PaddleServer
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-inferenceservice" class="md-nav__link">
+    Create the InferenceService
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-prediction" class="md-nav__link">
+    Run a Prediction
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -788,8 +877,41 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mms/triton.md" class="md-nav__link">
-        Triton
+      <a href="../../mms/multi-model-serving/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" type="checkbox" id="__nav_4_3_2" >
+      
+      <label class="md-nav__link" for="__nav_4_3_2">
+        Model Server Runtime
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Model Server Runtime" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Model Server Runtime
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mms/triton/" class="md-nav__link">
+        Triton inference server
       </a>
     </li>
   
@@ -800,9 +922,15 @@
   
   
     <li class="md-nav__item">
-      <a href="../../mms/mlserver.md" class="md-nav__link">
-        MLServer
+      <a href="../../mms/sklearn/" class="md-nav__link">
+        scikit-learn
       </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -890,8 +1018,41 @@
   
   
     <li class="md-nav__item">
-      <a href="../../explainer/alibi.md" class="md-nav__link">
+      <a href="../../explainer/explainer/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5_2" type="checkbox" id="__nav_4_5_2" >
+      
+      <label class="md-nav__link" for="__nav_4_5_2">
         Alibi Explainer
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/cifar10/" class="md-nav__link">
+        Image Explainer
       </a>
     </li>
   
@@ -902,7 +1063,37 @@
   
   
     <li class="md-nav__item">
-      <a href="../../explainer/aix.md" class="md-nav__link">
+      <a href="../../explainer/alibi/income/" class="md-nav__link">
+        Income Explainer
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/moviesentiment/" class="md-nav__link">
+        Text Explainer
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/aix/mnist/aix/" class="md-nav__link">
         AIX Explainer
       </a>
     </li>
@@ -926,13 +1117,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
       
       <label class="md-nav__link" for="__nav_4_6">
-        Drift/Outlier Detection
+        Detectors
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Drift/Outlier Detection" data-md-level="2">
+      <nav class="md-nav" aria-label="Detectors" data-md-level="2">
         <label class="md-nav__title" for="__nav_4_6">
           <span class="md-nav__icon md-icon"></span>
-          Drift/Outlier Detection
+          Detectors
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -941,8 +1132,32 @@
   
   
     <li class="md-nav__item">
-      <a href="../../detect/alibi_detect.md" class="md-nav__link">
-        Alibi Detect
+      <a href="../../detect/alibi_detect/alibi_detect/" class="md-nav__link">
+        Alibi Detector
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/aif/germancredit/" class="md-nav__link">
+        AIF Bias Detector
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/art/mnist/" class="md-nav__link">
+        ART Adversial Detector
       </a>
     </li>
   
@@ -1160,13 +1375,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    Setup
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#create-the-inferenceservice" class="md-nav__link">
     Create the InferenceService
   </a>
@@ -1197,27 +1405,31 @@
                   </a>
                 
                 
-                <h1 id="predict-on-an-inferenceservice-using-paddleserver">Predict on an InferenceService using PaddleServer<a class="headerlink" href="#predict-on-an-inferenceservice-using-paddleserver" title="Permanent link">&para;</a></h1>
+                <h1 id="deploy-paddle-model-with-inferenceservice">Deploy paddle model with InferenceService<a class="headerlink" href="#deploy-paddle-model-with-inferenceservice" title="Permanent link">&para;</a></h1>
 <p>In this example, we use a trained paddle resnet50 model to classify images by running an inference service with Paddle predictor.</p>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="https://github.com/kubeflow/kfserving/#install-kfserving">KFServing installed</a>.</li>
-<li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
-</ol>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
-<p>Apply the custom resouce
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;paddle-resnet50&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">predictor</span><span class="p">:</span>
+    <span class="nt">paddle</span><span class="p">:</span>
+      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz&quot;</span>
+</code></pre></div>
+Apply the above yaml to create the InferenceService
 <div class="highlight"><pre><span></span><code>kubectl apply -f paddle.yaml
 </code></pre></div></p>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code><span class="go">inferenceservice.serving.kubeflow.org/paddle-resnet50 created</span>
+<p><mark><strong> Expected Output </strong></mark>
+<div class="highlight"><pre><span></span><code><span class="go">inferenceservice.serving.kserve.io/paddle-resnet50 created</span>
 </code></pre></div></p>
 <h2 id="run-a-prediction">Run a Prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
-<p>The first step is to <a href="../../../../README.md#determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>paddle-resnet50
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict -d @./jay.json
 </code></pre></div>
-<p>Expected Output
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code><span class="go">*   Trying 127.0.0.1:80...</span>
 <span class="go">* TCP_NODELAY set</span>
 <span class="go">* Connected to localhost (127.0.0.1) port 80 (#0)</span>
@@ -1262,6 +1474,39 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../lightgbm/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Lightgbm
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../custom/custom_model/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to write a custom predictor
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
