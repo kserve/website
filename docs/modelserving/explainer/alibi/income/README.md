@@ -1,47 +1,49 @@
 # Example Anchors Tabular Explaination for Income Prediction
 
-For users of KFServing v0.3.0 please follow [the README and notebook for v0.3.0 branch](https://github.com/kserve/kserve/tree/v0.3.0/docs/samples/explanation/alibi/income).
+This example uses a [US income dataset](https://archive.ics.uci.edu/ml/datasets/adult) to show the example of explanation on tabular data.
+You can also try out the [Jupyter notebook](income_explanations.ipynb) for a visual walkthrough.
 
-This example uses a [US income dataset](https://archive.ics.uci.edu/ml/datasets/adult)
-
-You can also try out the [Jupyter notebook](income_explanations.ipynb).
-
-We can create a InferenceService with a trained sklearn predictor for this dataset and an associated model explainer. The black box explainer algorithm we will use is the Tabular version of Anchors from the [Alibi open source library](https://github.com/SeldonIO/alibi). More details on this algorithm and configuration settings that can be set can be found in the [Seldon Alibi documentation](https://docs.seldon.io/projects/alibi/en/stable/).
+## Create the InferenceService with alibi explainer
+We can create a InferenceService with a trained sklearn predictor for this dataset and an associated model explainer.
+The black box explainer algorithm we will use is the Tabular version of Anchors from the [Alibi open source library](https://github.com/SeldonIO/alibi). More details on this algorithm and configuration settings that can be set can be found in the [Seldon Alibi documentation](https://docs.seldon.io/projects/alibi/en/stable/).
 
 The InferenceService is shown below:
 
 ```yaml
-apiVersion: "serving.kserve.io/v1alpha2"
+apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "income"
 spec:
-  default:
-    predictor:
-      minReplicas: 1
-      sklearn:
-        storageUri: "gs://seldon-models/sklearn/income/model"
-        resources:
-          requests:
-            cpu: 0.1
-          limits:
-            cpu: 1
-    explainer:
-      minReplicas: 1
-      alibi:
-        type: AnchorTabular
-        storageUri: "gs://seldon-models/sklearn/income/explainer-py36-0.5.2"
-        resources:
-          requests:
-            cpu: 0.1
-          limits:
-            cpu: 1
+  predictor:
+    minReplicas: 1
+    sklearn:
+      storageUri: "gs://seldon-models/sklearn/income/model"
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 1Gi   
+  explainer:
+    minReplicas: 1
+    alibi:
+      type: AnchorTabular
+      storageUri: "gs://seldon-models/sklearn/income/explainer-py37-0.6.0"
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 4Gi
 ```
-For KFS 0.4 the explainer storageUri is `gs://seldon-models/sklearn/income/alibi/0.4.0`
 
-Create this InferenceService:
+Create the InferenceService with above yaml:
 
-```
+=== "kubectl"
+```bash
 kubectl create -f income.yaml
 ```
 
@@ -53,6 +55,7 @@ INGRESS_GATEWAY=istio-ingressgateway
 CLUSTER_IP=$(kubectl -n istio-system get service $INGRESS_GATEWAY -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
+### Run the inference
 Test the predictor:
 
 ```
@@ -65,8 +68,8 @@ You should receive the response showing the prediction is for low salary:
 {"predictions": [0]}
 ```
 
+### Run the explanation
 Now lets get an explanation for this:
-
 
 ```
 curl -v -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
@@ -954,22 +957,4 @@ The returned explanation will be like:
 }
 
 ```
-
-
-## Local Testing
-
-If you wish to test locally first install the requirements:
-
-```
-pip install -r requirements.txt
-```
-
-Now train the model:
-
-```
-make train
-```
-
-You can then store the `model.joblib` for the model and `explainer.dill` for the explainer in a bucket accessible from your Kubernetes cluster.
-
 

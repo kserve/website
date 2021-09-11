@@ -1,12 +1,10 @@
-# Predict on an InferenceService with Tensorflow model
-## Setup
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be network accessible.
+# Deploy Tensorflow Model with InferenceService
 
-
-## Create the InferenceService with HTTP
+## Create the HTTP InferenceService 
  
-Create an `InferenceService` yaml which specifies the framework `tensorflow` and `storageUri` that is pointed to a saved tensorflow model, and name it as `tensorflow.yaml`
+Create an `InferenceService` yaml which specifies the framework `tensorflow` and `storageUri` that is pointed to a
+[saved tensorflow model](https://www.tensorflow.org/guide/saved_model), and name it as `tensorflow.yaml`.
+
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
@@ -18,14 +16,14 @@ spec:
       storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
 ```
 
-Apply the `tensorflow.yaml` to create the `InferenceService`, 
-by default it exposes a HTTP/REST endpoint.
+Apply the `tensorflow.yaml` to create the `InferenceService`, by default it exposes a HTTP/REST endpoint.
 
+=== "kubectl"
 ```
 kubectl apply -f tensorflow.yaml 
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/flower-sample created
 ```
@@ -46,7 +44,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 * Connected to localhost (::1) port 8080 (#0)
 > POST /v1/models/tensorflow-sample:predict HTTP/1.1
@@ -93,12 +91,14 @@ spec:
       storageUri: "gs://kfserving-samples/models/tensorflow/flowers-2"
 ```
 
+=== "kubectl"
 ```
 kubectl apply -f canary.yaml 
 ```
 
 To verify if the traffic split percentage is applied correctly, you can run the following command:
 
+=== "kubectl"
 ```
 kubectl get isvc flower-sample
 NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION                   LATESTREADYREVISION                     AGE
@@ -109,7 +109,7 @@ As you can see the traffic is split between the last rolled out revision and the
 do not need to maintain both default and canary on the `InferenceService` as in v1alpha2.
 
 
-## Create the InferenceService with gRPC
+## Create the gRPC InferenceService 
 Create `InferenceService` which exposes the gRPC port and by default it listens on port 9000.
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
@@ -127,11 +127,13 @@ spec:
 ```
 
 Apply `grpc.yaml` to create the gRPC InferenceService.
+
+=== "kubectl"
 ```
 kubectl apply -f grpc.yaml 
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/flower-grpc created
 ```
@@ -152,7 +154,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.sta
 python grpc_client.py --host $INGRESS_HOST --port $INGRESS_PORT --model $MODEL_NAME --hostname $SERVICE_HOSTNAME --input_path $INPUT_PATH
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 outputs {
   key: "key"

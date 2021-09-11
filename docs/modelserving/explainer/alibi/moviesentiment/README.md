@@ -1,50 +1,51 @@
 # Example Anchors Text Explaination for Movie Sentiment
 
-This example uses a [movie sentiment dataset](http://www.cs.cornell.edu/people/pabo/movie-review-data/).
+This example uses a [movie sentiment dataset](http://www.cs.cornell.edu/people/pabo/movie-review-data/) to show the explanation on text data, for a more visual walkthrough please try the [Jupyter notebook](movie_review_explanations.ipynb).
 
-For a more visual rethrough please try the [Jupyter notebook](movie_review_explanations.ipynb).
-
-We can create a InferenceService with a trained sklearn predictor for this dataset and an associated explainer. The black box explainer algorithm we will use is the Text version of Anchors from the [Alibi open source library](https://github.com/SeldonIO/alibi). More details on this algorithm and configuration settings that can be set can be found in the [Seldon Alibi documentation](https://docs.seldon.io/projects/alibi/en/stable/).
+## Deploy InferenceService with AnchorText Explainer
+We can create a InferenceService with a trained sklearn predictor for this dataset and an associated explainer. 
+The black box explainer algorithm we will use is the Text version of Anchors from the [Alibi open source library](https://github.com/SeldonIO/alibi).
+More details on this algorithm and configuration settings that can be set can be found in the [Seldon Alibi documentation](https://docs.seldon.io/projects/alibi/en/stable/).
 
 The InferenceService is shown below:
 
-```
-apiVersion: "serving.kserve.io/v1alpha2"
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "moviesentiment"
 spec:
-  default:
-    predictor:
-      minReplicas: 1
-      sklearn:
-        storageUri: "gs://seldon-models/sklearn/moviesentiment"
-        resources:
-          requests:
-            cpu: 0.1
-            memory: 1Gi                        
-          limits:
-            cpu: 1
-            memory: 1Gi                        
-    explainer:
-      minReplicas: 1
-      alibi:
-        type: AnchorText
-        resources:
-          requests:
-            cpu: 0.1
-            memory: 6Gi            
-          limits:
-            memory: 6Gi
-        
+  predictor:
+    minReplicas: 1
+    sklearn:
+      storageUri: "gs://seldon-models/sklearn/moviesentiment"
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 1Gi       
+        limits:
+          cpu: 1
+          memory: 1Gi         
+  explainer:
+    minReplicas: 1
+    alibi:
+      type: AnchorText
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 6Gi
+        limits:
+          memory: 6Gi
 ```
 
 Create this InferenceService:
 
+=== "kubectl"
 ```
 kubectl create -f moviesentiment.yaml
 ```
 
+## Run Inference and Explanation
 Set up some environment variables for the model name and cluster entrypoint.
 
 ```
@@ -84,7 +85,7 @@ Now lets get an explanation for the first sentence:
 curl -v -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
 ```
 
-The returned explanation will be like:
+==** Expected Output **==
 
 ```
 {
@@ -200,31 +201,31 @@ This shows the key word "bad" was indetified and examples show it in context usi
 You can add custom configuration for the Anchor Text explainer in the 'config' section. For example we can change the text explainer to sample from the corpus rather than use UKN placeholders:
 
 ```
-apiVersion: "serving.kserve.io/v1alpha2"
+apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "moviesentiment"
 spec:
-  default:
-    predictor:
-      sklearn:
-        storageUri: "gs://seldon-models/sklearn/moviesentiment"
-        resources:
-          requests:
-            cpu: 0.1
-    explainer:
-      alibi:
-        type: AnchorText
-        config:
-          use_unk: "false"
-          sample_proba: "0.5"	  
-        resources:
-          requests:
-            cpu: 0.1
+  predictor:
+    sklearn:
+      storageUri: "gs://seldon-models/sklearn/moviesentiment"
+      resources:
+        requests:
+          cpu: 0.1
+  explainer:
+    alibi:
+      type: AnchorText
+      config:
+        use_unk: "false"
+        sample_proba: "0.5"	  
+      resources:
+        requests:
+          cpu: 0.1
 ```
 
 If we apply this:
 
+=== "kubectl"
 ```
 kubectl create -f moviesentiment2.yaml
 ```
@@ -235,7 +236,7 @@ and then ask for an explanation:
 curl -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
 ```
 
-The explanation would be like:
+==** Expected Output **==
 
 ```
 {
@@ -349,22 +350,6 @@ The explanation would be like:
 }
 
 ```
-
-## Local Testing
-
-If you wish to test locally first install the requirements:
-
-```
-pip install -r requirements.txt
-```
-
-Now train the model:
-
-```
-make train
-```
-
-You can then store the `model.joblib` in a bucket accessible from your Kubernetes cluster.
 
 ## Run on Notebook
 

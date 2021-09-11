@@ -1,21 +1,48 @@
 # Using AIX to get explanations for MNIST classifications
 
-This is an example of how to explain model predictions using [AI Explainability 360 (AIX360)](https://ai-explainability-360.org/) on KServe. We will be using mnist dataset for handwritten digits for this model and explain how the model decides the predicted results.
+This is an example of how to explain model predictions using [AI Explainability 360 (AIX360)](https://ai-explainability-360.org/) on KServe.
+We will be using mnist dataset for handwritten digits for this model and explain how the model decides the predicted results.
 
-To deploy the inferenceservice with v1beta1 API
+## Create the InferenceService with AIX Explainer
 
-`kubectl apply -f aix-explainer.yaml`
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "aix-explainer"
+  namespace: default
+spec:
+  predictor:
+    containers:
+    - name: predictor
+      image: aipipeline/rf-predictor:0.4.1
+      command: ["python", "-m", "rfserver", "--model_name", "aix-explainer"]
+      imagePullPolicy: Always
+  explainer:
+    aix:
+      type: LimeImages
+      config:
+        num_samples: "100"
+        top_labels: "10"
+        min_weight: "0.01"
+``` 
+To deploy the InferenceService with v1beta1 API
+
+=== "kubectl"
+```bash
+kubectl apply -f aix-explainer.yaml
+```
 
 Then find the url.
 
-`kubectl get inferenceservice`
-
-```
+=== "kubectl"
+```bash
+kubectl get inferenceservice aixserver
 NAME         URL                                               READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
 aixserver   http://aixserver.somecluster/v1/models/aixserver   True    100                                40m
 ```
 
-## Explanation
+## Run Explanation
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```

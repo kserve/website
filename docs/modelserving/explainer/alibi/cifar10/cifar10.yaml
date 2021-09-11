@@ -25,4 +25,3 @@ spec:
           memory: 5Gi            
         limits:
           memory: 10Gi
-        

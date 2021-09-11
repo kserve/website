@@ -1,11 +1,9 @@
-# Deploy Custom Python Model with KFServer API
+# Deploy Custom Python Model Server with InferenceService
 When out of the box model server does not fit your need, you can build your own model server using KFServer API and use the
 following source to serving workflow to deploy your custom models to KServe.
 
 ## Setup
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-3. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
+1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
 
 ## Create your custom Model Server by extending KFModel
 `KServe.KFModel` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
@@ -96,25 +94,36 @@ curl localhost:8080/v1/models/custom-model:predict -d @./input.json
 {"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
 ```
 
-## Deploy to KServe
+## Deploy the Custom Predictor on KServe
 ### Create the InferenceService
-
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: custom-model
+spec:
+  predictor:
+    containers:
+      - name: kserve-container
+        image: {username}/custom-model:v1
+```
 In the `custom.yaml` file edit the container image and replace {username} with your Docker Hub username.
 
-Apply the CRD
+Apply the yaml to create the InferenceService
 
+!!! "kubectl"
 ```
 kubectl apply -f custom.yaml
 ```
 
-Expected Output
-
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/custom-model created
 ```
 
 ### Arguments and Environment Variables
 You can supply additional command arguments on the container spec to configure the model server.
+
 - `--workers`: fork the specified number of model server workers(multi-processing), the default value is 1. If you start the server after model is loaded
 you need to make sure model object is fork friendly for multi-processing to work. Alternatively you can decorate your model server
 class with replicas and in this case each model server is created as a python worker independent of the server.
@@ -133,8 +142,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH
 ```
 
-Expected Output:
-
+==** Expected Output **==
 ```
 *   Trying 169.47.250.204...
 * TCP_NODELAY set
@@ -161,7 +169,6 @@ Expected Output:
 ```
 
 ### Delete the InferenceService
-
 ```
 kubectl delete -f custom.yaml
 ```

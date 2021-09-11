@@ -1,11 +1,6 @@
-# Predict on a InferenceService using TorchServe
+# Deploy PyTorch model with TorchServe InferenceService
 
 In this example, we use a trained pytorch mnist model to predict handwritten digits by running an inference service with [TorchServe](https://github.com/pytorch/serve) predictor.
-
-## Setup
-
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Creating model storage with model archive file
 
@@ -24,27 +19,23 @@ The KServe/TorchServe integration expects following model store layout.
 │   ├── mnist.mar
 ```
 
-- For remote storage you can choose to start the example using the prebuilt mnist MAR file stored on KServe example GCS bucket
-`gs://kfserving-examples/models/torchserve/image_classifier`,
-you can also generate the MAR file with `torch-model-archiver` and create the model store on remote storage according to the above layout.
+!!! Note
+    For remote storage you can choose to start the example using the prebuilt mnist MAR file stored on KServe example GCS bucket
+    `gs://kfserving-examples/models/torchserve/image_classifier`, you can also generate the MAR file with `torch-model-archiver` and 
+    create the model store on remote storage according to the above layout.
 
-```bash
-torch-model-archiver --model-name mnist --version 1.0 \
---model-file model-archiver/model-store/mnist/mnist.py \
---serialized-file model-archiver/model-store/mnist/mnist_cnn.pt \
---handler model-archiver/model-store/mnist/mnist_handler.py \
-```
-
-
-- For PVC user please refer to [model archive file generation](./model-archiver/README.md) for auto generation of MAR files from
-the model and dependent files.
-
-- The [config.properties](./config.properties) file includes the flag `service_envelope=kfserving` to enable the KServe inference protocol.
-The requests are converted from KServe inference request format to torchserve request format and sent to the `inference_address` configured
-via local socket.
+    ```bash
+    torch-model-archiver --model-name mnist --version 1.0 \
+    --model-file model-archiver/model-store/mnist/mnist.py \
+    --serialized-file model-archiver/model-store/mnist/mnist_cnn.pt \
+    --handler model-archiver/model-store/mnist/mnist_handler.py \
+    ```
 
 
-## TorchServe with KFS envelope inference endpoints
+    For PVC user please refer to [model archive file generation](./model-archiver/README.md) for auto generation of MAR files from
+    the model and dependent files.
+
+## TorchServe with KServe envelope inference endpoints
 The KServe/TorchServe integration supports KServe v1 protocol and we are working on to support v2 protocol.
 
 | API  | Verb | Path | Payload |
@@ -52,21 +43,54 @@ The KServe/TorchServe integration supports KServe v1 protocol and we are working
 | Predict  | POST  | /v1/models/<model_name>:predict  | Request:{"instances": []}  Response:{"predictions": []} |
 | Explain  | POST  | /v1/models/<model_name>:explain  | Request:{"instances": []}  Response:{"predictions": [], "explainations": []}   ||
 
+!!! Note
+    The [config.properties](./config.properties) file includes the flag `service_envelope=kfserving` to enable the KServe inference protocol.
+    The requests are converted from KServe inference request format to torchserve request format and sent to the `inference_address` configured
+    via local socket.
+
 [Sample requests for text and image classification](https://github.com/pytorch/serve/tree/master/kubernetes/kfserving/kf_request_json)
 
 ## Create the InferenceService
 
 For deploying the `InferenceService` on CPU
+
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "torchserve"
+spec:
+  predictor:
+    pytorch:
+      storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+```
+=== "kubectl"
 ```bash
 kubectl apply -f torchserve.yaml
 ```
 
 For deploying the `InferenceService` on GPU
+
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "torchserve"
+spec:
+  predictor:
+    pytorch:
+      storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      resources:
+        limits:
+          memory: 4Gi
+          nvidia.com/gpu: "1"
+```
+=== "kubectl"
 ```bash
 kubectl apply -f gpu.yaml
 ```
 
-Expected Output
+==** Expected Output **==
 
 ```bash
 $inferenceservice.serving.kserve.io/torchserve created
@@ -88,7 +112,7 @@ For other models please refer to [input request](https://github.com/pytorch/serv
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
 ```
 
-Expected Output
+==** Expected Output **==
 
 ```bash
 *   Trying 52.89.19.61...
@@ -124,14 +148,11 @@ gradients to provide user with an easy way to understand which features are cont
 
 Your can refer to [Captum Tutorial](https://captum.ai/tutorials/) for more examples.
 
-### Explain Request
-
 ```bash
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/mnist:explain -d @./mnist.json
 ```
 
-Expected Output
-
+==** Expected Output **==
 ```bash
 *   Trying 52.89.19.61...
 * Connected to a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com (52.89.19.61) port 80 (#0)

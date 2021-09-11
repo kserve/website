@@ -1,11 +1,6 @@
-# Predict on a InferenceService with transformer using Torchserve
+# Deploy Transformer with InferenceService
 Transformer is an `InferenceService` component which does pre/post processing alongside with model inference. It usually takes raw input and transforms them to the
 input tensors model server expects. In this example we demonstrate an example of running inference with `Transformer` and `TorchServe` predictor.
-
-## Setup
-
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Build Transformer image
 `KServe.KFModel` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
@@ -92,8 +87,9 @@ spec:
       storageUri: gs://kfserving-examples/models/torchserve/image_classifier
 ```
 
-Note that `STORAGE_URI` environment variable is a build-in env to inject the storage initializer for custom container just like `StorageURI` field for prepackaged predictors
-and the downloaded artifacts are stored under `/mnt/models`.
+!!! note
+    `STORAGE_URI` environment variable is a build-in env to inject the storage initializer for custom container just like `StorageURI` field for prepackaged predictors
+    and the downloaded artifacts are stored under `/mnt/models`.
 
 
 Apply the CRD
@@ -118,7 +114,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 > POST /v1/models/mnist:predict HTTP/1.1
 > Host: torchserve-transformer.default.example.com

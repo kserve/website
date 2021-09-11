@@ -1,3 +1,5 @@
+# Deploy Lightgbm model with InferenceService
+
 ## Creating your own model and testing the LightGBM server.
 
 To test the LightGBM Server, first we need to generate a simple LightGBM model using Python. 
@@ -45,20 +47,23 @@ print(res)
 print(res.text)
 ```
 
-## Predict on a InferenceService using LightGBM Server
-
-## Setup
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-
 ## Create the InferenceService
-
-Apply the CRD
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "lightgbm-iris"
+spec:
+  predictor:
+    lightgbm:
+      storageUri: "gs://kfserving-examples/models/lightgbm/iris"
+```
+Apply the above yaml to create the InferenceService
 ```
 kubectl apply -f lightgbm.yaml
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/lightgbm-iris created
 ```
@@ -73,8 +78,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice lightgbm-iris -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-Expected Output
-
+==** Expected Output **==
 ```
 *   Trying 169.63.251.68...
 * TCP_NODELAY set

@@ -1,7 +1,6 @@
 # Multi-Model Serving
 Multi-model serving is an [alpha](https://kubernetes.io/docs/reference/using-api/#api-versioning) 
-feature added recently to increase KServe’s scalability.
-Please assume that the interface is subject to changes.
+feature added recently to increase KServe’s scalability. Please assume that the interface is subject to changes.
 
 ## The model deployment scalability problem
 With machine learning approaches becoming more widely adopted in organizations, 
@@ -20,7 +19,11 @@ But, when dealing with a large number of models,  its 'one model, one server' pa
 To scale the number of models, we have to scale the number of InferenceServices, 
 something that can quickly challenge the cluster's limits.
 
-Multi-model serving is designed to address three types of limitations KServe will run into: 1) Compute resource limitation, 2) Maximum pods limitation, 3) Maximum IP address limitation.
+Multi-model serving is designed to address three types of limitations KServe will run into: 
+
+- Compute resource limitation
+- Maximum pods limitation
+- Maximum IP address limitation.
 
 ### Compute resource limitation
 Each InferenceService has a resource overhead because of the sidecars injected into each pod. 
@@ -58,10 +61,11 @@ We designed a new CustomResource called "TrainedModel" which represents a machin
 It can be loaded into a designated InferenceService.
 
 The common user flow with Multi-Model serving is:
-1) Deploy an InferenceService without the "storageUri" field i.e. without any models loaded
-2) Deploy multiple TrainedModel CRs which load models to a designated InferenceService
-3) Resolve the model prediction endpoint from TrainedModel's status object
-4) Run prediction using the resolved endpoint
+
+1. Deploy an InferenceService without the "storageUri" field i.e. without any models loaded
+2. Deploy multiple TrainedModel CRs which load models to a designated InferenceService
+3. Resolve the model prediction endpoint from TrainedModel's status object
+4. Run prediction using the resolved endpoint
 
 ### Design
 ![Multi-model Diagram](./mms-design.png)
@@ -77,7 +81,7 @@ delivered to the model server from remote model storage in parallel with go rout
 
 ### Integration with model servers
 Multi-model serving will work with any model server that implements KServe 
-[V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2). 
+[V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2) load/unload endpoints. 
 More specifically, if the model server implements the 
 [load](https://github.com/triton-inference-server/server/blob/master/docs/protocol/extension_model_repository.md#load),
 [unload](https://github.com/triton-inference-server/server/blob/master/docs/protocol/extension_model_repository.md#unload) 
@@ -87,15 +91,3 @@ Currently, Triton, LightGBM, SKLearn, and XGBoost are able to use Multi-model se
 Click on [Triton](https://github.com/kserve/kserve/tree/master/docs/samples/multimodelserving/triton) 
 or [SKLearn](https://github.com/kserve/kserve/tree/master/docs/samples/multimodelserving/sklearn) 
 to see examples on how to run multi-model serving!
-
-Remember to set the respective model server's `multiModelServer` flag in `inferenceservice.yaml` to true to enable the experimental feature.
-
-
-## Roadmap
-**Model agent readiness check**: When a new replica of InferenceService predictor starts up, it will be necessary to block the new replica until the model agent attempts to load all the models for this InferenceService first.
-
-**Model probing**: We plan to probe each TrainedModel's current status such as Downloading, Downloading success/failed, Loading, Loading success/failed, Ready and propagate the status back to TrainedModels status object.
-
-**Sharding**: When an InferenceService is full, a new shard will be created to load more models.
-
-**Multiple transformers for Multi-model serving**: When multiple models are loaded to a predictor, each of them may require a different transformer. An approach to share multiple transformers is desired for Multi-model serving.

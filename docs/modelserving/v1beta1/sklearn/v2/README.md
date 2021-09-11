@@ -1,4 +1,4 @@
-# Serve SKLearn models with InferenceService
+# Deploy sklearn-learn models with InferenceService
 
 This example walks you through how to deploy a `scikit-learn` model leveraging
 the `v1beta1` version of the `InferenceService` CRD.

@@ -1,15 +1,12 @@
 # Predict on a Spark MLlib model PMML InferenceService
-spark.mllib supports model export to Predictive Model Markup Language [PMML](https://en.wikipedia.org/wiki/Predictive_Model_Markup_Language).
 
 ## Setup
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-3. Install `pyspark` 3.0.x and `pyspark2pmml`
+1. Install `pyspark` 3.0.x and `pyspark2pmml`
 ```bash
 pip install pyspark~=3.0.0
 pip install pyspark2pmml
 ```
-4. Get [JPMML-SparkML jar](https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.3/jpmml-sparkml-executable-1.6.3.jar) 
+2. Get [JPMML-SparkML jar](https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.3/jpmml-sparkml-executable-1.6.3.jar) 
 
 ## Train a Spark MLlib model and export to PMML file
 

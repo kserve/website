@@ -10,4 +10,3 @@ spec:
         limits:
           memory: 4Gi
           nvidia.com/gpu: "1"
- 

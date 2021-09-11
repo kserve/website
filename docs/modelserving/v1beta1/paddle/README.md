@@ -1,19 +1,23 @@
-# Predict on an InferenceService using PaddleServer
+# Deploy paddle model with InferenceService
 In this example, we use a trained paddle resnet50 model to classify images by running an inference service with Paddle predictor.
 
-## Setup
-
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-
 ## Create the InferenceService
-
-Apply the custom resouce
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "paddle-resnet50"
+spec:
+  predictor:
+    paddle:
+      storageUri: "https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz"
+```
+Apply the above yaml to create the InferenceService
 ```bash
 kubectl apply -f paddle.yaml
 ```
 
-Expected Output
+==** Expected Output **==
 ```console
 inferenceservice.serving.kserve.io/paddle-resnet50 created
 ```
@@ -28,7 +32,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./jay.json
 ```
 
-Expected Output
+==** Expected Output **==
 ```console
 *   Trying 127.0.0.1:80...
 * TCP_NODELAY set

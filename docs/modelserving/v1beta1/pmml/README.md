@@ -1,31 +1,36 @@
-## Creating your own model and testing the PMML Server locally.
+# Deploy PMML model with InferenceService
+PMML, or predictive model markup language, is an XML format for describing data mining and statistical models, including inputs to the models,
+transformations used to prepare data for data mining, and the parameters that define the models themselves. In this example we show how you can
+serve the PMML format model on `InferenceService`.
 
-To test the [PMMLServer](http://dmg.org/pmml/pmml_examples/#Iris) server, first we need to download model from [single_iris_dectree](http://dmg.org/pmml/pmml_examples/KNIME_PMML_4.1_Examples/single_iris_dectree.xml)
-
-# Predict on a InferenceService using PMMLServer
-
-## Disadvantages
-
-The `pmmlserver` is based on [Py4J](https://github.com/bartdag/py4j) and that doesn't support multi-process mode. So we can't set `spec.predictor.containerConcurrency`.
-
-If you want to scale the PMMLServer to improve prediction performance, you should set the InferenceService's `resources.limits.cpu` to 1 and scale it replica size.
-
-
-## Setup
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Create the InferenceService
 
-Apply the CRD
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "pmml-demo"
+spec:
+  predictor:
+    pmml:
+      storageUri: gs://kfserving-examples/models/pmml
+```
+Create the InferenceService with above yaml
 ```
 kubectl apply -f pmml.yaml
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/pmml-demo created
 ```
+
+!!! warning
+    The `pmmlserver` is based on [Py4J](https://github.com/bartdag/py4j) and that doesn't support multi-process mode, so we can't set `spec.predictor.containerConcurrency`.
+    If you want to scale the PMMLServer to improve prediction performance, you should set the InferenceService's `resources.limits.cpu` to 1 and scale the replica size.
+
+
 ## Run a prediction
 The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
@@ -36,7 +41,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice pmml-demo -o jsonpath='{.status.
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-Expected Output
+==** Expected Output **==
 
 ```
 * TCP_NODELAY set

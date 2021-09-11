@@ -7,16 +7,13 @@ the cost of deploying models increase significantly because you may train anywhe
 These challenges become more pronounced when you don’t access all models at the same time but still need them to be available at all times.
 KServe multi model serving design addresses these issues and gives a scalable yet cost-effective solution to deploy multiple models.
 
-> :warning: You must set Triton's multiModelServer flag in `inferenceservice.yaml` to true to enable multi-model serving for Triton.
 
 ## Setup
-1. Your ~/.kube/config should point to a cluster with [KFServing 0.6 installed](../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-3. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
+1. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"registriesSkippingTagResolving":"nvcr.io"}}' -n knative-serving
 ```
-4. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
+2. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}}' -n knative-serving
 ```
@@ -212,7 +209,7 @@ curl -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/mo
 {"name":"simple-string","versions":["1"],"platform":"tensorflow_graphdef","inputs":[{"name":"INPUT0","datatype":"BYTES","shape":[-1,16]},{"name":"INPUT1","datatype":"BYTES","shape":[-1,16]}],"outputs":[{"name":"OUTPUT0","datatype":"BYTES","shape":[-1,16]},{"name":"OUTPUT1","datatype":"BYTES","shape":[-1,16]}]}
 ```
 
-### Run Performance Test
+## Run Performance Test
 The performance job runs vegeta load testing to the `MultiModelInferenceService` with model `cifar10`.
 ```bash
 kubectl create -f perf.yaml
@@ -226,7 +223,7 @@ Status Codes  [code:count]                      200:600
 Error Set:
 ```
 
-### Homogeneous model allocation and Autoscaling
+## Homogeneous model allocation and Autoscaling
 The current MMS implementation uses the homogeneous approach meaning that each `InferenceService` replica holds the same
 set of models. Autoscaling is based on the aggregated traffic for this set of models NOT the request volume for individual
 model, this set of models is always scaled up together. The downside of this approach is that traffic spike for one model
@@ -235,7 +232,7 @@ this may not be desirable for `InferenceService` that hosts a set of big models.
 allocation where each replica can host a different set of models, models are scaled up/down individually based on its own
 traffic and in this way it ensures better resource utilization.
 
-### Delete Trained Models
+## Delete Trained Models
 To remove the resources, run the command `kubectl delete inferenceservice triton-mms`. 
 This will delete the inference service and result in the trained models deleted. To delete individual `TrainedModel` you
 can run the command `kubectl delete tm $MODEL_NAME`.
