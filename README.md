@@ -18,7 +18,7 @@ contributor guidelines.
 
 ### Run website locally
 
-For instructions, see KServe's [MkDocs contributor guide](https://knative.dev/docs/help/contributor/mkdocs-contributor-guide).
+For instructions, see KServe's [MkDocs contributor guide](docs/help/contributor/mkdocs-contributor-guide).
 
 ### Website source files
 
@@ -47,7 +47,7 @@ reading about how to contribute to the docs, you should take a moment to learn
 about the KServe code of conduct, governance, values, and the KServe working
 groups and committees.
 
-[KServe community and contributor guidelines](https://knative.dev/community/contributing/)
+[KServe community and contributor guidelines](docs/community/contributing/)
 
 Source files for all KServe community and governance topics are located
 separately in the [kserve/community](docs/community/)
