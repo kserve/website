@@ -18,7 +18,7 @@ contributor guidelines.
 
 ### Run website locally
 
-For instructions, see KServe's [MkDocs contributor guide](docs/help/contributor/mkdocs-contributor-guide).
+For instructions, see KServe's [MkDocs contributor guide](docs/help/contributor/mkdocs-contributor-guide.md).
 
 ### Website source files
 
@@ -62,7 +62,7 @@ To help you get started, see the following resources:
   - [Concept](docs/help/contributor/templates/template-concept.md)
   - [Procedure](docs/help/contributor/templates/template-procedure.md)
   - [Troubleshooting](docs/help/contributor/templates/template-troubleshooting.md)
-  - [Blog](docs/help/contributor/templates/template-blog-entry.md)
+  - [Blog](docs/help/contributor/templates/template-blog.md)
 
 ## Help and support
 
