@@ -13,18 +13,12 @@
 }
 
 .md-header__button.md-logo img {
-  width: 10rem;
-  height: 3rem;
+  width: 8rem;
+  height: 6rem;
 }
 .md-header__button.md-logo {
   transition-duration: 0.2s;
   transition-property: transform;
-}
-
-.md-header__button.md-logo:hover {
-  opacity: 1;
-  transform: rotate(5deg);
-  -webkit-transform: rotate(5deg);
 }
 
 .md-nav__item--nested>.md-nav__link, .md-nav__item a {
