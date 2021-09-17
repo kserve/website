@@ -28,7 +28,7 @@
   text-decoration: underline;
 }
 
-.api a:hover {
+.key-banner a:hover {
   text-decoration: none;
 }
 
@@ -39,7 +39,8 @@
   margin: 0 auto;
   padding: 0 15px;
 }
-
+/* End 
+-------------------------------- */
 .md-header__button.md-logo img {
   width: 4rem;
   height: 3rem;
