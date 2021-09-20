@@ -48,7 +48,7 @@ nav:
                 - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
                 - ART Adversial Detector: modelserving/detect/art/mnist/README.md
     - API Reference:
-          - Control Plane API: api/api.md
+          - Control Plane API: reference/api.md
           - Python Client SDK: sdk_docs/sdk_doc.md
     - Developer Guide:
           - How to contribute: developer/developer.md

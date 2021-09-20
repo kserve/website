@@ -21,8 +21,6 @@ KServeClient | [create](#create) | Create InferenceService|
 KServeClient | [get](#get)    | Get or watch the specified InferenceService or all InferenceServices in the namespace |
 KServeClient | [patch](#patch)  | Patch the specified InferenceService|
 KServeClient | [replace](#replace) | Replace the specified InferenceService|
-KServeClient | [rollout_canary](#rollout_canary) | Rollout the traffic on `canary` version for specified InferenceService|
-KServeClient | [promote](#promote) | Promote the `canary` version of the InferenceService to `default`|
 KServeClient | [delete](#delete) | Delete the specified InferenceService |
 KServeClient | [wait_isvc_ready](#wait_isvc_ready) | Wait for the InferenceService to be ready |
 KServeClient | [is_isvc_ready](#is_isvc_read) | Check if the InferenceService is ready |
@@ -30,7 +28,7 @@ KServeClient | [is_isvc_ready](#is_isvc_read) | Check if the InferenceService is
 ## set_credentials
 > set_credentials(storage_type, namespace=None, credentials_file=None, service_account='kfserving-service-credentials', **kwargs):
 
-Create or update a `Secret` and `Service Account` for GCS and S3 for the provided credentials. Once the `Service Account` is applied, it may be used in the `Service Account` field of a InferenceService's [V1alpha2ModelSpec](V1alpha2ModelSpec.md).
+Create or update a `Secret` and `Service Account` for GCS and S3 for the provided credentials. Once the `Service Account` is applied, it may be used in the `Service Account` field of a InferenceService's [V1beta1ModelSpec](V1beta1ModelSpec.md).
 
 ### Example
 
@@ -103,20 +101,18 @@ from kubernetes import client
 
 from kserve import KServeClient
 from kserve import constants
-from kserve import V1alpha2EndpointSpec
-from kserve import V1alpha2PredictorSpec
-from kserve import V1alpha2TensorflowSpec
-from kserve import V1alpha2InferenceServiceSpec
-from kserve import V1alpha2InferenceService
+from kserve import V1beta1PredictorSpec
+from kserve import V1beta1TFServingSpec
+from kserve import V1beta1InferenceServiceSpec
+from kserve import V1beta1InferenceService
 
-
-default_model_spec = V1alpha2EndpointSpec(predictor=V1alpha2PredictorSpec(tensorflow=V1alpha2TensorflowSpec(
+default_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(tensorflow=V1beta1TFServingSpec(
     storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
 
-isvc = V1alpha2InferenceService(api_version=constants.KSERVE_GROUP + '/' + constants.KSERVE_V1ALPHA2_VERSION,
+isvc = V1beta1InferenceService(api_version=constants.KSERVE_V1BETA1,
                           kind=constants.KSERVE_KIND,
-                          metadata=client.V1ObjectMeta(name='flower-sample', namespace='kubeflow'),
-                          spec=V1alpha2InferenceServiceSpec(default=default_model_spec))
+                          metadata=client.V1ObjectMeta(name='flower-sample', namespace='kserve-models'),
+                          spec=default_model_spec)
 
 
 kserve = KServeClient()
@@ -130,7 +126,7 @@ kserve.create(isvc)
 ### Parameters
 Name | Type |  Description | Notes
 ------------ | ------------- | ------------- | -------------
-inferenceservice  | [V1alpha2InferenceService](V1alpha2InferenceService.md) | InferenceService defination| Required |
+inferenceservice  | [V1beta1InferenceService](V1beta1InferenceService.md) | InferenceService defination| Required |
 namespace | str | Namespace for InferenceService deploying to. If the `namespace` is not defined, will align with InferenceService definition, or use current or default namespace if namespace is not specified in InferenceService definition.  | Optional |
 watch | bool | Watch the created InferenceService if `True`, otherwise will return the created InferenceService object. Stop watching if InferenceService reaches the optional specified `timeout_seconds` or once the InferenceService overall status `READY` is `True`. | Optional |
 timeout_seconds | int | Timeout seconds for watching. Defaults to 600. | Optional |
@@ -191,27 +187,38 @@ Note that if you want to set the field from existing value to `None`, `patch` AP
 ```python
 from kubernetes import client
 from kserve import constants
-from kserve import V1alpha2EndpointSpec
-from kserve import V1alpha2PredictorSpec
-from kserve import V1alpha2TensorflowSpec
-from kserve import V1alpha2InferenceServiceSpec
-from kserve import V1alpha2InferenceService
+from kserve import V1beta1PredictorSpec
+from kserve import V1beta1TFServingSpec
+from kserve import V1beta1InferenceServiceSpec
+from kserve import V1beta1InferenceService
 from kserve import KServeClient
 
-default_model_spec = V1alpha2EndpointSpec(predictor=V1alpha2PredictorSpec(tensorflow=V1alpha2TensorflowSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
-canary_model_spec = V1alpha2EndpointSpec(predictor=V1alpha2PredictorSpec(tensorflow=V1alpha2TensorflowSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
-
-isvc = V1alpha2InferenceService(api_version=constants.KSERVE_GROUP + '/' + constants.KSERVE_V1ALPHA2_VERSION,
-                          kind=constants.KSERVE_KIND,
-                          metadata=client.V1ObjectMeta(name='flower-sample', namespace='kubeflow'),
-                          spec=V1alpha2InferenceServiceSpec(default=default_model_spec,
-                                                     canary=canary_model_spec,
-                                                     canary_traffic_percent=10))
-
+service_name = 'flower-sample'
 kserve = KServeClient()
-kserve.patch('flower-sample', isvc)
+
+default_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(tensorflow=V1beta1TFServingSpec(
+    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
+
+isvc = V1beta1InferenceService(api_version=constants.KSERVE_V1BETA1,
+                                   kind=constants.KSERVE_KIND,
+                                   metadata=client.V1ObjectMeta(
+                                        name=service_name, namespace='kserve-models'),
+                                   spec=default_model_spec)
+
+kserve.create(isvc)
+kserve.wait_isvc_ready(service_name, namespace='kserve-models')
+
+canary_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(canary_traffic_percent=10,
+    tensorflow=V1beta1TFServingSpec(
+    storage_uri='gs://kfserving-samples/models/tensorflow/flowers-2')))
+
+isvc = V1beta1InferenceService(api_version= constants.KSERVE_V1BETA1,
+                          kind=constants.KSERVE_KIND,
+                          metadata=client.V1ObjectMeta(name='flower-sample', namespace='kserve-models'),
+                          spec=canary_model_spec)
+
+
+kserve.patch(service_name, isvc)
 
 # The API also supports watching the patached InferenceService status till it's READY.
 # kserve.patch('flower-sample', isvc, watch=True)
@@ -220,7 +227,7 @@ kserve.patch('flower-sample', isvc)
 ### Parameters
 Name | Type |  Description | Notes
 ------------ | ------------- | ------------- | -------------
-inferenceservice  | [V1alpha2InferenceService](V1alpha2InferenceService.md) | InferenceService defination| Required |
+inferenceservice  | [V1beta1InferenceService](V1beta1InferenceService.md) | InferenceService defination| Required |
 namespace | str | The InferenceService's namespace for patching. If the `namespace` is not defined, will align with InferenceService definition, or use current or default namespace if namespace is not specified in InferenceService definition. | Optional|
 watch | bool | Watch the patched InferenceService if `True`, otherwise will return the patched InferenceService object. Stop watching if InferenceService reaches the optional specified `timeout_seconds` or once the InferenceService overall status `READY` is `True`. | Optional |
 timeout_seconds | int | Timeout seconds for watching. Defaults to 600. | Optional |
@@ -238,32 +245,37 @@ Replace the created InferenceService in the specified namespace. Generally use t
 ```python
 from kubernetes import client
 from kserve import constants
-from kserve import V1alpha2EndpointSpec
-from kserve import V1alpha2PredictorSpec
-from kserve import V1alpha2TensorflowSpec
-from kserve import V1alpha2InferenceServiceSpec
-from kserve import V1alpha2InferenceService
+from kserve import V1beta1PredictorSpec
+from kserve import V1beta1TFServingSpec
+from kserve import V1beta1InferenceServiceSpec
+from kserve import V1beta1InferenceService
 from kserve import KServeClient
 
-default_endpoint_spec = V1alpha2EndpointSpec(
-                          predictor=V1alpha2PredictorSpec(
-                            tensorflow=V1alpha2TensorflowSpec(
-                              storage_uri='gs://kfserving-samples/models/tensorflow/flowers',
-                              resources=None)))
-
-isvc = V1alpha2InferenceService(api_version=api_version,
-                          kind=constants.KSERVE_KIND,
-                          metadata=client.V1ObjectMeta(
-                            name='flower-sample',
-                            namespace='kubeflow',
-                            resource_version=resource_version),
-                          spec=V1alpha2InferenceServiceSpec(default=default_endpoint_spec,
-                                                     canary=None,
-                                                     canary_traffic_percent=0))
-
-
+service_name = 'flower-sample'
 kserve = KServeClient()
-kserve.replace('flower-sample', isvc)
+
+default_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(tensorflow=V1beta1TFServingSpec(
+    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
+
+isvc = V1beta1InferenceService(api_version=constants.KSERVE_V1BETA1,
+                                   kind=constants.KSERVE_KIND,
+                                   metadata=client.V1ObjectMeta(
+                                        name=service_name, namespace='kserve-models'),
+                                   spec=default_model_spec)
+
+kserve.create(isvc)
+kserve.wait_isvc_ready(service_name, namespace='kserve-models')
+
+canary_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(canary_traffic_percent=0,
+    tensorflow=V1beta1TFServingSpec(
+    storage_uri='gs://kfserving-samples/models/tensorflow/flowers-2')))
+
+isvc = V1beta1InferenceService(api_version= constants.KSERVE_V1BETA1,
+                          kind=constants.KSERVE_KIND,
+                          metadata=client.V1ObjectMeta(name=service_name, namespace='kserve-models'),
+                          spec=canary_model_spec)
+
+kserve.replace(service_name, isvc)
 
 # The API also supports watching the replaced InferenceService status till it's READY.
 # kserve.replace('flower-sample', isvc, watch=True)
@@ -272,83 +284,13 @@ kserve.replace('flower-sample', isvc)
 ### Parameters
 Name | Type |  Description | Notes
 ------------ | ------------- | ------------- | -------------
-inferenceservice  | [V1alpha2InferenceService](V1alpha2InferenceService.md) | InferenceService defination| Required |
+inferenceservice  | [V1beta1InferenceService](V1beta1InferenceService.md) | InferenceService defination| Required |
 namespace | str | The InferenceService's namespace. If the `namespace` is not defined, will align with InferenceService definition, or use current or default namespace if namespace is not specified in InferenceService definition. | Optional|
 watch | bool | Watch the patched InferenceService if `True`, otherwise will return the replaced InferenceService object. Stop watching if InferenceService reaches the optional specified `timeout_seconds` or once the InferenceService overall status `READY` is `True`. | Optional |
 timeout_seconds | int | Timeout seconds for watching. Defaults to 600. | Optional |
 
 ### Return type
 object
-
-## rollout_canary
-> rollout_canary(name, percent=100, canary=None, namespace=None, watch=False, timeout_seconds=600)
-
-Rollout canary for the created InferenceService in the specified namespace. The `rollout_canary` API updates the InferenceService `canaryTrafficPercent` to speficed `percent` to adjust the traffic percent that will be distributed on the canary version. The `rollout_canary` also supports setting or updating `canary` endpoint spec for the kserve. If the InferenceService has no `canary` endpoint spec, need to specify with the API it while setting `canaryTrafficPercent`.
-
-The difference between [rollout_canary](#rollout_canary) and [promote](#promote) is that the `rollout_canary` only updates `canaryTrafficPercent` (or  `canary` endpoint spec) while the `promote` moves the `canary` version of the InferenceService to `default`.
-
-
-### Example
-
-```python
-
-kserve = KServeClient()
-kserve.rollout_canary('flower-sample', percent=50, namespace='kubeflow')
-
-# The API also supports setting or updating the canary endpoint spec.
-canary_spec = V1alpha2EndpointSpec(
-  predictor=V1alpha2PredictorSpec(
-    tensorflow=V1alpha2TensorflowSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
-
-kserve.rollout_canary('flower-sample', percent=50, canary=canary_spec, namespace='kubeflow')
-
-# The API also supports watching the InferenceService status till it's READY.
-# kserve.rollout_canary('flower-sample', percent=50, namespace='kubeflow', watch=True)
-```
-
-### Parameters
-Name | Type |  Description | Notes
------------- | ------------- | ------------- | -------------
-name  | str | The InferenceService name for promoting.| Required|
-percent  | int | The traffic percent that will be distributed on the canary version.| Required|
-canary  | [V1alpha2EndpointSpec](V1alpha2EndpointSpec.md) | The canary endpoint spec for kserve.|Optional |
-namespace | str | The InferenceService's namespace. If the `namespace` is not defined, will align with InferenceService definition, or use current or default namespace if namespace is not specified in InferenceService definition. | Optional|
-watch | bool | Watch the InferenceService if `True`, otherwise will return the InferenceService object. Stop watching if InferenceService reaches the optional specified `timeout_seconds` or once the InferenceService overall status `READY` is `True`. | Optional |
-timeout_seconds | int | Timeout seconds for watching. Defaults to 600. | Optional |
-
-### Return type
-object
-
-## promote
-> promote(name, namespace=None, watch=False, timeout_seconds=600)
-
-Promote the `Canary InferenceServiceSpec` to `Default InferenceServiceSpec` for the created InferenceService in the specified namespace.
-
-If you just want to update canary version and canary traffic percent, please use API [rollout_canary](#rollout_canary).
-
-### Example
-
-```python
-
-kserve = KServeClient()
-kserve.promote('flower-sample', namespace='kubeflow')
-
-# The API also supports watching the promoted InferenceService status till it's READY.
-# kserve.promote('flower-sample', namespace='kubeflow', watch=True)
-```
-
-### Parameters
-Name | Type |  Description | Notes
------------- | ------------- | ------------- | -------------
-name  | str | The InferenceService name for promoting.| Required|
-namespace | str | The InferenceService's namespace. If the `namespace` is not defined, will align with InferenceService definition, or use current or default namespace if namespace is not specified in InferenceService definition. | Optional|
-watch | bool | Watch the promoted InferenceService if `True`, otherwise will return the promoted InferenceService object. Stop watching if InferenceService reaches the optional specified `timeout_seconds` or once the InferenceService overall status `READY` is `True`. | Optional |
-timeout_seconds | int | Timeout seconds for watching. Defaults to 600. | Optional |
-
-### Return type
-object
-
 
 ## delete
 > delete(name, namespace=None)
