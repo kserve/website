@@ -58,7 +58,7 @@ nav:
         - Roadmap: community/roadmap.md
         - Demos and Presentations: community/presentations.md
 
-site_name: KServe Documentation Website (In construction)
+site_name: KServe Documentation Website
 site_url: https://kserve.io/docs
 site_description: KServe Documentation
 extra_css:
@@ -70,6 +70,8 @@ edit_uri: edit/mkdocs/docs
 theme:
   name: material
   logo: images/logo/kserve.png
+  favicon: images/favicon/favicon-32x32.png
+  custom_dir: overrides
   features:
     - navigation.tabs
     - navigation.tracking
