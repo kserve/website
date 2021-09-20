@@ -12,42 +12,9 @@
   display: none;
 }
 
-
-/*  Key banner
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.key-banner {
-  background: #00b0ff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  padding: 0px;
-}
-
-.key-banner a {
-  text-decoration: underline;
-}
-
-.key-banner a:hover {
-  text-decoration: none;
-}
-
-
-.top-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-/* End 
--------------------------------- */
 .md-header__button.md-logo img {
   width: 4rem;
   height: 3rem;
-}
-.md-header__button.md-logo {
-  transition-duration: 0.2s;
-  transition-property: transform;
 }
 
 .md-nav__item--nested>.md-nav__link, .md-nav__item a {

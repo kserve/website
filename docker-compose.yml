@@ -3,7 +3,7 @@ version: '3'
 services:
   mkdocs:
     image: ghcr.io/peaceiris/mkdocs-material:latest
-    container_name: kserve_mkdocs_material_boilerplate
+    container_name: kserve_website_mkdocs_material_boilerplate
     ports:
       - 8000:8000
     volumes:
