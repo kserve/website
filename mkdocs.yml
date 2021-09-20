@@ -16,8 +16,12 @@ nav:
                 - Distributed Tracing: admin/dt.md
     - User Guide:
           - Concepts:
-                - Control Plane: modelserving/control_plane.md
-                - Data Plane: modelserving/data_plane.md
+                - Control Plane:
+                  - Model Serving Control Plane: modelserving/control_plane.md
+                  - ModelMesh Control Plane: modelserving/modelmesh_control_plane.md
+                - Data Plane:
+                  - Model Serving Data Plane: modelserving/data_plane.md
+                  - V2 Inference Protocol: modelserving/inference_api.md
           - Single Model Serving:
             - Tensorflow: modelserving/v1beta1/tensorflow/README.md
             - PyTorch: modelserving/v1beta1/torchserve/README.md
