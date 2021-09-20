@@ -1,8 +1,8 @@
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "mnist-pvc"
+  name: "sklearn-pvc"
 spec:
   predictor:
-    tensorflow:
-      storageUri: "pvc://${PVC_NAME}/export"
+    sklearn:
+      storageUri: "pvc://${PVC_NAME}/model.joblib"

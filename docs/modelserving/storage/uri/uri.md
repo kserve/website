@@ -34,7 +34,7 @@ kubectl apply -f create-uri-secret.yaml
 ```
 
 !!! note
-  The serviceAccountName specified in your predictor in your inference service. These headers will be applied to any http/https requests that have the same host.
+    The serviceAccountName specified in your predictor in your inference service. These headers will be applied to any http/https requests that have the same host.
 
 
 The header and host should be base64 encoded format.
@@ -103,8 +103,7 @@ kubectl apply -f sklearn-from-uri.yaml
 
 ### Run a prediction
 
-Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports)
-to find out the ingress IP and port.
+Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) to find out the ingress IP and port.
 
 An example payload below:
 ```json
@@ -152,8 +151,7 @@ $ *   Trying 127.0.0.1:8080...
 
 ## Tensorflow
 
-This will serve as an example of the ability to also pull in a tarball containing all of the 
-required model dependencies, for instance `tensorflow` requires multiple files in a strict directory structure in order to be servable. 
+This will serve as an example of the ability to also pull in a tarball containing all of the required model dependencies, for instance `tensorflow` requires multiple files in a strict directory structure in order to be servable. 
 
 ### Train and freeze the model
 
@@ -192,7 +190,7 @@ if __name__ == '__main__':
     freeze(model)
 ```
 
-Now, the frozen model object need to package as tarball and pushing it somewhere on the web to expose it. For instance, pushing the `model.joblib` file to some repo on GitHub.
+The post-training procedure here is a bit different. Instead of directly pushing the frozen output to some URI, we'll need to package them into a tarball. To do so,
 
 ```bash
 cd ../frozen
@@ -207,7 +205,9 @@ Where we assume the `0001/` directory has the structure:
 |--- variables.data-00000-of-00001
 |--- variables.index
 ```
-Note that building the tarball from the directory specifying a version number is required for `tensorflow`.
+
+!!! note
+    Building the tarball from the directory specifying a version number is required for `tensorflow`.
 
 ### Specify and create the `InferenceService`
 And again, if everything went to plan we should be able to pull down the tarball and expose the endpoint.
@@ -231,8 +231,7 @@ kubectl apply -f tensorflow-from-uri-gzip.yaml
 
 ## Run a prediction
 
-Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports)
-to find out the ingress IP and port.
+Again, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) to find out the ingress IP and port.
 
 An example payload below:
 ```json
@@ -245,9 +244,9 @@ An example payload below:
 ```
 
 ```bash
-SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-from-uri -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+SERVICE_HOSTNAME=$(kubectl get inferenceservice tensorflow-from-uri-gzip -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-MODEL_NAME=tensorflow-from-uri
+MODEL_NAME=tensorflow-from-uri-gzip
 INPUT_PATH=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
