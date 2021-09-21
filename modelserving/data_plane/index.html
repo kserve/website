@@ -18,7 +18,7 @@
     
     
       
-        <title>Data Plane - KServe Documentation Website (In construction)</title>
+        <title>Model Serving Data Plane - KServe Documentation Website (In construction)</title>
       
     
     
@@ -94,7 +94,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Data Plane
+              Model Serving Data Plane
             
           </span>
         </div>
@@ -225,11 +225,18 @@
   
   
   
+    
+
+  
+  
+  
     <li class="md-tabs__item">
       <a href="../control_plane/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
+  
+
   
 
   
@@ -643,13 +650,75 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" type="checkbox" id="__nav_4_1_1" >
+      
+      <label class="md-nav__link" for="__nav_4_1_1">
+        Control Plane
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Control Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Control Plane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
     <li class="md-nav__item">
       <a href="../control_plane/" class="md-nav__link">
-        Control Plane
+        Model Serving Control Plane
       </a>
     </li>
   
 
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modelmesh_control_plane.md" class="md-nav__link">
+        ModelMesh Control Plane
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" type="checkbox" id="__nav_4_1_2" checked>
+      
+      <label class="md-nav__link" for="__nav_4_1_2">
+        Data Plane
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Data Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          Data Plane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
             
   
@@ -666,12 +735,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Data Plane
+          Model Serving Data Plane
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Data Plane
+        Model Serving Data Plane
       </a>
       
         
@@ -746,6 +815,24 @@
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inference_api/" class="md-nav__link">
+        V2 Inference Protocol
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1533,7 +1620,7 @@
 <h3 id="data-plane-v2">Data Plane (V2)<a class="headerlink" href="#data-plane-v2" title="Permanent link">&para;</a></h3>
 <p>The second version of the data-plane protocol addresses several issues found with the V1 data-plane protocol, including performance and generality across a large number of model frameworks and servers.</p>
 <h4 id="predict_1">Predict<a class="headerlink" href="#predict_1" title="Permanent link">&para;</a></h4>
-<p>The V2 protocol proposes both HTTP/REST and GRPC APIs. See the <a href="/docs/predict-api/v2">complete proposal</a> for more information.</p>
+<p>The V2 protocol proposes both HTTP/REST and GRPC APIs. See the <a href="../inference_api">complete specification</a> for more information.</p>
                 
               
               
@@ -1565,19 +1652,19 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Control Plane
+              Model Serving Control Plane
             </div>
           </div>
         </a>
       
       
-        <a href="../v1beta1/tensorflow/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../inference_api/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Tensorflow
+              V2 Inference Protocol
             </div>
           </div>
           <div class="md-footer__button md-icon">
