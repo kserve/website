@@ -56,6 +56,14 @@ nav:
                 - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
                 - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
                 - ART Adversial Detector: modelserving/detect/art/mnist/README.md
+          - Batcher:
+                - Inference Batcher: modelserving/batcher/batcher.md
+          - Logger:
+                - Inference Logger: modelserving/logger/logger.md
+          - Autoscaling:
+                - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
+          - Kafka:
+                - Inference Kafka: modelserving/kafka/kafka.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Python Client SDK: sdk_docs/sdk_doc.md
