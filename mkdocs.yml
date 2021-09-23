@@ -53,7 +53,7 @@ nav:
                 - ART Adversial Detector: modelserving/detect/art/mnist/README.md
     - API Reference:
           - Control Plane API: reference/api.md
-          - Python Client SDK: reference/client.md
+          - Python Client SDK: sdk_docs/sdk_doc.md
     - Developer Guide:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
