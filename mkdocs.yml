@@ -40,6 +40,11 @@ nav:
           - Transformers:
                 - Feast: modelserving/v1beta1/transformer/feast/README.md
                 - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
+          - Storage:
+                - Azure: modelserving/storage/azure/azure.md
+                - PVC: modelserving/storage/pvc/pvc.md
+                - S3: modelserving/storage/s3/s3.md
+                - URI: modelserving/storage/uri/uri.md
           - Explainers:
                 - Concept: modelserving/explainer/explainer.md
                 - Alibi Explainer: 
