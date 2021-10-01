@@ -33,7 +33,7 @@
 .animated-gradient {
   animation-name: continuousgradient;
   background: linear-gradient(-45deg, #1d6ba6, #000);
-  animation-duration: 12s;
+  animation-duration: 0s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   position: absolute;
