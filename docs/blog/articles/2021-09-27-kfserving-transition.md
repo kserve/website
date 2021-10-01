@@ -6,7 +6,7 @@ type: "blog"
 ---
 
 ### Authors
- **Dan Sun(dsun20@bloomberg.net)** and **Animesh Singh(singhan@us.ibm.com)** on behalf of the Kubeflow Serving Working Group
+ **Dan Sun** and **Animesh Singh** on behalf of the Kubeflow Serving Working Group
 
 ### **KFServing is now KServe**
 We are excited to announce the next chapter for KFServing.
