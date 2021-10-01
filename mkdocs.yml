@@ -70,6 +70,9 @@ nav:
     - Developer Guide:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
+    - Blog:
+          - Articles: 
+            - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
     - Community:
         - Adopters: community/adopters.md
         - Roadmap: community/roadmap.md
