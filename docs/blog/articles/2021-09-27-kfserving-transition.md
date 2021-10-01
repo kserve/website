@@ -29,7 +29,7 @@ The project sets out to provide the following features:
 
 KFServing was created to address the challenges of deploying and monitoring machine learning models on production for organizations.
 After publishing the open source project, we’ve seen an explosion in demand for the software, leading to strong adoption and community growth.
-The scope of the project has since increaded, and we have developed multiple components along the way, including our own growing body of documentation
+The scope of the project has since increased, and we have developed multiple components along the way, including our own growing body of documentation
 that needs it's own website and independent GitHub organization.
 
 ### **What's Next**
