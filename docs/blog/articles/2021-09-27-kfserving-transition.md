@@ -15,7 +15,8 @@ Group leads.
 
 The project has been rebranded from **KFServing** to **KServe**, and we are planning to graduate the project from Kubeflow Project later this year.
 
-<img src="../../images/2021-09-27-kfserving-transition/image1.png" style="width:6.5in;height:4in" />
+<!-- <img src="../../images/2021-09-27-kfserving-transition/image1.png" style="width:6.5in;height:4in" /> -->
+![Image1](../../images/2021-09-27-kfserving-transition/image1.png)
 
 Developed collaboratively by Google, IBM, Bloomberg, NVIDIA, and Seldon in 2019, KFServing was published as open source in early 2019. 
 The project sets out to provide the following features:
@@ -40,7 +41,8 @@ For contributors, please follow the KServe [developer](https://github.com/kserve
 [doc contribution](https://github.com/kserve/website/blob/main/docs/help/contributor/mkdocs-contributor-guide.md) guide to make code or doc contributions.
 We are excited to work with you to make KServe better and promote its adoption by more and more users!
 
-<img src="../../images/2021-09-27-kfserving-transition/kserve.png" style="width:8in;height:4in" />
+<!-- <img src="../../images/2021-09-27-kfserving-transition/kserve.png" style="width:8in;height:4in" /> -->
+![KServe](../../images/2021-09-27-kfserving-transition/kserve.png)
 
 ### **KServe Key Links**
 - [<u>Website</u>](https://kserve.github.io/website/)
