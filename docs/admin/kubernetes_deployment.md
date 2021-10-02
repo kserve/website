@@ -1,5 +1,5 @@
 # Kubernetes Deployment Installation Guide
-KServe supports `RawDeployment` mode to enable `InferenceService` deployment with Kubernetes resources [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) and [horizontal pod autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale). Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `RawDeployment` mode.
+KServe supports `RawDeployment` mode to enable `InferenceService` deployment with Kubernetes resources [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale). Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `RawDeployment` mode.
 
 Kubernetes 1.17 is the minimally recommended version.
 ## 1. Install Istio
@@ -24,7 +24,7 @@ Download the KServe's install manifest yaml.
 ```bash
 wget https://github.com/kserve/kserve/releases/download/v0.7.0-rc0/kserve.yaml
 ```
-Open the `kserve.yaml`, find the `ConfigMap` with name `inferenceservice-config` in `kserve` namespace and modify the `deploy` section:
+Open the `kserve.yaml`, find the `ConfigMap` with name `inferenceservice-config` in the manifest and modify the `deploy` section:
 ```json
 deploy:
     {
