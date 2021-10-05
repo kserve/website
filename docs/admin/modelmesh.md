@@ -3,11 +3,11 @@ KServe ModelMesh installation enables high-scale, high-density and frequently-ch
 
 A Kubernetes cluster is required. You will need cluster-admin authority. Additionally [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) and an [etcd](https://etcd.io/) server on the Kubernetes cluster are required.
 
-## 1. Normal Installation
-You can find the normal installation instructions in the ModelMesh Serving [install guide](https://github.com/kserve/modelmesh-serving/blob/main/docs/install/install-script.md).
+## 1. Standard Installation
+You can find the standard installation instructions in the ModelMesh Serving [installation guide](https://github.com/kserve/modelmesh-serving/blob/main/docs/install/install-script.md). This approach assumes you have installed the prerequisites such as etcd and S3-compatible object storage.
 
 ## 2. Quick Installation
-A quick installation allows you to quickly get ModelMesh Serving up and running without having to manually install prerequisites such as etcd. The steps are described in the ModelMesh Serving [quick start guide](https://github.com/kserve/modelmesh-serving/blob/main/docs/README.md).
+A quick installation allows you to quickly get ModelMesh Serving up and running without having to manually install the prerequisites. The steps are described in the ModelMesh Serving [quick start guide](https://github.com/kserve/modelmesh-serving/blob/main/docs/quickstart.md).
 
 !!! note
-    ModelMesh Serving is namespace scoped, meaning all of its components must exist within a single namespace and only one instance of ModelMesh Serving can be installed per namespace. For more details, you can check out the ModelMesh Serving [environment guide](https://github.com/kserve/modelmesh-serving/blob/main/docs/install/environment.md).
+    ModelMesh Serving is namespace scoped, meaning all of its components must exist within a single namespace and only one instance of ModelMesh Serving can be installed per namespace. For more details, you can check out the ModelMesh Serving [getting started guide](https://github.com/kserve/modelmesh-serving/blob/main/docs/install/README.md).

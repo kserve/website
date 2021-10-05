@@ -51,4 +51,4 @@ It decreases the average resource overhead per model so model deployment becomes
 And the number of models which can be deployed in a cluster will no longer be limited
 by the maximum pods limitation and the maximum IP address limitation.
 
-Learn more about ModelMesh [here]().
+Learn more about ModelMesh [here](modelmesh/overview.md).
