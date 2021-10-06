@@ -127,7 +127,7 @@ copyright: "Copyright © 2021 The KServe Authors"
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/kserve/community
+      link: https://github.com/kserve
       name: KServe Community on Github
     - icon: fontawesome/brands/slack
       link: https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#
