@@ -18,7 +18,6 @@ nav:
           - Concepts:
                 - Control Plane:
                   - Model Serving Control Plane: modelserving/control_plane.md
-                  - ModelMesh Control Plane: modelserving/modelmesh_control_plane.md
                 - Data Plane:
                   - Model Serving Data Plane: modelserving/data_plane.md
                   - V2 Inference Protocol: modelserving/inference_api.md
@@ -32,11 +31,10 @@ nav:
             - Lightgbm: modelserving/v1beta1/lightgbm/README.md
             - PaddleServer: modelserving/v1beta1/paddle/README.md
             - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
-          - Multi Model Serving: 
-                - Concept: modelserving/mms/multi-model-serving.md
-                - Model Server Runtime:
-                  - Triton inference server: modelserving/mms/triton/README.md
-                  - scikit-learn: modelserving/mms/sklearn/README.md
+          - Multi Model Serving:
+                - Overview:
+                  - The Scalability Problem: modelserving/mms/multi-model-serving.md
+                  - ModelMesh Overview: modelserving/mms/modelmesh/overview.md
           - Transformers:
                 - Feast: modelserving/v1beta1/transformer/feast/README.md
                 - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
@@ -47,7 +45,7 @@ nav:
                 - URI: modelserving/storage/uri/uri.md
           - Explainers:
                 - Concept: modelserving/explainer/explainer.md
-                - Alibi Explainer: 
+                - Alibi Explainer:
                   - Image Explainer: modelserving/explainer/alibi/cifar10/README.md
                   - Income Explainer: modelserving/explainer/alibi/income/README.md
                   - Text Explainer: modelserving/explainer/alibi/moviesentiment/README.md
@@ -71,7 +69,7 @@ nav:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
     - Blog:
-          - Articles: 
+          - Articles:
             - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
     - Community:
         - Adopters: community/adopters.md
