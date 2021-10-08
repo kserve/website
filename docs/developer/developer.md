@@ -243,7 +243,7 @@ python3 setup.py install --force --user
 ```
 Then go to `test/e2e`. 
 
-Run `kubectl create namespace kfserving-ci-e2e-test`
+Run `kubectl create namespace kserve-ci-e2e-test`
 
 For KIND/minikube:
 
@@ -253,7 +253,7 @@ For KIND/minikube:
 
 Run `pytest > testresults.txt`
 
-Tests may not clean up. To re-run, first do `kubectl delete namespace kfserving-ci-e2e-test`, recreate namespace and run again.
+Tests may not clean up. To re-run, first do `kubectl delete namespace kserve-ci-e2e-test`, recreate namespace and run again.
 
 ## Iterating
 
