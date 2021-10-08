@@ -1,9 +1,29 @@
 ## Run your first `InferenceService`
 
+**In this tutorial, you will deploy a ScikitLearn InferenceService.**
+
+This inference service loads a simple iris ML model, send a list of attributes and print the prediction for the class of iris plant."
+
+Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the trained model and
+it gets some **super powers out of the box** :rocket:.
+
 ### 1. Create test `InferenceService`
+=== "YAML"
+
+    ```bash
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-iris"
+    spec:
+      predictor:
+        sklearn:
+          storageUri: "gs://kfserving-samples/models/sklearn/iris"
+    ```
+Once you've created your YAML file (named something like "sklearn.yaml"):
 ```bash
 kubectl create namespace kserve-test
-kubectl apply -f docs/modelserving/v1beta1/sklearn/v1/sklearn.yaml -n kserve-test
+kubectl apply -f sklearn.yaml -n kserve-test
 ```
 
 ### 2. Check `InferenceService` status.
@@ -54,12 +74,23 @@ istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...     
     ```
 
 ### 4. Curl the `InferenceService`
+First prepare your inference input request
+```json
+{
+  "instances": [
+    [6.8,  2.8,  4.8,  1.4],
+    [6.0,  3.4,  4.5,  1.6]
+  ]
+}
+```
+Once you've created your json test input file (named something like "iris-input.json"):
+
 === "Real DNS"
 
     If you have configured the DNS, you can directly curl the `InferenceService` with the URL obtained from the status print.
     e.g
     ```
-    curl -v http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./docs/modelserving/v1beta1/sklearn/v1/iris-input.json
+    curl -v http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 === "Magic DNS"
@@ -85,7 +116,7 @@ istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...     
     
     With the change applied you can now directly curl the URL
     ```bash
-    curl -v http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict -d @./docs/modelserving/v1beta1/sklearn/v1/iris-input.json
+    curl -v http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 === "From Ingress gateway with HOST Header"
@@ -93,20 +124,20 @@ istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...     
     If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
     ```bash
     SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -n kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-    curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict -d @./docs/modelserving/v1beta1/sklearn/v1/iris-input.json
+    curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 === "From local cluster gateway"
 
     If you are calling from in cluster you can curl with the internal url with host {{InferenceServiceName}}.{{namespace}}
     ```bash
-    curl -v http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./docs/modelserving/v1beta1/sklearn/v1/iris-input.json
+    curl -v http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 ### 5. Run Performance Test
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
-kubectl create -f docs/modelserving/v1beta1/sklearn/v1/perf.yaml -n kserve-test
+kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.7/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
 ==**Expected Outpout**==
