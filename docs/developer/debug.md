@@ -11,8 +11,8 @@
   |                      |        |                       |      |                          |
   |KServe Route          |        |Knative Route          |      | Knative Revision Service |
   +----------------------+        +-----------------------+      +------------+-------------+
-   Istio Ingress Gateway           Knative Local Gateway                    Kube Proxy
-                                                                              |
+   Knative Ingress Gateway           Knative Local Gateway                    Kube Proxy
+   (Istio gateway)                   (Istio gateway)                          |
                                                                               |
                                                                               |
   +-------------------------------------------------------+                   |
@@ -32,11 +32,9 @@
                  |  KPA/HPA        |
                  +-----------------+
 ```
-1. Traffic arrives through:
-   - The `Istio Ingress Gateway` for external traffic
-   - The `Istio Cluster Local Gateway` for internal traffic
+### 1.Traffic arrives through `Knative Ingress/Local Gateway` for external/internal traffic
    
-`Istio Gateway` describes the edge of the mesh receiving incoming or outgoing HTTP/TCP connections. The specification describes a set of ports
+`Istio Gateway` resource describes the edge of the mesh receiving incoming or outgoing HTTP/TCP connections. The specification describes a set of ports
 that should be exposed and the type of protocol to use. If you are using `Standalone` mode, it installs the `Gateway` in `knative-serving` namespace,
 if you are using `Kubeflow KServe`(KServe installed with Kubeflow), it installs the `Gateway` in `kubeflow` namespace e.g on GCP the gateway is protected behind `IAP` with [Istio authentication policy](https://istio.io/docs/tasks/security/authentication/authn-policy).
 
@@ -75,7 +73,7 @@ spec:
 The `InferenceService` request routes to the `Istio Ingress Gateway` by matching the host and port from the url, by default http is configured, you can [configure
 HTTPS with TLS certificates](https://knative.dev/docs/serving/using-a-tls-cert).
  
-2. KServe creates a `Istio virtual service` to specify routing rule for predictor, transformer, explainer.
+### 2. KServe `Istio virtual service` to route for predictor, transformer, explainer.
 ```bash
 kubectl get vs sklearn-iris -oyaml
 ```
@@ -113,12 +111,12 @@ metadata:
           number: 80
       weight: 100
 ```
-- KServe creates the routing rule which by default routes to `Predictor` if you only have `Predictor` specified on `InferenceService`.
-- When `Transformer` and `Explainer` are specified on `InferenceService` the routing rule configures the traffic to route to `Transformer`
-or `Explainer` based on the verb.
-- The request then routes to the second level `Knative` created virtual service via local gateway with the matching host header.
 
-3. Knative creates a `Istio virtual service` to configure the gateway to route the inference request to the latest ready revision.
+KServe creates the routing rule which by default routes to `Predictor` if you only have `Predictor` specified on `InferenceService`.
+When `Transformer` and `Explainer` are specified on `InferenceService` the routing rule configures the traffic to route to `Transformer`
+or `Explainer` based on the verb. The request then routes to the second level `Knative` created virtual service via local gateway with the matching host header.
+
+### 3. Knative `Istio virtual service` to route the inference request to the latest ready revision.
 
 ```bash
 kubectl get vs sklearn-iris-predictor-default-ingress -oyaml
@@ -187,7 +185,7 @@ The destination here is the `k8s Service` for the latest ready `Knative Revision
 user rolls out a new revision. When a new revision is rolled out and in ready state, the old revision is then scaled down, after
 configured revision GC time the revision resource is garbage collected if the revision no longer has traffic referenced.
 
-4. Once the revision pods are ready, the `Kubernetes Service` routes the requests to the `queue proxy` sidecar of the inference service predictor pod on `port 8012`.
+### 4. `Kubernetes Service` routes the requests to the `queue proxy` sidecar of the inference service pod on `port 8012`.
 ```bash
 kubectl get svc sklearn-iris-predictor-default-fhmjk-private -oyaml
 ```
@@ -222,11 +220,11 @@ spec:
   type: ClusterIP
 
 ```
-5. The `queue proxy` sends concurrent requests that the `kserve container` can handle at a time configured with `ContainerConcurrency`.
+### 5. The `queue proxy` routes to `kserve container` with max concurrent requests configured with `ContainerConcurrency`.
 If the `queue proxy` has more requests than it can handle, the [Knative Autoscaler](https://knative.dev/docs/serving/configuring-autoscaling/)
 creates more pods to handle additional requests.
 
-6. Finally The `queue proxy` routes traffic to the `kserve-container` for processing the inference requests.
+### 6. Finally The `queue proxy` routes traffic to the `kserve-container` for processing the inference requests.
 
 ## Debug KServe InferenceService Status
 
