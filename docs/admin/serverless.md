@@ -2,10 +2,10 @@
 KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
-Kubernetes 1.17 is the minimally required version and please check the following recommended Knative versions, Istio versions for the corresponding
+Kubernetes 1.17 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.
 
-## Supported Version Matrix
+## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version   | Recommended Knative Version  |
 | :---------- | :------------ | :------------|
 | 1.17       | 1.9  | 0.19, 0.20  |
