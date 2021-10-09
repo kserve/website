@@ -11,14 +11,14 @@
       
       
       
-        <link rel="canonical" href="https://kserve.io/docs/developer/developer/">
+        <link rel="canonical" href="https://kserve.io/docs/developer/debug/">
       
       <link rel="icon" href="../../images/favicon/favicon-32x32.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.4">
     
     
       
-        <title>How to contribute - KServe Documentation Website</title>
+        <title>Debugging guide - KServe Documentation Website</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#development" class="md-skip">
+        <a href="#kserve-debugging-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              How to contribute
+              Debugging guide
             
           </span>
         </div>
@@ -279,7 +279,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="./" class="md-tabs__link md-tabs__link--active">
+      <a href="../developer/" class="md-tabs__link md-tabs__link--active">
         Developer Guide
       </a>
     </li>
@@ -1432,6 +1432,18 @@
             
   
   
+  
+    <li class="md-nav__item">
+      <a href="../developer/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
     
   
   
@@ -1444,12 +1456,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          How to contribute
+          Debugging guide
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        How to contribute
+        Debugging guide
       </a>
       
         
@@ -1467,37 +1479,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    Prerequisites
+  <a href="#debug-kserve-inferenceservice-status" class="md-nav__link">
+    Debug KServe InferenceService Status
   </a>
   
-    <nav class="md-nav" aria-label="Prerequisites">
+    <nav class="md-nav" aria-label="Debug KServe InferenceService Status">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-requirements" class="md-nav__link">
-    Install requirements
+  <a href="#ingressnotconfigured" class="md-nav__link">
+    IngressNotConfigured
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#install-knative-on-a-kubernetes-cluster" class="md-nav__link">
-    Install Knative on a Kubernetes cluster
+  <a href="#revisionmissing-error" class="md-nav__link">
+    RevisionMissing Error
+  </a>
+  
+    <nav class="md-nav" aria-label="RevisionMissing Error">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storage-initializer-fails-to-download-model" class="md-nav__link">
+    Storage Initializer fails to download model
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#setup-your-environment" class="md-nav__link">
-    Setup your environment
+  <a href="#inference-service-in-oom-status" class="md-nav__link">
+    Inference Service in OOM status
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#checkout-your-fork" class="md-nav__link">
-    Checkout your fork
+  <a href="#inference-service-fails-to-start" class="md-nav__link">
+    Inference Service fails to start
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-service-cannot-fetch-docker-images-from-aws-ecr" class="md-nav__link">
+    Inference Service cannot fetch docker images from AWS ECR
   </a>
   
 </li>
@@ -1508,64 +1540,57 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-kserve" class="md-nav__link">
-    Deploy KServe
+  <a href="#debug-kserve-request-flow" class="md-nav__link">
+    Debug KServe Request flow
   </a>
   
-    <nav class="md-nav" aria-label="Deploy KServe">
+    <nav class="md-nav" aria-label="Debug KServe Request flow">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#check-knative-serving-installation" class="md-nav__link">
-    Check Knative Serving installation
+  <a href="#1traffic-arrives-through-knative-ingresslocal-gateway-for-externalinternal-traffic" class="md-nav__link">
+    1.Traffic arrives through Knative Ingress/Local Gateway for external/internal traffic
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy-kserve-from-master-branch" class="md-nav__link">
-    Deploy KServe from master branch
+  <a href="#2-kserve-istio-virtual-service-to-route-for-predictor-transformer-explainer" class="md-nav__link">
+    2. KServe Istio virtual service to route for predictor, transformer, explainer.
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy-kserve-with-your-own-version" class="md-nav__link">
-    Deploy KServe with your own version
+  <a href="#3-knative-istio-virtual-service-to-route-the-inference-request-to-the-latest-ready-revision" class="md-nav__link">
+    3. Knative Istio virtual service to route the inference request to the latest ready revision.
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#smoke-test-after-deployment" class="md-nav__link">
-    Smoke test after deployment
+  <a href="#4-kubernetes-service-routes-the-requests-to-the-queue-proxy-sidecar-of-the-inference-service-pod-on-port-8012" class="md-nav__link">
+    4. Kubernetes Service routes the requests to the queue proxy sidecar of the inference service pod on port 8012.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-the-queue-proxy-routes-to-kserve-container-with-max-concurrent-requests-configured-with-containerconcurrency" class="md-nav__link">
+    5. The queue proxy routes to kserve container with max concurrent requests configured with ContainerConcurrency.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-finally-the-queue-proxy-routes-traffic-to-the-kserve-container-for-processing-the-inference-requests" class="md-nav__link">
+    6. Finally The queue proxy routes traffic to the kserve-container for processing the inference requests.
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-unitintegration-tests" class="md-nav__link">
-    Running unit/integration tests
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#run-e2e-tests-locally" class="md-nav__link">
-    Run e2e tests locally
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#iterating" class="md-nav__link">
-    Iterating
-  </a>
   
 </li>
       
@@ -1573,18 +1598,6 @@
   
 </nav>
       
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../debug/" class="md-nav__link">
-        Debugging guide
-      </a>
     </li>
   
 
@@ -1744,37 +1757,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    Prerequisites
+  <a href="#debug-kserve-inferenceservice-status" class="md-nav__link">
+    Debug KServe InferenceService Status
   </a>
   
-    <nav class="md-nav" aria-label="Prerequisites">
+    <nav class="md-nav" aria-label="Debug KServe InferenceService Status">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-requirements" class="md-nav__link">
-    Install requirements
+  <a href="#ingressnotconfigured" class="md-nav__link">
+    IngressNotConfigured
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#install-knative-on-a-kubernetes-cluster" class="md-nav__link">
-    Install Knative on a Kubernetes cluster
+  <a href="#revisionmissing-error" class="md-nav__link">
+    RevisionMissing Error
+  </a>
+  
+    <nav class="md-nav" aria-label="RevisionMissing Error">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storage-initializer-fails-to-download-model" class="md-nav__link">
+    Storage Initializer fails to download model
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#setup-your-environment" class="md-nav__link">
-    Setup your environment
+  <a href="#inference-service-in-oom-status" class="md-nav__link">
+    Inference Service in OOM status
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#checkout-your-fork" class="md-nav__link">
-    Checkout your fork
+  <a href="#inference-service-fails-to-start" class="md-nav__link">
+    Inference Service fails to start
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-service-cannot-fetch-docker-images-from-aws-ecr" class="md-nav__link">
+    Inference Service cannot fetch docker images from AWS ECR
   </a>
   
 </li>
@@ -1785,64 +1818,57 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deploy-kserve" class="md-nav__link">
-    Deploy KServe
+  <a href="#debug-kserve-request-flow" class="md-nav__link">
+    Debug KServe Request flow
   </a>
   
-    <nav class="md-nav" aria-label="Deploy KServe">
+    <nav class="md-nav" aria-label="Debug KServe Request flow">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#check-knative-serving-installation" class="md-nav__link">
-    Check Knative Serving installation
+  <a href="#1traffic-arrives-through-knative-ingresslocal-gateway-for-externalinternal-traffic" class="md-nav__link">
+    1.Traffic arrives through Knative Ingress/Local Gateway for external/internal traffic
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy-kserve-from-master-branch" class="md-nav__link">
-    Deploy KServe from master branch
+  <a href="#2-kserve-istio-virtual-service-to-route-for-predictor-transformer-explainer" class="md-nav__link">
+    2. KServe Istio virtual service to route for predictor, transformer, explainer.
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#deploy-kserve-with-your-own-version" class="md-nav__link">
-    Deploy KServe with your own version
+  <a href="#3-knative-istio-virtual-service-to-route-the-inference-request-to-the-latest-ready-revision" class="md-nav__link">
+    3. Knative Istio virtual service to route the inference request to the latest ready revision.
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#smoke-test-after-deployment" class="md-nav__link">
-    Smoke test after deployment
+  <a href="#4-kubernetes-service-routes-the-requests-to-the-queue-proxy-sidecar-of-the-inference-service-pod-on-port-8012" class="md-nav__link">
+    4. Kubernetes Service routes the requests to the queue proxy sidecar of the inference service pod on port 8012.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-the-queue-proxy-routes-to-kserve-container-with-max-concurrent-requests-configured-with-containerconcurrency" class="md-nav__link">
+    5. The queue proxy routes to kserve container with max concurrent requests configured with ContainerConcurrency.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-finally-the-queue-proxy-routes-traffic-to-the-kserve-container-for-processing-the-inference-requests" class="md-nav__link">
+    6. Finally The queue proxy routes traffic to the kserve-container for processing the inference requests.
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-unitintegration-tests" class="md-nav__link">
-    Running unit/integration tests
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#run-e2e-tests-locally" class="md-nav__link">
-    Run e2e tests locally
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#iterating" class="md-nav__link">
-    Iterating
-  </a>
   
 </li>
       
@@ -1858,251 +1884,308 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/kserve/website/edit/mkdocs/docs/developer/developer.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/kserve/website/edit/mkdocs/docs/developer/debug.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h1>
-<p>This doc explains how to setup a development environment so you can get started
-<a href="https://github.com/kserve/kserve/blob/master/CONTRIBUTING.md">contributing</a>.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<p>Follow the instructions below to set up your development environment. Once you
-meet these requirements, you can make changes and
-<a href="#deploy-kserve">deploy your own version of kserve</a>!</p>
-<p>Before submitting a PR, see also <a href="https://github.com/kserve/kserve/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
-<h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">&para;</a></h3>
-<p>You must install these tools:</p>
-<ol>
-<li><a href="https://golang.org/doc/install"><code>go</code></a>: KServe controller is written in Go and requires Go 1.14.0+.</li>
-<li><a href="https://help.github.com/articles/set-up-git/"><code>git</code></a>: For source control.</li>
-<li><a href="https://blog.golang.org/using-go-modules"><code>Go Module</code></a>: Go's new dependency management system.</li>
-<li><a href="https://github.com/google/ko"><code>ko</code></a>:
-   For development.</li>
-<li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/"><code>kubectl</code></a>: For
-   managing development environments.</li>
-<li><a href="https://github.com/kubernetes-sigs/kustomize/"><code>kustomize</code></a> To customize YAMLs for different environments, requires v3.5.4+.</li>
-<li><a href="https://github.com/mikefarah/yq"><code>yq</code></a> yq is used in the project makefiles to parse and display YAML output. Please use yq version <a href="https://github.com/mikefarah/yq/releases/tag/3.4.1"><code>3.*</code></a>. Latest yq version <code>4.*</code> has remove <code>-d</code> command so doesn't work with the scripts.</li>
-</ol>
-<h3 id="install-knative-on-a-kubernetes-cluster">Install Knative on a Kubernetes cluster<a class="headerlink" href="#install-knative-on-a-kubernetes-cluster" title="Permanent link">&para;</a></h3>
-<p>KServe currently requires <code>Knative Serving</code> for auto-scaling, canary rollout, <code>Istio</code> for traffic routing and ingress.</p>
-<ul>
-<li>
-<p>To install Knative components on your Kubernetes cluster, follow the <a href="https://knative.dev/docs/admin/install/">installation guide</a> or alternatively, 
-use the <a href="https://knative.dev/docs/install/knative-with-operators/">Knative Operators</a> to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
-they can be installed via the <a href="https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md">directions here</a>.</p>
-</li>
-<li>
-<p>If you start from scratch, KServe requires Kubernetes 1.17+, Knative 0.19+, Istio 1.9+.</p>
-</li>
-<li>
-<p>If you already have <code>Istio</code> or <code>Knative</code> (e.g. from a Kubeflow install) then you don't need to install them explictly, as long as version dependencies are satisfied.</p>
-</li>
-</ul>
-<h3 id="setup-your-environment">Setup your environment<a class="headerlink" href="#setup-your-environment" title="Permanent link">&para;</a></h3>
-<p>To start your environment you'll need to set these environment variables (we
-recommend adding them to your <code>.bashrc</code>):</p>
-<ol>
-<li><code>GOPATH</code>: If you don't have one, simply pick a directory and add
-   <code>export GOPATH=...</code></li>
-<li><code>$GOPATH/bin</code> on <code>PATH</code>: This is so that tooling installed via <code>go get</code> will
-   work properly.</li>
-<li>
-<p><code>KO_DOCKER_REPO</code>: The docker repository to which developer images should be
-   pushed (e.g. <code>docker.io/&lt;username&gt;</code>).</p>
-</li>
-<li>
-<p><strong>Note</strong>: Set up a docker repository for pushing images. You can use any container image registry by adjusting 
-the authentication methods and repository paths mentioned in the sections below.</p>
-</li>
-<li><a href="https://cloud.google.com/container-registry/docs/pushing-and-pulling">Google Container Registry quickstart</a></li>
-<li><a href="https://docs.docker.com/docker-hub/">Docker Hub quickstart</a></li>
-<li><a href="https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal">Azure Container Registry quickstart</a></li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>if you are using docker hub to store your images your <code>KO_DOCKER_REPO</code> variable should be <code>docker.io/&lt;username&gt;</code>.
-Currently Docker Hub doesn't let you create subdirs under your username.</p>
-</div>
-<p><code>.bashrc</code> example:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/go&quot;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span><span class="s2">/bin&quot;</span>
-<span class="nb">export</span> <span class="nv">KO_DOCKER_REPO</span><span class="o">=</span><span class="s1">&#39;docker.io/&lt;username&gt;&#39;</span>
+                <h1 id="kserve-debugging-guide">KServe Debugging Guide<a class="headerlink" href="#kserve-debugging-guide" title="Permanent link">&para;</a></h1>
+<h2 id="debug-kserve-inferenceservice-status">Debug KServe InferenceService Status<a class="headerlink" href="#debug-kserve-inferenceservice-status" title="Permanent link">&para;</a></h2>
+<p>You deployed an InferenceService to KServe, but it is not in ready state. Go through this step by step guide to understand what failed.</p>
+<div class="highlight"><pre><span></span><code>kubectl get inferenceservices sklearn-iris 
+NAME                  URL   READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
+model-example               False                                      1m
 </code></pre></div>
-<h3 id="checkout-your-fork">Checkout your fork<a class="headerlink" href="#checkout-your-fork" title="Permanent link">&para;</a></h3>
-<p>The Go tools require that you clone the repository to the
-<code>src/github.com/kserve/kserve</code> directory in your
-<a href="https://github.com/golang/go/wiki/SettingGOPATH"><code>GOPATH</code></a>.</p>
-<p>To check out this repository:</p>
-<ol>
-<li>Create your own
-   <a href="https://help.github.com/articles/fork-a-repo/">fork of this repo</a></li>
-<li>Clone it to your machine:</li>
-</ol>
-<div class="highlight"><pre><span></span><code>mkdir -p <span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span>/src/github.com/kubeflow
-<span class="nb">cd</span> <span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span>/src/github.com/kubeflow
-git clone git@github.com:<span class="si">${</span><span class="nv">YOUR_GITHUB_USERNAME</span><span class="si">}</span>/kserve.git
-<span class="nb">cd</span> kserve
-git remote add upstream git@github.com:kserve/kserve.git
-git remote set-url --push upstream no_push
+<h3 id="ingressnotconfigured">IngressNotConfigured<a class="headerlink" href="#ingressnotconfigured" title="Permanent link">&para;</a></h3>
+<p>If you see <code>IngressNotConfigured</code> error, this indicates <code>Istio Ingress Gateway</code> probes are failing.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl get ksvc
+NAME                             URL                                                            LATESTCREATED                          LATESTREADY                            READY     REASON
+sklearn-iris-predictor-default   http://sklearn-iris-predictor-default.default.example.com   sklearn-iris-predictor-default-jk794   mnist-sample-predictor-default-jk794   Unknown   IngressNotConfigured
 </code></pre></div>
-<p><em>Adding the <code>upstream</code> remote sets you up nicely for regularly
-<a href="https://help.github.com/articles/syncing-a-fork/">syncing your fork</a>.</em></p>
-<p>Once you reach this point you are ready to do a full build and deploy as
-described below.</p>
-<h2 id="deploy-kserve">Deploy KServe<a class="headerlink" href="#deploy-kserve" title="Permanent link">&para;</a></h2>
-<h3 id="check-knative-serving-installation">Check Knative Serving installation<a class="headerlink" href="#check-knative-serving-installation" title="Permanent link">&para;</a></h3>
-<p>Once you've <a href="#prerequisites">setup your development environment</a>, you can verify the installation with following:</p>
-<div class="admonition success">
-<p class="admonition-title">Success</p>
-<div class="highlight"><pre><span></span><code>$ kubectl -n knative-serving get pods
-NAME                                                     READY   STATUS      RESTARTS   AGE
-activator-77784645fc-t2pjf                               <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-autoscaler-6fddf74d5-z2fzf                               <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-autoscaler-hpa-5bf4476cc5-tsbw6                          <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-controller-7b8cd7f95c-6jxxj                              <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-istio-webhook-866c5bc7f8-t5ztb                           <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-networking-istio-54fb8b5d4b-xznwd                        <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-webhook-5f5f7bd9b4-cv27c                                 <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
+You can then check Knative <code>networking-istio</code> pod logs for more details.
+<div class="highlight"><pre><span></span><code>kubectl logs -l <span class="nv">app</span><span class="o">=</span>networking-istio -n knative-serving
+</code></pre></div></p>
+<p>If you are seeing HTTP 403, then you may have <code>Istio RBAC</code> turned on which blocks the probes to your service.
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;error&quot;</span><span class="p">,</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2020-03-26T19:12:00.749Z&quot;</span><span class="p">,</span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="s2">&quot;istiocontroller.ingress-controller.status-manager&quot;</span><span class="p">,</span><span class="nt">&quot;caller&quot;</span><span class="p">:</span><span class="s2">&quot;ingress/status.go:366&quot;</span><span class="p">,</span>
+<span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;Probing of http://flowers-sample-predictor-default.kubeflow-jeanarmel-luce.example.com:80/ failed, IP: 10.0.0.29:80, ready: false, error: unexpected status code: want [200], got 403 (depth: 0)&quot;</span><span class="p">,</span>
+<span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="s2">&quot;6b0e5c6&quot;</span><span class="p">,</span><span class="nt">&quot;knative.dev/controller&quot;</span><span class="p">:</span><span class="s2">&quot;ingress-controller&quot;</span><span class="p">,</span><span class="nt">&quot;stacktrace&quot;</span><span class="p">:</span><span class="s2">&quot;knative.dev/serving/pkg/reconciler/ingress.(*StatusProber).processWorkItem\n\t/home/prow/go/src/knative.dev/serving/pkg/reconciler/ingress/status.go:366\nknative.dev/serving/pkg/reconciler/ingress.(*StatusProber).Start.func1\n\t/home/prow/go/src/knative.dev/serving/pkg/reconciler/ingress/status.go:268&quot;</span><span class="p">}</span>
+</code></pre></div></p>
+<h3 id="revisionmissing-error">RevisionMissing Error<a class="headerlink" href="#revisionmissing-error" title="Permanent link">&para;</a></h3>
+<p>If you see <code>RevisionMissing</code> error, then your service pods are not in ready state. <code>Knative Service</code> creates <a href="https://knative.dev/docs/serving/spec/knative-api-specification-1.0/#revision">Knative Revision</a> 
+which represents a snapshot of the <code>InferenceService</code> code and configuration.</p>
+<h4 id="storage-initializer-fails-to-download-model">Storage Initializer fails to download model<a class="headerlink" href="#storage-initializer-fails-to-download-model" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>kubectl get revision <span class="k">$(</span>kubectl get configuration sklearn-iris-predictor-default --output <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.status.latestCreatedRevisionName}&quot;</span><span class="k">)</span> 
+NAME                                   CONFIG NAME                      K8S SERVICE NAME                       GENERATION   READY     REASON
+sklearn-iris-predictor-default-csjpw   sklearn-iris-predictor-default   sklearn-iris-predictor-default-csjpw   <span class="m">2</span>            Unknown   Deploying
+</code></pre></div>
+<p>If you see <code>READY</code> status in <code>Unknown</code> error, this usually indicates that the KServe <code>Storage Initializer</code> init container fails to download the model and you can
+check the init container logs to see why it fails, <strong>note that the pod scales down after sometime if the init container fails</strong>. 
+<div class="highlight"><pre><span></span><code>kubectl get pod -l serving.kserve.io/inferenceservice<span class="o">=</span>sklearn-iris
+NAME                                                              READY   STATUS       RESTARTS   AGE
+sklearn-iris-predictor-default-29jks-deployment-5f7d4b9996hzrnc   <span class="m">0</span>/3     Init:Error   <span class="m">1</span>          10s
 
-$ kubectl get gateway -n knative-serving
-NAME                      AGE
-knative-ingress-gateway   11d
-knative-local-gateway     11d
-
-$ kubectl get svc -n istio-system
-NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>                                                      AGE
-istio-ingressgateway    LoadBalancer   <span class="m">10</span>.101.196.89    X.X.X.X       <span class="m">15021</span>:31101/TCP,80:31781/TCP,443:30372/TCP,15443:31067/TCP   11d
-istiod                  ClusterIP      <span class="m">10</span>.101.116.203   &lt;none&gt;        <span class="m">15010</span>/TCP,15012/TCP,443/TCP,15014/TCP,853/TCP                11d
+kubectl logs -l <span class="nv">model</span><span class="o">=</span>sklearn-iris -c storage-initializer
+<span class="o">[</span>I <span class="m">200517</span> <span class="m">03</span>:56:19 initializer-entrypoint:13<span class="o">]</span> Initializing, args: src_uri <span class="o">[</span>gs://kfserving-samples/models/sklearn/iris-1<span class="o">]</span> dest_path<span class="o">[</span> <span class="o">[</span>/mnt/models<span class="o">]</span>
+<span class="o">[</span>I <span class="m">200517</span> <span class="m">03</span>:56:19 storage:35<span class="o">]</span> Copying contents of gs://kfserving-samples/models/sklearn/iris-1 to <span class="nb">local</span>
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/storage-initializer/scripts/initializer-entrypoint&quot;</span>, line <span class="m">14</span>, in &lt;module&gt;
+    kserve.Storage.download<span class="o">(</span>src_uri, dest_path<span class="o">)</span>
+  File <span class="s2">&quot;/usr/local/lib/python3.7/site-packages/kfserving/storage.py&quot;</span>, line <span class="m">48</span>, in download
+    Storage._download_gcs<span class="o">(</span>uri, out_dir<span class="o">)</span>
+  File <span class="s2">&quot;/usr/local/lib/python3.7/site-packages/kfserving/storage.py&quot;</span>, line <span class="m">116</span>, in _download_gcs
+    The path or model %s does not exist.<span class="s2">&quot; % (uri))</span>
+<span class="s2">RuntimeError: Failed to fetch model. The path or model gs://kfserving-samples/models/sklearn/iris-1 does not exist.</span>
+<span class="s2">[I 200517 03:40:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-samples/models/sklearn/iris] dest_path[ [/mnt/models]</span>
+<span class="s2">[I 200517 03:40:19 storage:35] Copying contents of gs://kfserving-samples/models/sklearn/iris to local</span>
+<span class="s2">[I 200517 03:40:20 storage:111] Downloading: /mnt/models/model.joblib</span>
+<span class="s2">[I 200517 03:40:20 storage:60] Successfully copied gs://kfserving-samples/models/sklearn/iris to /mnt/models</span>
+</code></pre></div></p>
+<h4 id="inference-service-in-oom-status">Inference Service in OOM status<a class="headerlink" href="#inference-service-in-oom-status" title="Permanent link">&para;</a></h4>
+<p>If you see <code>ExitCode137</code> from the revision status, this means the revision has failed and this usually happens when the inference service pod is out of memory. To address it, you might need to bump up the memory limit of the <code>InferenceService</code>.
+<div class="highlight"><pre><span></span><code>kubectl get revision <span class="k">$(</span>kubectl get configuration sklearn-iris-predictor-default --output <span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.status.latestCreatedRevisionName}&quot;</span><span class="k">)</span> 
+NAME                                   CONFIG NAME                      K8S SERVICE NAME                       GENERATION   READY   REASON
+sklearn-iris-predictor-default-84bzf   sklearn-iris-predictor-default   sklearn-iris-predictor-default-84bzf   <span class="m">8</span>            False   ExitCode137s
+</code></pre></div></p>
+<h4 id="inference-service-fails-to-start">Inference Service fails to start<a class="headerlink" href="#inference-service-fails-to-start" title="Permanent link">&para;</a></h4>
+<p>If you see other exit codes from the revision status you can further check the pod status.
+<div class="highlight"><pre><span></span><code>kubectl get pods -l serving.kserve.io/inferenceservice<span class="o">=</span>sklearn-iris
+sklearn-iris-predictor-default-rvhmk-deployment-867c6444647tz7n   <span class="m">1</span>/3     CrashLoopBackOff        <span class="m">3</span>          80s
+</code></pre></div></p>
+<p>If you see the <code>CrashLoopBackOff</code>, then check the <code>kserve-container</code> log to see more details where it fails, the error log is usually propagated on revision container status also.
+<div class="highlight"><pre><span></span><code>kubectl logs sklearn-iris-predictor-default-rvhmk-deployment-867c6444647tz7n  kserve-container
+<span class="o">[</span>I <span class="m">200517</span> <span class="m">04</span>:58:21 storage:35<span class="o">]</span> Copying contents of /mnt/models to <span class="nb">local</span>
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/usr/local/lib/python3.7/runpy.py&quot;</span>, line <span class="m">193</span>, in _run_module_as_main
+    <span class="s2">&quot;__main__&quot;</span>, mod_spec<span class="o">)</span>
+  File <span class="s2">&quot;/usr/local/lib/python3.7/runpy.py&quot;</span>, line <span class="m">85</span>, in _run_code
+    exec<span class="o">(</span>code, run_globals<span class="o">)</span>
+  File <span class="s2">&quot;/sklearnserver/sklearnserver/__main__.py&quot;</span>, line <span class="m">33</span>, in &lt;module&gt;
+    model.load<span class="o">()</span>
+  File <span class="s2">&quot;/sklearnserver/sklearnserver/model.py&quot;</span>, line <span class="m">36</span>, in load
+    <span class="nv">model_file</span> <span class="o">=</span> next<span class="o">(</span>path <span class="k">for</span> path in paths <span class="k">if</span> os.path.exists<span class="o">(</span>path<span class="o">))</span>
+StopIteration
+</code></pre></div></p>
+<h3 id="inference-service-cannot-fetch-docker-images-from-aws-ecr">Inference Service cannot fetch docker images from AWS ECR<a class="headerlink" href="#inference-service-cannot-fetch-docker-images-from-aws-ecr" title="Permanent link">&para;</a></h3>
+<p>If you don't see the inference service created at all for custom images from private registries (such as AWS ECR), it might be that the Knative Serving Controller fails to authenticate itself against the registry.</p>
+<div class="highlight"><pre><span></span><code>failed to resolve image to digest: failed to fetch image information: unsupported status code <span class="m">401</span><span class="p">;</span> body: Not Authorized
 </code></pre></div>
-</div>
-<h3 id="deploy-kserve-from-master-branch">Deploy KServe from master branch<a class="headerlink" href="#deploy-kserve-from-master-branch" title="Permanent link">&para;</a></h3>
-<p>We suggest using <a href="https://github.com/jetstack/cert-manager">cert manager</a> for
-provisioning the certificates for the webhook server. Other solutions should
-also work as long as they put the certificates in the desired location.</p>
-<p>You can follow
-<a href="https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html">the cert manager documentation</a>
-to install it.</p>
-<p>If you don't want to install cert manager, you can set the <code>KSERVE_ENABLE_SELF_SIGNED_CA</code> environment variable to true.
-<code>KSERVE_ENABLE_SELF_SIGNED_CA</code> will execute a script to create a self-signed CA and patch it to the webhook config.
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">KSERVE_ENABLE_SELF_SIGNED_CA</span><span class="o">=</span><span class="nb">true</span>
-</code></pre></div></p>
-<p>After that you can run following command to deploy <code>KServe</code>, you can skip above step if cert manager is already installed.
-<div class="highlight"><pre><span></span><code>make deploy
-</code></pre></div></p>
-<div class="admonition optional">
-<p class="admonition-title">Optional</p>
-<p>you can change CPU and memory limits when deploying <code>KServe</code>.
- <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">KSERVE_CONTROLLER_CPU_LIMIT</span><span class="o">=</span>&lt;cpu_limit&gt;
-<span class="nb">export</span> <span class="nv">KSERVE_CONTROLLER_MEMORY_LIMIT</span><span class="o">=</span>&lt;memory_limit&gt;
-make deploy
-</code></pre></div></p>
-</div>
-<p><mark><strong>Expected Output</strong></mark>
-<div class="highlight"><pre><span></span><code><span class="gp">$</span> kubectl get pods -n kserve -l control-plane<span class="o">=</span>kserve-controller-manager
-<span class="go">NAME                             READY   STATUS    RESTARTS   AGE</span>
-<span class="go">kserve-controller-manager-0      2/2     Running   0          13m</span>
-</code></pre></div></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>By default it installs to <code>kserve</code> namespace with the published controller manager image from master branch.</p>
-</div>
-<h3 id="deploy-kserve-with-your-own-version">Deploy KServe with your own version<a class="headerlink" href="#deploy-kserve-with-your-own-version" title="Permanent link">&para;</a></h3>
-<p>Run the following command to deploy <code>KServe</code> controller and model agent with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev
-</code></pre></div></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><code>deploy-dev</code> builds the image from your local code, publishes to <code>KO_DOCKER_REPO</code> and deploys the <code>kserve-controller-manager</code> and <code>model agent</code> with the image digest to your cluster for testing. 
-Please also ensure you are logged in to <code>KO_DOCKER_REPO</code> from your client machine.</p>
-</div>
-<p>Run the following command to deploy model server with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev-sklearn
-make deploy-dev-xgb
-</code></pre></div></p>
-<p>Run the following command to deploy explainer with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev-alibi
-</code></pre></div></p>
-<p>Run the following command to deploy storage initializer with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev-storageInitializer
-</code></pre></div></p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The deploy command publishes the image to <code>KO_DOCKER_REPO</code> with the version <code>latest</code>, it changes the <code>InferenceService</code> configmap to point to the newly built image sha.
-The built image is only for development and testing purpose, the current limitation is that it changes the image impacted and reset all other images including the
-<code>kserver-controller-manager</code> to use the default ones. </p>
-</div>
-<h3 id="smoke-test-after-deployment">Smoke test after deployment<a class="headerlink" href="#smoke-test-after-deployment" title="Permanent link">&para;</a></h3>
-<p>Run the following command to smoke test the deployment
-<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
-</code></pre></div></p>
-<p>You should see model serving deployment running under default or your specified namespace.</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flowers-sample
+<p>You can verify that this is actually the case by spinning up a pod that uses your image. The pod should be able to fetch it, if the correct IAM roles are attached, while Knative is not able to. To circumvent this issue you can either skip tag resolution or provide certificates for your registry as detailed in <a href="https://knative.dev/docs/serving/tag-resolution/">the official knative docs</a>.</p>
+<div class="highlight"><pre><span></span><code>kubectl -n knative-serving edit configmap config-deployment
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark>  <br />
-<div class="highlight"><pre><span></span><code>NAME                                                      READY   STATUS    RESTARTS   AGE
-flowers-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
+<p>The resultant yaml will look like something below.
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">config-deployment</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving</span>
+<span class="nt">data</span><span class="p">:</span>
+  <span class="c1"># List of repositories for which tag to digest resolving should be skipped (for AWS ECR: {account_id}.dkr.ecr.{region}.amazonaws.com)</span>
+  <span class="nt">registriesSkippingTagResolving</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">registry.example.com</span>
 </code></pre></div></p>
-<h2 id="running-unitintegration-tests">Running unit/integration tests<a class="headerlink" href="#running-unitintegration-tests" title="Permanent link">&para;</a></h2>
-<p><code>kserver-controller-manager</code> has a few integration tests which requires mock apiserver
-and etcd, they get installed along with <a href="https://book.kubebuilder.io/quick-start.html#installation"><code>kubebuilder</code></a>.</p>
-<p>To run all unit/integration tests:</p>
-<div class="highlight"><pre><span></span><code>make <span class="nb">test</span>
+<h2 id="debug-kserve-request-flow">Debug KServe Request flow<a class="headerlink" href="#debug-kserve-request-flow" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>  +----------------------+        +-----------------------+      +--------------------------+
+  |Istio Virtual Service |        |Istio Virtual Service  |      | K8S Service              |
+  |                      |        |                       |      |                          |
+  |sklearn-iris          |        |sklearn-iris-predictor |      | sklearn-iris-predictor   |
+  |                      +-------&gt;|-default               +-----&gt;| -default-$revision       |
+  |                      |        |                       |      |                          |
+  |KServe Route          |        |Knative Route          |      | Knative Revision Service |
+  +----------------------+        +-----------------------+      +------------+-------------+
+   Knative Ingress Gateway           Knative Local Gateway                    Kube Proxy
+   (Istio gateway)                   (Istio gateway)                          |
+                                                                              |
+                                                                              |
+  +-------------------------------------------------------+                   |
+  |  Knative Revision Pod                                 |                   |
+  |                                                       |                   |
+  |  +-------------------+      +-----------------+       |                   |
+  |  |                   |      |                 |       |                   |
+  |  |kserve-container   |&lt;-----+ Queue Proxy     |       |&lt;------------------+
+  |  |                   |      |                 |       |
+  |  +-------------------+      +--------------^--+       |
+  |                                            |          |
+  +-----------------------^-------------------------------+
+                          | scale deployment   |
+                 +--------+--------+           | pull metrics
+                 |  Knative        |           |
+                 |  Autoscaler     |-----------
+                 |  KPA/HPA        |
+                 +-----------------+
 </code></pre></div>
-<h2 id="run-e2e-tests-locally">Run e2e tests locally<a class="headerlink" href="#run-e2e-tests-locally" title="Permanent link">&para;</a></h2>
-<p>To setup from local code, do:</p>
-<ol>
-<li><code>./hack/quick_install.sh</code></li>
-<li><code>make undeploy</code></li>
-<li><code>make deploy-dev</code></li>
-</ol>
-<p>Install pytest and test deps:
-<div class="highlight"><pre><span></span><code>pip3 install pytest==6.0.2 pytest-xdist pytest-rerunfailures
-pip3 install --upgrade pytest-tornasync
-pip3 install urllib3==1.24.2
-pip3 install --upgrade setuptools
+<h3 id="1traffic-arrives-through-knative-ingresslocal-gateway-for-externalinternal-traffic">1.Traffic arrives through <code>Knative Ingress/Local Gateway</code> for external/internal traffic<a class="headerlink" href="#1traffic-arrives-through-knative-ingresslocal-gateway-for-externalinternal-traffic" title="Permanent link">&para;</a></h3>
+<p><code>Istio Gateway</code> resource describes the edge of the mesh receiving incoming or outgoing HTTP/TCP connections. The specification describes a set of ports
+that should be exposed and the type of protocol to use. If you are using <code>Standalone</code> mode, it installs the <code>Gateway</code> in <code>knative-serving</code> namespace,
+if you are using <code>Kubeflow KServe</code>(KServe installed with Kubeflow), it installs the <code>Gateway</code> in <code>kubeflow</code> namespace e.g on GCP the gateway is protected behind <code>IAP</code> with <a href="https://istio.io/docs/tasks/security/authentication/authn-policy">Istio authentication policy</a>.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl get gateway knative-ingress-gateway -n knative-serving -oyaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Gateway</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">labels</span><span class="p">:</span>
+    <span class="nt">networking.knative.dev/ingress-provider</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">istio</span>
+    <span class="nt">serving.knative.dev/release</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v0.12.1</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-ingress-gateway</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">selector</span><span class="p">:</span>
+    <span class="nt">istio</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ingressgateway</span>
+  <span class="nt">servers</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;*&#39;</span>
+    <span class="nt">port</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+      <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTTP</span>
+  <span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;*&#39;</span>
+    <span class="nt">port</span><span class="p">:</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">443</span>
+      <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTTPS</span>
+    <span class="nt">tls</span><span class="p">:</span>
+      <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SIMPLE</span>
+      <span class="nt">privateKey</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/istio/ingressgateway-certs/tls.key</span>
+      <span class="nt">serverCertificate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/istio/ingressgateway-certs/tls.crt</span>
+</code></pre></div>
+The <code>InferenceService</code> request routes to the <code>Istio Ingress Gateway</code> by matching the host and port from the url, by default http is configured, you can <a href="https://knative.dev/docs/serving/using-a-tls-cert">configure
+HTTPS with TLS certificates</a>.</p>
+<h3 id="2-kserve-istio-virtual-service-to-route-for-predictor-transformer-explainer">2. KServe <code>Istio virtual service</code> to route for predictor, transformer, explainer.<a class="headerlink" href="#2-kserve-istio-virtual-service-to-route-for-predictor-transformer-explainer" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl get vs sklearn-iris -oyaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VirtualService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+  <span class="nt">gateways</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
+  <span class="nt">hosts</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris.default.svc.cluster.local</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris.default.example.com</span>
+  <span class="nt">http</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">headers</span><span class="p">:</span>
+      <span class="nt">request</span><span class="p">:</span>
+        <span class="nt">set</span><span class="p">:</span>
+          <span class="nt">Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc.cluster.local</span>
+    <span class="nt">match</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
+        <span class="nt">regex</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^sklearn-iris\.default(\.svc(\.cluster\.local)?)?(?::\d{1,5})?$</span>
+      <span class="nt">gateways</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
+    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
+        <span class="nt">regex</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^sklearn-iris\.default\.example\.com(?::\d{1,5})?$</span>
+      <span class="nt">gateways</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
+    <span class="nt">route</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">destination</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-local-gateway.istio-system.svc.cluster.local</span>
+        <span class="nt">port</span><span class="p">:</span>
+          <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+      <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+</code></pre></div>
+<p>KServe creates the routing rule which by default routes to <code>Predictor</code> if you only have <code>Predictor</code> specified on <code>InferenceService</code>.
+When <code>Transformer</code> and <code>Explainer</code> are specified on <code>InferenceService</code> the routing rule configures the traffic to route to <code>Transformer</code>
+or <code>Explainer</code> based on the verb. The request then routes to the second level <code>Knative</code> created virtual service via local gateway with the matching host header.</p>
+<h3 id="3-knative-istio-virtual-service-to-route-the-inference-request-to-the-latest-ready-revision">3. Knative <code>Istio virtual service</code> to route the inference request to the latest ready revision.<a class="headerlink" href="#3-knative-istio-virtual-service-to-route-the-inference-request-to-the-latest-ready-revision" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl get vs sklearn-iris-predictor-default-ingress -oyaml
+</code></pre></div>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VirtualService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-mesh</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">gateways</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
+  <span class="nt">hosts</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.example.com</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc.cluster.local</span>
+  <span class="nt">http</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">match</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
+        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span>
+      <span class="nt">gateways</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
+    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
+        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc</span>
+      <span class="nt">gateways</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
+    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
+        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span>
+      <span class="nt">gateways</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
+    <span class="nt">retries</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+    <span class="nt">route</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">destination</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001.default.svc.cluster.local</span>
+        <span class="nt">port</span><span class="p">:</span>
+          <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+      <span class="nt">headers</span><span class="p">:</span>
+        <span class="nt">request</span><span class="p">:</span>
+          <span class="nt">set</span><span class="p">:</span>
+            <span class="nt">Knative-Serving-Namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+            <span class="nt">Knative-Serving-Revision</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001</span>
+      <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+  <span class="p p-Indicator">-</span> <span class="nt">match</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
+        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.example.com</span>
+      <span class="nt">gateways</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
+    <span class="nt">retries</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
+    <span class="nt">route</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">destination</span><span class="p">:</span>
+        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001.default.svc.cluster.local</span>
+        <span class="nt">port</span><span class="p">:</span>
+          <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+      <span class="nt">headers</span><span class="p">:</span>
+        <span class="nt">request</span><span class="p">:</span>
+          <span class="nt">set</span><span class="p">:</span>
+            <span class="nt">Knative-Serving-Namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+            <span class="nt">Knative-Serving-Revision</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001</span>
+      <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+</code></pre></div>
+The destination here is the <code>k8s Service</code> for the latest ready <code>Knative Revision</code> and it is reconciled by <code>Knative</code> every time
+user rolls out a new revision. When a new revision is rolled out and in ready state, the old revision is then scaled down, after
+configured revision GC time the revision resource is garbage collected if the revision no longer has traffic referenced.</p>
+<h3 id="4-kubernetes-service-routes-the-requests-to-the-queue-proxy-sidecar-of-the-inference-service-pod-on-port-8012">4. <code>Kubernetes Service</code> routes the requests to the <code>queue proxy</code> sidecar of the inference service pod on <code>port 8012</code>.<a class="headerlink" href="#4-kubernetes-service-routes-the-requests-to-the-queue-proxy-sidecar-of-the-inference-service-pod-on-port-8012" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code>kubectl get svc sklearn-iris-predictor-default-fhmjk-private -oyaml
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-fhmjk-private</span>
+  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">clusterIP</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.105.186.18</span>
+  <span class="nt">ports</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http</span>
+    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
+    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8012</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">queue-metrics</span>
+    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9090</span>
+    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
+    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">queue-metrics</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http-usermetric</span>
+    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9091</span>
+    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
+    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http-usermetric</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http-queueadm</span>
+    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8022</span>
+    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
+    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8022</span>
+  <span class="nt">selector</span><span class="p">:</span>
+    <span class="nt">serving.knative.dev/revisionUID</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">a8f1eafc-3c64-4930-9a01-359f3235333a</span>
+  <span class="nt">sessionAffinity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
 </code></pre></div></p>
-<p>Go to <code>python/kserve</code> and install kserve python sdk deps 
-<div class="highlight"><pre><span></span><code>pip3 install -r requirements.txt
-python3 setup.py install --force --user
-</code></pre></div>
-Then go to <code>test/e2e</code>. </p>
-<p>Run <code>kubectl create namespace kserve-ci-e2e-test</code></p>
-<p>For KIND/minikube:</p>
-<ul>
-<li>Run <code>export KSERVE_INGRESS_HOST_PORT=localhost:8080</code></li>
-<li>In a different window run <code>kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80</code></li>
-<li>Note that not all tests will pass as the pytorch test requires gpu. These will show as pending pods at the end or you can add marker to skip the test.</li>
-</ul>
-<p>Run <code>pytest &gt; testresults.txt</code></p>
-<p>Tests may not clean up. To re-run, first do <code>kubectl delete namespace kserve-ci-e2e-test</code>, recreate namespace and run again.</p>
-<h2 id="iterating">Iterating<a class="headerlink" href="#iterating" title="Permanent link">&para;</a></h2>
-<p>As you make changes to the code-base, there are two special cases to be aware
-of:</p>
-<ul>
-<li>
-<p><strong>If you change an input to generated code</strong>, then you must run
-  <code>make manifests</code>. Inputs include:</p>
-</li>
-<li>
-<p>API type definitions in
-    <a href="https://github.com/kserve/kserve/tree/master/pkg/apis/serving/v1beta1">apis/serving/v1beta1</a>,</p>
-</li>
-<li>
-<p>Manifests or kustomize patches stored in <a href="https://github.com/kserve/kserve/tree/master/config">config</a>.</p>
-</li>
-<li>
-<p><strong>If you want to add new dependencies</strong>, then you add the imports and the specific version of the dependency
-module in <code>go.mod</code>. When it encounters an import of a package not provided by any module in <code>go.mod</code>, the go
-command automatically looks up the module containing the package and adds it to <code>go.mod</code> using the latest version.</p>
-</li>
-<li>
-<p><strong>If you want to upgrade the dependency</strong>, then you run go get command e.g <code>go get golang.org/x/text</code> to upgrade
-to the latest version, <code>go get golang.org/x/text@v0.3.0</code> to upgrade to a specific version.</p>
-</li>
-</ul>
-<div class="highlight"><pre><span></span><code>make deploy-dev
-</code></pre></div>
+<h3 id="5-the-queue-proxy-routes-to-kserve-container-with-max-concurrent-requests-configured-with-containerconcurrency">5. The <code>queue proxy</code> routes to <code>kserve container</code> with max concurrent requests configured with <code>ContainerConcurrency</code>.<a class="headerlink" href="#5-the-queue-proxy-routes-to-kserve-container-with-max-concurrent-requests-configured-with-containerconcurrency" title="Permanent link">&para;</a></h3>
+<p>If the <code>queue proxy</code> has more requests than it can handle, the <a href="https://knative.dev/docs/serving/configuring-autoscaling/">Knative Autoscaler</a>
+creates more pods to handle additional requests.</p>
+<h3 id="6-finally-the-queue-proxy-routes-traffic-to-the-kserve-container-for-processing-the-inference-requests">6. Finally The <code>queue proxy</code> routes traffic to the <code>kserve-container</code> for processing the inference requests.<a class="headerlink" href="#6-finally-the-queue-proxy-routes-traffic-to-the-kserve-container-for-processing-the-inference-requests" title="Permanent link">&para;</a></h3>
                 
               
               
@@ -2125,7 +2208,7 @@ to the latest version, <code>go get golang.org/x/text@v0.3.0</code> to upgrade t
   
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
-        <a href="../../sdk_docs/sdk_doc/" class="md-footer__link md-footer__link--prev" rel="prev">
+        <a href="../developer/" class="md-footer__link md-footer__link--prev" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2134,19 +2217,19 @@ to the latest version, <code>go get golang.org/x/text@v0.3.0</code> to upgrade t
               <span class="md-footer__direction">
                 Previous
               </span>
-              Python Client SDK
+              How to contribute
             </div>
           </div>
         </a>
       
       
-        <a href="../debug/" class="md-footer__link md-footer__link--next" rel="next">
+        <a href="../../blog/articles/2021-09-27-kfserving-transition/" class="md-footer__link md-footer__link--next" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Debugging guide
+              KFserving Transition
             </div>
           </div>
           <div class="md-footer__button md-icon">

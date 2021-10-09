@@ -1,175 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://kserve.io/docs/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/get_started/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/get_started/first_isvc/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/admin/serverless/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/admin/kubernetes_deployment/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/admin/modelmesh/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/control_plane/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/data_plane/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/inference_api/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/tensorflow/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/torchserve/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/sklearn/v2/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/xgboost/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/pmml/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/spark/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/lightgbm/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/paddle/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/custom/custom_model/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/mms/multi-model-serving/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/mms/modelmesh/overview/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/transformer/feast/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/v1beta1/transformer/torchserve_image_transformer/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/storage/azure/azure/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/storage/pvc/pvc/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/storage/s3/s3/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/storage/uri/uri/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/explainer/explainer/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/explainer/alibi/cifar10/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/explainer/alibi/income/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/explainer/alibi/moviesentiment/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/explainer/aix/mnist/aix/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/detect/alibi_detect/alibi_detect/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/detect/aif/germancredit/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/detect/art/mnist/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/batcher/batcher/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/logger/logger/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/autoscaling/autoscaling/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/modelserving/kafka/kafka/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/reference/api/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/sdk_docs/sdk_doc/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/developer/developer/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://kserve.io/docs/developer/debug/</loc>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/blog/articles/2021-09-27-kfserving-transition/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://kserve.io/docs/community/adopters/</loc>
-     <lastmod>2021-10-08</lastmod>
+     <lastmod>2021-10-09</lastmod>
+     <changefreq>daily</changefreq>
+    </url><url>
+     <loc>https://kserve.io/docs/community/presentations/</loc>
+     <lastmod>2021-10-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
