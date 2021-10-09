@@ -238,7 +238,7 @@ kubectl apply -f autoscale-gpu.yaml
 
 ### Predict InferenceService with concurrent requests
 
-The first step is to [determine the ingress IP and ports](../../../README.md#determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 Send 30 seconds of traffic maintaining 5 in-flight requests.
 

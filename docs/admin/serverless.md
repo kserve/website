@@ -2,13 +2,24 @@
 KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
-Kubernetes 1.17 is the minimally recommended version and Knative Serving and Istio should be available on Kubernetes Cluster.
+Kubernetes 1.17 is the minimally required version and please check the following recommended Knative versions, Istio versions for the corresponding
+Kubernetes version.
+
+## Supported Version Matrix
+| Kubernetes Version | Recommended Istio Version   | Recommended Knative Version  |
+| :---------- | :------------ | :------------|
+| 1.17       | 1.9  | 0.19, 0.20  |
+| 1.18       | 1.9, 1.10 | 0.21, 0.22 |
+| 1.19       | 1.9, 1.10, 1.11   | 0.23, 0.24 |
+| 1.20       | 1.9, 1.10, 1.11   | 0.24, 0.25  |
+| 1.21       | 1.10, 1.11   | 0.25, 0.26  |
+| 1.22       | 1.11   | 0.25, 0.26  |
 
 ## 1. Install Istio
-The minimally required Istio version is 1.9.5 and you can refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
+Please refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
 
 ## 2. Install Knative Serving
-The minimally required Knative Serving version is 0.19.0 and you can refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
+Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
 
 !!! note
     If you are looking to use PodSpec fields such as nodeSelector, affinity or tolerations which are now supported in the v1beta1 API spec, 
