@@ -80,8 +80,7 @@ HTTPS with TLS certificates](https://knative.dev/docs/serving/using-a-tls-cert).
 kubectl get vs sklearn-iris -oyaml
 ```
 
-==== "YAML"
-```
+```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -141,44 +140,6 @@ spec:
   - sklearn-iris-predictor-default.default.svc
   - sklearn-iris-predictor-default.default.svc.cluster.local
   http:
-  - headers:
-      request:
-        set:
-          K-Network-Hash: fb61ebcd84e5af92624f7b01823bea2e40e2f6df37bce2bcce71d5dbcca26a8b
-    match:
-    - authority:
-        prefix: sklearn-iris-predictor-default.default
-      gateways:
-      - knative-serving/knative-local-gateway
-      headers:
-        K-Network-Hash:
-          exact: override
-    - authority:
-        prefix: sklearn-iris-predictor-default.default.svc
-      gateways:
-      - knative-serving/knative-local-gateway
-      headers:
-        K-Network-Hash:
-          exact: override
-    - authority:
-        prefix: sklearn-iris-predictor-default.default
-      gateways:
-      - knative-serving/knative-local-gateway
-      headers:
-        K-Network-Hash:
-          exact: override
-    retries: {}
-    route:
-    - destination:
-        host: sklearn-iris-predictor-default-00001.default.svc.cluster.local
-        port:
-          number: 80
-      headers:
-        request:
-          set:
-            Knative-Serving-Namespace: default
-            Knative-Serving-Revision: sklearn-iris-predictor-default-00001
-      weight: 100
   - match:
     - authority:
         prefix: sklearn-iris-predictor-default.default
@@ -192,30 +153,6 @@ spec:
         prefix: sklearn-iris-predictor-default.default
       gateways:
       - knative-serving/knative-local-gateway
-    retries: {}
-    route:
-    - destination:
-        host: sklearn-iris-predictor-default-00001.default.svc.cluster.local
-        port:
-          number: 80
-      headers:
-        request:
-          set:
-            Knative-Serving-Namespace: default
-            Knative-Serving-Revision: sklearn-iris-predictor-default-00001
-      weight: 100
-  - headers:
-      request:
-        set:
-          K-Network-Hash: fb61ebcd84e5af92624f7b01823bea2e40e2f6df37bce2bcce71d5dbcca26a8b
-    match:
-    - authority:
-        prefix: sklearn-iris-predictor-default.default.example.com
-      gateways:
-      - knative-serving/knative-ingress-gateway
-      headers:
-        K-Network-Hash:
-          exact: override
     retries: {}
     route:
     - destination:
