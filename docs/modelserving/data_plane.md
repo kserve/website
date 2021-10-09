@@ -33,4 +33,4 @@ All InferenceServices that are deployed with an Explainer support a standardized
 The second version of the data-plane protocol addresses several issues found with the V1 data-plane protocol, including performance and generality across a large number of model frameworks and servers.
 
 #### Predict
-The V2 protocol proposes both HTTP/REST and GRPC APIs. See the [complete specification](../inference_api) for more information.
+The V2 protocol proposes both HTTP/REST and GRPC APIs. See the [complete specification](./inference_api.md) for more information.
