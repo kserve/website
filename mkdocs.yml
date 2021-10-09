@@ -8,12 +8,6 @@ nav:
                 - Serverless installation: admin/serverless.md
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - ModelMesh installation: admin/modelmesh.md
-          - KServe Configurations:
-              -  InferenceService configuration: admin/config.md
-          - KServe Observability:
-                - Logging: admin/logging.md
-                - Metrics: admin/metrics.md
-                - Distributed Tracing: admin/dt.md
     - User Guide:
           - Concepts:
                 - Control Plane:
@@ -24,7 +18,7 @@ nav:
           - Single Model Serving:
             - Tensorflow: modelserving/v1beta1/tensorflow/README.md
             - PyTorch: modelserving/v1beta1/torchserve/README.md
-            - scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
+            - Scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
             - XGBoost: modelserving/v1beta1/xgboost/README.md
             - PMML: modelserving/v1beta1/pmml/README.md
             - Spark: modelserving/v1beta1/spark/README.md
@@ -43,20 +37,20 @@ nav:
                 - PVC: modelserving/storage/pvc/pvc.md
                 - S3: modelserving/storage/s3/s3.md
                 - URI: modelserving/storage/uri/uri.md
-          - Explainers:
+          - Model Explainability:
                 - Concept: modelserving/explainer/explainer.md
                 - Alibi Explainer:
                   - Image Explainer: modelserving/explainer/alibi/cifar10/README.md
                   - Income Explainer: modelserving/explainer/alibi/income/README.md
                   - Text Explainer: modelserving/explainer/alibi/moviesentiment/README.md
                 - AIX Explainer: modelserving/explainer/aix/mnist/aix.md
-          - Detectors:
+          - Model Monitoring:
                 - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
                 - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
                 - ART Adversial Detector: modelserving/detect/art/mnist/README.md
-          - Batcher:
+          - Request Batching:
                 - Inference Batcher: modelserving/batcher/batcher.md
-          - Logger:
+          - Payload Logging:
                 - Inference Logger: modelserving/logger/logger.md
           - Autoscaling:
                 - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
@@ -73,7 +67,6 @@ nav:
             - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
     - Community:
         - Adopters: community/adopters.md
-        - Roadmap: community/roadmap.md
         - Demos and Presentations: community/presentations.md
 
 site_name: KServe Documentation Website
