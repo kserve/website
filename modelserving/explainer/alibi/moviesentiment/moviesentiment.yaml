@@ -10,7 +10,7 @@ spec:
       resources:
         requests:
           cpu: 0.1
-          memory: 1Gi                        
+          memory: 1Gi
         limits:
           cpu: 1
           memory: 1Gi                        
@@ -21,6 +21,6 @@ spec:
       resources:
         requests:
           cpu: 0.1
-          memory: 6Gi            
+          memory: 2Gi
         limits:
           memory: 6Gi

@@ -1771,23 +1771,22 @@ More details on this algorithm and configuration settings that can be set can be
 <h2 id="run-inference-and-explanation">Run Inference and Explanation<a class="headerlink" href="#run-inference-and-explanation" title="Permanent link">&para;</a></h2>
 <p>Set up some environment variables for the model name and cluster entrypoint.</p>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=moviesentiment
-INGRESS_GATEWAY=istio-ingressgateway
-CLUSTER_IP=$(kubectl -n istio-system get service $INGRESS_GATEWAY -o jsonpath=&#39;{.status.loadBalancer.ingress[0].ip}&#39;)
+SERVICE_HOSTNAME=$(kubectl get inferenceservice moviesentiment -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
 </code></pre></div>
 <p>Test the predictor on an example sentence:</p>
-<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${MODEL_NAME}.default.example.com&quot; http://$CLUSTER_IP/v1/models/$MODEL_NAME:predict -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
 </code></pre></div>
 <p>You should receive the response showing negative sentiment:</p>
 <div class="highlight"><pre><span></span><code>{&quot;predictions&quot;: [0]}
 </code></pre></div>
 <p>Test on another sentence:</p>
-<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${MODEL_NAME}.default.example.com&quot; http://$CLUSTER_IP/v1/models/$MODEL_NAME:predict -d &#39;{&quot;instances&quot;:[&quot;a touching , sophisticated film that almost seems like a documentary in the way it captures an italian immigrant family on the brink of major changes .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d &#39;{&quot;instances&quot;:[&quot;a touching , sophisticated film that almost seems like a documentary in the way it captures an italian immigrant family on the brink of major changes .&quot;]}&#39;
 </code></pre></div>
 <p>You should receive the response showing positive sentiment:</p>
 <div class="highlight"><pre><span></span><code>{&quot;predictions&quot;: [1]}
 </code></pre></div>
 <p>Now lets get an explanation for the first sentence:</p>
-<div class="highlight"><pre><span></span><code>curl -v -H &quot;Host: ${MODEL_NAME}.default.example.com&quot; http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>{
@@ -1896,26 +1895,26 @@ CLUSTER_IP=$(kubectl -n istio-system get service $INGRESS_GATEWAY -o jsonpath=&#
 <p>This shows the key word "bad" was indetified and examples show it in context using the default "UKN" placeholder for surrounding words.</p>
 <h2 id="custom-configuration">Custom Configuration<a class="headerlink" href="#custom-configuration" title="Permanent link">&para;</a></h2>
 <p>You can add custom configuration for the Anchor Text explainer in the 'config' section. For example we can change the text explainer to sample from the corpus rather than use UKN placeholders:</p>
-<div class="highlight"><pre><span></span><code>apiVersion: &quot;serving.kserve.io/v1beta1&quot;
-kind: &quot;InferenceService&quot;
-metadata:
-  name: &quot;moviesentiment&quot;
-spec:
-  predictor:
-    sklearn:
-      storageUri: &quot;gs://seldon-models/sklearn/moviesentiment&quot;
-      resources:
-        requests:
-          cpu: 0.1
-  explainer:
-    alibi:
-      type: AnchorText
-      config:
-        use_unk: &quot;false&quot;
-        sample_proba: &quot;0.5&quot;   
-      resources:
-        requests:
-          cpu: 0.1
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;moviesentiment&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">predictor</span><span class="p">:</span>
+    <span class="nt">sklearn</span><span class="p">:</span>
+      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://seldon-models/sklearn/moviesentiment&quot;</span>
+      <span class="nt">resources</span><span class="p">:</span>
+        <span class="nt">requests</span><span class="p">:</span>
+          <span class="nt">cpu</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+  <span class="nt">explainer</span><span class="p">:</span>
+    <span class="nt">alibi</span><span class="p">:</span>
+      <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AnchorText</span>
+      <span class="nt">config</span><span class="p">:</span>
+        <span class="nt">use_unk</span><span class="p">:</span> <span class="s">&quot;false&quot;</span>
+        <span class="nt">sample_proba</span><span class="p">:</span> <span class="s">&quot;0.5&quot;</span>   
+      <span class="nt">resources</span><span class="p">:</span>
+        <span class="nt">requests</span><span class="p">:</span>
+          <span class="nt">cpu</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
 </code></pre></div>
 <p>If we apply this:</p>
 <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">kubectl</label><div class="tabbed-content"></div>
@@ -1923,7 +1922,7 @@ spec:
 <div class="highlight"><pre><span></span><code>kubectl create -f moviesentiment2.yaml
 </code></pre></div>
 <p>and then ask for an explanation:</p>
-<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${MODEL_NAME}.default.example.com&quot; http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>{
