@@ -4,7 +4,7 @@
 
 ### Create Message Dumper
 
-Create a message dumper Knative service which will print out the CloudEvents it receives.
+Create a message dumper `Knative Service` which will print out the CloudEvents it receives.
 
 === "yaml"
 ```yaml
@@ -26,8 +26,7 @@ kubectl create -f message-dumper.yaml
 
 ### Create an InferenceService with Logger
 
-Create a sklearn predictor with a logger which points at the message dumper.
-
+Create a sklearn predictor with the logger which points at the message dumper url.
 
 === "yaml"
 ```yaml
@@ -44,7 +43,8 @@ spec:
       storageUri: gs://kfserving-samples/models/sklearn/iris
 ```
 
-(Here we set the url explicitly. otherwise it defaults to the namespace knative broker or the value of DefaultUrl in the logger section of the controller configmap.)
+!!! Note
+    Here we set the url explicitly, otherwise it defaults to the namespace knative broker or the value of `DefaultUrl` in the logger section of the inference service configmap.
 
 === "kubectl"
 ```bash
@@ -157,7 +157,7 @@ spec:
     spec:
       containers:
       - image: gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/event_display
-    ```
+```
 
 === "kubectl"
 ```bash
@@ -166,7 +166,7 @@ kubectl apply -f message-dumper.yaml
 
 ### Create Channel Broker
 
-Create a [Broker](https://knative.dev/docs/eventing/getting-started/)
+Create a [Broker](https://knative.dev/docs/eventing/broker/) which allows you route events to consumers like InferenceService.
 
 === "yaml"
 ```yaml
@@ -187,7 +187,8 @@ Take note of the broker **URL** as that is what we'll be using in the InferenceS
 
 ### Create Trigger
 
-We now create a trigger to pass events to our message-dumper service.
+We now create a [trigger](https://knative.dev/docs/eventing/broker/triggers/) to forward the events to message-dumper service.
+The trigger can specify a filter that enables selection of relevant events based on the Cloud Event context attributes.
 
 === "yaml"
 ```yaml
@@ -211,7 +212,7 @@ kubectl create -f trigger.yaml
 
 ### Create an InferenceService with Logger
 
-Create a sklearn predictor with a logger.
+Create a sklearn predictor with the `logger url` pointing to the Knative eventing multi-tenant broker in `knative-eventing` namespace.
 
 === "yaml"
 ```yaml
