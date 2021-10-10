@@ -905,8 +905,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arguments-and-environment-variables" class="md-nav__link">
-    Arguments and Environment Variables
+  <a href="#arguments" class="md-nav__link">
+    Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment Variables
   </a>
   
 </li>
@@ -1807,8 +1814,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#arguments-and-environment-variables" class="md-nav__link">
-    Arguments and Environment Variables
+  <a href="#arguments" class="md-nav__link">
+    Arguments
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment Variables
   </a>
   
 </li>
@@ -1949,7 +1963,7 @@ In the <code>custom.yaml</code> file edit the container image and replace {usern
 <p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/custom-model created
 </code></pre></div></p>
-<h3 id="arguments-and-environment-variables">Arguments and Environment Variables<a class="headerlink" href="#arguments-and-environment-variables" title="Permanent link">&para;</a></h3>
+<h3 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">&para;</a></h3>
 <p>You can supply additional command arguments on the container spec to configure the model server.</p>
 <ul>
 <li><code>--workers</code>: fork the specified number of model server workers(multi-processing), the default value is 1. If you start the server after model is loaded
@@ -1958,6 +1972,12 @@ class with replicas and in this case each model server is created as a python wo
 <li><code>--http_port</code>: the http port model server is listening on, the default port is 8080 </li>
 <li><code>--max_buffer_size</code>: Max socker buffer size for tornado http client, the default limit is 10Mi.</li>
 <li><code>--max_asyncio_workers</code>: Max number of workers to spawn for python async io loop, by default it is <code>min(32,cpu.limit + 4)</code></li>
+</ul>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<p>You can supply additional environment variables on the container spec.</p>
+<ul>
+<li><code>STORAGE_URI</code>: load a model from a storage system supported by KServe e.g. <code>pvc://</code> <code>s3://</code>. This acts the same as <code>storageUri</code> when using a built-in predictor.
+The data will be available at <code>/mnt/models</code> in the container. For example, the following <code>STORAGE_URI: "pvc://my_model/model.onnx"</code> will be accessible at <code>/mnt/models/model.onnx</code></li>
 </ul>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>

@@ -1838,7 +1838,7 @@
                 <h1 id="inference-logger">Inference Logger<a class="headerlink" href="#inference-logger" title="Permanent link">&para;</a></h1>
 <h2 id="basic-inference-logger">Basic Inference Logger<a class="headerlink" href="#basic-inference-logger" title="Permanent link">&para;</a></h2>
 <h3 id="create-message-dumper">Create Message Dumper<a class="headerlink" href="#create-message-dumper" title="Permanent link">&para;</a></h3>
-<p>Create a message dumper Knative service which will print out the CloudEvents it receives.</p>
+<p>Create a message dumper <code>Knative Service</code> which will print out the CloudEvents it receives.</p>
 <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">yaml</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.knative.dev/v1</span>
@@ -1856,7 +1856,7 @@
 <div class="highlight"><pre><span></span><code>kubectl create -f message-dumper.yaml
 </code></pre></div>
 <h3 id="create-an-inferenceservice-with-logger">Create an InferenceService with Logger<a class="headerlink" href="#create-an-inferenceservice-with-logger" title="Permanent link">&para;</a></h3>
-<p>Create a sklearn predictor with a logger which points at the message dumper.</p>
+<p>Create a sklearn predictor with the logger which points at the message dumper url.</p>
 <div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">yaml</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
@@ -1871,7 +1871,10 @@
     <span class="nt">sklearn</span><span class="p">:</span>
       <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gs://kfserving-samples/models/sklearn/iris</span>
 </code></pre></div>
-<p>(Here we set the url explicitly. otherwise it defaults to the namespace knative broker or the value of DefaultUrl in the logger section of the controller configmap.)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here we set the url explicitly, otherwise it defaults to the namespace knative broker or the value of <code>DefaultUrl</code> in the logger section of the inference service configmap.</p>
+</div>
 <div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">kubectl</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl create -f sklearn-basic-logger.yaml
@@ -1967,22 +1970,21 @@ Data,
     <span class="nt">spec</span><span class="p">:</span>
       <span class="nt">containers</span><span class="p">:</span>
       <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gcr.io/knative-releases/knative.dev/eventing-contrib/cmd/event_display</span>
-    <span class="err">```</span>
-
-<span class="l l-Scalar l-Scalar-Plain">=== &quot;kubectl&quot;</span>
-<span class="err">```</span><span class="l l-Scalar l-Scalar-Plain">bash</span>
-<span class="l l-Scalar l-Scalar-Plain">kubectl apply -f message-dumper.yaml</span>
+</code></pre></div>
+<div class="tabbed-set" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">kubectl</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>kubectl apply -f message-dumper.yaml
 </code></pre></div>
 <h3 id="create-channel-broker">Create Channel Broker<a class="headerlink" href="#create-channel-broker" title="Permanent link">&para;</a></h3>
-<p>Create a <a href="https://knative.dev/docs/eventing/getting-started/">Broker</a></p>
-<div class="tabbed-set" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">yaml</label><div class="tabbed-content"></div>
+<p>Create a <a href="https://knative.dev/docs/eventing/broker/">Broker</a> which allows you route events to consumers like InferenceService.</p>
+<div class="tabbed-set" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">yaml</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eventing.knative.dev/v1</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">broker</span>
 <span class="nt">metadata</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set" data-tabs="9:1"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">kubectl</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f broker.yaml
 
@@ -1990,8 +1992,9 @@ kubectl get broker default
 </code></pre></div>
 <p>Take note of the broker <strong>URL</strong> as that is what we'll be using in the InferenceService later on.</p>
 <h3 id="create-trigger">Create Trigger<a class="headerlink" href="#create-trigger" title="Permanent link">&para;</a></h3>
-<p>We now create a trigger to pass events to our message-dumper service.</p>
-<div class="tabbed-set" data-tabs="9:1"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">yaml</label><div class="tabbed-content"></div>
+<p>We now create a <a href="https://knative.dev/docs/eventing/broker/triggers/">trigger</a> to forward the events to message-dumper service.
+The trigger can specify a filter that enables selection of relevant events based on the Cloud Event context attributes.</p>
+<div class="tabbed-set" data-tabs="10:1"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">yaml</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eventing.knative.dev/v1</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Trigger</span>
@@ -2005,13 +2008,13 @@ kubectl get broker default
       <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Service</span>
       <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">message-dumper</span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="10:1"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set" data-tabs="11:1"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">kubectl</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl create -f trigger.yaml
 </code></pre></div>
 <h3 id="create-an-inferenceservice-with-logger_1">Create an InferenceService with Logger<a class="headerlink" href="#create-an-inferenceservice-with-logger_1" title="Permanent link">&para;</a></h3>
-<p>Create a sklearn predictor with a logger.</p>
-<div class="tabbed-set" data-tabs="11:1"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">yaml</label><div class="tabbed-content"></div>
+<p>Create a sklearn predictor with the <code>logger url</code> pointing to the Knative eventing multi-tenant broker in <code>knative-eventing</code> namespace.</p>
+<div class="tabbed-set" data-tabs="12:1"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">yaml</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
@@ -2026,7 +2029,7 @@ kubectl get broker default
     <span class="nt">sklearn</span><span class="p">:</span>
       <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gs://kfserving-samples/models/sklearn/iris</span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="12:1"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set" data-tabs="13:1"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">kubectl</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl create -f sklearn-knative-eventing.yaml
 </code></pre></div>
@@ -2044,7 +2047,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 </code></pre></div>
 <h3 id="check-cloudevents_1">Check CloudEvents<a class="headerlink" href="#check-cloudevents_1" title="Permanent link">&para;</a></h3>
 <p>Check the logs of the message dumper, we can see the CloudEvents associated with our previous curl request.</p>
-<div class="tabbed-set" data-tabs="13:1"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set" data-tabs="14:1"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><label for="__tabbed_14_1">kubectl</label><div class="tabbed-content"></div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl logs <span class="k">$(</span>kubectl get pod -l serving.knative.dev/service<span class="o">=</span>message-dumper -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.items[0].metadata.name}&#39;</span><span class="k">)</span> user-container
 </code></pre></div>
