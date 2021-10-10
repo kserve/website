@@ -47,19 +47,17 @@ Create the InferenceService with above yaml:
 kubectl create -f income.yaml
 ```
 
-Set up some environment variables for the model name and cluster entrypoint.
-
+The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 ```
 MODEL_NAME=income
-INGRESS_GATEWAY=istio-ingressgateway
-CLUSTER_IP=$(kubectl -n istio-system get service $INGRESS_GATEWAY -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+SERVICE_HOSTNAME=$(kubectl get inferenceservice income -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
 ### Run the inference
 Test the predictor:
 
 ```
-curl -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:predict -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
+curl -H "Host: $SERVICE_HOSTNAME" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
 ```
 
 You should receive the response showing the prediction is for low salary:
@@ -72,7 +70,7 @@ You should receive the response showing the prediction is for low salary:
 Now lets get an explanation for this:
 
 ```
-curl -v -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
+curl -H "Host: $SERVICE_HOSTNAME" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
 ```
 
 The returned explanation will be like:

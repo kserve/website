@@ -50,14 +50,13 @@ Set up some environment variables for the model name and cluster entrypoint.
 
 ```
 MODEL_NAME=moviesentiment
-INGRESS_GATEWAY=istio-ingressgateway
-CLUSTER_IP=$(kubectl -n istio-system get service $INGRESS_GATEWAY -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+SERVICE_HOSTNAME=$(kubectl get inferenceservice moviesentiment -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
 Test the predictor on an example sentence:
 
 ```
-curl -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:predict -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
+curl -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
 ```
 
 You should receive the response showing negative sentiment:
@@ -69,7 +68,7 @@ You should receive the response showing negative sentiment:
 Test on another sentence:
 
 ```
-curl -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:predict -d '{"instances":["a touching , sophisticated film that almost seems like a documentary in the way it captures an italian immigrant family on the brink of major changes ."]}'
+curl -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d '{"instances":["a touching , sophisticated film that almost seems like a documentary in the way it captures an italian immigrant family on the brink of major changes ."]}'
 ```
 
 You should receive the response showing positive sentiment:
@@ -82,7 +81,7 @@ Now lets get an explanation for the first sentence:
 
 
 ```
-curl -v -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
 ```
 
 ==** Expected Output **==
@@ -200,7 +199,7 @@ This shows the key word "bad" was indetified and examples show it in context usi
 
 You can add custom configuration for the Anchor Text explainer in the 'config' section. For example we can change the text explainer to sample from the corpus rather than use UKN placeholders:
 
-```
+```yaml
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
@@ -233,7 +232,7 @@ kubectl create -f moviesentiment2.yaml
 and then ask for an explanation:
 
 ```
-curl -H "Host: ${MODEL_NAME}.default.example.com" http://$CLUSTER_IP/v1/models/$MODEL_NAME:explain -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
+curl -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d '{"instances":["a visually flashy but narratively opaque and emotionally vapid exercise ."]}'
 ```
 
 ==** Expected Output **==
