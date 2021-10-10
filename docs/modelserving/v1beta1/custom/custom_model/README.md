@@ -121,7 +121,7 @@ kubectl apply -f custom.yaml
 $ inferenceservice.serving.kserve.io/custom-model created
 ```
 
-### Arguments and Environment Variables
+### Arguments
 You can supply additional command arguments on the container spec to configure the model server.
 
 - `--workers`: fork the specified number of model server workers(multi-processing), the default value is 1. If you start the server after model is loaded
@@ -130,6 +130,13 @@ class with replicas and in this case each model server is created as a python wo
 - `--http_port`: the http port model server is listening on, the default port is 8080 
 - `--max_buffer_size`: Max socker buffer size for tornado http client, the default limit is 10Mi.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`
+
+### Environment Variables
+
+You can supply additional environment variables on the container spec.
+
+- `STORAGE_URI`: load a model from a storage system supported by KServe e.g. `pvc://` `s3://`. This acts the same as `storageUri` when using a built-in predictor.
+The data will be available at `/mnt/models` in the container. For example, the following `STORAGE_URI: "pvc://my_model/model.onnx"` will be accessible at `/mnt/models/model.onnx`
 
 ### Run a prediction
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
