@@ -16,6 +16,7 @@ nav:
                   - Model Serving Data Plane: modelserving/data_plane.md
                   - V2 Inference Protocol: modelserving/inference_api.md
           - Single Model Serving:
+            - Overview: modelserving/v1beta1/serving_runtime.md
             - Tensorflow: modelserving/v1beta1/tensorflow/README.md
             - PyTorch: modelserving/v1beta1/torchserve/README.md
             - Scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
