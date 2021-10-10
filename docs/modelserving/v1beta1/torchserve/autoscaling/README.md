@@ -1,22 +1,25 @@
-# Autoscaling
-KServe supports the implementation of Knative Pod Autoscaler (KPA) and Kubernetes’ Horizontal Pod Autoscaler (HPA).
+# Autoscaling with PyTorch InferenceService
+
+## Knative Autoscaler
+KServe supports the implementation of **Knative Pod Autoscaler (KPA)** and **Kubernetes’ Horizontal Pod Autoscaler (HPA)**.
 The features and limitations of each of these Autoscalers are listed below.
 
-IMPORTANT: If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install [HPA extension](https://knative.dev/docs/install/any-kubernetes-cluster/#optional-serving-extensions)
- after you install Knative Serving.
+!!! Note
+    If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install [HPA extension](https://knative.dev/docs/install/any-kubernetes-cluster/#optional-serving-extensions)
 
 Knative Pod Autoscaler (KPA)
+
 - Part of the Knative Serving core and enabled by default once Knative Serving is installed.
 - Supports scale to zero functionality.
 - Does not support CPU-based autoscaling.
 
 Horizontal Pod Autoscaler (HPA)
+
 - Not part of the Knative Serving core, and must be enabled after Knative Serving installation.
 - Does not support scale to zero functionality.
 - Supports CPU-based autoscaling.
 
 ## Create InferenceService with concurrency target
-
 
 ### Soft limit
 You can configure InferenceService with annotation `autoscaling.knative.dev/target` for a soft limit. The soft limit is a targeted limit rather than
@@ -55,7 +58,7 @@ spec:
 ### Create the InferenceService
 
 ```bash
-kubectl apply -f torchserve.yaml
+kubectl apply -f autoscaling.yaml
 ```
 
 Expected Output
