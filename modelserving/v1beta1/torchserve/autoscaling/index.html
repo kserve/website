@@ -18,7 +18,7 @@
     
     
       
-        <title>Autoscaling - KServe Documentation Website</title>
+        <title>Autoscaling with PyTorch InferenceService - KServe Documentation Website</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autoscaling" class="md-skip">
+        <a href="#autoscaling-with-pytorch-inferenceservice" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Autoscaling
+              Autoscaling with PyTorch InferenceService
             
           </span>
         </div>
@@ -689,6 +689,18 @@
           Single Model Serving
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serving_runtime/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
           
             
   
@@ -1604,6 +1616,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#knative-autoscaler" class="md-nav__link">
+    Knative Autoscaler
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-inferenceservice-with-concurrency-target" class="md-nav__link">
     Create InferenceService with concurrency target
   </a>
@@ -1674,19 +1693,26 @@
                   </a>
                 
                 
-                <h1 id="autoscaling">Autoscaling<a class="headerlink" href="#autoscaling" title="Permanent link">&para;</a></h1>
-<p>KServe supports the implementation of Knative Pod Autoscaler (KPA) and Kubernetes’ Horizontal Pod Autoscaler (HPA).
+                <h1 id="autoscaling-with-pytorch-inferenceservice">Autoscaling with PyTorch InferenceService<a class="headerlink" href="#autoscaling-with-pytorch-inferenceservice" title="Permanent link">&para;</a></h1>
+<h2 id="knative-autoscaler">Knative Autoscaler<a class="headerlink" href="#knative-autoscaler" title="Permanent link">&para;</a></h2>
+<p>KServe supports the implementation of <strong>Knative Pod Autoscaler (KPA)</strong> and <strong>Kubernetes’ Horizontal Pod Autoscaler (HPA)</strong>.
 The features and limitations of each of these Autoscalers are listed below.</p>
-<p>IMPORTANT: If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install <a href="https://knative.dev/docs/install/any-kubernetes-cluster/#optional-serving-extensions">HPA extension</a>
- after you install Knative Serving.</p>
-<p>Knative Pod Autoscaler (KPA)
-- Part of the Knative Serving core and enabled by default once Knative Serving is installed.
-- Supports scale to zero functionality.
-- Does not support CPU-based autoscaling.</p>
-<p>Horizontal Pod Autoscaler (HPA)
-- Not part of the Knative Serving core, and must be enabled after Knative Serving installation.
-- Does not support scale to zero functionality.
-- Supports CPU-based autoscaling.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install <a href="https://knative.dev/docs/install/any-kubernetes-cluster/#optional-serving-extensions">HPA extension</a></p>
+</div>
+<p>Knative Pod Autoscaler (KPA)</p>
+<ul>
+<li>Part of the Knative Serving core and enabled by default once Knative Serving is installed.</li>
+<li>Supports scale to zero functionality.</li>
+<li>Does not support CPU-based autoscaling.</li>
+</ul>
+<p>Horizontal Pod Autoscaler (HPA)</p>
+<ul>
+<li>Not part of the Knative Serving core, and must be enabled after Knative Serving installation.</li>
+<li>Does not support scale to zero functionality.</li>
+<li>Supports CPU-based autoscaling.</li>
+</ul>
 <h2 id="create-inferenceservice-with-concurrency-target">Create InferenceService with concurrency target<a class="headerlink" href="#create-inferenceservice-with-concurrency-target" title="Permanent link">&para;</a></h2>
 <h3 id="soft-limit">Soft limit<a class="headerlink" href="#soft-limit" title="Permanent link">&para;</a></h3>
 <p>You can configure InferenceService with annotation <code>autoscaling.knative.dev/target</code> for a soft limit. The soft limit is a targeted limit rather than
@@ -1716,7 +1742,7 @@ If concurrency reaches the hard limit, surplus requests will be buffered and mus
       <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-examples/models/torchserve/image_classifier&quot;</span>
 </code></pre></div>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl apply -f torchserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl apply -f autoscaling.yaml
 </code></pre></div>
 <p>Expected Output</p>
 <div class="highlight"><pre><span></span><code><span class="nv">$inferenceservice</span>.serving.kserve.io/torchserve created

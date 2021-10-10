@@ -18,7 +18,7 @@
     
     
       
-        <title>Metrics - KServe Documentation Website</title>
+        <title>Expose TorchServe Metrics - KServe Documentation Website</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#metrics" class="md-skip">
+        <a href="#expose-torchserve-metrics" class="md-skip">
           Skip to content
         </a>
       
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Metrics
+              Expose TorchServe Metrics
             
           </span>
         </div>
@@ -689,6 +689,18 @@
           Single Model Serving
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../serving_runtime/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
           
             
   
@@ -1604,36 +1616,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    Setup
+  <a href="#install-istio-with-grafana-and-prometheus" class="md-nav__link">
+    Install Istio with Grafana and Prometheus
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#open-the-istio-dashboard-via-the-grafana-ui-and-prometheus-ui" class="md-nav__link">
-    Open the Istio Dashboard via the Grafana UI and Prometheus UI
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#access-prometheus-and-grafana" class="md-nav__link">
-    Access prometheus and grafana
-  </a>
-  
-    <nav class="md-nav" aria-label="Access prometheus and grafana">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#deployment-yaml" class="md-nav__link">
-    Deployment yaml
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1652,19 +1637,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#inference" class="md-nav__link">
-    Inference
+  <a href="#check-the-dashboard" class="md-nav__link">
+    Check the dashboard
   </a>
   
-    <nav class="md-nav" aria-label="Inference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-data-source" class="md-nav__link">
-    Adding data source
-  </a>
-  
-    <nav class="md-nav" aria-label="Adding data source">
+    <nav class="md-nav" aria-label="Check the dashboard">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1678,11 +1655,6 @@
   <a href="#grafana-dashboard" class="md-nav__link">
     Grafana dashboard
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1708,25 +1680,19 @@
                   </a>
                 
                 
-                <h1 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h1>
-<p>This adds prometheus and granfana to the cluster with some default metrics.</p>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="../../../../get_started/#4-install-kserve">KServe installed</a>.</li>
-<li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
-</ol>
-<h2 id="open-the-istio-dashboard-via-the-grafana-ui-and-prometheus-ui">Open the Istio Dashboard via the Grafana UI and Prometheus UI<a class="headerlink" href="#open-the-istio-dashboard-via-the-grafana-ui-and-prometheus-ui" title="Permanent link">&para;</a></h2>
+                <h1 id="expose-torchserve-metrics">Expose TorchServe Metrics<a class="headerlink" href="#expose-torchserve-metrics" title="Permanent link">&para;</a></h1>
+<p>This tutorial setups prometheus and granfana to the cluster with TorchServe metrics.</p>
+<h2 id="install-istio-with-grafana-and-prometheus">Install Istio with Grafana and Prometheus<a class="headerlink" href="#install-istio-with-grafana-and-prometheus" title="Permanent link">&para;</a></h2>
 <p><strong><strong>Note:</strong></strong> Make sure to enable prometheus and grafana while installing istio.</p>
-<h2 id="access-prometheus-and-grafana">Access prometheus and grafana<a class="headerlink" href="#access-prometheus-and-grafana" title="Permanent link">&para;</a></h2>
-<p>Grafana and Prometheus can be accessed from the below links</p>
+<p>After installation Grafana and Prometheus can be accessed from the below links</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Grafana</span>
 istioctl dashboard grafana
 
 <span class="c1"># Prometheus</span>
 istioctl dashboard prometheus
 </code></pre></div>
-<h3 id="deployment-yaml">Deployment yaml<a class="headerlink" href="#deployment-yaml" title="Permanent link">&para;</a></h3>
-<p>Enable prometheus scraping by adding annotations to deployment yaml. Here our torchserve's metrics port is 8082.</p>
+<h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
+<p>Enable prometheus scraping by adding annotations to deployment yaml, by default the torchserve's metrics port is 8082.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -1739,7 +1705,6 @@ istioctl dashboard prometheus
     <span class="nt">pytorch</span><span class="p">:</span>
       <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span>
 </code></pre></div>
-<h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Apply the CRD</p>
 <div class="highlight"><pre><span></span><code>kubectl apply -f metrics.yaml
 </code></pre></div>
@@ -1748,13 +1713,12 @@ istioctl dashboard prometheus
 </code></pre></div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<h2 id="inference">Inference<a class="headerlink" href="#inference" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>mnist
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torch-metrics &lt;namespace&gt; -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
 curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict -d @./mnist.json
 </code></pre></div>
-<p>Expected Output</p>
+<p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>*   Trying <span class="m">52</span>.89.19.61...
 * Connected to a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com <span class="o">(</span><span class="m">52</span>.89.19.61<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
 &gt; PUT /v1/models/mnist:predict HTTP/1.1
@@ -1779,25 +1743,23 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 * Connection <span class="c1">#0 to host a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com left intact</span>
 <span class="o">{</span><span class="s2">&quot;predictions&quot;</span>: <span class="o">[</span><span class="s2">&quot;2&quot;</span><span class="o">]}</span>
 </code></pre></div>
-<h3 id="adding-data-source">Adding data source<a class="headerlink" href="#adding-data-source" title="Permanent link">&para;</a></h3>
-<h4 id="prometheus-graph-view">Prometheus graph view<a class="headerlink" href="#prometheus-graph-view" title="Permanent link">&para;</a></h4>
+<h2 id="check-the-dashboard">Check the dashboard<a class="headerlink" href="#check-the-dashboard" title="Permanent link">&para;</a></h2>
+<h3 id="prometheus-graph-view">Prometheus graph view<a class="headerlink" href="#prometheus-graph-view" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Navigate to prometheus page</li>
 <li>Add a query in the prometheus page</li>
 </ul>
 <p><img alt="Add query" src="images/prometheus.png" />
 <img alt="Graph" src="images/prometheus_graph.png" /></p>
-<h4 id="grafana-dashboard">Grafana dashboard<a class="headerlink" href="#grafana-dashboard" title="Permanent link">&para;</a></h4>
+<h3 id="grafana-dashboard">Grafana dashboard<a class="headerlink" href="#grafana-dashboard" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Navigate to grafana page</li>
 <li>Add a dashboard from the top left + symbol</li>
 <li>Click add query and enter the query</li>
 </ul>
 <p><img alt="Add dashboard" src="images/grafana.png" /></p>
-<p>Add Prometheus data source to Grafana to visualize metrics.
-Link: <a href="https://prometheus.io/docs/visualization/grafana/">Add datasource</a></p>
-<p>For Exposing grafana and prometheus under istio ingress refer.<a href="https://istio.io/latest/docs/tasks/observability/gateways/">Remotely accessing telemetry addons</a></p>
-<p>Apply below deployment</p>
+<p>For Exposing grafana and prometheus under istio ingress please refer to <a href="https://istio.io/latest/docs/tasks/observability/gateways/">remotely accessing telemetry addons</a></p>
+<p>Apply below deployment for a demo setup.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Gateway</span>
 <span class="nt">metadata</span><span class="p">:</span>

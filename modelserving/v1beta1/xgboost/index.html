@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deploying-xgboost-models" class="md-skip">
+        <a href="#deploying-xgboost-models-with-inferenceservice" class="md-skip">
           Skip to content
         </a>
       
@@ -701,6 +701,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../serving_runtime/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../tensorflow/" class="md-nav__link">
         Tensorflow
       </a>
@@ -811,22 +823,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deployment" class="md-nav__link">
-    Deployment
-  </a>
-  
-    <nav class="md-nav" aria-label="Deployment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#testing-deployed-model" class="md-nav__link">
-    Testing deployed model
+  <a href="#deploy-with-inferenceservice" class="md-nav__link">
+    Deploy with InferenceService
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#testing-deployed-model" class="md-nav__link">
+    Testing deployed model
+  </a>
   
 </li>
       
@@ -1745,22 +1751,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#deployment" class="md-nav__link">
-    Deployment
-  </a>
-  
-    <nav class="md-nav" aria-label="Deployment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#testing-deployed-model" class="md-nav__link">
-    Testing deployed model
+  <a href="#deploy-with-inferenceservice" class="md-nav__link">
+    Deploy with InferenceService
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#testing-deployed-model" class="md-nav__link">
+    Testing deployed model
+  </a>
   
 </li>
       
@@ -1781,7 +1781,7 @@
                   </a>
                 
                 
-                <h1 id="deploying-xgboost-models">Deploying XGBoost models<a class="headerlink" href="#deploying-xgboost-models" title="Permanent link">&para;</a></h1>
+                <h1 id="deploying-xgboost-models-with-inferenceservice">Deploying XGBoost models with InferenceService<a class="headerlink" href="#deploying-xgboost-models-with-inferenceservice" title="Permanent link">&para;</a></h1>
 <p>This example walks you through how to deploy a <code>xgboost</code> model leveraging the
 <code>v1beta1</code> version of the <code>InferenceService</code> CRD.
 Note that, by default the <code>v1beta1</code> version will expose your model through an
@@ -1855,7 +1855,7 @@ models</a>.</p>
 file, we should now be ready to start our server as:</p>
 <div class="highlight"><pre><span></span><code>mlserver start .
 </code></pre></div>
-<h2 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h2>
+<h2 id="deploy-with-inferenceservice">Deploy with InferenceService<a class="headerlink" href="#deploy-with-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Lastly, we will use KServe to deploy our trained model.
 For this, we will just need to use <strong>version <code>v1beta1</code></strong> of the
 <code>InferenceService</code> CRD and set the the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
@@ -1880,9 +1880,9 @@ For this, we will just need to use <strong>version <code>v1beta1</code></strong>
 </ul>
 <p>Assuming that we've got a cluster accessible through <code>kubectl</code> with KServe
 already installed, we can deploy our model as:</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f ./xgboost.yaml
+<div class="highlight"><pre><span></span><code>kubectl apply -f xgboost.yaml
 </code></pre></div>
-<h3 id="testing-deployed-model">Testing deployed model<a class="headerlink" href="#testing-deployed-model" title="Permanent link">&para;</a></h3>
+<h2 id="testing-deployed-model">Testing deployed model<a class="headerlink" href="#testing-deployed-model" title="Permanent link">&para;</a></h2>
 <p>We can now test our deployed model by sending a sample request.</p>
 <p>Note that this request <strong>needs to follow the <a href="../../../predict-api/v2">V2 Dataplane
 protocol</a></strong>.
