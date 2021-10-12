@@ -1,10 +1,7 @@
 # Development
 
 This doc explains how to setup a development environment so you can get started
-[contributing](../CONTRIBUTING.md). Also take a look at:
-
-- [How to add and run tests](../test/README.md)
-- [Iterating](#iterating)
+[contributing](https://github.com/kserve/kserve/blob/master/CONTRIBUTING.md).
 
 ## Prerequisites
 
@@ -12,7 +9,7 @@ Follow the instructions below to set up your development environment. Once you
 meet these requirements, you can make changes and
 [deploy your own version of kserve](#deploy-kserve)!
 
-Before submitting a PR, see also [CONTRIBUTING.md](../CONTRIBUTING.md).
+Before submitting a PR, see also [CONTRIBUTING.md](https://github.com/kserve/kserve/blob/master/CONTRIBUTING.md).
 
 ### Install requirements
 
@@ -243,7 +240,7 @@ python3 setup.py install --force --user
 ```
 Then go to `test/e2e`. 
 
-Run `kubectl create namespace kfserving-ci-e2e-test`
+Run `kubectl create namespace kserve-ci-e2e-test`
 
 For KIND/minikube:
 
@@ -253,7 +250,7 @@ For KIND/minikube:
 
 Run `pytest > testresults.txt`
 
-Tests may not clean up. To re-run, first do `kubectl delete namespace kfserving-ci-e2e-test`, recreate namespace and run again.
+Tests may not clean up. To re-run, first do `kubectl delete namespace kserve-ci-e2e-test`, recreate namespace and run again.
 
 ## Iterating
 

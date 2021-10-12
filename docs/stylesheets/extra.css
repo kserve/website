@@ -13,12 +13,8 @@
 }
 
 .md-header__button.md-logo img {
-  width: 8rem;
-  height: 6rem;
-}
-.md-header__button.md-logo {
-  transition-duration: 0.2s;
-  transition-property: transform;
+  width: 4rem;
+  height: 3rem;
 }
 
 .md-nav__item--nested>.md-nav__link, .md-nav__item a {

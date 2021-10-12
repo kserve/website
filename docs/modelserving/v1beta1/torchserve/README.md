@@ -35,7 +35,7 @@ The KServe/TorchServe integration expects following model store layout.
     For PVC user please refer to [model archive file generation](./model-archiver/README.md) for auto generation of MAR files from
     the model and dependent files.
 
-## TorchServe with KServe envelope inference endpoints
+## TorchServe with KServe inference protocol 
 The KServe/TorchServe integration supports KServe v1 protocol and we are working on to support v2 protocol.
 
 | API  | Verb | Path | Payload |

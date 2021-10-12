@@ -11,8 +11,10 @@ This page contains a list of organizations who are using KServe either in produc
 | [Gojek](https://www.gojek.com/) | [Willem Pienaar](https://github.com/woop) |
 | [Halodoc ID](https://halodoc.com/) | [Joinal Ahmed](https://github.com/joinal-ahmed) |
 | [IBM](https://www.ibm.com/) | [Animesh Singh](https://github.com/animeshsingh) |
+| [Kubeflow on Google Cloud](https://www.kubeflow.org/docs/distributions/gke/) | [James Liu](https://github.com/zijianjoy)|
 | [Inspur](https://www.inspur.com/) | [Qingshan Chen](https://github.com/iamlovingit) |
 | [Max Kelsen](https://www.maxkelsen.com/) | [Jacob O'Farrell](https://github.com/ofaz) |
+| [Naver](https://www.navercorp.com/en) | [Mark Winter](https://github.com/markwinter) |
 | [Nuance](https://www.nuance.com/) | [Jeff Griffith](https://github.com/jeffgriffith) |
 | [NVIDIA](https://www.nvidia.com/en-us/) | [David Goodwin](deadeyegoodwin) |
 | [One Convergence](https://dkube.io/) | [Subra Ongole](https://github.com/songole) |

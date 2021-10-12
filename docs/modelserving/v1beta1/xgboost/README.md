@@ -1,4 +1,4 @@
-# Deploying XGBoost models
+# Deploying XGBoost models with InferenceService
 
 This example walks you through how to deploy a `xgboost` model leveraging the
 `v1beta1` version of the `InferenceService` CRD.
@@ -92,7 +92,7 @@ file, we should now be ready to start our server as:
 mlserver start .
 ```
 
-## Deployment
+## Deploy with InferenceService
 
 Lastly, we will use KServe to deploy our trained model.
 For this, we will just need to use **version `v1beta1`** of the
@@ -123,10 +123,10 @@ Assuming that we've got a cluster accessible through `kubectl` with KServe
 already installed, we can deploy our model as:
 
 ```
-kubectl apply -f ./xgboost.yaml
+kubectl apply -f xgboost.yaml
 ```
 
-### Testing deployed model
+## Testing deployed model
 
 We can now test our deployed model by sending a sample request.
 

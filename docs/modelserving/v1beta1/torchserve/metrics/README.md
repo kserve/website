@@ -1,19 +1,12 @@
-# Metrics
+# Expose TorchServe Metrics
 
-This adds prometheus and granfana to the cluster with some default metrics.
+This tutorial setups prometheus and granfana to the cluster with TorchServe metrics.
 
-## Setup
-
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-
-##  Open the Istio Dashboard via the Grafana UI and Prometheus UI
+## Install Istio with Grafana and Prometheus
 
 __**Note:**__ Make sure to enable prometheus and grafana while installing istio.
 
-## Access prometheus and grafana
-
-Grafana and Prometheus can be accessed from the below links
+After installation Grafana and Prometheus can be accessed from the below links
 
 ```bash
 # Grafana
@@ -23,9 +16,8 @@ istioctl dashboard grafana
 istioctl dashboard prometheus
 ```
 
-### Deployment yaml
-
-Enable prometheus scraping by adding annotations to deployment yaml. Here our torchserve's metrics port is 8082.
+## Create the InferenceService
+Enable prometheus scraping by adding annotations to deployment yaml, by default the torchserve's metrics port is 8082.
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -41,7 +33,6 @@ spec:
       storageUri: gs://kfserving-examples/models/torchserve/image_classifier
 ```
 
-## Create the InferenceService
 
 Apply the CRD
 
@@ -59,8 +50,6 @@ $inferenceservice.serving.kserve.io/torch-metrics created
 
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-## Inference
-
 ```bash
 MODEL_NAME=mnist
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torch-metrics <namespace> -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -68,7 +57,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice torch-metrics <namespace> -o jso
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
 ```
 
-Expected Output
+==** Expected Output **==
 
 ```bash
 *   Trying 52.89.19.61...
@@ -96,9 +85,9 @@ Expected Output
 {"predictions": ["2"]}
 ```
 
-### Adding data source
+## Check the dashboard 
 
-#### Prometheus graph view
+### Prometheus graph view
 
 * Navigate to prometheus page
 * Add a query in the prometheus page
@@ -106,7 +95,7 @@ Expected Output
 ![Add query](./images/prometheus.png)
 ![Graph](./images/prometheus_graph.png)
 
-#### Grafana dashboard
+### Grafana dashboard
 
 * Navigate to grafana page
 * Add a dashboard from the top left + symbol
@@ -114,12 +103,9 @@ Expected Output
   
 ![Add dashboard](./images/grafana.png)
 
-Add Prometheus data source to Grafana to visualize metrics.
-Link: [Add datasource](https://prometheus.io/docs/visualization/grafana/)
+For Exposing grafana and prometheus under istio ingress please refer to [remotely accessing telemetry addons](https://istio.io/latest/docs/tasks/observability/gateways/)
 
-For Exposing grafana and prometheus under istio ingress refer.[Remotely accessing telemetry addons](https://istio.io/latest/docs/tasks/observability/gateways/)
-
-Apply below deployment
+Apply below deployment for a demo setup.
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
