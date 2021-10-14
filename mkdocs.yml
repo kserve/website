@@ -65,6 +65,8 @@ nav:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
     - Blog:
+          - Releases:
+            - KServe 0.7 Release: blog/articles/2021-10-11-KServe-0.7-release.md
           - Articles:
             - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
     - Community:
