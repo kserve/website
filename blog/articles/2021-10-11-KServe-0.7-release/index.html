@@ -77,7 +77,7 @@
             
  <h1>
 
- In Construction | <b>KServe v0.7 is Released</b>, <a href="/blog/articles/2021-10-11-KServe-0.7-release/">Read blog &gt;&gt;</a>
+ In Construction | <b>KServe v0.7 is Released</b>, <a href="/website/blog/articles/2021-10-11-KServe-0.7-release/">Read blog &gt;&gt;</a>
     
  </h1>
 
@@ -1816,7 +1816,7 @@
                 
                 <h3 id="authors">Authors<a class="headerlink" href="#authors" title="Permanent link">&para;</a></h3>
 <p><strong>Dan Sun</strong>, <strong>Animesh Singh</strong>, <strong>Yuzhui Liu</strong>, <strong>Vedant Padwal</strong> on behalf of the KServe Working Group.</p>
-<p><a href="/blog/articles/2021-09-27-kfserving-transition/">KFServing is now KServe</a> and KServe 0.7 release is available, the release also ensures a smooth user migration experience from KFServing to KServe.</p>
+<p><a href="/website/blog/articles/2021-09-27-kfserving-transition/">KFServing is now KServe</a> and KServe 0.7 release is available, the release also ensures a smooth user migration experience from KFServing to KServe.</p>
 <h3 id="whats-changed"><strong><img alt="⚠" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26a0.svg" title=":warning:" /> What's Changed?</strong><a class="headerlink" href="#whats-changed" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>InferenceService</code> API group is changed from <code>serving.kubeflow.org</code> to <code>serving.kserve.io</code> <a href="https://github.com/kserve/kserve/issues/1826">#1826</a>, <a href="/admin/migration">the migration job</a> is created for smooth transition.</li>
@@ -1833,12 +1833,14 @@
 <p>ModelMesh project is joining KServe under repository <a href="https://github.com/kserve/modelmesh-serving">modelmesh-serving</a>!</p>
 <p>ModelMesh is designed for high-scale, high-density and frequently-changing model use cases.
 ModelMesh intelligently loads and unloads AI models to and from memory to strike an intelligent 
-trade-off between responsiveness to users and computational footprint. To learn more about ModelMesh features and components, check out the <a href="https://developer.ibm.com/blogs/kserve-and-watson-modelmesh-extreme-scale-model-inferencing-for-trusted-ai">ModelMesh announcement blog</a> and <a href="https://www.linkedin.com/feed/update/urn:li:activity:6854064203360280576/">Join talk at #KubeCon NA tomorrow to get a deeper dive into ModelMesh and KServe.</a> 
-- (Alpha feature) Raw Kubernetes deployment support, Istio/Knative dependency is now optional and please follow the <a href="/admin/kubernetes_deployment">guide</a> to install and turn on <code>RawDeployment</code> mode.
-- KServe now has its own documentation website temporarily hosted on <a href="https://kserve.github.io/website">website</a>.
-- Support v1 crd and webhook configuration for Kubernetes 1.22 <a href="https://github.com/kserve/kserve/issues/1837">#1837</a>.
-- Triton model serving runtime now defaults to 21.09 version <a href="https://github.com/kserve/kserve/issues/1840">#1840</a>.</p>
+trade-off between responsiveness to users and computational footprint. To learn more about ModelMesh features and components, check out the <a href="https://developer.ibm.com/blogs/kserve-and-watson-modelmesh-extreme-scale-model-inferencing-for-trusted-ai">ModelMesh announcement blog</a> and <a href="https://www.linkedin.com/feed/update/urn:li:activity:6854064203360280576/">Join talk at #KubeCon NA tomorrow to get a deeper dive into ModelMesh and KServe.</a>.</p>
 </li>
+<li>
+<p>(Alpha feature) Raw Kubernetes deployment support, Istio/Knative dependency is now optional and please follow the <a href="/admin/kubernetes_deployment">guide</a> to install and turn on <code>RawDeployment</code> mode.</p>
+</li>
+<li>KServe now has its own documentation website temporarily hosted on <a href="https://kserve.github.io/website">website</a>.</li>
+<li>Support v1 crd and webhook configuration for Kubernetes 1.22 <a href="https://github.com/kserve/kserve/issues/1837">#1837</a>.</li>
+<li>Triton model serving runtime now defaults to 21.09 version <a href="https://github.com/kserve/kserve/issues/1840">#1840</a>.</li>
 </ul>
 <h3 id="whats-fixed"><strong>🐞 What's Fixed?</strong><a class="headerlink" href="#whats-fixed" title="Permanent link">&para;</a></h3>
 <ul>
