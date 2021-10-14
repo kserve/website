@@ -13,6 +13,20 @@ rules:
   resources: ["*"]
   verbs: ["*"]
 - apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - deployments
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets/scale
+  verbs:
+  - patch
+- apiGroups:
   - networking.istio.io
   resources:
   - virtualservices
@@ -32,6 +46,12 @@ rules:
   - patch
   - update
   - watch
+- apiGroups:
+  - serving.knative.dev
+  resources:
+  - revisions
+  verbs:
+  - delete
 - apiGroups:
   - serving.kubeflow.org
   resources:
@@ -96,6 +116,7 @@ metadata:
   name: kserve-migration
   namespace: kserve
 spec:
+  backoffLimit: 0
   template:
     metadata:
       name: kserve-migration
@@ -104,4 +125,7 @@ spec:
       containers:
       - name: kserve-migration
         image: kserve/kserve-migration:latest
+        env:
+        - name: REMOVE_KFSERVING
+          value: "true"
       restartPolicy: Never

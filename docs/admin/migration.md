@@ -9,6 +9,8 @@ This doc helps to migrate existing inference services running in the cluster fro
 
 ### Migration
 
+Please use this [YAML file](./kserve_migration_job.yaml) to migrate existing inference services.
+
 === "kubectl"
 ```bash
 kubectl apply -f kserve_migration_job.yaml
