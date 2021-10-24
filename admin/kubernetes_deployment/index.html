@@ -882,6 +882,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../../modelserving/v1beta1/triton/torchscript/" class="md-nav__link">
+        Triton
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../modelserving/v1beta1/custom/custom_model/" class="md-nav__link">
         How to write a custom predictor
       </a>
@@ -1780,7 +1792,7 @@
                 
                 <h1 id="kubernetes-deployment-installation-guide">Kubernetes Deployment Installation Guide<a class="headerlink" href="#kubernetes-deployment-installation-guide" title="Permanent link">&para;</a></h1>
 <p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
-<p>Kubernetes 1.17 is the minimally required version and please check the following recommended Istio versions for the corresponding
+<p>Kubernetes 1.19 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.</p>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">&para;</a></h2>
 <table>
@@ -1791,14 +1803,6 @@ Kubernetes version.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1.17</td>
-<td align="left">1.9</td>
-</tr>
-<tr>
-<td align="left">1.18</td>
-<td align="left">1.9, 1.10</td>
-</tr>
 <tr>
 <td align="left">1.19</td>
 <td align="left">1.9, 1.10, 1.11</td>

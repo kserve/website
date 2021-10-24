@@ -18,7 +18,7 @@
     
     
       
-        <title>Predict on a Triton InferenceService with TorchScript model - KServe Documentation Website</title>
+        <title>Triton - KServe Documentation Website</title>
       
     
     
@@ -106,7 +106,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Predict on a Triton InferenceService with TorchScript model
+              Triton
             
           </span>
         </div>
@@ -225,6 +225,8 @@
         
   
   
+    
+  
 
 
   
@@ -241,7 +243,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../control_plane/" class="md-tabs__link">
+      <a href="../../../control_plane/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
@@ -546,12 +548,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       <label class="md-nav__link" for="__nav_4">
         User Guide
@@ -684,12 +688,14 @@
             
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
       
       <label class="md-nav__link" for="__nav_4_2">
         Single Model Serving
@@ -806,6 +812,167 @@
       <a href="../../paddle/" class="md-nav__link">
         PaddleServer
       </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Triton
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#export-as-torchscript-model" class="md-nav__link">
+    Export as Torchscript Model
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#store-your-trained-model-on-gcs-in-a-model-repository" class="md-nav__link">
+    Store your trained model on GCS in a Model Repository
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inference-with-http-endpoint" class="md-nav__link">
+    Inference with HTTP endpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference with HTTP endpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-inferenceservice" class="md-nav__link">
+    Create the InferenceService
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-a-prediction-with-curl" class="md-nav__link">
+    Run a prediction with curl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-a-performance-test" class="md-nav__link">
+    Run a performance test
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inference-with-grpc-endpoint" class="md-nav__link">
+    Inference with gRPC endpoint
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference with gRPC endpoint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-inferenceservice_1" class="md-nav__link">
+    Create the InferenceService
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-transformer-to-the-inferenceservice" class="md-nav__link">
+    Add Transformer to the InferenceService
+  </a>
+  
+    <nav class="md-nav" aria-label="Add Transformer to the InferenceService">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implement-prepost-processing-functions" class="md-nav__link">
+    Implement pre/post processing functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-transformer-docker-image" class="md-nav__link">
+    Build Transformer docker image
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-inferenceservice-with-transformer" class="md-nav__link">
+    Create the InferenceService with Transformer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-a-prediction-with-curl_1" class="md-nav__link">
+    Run a prediction with curl
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1674,13 +1841,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#train-a-pytorch-model" class="md-nav__link">
-    Train a Pytorch Model
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#export-as-torchscript-model" class="md-nav__link">
     Export as Torchscript Model
   </a>
@@ -1716,6 +1876,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#run-a-performance-test" class="md-nav__link">
+    Run a performance test
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1738,13 +1905,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#run-a-performance-test" class="md-nav__link">
-    Run a performance test
-  </a>
   
 </li>
       
@@ -1778,8 +1938,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#run-a-prediction-from-curl" class="md-nav__link">
-    Run a prediction from curl
+  <a href="#run-a-prediction-with-curl_1" class="md-nav__link">
+    Run a prediction with curl
   </a>
   
 </li>
@@ -1814,8 +1974,6 @@ C++ is very often the language of choice, The following example will outline the
 to a serialized representation that can be loaded and executed purely from C++ like Triton Inference Server, with no dependency on Python.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="../../../../get_started/#4-install-kserve">KFServing 0.5 installed</a>.</li>
-<li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
 <li>Skip <a href="https://knative.dev/docs/serving/tag-resolution/">tag resolution</a> for <code>nvcr.io</code> which requires auth to resolve triton inference server image digest
 <div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span> -n knative-serving
 </code></pre></div></li>
@@ -1823,8 +1981,6 @@ to a serialized representation that can be loaded and executed purely from C++ l
 <div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;progressDeadline&quot;: &quot;600s&quot;}}&#39;</span> -n knative-serving
 </code></pre></div></li>
 </ol>
-<h2 id="train-a-pytorch-model">Train a Pytorch Model<a class="headerlink" href="#train-a-pytorch-model" title="Permanent link">&para;</a></h2>
-<p>Train the <a href="../eager/cifar10.py">cifar pytorch model</a>.</p>
 <h2 id="export-as-torchscript-model">Export as Torchscript Model<a class="headerlink" href="#export-as-torchscript-model" title="Permanent link">&para;</a></h2>
 <p>A PyTorch model’s journey from Python to C++ is enabled by <a href="https://pytorch.org/docs/master/jit.html">Torch Script</a>, a representation of a PyTorch model
 that can be understood, compiled and serialized by the Torch Script compiler. If you are starting out from an existing PyTorch model written in the vanilla <code>eager</code> API,
@@ -1904,9 +2060,7 @@ instance_group [
 </code></pre></div></p>
 <h2 id="inference-with-http-endpoint">Inference with HTTP endpoint<a class="headerlink" href="#inference-with-http-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<p>Create the inference service yaml with the above specified model repository uri.
-<div class="highlight"><pre><span></span><code>kubectl apply -f torchscript.yaml
-</code></pre></div></p>
+<p>Create the inference service yaml with the above specified model repository uri.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -1920,16 +2074,18 @@ instance_group [
       <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
         <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
 </code></pre></div>
-<blockquote>
-<p><img alt="⚠" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26a0.svg" title=":warning:" /> <strong>Setting OMP_NUM_THREADS env is critical for performance</strong>: 
-OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra. 
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting OMP_NUM_THREADS env is critical for performance, OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra.
 We want one thread per worker instead of many threads per worker to avoid contention.</p>
-</blockquote>
-<p>Expected Output and check the readiness of the <code>InferenceService</code>
+</div>
+<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">kubectl</label><div class="tabbed-content"></div>
+</div>
+<div class="highlight"><pre><span></span><code>kubectl apply -f torchscript.yaml
+</code></pre></div>
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 </code></pre></div></p>
-<div class="highlight"><pre><span></span><code>kubectl get inferenceservices torchscript-demo
-</code></pre></div>
 <h3 id="run-a-prediction-with-curl">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so 
@@ -1939,7 +2095,7 @@ the input request needs to follow the V2 schema with the specified data type, sh
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchscript-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 curl -v -X -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> POST https://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="nv">$MODEL_NAME</span>/infer -d <span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-expected output
+<mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>* Connected to torchscript-cifar.default.svc.cluster.local <span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
 &gt; POST /v2/models/cifar10/infer HTTP/1.1
 &gt; Host: torchscript-cifar.default.svc.cluster.local
@@ -1960,6 +2116,19 @@ expected output
 &lt; 
 * Connection <span class="c1">#0 to host torchscript-cifar.default.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;model_name&quot;</span>:<span class="s2">&quot;cifar10&quot;</span>,<span class="s2">&quot;model_version&quot;</span>:<span class="s2">&quot;1&quot;</span>,<span class="s2">&quot;outputs&quot;</span>:<span class="o">[{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;OUTPUT__0&quot;</span>,<span class="s2">&quot;datatype&quot;</span>:<span class="s2">&quot;FP32&quot;</span>,<span class="s2">&quot;shape&quot;</span>:<span class="o">[</span><span class="m">1</span>,10<span class="o">]</span>,<span class="s2">&quot;data&quot;</span>:<span class="o">[</span>-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279<span class="o">]}]}</span>
+</code></pre></div></p>
+<h3 id="run-a-performance-test">Run a performance test<a class="headerlink" href="#run-a-performance-test" title="Permanent link">&para;</a></h3>
+<p>QPS rate <code>--rate</code> can be changed in the <a href="perf.yaml">perf.yaml</a>.
+<div class="highlight"><pre><span></span><code>kubectl create -f perf.yaml
+
+Requests      [total, rate, throughput]         6000, 100.02, 100.01
+Duration      [total, attack, wait]             59.995s, 59.99s, 4.961ms
+Latencies     [min, mean, 50, 90, 95, 99, max]  4.222ms, 5.7ms, 5.548ms, 6.384ms, 6.743ms, 9.286ms, 25.85ms
+Bytes In      [total, mean]                     1890000, 315.00
+Bytes Out     [total, mean]                     665874000, 110979.00
+Success       [ratio]                           100.00%
+Status Codes  [code:count]                      200:6000
+Error Set:
 </code></pre></div></p>
 <h2 id="inference-with-grpc-endpoint">Inference with gRPC endpoint<a class="headerlink" href="#inference-with-grpc-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice_1">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice_1" title="Permanent link">&para;</a></h3>
@@ -1983,19 +2152,6 @@ expected output
 </code></pre></div>
 <p>Apply the gRPC <code>InferenceService</code> yaml and then you can call the model with <code>tritonclient</code> python library after <code>InferenceService</code> is ready.
 <div class="highlight"><pre><span></span><code>kubectl apply -f torchscript_grpc.yaml
-</code></pre></div></p>
-<h2 id="run-a-performance-test">Run a performance test<a class="headerlink" href="#run-a-performance-test" title="Permanent link">&para;</a></h2>
-<p>QPS rate <code>--rate</code> can be changed in the <a href="perf.yaml">perf.yaml</a>.
-<div class="highlight"><pre><span></span><code>kubectl create -f perf.yaml
-
-Requests      [total, rate, throughput]         6000, 100.02, 100.01
-Duration      [total, attack, wait]             59.995s, 59.99s, 4.961ms
-Latencies     [min, mean, 50, 90, 95, 99, max]  4.222ms, 5.7ms, 5.548ms, 6.384ms, 6.743ms, 9.286ms, 25.85ms
-Bytes In      [total, mean]                     1890000, 315.00
-Bytes Out     [total, mean]                     665874000, 110979.00
-Success       [ratio]                           100.00%
-Status Codes  [code:count]                      200:6000
-Error Set:
 </code></pre></div></p>
 <h2 id="add-transformer-to-the-inferenceservice">Add Transformer to the InferenceService<a class="headerlink" href="#add-transformer-to-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p><code>Triton Inference Server</code> expects tensors as input data, often times a pre-processing step is required before making the prediction call
@@ -2083,10 +2239,10 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code>kubectl apply -f torch_transformer.yaml
 </code></pre></div>
-<p>Expected Output
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torch-transfomer created
 </code></pre></div></p>
-<h3 id="run-a-prediction-from-curl">Run a prediction from curl<a class="headerlink" href="#run-a-prediction-from-curl" title="Permanent link">&para;</a></h3>
+<h3 id="run-a-prediction-with-curl_1">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl_1" title="Permanent link">&para;</a></h3>
 <p>The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict): 
 <code>"instances": &lt;value&gt;|&lt;list-of-objects&gt;</code>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
@@ -2101,16 +2257,16 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
     <span class="p">}</span>
   <span class="p">]</span>
 <span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>SERVICE_NAME=torch-transfomer
-MODEL_NAME=cifar10
-INPUT_PATH=@./image.json
-
-SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-
-curl -v -X POST -H &quot;Host: ${SERVICE_HOSTNAME}&quot; https://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 </code></pre></div></p>
-<p>You should see an output similar to the one below:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>torch-transfomer
+<span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./image.json
+
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$SERVICE_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+
+curl -v -X POST -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> https://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict -d <span class="nv">$INPUT_PATH</span>
+</code></pre></div>
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>&gt; POST /v2/models/cifar:predict HTTP/2
 &gt; user-agent: curl/7.71.1
 &gt; accept: */*
@@ -2130,7 +2286,7 @@ curl -v -X POST -H &quot;Host: ${SERVICE_HOSTNAME}&quot; https://${INGRESS_HOST}
 &lt; x-envoy-upstream-service-time: 52
 &lt; 
 {&quot;model_name&quot;: &quot;cifar&quot;, &quot;model_version&quot;: &quot;1&quot;, &quot;outputs&quot;: [{&quot;name&quot;: &quot;OUTPUT__0&quot;, &quot;datatype&quot;: &quot;FP32&quot;, &quot;shape&quot;: [1, 10], &quot;data&quot;: [-0.7299326062202454, -2.186835289001465, -0.029627874493598938, 2.3753483295440674, -0.3476247489452362, 1.3253062963485718, 0.5721136927604675, 0.049311548471450806, -0.3691796362400055, -1.0804035663604736]}]}
-</code></pre></div>
+</code></pre></div></p>
                 
               
               
@@ -2150,6 +2306,39 @@ curl -v -X POST -H &quot;Host: ${SERVICE_HOSTNAME}&quot; https://${INGRESS_HOST}
       
         
 <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../../paddle/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              PaddleServer
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../custom/custom_model/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to write a custom predictor
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
