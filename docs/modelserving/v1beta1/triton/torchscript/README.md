@@ -6,19 +6,14 @@ C++ is very often the language of choice, The following example will outline the
 to a serialized representation that can be loaded and executed purely from C++ like Triton Inference Server, with no dependency on Python.
 
 ## Setup
-1. Your ~/.kube/config should point to a cluster with [KFServing 0.5 installed](../../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-3. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
+1. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"registriesSkippingTagResolving":"nvcr.io"}}' -n knative-serving
 ```
-4. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
+2. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}}' -n knative-serving
 ```
-
-## Train a Pytorch Model
-Train the [cifar pytorch model](../eager/cifar10.py).
 
 ## Export as Torchscript Model
 A PyTorch model’s journey from Python to C++ is enabled by [Torch Script](https://pytorch.org/docs/master/jit.html), a representation of a PyTorch model
@@ -111,9 +106,6 @@ instance_group [
 
 ### Create the InferenceService
 Create the inference service yaml with the above specified model repository uri.
-```
-kubectl apply -f torchscript.yaml
-```
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -130,19 +122,20 @@ spec:
         value: "1"
 ```
 
-> :warning: **Setting OMP_NUM_THREADS env is critical for performance**: 
-OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra. 
-We want one thread per worker instead of many threads per worker to avoid contention.
+!!! warning
+    Setting OMP_NUM_THREADS env is critical for performance, OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra.
+    We want one thread per worker instead of many threads per worker to avoid contention.
 
+=== "kubectl"
+```
+kubectl apply -f torchscript.yaml
+```
 
-Expected Output and check the readiness of the `InferenceService`
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 ```
 
-```bash
-kubectl get inferenceservices torchscript-demo
-```
 
 ### Run a prediction with curl
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
@@ -155,7 +148,7 @@ INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST https://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/$MODEL_NAME/infer -d $INPUT_PATH
 ```
-expected output
+==** Expected Output **==
 ```bash
 * Connected to torchscript-cifar.default.svc.cluster.local (10.51.242.87) port 80 (#0)
 > POST /v2/models/cifar10/infer HTTP/1.1
@@ -177,6 +170,20 @@ expected output
 < 
 * Connection #0 to host torchscript-cifar.default.svc.cluster.local left intact
 {"model_name":"cifar10","model_version":"1","outputs":[{"name":"OUTPUT__0","datatype":"FP32","shape":[1,10],"data":[-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279]}]}
+```
+### Run a performance test
+QPS rate `--rate` can be changed in the [perf.yaml](./perf.yaml).
+```
+kubectl create -f perf.yaml
+
+Requests      [total, rate, throughput]         6000, 100.02, 100.01
+Duration      [total, attack, wait]             59.995s, 59.99s, 4.961ms
+Latencies     [min, mean, 50, 90, 95, 99, max]  4.222ms, 5.7ms, 5.548ms, 6.384ms, 6.743ms, 9.286ms, 25.85ms
+Bytes In      [total, mean]                     1890000, 315.00
+Bytes Out     [total, mean]                     665874000, 110979.00
+Success       [ratio]                           100.00%
+Status Codes  [code:count]                      200:6000
+Error Set:
 ```
 
 ## Inference with gRPC endpoint
@@ -206,23 +213,6 @@ spec:
 Apply the gRPC `InferenceService` yaml and then you can call the model with `tritonclient` python library after `InferenceService` is ready.
 ```
 kubectl apply -f torchscript_grpc.yaml
-```
-
-
-
-## Run a performance test
-QPS rate `--rate` can be changed in the [perf.yaml](./perf.yaml).
-```
-kubectl create -f perf.yaml
-
-Requests      [total, rate, throughput]         6000, 100.02, 100.01
-Duration      [total, attack, wait]             59.995s, 59.99s, 4.961ms
-Latencies     [min, mean, 50, 90, 95, 99, max]  4.222ms, 5.7ms, 5.548ms, 6.384ms, 6.743ms, 9.286ms, 25.85ms
-Bytes In      [total, mean]                     1890000, 315.00
-Bytes Out     [total, mean]                     665874000, 110979.00
-Success       [ratio]                           100.00%
-Status Codes  [code:count]                      200:6000
-Error Set:
 ```
 
 ## Add Transformer to the InferenceService
@@ -321,12 +311,12 @@ spec:
 kubectl apply -f torch_transformer.yaml
 ```
 
-Expected Output
+==** Expected Output **==
 ```
 $ inferenceservice.serving.kserve.io/torch-transfomer created
 ```
 
-### Run a prediction from curl
+### Run a prediction with curl
 The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict): 
 `"instances": <value>|<list-of-objects>`
 ```json
@@ -343,7 +333,8 @@ The transformer does not enforce a specific schema like predictor but the genera
   ]
 }
 ```
-```
+
+```bash
 SERVICE_NAME=torch-transfomer
 MODEL_NAME=cifar10
 INPUT_PATH=@./image.json
@@ -353,8 +344,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -X POST -H "Host: ${SERVICE_HOSTNAME}" https://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-You should see an output similar to the one below:
-
+==** Expected Output **==
 ```
 > POST /v2/models/cifar:predict HTTP/2
 > user-agent: curl/7.71.1
