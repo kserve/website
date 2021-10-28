@@ -59,7 +59,7 @@ python json_from_logs.py
 Finally, now that we have collected a number of our model's predictions and their corresponding inputs we will send these to the AIF server to calculate the bias metrics.
 
 ```bash
-python query_bias.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} data.json
+python query_bias.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} input.json
 ```
 
 ## Interpreting the results
@@ -70,7 +70,7 @@ Since, in the sample output below, the disparate impact is less that 1 then the 
 This in and of itself is not proof that the model is biased, but does hint that there may be some bias and a deeper look may be needed.
 
 ```bash
-python query_bias.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} data.json
+python query_bias.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} input.json
 ```
 ==** Expected Output **==
 ```
