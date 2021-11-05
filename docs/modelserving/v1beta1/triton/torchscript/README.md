@@ -146,7 +146,7 @@ the input request needs to follow the V2 schema with the specified data type, sh
 MODEL_NAME=cifar10
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST https://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/$MODEL_NAME/infer -d $INPUT_PATH
+curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/$MODEL_NAME/infer -d $INPUT_PATH
 ```
 ==** Expected Output **==
 ```bash
@@ -323,11 +323,11 @@ The transformer does not enforce a specific schema like predictor but the genera
 {
   "instances": [
     {
-      "image": { "b64": "aW1hZ2UgYnl0ZXM=" },
+      "image_bytes": { "b64": "aW1hZ2UgYnl0ZXM=" },
       "caption": "seaside"
     },
     {
-      "image": { "b64": "YXdlc29tZSBpbWFnZSBieXRlcw==" },
+      "image_bytes": { "b64": "YXdlc29tZSBpbWFnZSBieXRlcw==" },
       "caption": "mountains"
     }
   ]
@@ -341,7 +341,7 @@ INPUT_PATH=@./image.json
 
 SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v -X POST -H "Host: ${SERVICE_HOSTNAME}" https://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -X POST -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 ==** Expected Output **==
