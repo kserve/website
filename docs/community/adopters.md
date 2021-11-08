@@ -21,5 +21,6 @@ This page contains a list of organizations who are using KServe either in produc
 | [Seldon](https://www.seldon.io/) | [Clive Cox](https://github.com/cliveseldon) |
 | [Patterson Consulting](https://www.pattersonconsultingtn.com/) | [Josh Patterson](https://github.com/jpatanooga) |
 | [Samsung SDS](https://www.samsungsds.com/) | [Hanbae Seo](https://github.com/jazzsir) |
+| [Zillow](https://www.zillow.com/) | [Peilun Li](https://github.com/Peilun-Li) |
 
 
