@@ -9,11 +9,11 @@ This doc explains how to migrate existing inference services from KFServing to K
 
 ### Migrating from standalone KFServing
 
-1. Install KServe v0.7 using the [install YAML](https://github.com/kserve/kserve/blob/master/install/v0.7.0/kserve.yaml)
+1. Install KServe v0.7 using the [install YAML](https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml)
     - This will not affect existing services yet.
 
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/blob/master/install/v0.7.0/kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml
     ```
 
 2. Run the [KServe Migration YAML](https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job.yaml)
