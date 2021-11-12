@@ -2093,7 +2093,7 @@ the input request needs to follow the V2 schema with the specified data type, sh
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchscript-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
-curl -v -X -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> POST https://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="nv">$MODEL_NAME</span>/infer -d <span class="nv">$INPUT_PATH</span>
+curl -v -X -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> POST http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="nv">$MODEL_NAME</span>/infer -d <span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>* Connected to torchscript-cifar.default.svc.cluster.local <span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
@@ -2248,11 +2248,11 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
   <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;b64&quot;</span><span class="p">:</span> <span class="s2">&quot;aW1hZ2UgYnl0ZXM=&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;b64&quot;</span><span class="p">:</span> <span class="s2">&quot;aW1hZ2UgYnl0ZXM=&quot;</span> <span class="p">},</span>
       <span class="nt">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;seaside&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="nt">&quot;image&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;b64&quot;</span><span class="p">:</span> <span class="s2">&quot;YXdlc29tZSBpbWFnZSBieXRlcw==&quot;</span> <span class="p">},</span>
+      <span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;b64&quot;</span><span class="p">:</span> <span class="s2">&quot;YXdlc29tZSBpbWFnZSBieXRlcw==&quot;</span> <span class="p">},</span>
       <span class="nt">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;mountains&quot;</span>
     <span class="p">}</span>
   <span class="p">]</span>
@@ -2264,7 +2264,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
 
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$SERVICE_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
-curl -v -X POST -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> https://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict -d <span class="nv">$INPUT_PATH</span>
+curl -v -X POST -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict -d <span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>&gt; POST /v2/models/cifar:predict HTTP/2
