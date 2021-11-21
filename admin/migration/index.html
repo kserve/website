@@ -560,8 +560,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#migration" class="md-nav__link">
-    Migration
+  <a href="#migrating-from-standalone-kfserving" class="md-nav__link">
+    Migrating from standalone KFServing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating-from-kubeflow-based-kfserving" class="md-nav__link">
+    Migrating from Kubeflow-based KFServing
   </a>
   
 </li>
@@ -1725,8 +1732,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#migration" class="md-nav__link">
-    Migration
+  <a href="#migrating-from-standalone-kfserving" class="md-nav__link">
+    Migrating from standalone KFServing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migrating-from-kubeflow-based-kfserving" class="md-nav__link">
+    Migrating from Kubeflow-based KFServing
   </a>
   
 </li>
@@ -1749,17 +1763,98 @@
                 
                 
                 <h1 id="migrating-from-kfserving">Migrating from KFServing<a class="headerlink" href="#migrating-from-kfserving" title="Permanent link">&para;</a></h1>
-<p>This doc helps to migrate existing inference services running in the cluster from <code>KFServing</code> to <code>KServe</code> without downtime. The script deletes your <code>KFServing</code> installation after migrating the inference services from <code>serving.kubeflow.org</code> to <code>serving.kserve.io</code>.</p>
+<p>This doc explains how to migrate existing inference services from KFServing to KServe without downtime.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The migration job runs in kserve namespace. please make sure kserve running in the cluster.</p>
+<p>The migration job will by default delete the leftover KFServing installation after migrating the inference services from
+<code>serving.kubeflow.org</code> to <code>serving.kserve.io</code>.</p>
 </div>
-<h3 id="migration">Migration<a class="headerlink" href="#migration" title="Permanent link">&para;</a></h3>
-<p>Please use this <a href="../kserve_migration_job.yaml">YAML file</a> to migrate existing inference services.</p>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">kubectl</label><div class="tabbed-content"></div>
-</div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f kserve_migration_job.yaml
+<h3 id="migrating-from-standalone-kfserving">Migrating from standalone KFServing<a class="headerlink" href="#migrating-from-standalone-kfserving" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Install KServe v0.7 using the <a href="https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml">install YAML</a></p>
+<ul>
+<li>This will not affect existing services yet.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml
 </code></pre></div>
+</li>
+<li>
+<p>Run the <a href="https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job.yaml">KServe Migration YAML</a></p>
+<ul>
+<li>
+<p>This will begin the migration. Any errors here may affect your existing services.</p>
+</li>
+<li>
+<p>If you do not want to delete the KFServing resources after migrating, download and edit the env <code>REMOVE_KFSERVING</code>
+  in the YAML before applying it </p>
+</li>
+<li>
+<p>If your KFServing is installed in a namespace other than <code>kfserving-system</code>, then download and set the env <code>KFSERVING_NAMESPACE</code>
+  in the YAML before applying it</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job.yaml
+</code></pre></div>
+</li>
+<li>
+<p>Clean up the migration resources</p>
+<div class="highlight"><pre><span></span><code>kubectl delete ClusterRoleBinding cluster-migration-rolebinding
+kubectl delete ClusterRole cluster-migration-role
+kubectl delete ServiceAccount cluster-migration-svcaccount -n kserve 
+</code></pre></div>
+</li>
+</ol>
+<h3 id="migrating-from-kubeflow-based-kfserving">Migrating from Kubeflow-based KFServing<a class="headerlink" href="#migrating-from-kubeflow-based-kfserving" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Install Kubeflow-based KServe 0.7 using the <a href="https://github.com/kserve/kserve/blob/master/install/v0.7.0/kserve_kubeflow.yaml">install YAML</a></p>
+<ul>
+<li>This will not affect existing services yet.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/blob/master/install/v0.7.0/kserve_kubeflow.yaml
+</code></pre></div>
+</li>
+<li>
+<p>Run the <a href="https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job_kubeflow.yaml">KServe Migration YAML</a> for Kubeflow-based installations</p>
+<ul>
+<li>
+<p>This will begin the migration. Any errors here may affect your existing services.</p>
+</li>
+<li>
+<p>If you do not want to delete the KFServing resources after migrating, download and edit the env <code>REMOVE_KFSERVING</code>
+  in the YAML before applying it </p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job_kubeflow.yaml
+</code></pre></div>
+</li>
+<li>
+<p>Clean up the migration resources</p>
+<div class="highlight"><pre><span></span><code>kubectl delete ClusterRoleBinding cluster-migration-rolebinding
+kubectl delete ClusterRole cluster-migration-role
+kubectl delete ServiceAccount cluster-migration-svcaccount -n kubeflow 
+</code></pre></div>
+</li>
+<li>
+<p>Update the models web app to use the new InferenceService API group <code>serving.kserve.io</code></p>
+<ul>
+<li>Change the deployment image to <code>kserve/models-web-app:v0.7.0-rc0</code></li>
+<li>This is a temporary fix until the next Kubeflow release includes these changes</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl edit deployment kfserving-models-web-app -n kubeflow
+</code></pre></div>
+</li>
+<li>
+<p>Update the cluster role to be able to access the new InferenceService API group <code>serving.kserve.io</code></p>
+<ul>
+<li>Edit the <code>apiGroups</code> from <code>serving.kubeflow.org</code> to <code>serving.kserve.io</code></li>
+<li>This is a temporary fix until the next Kubeflow release includes these changes</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl edit clusterrole kfserving-models-web-app-cluster-role
+</code></pre></div>
+</li>
+</ol>
                 
               
               
