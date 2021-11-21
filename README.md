@@ -1,7 +1,7 @@
 # KServe documentation
 
 Welcome to the source file repository for our documentation on
-https://kserve.io.
+https://kserve.github.io/website/
 
 ## Website
 
