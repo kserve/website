@@ -9,6 +9,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [Cisco](https://www.cisco.com/) | [Krishna Durai](https://github.com/krishnadurai) |
 | [CoreWeave](https://coreweave.com/) | [Peter Salanki](https://github.com/salanki) |
 | [Gojek](https://www.gojek.com/) | [Willem Pienaar](https://github.com/woop) |
+| [Deeploy](https://deeploy.ml) | [Tim Kleinloog](https://github.com/TimKleinloog) |
 | [Halodoc ID](https://halodoc.com/) | [Joinal Ahmed](https://github.com/joinal-ahmed) |
 | [IBM](https://www.ibm.com/) | [Animesh Singh](https://github.com/animeshsingh) |
 | [Kubeflow on Google Cloud](https://www.kubeflow.org/docs/distributions/gke/) | [James Liu](https://github.com/zijianjoy)|
