@@ -122,6 +122,12 @@ markdown_extensions:
 
 copyright: "Copyright © 2021 The KServe Authors"
 
+plugins:
+  - mike:
+     version_selector: true
+     css_dir: css
+     javascript_dir: js
+
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -134,3 +140,5 @@ extra:
   version_warning: !!python/object/apply:os.getenv ["VERSION_WARNING"]
   kserve_version: !!python/object/apply:os.getenv ["KSERVE_VERSION"]
   branch: !!python/object/apply:os.getenv ["SAMPLES_BRANCH", "mkdocs"]
+  version:
+    provider: mike
