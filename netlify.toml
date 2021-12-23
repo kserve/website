@@ -1,3 +1,4 @@
 [build]
 publish = "/"
-command = ""
+command = "git config --local user.email \"github-actions[bot]@users.noreply.github.com\" && git config --local user.name \"github-actions[bot]\" && mike deploy --update-aliases $(cat version.txt) latest && mike set-default latest && git checkout gh-pages"
+
