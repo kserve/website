@@ -126,7 +126,7 @@ plugins:
   - search
   - mike:
      version_selector: true
-     css_dir: css
+     css_dir: stylesheets
      javascript_dir: js
 
 extra:
