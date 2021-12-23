@@ -123,6 +123,7 @@ markdown_extensions:
 copyright: "Copyright © 2021 The KServe Authors"
 
 plugins:
+  - search
   - mike:
      version_selector: true
      css_dir: css
