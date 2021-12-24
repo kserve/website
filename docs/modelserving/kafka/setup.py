@@ -38,7 +38,7 @@ setup(
         "pandas>=0.24.2",
         "numpy>=1.16.3",
         "kubernetes >= 9.0.0",
-        "opencv-python-headless==4.0.0.21",
+        "opencv-python-headless==4.2.0.32",
         "boto3==1.18.18"
     ],
     tests_require=tests_require,
