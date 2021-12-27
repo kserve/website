@@ -12,13 +12,13 @@ For some (e.g. folks using RHEL), you may have to use pip3.
 
 === "pip"
     ```
-    pip install mkdocs-material
+    pip install mkdocs-material mike
     ```
     More detailed instructions can be found here: [https://squidfunk.github.io/mkdocs-material/getting-started/#installation](https://squidfunk.github.io/mkdocs-material/getting-started/#installation)
 
 === "pip3"
     ```
-    pip3 install mkdocs-material
+    pip3 install mkdocs-material mike
     ```
     More detailed instructions can be found here: [https://squidfunk.github.io/mkdocs-material/getting-started/#installation](https://squidfunk.github.io/mkdocs-material/getting-started/#installation)
 
