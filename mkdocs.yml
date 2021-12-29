@@ -57,6 +57,9 @@ nav:
                 - Inference Logger: modelserving/logger/logger.md
           - Autoscaling:
                 - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
+          - Node Scheduling:
+                - Overview: modelserving/nodescheduling/overview.md
+                - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
           - Kafka:
                 - Inference Kafka: modelserving/kafka/kafka.md
     - API Reference:
