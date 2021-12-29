@@ -75,7 +75,7 @@ nav:
         - Demos and Presentations: community/presentations.md
 
 site_name: KServe Documentation Website
-site_url: https://kserve.io/docs
+site_url: https://kserve.io/website
 site_description: KServe Documentation
 extra_css:
   - stylesheets/extra.css
