@@ -1149,29 +1149,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#build-transformer-image" class="md-nav__link">
-    Build Transformer image
+  <a href="#create-custom-image-transformer" class="md-nav__link">
+    Create Custom Image Transformer
   </a>
   
-    <nav class="md-nav" aria-label="Build Transformer image">
+    <nav class="md-nav" aria-label="Create Custom Image Transformer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extend-kfmodel-and-implement-prepost-processing-functions" class="md-nav__link">
-    Extend KFModel and implement pre/post processing functions
+  <a href="#extend-modelserver-and-implement-prepost-processing-functions" class="md-nav__link">
+    Extend ModelServer and implement pre/post processing functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-transformer-docker-image" class="md-nav__link">
+    Build Transformer docker image
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-transformer-docker-image" class="md-nav__link">
-    Build Transformer docker image
-  </a>
   
 </li>
       
@@ -2040,29 +2040,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#build-transformer-image" class="md-nav__link">
-    Build Transformer image
+  <a href="#create-custom-image-transformer" class="md-nav__link">
+    Create Custom Image Transformer
   </a>
   
-    <nav class="md-nav" aria-label="Build Transformer image">
+    <nav class="md-nav" aria-label="Create Custom Image Transformer">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extend-kfmodel-and-implement-prepost-processing-functions" class="md-nav__link">
-    Extend KFModel and implement pre/post processing functions
+  <a href="#extend-modelserver-and-implement-prepost-processing-functions" class="md-nav__link">
+    Extend ModelServer and implement pre/post processing functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-transformer-docker-image" class="md-nav__link">
+    Build Transformer docker image
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#build-transformer-docker-image" class="md-nav__link">
-    Build Transformer docker image
-  </a>
   
 </li>
       
@@ -2099,39 +2099,41 @@
 
 <h1 id="deploy-transformer-with-inferenceservice">Deploy Transformer with InferenceService<a class="headerlink" href="#deploy-transformer-with-inferenceservice" title="Permanent link">&para;</a></h1>
 <p>Transformer is an <code>InferenceService</code> component which does pre/post processing alongside with model inference. It usually takes raw input and transforms them to the
-input tensors model server expects. In this example we demonstrate an example of running inference with <code>Transformer</code> and <code>TorchServe</code> predictor.</p>
-<h2 id="build-transformer-image">Build Transformer image<a class="headerlink" href="#build-transformer-image" title="Permanent link">&para;</a></h2>
+input tensors model server expects. In this example we demonstrate an example of running inference with a custom image <code>Transformer</code> and <em>TorchServe</em> <code>Predictor</code>.</p>
+<h2 id="create-custom-image-transformer">Create Custom Image Transformer<a class="headerlink" href="#create-custom-image-transformer" title="Permanent link">&para;</a></h2>
+<h3 id="extend-modelserver-and-implement-prepost-processing-functions">Extend ModelServer and implement pre/post processing functions<a class="headerlink" href="#extend-modelserver-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
 <p><code>KServe.KFModel</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
-in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, when <code>predictor_host</code> is passed the <code>predict</code> handler by default makes a HTTP call to the predictor url 
+in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, when <code>predictor_host</code> is passed the <code>predict</code> handler by default makes a HTTP call to the predictor url
 and gets back a response which then passes to <code>postproces</code> handler. KServe automatically fills in the <code>predictor_host</code> for <code>Transformer</code> and handle the call to the <code>Predictor</code>, for gRPC
 predictor currently you would need to overwrite the <code>predict</code> handler to make the gRPC call.</p>
 <p>To implement a <code>Transformer</code> you can derive from the base <code>KFModel</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own
 customized transformation logic.</p>
-<h3 id="extend-kfmodel-and-implement-prepost-processing-functions">Extend KFModel and implement pre/post processing functions<a class="headerlink" href="#extend-kfmodel-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">kserve</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_LOGLEVEL</span><span class="p">)</span>
 
-<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
-         <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))])</span>
-
-
 <span class="k">def</span> <span class="nf">image_transform</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
-    <span class="n">byte_array</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s1">&#39;image_bytes&#39;</span><span class="p">][</span><span class="s1">&#39;b64&#39;</span><span class="p">])</span>
+    <span class="sd">&quot;&quot;&quot;converts the input image of Bytes Array into Tensor</span>
+<span class="sd">    Args:</span>
+<span class="sd">        instance (dict): The request input for image bytes.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        list: Returns converted tensor as input for predict handler with v1/v2 inference protocol.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_processing</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+        <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+        <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,))</span>
+    <span class="p">])</span>
+    <span class="n">byte_array</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">byte_array</span><span class="p">))</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-    <span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">transform</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_processing</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">instance</span>
 
 
 <span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
@@ -2145,8 +2147,8 @@ customized transformation logic.</p>
     <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">inputs</span>
 </code></pre></div>
-<p>Please see the code example <a href="./image_transformer">here</a></p>
-<h2 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h2>
+<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/transformer/torchserve_image_transformer">here</a>.</p>
+<h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker build -t <span class="o">{</span>username<span class="o">}</span>/image-transformer:latest -f transformer.Dockerfile .
 
 docker push <span class="o">{</span>username<span class="o">}</span>/image-transformer:latest
@@ -2154,7 +2156,7 @@ docker push <span class="o">{</span>username<span class="o">}</span>/image-trans
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Please use the <a href="transformer.yaml">YAML file</a> to create the <code>InferenceService</code>, which includes a Transformer and a PyTorch Predictor.</p>
 <p>By default <code>InferenceService</code> uses <code>TorchServe</code> to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to <code>TorchServe</code> model repository layout.
-The model repository contains a mnist model but you can store more than one models there. In the <code>Transformer</code> image you can create a tranformer class for all the models in the repository if they can share the same transformer 
+The model repository contains a mnist model but you can store more than one models there. In the <code>Transformer</code> image you can create a tranformer class for all the models in the repository if they can share the same transformer
 or maintain a map from model name to transformer classes so KServe knows to use the transformer for the corresponding model.  </p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
@@ -2199,7 +2201,7 @@ curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; -d $INPUT_PATH http://${INGRESS
 &gt; Accept: */*
 &gt; Content-Length: 401
 &gt; Content-Type: application/x-www-form-urlencoded
-&gt; 
+&gt;
 * upload completely sent off: 401 out of 401 bytes
 Handling connection for 8080
 * Mark bundle as not supporting multiuse
@@ -2209,7 +2211,7 @@ Handling connection for 8080
 &lt; date: Tue, 12 Jan 2021 09:52:30 GMT
 &lt; server: istio-envoy
 &lt; x-envoy-upstream-service-time: 83
-&lt; 
+&lt;
 * Connection #0 to host localhost left intact
 {&quot;predictions&quot;: [2]}
 </code></pre></div></p>

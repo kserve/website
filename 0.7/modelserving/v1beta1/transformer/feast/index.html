@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#predict-on-an-inferenceservice-with-transformer-using-feast-online-feature-store" class="md-skip">
+        <a href="#deploy-inferenceservice-with-transformer-using-feast-online-feature-store" class="md-skip">
           Skip to content
         </a>
       
@@ -1142,11 +1142,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-transformer-image" class="md-nav__link">
-    Build Transformer image
+  <a href="#create-a-transformer-with-feast" class="md-nav__link">
+    Create a Transformer with Feast
   </a>
   
-    <nav class="md-nav" aria-label="Build Transformer image">
+    <nav class="md-nav" aria-label="Create a Transformer with Feast">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1156,15 +1156,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#build-transformer-docker-image" class="md-nav__link">
     Build Transformer docker image
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2054,11 +2054,11 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#build-transformer-image" class="md-nav__link">
-    Build Transformer image
+  <a href="#create-a-transformer-with-feast" class="md-nav__link">
+    Create a Transformer with Feast
   </a>
   
-    <nav class="md-nav" aria-label="Build Transformer image">
+    <nav class="md-nav" aria-label="Create a Transformer with Feast">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2068,15 +2068,15 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#build-transformer-docker-image" class="md-nav__link">
     Build Transformer docker image
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2111,7 +2111,7 @@
 </a>
 
 
-<h1 id="predict-on-an-inferenceservice-with-transformer-using-feast-online-feature-store">Predict on an InferenceService with transformer using Feast online feature store<a class="headerlink" href="#predict-on-an-inferenceservice-with-transformer-using-feast-online-feature-store" title="Permanent link">&para;</a></h1>
+<h1 id="deploy-inferenceservice-with-transformer-using-feast-online-feature-store">Deploy InferenceService with Transformer using Feast online feature store<a class="headerlink" href="#deploy-inferenceservice-with-transformer-using-feast-online-feature-store" title="Permanent link">&para;</a></h1>
 <p>Transformer is an <code>InferenceService</code> component which does pre/post processing alongside with model inference. In this example, instead of typical input transformation of raw data to tensors, we demonstrate a use case of online feature augmentation as part of preprocessing. We use a <a href="https://github.com/feast-dev/feast">Feast</a> <code>Transformer</code> to gather online features, run inference with a <code>SKLearn</code> predictor, and leave post processing as pass-through.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
@@ -2119,27 +2119,57 @@
 <li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
 <li>Your Feast online store is populated with driver <a href="https://github.com/tedhtchang/populate_feast_online_store/blob/main/driver_stats.parquet">data</a>, instructions available <a href="https://github.com/tedhtchang/populate_feast_online_store">here</a>, and network accessible.</li>
 </ol>
-<h2 id="build-transformer-image">Build Transformer image<a class="headerlink" href="#build-transformer-image" title="Permanent link">&para;</a></h2>
+<h2 id="create-a-transformer-with-feast">Create a Transformer with Feast<a class="headerlink" href="#create-a-transformer-with-feast" title="Permanent link">&para;</a></h2>
+<h3 id="extend-kfmodel-and-implement-prepost-processing-functions">Extend KFModel and implement pre/post processing functions<a class="headerlink" href="#extend-kfmodel-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
 <p><code>KServe.KFModel</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
-in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, when <code>predictor_host</code> is passed the <code>predict</code> handler by default makes a HTTP call to the predictor url 
+in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, when <code>predictor_host</code> is passed the <code>predict</code> handler by default makes a HTTP call to the predictor url
 and gets back a response which then passes to <code>postproces</code> handler. KServe automatically fills in the <code>predictor_host</code> for <code>Transformer</code> and handle the call to the <code>Predictor</code>, for gRPC
 predictor currently you would need to overwrite the <code>predict</code> handler to make the gRPC call.</p>
 <p>To implement a <code>Transformer</code> you can derive from the base <code>KFModel</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own
 customized transformation logic.</p>
-<h3 id="extend-kfmodel-and-implement-prepost-processing-functions">Extend KFModel and implement pre/post processing functions<a class="headerlink" href="#extend-kfmodel-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
-<p>We created a class, DriverTransformer, which extends KFModel for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:
-* feast_serving_url: The Feast serving URL, in the form of <code>&lt;host_name_or_ip:port&gt;</code>
-* entity_ids: The entity IDs for which to retrieve features from the Feast feature store
-* feature_refs: The feature references for the features to be retrieved</p>
-<p>Please see the code example <a href="./driver_transformer">here</a></p>
-<h2 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h2>
+<p>We created a class, DriverTransformer, which extends <code>KFModel</code> for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:</p>
+<ul>
+<li><strong>feast_serving_url</strong>: The Feast serving URL, in the form of <code>&lt;host_name_or_ip:port&gt;</code></li>
+<li><strong>entity_ids</strong>: The entity IDs for which to retrieve features from the Feast feature store</li>
+<li><strong>feature_refs</strong>: The feature references for the features to be retrieved</li>
+</ul>
+<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/transformer/feast">here</a>.</p>
+<h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
+<p>Checkout the feast code example and under the example directory run the commands as following:</p>
 <div class="highlight"><pre><span></span><code>docker build -t <span class="o">{</span>username<span class="o">}</span>/driver-transformer:latest -f driver_transformer.Dockerfile .
 
 docker push <span class="o">{</span>username<span class="o">}</span>/driver-transformer:latest
 </code></pre></div>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Please use the <a href="driver_transformer.yaml">YAML file</a> and update the <code>feast_serving_url</code> argument to create the <code>InferenceService</code>, which includes a Feast Transformer and a SKLearn Predictor.</p>
-<p>In the Feast Transformer image we packaged the driver transformer class so KServe knows to use the preprocess implementation to augment inputs with online features before making model inference requests. Then the <code>InferenceService</code> uses <code>SKLearn</code> to serve the <a href="https://github.com/feast-dev/feast-driver-ranking-tutorial">driver ranking model</a>, which is trained with Feast offline features, available in a gcs bucket specified under <code>storageUri</code>.</p>
+<p>In the Feast Transformer image we packaged the driver transformer class so KServe knows to use the preprocess implementation to augment inputs with online features before making model inference requests.
+Then the <code>InferenceService</code> uses <code>SKLearn</code> to serve the <a href="https://github.com/feast-dev/feast-driver-ranking-tutorial">driver ranking model</a>, which is trained with Feast offline features, available in a gcs bucket specified under <code>storageUri</code>.
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;sklearn-driver-transformer&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+  <span class="nt">transformer</span><span class="p">:</span>
+    <span class="nt">containers</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kserve/driver-transformer:latest</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">driver-container</span>
+      <span class="nt">command</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;python&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;-m&quot;</span>
+      <span class="p p-Indicator">-</span> <span class="s">&quot;driver_transformer&quot;</span>
+      <span class="nt">args</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--feast_serving_url</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">x.x.x.x:x</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--entity_ids</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">driver_id</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--feature_refs</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">driver_statistics:acc_rate</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">driver_statistics:avg_daily_trips</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">driver_statistics:conv_rate</span>
+  <span class="nt">predictor</span><span class="p">:</span>
+    <span class="nt">sklearn</span><span class="p">:</span>
+      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://pv-kfserving/driver&quot;</span>
+</code></pre></div></p>
 <p>Apply the CRD
 <div class="highlight"><pre><span></span><code>kubectl apply -f driver_transformer.yaml
 </code></pre></div></p>
@@ -2148,14 +2178,14 @@ docker push <span class="o">{</span>username<span class="o">}</span>/driver-tran
 </code></pre></div></p>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>SERVICE_NAME=sklearn-driver-transformer
-MODEL_NAME=sklearn-driver-transformer
-INPUT_PATH=@./driver-input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>sklearn-driver-transformer
+<span class="nv">MODEL_NAME</span><span class="o">=</span>sklearn-driver-transformer
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./driver-input.json
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$SERVICE_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
-curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
+curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> -d <span class="nv">$INPUT_PATH</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
-<p>Expected Output
+<p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>&gt; POST /v1/models/sklearn-driver-transformer:predict HTTP/1.1
 &gt; Host: sklearn-driver-transformer.default.example.com
 &gt; User-Agent: curl/7.58.0
