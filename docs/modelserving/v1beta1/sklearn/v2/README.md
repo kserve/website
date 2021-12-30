@@ -1,4 +1,4 @@
-# Deploy sklearn-learn models with InferenceService
+# Deploy Scikit-learn models with InferenceService
 
 This example walks you through how to deploy a `scikit-learn` model leveraging
 the `v1beta1` version of the `InferenceService` CRD.
@@ -71,7 +71,7 @@ However, you can still override these defaults by providing a
 You can even provide a [set of `model-settings.json` files to load multiple
 models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
 
-### Serving our model locally
+### Serving model locally
 
 With the `mlserver` package installed locally and a local `model-settings.json`
 file, you should now be ready to start our server as:
