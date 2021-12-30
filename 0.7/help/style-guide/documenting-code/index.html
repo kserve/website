@@ -892,7 +892,7 @@
   
     <li class="md-nav__item">
       <a href="../../../modelserving/v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -927,6 +927,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -934,8 +993,29 @@
   
     <li class="md-nav__item">
       <a href="../../../modelserving/v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2106,17 +2186,19 @@
 <p>Specify the language your code is in as part of the code block</p>
 <p>Specify non-language specific code, like CLI commands, with ```bash. See the following examples for formatting.</p>
 </blockquote>
-<div class="tabbed-set" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="kn">package</span> <span class="nx">main</span>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><label for="__tabbed_1_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><label for="__tabbed_1_3"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct Formatting</label><label for="__tabbed_1_4"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect Formatting</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span><span class="w"></span>
 
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span><span class="w"></span>
 
-<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">)</span>
-<span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>package main
 
 import <span class="s2">&quot;fmt&quot;</span>
@@ -2126,7 +2208,7 @@ func main<span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct Formatting</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>```go
 package main
 
@@ -2138,7 +2220,7 @@ func main() {
 ```
 </code></pre></div>
 </div>
-<input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><label for="__tabbed_1_4"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect Formatting</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>```bash
 package main
 
@@ -2151,6 +2233,7 @@ func main() {
 </code></pre></div>
 </div>
 </div>
+</div>
 <h2 id="documenting-yaml">Documenting YAML<a class="headerlink" href="#documenting-yaml" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>When documenting YAML, use two steps. Use step 1 to create the YAML file, and step 2 to apply the YAML file.</p>
@@ -2158,14 +2241,16 @@ func main() {
 <p>Use <strong>kubectl edit</strong> for files which are shipped as part of the KServe software, like the KServe ConfigMaps.</p>
 <p>Write ```yaml at the beginning of your code block if you are typing YAML code as part of a CLI command.</p>
 </blockquote>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><label for="__tabbed_2_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <ul>
 <li>
 <p>Creating or updating a resource:</p>
 <ol>
 <li>
 <p>Create a YAML file using the following template:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># YAML FILE CONTENTS</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># YAML FILE CONTENTS</span><span class="w"></span>
 </code></pre></div>
 </li>
 <li>
@@ -2183,17 +2268,18 @@ Where <code>&lt;filename&gt;</code> is the name of the file you created in the p
 </li>
 </ul>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><strong>Example 1:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl create -f -</span>
-<span class="l l-Scalar l-Scalar-Plain"># code</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl create -f -</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain"># code</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span><span class="w"></span>
 </code></pre></div>
 <p><strong>Example 2:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
-<span class="l l-Scalar l-Scalar-Plain"># code</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain"># code</span><span class="w"></span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span><span class="w"></span>
 </code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="referencing-variables-in-code-blocks">Referencing variables in code blocks<a class="headerlink" href="#referencing-variables-in-code-blocks" title="Permanent link">&para;</a></h2>
@@ -2207,19 +2293,24 @@ Where <code>&lt;filename&gt;</code> is the name of the file you created in the p
 </ul>
 </blockquote>
 <h3 id="single-variable">Single variable<a class="headerlink" href="#single-variable" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><label for="__tabbed_3_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code>kubectl get isvc &lt;service-name&gt;
 </code></pre></div>
 Where <code>&lt;service-name&gt;</code> is the name of your InferenceService.</p>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code>kubectl get isvc <span class="o">{</span>SERVICE_NAME<span class="o">}</span>
 </code></pre></div>
 {SERVICE_NAME} = The name of your service</p>
 </div>
 </div>
+</div>
 <h3 id="multiple-variables">Multiple variables<a class="headerlink" href="#multiple-variables" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><label for="__tabbed_4_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code>kn create service &lt;service-name&gt; --revision-name &lt;revision-name&gt;
 </code></pre></div>
 Where:</p>
@@ -2228,36 +2319,40 @@ Where:</p>
 <li><code>&lt;revision-name&gt;</code> is the desired name of your revision.</li>
 </ul>
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code>kn create service &lt;service-name&gt; --revision-name &lt;revision-name&gt;
 </code></pre></div>
 Where <code>&lt;service-name&gt;</code> is the name of your Knative Service.<br>
 Where <code>&lt;revision-name&gt;</code> is the desired name of your revision.</p>
 </div>
 </div>
+</div>
 <h2 id="cli-output">CLI output<a class="headerlink" href="#cli-output" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>CLI Output should include the custom css "{ .bash .no-copy }" in place of "bash" which removes the "Copy to clipboard button" on the right side of the code block</p>
 </blockquote>
-<div class="tabbed-set" data-tabs="5:4"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="5:4"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><input id="__tabbed_5_4" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct</label><label for="__tabbed_5_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><label for="__tabbed_5_3"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct Formatting</label><label for="__tabbed_5_4"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect Formatting</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="no-copy highlight"><pre><span></span><code>&lt;some-code&gt;
 </code></pre></div>
 </div>
-<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>&lt;some-code&gt;
 </code></pre></div>
 </div>
-<input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><label for="__tabbed_5_3"><img alt="✅" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2705.svg" title=":white_check_mark:" /> Correct Formatting</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>```{ .bash .no-copy }
 &lt;some-code&gt;
 ```
 </code></pre></div>
 </div>
-<input id="__tabbed_5_4" name="__tabbed_5" type="radio" /><label for="__tabbed_5_4"><img alt="⛔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26d4.svg" title=":no_entry:" /> Incorrect Formatting</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>```bash
 &lt;some-code&gt;
 ```
 </code></pre></div>
+</div>
 </div>
 </div>
 

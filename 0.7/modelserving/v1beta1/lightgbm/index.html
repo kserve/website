@@ -900,7 +900,7 @@
   
     <li class="md-nav__item">
       <a href="../spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -997,6 +997,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -1004,8 +1063,29 @@
   
     <li class="md-nav__item">
       <a href="../triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2173,14 +2253,14 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;lightgbm-iris&quot;</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">lightgbm</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-iris&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span><span class="w"></span>
 </code></pre></div>
 Apply the above yaml to create the InferenceService
 <div class="highlight"><pre><span></span><code>kubectl apply -f lightgbm.yaml
@@ -2222,20 +2302,20 @@ curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRES
 you saved from your training environment, however you can build your own lgbserver image following <a href="https://github.com/kserve/kserve/python/lgbserver/README.md#building-your-own-ligthgbm-server-docker-image">this instruction</a>.</p>
 <p>To use your lgbserver image:
 - Add the image to the KServe <a href="https://github.com/kserve/kserve/config/configmap/inferenceservice.yaml">configmap</a>
-<div class="highlight"><pre><span></span><code>        <span class="s">&quot;lightgbm&quot;</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{</span>
-            <span class="s">&quot;image&quot;</span><span class="p p-Indicator">:</span> <span class="s">&quot;&lt;your-dockerhub-id&gt;/kserve/lgbserver&quot;</span><span class="p p-Indicator">,</span>
-        <span class="p p-Indicator">}</span><span class="err">,</span>
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="s">&quot;lightgbm&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="w"></span>
+<span class="w">            </span><span class="s">&quot;image&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;&lt;your-dockerhub-id&gt;/kserve/lgbserver&quot;</span><span class="p p-Indicator">,</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">}</span><span class="err">,</span><span class="w"></span>
 </code></pre></div>
 - Specify the <code>runtimeVersion</code> on <code>InferenceService</code> spec
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;lightgbm-iris&quot;</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">lightgbm</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span>
-      <span class="nt">runtimeVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">X.X.X</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-iris&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">X.X.X</span><span class="w"></span>
 </code></pre></div></p>
 
               
@@ -2255,7 +2335,7 @@ you saved from your training environment, however you can build your own lgbserv
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../spark/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Spark" rel="prev">
+        <a href="../spark/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Spark MLlib" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2264,7 +2344,7 @@ you saved from your training environment, however you can build your own lgbserv
               <span class="md-footer__direction">
                 Previous
               </span>
-              Spark
+              Spark MLlib
             </div>
           </div>
         </a>

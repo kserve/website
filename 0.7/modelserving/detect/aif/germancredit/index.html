@@ -896,7 +896,7 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -931,6 +931,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -938,8 +997,29 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2180,7 +2260,10 @@
 <p>We would like to be able to check if these "protected classes" are being used in a model's predictions. In this example we will feed the model some predictions and calculate metrics based off of the predictions the model makes. We will be using KServe payload logging capability collect the metrics. These metrics will give insight as to whether or not the model is biased for or against any protected classes. In this example we will look at the bias our deployed model has on those of age &gt; 25 vs. those of age &lt;= 25 and see if creditors are treating either unfairly.</p>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Apply the CRD</p>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f bias.yaml
 </code></pre></div>
@@ -2189,7 +2272,10 @@
 </code></pre></div></p>
 <h2 id="deploy-the-message-dumper-sample-backend-receiver-for-payload-logs">Deploy the message dumper (sample backend receiver for payload logs)<a class="headerlink" href="#deploy-the-message-dumper-sample-backend-receiver-for-payload-logs" title="Permanent link">&para;</a></h2>
 <p>Apply the message-dumper CRD which will collect the logs that are created when running predictions on the inferenceservice. In production setup, instead of message-dumper Kafka can be used to receive payload logs</p>
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f message-dumper.yaml
 </code></pre></div>

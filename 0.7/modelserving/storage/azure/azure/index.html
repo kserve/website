@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#predict-on-a-inferenceservice-with-saved-model-on-azure" class="md-skip">
+        <a href="#deploy-inferenceservice-with-saved-model-on-azure" class="md-skip">
           Skip to content
         </a>
       
@@ -896,7 +896,7 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -931,6 +931,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -938,8 +997,29 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2212,9 +2292,9 @@
 </a>
 
 
-<h1 id="predict-on-a-inferenceservice-with-saved-model-on-azure">Predict on a InferenceService with saved model on Azure<a class="headerlink" href="#predict-on-a-inferenceservice-with-saved-model-on-azure" title="Permanent link">&para;</a></h1>
+<h1 id="deploy-inferenceservice-with-saved-model-on-azure">Deploy InferenceService with saved model on Azure<a class="headerlink" href="#deploy-inferenceservice-with-saved-model-on-azure" title="Permanent link">&para;</a></h1>
 <h2 id="using-public-azure-blobs">Using Public Azure Blobs<a class="headerlink" href="#using-public-azure-blobs" title="Permanent link">&para;</a></h2>
-<p>By default, KServe uses anonymous client to download artifacts. To point to an Azure Blob, specify StorageUri to point to an Azure Blob Storage with the format: 
+<p>By default, KServe uses anonymous client to download artifacts. To point to an Azure Blob, specify StorageUri to point to an Azure Blob Storage with the format:
 <code>https://{$STORAGE_ACCOUNT_NAME}.blob.core.windows.net/{$CONTAINER}/{$PATH}</code></p>
 <p>e.g. https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib</p>
 <h2 id="using-private-blobs">Using Private Blobs<a class="headerlink" href="#using-private-blobs" title="Permanent link">&para;</a></h2>
@@ -2230,48 +2310,63 @@
 </code></pre></div>
 <h2 id="create-azure-secret-and-attach-to-service-account">Create Azure Secret and attach to Service Account<a class="headerlink" href="#create-azure-secret-and-attach-to-service-account" title="Permanent link">&para;</a></h2>
 <h3 id="create-azure-secret">Create Azure secret<a class="headerlink" href="#create-azure-secret" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Secret</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">azcreds</span>
-<span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Opaque</span>
-<span class="nt">stringData</span><span class="p">:</span> <span class="c1"># use `stringData` for raw credential string or `data` for base64 encoded string</span>
-  <span class="nt">AZ_CLIENT_ID</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxx</span>
-  <span class="nt">AZ_CLIENT_SECRET</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxx</span>
-  <span class="nt">AZ_SUBSCRIPTION_ID</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxx</span>
-  <span class="nt">AZ_TENANT_ID</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xxxxx</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azcreds</span><span class="w"></span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span><span class="w"></span>
+<span class="nt">stringData</span><span class="p">:</span><span class="w"> </span><span class="c1"># use `stringData` for raw credential string or `data` for base64 encoded string</span><span class="w"></span>
+<span class="w">  </span><span class="nt">AZ_CLIENT_ID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxx</span><span class="w"></span>
+<span class="w">  </span><span class="nt">AZ_CLIENT_SECRET</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxx</span><span class="w"></span>
+<span class="w">  </span><span class="nt">AZ_SUBSCRIPTION_ID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxx</span><span class="w"></span>
+<span class="w">  </span><span class="nt">AZ_TENANT_ID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxxx</span><span class="w"></span>
 </code></pre></div>
 <h3 id="attach-secret-to-a-service-account">Attach secret to a service account<a class="headerlink" href="#attach-secret-to-a-service-account" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sa</span>
-<span class="nt">secrets</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">azcreds</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span><span class="w"></span>
+<span class="nt">secrets</span><span class="p">:</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azcreds</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f create-azure-secret.yaml
 </code></pre></div>
 <h2 id="deploy-the-model-on-azure-with-inferenceservice">Deploy the model on Azure with <code>InferenceService</code><a class="headerlink" href="#deploy-the-model-on-azure-with-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Create the InferenceService with the azure <code>storageUri</code> and the service account with azure credential attached.</p>
-<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;sklearn-azure&quot;</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">serviceAccountName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sa</span>
-    <span class="nt">sklearn</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib&quot;</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklearn-azure&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib&quot;</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f sklearn-azure.yaml
 </code></pre></div>
@@ -2294,7 +2389,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &gt; Accept: */*
 &gt; Content-Length: 84
 &gt; Content-Type: application/x-www-form-urlencoded
-&gt; 
+&gt;
 * upload completely sent off: 84 out of 84 bytes
 * Mark bundle as not supporting multiuse
 &lt; HTTP/1.1 200 OK
@@ -2303,7 +2398,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &lt; date: Mon, 20 Sep 2021 04:55:50 GMT
 &lt; server: istio-envoy
 &lt; x-envoy-upstream-service-time: 6
-&lt; 
+&lt;
 * Connection #0 to host localhost left intact
 {&quot;predictions&quot;: [1, 1]}
 </code></pre></div>

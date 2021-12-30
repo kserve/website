@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#predict-on-a-inferenceservice-with-a-saved-model-on-s3" class="md-skip">
+        <a href="#deploy-inferenceservice-with-a-saved-model-on-s3" class="md-skip">
           Skip to content
         </a>
       
@@ -896,7 +896,7 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -931,6 +931,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -938,8 +997,29 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2158,61 +2238,76 @@
 </a>
 
 
-<h1 id="predict-on-a-inferenceservice-with-a-saved-model-on-s3">Predict on a InferenceService with a saved model on S3<a class="headerlink" href="#predict-on-a-inferenceservice-with-a-saved-model-on-s3" title="Permanent link">&para;</a></h1>
+<h1 id="deploy-inferenceservice-with-a-saved-model-on-s3">Deploy InferenceService with a saved model on S3<a class="headerlink" href="#deploy-inferenceservice-with-a-saved-model-on-s3" title="Permanent link">&para;</a></h1>
 <h2 id="create-s3-secret-and-attach-to-service-account">Create S3 Secret and attach to Service Account<a class="headerlink" href="#create-s3-secret-and-attach-to-service-account" title="Permanent link">&para;</a></h2>
-<p>Create a secret with your <a href="https://console.aws.amazon.com/iam/home#/users">S3 user credential</a>, <code>KServe</code> reads the secret annotations to inject the S3 environment variables on storage initializer or model agent to download the models from S3 storage. </p>
+<p>Create a secret with your <a href="https://console.aws.amazon.com/iam/home#/users">S3 user credential</a>, <code>KServe</code> reads the secret annotations to inject the S3 environment variables on storage initializer or model agent to download the models from S3 storage.</p>
 <h3 id="create-s3-secret">Create S3 secret<a class="headerlink" href="#create-s3-secret" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Secret</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">s3creds</span>
-  <span class="nt">annotations</span><span class="p">:</span>
-     <span class="nt">serving.kserve.io/s3-endpoint</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">s3.amazonaws.com</span> <span class="c1"># replace with your s3 endpoint e.g minio-service.kubeflow:9000 </span>
-     <span class="nt">serving.kserve.io/s3-usehttps</span><span class="p">:</span> <span class="s">&quot;1&quot;</span> <span class="c1"># by default 1, if testing with minio you can set to 0</span>
-     <span class="nt">serving.kserve.io/s3-region</span><span class="p">:</span> <span class="s">&quot;us-east-2&quot;</span>
-     <span class="nt">serving.kserve.io/s3-useanoncredential</span><span class="p">:</span> <span class="s">&quot;false&quot;</span> <span class="c1"># omitting this is the same as false, if true will ignore provided credential and use anonymous credentials</span>
-<span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Opaque</span>
-<span class="nt">stringData</span><span class="p">:</span> <span class="c1"># use `stringData` for raw credential string or `data` for base64 encoded string</span>
-  <span class="nt">AWS_ACCESS_KEY_ID</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">XXXX</span>
-  <span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">XXXXXXXX</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3creds</span><span class="w"></span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
+<span class="w">     </span><span class="nt">serving.kserve.io/s3-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3.amazonaws.com</span><span class="w"> </span><span class="c1"># replace with your s3 endpoint e.g minio-service.kubeflow:9000</span><span class="w"></span>
+<span class="w">     </span><span class="nt">serving.kserve.io/s3-usehttps</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="c1"># by default 1, if testing with minio you can set to 0</span><span class="w"></span>
+<span class="w">     </span><span class="nt">serving.kserve.io/s3-region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-east-2&quot;</span><span class="w"></span>
+<span class="w">     </span><span class="nt">serving.kserve.io/s3-useanoncredential</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="c1"># omitting this is the same as false, if true will ignore provided credential and use anonymous credentials</span><span class="w"></span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span><span class="w"></span>
+<span class="nt">stringData</span><span class="p">:</span><span class="w"> </span><span class="c1"># use `stringData` for raw credential string or `data` for base64 encoded string</span><span class="w"></span>
+<span class="w">  </span><span class="nt">AWS_ACCESS_KEY_ID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">XXXX</span><span class="w"></span>
+<span class="w">  </span><span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">XXXXXXXX</span><span class="w"></span>
 </code></pre></div>
 <h3 id="attach-secret-to-a-service-account">Attach secret to a service account<a class="headerlink" href="#attach-secret-to-a-service-account" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sa</span>
-<span class="nt">secrets</span><span class="p">:</span>
-<span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">s3creds</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span><span class="w"></span>
+<span class="nt">secrets</span><span class="p">:</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3creds</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f create-s3-secret.yaml
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you are running kserve with istio sidecars enabled, there can be a race condition between the istio proxy being ready and the agent pulling models. This will result in a <code>tcp dial connection refused</code> error when the agent tries to download from s3.</p>
-<p>To resolve it, istio allows the blocking of other containers in a pod until the proxy container is ready. </p>
+<p>To resolve it, istio allows the blocking of other containers in a pod until the proxy container is ready.</p>
 <p>You can enabled this by setting <code>proxy.holdApplicationUntilProxyStarts: true</code> in <code>istio-sidecar-injector</code> configmap, <code>proxy.holdApplicationUntilProxyStarts</code> flag was introduced in Istio 1.7 as an experimental feature and is turned off by default.</p>
 </div>
 <h2 id="deploy-the-model-on-s3-with-inferenceservice">Deploy the model on S3 with <code>InferenceService</code><a class="headerlink" href="#deploy-the-model-on-s3-with-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Create the InferenceService with the s3 <code>storageUri</code> and the service account with s3 credential attached.</p>
-<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;mnist-s3&quot;</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">serviceAccountName</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sa</span>
-    <span class="nt">tensorflow</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;s3://kserve-examples/mnist&quot;</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mnist-s3&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;s3://kserve-examples/mnist&quot;</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f mnist-s3.yaml
 </code></pre></div>

@@ -896,7 +896,7 @@
   
     <li class="md-nav__item">
       <a href="../../v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -931,6 +931,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -938,8 +997,29 @@
   
     <li class="md-nav__item">
       <a href="../../v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2301,33 +2381,33 @@ mnist-transformer-default-jmf98-deployment-8585cbc748-ftfhd   2/2     Running   
 <div class="highlight"><pre><span></span><code>mc cp images/0.png myminio/mnist
 </code></pre></div>
 you should expect a notification event like following sent to kafka topic <code>mnist</code> after uploading an image in <code>mnist</code> bucket
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-   <span class="nt">&quot;EventType&quot;</span><span class="p">:</span><span class="s2">&quot;s3:ObjectCreated:Put&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;Key&quot;</span><span class="p">:</span><span class="s2">&quot;mnist/0.png&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;Records&quot;</span><span class="p">:[</span>
-      <span class="p">{</span><span class="nt">&quot;eventVersion&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
-       <span class="nt">&quot;eventSource&quot;</span><span class="p">:</span><span class="s2">&quot;minio:s3&quot;</span><span class="p">,</span>
-       <span class="nt">&quot;awsRegion&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-       <span class="nt">&quot;eventTime&quot;</span><span class="p">:</span><span class="s2">&quot;2019-11-17T19:08:08Z&quot;</span><span class="p">,</span>
-       <span class="nt">&quot;eventName&quot;</span><span class="p">:</span><span class="s2">&quot;s3:ObjectCreated:Put&quot;</span><span class="p">,</span>
-       <span class="nt">&quot;userIdentity&quot;</span><span class="p">:{</span><span class="nt">&quot;principalId&quot;</span><span class="p">:</span><span class="s2">&quot;minio&quot;</span><span class="p">},</span>
-       <span class="nt">&quot;requestParameters&quot;</span><span class="p">:{</span><span class="nt">&quot;sourceIPAddress&quot;</span><span class="p">:</span><span class="s2">&quot;127.0.0.1:37830&quot;</span><span class="p">},</span>
-       <span class="nt">&quot;responseElements&quot;</span><span class="p">:{</span><span class="nt">&quot;x-amz-request-id&quot;</span><span class="p">:</span><span class="s2">&quot;15D808BF706E0994&quot;</span><span class="p">,</span>
-       <span class="nt">&quot;x-minio-origin-endpoint&quot;</span><span class="p">:</span><span class="s2">&quot;http://10.244.0.71:9000&quot;</span><span class="p">},</span>
-       <span class="nt">&quot;s3&quot;</span><span class="p">:{</span>
-          <span class="nt">&quot;s3SchemaVersion&quot;</span><span class="p">:</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;configurationId&quot;</span><span class="p">:</span><span class="s2">&quot;Config&quot;</span><span class="p">,</span>
-          <span class="nt">&quot;bucket&quot;</span><span class="p">:{</span>
-               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span>
-               <span class="nt">&quot;ownerIdentity&quot;</span><span class="p">:{</span><span class="nt">&quot;principalId&quot;</span><span class="p">:</span><span class="s2">&quot;minio&quot;</span><span class="p">},</span>
-               <span class="nt">&quot;arn&quot;</span><span class="p">:</span><span class="s2">&quot;arn:aws:s3:::mnist&quot;</span><span class="p">},</span>
-          <span class="nt">&quot;object&quot;</span><span class="p">:{</span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="s2">&quot;0.png&quot;</span><span class="p">,</span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="mi">324</span><span class="p">,</span><span class="nt">&quot;eTag&quot;</span><span class="p">:</span><span class="s2">&quot;ebed21f6f77b0a64673a3c96b0c623ba&quot;</span><span class="p">,</span><span class="nt">&quot;contentType&quot;</span><span class="p">:</span><span class="s2">&quot;image/png&quot;</span><span class="p">,</span><span class="nt">&quot;userMetadata&quot;</span><span class="p">:{</span><span class="nt">&quot;content-type&quot;</span><span class="p">:</span><span class="s2">&quot;image/png&quot;</span><span class="p">},</span><span class="nt">&quot;versionId&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="nt">&quot;sequencer&quot;</span><span class="p">:</span><span class="s2">&quot;15D808BF706E0994&quot;</span><span class="p">}},</span>
-          <span class="nt">&quot;source&quot;</span><span class="p">:{</span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;userAgent&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}}</span>
-   <span class="p">],</span>
-   <span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;info&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;2019-11-17T19:08:08Z&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;EventType&quot;</span><span class="p">:</span><span class="s2">&quot;s3:ObjectCreated:Put&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;Key&quot;</span><span class="p">:</span><span class="s2">&quot;mnist/0.png&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;Records&quot;</span><span class="p">:[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;eventVersion&quot;</span><span class="p">:</span><span class="s2">&quot;2.0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;eventSource&quot;</span><span class="p">:</span><span class="s2">&quot;minio:s3&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;awsRegion&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;eventTime&quot;</span><span class="p">:</span><span class="s2">&quot;2019-11-17T19:08:08Z&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;eventName&quot;</span><span class="p">:</span><span class="s2">&quot;s3:ObjectCreated:Put&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;userIdentity&quot;</span><span class="p">:{</span><span class="nt">&quot;principalId&quot;</span><span class="p">:</span><span class="s2">&quot;minio&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;requestParameters&quot;</span><span class="p">:{</span><span class="nt">&quot;sourceIPAddress&quot;</span><span class="p">:</span><span class="s2">&quot;127.0.0.1:37830&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;responseElements&quot;</span><span class="p">:{</span><span class="nt">&quot;x-amz-request-id&quot;</span><span class="p">:</span><span class="s2">&quot;15D808BF706E0994&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;x-minio-origin-endpoint&quot;</span><span class="p">:</span><span class="s2">&quot;http://10.244.0.71:9000&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">       </span><span class="nt">&quot;s3&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;s3SchemaVersion&quot;</span><span class="p">:</span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;configurationId&quot;</span><span class="p">:</span><span class="s2">&quot;Config&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;bucket&quot;</span><span class="p">:{</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;ownerIdentity&quot;</span><span class="p">:{</span><span class="nt">&quot;principalId&quot;</span><span class="p">:</span><span class="s2">&quot;minio&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">               </span><span class="nt">&quot;arn&quot;</span><span class="p">:</span><span class="s2">&quot;arn:aws:s3:::mnist&quot;</span><span class="p">},</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;object&quot;</span><span class="p">:{</span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="s2">&quot;0.png&quot;</span><span class="p">,</span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="mi">324</span><span class="p">,</span><span class="nt">&quot;eTag&quot;</span><span class="p">:</span><span class="s2">&quot;ebed21f6f77b0a64673a3c96b0c623ba&quot;</span><span class="p">,</span><span class="nt">&quot;contentType&quot;</span><span class="p">:</span><span class="s2">&quot;image/png&quot;</span><span class="p">,</span><span class="nt">&quot;userMetadata&quot;</span><span class="p">:{</span><span class="nt">&quot;content-type&quot;</span><span class="p">:</span><span class="s2">&quot;image/png&quot;</span><span class="p">},</span><span class="nt">&quot;versionId&quot;</span><span class="p">:</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="nt">&quot;sequencer&quot;</span><span class="p">:</span><span class="s2">&quot;15D808BF706E0994&quot;</span><span class="p">}},</span><span class="w"></span>
+<span class="w">          </span><span class="nt">&quot;source&quot;</span><span class="p">:{</span><span class="nt">&quot;host&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="nt">&quot;userAgent&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}}</span><span class="w"></span>
+<span class="w">   </span><span class="p">],</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;info&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;2019-11-17T19:08:08Z&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <p>Check the transformer log, you should expect a prediction response and put the image to the corresponding bucket
 <div class="highlight"><pre><span></span><code>kubectl logs mnist-transformer-default-rctjm-deployment-54d59c849c-2dq98  kserve-container

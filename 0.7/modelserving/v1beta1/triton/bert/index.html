@@ -17,7 +17,7 @@
     
     
       
-        <title>QA Inference with BERT model using Triton Inference Server - KServe Documentation Website</title>
+        <title>Tensorflow - KServe Documentation Website</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              QA Inference with BERT model using Triton Inference Server
+              Tensorflow
             
           </span>
         </div>
@@ -233,6 +233,8 @@
         
   
   
+    
+  
 
 
   
@@ -249,7 +251,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../control_plane/" class="md-tabs__link">
+      <a href="../../../control_plane/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
@@ -586,12 +588,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       
       
@@ -753,12 +757,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
       
       
       
@@ -892,7 +898,7 @@
   
     <li class="md-nav__item">
       <a href="../../spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -927,6 +933,69 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -934,8 +1003,118 @@
   
     <li class="md-nav__item">
       <a href="../torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Tensorflow
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Tensorflow
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    Setup
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-custom-transformer-for-bert-tokenizer" class="md-nav__link">
+    Create Custom Transformer for BERT Tokenizer
+  </a>
+  
+    <nav class="md-nav" aria-label="Create Custom Transformer for BERT Tokenizer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extend-modelserver-base-and-implement-prepostprocess" class="md-nav__link">
+    Extend ModelServer base and Implement pre/postprocess
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-transformer-docker-image" class="md-nav__link">
+    Build Transformer docker image
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-inferenceservice" class="md-nav__link">
+    Create the InferenceService
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-the-inferenceservice" class="md-nav__link">
+    Check the InferenceService
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-prediction" class="md-nav__link">
+    Run a Prediction
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2027,9 +2206,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#extend-kfserver-and-implement-prepostprocess-and-predict" class="md-nav__link">
-    Extend KFServer and Implement pre/postprocess and predict
+  <a href="#create-custom-transformer-for-bert-tokenizer" class="md-nav__link">
+    Create Custom Transformer for BERT Tokenizer
   </a>
+  
+    <nav class="md-nav" aria-label="Create Custom Transformer for BERT Tokenizer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extend-modelserver-base-and-implement-prepostprocess" class="md-nav__link">
+    Extend ModelServer base and Implement pre/postprocess
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-transformer-docker-image" class="md-nav__link">
+    Build Transformer docker image
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2073,17 +2272,18 @@
 
 <h1 id="qa-inference-with-bert-model-using-triton-inference-server">QA Inference with BERT model using Triton Inference Server<a class="headerlink" href="#qa-inference-with-bert-model-using-triton-inference-server" title="Permanent link">&para;</a></h1>
 <p>Bidirectional Embedding Representations from Transformers (BERT), is a method of pre-training language representations which obtains state-of-the-art results on a wide array of Natural Language Processing (NLP) tasks.</p>
-<p>This example demonstrates
-- Inference on Question Answering (QA) task with BERT Base/Large model
-- The use of fine-tuned NVIDIA BERT models
-- Deploy Transformer for preprocess using BERT tokenizer
-- Deploy BERT model on Triton Inference Server
-- Inference with V2 KServe protocol</p>
+<p>This example demonstrates</p>
+<ul>
+<li>Inference on Question Answering (QA) task with BERT Base/Large model</li>
+<li>The use of fine-tuned NVIDIA BERT models</li>
+<li>Deploy Transformer for preprocess using BERT tokenizer</li>
+<li>Deploy BERT model on Triton Inference Server</li>
+<li>Inference with V2 KServe protocol</li>
+</ul>
 <p>We can run inference on a fine-tuned BERT model for tasks like Question Answering.</p>
 <p>Here we use a BERT model fine-tuned on a SQuaD 2.0 Dataset which contains 100,000+ question-answer pairs on 500+ articles combined with over 50,000 new, unanswerable questions.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="../../../../get_started/#4-install-kserve">KFServing 0.5 installed</a>.</li>
 <li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
 <li>Skip <a href="https://knative.dev/docs/serving/tag-resolution/">tag resolution</a> for <code>nvcr.io</code> which requires auth to resolve triton inference server image digest
 <div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span> -n knative-serving
@@ -2092,12 +2292,14 @@
 <div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;progressDeadline&quot;: &quot;600s&quot;}}&#39;</span> -n knative-serving
 </code></pre></div></li>
 </ol>
-<h2 id="extend-kfserver-and-implement-prepostprocess-and-predict">Extend KFServer and Implement pre/postprocess and predict<a class="headerlink" href="#extend-kfserver-and-implement-prepostprocess-and-predict" title="Permanent link">&para;</a></h2>
+<h2 id="create-custom-transformer-for-bert-tokenizer">Create Custom Transformer for BERT Tokenizer<a class="headerlink" href="#create-custom-transformer-for-bert-tokenizer" title="Permanent link">&para;</a></h2>
+<h3 id="extend-modelserver-base-and-implement-prepostprocess">Extend ModelServer base and Implement pre/postprocess<a class="headerlink" href="#extend-modelserver-base-and-implement-prepostprocess" title="Permanent link">&para;</a></h3>
 <ul>
 <li>The <code>preprocess</code> handler converts the paragraph and the question to BERT input using BERT tokenizer</li>
 <li>The <code>predict</code> handler calls <code>Triton Inference Server</code> using PYTHON REST API  </li>
-<li>The <code>postprocess</code> handler converts raw prediction to the answer with the probability
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BertTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
+<li>The <code>postprocess</code> handler converts raw prediction to the answer with the probability</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">BertTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">short_paragraph_text</span> <span class="o">=</span> <span class="s2">&quot;The Apollo program was the third United States human spaceflight program. First conceived as a three-man spacecraft to follow the one-man Project Mercury which put the first Americans in space, Apollo was dedicated to President John F. Kennedy&#39;s national goal of landing a man on the Moon. The first manned flight of Apollo was in 1968. Apollo ran from 1961 to 1972 followed by the Apollo-Soyuz Test Project a joint Earth orbit mission with the Soviet Union in 1975.&quot;</span>
@@ -2143,15 +2345,16 @@
         <span class="n">start_logits</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;outputs&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
         <span class="n">n_best_size</span> <span class="o">=</span> <span class="mi">20</span>
 
-        <span class="c1"># The maximum length of an answer that can be generated. This is needed </span>
+        <span class="c1"># The maximum length of an answer that can be generated. This is needed</span>
         <span class="c1">#  because the start and end predictions are not conditioned on one another</span>
         <span class="n">max_answer_length</span> <span class="o">=</span> <span class="mi">30</span>
 
         <span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">nbest_json</span><span class="p">,</span> <span class="n">scores_diff_json</span><span class="p">)</span> <span class="o">=</span> \
            <span class="n">data_processing</span><span class="o">.</span><span class="n">get_predictions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doc_tokens</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="n">start_logits</span><span class="p">,</span> <span class="n">end_logits</span><span class="p">,</span> <span class="n">n_best_size</span><span class="p">,</span> <span class="n">max_answer_length</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">prediction</span><span class="p">,</span> <span class="s2">&quot;prob&quot;</span><span class="p">:</span> <span class="n">nbest_json</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;probability&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">100.0</span><span class="p">}</span>
-</code></pre></div></li>
-</ul>
+</code></pre></div>
+Please find the code example <a href="https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/bert">here</a>.</p>
+<h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <p>Build the KServe Transformer image with above code
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span> bert_tokenizer_v2
 docker build -t <span class="nv">$USER</span>/bert_transformer-v2:latest . --rm
@@ -2159,36 +2362,36 @@ docker build -t <span class="nv">$USER</span>/bert_transformer-v2:latest . --rm
 Or you can use the prebuild image <code>kfserving/bert-transformer-v2:latest</code></p>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Add above custom KServe Transformer image and Triton Predictor to the <code>InferenceService</code> spec
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="s">&quot;InferenceService&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="s">&quot;bert-v2&quot;</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">transformer</span><span class="p">:</span>
-    <span class="nt">containers</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kserve-container</span>      
-        <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kfserving/bert-transformer-v2:latest</span>
-        <span class="nt">command</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="s">&quot;python&quot;</span>
-          <span class="p p-Indicator">-</span> <span class="s">&quot;-m&quot;</span>
-          <span class="p p-Indicator">-</span> <span class="s">&quot;bert_transformer_v2&quot;</span>
-        <span class="nt">env</span><span class="p">:</span>
-          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">STORAGE_URI</span>
-            <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-samples/models/triton/bert-transformer&quot;</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">triton</span><span class="p">:</span>
-      <span class="nt">runtimeVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
-      <span class="nt">resources</span><span class="p">:</span>
-        <span class="nt">limits</span><span class="p">:</span>
-          <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
-          <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8Gi</span>
-        <span class="nt">requests</span><span class="p">:</span>
-          <span class="nt">cpu</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
-          <span class="nt">memory</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8Gi</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="s">&quot;gs://kfserving-examples/models/triton/bert&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bert-v2&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w">      </span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving/bert-transformer-v2:latest</span><span class="w"></span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;bert_transformer_v2&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STORAGE_URI</span><span class="w"></span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/triton/bert-transformer&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span><span class="w"></span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/triton/bert&quot;</span><span class="w"></span>
 </code></pre></div></p>
 <p>Apply the <code>InferenceService</code> yaml.
-<div class="highlight"><pre><span></span><code>kubectl apply -f bert_v1beta1.yaml 
+<div class="highlight"><pre><span></span><code>kubectl apply -f bert_v1beta1.yaml
 </code></pre></div></p>
 <p>Expected Output
 <div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/bert-v2 created
@@ -2208,11 +2411,11 @@ bert-v2-transformer-default-sd6nc   bert-v2-transformer-default   bert-v2-transf
 <p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send a question request with following input, the transformer expects sending a list of <code>instances</code> or <code>inputs</code> and <code>preprocess</code> then converts
 the inputs to expected tensor sending to <code>Triton Inference Server</code>.
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s2">&quot;What President is credited with the original notion of putting Americans in space?&quot;</span> 
-  <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="s2">&quot;What President is credited with the original notion of putting Americans in space?&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>bert-v2
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
@@ -2237,6 +2440,41 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../torchscript/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Torchscript" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Torchscript
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../custom/custom_model/" class="md-footer__link md-footer__link--next" aria-label="Next: How to write a custom predictor" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to write a custom predictor
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

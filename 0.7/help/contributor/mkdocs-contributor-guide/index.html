@@ -892,7 +892,7 @@
   
     <li class="md-nav__item">
       <a href="../../../modelserving/v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -927,6 +927,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -934,8 +993,29 @@
   
     <li class="md-nav__item">
       <a href="../../../modelserving/v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2118,42 +2198,50 @@
 <p>kserve.io uses <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> to render documentation. Material for MkDocs is Python based and uses pip to install most of it's required packages as well as optional add-ons (which we use).</p>
 <p>You can choose to install MkDocs locally or using a Docker image. pip actually comes pre-installed with Python so it is included in many operating systems (like MacOSx or Ubuntu) but if you don’t have Python, you can install it here: https://www.python.org</p>
 <p>For some (e.g. folks using RHEL), you may have to use pip3.</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">pip</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">pip</label><label for="__tabbed_1_2">pip3</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code>pip install mkdocs-material mike
 </code></pre></div>
 More detailed instructions can be found here: <a href="https://squidfunk.github.io/mkdocs-material/getting-started/#installation">https://squidfunk.github.io/mkdocs-material/getting-started/#installation</a></p>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">pip3</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><div class="highlight"><pre><span></span><code>pip3 install mkdocs-material mike
 </code></pre></div>
 More detailed instructions can be found here: <a href="https://squidfunk.github.io/mkdocs-material/getting-started/#installation">https://squidfunk.github.io/mkdocs-material/getting-started/#installation</a></p>
 </div>
 </div>
+</div>
 <h2 id="install-kserve-specific-extensions">Install KServe-Specific Extensions<a class="headerlink" href="#install-kserve-specific-extensions" title="Permanent link">&para;</a></h2>
 <p>KServe uses a number of extensions to MkDocs which can also be installed using pip. If you used pip to install, run the following:</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">pip</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">pip</label><label for="__tabbed_2_2">pip3</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>pip install mkdocs-material-extensions mkdocs-macros-plugin mkdocs-exclude mkdocs-awesome-pages-plugin mkdocs-redirects
 </code></pre></div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">pip3</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>pip3 install mkdocs-material-extensions mkdocs-macros-plugin mkdocs-exclude mkdocs-awesome-pages-plugin mkdocs-redirects
 </code></pre></div>
+</div>
 </div>
 </div>
 <h2 id="setting-up-local-preview">Setting Up Local Preview<a class="headerlink" href="#setting-up-local-preview" title="Permanent link">&para;</a></h2>
 <p>Once you have installed Material for MkDocs and all of the extensions, head over to
 and clone the repo.</p>
 <p>In your terminal, find your way over to the location of the cloned repo. Once you are in the main folder and run:</p>
-<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Local Preview</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Local Preview</label><label for="__tabbed_3_2">Local Preview w/ Dirty Reload</label><label for="__tabbed_3_3">Local Preview including Blog and Community Site</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mkdocs serve
 </code></pre></div>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Local Preview w/ Dirty Reload</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>If you’re only changing a single page in the /docs/ folder (i.e. not the homepage or mkdocs.yml) adding the flag --dirtyreload will make the site rebuild super crazy insta-fast.
 <div class="highlight"><pre><span></span><code>mkdocs serve --dirtyreload
 </code></pre></div></p>
 </div>
-<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Local Preview including Blog and Community Site</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p>First, install the necessary extensions:
 <div class="highlight"><pre><span></span><code>npm install -g postcss postcss-cli autoprefixer http-server
 </code></pre></div>
@@ -2163,6 +2251,7 @@ Once you have those npm packages installed, run:
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Unfortunately, there aren’t live previews for this version of the local preview.</p>
+</div>
 </div>
 </div>
 </div>
@@ -2192,7 +2281,9 @@ and
 <a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/">https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/</a></p>
 <h3 id="content-tabs">Content Tabs<a class="headerlink" href="#content-tabs" title="Permanent link">&para;</a></h3>
 <p>Content tabs are handy way to organize lots of information in a visually pleasing way. Some documentation from <a href="https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#usage">https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#usage</a> is reproduced here:</p>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Grouping Code blocks</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Grouping Code blocks</label><label for="__tabbed_4_2">Grouping other content</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>Code blocks are one of the primary targets to be grouped, and can be considered a special case of content tabs, as tabs with a single code block are always rendered without horizontal spacing.
 Example:
 <div class="highlight"><pre><span></span><code>=== &quot;C&quot;
@@ -2218,7 +2309,9 @@ Example:
     ```
 </code></pre></div></p>
 <p>Result:</p>
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">C</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">C</label><label for="__tabbed_5_2">C++</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -2227,7 +2320,7 @@ Example:
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 </div>
-<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">C++</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -2238,7 +2331,8 @@ Example:
 </div>
 </div>
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Grouping other content</label><div class="tabbed-content">
+</div>
+<div class="tabbed-block">
 <p>When a content tab contains more than one code block, it is rendered with horizontal spacing. Vertical spacing is never added, but can be achieved by nesting tabs in other blocks.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code>=== &quot;Unordered list&quot;
@@ -2254,19 +2348,23 @@ Example:
     3. Nulla tempor lobortis orci
 </code></pre></div>
 <p>Result:</p>
-<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Unordered list</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Unordered list</label><label for="__tabbed_6_2">Ordered list</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <ul>
 <li>Sed sagittis eleifend rutrum</li>
 <li>Donec vitae suscipit est</li>
 <li>Nulla tempor lobortis orci</li>
 </ul>
 </div>
-<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Ordered list</label><div class="tabbed-content">
+<div class="tabbed-block">
 <ol>
 <li>Sed sagittis eleifend rutrum</li>
 <li>Donec vitae suscipit est</li>
 <li>Nulla tempor lobortis orci</li>
 </ol>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2279,7 +2377,9 @@ Example:
 <p>For more info, see: <a href="https://facelessuser.github.io/pymdown-extensions/extensions/snippets/">https://facelessuser.github.io/pymdown-extensions/extensions/snippets/</a></p>
 <h3 id="admonitions">Admonitions<a class="headerlink" href="#admonitions" title="Permanent link">&para;</a></h3>
 <p>We use the following admonition boxes only. Use admonitions sparingly; too many admonitions can be distracting.</p>
-<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Admonitions</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Admonitions</label><label for="__tabbed_7_2">Formatting</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A Note contains information that is useful, but not essential.
@@ -2295,7 +2395,7 @@ If the information suggests an action to take, use a tip instead.</p>
 <p>A Warning draws attention to potential trouble.</p>
 </div>
 </div>
-<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Formatting</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>!!! note
     A Note contains information that is useful, but not essential.
     A reader can skip a note without bypassing required information.
@@ -2309,13 +2409,17 @@ If the information suggests an action to take, use a tip instead.</p>
 </code></pre></div>
 </div>
 </div>
+</div>
 <h3 id="icons-and-emojis">Icons and Emojis<a class="headerlink" href="#icons-and-emojis" title="Permanent link">&para;</a></h3>
 <p>Material for MkDocs supports using Material Icons and Emojis using easy shortcodes.</p>
-<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Emojs</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Emojs</label><label for="__tabbed_8_2">Formatting</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p><img alt="🌮" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f32e.svg" title=":taco:" /></p>
 </div>
-<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Formatting</label><div class="tabbed-content">
+<div class="tabbed-block">
 <p><code>:taco:</code></p>
+</div>
 </div>
 </div>
 <p>To search a database of Icons and Emojis (all of which can be used on kserve.io), as well as usage information, see: <a href="https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#search">https://squidfunk.github.io/mkdocs-material/reference/icons-emojis/#search</a></p>

@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#predict-on-an-inferenceservice-with-a-saved-model-from-a-uri" class="md-skip">
+        <a href="#deploy-inferenceservice-with-a-saved-model-from-a-uri" class="md-skip">
           Skip to content
         </a>
       
@@ -896,7 +896,7 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -931,6 +931,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -938,8 +997,29 @@
   
     <li class="md-nav__item">
       <a href="../../../v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2226,31 +2306,37 @@
 </a>
 
 
-<h1 id="predict-on-an-inferenceservice-with-a-saved-model-from-a-uri">Predict on an InferenceService with a saved model from a URI<a class="headerlink" href="#predict-on-an-inferenceservice-with-a-saved-model-from-a-uri" title="Permanent link">&para;</a></h1>
-<p>This doc guides to specify a model object via the URI (Uniform Resource Identifier) of the model object exposed via an <code>http</code> or <code>https</code> endpoint. </p>
+<h1 id="deploy-inferenceservice-with-a-saved-model-from-a-uri">Deploy InferenceService with a saved model from a URI<a class="headerlink" href="#deploy-inferenceservice-with-a-saved-model-from-a-uri" title="Permanent link">&para;</a></h1>
+<p>This doc guides to specify a model object via the URI (Uniform Resource Identifier) of the model object exposed via an <code>http</code> or <code>https</code> endpoint.</p>
 <p>This <code>storageUri</code> option supports single file models, like <code>sklearn</code> which is specified by a <a href="https://joblib.readthedocs.io/en/latest/">joblib</a> file, or artifacts (e.g. <code>tar</code> or <code>zip</code>) which contain all the necessary dependencies for other model types (e.g. <code>tensorflow</code> or <code>pytorch</code>). Here, we'll show examples from both of the above.</p>
 <h2 id="create-httphttps-header-secret-and-attach-to-service-account">Create HTTP/HTTPS header Secret and attach to Service account<a class="headerlink" href="#create-httphttps-header-secret-and-attach-to-service-account" title="Permanent link">&para;</a></h2>
 <p>The HTTP/HTTPS service request headers can be defined as secret and attached to service account. This is optional.</p>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Secret</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysecret</span>
-<span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Opaque</span>
-<span class="nt">data</span><span class="p">:</span>
-  <span class="nt">https-host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ZXhhbXBsZS5jb20=</span>
-  <span class="nt">headers</span><span class="p">:</span> <span class="p p-Indicator">|-</span>
-    <span class="no">ewoiYWNjb3VudC1uYW1lIjogInNvbWVfYWNjb3VudF9uYW1lIiwKInNlY3JldC1rZXkiOiAic29tZV9zZWNyZXRfa2V5Igp9</span>
-<span class="nn">---</span>
-<span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sa</span>
-<span class="nt">secrets</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysecret</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysecret</span><span class="w"></span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span><span class="w"></span>
+<span class="nt">data</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">https-host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ZXhhbXBsZS5jb20=</span><span class="w"></span>
+<span class="w">  </span><span class="nt">headers</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span><span class="w"></span>
+<span class="w">    </span><span class="no">ewoiYWNjb3VudC1uYW1lIjogInNvbWVfYWNjb3VudF9uYW1lIiwKInNlY3JldC1rZXkiOiAic29tZV9zZWNyZXRfa2V5Igp9</span><span class="w"></span>
+<span class="nn">---</span><span class="w"></span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span><span class="w"></span>
+<span class="nt">secrets</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysecret</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f create-uri-secret.yaml
 </code></pre></div>
@@ -2272,8 +2358,11 @@ ewoiYWNjb3VudC1uYW1lIjogInNvbWVfYWNjb3VudF9uYW1lIiwKInNlY3JldC1rZXkiOiAic29tZV9z
 </code></pre></div></p>
 <h2 id="sklearn">Sklearn<a class="headerlink" href="#sklearn" title="Permanent link">&para;</a></h2>
 <h3 id="train-and-freeze-the-model">Train and freeze the model<a class="headerlink" href="#train-and-freeze-the-model" title="Permanent link">&para;</a></h3>
-<p>Here, we'll train a simple iris model. Please note that <code>KServe</code> requires <code>sklearn==0.20.3</code>. </p>
-<div class="tabbed-set" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">python</label><div class="tabbed-content"></div>
+<p>Here, we'll train a simple iris model. Please note that <code>KServe</code> requires <code>sklearn==0.20.3</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
@@ -2296,30 +2385,36 @@ ewoiYWNjb3VudC1uYW1lIjogInNvbWVfYWNjb3VudF9uYW1lIiwKInNlY3JldC1rZXkiOiAic29tZV9z
 </code></pre></div>
 <p>Now, the frozen model object can be put it somewhere on the web to expose it. For instance, pushing the <code>model.joblib</code> file to some repo on GitHub.</p>
 <h3 id="specify-and-create-the-inferenceservice">Specify and create the <code>InferenceService</code><a class="headerlink" href="#specify-and-create-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-from-uri</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">sklearn</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-from-uri</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f sklearn-from-uri.yaml
 </code></pre></div>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>Now, the ingress can be accessed at <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or follow <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">this instruction</a> to find out the ingress IP and port.</p>
 <p>An example payload below:
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">[</span><span class="mf">6.8</span><span class="p">,</span>  <span class="mf">2.8</span><span class="p">,</span>  <span class="mf">4.8</span><span class="p">,</span>  <span class="mf">1.4</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span>  <span class="mf">3.4</span><span class="p">,</span>  <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">1.6</span><span class="p">]</span>
-  <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w">  </span><span class="mf">2.8</span><span class="p">,</span><span class="w">  </span><span class="mf">4.8</span><span class="p">,</span><span class="w">  </span><span class="mf">1.4</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w">  </span><span class="mf">3.4</span><span class="p">,</span><span class="w">  </span><span class="mf">4.5</span><span class="p">,</span><span class="w">  </span><span class="mf">1.6</span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice sklearn-from-uri -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
@@ -2337,7 +2432,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &gt; Accept: */*
 &gt; Content-Length: 76
 &gt; Content-Type: application/x-www-form-urlencoded
-&gt; 
+&gt;
 * upload completely sent off: 76 out of 76 bytes
 * Mark bundle as not supporting multiuse
 &lt; HTTP/1.1 200 OK
@@ -2346,14 +2441,17 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &lt; date: Mon, 06 Sep 2021 15:52:55 GMT
 &lt; server: istio-envoy
 &lt; x-envoy-upstream-service-time: 7
-&lt; 
+&lt;
 * Connection #0 to host localhost left intact
 {&quot;predictions&quot;: [1, 1]}
 </code></pre></div>
 <h2 id="tensorflow">Tensorflow<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h2>
-<p>This will serve as an example of the ability to also pull in a tarball containing all of the required model dependencies, for instance <code>tensorflow</code> requires multiple files in a strict directory structure in order to be servable. </p>
+<p>This will serve as an example of the ability to also pull in a tarball containing all of the required model dependencies, for instance <code>tensorflow</code> requires multiple files in a strict directory structure in order to be servable.</p>
 <h3 id="train-and-freeze-the-model_1">Train and freeze the model<a class="headerlink" href="#train-and-freeze-the-model_1" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">python</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -2405,30 +2503,36 @@ Where we assume the <code>0001/</code> directory has the structure:
 </div>
 <h3 id="specify-and-create-the-inferenceservice_1">Specify and create the <code>InferenceService</code><a class="headerlink" href="#specify-and-create-the-inferenceservice_1" title="Permanent link">&para;</a></h3>
 <p>And again, if everything went to plan we should be able to pull down the tarball and expose the endpoint.</p>
-<div class="tabbed-set" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">yaml</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tensorflow-from-uri-gzip</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">tensorflow</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://raw.githubusercontent.com/tduffy000/kfserving-uri-examples/master/tensorflow/frozen/model_artifacts.tar.gz</span>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow-from-uri-gzip</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://raw.githubusercontent.com/tduffy000/kfserving-uri-examples/master/tensorflow/frozen/model_artifacts.tar.gz</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f tensorflow-from-uri-gzip.yaml
 </code></pre></div>
 <h2 id="run-a-prediction_1">Run a prediction<a class="headerlink" href="#run-a-prediction_1" title="Permanent link">&para;</a></h2>
 <p>Again, the ingress can be accessed at <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or follow <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">this instruction</a> to find out the ingress IP and port.</p>
 <p>An example payload below:
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">[</span><span class="mf">6.8</span><span class="p">,</span>  <span class="mf">2.8</span><span class="p">,</span>  <span class="mf">4.8</span><span class="p">,</span>  <span class="mf">1.4</span><span class="p">],</span>
-    <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span>  <span class="mf">3.4</span><span class="p">,</span>  <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">1.6</span><span class="p">]</span>
-  <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w">  </span><span class="mf">2.8</span><span class="p">,</span><span class="w">  </span><span class="mf">4.8</span><span class="p">,</span><span class="w">  </span><span class="mf">1.4</span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w">  </span><span class="mf">3.4</span><span class="p">,</span><span class="w">  </span><span class="mf">4.5</span><span class="p">,</span><span class="w">  </span><span class="mf">1.6</span><span class="p">]</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice tensorflow-from-uri-gzip -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
@@ -2448,7 +2552,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &gt; Accept: */*
 &gt; Content-Length: 86
 &gt; Content-Type: application/x-www-form-urlencoded
-&gt; 
+&gt;
 } [86 bytes data]
 * upload completely sent off: 86 out of 86 bytes
 &lt; HTTP/1.1 200 OK
@@ -2457,7 +2561,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &lt; date: Thu, 06 Aug 2020 23:21:19 GMT
 &lt; x-envoy-upstream-service-time: 151
 &lt; server: istio-envoy
-&lt; 
+&lt;
 { [112 bytes data]
 100   198  100   112  100    86    722    554 --:--:-- --:--:-- --:--:--  1285
 * Connection #0 to host 10.0.1.16 left intact

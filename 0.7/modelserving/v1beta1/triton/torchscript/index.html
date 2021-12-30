@@ -17,7 +17,7 @@
     
     
       
-        <title>Triton - KServe Documentation Website</title>
+        <title>Torchscript - KServe Documentation Website</title>
       
     
     
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Triton
+              Torchscript
             
           </span>
         </div>
@@ -785,14 +785,12 @@
               
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" >
       
       
       
@@ -900,7 +898,7 @@
   
     <li class="md-nav__item">
       <a href="../../spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -935,6 +933,69 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -951,12 +1012,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Triton
+          Torchscript
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Triton
+        Torchscript
       </a>
       
         
@@ -1094,6 +1155,27 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2364,7 +2446,7 @@ For example in your model repository bucket <code>gs://kfserving-examples/models
       model.pt
 </code></pre></div>
 The config.pbtxt defines a model configuration that provides the required and optional information for the model.
-A minimal model configuration must specify name, platform, max_batch_size, input, and output. Due to the absence of names 
+A minimal model configuration must specify name, platform, max_batch_size, input, and output. Due to the absence of names
 for inputs and outputs in a TorchScript model, the <code>name</code> attribute of both the inputs and outputs in the configuration must
 follow a specific naming convention i.e. “<name>__<index>”. Where <name> can be any string and <index> refers to the position of the corresponding
 input/output. This means if there are two inputs and two outputs they must be named as: <code>INPUT__0</code>, <code>INPUT__1</code> and <code>OUTPUT__0</code>, <code>OUTPUT__1</code> such that <code>INPUT__0</code>
@@ -2405,25 +2487,28 @@ instance_group [
 <h2 id="inference-with-http-endpoint">Inference with HTTP endpoint<a class="headerlink" href="#inference-with-http-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
 <p>Create the inference service yaml with the above specified model repository uri.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">triton</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
-      <span class="nt">runtimeVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
-      <span class="nt">env</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Setting OMP_NUM_THREADS env is critical for performance, OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra.
 We want one thread per worker instead of many threads per worker to avoid contention.</p>
 </div>
-<div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">kubectl</label><div class="tabbed-content"></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f torchscript.yaml
 </code></pre></div>
@@ -2432,7 +2517,7 @@ We want one thread per worker instead of many threads per worker to avoid conten
 </code></pre></div></p>
 <h3 id="run-a-prediction-with-curl">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so 
+<p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so
 the input request needs to follow the V2 schema with the specified data type, shape.
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
@@ -2448,7 +2533,7 @@ curl -v -X -H <span class="s2">&quot;Host: </span><span class="si">${</span><spa
 &gt; Content-Length: <span class="m">110765</span>
 &gt; Content-Type: application/x-www-form-urlencoded
 &gt; Expect: <span class="m">100</span>-continue
-&gt; 
+&gt;
 &lt; HTTP/1.1 <span class="m">100</span> Continue
 * We are completely uploaded and fine
 &lt; HTTP/1.1 <span class="m">200</span> OK
@@ -2457,7 +2542,7 @@ curl -v -X -H <span class="s2">&quot;Host: </span><span class="si">${</span><spa
 &lt; date: Sun, <span class="m">11</span> Oct <span class="m">2020</span> <span class="m">21</span>:26:51 GMT
 &lt; x-envoy-upstream-service-time: <span class="m">8</span>
 &lt; server: istio-envoy
-&lt; 
+&lt;
 * Connection <span class="c1">#0 to host torchscript-cifar.default.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;model_name&quot;</span>:<span class="s2">&quot;cifar10&quot;</span>,<span class="s2">&quot;model_version&quot;</span>:<span class="s2">&quot;1&quot;</span>,<span class="s2">&quot;outputs&quot;</span>:<span class="o">[{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;OUTPUT__0&quot;</span>,<span class="s2">&quot;datatype&quot;</span>:<span class="s2">&quot;FP32&quot;</span>,<span class="s2">&quot;shape&quot;</span>:<span class="o">[</span><span class="m">1</span>,10<span class="o">]</span>,<span class="s2">&quot;data&quot;</span>:<span class="o">[</span>-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279<span class="o">]}]}</span>
 </code></pre></div></p>
@@ -2477,22 +2562,22 @@ Error Set:
 <h2 id="inference-with-grpc-endpoint">Inference with gRPC endpoint<a class="headerlink" href="#inference-with-grpc-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice_1">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice_1" title="Permanent link">&para;</a></h3>
 <p>Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">triton</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
-      <span class="nt">runtimeVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
-      <span class="nt">ports</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">containerPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9000</span>
-        <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">h2c</span>
-        <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
-      <span class="nt">env</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span><span class="w"></span>
+<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class="w"></span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
 </code></pre></div>
 <p>Apply the gRPC <code>InferenceService</code> yaml and then you can call the model with <code>tritonclient</code> python library after <code>InferenceService</code> is ready.
 <div class="highlight"><pre><span></span><code>kubectl apply -f torchscript_grpc.yaml
@@ -2503,7 +2588,7 @@ when the user is sending in request with raw input format. Transformer component
 User is responsible to create a python class which extends from KServe <code>KFModel</code> base class which implements <code>preprocess</code> handler to transform raw input
 format to tensor format according to V2 prediction protocol, <code>postprocess</code> handle is to convert raw prediction response to a more user friendly response.</p>
 <h3 id="implement-prepost-processing-functions">Implement pre/post processing functions<a class="headerlink" href="#implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
@@ -2548,38 +2633,39 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
     <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="c1"># Here we reshape the data because triton always returns the flatten 1D array as json if not explicitly requesting binary</span>
         <span class="c1"># since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]}</span> 
+        <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]}</span>
 </code></pre></div>
+Please find the code example <a href="https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/torchscript">here</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker build -t $DOCKER_USER/image-transformer-v2:latest -f transformer.Dockerfile . --rm
 </code></pre></div>
 <h3 id="create-the-inferenceservice-with-transformer">Create the InferenceService with Transformer<a class="headerlink" href="#create-the-inferenceservice-with-transformer" title="Permanent link">&para;</a></h3>
 <p>Please use the <a href="torch_transformer.yaml">YAML file</a> to create the InferenceService, which adds the image transformer component with the docker image built from above.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">torch-transfomer</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">predictor</span><span class="p">:</span>
-    <span class="nt">triton</span><span class="p">:</span>
-      <span class="nt">storageUri</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
-      <span class="nt">runtimeVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
-      <span class="nt">env</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="s">&quot;1&quot;</span>
-  <span class="nt">transformer</span><span class="p">:</span>
-    <span class="nt">containers</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kfserving/image-transformer-v2:latest</span>
-      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
-      <span class="nt">command</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="s">&quot;python&quot;</span>
-      <span class="p p-Indicator">-</span> <span class="s">&quot;-m&quot;</span>
-      <span class="p p-Indicator">-</span> <span class="s">&quot;image_transformer_v2&quot;</span>
-      <span class="nt">args</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--model_name</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">cifar10</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">--protocol</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">v2</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transfomer</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving/image-transformer-v2:latest</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;image_transformer_v2&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cifar10</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--protocol</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span><span class="w"></span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code>kubectl apply -f torch_transformer.yaml
 </code></pre></div>
@@ -2587,20 +2673,20 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torch-transfomer created
 </code></pre></div></p>
 <h3 id="run-a-prediction-with-curl_1">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl_1" title="Permanent link">&para;</a></h3>
-<p>The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict): 
+<p>The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict):
 <code>"instances": &lt;value&gt;|&lt;list-of-objects&gt;</code>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-  <span class="nt">&quot;instances&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;b64&quot;</span><span class="p">:</span> <span class="s2">&quot;aW1hZ2UgYnl0ZXM=&quot;</span> <span class="p">},</span>
-      <span class="nt">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;seaside&quot;</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&quot;b64&quot;</span><span class="p">:</span> <span class="s2">&quot;YXdlc29tZSBpbWFnZSBieXRlcw==&quot;</span> <span class="p">},</span>
-      <span class="nt">&quot;caption&quot;</span><span class="p">:</span> <span class="s2">&quot;mountains&quot;</span>
-    <span class="p">}</span>
-  <span class="p">]</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;b64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aW1hZ2UgYnl0ZXM=&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seaside&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">},</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;b64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YXdlc29tZSBpbWFnZSBieXRlcw==&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mountains&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">  </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>torch-transfomer
 <span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
@@ -2616,19 +2702,19 @@ curl -v -X POST -H <span class="s2">&quot;Host: </span><span class="si">${</span
 &gt; accept: */*
 &gt; content-length: 3422
 &gt; content-type: application/x-www-form-urlencoded
-&gt; 
+&gt;
 * We are completely uploaded and fine
 * TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
 * TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
 * old SSL session ID is stale, removing
 * Connection state changed (MAX_CONCURRENT_STREAMS == 4294967295)!
-&lt; HTTP/2 200 
+&lt; HTTP/2 200
 &lt; content-length: 338
 &lt; content-type: application/json; charset=UTF-8
 &lt; date: Thu, 08 Oct 2020 13:15:14 GMT
 &lt; server: istio-envoy
 &lt; x-envoy-upstream-service-time: 52
-&lt; 
+&lt;
 {&quot;model_name&quot;: &quot;cifar&quot;, &quot;model_version&quot;: &quot;1&quot;, &quot;outputs&quot;: [{&quot;name&quot;: &quot;OUTPUT__0&quot;, &quot;datatype&quot;: &quot;FP32&quot;, &quot;shape&quot;: [1, 10], &quot;data&quot;: [-0.7299326062202454, -2.186835289001465, -0.029627874493598938, 2.3753483295440674, -0.3476247489452362, 1.3253062963485718, 0.5721136927604675, 0.049311548471450806, -0.3691796362400055, -1.0804035663604736]}]}
 </code></pre></div></p>
 
@@ -2665,13 +2751,13 @@ curl -v -X POST -H <span class="s2">&quot;Host: </span><span class="si">${</span
       
       
         
-        <a href="../../custom/custom_model/" class="md-footer__link md-footer__link--next" aria-label="Next: How to write a custom predictor" rel="next">
+        <a href="../bert/" class="md-footer__link md-footer__link--next" aria-label="Next: Tensorflow" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              How to write a custom predictor
+              Tensorflow
             </div>
           </div>
           <div class="md-footer__button md-icon">

@@ -894,7 +894,7 @@
   
     <li class="md-nav__item">
       <a href="../../modelserving/v1beta1/spark/" class="md-nav__link">
-        Spark
+        Spark MLlib
       </a>
     </li>
   
@@ -929,6 +929,65 @@
 
             
           
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
             
               
   
@@ -936,8 +995,29 @@
   
     <li class="md-nav__item">
       <a href="../../modelserving/v1beta1/triton/torchscript/" class="md-nav__link">
-        Triton
+        Torchscript
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modelserving/v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2323,9 +2403,9 @@ You can then check Knative <code>networking-istio</code> pod logs for more detai
 <div class="highlight"><pre><span></span><code>kubectl logs -l <span class="nv">app</span><span class="o">=</span>networking-istio -n knative-serving
 </code></pre></div></p>
 <p>If you are seeing HTTP 403, then you may have <code>Istio RBAC</code> turned on which blocks the probes to your service.
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;error&quot;</span><span class="p">,</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2020-03-26T19:12:00.749Z&quot;</span><span class="p">,</span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="s2">&quot;istiocontroller.ingress-controller.status-manager&quot;</span><span class="p">,</span><span class="nt">&quot;caller&quot;</span><span class="p">:</span><span class="s2">&quot;ingress/status.go:366&quot;</span><span class="p">,</span>
-<span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;Probing of http://flowers-sample-predictor-default.kubeflow-jeanarmel-luce.example.com:80/ failed, IP: 10.0.0.29:80, ready: false, error: unexpected status code: want [200], got 403 (depth: 0)&quot;</span><span class="p">,</span>
-<span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="s2">&quot;6b0e5c6&quot;</span><span class="p">,</span><span class="nt">&quot;knative.dev/controller&quot;</span><span class="p">:</span><span class="s2">&quot;ingress-controller&quot;</span><span class="p">,</span><span class="nt">&quot;stacktrace&quot;</span><span class="p">:</span><span class="s2">&quot;knative.dev/serving/pkg/reconciler/ingress.(*StatusProber).processWorkItem\n\t/home/prow/go/src/knative.dev/serving/pkg/reconciler/ingress/status.go:366\nknative.dev/serving/pkg/reconciler/ingress.(*StatusProber).Start.func1\n\t/home/prow/go/src/knative.dev/serving/pkg/reconciler/ingress/status.go:268&quot;</span><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;level&quot;</span><span class="p">:</span><span class="s2">&quot;error&quot;</span><span class="p">,</span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2020-03-26T19:12:00.749Z&quot;</span><span class="p">,</span><span class="nt">&quot;logger&quot;</span><span class="p">:</span><span class="s2">&quot;istiocontroller.ingress-controller.status-manager&quot;</span><span class="p">,</span><span class="nt">&quot;caller&quot;</span><span class="p">:</span><span class="s2">&quot;ingress/status.go:366&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;Probing of http://flowers-sample-predictor-default.kubeflow-jeanarmel-luce.example.com:80/ failed, IP: 10.0.0.29:80, ready: false, error: unexpected status code: want [200], got 403 (depth: 0)&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="s2">&quot;6b0e5c6&quot;</span><span class="p">,</span><span class="nt">&quot;knative.dev/controller&quot;</span><span class="p">:</span><span class="s2">&quot;ingress-controller&quot;</span><span class="p">,</span><span class="nt">&quot;stacktrace&quot;</span><span class="p">:</span><span class="s2">&quot;knative.dev/serving/pkg/reconciler/ingress.(*StatusProber).processWorkItem\n\t/home/prow/go/src/knative.dev/serving/pkg/reconciler/ingress/status.go:366\nknative.dev/serving/pkg/reconciler/ingress.(*StatusProber).Start.func1\n\t/home/prow/go/src/knative.dev/serving/pkg/reconciler/ingress/status.go:268&quot;</span><span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <h3 id="revisionmissing-error">RevisionMissing Error<a class="headerlink" href="#revisionmissing-error" title="Permanent link">&para;</a></h3>
 <p>If you see <code>RevisionMissing</code> error, then your service pods are not in ready state. <code>Knative Service</code> creates <a href="https://knative.dev/docs/serving/spec/knative-api-specification-1.0/#revision">Knative Revision</a> 
@@ -2390,14 +2470,14 @@ StopIteration
 <div class="highlight"><pre><span></span><code>kubectl -n knative-serving edit configmap config-deployment
 </code></pre></div>
 <p>The resultant yaml will look like something below.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">config-deployment</span>
-  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving</span>
-<span class="nt">data</span><span class="p">:</span>
-  <span class="c1"># List of repositories for which tag to digest resolving should be skipped (for AWS ECR: {account_id}.dkr.ecr.{region}.amazonaws.com)</span>
-  <span class="nt">registriesSkippingTagResolving</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">registry.example.com</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">config-deployment</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving</span><span class="w"></span>
+<span class="nt">data</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># List of repositories for which tag to digest resolving should be skipped (for AWS ECR: {account_id}.dkr.ecr.{region}.amazonaws.com)</span><span class="w"></span>
+<span class="w">  </span><span class="nt">registriesSkippingTagResolving</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">registry.example.com</span><span class="w"></span>
 </code></pre></div></p>
 <h2 id="debug-kserve-request-flow">Debug KServe Request flow<a class="headerlink" href="#debug-kserve-request-flow" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>  +----------------------+        +-----------------------+      +--------------------------+
@@ -2435,70 +2515,70 @@ that should be exposed and the type of protocol to use. If you are using <code>S
 if you are using <code>Kubeflow KServe</code>(KServe installed with Kubeflow), it installs the <code>Gateway</code> in <code>kubeflow</code> namespace e.g on GCP the gateway is protected behind <code>IAP</code> with <a href="https://istio.io/docs/tasks/security/authentication/authn-policy">Istio authentication policy</a>.</p>
 <p><div class="highlight"><pre><span></span><code>kubectl get gateway knative-ingress-gateway -n knative-serving -oyaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Gateway</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">labels</span><span class="p">:</span>
-    <span class="nt">networking.knative.dev/ingress-provider</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">istio</span>
-    <span class="nt">serving.knative.dev/release</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v0.12.1</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-ingress-gateway</span>
-  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">selector</span><span class="p">:</span>
-    <span class="nt">istio</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ingressgateway</span>
-  <span class="nt">servers</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&#39;*&#39;</span>
-    <span class="nt">port</span><span class="p">:</span>
-      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http</span>
-      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
-      <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTTP</span>
-  <span class="p p-Indicator">-</span> <span class="nt">hosts</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="s">&#39;*&#39;</span>
-    <span class="nt">port</span><span class="p">:</span>
-      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https</span>
-      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">443</span>
-      <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTTPS</span>
-    <span class="nt">tls</span><span class="p">:</span>
-      <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SIMPLE</span>
-      <span class="nt">privateKey</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/istio/ingressgateway-certs/tls.key</span>
-      <span class="nt">serverCertificate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/istio/ingressgateway-certs/tls.crt</span>
+<div class="highlight"><pre><span></span><code><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Gateway</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">networking.knative.dev/ingress-provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">istio</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serving.knative.dev/release</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.12.1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-ingress-gateway</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">istio</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ingressgateway</span><span class="w"></span>
+<span class="w">  </span><span class="nt">servers</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span><span class="w"></span>
+<span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w"></span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTP</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span><span class="w"></span>
+<span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPS</span><span class="w"></span>
+<span class="w">    </span><span class="nt">tls</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SIMPLE</span><span class="w"></span>
+<span class="w">      </span><span class="nt">privateKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/istio/ingressgateway-certs/tls.key</span><span class="w"></span>
+<span class="w">      </span><span class="nt">serverCertificate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/etc/istio/ingressgateway-certs/tls.crt</span><span class="w"></span>
 </code></pre></div>
 The <code>InferenceService</code> request routes to the <code>Istio Ingress Gateway</code> by matching the host and port from the url, by default http is configured, you can <a href="https://knative.dev/docs/serving/using-a-tls-cert">configure
 HTTPS with TLS certificates</a>.</p>
 <h3 id="2-kserve-istio-virtual-service-to-route-for-predictor-transformer-explainer">2. KServe <code>Istio virtual service</code> to route for predictor, transformer, explainer.<a class="headerlink" href="#2-kserve-istio-virtual-service-to-route-for-predictor-transformer-explainer" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl get vs sklearn-iris -oyaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VirtualService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris</span>
-  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-  <span class="nt">gateways</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
-  <span class="nt">hosts</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris.default.svc.cluster.local</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris.default.example.com</span>
-  <span class="nt">http</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">headers</span><span class="p">:</span>
-      <span class="nt">request</span><span class="p">:</span>
-        <span class="nt">set</span><span class="p">:</span>
-          <span class="nt">Host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc.cluster.local</span>
-    <span class="nt">match</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
-        <span class="nt">regex</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^sklearn-iris\.default(\.svc(\.cluster\.local)?)?(?::\d{1,5})?$</span>
-      <span class="nt">gateways</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
-    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
-        <span class="nt">regex</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">^sklearn-iris\.default\.example\.com(?::\d{1,5})?$</span>
-      <span class="nt">gateways</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
-    <span class="nt">route</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">destination</span><span class="p">:</span>
-        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">knative-local-gateway.istio-system.svc.cluster.local</span>
-        <span class="nt">port</span><span class="p">:</span>
-          <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
-      <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VirtualService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"></span>
+<span class="w">  </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris.default.svc.cluster.local</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris.default.example.com</span><span class="w"></span>
+<span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">headers</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">request</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">set</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">Host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc.cluster.local</span><span class="w"></span>
+<span class="w">    </span><span class="nt">match</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">authority</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^sklearn-iris\.default(\.svc(\.cluster\.local)?)?(?::\d{1,5})?$</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">authority</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^sklearn-iris\.default\.example\.com(?::\d{1,5})?$</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span><span class="w"></span>
+<span class="w">    </span><span class="nt">route</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">destination</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-local-gateway.istio-system.svc.cluster.local</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w"></span>
+<span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
 </code></pre></div>
 <p>KServe creates the routing rule which by default routes to <code>Predictor</code> if you only have <code>Predictor</code> specified on <code>InferenceService</code>.
 When <code>Transformer</code> and <code>Explainer</code> are specified on <code>InferenceService</code> the routing rule configures the traffic to route to <code>Transformer</code>
@@ -2506,63 +2586,63 @@ or <code>Explainer</code> based on the verb. The request then routes to the seco
 <h3 id="3-knative-istio-virtual-service-to-route-the-inference-request-to-the-latest-ready-revision">3. Knative <code>Istio virtual service</code> to route the inference request to the latest ready revision.<a class="headerlink" href="#3-knative-istio-virtual-service-to-route-the-inference-request-to-the-latest-ready-revision" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl get vs sklearn-iris-predictor-default-ingress -oyaml
 </code></pre></div>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">VirtualService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-mesh</span>
-  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">gateways</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
-  <span class="nt">hosts</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.example.com</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc.cluster.local</span>
-  <span class="nt">http</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">match</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
-        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span>
-      <span class="nt">gateways</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
-    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
-        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc</span>
-      <span class="nt">gateways</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
-    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
-        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span>
-      <span class="nt">gateways</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span>
-    <span class="nt">retries</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
-    <span class="nt">route</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">destination</span><span class="p">:</span>
-        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001.default.svc.cluster.local</span>
-        <span class="nt">port</span><span class="p">:</span>
-          <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
-      <span class="nt">headers</span><span class="p">:</span>
-        <span class="nt">request</span><span class="p">:</span>
-          <span class="nt">set</span><span class="p">:</span>
-            <span class="nt">Knative-Serving-Namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-            <span class="nt">Knative-Serving-Revision</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001</span>
-      <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-  <span class="p p-Indicator">-</span> <span class="nt">match</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">authority</span><span class="p">:</span>
-        <span class="nt">prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.example.com</span>
-      <span class="nt">gateways</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span>
-    <span class="nt">retries</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
-    <span class="nt">route</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">destination</span><span class="p">:</span>
-        <span class="nt">host</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001.default.svc.cluster.local</span>
-        <span class="nt">port</span><span class="p">:</span>
-          <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
-      <span class="nt">headers</span><span class="p">:</span>
-        <span class="nt">request</span><span class="p">:</span>
-          <span class="nt">set</span><span class="p">:</span>
-            <span class="nt">Knative-Serving-Namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-            <span class="nt">Knative-Serving-Revision</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001</span>
-      <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.istio.io/v1alpha3</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">VirtualService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-mesh</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span><span class="w"></span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.example.com</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc.cluster.local</span><span class="w"></span>
+<span class="w">  </span><span class="nt">http</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">authority</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">authority</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.svc</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">authority</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-local-gateway</span><span class="w"></span>
+<span class="w">    </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">route</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">destination</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001.default.svc.cluster.local</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w"></span>
+<span class="w">      </span><span class="nt">headers</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">request</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">set</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">Knative-Serving-Namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"></span>
+<span class="w">            </span><span class="nt">Knative-Serving-Revision</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001</span><span class="w"></span>
+<span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">match</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">authority</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default.default.example.com</span><span class="w"></span>
+<span class="w">      </span><span class="nt">gateways</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">knative-serving/knative-ingress-gateway</span><span class="w"></span>
+<span class="w">    </span><span class="nt">retries</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span><span class="w"></span>
+<span class="w">    </span><span class="nt">route</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">destination</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001.default.svc.cluster.local</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w"></span>
+<span class="w">      </span><span class="nt">headers</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">request</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">set</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">Knative-Serving-Namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"></span>
+<span class="w">            </span><span class="nt">Knative-Serving-Revision</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-00001</span><span class="w"></span>
+<span class="w">      </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
 </code></pre></div>
 The destination here is the <code>k8s Service</code> for the latest ready <code>Knative Revision</code> and it is reconciled by <code>Knative</code> every time
 user rolls out a new revision. When a new revision is rolled out and in ready state, the old revision is then scaled down, after
@@ -2570,34 +2650,34 @@ configured revision GC time the revision resource is garbage collected if the re
 <h3 id="4-kubernetes-service-routes-the-requests-to-the-queue-proxy-sidecar-of-the-inference-service-pod-on-port-8012">4. <code>Kubernetes Service</code> routes the requests to the <code>queue proxy</code> sidecar of the inference service pod on <code>port 8012</code>.<a class="headerlink" href="#4-kubernetes-service-routes-the-requests-to-the-queue-proxy-sidecar-of-the-inference-service-pod-on-port-8012" title="Permanent link">&para;</a></h3>
 <p><div class="highlight"><pre><span></span><code>kubectl get svc sklearn-iris-predictor-default-fhmjk-private -oyaml
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Service</span>
-<span class="nt">metadata</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-fhmjk-private</span>
-  <span class="nt">namespace</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-<span class="nt">spec</span><span class="p">:</span>
-  <span class="nt">clusterIP</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10.105.186.18</span>
-  <span class="nt">ports</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http</span>
-    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
-    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
-    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8012</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">queue-metrics</span>
-    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9090</span>
-    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
-    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">queue-metrics</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http-usermetric</span>
-    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9091</span>
-    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
-    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http-usermetric</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http-queueadm</span>
-    <span class="nt">port</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8022</span>
-    <span class="nt">protocol</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TCP</span>
-    <span class="nt">targetPort</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8022</span>
-  <span class="nt">selector</span><span class="p">:</span>
-    <span class="nt">serving.knative.dev/revisionUID</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">a8f1eafc-3c64-4930-9a01-359f3235333a</span>
-  <span class="nt">sessionAffinity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
-  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ClusterIP</span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris-predictor-default-fhmjk-private</span><span class="w"></span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">clusterIP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10.105.186.18</span><span class="w"></span>
+<span class="w">  </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w"></span>
+<span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class="w"></span>
+<span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8012</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">queue-metrics</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9090</span><span class="w"></span>
+<span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class="w"></span>
+<span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">queue-metrics</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http-usermetric</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9091</span><span class="w"></span>
+<span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class="w"></span>
+<span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http-usermetric</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http-queueadm</span><span class="w"></span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8022</span><span class="w"></span>
+<span class="w">    </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class="w"></span>
+<span class="w">    </span><span class="nt">targetPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8022</span><span class="w"></span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serving.knative.dev/revisionUID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">a8f1eafc-3c64-4930-9a01-359f3235333a</span><span class="w"></span>
+<span class="w">  </span><span class="nt">sessionAffinity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">None</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterIP</span><span class="w"></span>
 </code></pre></div></p>
 <h3 id="5-the-queue-proxy-routes-to-kserve-container-with-max-concurrent-requests-configured-with-containerconcurrency">5. The <code>queue proxy</code> routes to <code>kserve container</code> with max concurrent requests configured with <code>ContainerConcurrency</code>.<a class="headerlink" href="#5-the-queue-proxy-routes-to-kserve-container-with-max-concurrent-requests-configured-with-containerconcurrency" title="Permanent link">&para;</a></h3>
 <p>If the <code>queue proxy</code> has more requests than it can handle, the <a href="https://knative.dev/docs/serving/configuring-autoscaling/">Knative Autoscaler</a>
