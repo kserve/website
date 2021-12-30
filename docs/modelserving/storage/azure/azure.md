@@ -1,9 +1,9 @@
 
-# Predict on a InferenceService with saved model on Azure
+# Deploy InferenceService with saved model on Azure
 
 ## Using Public Azure Blobs
 
-By default, KServe uses anonymous client to download artifacts. To point to an Azure Blob, specify StorageUri to point to an Azure Blob Storage with the format: 
+By default, KServe uses anonymous client to download artifacts. To point to an Azure Blob, specify StorageUri to point to an Azure Blob Storage with the format:
 ```https://{$STORAGE_ACCOUNT_NAME}.blob.core.windows.net/{$CONTAINER}/{$PATH}```
 
 e.g. https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib
@@ -104,7 +104,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 > Accept: */*
 > Content-Length: 84
 > Content-Type: application/x-www-form-urlencoded
-> 
+>
 * upload completely sent off: 84 out of 84 bytes
 * Mark bundle as not supporting multiuse
 < HTTP/1.1 200 OK
@@ -113,7 +113,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 < date: Mon, 20 Sep 2021 04:55:50 GMT
 < server: istio-envoy
 < x-envoy-upstream-service-time: 6
-< 
+<
 * Connection #0 to host localhost left intact
 {"predictions": [1, 1]}
 ```

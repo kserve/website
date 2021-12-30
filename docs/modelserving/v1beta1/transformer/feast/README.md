@@ -40,12 +40,8 @@ Please use the [YAML file](./driver_transformer.yaml) and update the `feast_serv
 
 In the Feast Transformer image we packaged the driver transformer class so KServe knows to use the preprocess implementation to augment inputs with online features before making model inference requests.
 Then the `InferenceService` uses `SKLearn` to serve the [driver ranking model](https://github.com/feast-dev/feast-driver-ranking-tutorial), which is trained with Feast offline features, available in a gcs bucket specified under `storageUri`.
-<<<<<<< HEAD
 
-```yaml
-=======
 ```YAML
->>>>>>> Fix transformer example
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:

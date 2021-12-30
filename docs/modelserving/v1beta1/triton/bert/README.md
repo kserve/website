@@ -3,6 +3,7 @@
 Bidirectional Embedding Representations from Transformers (BERT), is a method of pre-training language representations which obtains state-of-the-art results on a wide array of Natural Language Processing (NLP) tasks.
 
 This example demonstrates
+
 - Inference on Question Answering (QA) task with BERT Base/Large model
 - The use of fine-tuned NVIDIA BERT models
 - Deploy Transformer for preprocess using BERT tokenizer
@@ -14,21 +15,21 @@ We can run inference on a fine-tuned BERT model for tasks like Question Answerin
 Here we use a BERT model fine-tuned on a SQuaD 2.0 Dataset which contains 100,000+ question-answer pairs on 500+ articles combined with over 50,000 new, unanswerable questions.
 
 ## Setup
-1. Your ~/.kube/config should point to a cluster with [KFServing 0.5 installed](../../../../get_started/README.md#4-install-kserve).
-2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
-3. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
+1. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
+2. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"registriesSkippingTagResolving":"nvcr.io"}}' -n knative-serving
 ```
-4. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
+3. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}}' -n knative-serving
 ```
-## Extend KFServer and Implement pre/postprocess and predict
+## Extend ModelServer and Implement pre/postprocess and predict
 
 - The `preprocess` handler converts the paragraph and the question to BERT input using BERT tokenizer
 - The `predict` handler calls `Triton Inference Server` using PYTHON REST API  
 - The `postprocess` handler converts raw prediction to the answer with the probability
+
 ```python
 class BertTransformer(kserve.KFModel):
     def __init__(self, name: str, predictor_host: str):
@@ -49,12 +50,12 @@ class BertTransformer(kserve.KFModel):
         if not self.triton_client:
             self.triton_client = httpclient.InferenceServerClient(
                 url=self.predictor_host, verbose=True)
-     
+
         unique_ids = np.zeros([1,1], dtype=np.int32)
         segment_ids = features["segment_ids"].reshape(1,128)
         input_ids = features["input_ids"].reshape(1,128)
         input_mask = features["input_mask"].reshape(1,128)
-        
+
         inputs = []
         inputs.append(httpclient.InferInput('unique_ids', [1,1], "INT32"))
         inputs.append(httpclient.InferInput('segment_ids', [1, 128], "INT32"))
@@ -64,19 +65,19 @@ class BertTransformer(kserve.KFModel):
         inputs[1].set_data_from_numpy(segment_ids)
         inputs[2].set_data_from_numpy(input_ids)
         inputs[3].set_data_from_numpy(input_mask)
-        
+
         outputs = []
         outputs.append(httpclient.InferRequestedOutput('start_logits', binary_data=False))
         outputs.append(httpclient.InferRequestedOutput('end_logits', binary_data=False))
         result = self.triton_client.infer(self.model_name, inputs, outputs=outputs)
         return result.get_response()
-    
+
     def postprocess(self, result: Dict) -> Dict:
         end_logits = result['outputs'][0]['data']
         start_logits = result['outputs'][1]['data']
         n_best_size = 20
 
-        # The maximum length of an answer that can be generated. This is needed 
+        # The maximum length of an answer that can be generated. This is needed
         #  because the start and end predictions are not conditioned on one another
         max_answer_length = 30
 
@@ -126,13 +127,14 @@ spec:
 
 Apply the `InferenceService` yaml.
 ```
-kubectl apply -f bert_v1beta1.yaml 
+kubectl apply -f bert_v1beta1.yaml
 ```
 
 Expected Output
 ```
 inferenceservice.serving.kserve.io/bert-v2 created
 ```
+
 ## Check the InferenceService
 ```
 kubectl get inferenceservice bert-v2
@@ -154,7 +156,7 @@ the inputs to expected tensor sending to `Triton Inference Server`.
 ```json
 {
   "instances": [
-    "What President is credited with the original notion of putting Americans in space?" 
+    "What President is credited with the original notion of putting Americans in space?"
   ]
 }
 ```
@@ -171,4 +173,3 @@ Expected output
 ```
 {"predictions": "John F. Kennedy", "prob": 77.91848979818604}
 ```
-

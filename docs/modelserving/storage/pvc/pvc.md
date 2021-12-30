@@ -1,5 +1,5 @@
 
-# Predict on an InferenceService with a saved model on PVC
+# Deploy InferenceService with a saved model on PVC
 
 This doc shows how to store a model in PVC and create InferenceService with a saved model on PVC.
 
@@ -87,7 +87,7 @@ kubectl cp model.joblib model-store-pod:/pv/model.joblib -c model-store
 
 ## Deploy `InferenceService` with models on PVC
 
-Update the ${PVC_NAME} to the created PVC name and create the InferenceService with the PVC `storageUri`. 
+Update the ${PVC_NAME} to the created PVC name and create the InferenceService with the PVC `storageUri`.
 
 === "yaml"
 ```yaml
@@ -131,7 +131,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 > Accept: */*
 > Content-Length: 84
 > Content-Type: application/x-www-form-urlencoded
-> 
+>
 * upload completely sent off: 84 out of 84 bytes
 * Mark bundle as not supporting multiuse
 < HTTP/1.1 200 OK
@@ -140,7 +140,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 < date: Mon, 20 Sep 2021 04:55:50 GMT
 < server: istio-envoy
 < x-envoy-upstream-service-time: 6
-< 
+<
 * Connection #0 to host localhost left intact
 {"predictions": [1, 1]}
 ```
