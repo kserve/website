@@ -1,6 +1,6 @@
-# Predict on an InferenceService with a saved model from a URI
+# Deploy InferenceService with a saved model from a URI
 
-This doc guides to specify a model object via the URI (Uniform Resource Identifier) of the model object exposed via an `http` or `https` endpoint. 
+This doc guides to specify a model object via the URI (Uniform Resource Identifier) of the model object exposed via an `http` or `https` endpoint.
 
 This `storageUri` option supports single file models, like `sklearn` which is specified by a [joblib](https://joblib.readthedocs.io/en/latest/) file, or artifacts (e.g. `tar` or `zip`) which contain all the necessary dependencies for other model types (e.g. `tensorflow` or `pytorch`). Here, we'll show examples from both of the above.
 
@@ -55,7 +55,7 @@ ewoiYWNjb3VudC1uYW1lIjogInNvbWVfYWNjb3VudF9uYW1lIiwKInNlY3JldC1rZXkiOiAic29tZV9z
 
 ### Train and freeze the model
 
-Here, we'll train a simple iris model. Please note that `KServe` requires `sklearn==0.20.3`. 
+Here, we'll train a simple iris model. Please note that `KServe` requires `sklearn==0.20.3`.
 
 === "python"
 ```python
@@ -135,7 +135,7 @@ $ *   Trying 127.0.0.1:8080...
 > Accept: */*
 > Content-Length: 76
 > Content-Type: application/x-www-form-urlencoded
-> 
+>
 * upload completely sent off: 76 out of 76 bytes
 * Mark bundle as not supporting multiuse
 < HTTP/1.1 200 OK
@@ -144,14 +144,14 @@ $ *   Trying 127.0.0.1:8080...
 < date: Mon, 06 Sep 2021 15:52:55 GMT
 < server: istio-envoy
 < x-envoy-upstream-service-time: 7
-< 
+<
 * Connection #0 to host localhost left intact
 {"predictions": [1, 1]}
 ```
 
 ## Tensorflow
 
-This will serve as an example of the ability to also pull in a tarball containing all of the required model dependencies, for instance `tensorflow` requires multiple files in a strict directory structure in order to be servable. 
+This will serve as an example of the ability to also pull in a tarball containing all of the required model dependencies, for instance `tensorflow` requires multiple files in a strict directory structure in order to be servable.
 
 ### Train and freeze the model
 
@@ -265,7 +265,7 @@ $ *   Trying 10.0.1.16...
 > Accept: */*
 > Content-Length: 86
 > Content-Type: application/x-www-form-urlencoded
-> 
+>
 } [86 bytes data]
 * upload completely sent off: 86 out of 86 bytes
 < HTTP/1.1 200 OK
@@ -274,7 +274,7 @@ $ *   Trying 10.0.1.16...
 < date: Thu, 06 Aug 2020 23:21:19 GMT
 < x-envoy-upstream-service-time: 151
 < server: istio-envoy
-< 
+<
 { [112 bytes data]
 100   198  100   112  100    86    722    554 --:--:-- --:--:-- --:--:--  1285
 * Connection #0 to host 10.0.1.16 left intact

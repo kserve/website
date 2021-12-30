@@ -1,1 +1,0 @@
-# Random Forest for MNIST on kserve
