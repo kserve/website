@@ -1,4 +1,4 @@
-# Predict on a Spark MLlib model PMML InferenceService
+# Deploy Spark MLlib model with PMML InferenceService
 
 ## Setup
 1. Install `pyspark` 3.0.x and `pyspark2pmml`
@@ -6,7 +6,7 @@
 pip install pyspark~=3.0.0
 pip install pyspark2pmml
 ```
-2. Get [JPMML-SparkML jar](https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.3/jpmml-sparkml-executable-1.6.3.jar) 
+2. Get [JPMML-SparkML jar](https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.3/jpmml-sparkml-executable-1.6.3.jar)
 
 ## Train a Spark MLlib model and export to PMML file
 
@@ -39,7 +39,7 @@ Upload the `DecisionTreeIris.pmml` to a GCS bucket, note that the `PMMLServer` e
 ```bash
 gsutil cp ./DecisionTreeIris.pmml gs://$BUCKET_NAME/sparkpmml/model.pmml
 ```
- 
+
 ## Create the InferenceService with PMMLServer
 Create the `InferenceService` with `pmml` predictor and specify the `storageUri` with bucket location you uploaded to
 ```yaml

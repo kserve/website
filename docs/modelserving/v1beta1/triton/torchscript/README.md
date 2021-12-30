@@ -59,7 +59,7 @@ torchscript/
       model.pt
 ```
 The config.pbtxt defines a model configuration that provides the required and optional information for the model.
-A minimal model configuration must specify name, platform, max_batch_size, input, and output. Due to the absence of names 
+A minimal model configuration must specify name, platform, max_batch_size, input, and output. Due to the absence of names
 for inputs and outputs in a TorchScript model, the `name` attribute of both the inputs and outputs in the configuration must
 follow a specific naming convention i.e. “<name>__<index>”. Where <name> can be any string and <index> refers to the position of the corresponding
 input/output. This means if there are two inputs and two outputs they must be named as: `INPUT__0`, `INPUT__1` and `OUTPUT__0`, `OUTPUT__1` such that `INPUT__0`
@@ -140,7 +140,7 @@ $ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 ### Run a prediction with curl
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-The latest Triton Inference Server already switched to use KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2), so 
+The latest Triton Inference Server already switched to use KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2), so
 the input request needs to follow the V2 schema with the specified data type, shape.
 ```bash
 MODEL_NAME=cifar10
@@ -158,7 +158,7 @@ curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST http://${INGRESS_HOST}:${INGRESS_
 > Content-Length: 110765
 > Content-Type: application/x-www-form-urlencoded
 > Expect: 100-continue
-> 
+>
 < HTTP/1.1 100 Continue
 * We are completely uploaded and fine
 < HTTP/1.1 200 OK
@@ -167,7 +167,7 @@ curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST http://${INGRESS_HOST}:${INGRESS_
 < date: Sun, 11 Oct 2020 21:26:51 GMT
 < x-envoy-upstream-service-time: 8
 < server: istio-envoy
-< 
+<
 * Connection #0 to host torchscript-cifar.default.svc.cluster.local left intact
 {"model_name":"cifar10","model_version":"1","outputs":[{"name":"OUTPUT__0","datatype":"FP32","shape":[1,10],"data":[-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279]}]}
 ```
@@ -269,8 +269,9 @@ class ImageTransformer(kserve.KFModel):
     def postprocess(self, results: Dict) -> Dict:
         # Here we reshape the data because triton always returns the flatten 1D array as json if not explicitly requesting binary
         # since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.
-        return {output["name"] : np.array(output["data"]).reshape(output["shape"]) for output in results["outputs"]} 
+        return {output["name"] : np.array(output["data"]).reshape(output["shape"]) for output in results["outputs"]}
 ```
+Please find the code example [here](https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/torchscript).
 
 ### Build Transformer docker image
 ```
@@ -317,7 +318,7 @@ $ inferenceservice.serving.kserve.io/torch-transfomer created
 ```
 
 ### Run a prediction with curl
-The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict): 
+The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict):
 `"instances": <value>|<list-of-objects>`
 ```json
 {
@@ -351,18 +352,18 @@ curl -v -X POST -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_
 > accept: */*
 > content-length: 3422
 > content-type: application/x-www-form-urlencoded
-> 
+>
 * We are completely uploaded and fine
 * TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
 * TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
 * old SSL session ID is stale, removing
 * Connection state changed (MAX_CONCURRENT_STREAMS == 4294967295)!
-< HTTP/2 200 
+< HTTP/2 200
 < content-length: 338
 < content-type: application/json; charset=UTF-8
 < date: Thu, 08 Oct 2020 13:15:14 GMT
 < server: istio-envoy
 < x-envoy-upstream-service-time: 52
-< 
+<
 {"model_name": "cifar", "model_version": "1", "outputs": [{"name": "OUTPUT__0", "datatype": "FP32", "shape": [1, 10], "data": [-0.7299326062202454, -2.186835289001465, -0.029627874493598938, 2.3753483295440674, -0.3476247489452362, 1.3253062963485718, 0.5721136927604675, 0.049311548471450806, -0.3691796362400055, -1.0804035663604736]}]}
 ```

@@ -24,7 +24,9 @@ kubectl patch cm config-deployment --patch '{"data":{"registriesSkippingTagResol
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}}' -n knative-serving
 ```
-## Extend ModelServer and Implement pre/postprocess and predict
+
+## Create Custom Transformer for BERT Tokenizer
+### Extend ModelServer base and Implement pre/postprocess
 
 - The `preprocess` handler converts the paragraph and the question to BERT input using BERT tokenizer
 - The `predict` handler calls `Triton Inference Server` using PYTHON REST API  
@@ -85,7 +87,9 @@ class BertTransformer(kserve.KFModel):
            data_processing.get_predictions(self.doc_tokens, self.features, start_logits, end_logits, n_best_size, max_answer_length)
         return {"predictions": prediction, "prob": nbest_json[0]['probability'] * 100.0}
 ```
+Please find the code example [here](https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/bert).
 
+### Build Transformer docker image
 Build the KServe Transformer image with above code
 ```bash
 cd bert_tokenizer_v2

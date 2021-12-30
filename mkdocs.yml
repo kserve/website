@@ -24,7 +24,7 @@ nav:
                 - Scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
                 - XGBoost: modelserving/v1beta1/xgboost/README.md
                 - PMML: modelserving/v1beta1/pmml/README.md
-                - Spark: modelserving/v1beta1/spark/README.md
+                - Spark MLlib: modelserving/v1beta1/spark/README.md
                 - Lightgbm: modelserving/v1beta1/lightgbm/README.md
                 - Paddle: modelserving/v1beta1/paddle/README.md
               - Multi-Framework Serving Runtimes:
