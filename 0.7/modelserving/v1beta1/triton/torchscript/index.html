@@ -2585,7 +2585,7 @@ Error Set:
 <h2 id="add-transformer-to-the-inferenceservice">Add Transformer to the InferenceService<a class="headerlink" href="#add-transformer-to-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p><code>Triton Inference Server</code> expects tensors as input data, often times a pre-processing step is required before making the prediction call
 when the user is sending in request with raw input format. Transformer component can be specified on InferenceService spec for user implemented pre/post processing code.
-User is responsible to create a python class which extends from KServe <code>KFModel</code> base class which implements <code>preprocess</code> handler to transform raw input
+User is responsible to create a python class which extends from KServe <code>Model</code> base class which implements <code>preprocess</code> handler to transform raw input
 format to tensor format according to V2 prediction protocol, <code>postprocess</code> handle is to convert raw prediction response to a more user friendly response.</p>
 <h3 id="implement-prepost-processing-functions">Implement pre/post processing functions<a class="headerlink" href="#implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
 <p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
@@ -2613,7 +2613,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
     <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">predictor_host</span> <span class="o">=</span> <span class="n">predictor_host</span>

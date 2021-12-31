@@ -2129,7 +2129,7 @@
 <h1 id="model-serving-runtimes">Model Serving Runtimes<a class="headerlink" href="#model-serving-runtimes" title="Permanent link">&para;</a></h1>
 <p>KServe provides a simple Kubernetes CRD to enable deploying single or multiple trained models onto model serving runtimes such as <a href="https://www.tensorflow.org/tfx/guide/serving">TFServing</a>, 
 <a href="https://pytorch.org/serve/server.html">TorchServe</a>, <a href="https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs">Triton Inference Server</a>.
-In addition <a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">KFServer</a> is the Python model serving runtime implemented in KServe itself with prediction v1 protocol,
+In addition <a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">ModelServer</a> is the Python model serving runtime implemented in KServe itself with prediction v1 protocol,
 <a href="https://github.com/SeldonIO/MLServer">MLServer</a> implements the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction v2 protocol</a> with both REST and gRPC.
 These model serving runtimes are able to provide out-of-the-box model serving, but you could also choose to build your own model server for more complex use case.
 KServe provides basic API primitives to allow you easily build custom model serving runtime, you can use other tools like <a href="https://docs.bentoml.org/en/latest">BentoML</a> to build your custom model serving image.</p>
@@ -2200,7 +2200,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>1.1.1</td>
 </tr>
 <tr>
-<td><a href="https://github.com/kubeflow/kfserving/tree/master/python/sklearnserver">SKLearn KFServer</a></td>
+<td><a href="https://github.com/kubeflow/kfserving/tree/master/python/sklearnserver">SKLearn ModelServer</a></td>
 <td><a href="https://scikit-learn.org/stable/modules/model_persistence.html">Pickled Model</a></td>
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
@@ -2208,7 +2208,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>0.20.3</td>
 </tr>
 <tr>
-<td><a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">XGBoost KFServer</a></td>
+<td><a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">XGBoost ModelServer</a></td>
 <td><a href="https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html">Saved Model</a></td>
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
@@ -2216,7 +2216,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>0.82</td>
 </tr>
 <tr>
-<td><a href="https://github.com/kserve/kserve/tree/master/python/pmmlserver">PMML KFServer</a></td>
+<td><a href="https://github.com/kserve/kserve/tree/master/python/pmmlserver">PMML ModelServer</a></td>
 <td><a href="http://dmg.org/pmml/v4-4-1/GeneralStructure.html">PMML</a></td>
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
@@ -2224,7 +2224,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td><a href="https://github.com/autodeployai/pypmml">PMML4.4.1</a></td>
 </tr>
 <tr>
-<td><a href="https://github.com/kserve/kserve/tree/master/python/lightgbm">LightGBM KFServer</a></td>
+<td><a href="https://github.com/kserve/kserve/tree/master/python/lightgbm">LightGBM ModelServer</a></td>
 <td><a href="https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html#lightgbm.Booster.save_model">Saved LightGBM Model</a></td>
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
@@ -2232,7 +2232,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>2.3.1</td>
 </tr>
 <tr>
-<td><a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">Custom KFServer</a></td>
+<td><a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">Custom ModelServer</a></td>
 <td>--</td>
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>

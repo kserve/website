@@ -2243,11 +2243,11 @@
 input tensors model server expects. In this example we demonstrate an example of running inference with a custom image <code>Transformer</code> and <em>TorchServe</em> <code>Predictor</code>.</p>
 <h2 id="create-custom-image-transformer">Create Custom Image Transformer<a class="headerlink" href="#create-custom-image-transformer" title="Permanent link">&para;</a></h2>
 <h3 id="extend-modelserver-and-implement-prepost-processing-functions">Extend ModelServer and implement pre/post processing functions<a class="headerlink" href="#extend-modelserver-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
-<p><code>KServe.KFModel</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
+<p><code>KServe.Model</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
 in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, when <code>predictor_host</code> is passed the <code>predict</code> handler by default makes a HTTP call to the predictor url
 and gets back a response which then passes to <code>postproces</code> handler. KServe automatically fills in the <code>predictor_host</code> for <code>Transformer</code> and handle the call to the <code>Predictor</code>, for gRPC
 predictor currently you would need to overwrite the <code>predict</code> handler to make the gRPC call.</p>
-<p>To implement a <code>Transformer</code> you can derive from the base <code>KFModel</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own
+<p>To implement a <code>Transformer</code> you can derive from the base <code>Model</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own
 customized transformation logic.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
@@ -2277,7 +2277,7 @@ customized transformation logic.</p>
     <span class="k">return</span> <span class="n">instance</span>
 
 
-<span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">predictor_host</span> <span class="o">=</span> <span class="n">predictor_host</span>

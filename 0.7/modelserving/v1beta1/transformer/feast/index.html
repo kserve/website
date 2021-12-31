@@ -1230,8 +1230,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extend-kfmodel-and-implement-prepost-processing-functions" class="md-nav__link">
-    Extend KFModel and implement pre/post processing functions
+  <a href="#extend-model-and-implement-prepost-processing-functions" class="md-nav__link">
+    Extend Model and implement pre/post processing functions
   </a>
   
 </li>
@@ -2203,8 +2203,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extend-kfmodel-and-implement-prepost-processing-functions" class="md-nav__link">
-    Extend KFModel and implement pre/post processing functions
+  <a href="#extend-model-and-implement-prepost-processing-functions" class="md-nav__link">
+    Extend Model and implement pre/post processing functions
   </a>
   
 </li>
@@ -2261,14 +2261,14 @@
 <li>Your Feast online store is populated with driver <a href="https://github.com/tedhtchang/populate_feast_online_store/blob/main/driver_stats.parquet">data</a>, instructions available <a href="https://github.com/tedhtchang/populate_feast_online_store">here</a>, and network accessible.</li>
 </ol>
 <h2 id="create-a-transformer-with-feast">Create a Transformer with Feast<a class="headerlink" href="#create-a-transformer-with-feast" title="Permanent link">&para;</a></h2>
-<h3 id="extend-kfmodel-and-implement-prepost-processing-functions">Extend KFModel and implement pre/post processing functions<a class="headerlink" href="#extend-kfmodel-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
-<p><code>KServe.KFModel</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
+<h3 id="extend-model-and-implement-prepost-processing-functions">Extend Model and implement pre/post processing functions<a class="headerlink" href="#extend-model-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
+<p><code>KServe.Model</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
 in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, when <code>predictor_host</code> is passed the <code>predict</code> handler by default makes a HTTP call to the predictor url
 and gets back a response which then passes to <code>postproces</code> handler. KServe automatically fills in the <code>predictor_host</code> for <code>Transformer</code> and handle the call to the <code>Predictor</code>, for gRPC
 predictor currently you would need to overwrite the <code>predict</code> handler to make the gRPC call.</p>
-<p>To implement a <code>Transformer</code> you can derive from the base <code>KFModel</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own
+<p>To implement a <code>Transformer</code> you can derive from the base <code>Model</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own
 customized transformation logic.</p>
-<p>We created a class, DriverTransformer, which extends <code>KFModel</code> for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:</p>
+<p>We created a class, DriverTransformer, which extends <code>Model</code> for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:</p>
 <ul>
 <li><strong>feast_serving_url</strong>: The Feast serving URL, in the form of <code>&lt;host_name_or_ip:port&gt;</code></li>
 <li><strong>entity_ids</strong>: The entity IDs for which to retrieve features from the Feast feature store</li>
