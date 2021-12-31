@@ -33,7 +33,7 @@ kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}
 - The `postprocess` handler converts raw prediction to the answer with the probability
 
 ```python
-class BertTransformer(kserve.KFModel):
+class BertTransformer(kserve.Model):
     def __init__(self, name: str, predictor_host: str):
         super().__init__(name)
         self.short_paragraph_text = "The Apollo program was the third United States human spaceflight program. First conceived as a three-man spacecraft to follow the one-man Project Mercury which put the first Americans in space, Apollo was dedicated to President John F. Kennedy's national goal of landing a man on the Moon. The first manned flight of Apollo was in 1968. Apollo ran from 1961 to 1972 followed by the Apollo-Soyuz Test Project a joint Earth orbit mission with the Soviet Union in 1975."
