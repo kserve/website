@@ -5,12 +5,12 @@ input tensors model server expects. In this example we demonstrate an example of
 ## Create Custom Image Transformer
 
 ### Extend ModelServer and implement pre/post processing functions
-`KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
+`KServe.KFModel` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
 in sequence, the output of the `preprocess` is passed to `predict` as the input, when `predictor_host` is passed the `predict` handler by default makes a HTTP call to the predictor url
 and gets back a response which then passes to `postproces` handler. KServe automatically fills in the `predictor_host` for `Transformer` and handle the call to the `Predictor`, for gRPC
 predictor currently you would need to overwrite the `predict` handler to make the gRPC call.
 
-To implement a `Transformer` you can derive from the base `Model` class and then overwrite the `preprocess` and `postprocess` handler to have your own
+To implement a `Transformer` you can derive from the base `KFModel` class and then overwrite the `preprocess` and `postprocess` handler to have your own
 customized transformation logic.
 
 ```python
@@ -42,7 +42,7 @@ def image_transform(instance):
     return instance
 
 
-class ImageTransformer(kserve.Model):
+class ImageTransformer(kserve.KFModel):
     def __init__(self, name: str, predictor_host: str):
         super().__init__(name)
         self.predictor_host = predictor_host

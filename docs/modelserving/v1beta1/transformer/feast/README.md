@@ -9,16 +9,16 @@ Transformer is an `InferenceService` component which does pre/post processing al
 
 ## Create a Transformer with Feast
 
-### Extend Model and implement pre/post processing functions
-`KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
+### Extend KFModel and implement pre/post processing functions
+`KServe.KFModel` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
 in sequence, the output of the `preprocess` is passed to `predict` as the input, when `predictor_host` is passed the `predict` handler by default makes a HTTP call to the predictor url
 and gets back a response which then passes to `postproces` handler. KServe automatically fills in the `predictor_host` for `Transformer` and handle the call to the `Predictor`, for gRPC
 predictor currently you would need to overwrite the `predict` handler to make the gRPC call.
 
-To implement a `Transformer` you can derive from the base `Model` class and then overwrite the `preprocess` and `postprocess` handler to have your own
+To implement a `Transformer` you can derive from the base `KFModel` class and then overwrite the `preprocess` and `postprocess` handler to have your own
 customized transformation logic.
 
-We created a class, DriverTransformer, which extends `Model` for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:
+We created a class, DriverTransformer, which extends `KFModel` for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:
 
 * __feast_serving_url__: The Feast serving URL, in the form of `<host_name_or_ip:port>`
 * __entity_ids__: The entity IDs for which to retrieve features from the Feast feature store
