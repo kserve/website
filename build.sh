@@ -7,6 +7,7 @@ ls -al
 echo "Fetching latest gh-pages"
 git fetch origin gh-pages
 mike deploy $currentVersion
+git checkout gh-pages
 ls -al
 # mv $currentVersion "${currentVersion}-tmp"
 # git clone -b gh-pages https://github.com/kserve/website.git
