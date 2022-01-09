@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.7/developer/developer/">
       
       <link rel="icon" href="../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.4">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.5">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bb3983ee.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ee0f47ba.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -2371,7 +2371,7 @@ meet these requirements, you can make changes and
 <h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">&para;</a></h3>
 <p>You must install these tools:</p>
 <ol>
-<li><a href="https://golang.org/doc/install"><code>go</code></a>: KServe controller is written in Go and requires Go 1.14.0+.</li>
+<li><a href="https://golang.org/doc/install"><code>go</code></a>: KServe controller is written in Go and requires Go 1.17.0+.</li>
 <li><a href="https://help.github.com/articles/set-up-git/"><code>git</code></a>: For source control.</li>
 <li><a href="https://blog.golang.org/using-go-modules"><code>Go Module</code></a>: Go's new dependency management system.</li>
 <li><a href="https://github.com/google/ko"><code>ko</code></a>:
@@ -2553,15 +2553,8 @@ and etcd, they get installed along with <a href="https://book.kubebuilder.io/qui
 <li><code>make undeploy</code></li>
 <li><code>make deploy-dev</code></li>
 </ol>
-<p>Install pytest and test deps:
-<div class="highlight"><pre><span></span><code>pip3 install pytest==6.0.2 pytest-xdist pytest-rerunfailures
-pip3 install --upgrade pytest-tornasync
-pip3 install urllib3==1.24.2
-pip3 install --upgrade setuptools
-</code></pre></div></p>
 <p>Go to <code>python/kserve</code> and install kserve python sdk deps 
-<div class="highlight"><pre><span></span><code>pip3 install -r requirements.txt
-python3 setup.py install --force --user
+<div class="highlight"><pre><span></span><code>pip3 install -e .[test]
 </code></pre></div>
 Then go to <code>test/e2e</code>. </p>
 <p>Run <code>kubectl create namespace kserve-ci-e2e-test</code></p>
@@ -2690,10 +2683,10 @@ to the latest version, <code>go get golang.org/x/text@v0.3.0</code> to upgrade t
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.361d90f1.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.b6ff8c07.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.289a2a4b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.5e13d264.min.js"></script>
       
     
   </body>
