@@ -15,7 +15,7 @@ Before submitting a PR, see also [CONTRIBUTING.md](https://github.com/kserve/kse
 
 You must install these tools:
 
-1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.14.0+.
+1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.17.0+.
 1. [`git`](https://help.github.com/articles/set-up-git/): For source control.
 1. [`Go Module`](https://blog.golang.org/using-go-modules): Go's new dependency management system.
 1. [`ko`](https://github.com/google/ko):
@@ -224,19 +224,9 @@ To setup from local code, do:
  2. `make undeploy`
  3. `make deploy-dev`
 
-
-Install pytest and test deps:
-```
-pip3 install pytest==6.0.2 pytest-xdist pytest-rerunfailures
-pip3 install --upgrade pytest-tornasync
-pip3 install urllib3==1.24.2
-pip3 install --upgrade setuptools
-```
-
 Go to `python/kserve` and install kserve python sdk deps 
 ```
-pip3 install -r requirements.txt
-python3 setup.py install --force --user
+pip3 install -e .[test]
 ```
 Then go to `test/e2e`. 
 
