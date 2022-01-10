@@ -4,10 +4,11 @@ git config --local user.email "github-actions[bot]@users.noreply.github.com"
 git config --local user.name "github-actions[bot]"
 currentVersion=$(cat version.txt)
 ls -al
+
 echo "Fetching latest gh-pages"
 git fetch origin gh-pages --depth=1
 
-git remote show
+git show gh-pages
 
 tmp=$(date +%s)
 tmp_branch="gh-page-${tmp}"
