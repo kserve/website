@@ -13,7 +13,7 @@ This doc explains how to migrate existing inference services from KFServing to K
     - This will not affect existing services yet.
 
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/install/v0.7.0/kserve.yaml
     ```
 
 2. Run the [KServe Migration YAML](https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job.yaml)
@@ -26,7 +26,7 @@ This doc explains how to migrate existing inference services from KFServing to K
       in the YAML before applying it
 
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/hack/kserve_migration/kserve_migration_job.yaml
     ```
 
 3. Clean up the migration resources
@@ -43,7 +43,7 @@ This doc explains how to migrate existing inference services from KFServing to K
     - This will not affect existing services yet.
 
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/blob/master/install/v0.7.0/kserve_kubeflow.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/install/v0.7.0/kserve_kubeflow.yaml
     ```
 
 2. Run the [KServe Migration YAML](https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job_kubeflow.yaml) for Kubeflow-based installations
@@ -53,7 +53,7 @@ This doc explains how to migrate existing inference services from KFServing to K
       in the YAML before applying it 
 
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/blob/master/hack/kserve_migration/kserve_migration_job_kubeflow.yaml
+    kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/hack/kserve_migration/kserve_migration_job_kubeflow.yaml
     ```
 
 3. Clean up the migration resources
