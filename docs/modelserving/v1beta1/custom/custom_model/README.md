@@ -1,12 +1,12 @@
 # Deploy Custom Python Model Server with InferenceService
-When out of the box model server does not fit your need, you can build your own model server using KFServer API and use the
+When out of the box model server does not fit your need, you can build your own model server using KServe ModelServer API and use the
 following source to serving workflow to deploy your custom models to KServe.
 
 ## Setup
 1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
 
-## Create your custom Model Server by extending KFModel
-`KServe.KFModel` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
+## Create your custom Model Server by extending Model class 
+`KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
 in sequence, the output of the `preprocess` is passed to `predict` as the input, the `predictor` handler should execute the
 inference for your model, the `postprocess` handler then turns the raw prediction result into user-friendly inference response. There
 is an additional `load` handler which is used for writing custom code to load your model into the memory from local file system or
@@ -17,7 +17,7 @@ is loaded on startup and ready to serve when user is making the prediction calls
 import kserve
 from typing import Dict
 
-class AlexNetModel(kserve.KFModel):
+class AlexNetModel(kserve.Model):
     def __init__(self, name: str):
        super().__init__(name)
        self.name = name
@@ -31,7 +31,7 @@ class AlexNetModel(kserve.KFModel):
 
 if __name__ == "__main__":
     model = AlexNetModel("custom-model")
-    kserve.KFServer().start([model])
+    kserve.ModelServer().start([model])
 ```
 
 ## Build the custom image with Buildpacks
@@ -59,7 +59,7 @@ from typing import Dict
 from ray import serve
 
 @serve.deployment(name="custom-model", config={"num_replicas": 2})
-class AlexNetModel(kserve.KFModel):
+class AlexNetModel(kserve.Model):
     def __init__(self):
        self.name = "custom-model"
        super().__init__(self.name)
@@ -72,7 +72,7 @@ class AlexNetModel(kserve.KFModel):
         pass
 
 if __name__ == "__main__":
-    kserve.KFServer().start({"custom-model": AlexNetModel})
+    kserve.ModelServer().start({"custom-model": AlexNetModel})
 ```
 
 Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
