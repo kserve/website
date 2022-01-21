@@ -1081,8 +1081,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-custom-model-server-by-extending-kfmodel" class="md-nav__link">
-    Create your custom Model Server by extending KFModel
+  <a href="#create-your-custom-model-server-by-extending-model-class" class="md-nav__link">
+    Create your custom Model Server by extending Model class
   </a>
   
 </li>
@@ -2243,8 +2243,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#create-your-custom-model-server-by-extending-kfmodel" class="md-nav__link">
-    Create your custom Model Server by extending KFModel
+  <a href="#create-your-custom-model-server-by-extending-model-class" class="md-nav__link">
+    Create your custom Model Server by extending Model class
   </a>
   
 </li>
@@ -2349,14 +2349,14 @@
 
 
 <h1 id="deploy-custom-python-model-server-with-inferenceservice">Deploy Custom Python Model Server with InferenceService<a class="headerlink" href="#deploy-custom-python-model-server-with-inferenceservice" title="Permanent link">&para;</a></h1>
-<p>When out of the box model server does not fit your need, you can build your own model server using KFServer API and use the
+<p>When out of the box model server does not fit your need, you can build your own model server using KServe ModelServer API and use the
 following source to serving workflow to deploy your custom models to KServe.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Install <a href="https://buildpacks.io/docs/tools/pack/">pack CLI</a> to build your custom model server image.</li>
 </ol>
-<h2 id="create-your-custom-model-server-by-extending-kfmodel">Create your custom Model Server by extending KFModel<a class="headerlink" href="#create-your-custom-model-server-by-extending-kfmodel" title="Permanent link">&para;</a></h2>
-<p><code>KServe.KFModel</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
+<h2 id="create-your-custom-model-server-by-extending-model-class">Create your custom Model Server by extending Model class<a class="headerlink" href="#create-your-custom-model-server-by-extending-model-class" title="Permanent link">&para;</a></h2>
+<p><code>KServe.Model</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
 in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, the <code>predictor</code> handler should execute the
 inference for your model, the <code>postprocess</code> handler then turns the raw prediction result into user-friendly inference response. There
 is an additional <code>load</code> handler which is used for writing custom code to load your model into the memory from local file system or
@@ -2365,7 +2365,7 @@ is loaded on startup and ready to serve when user is making the prediction calls
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
-<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
@@ -2379,7 +2379,7 @@ is loaded on startup and ready to serve when user is making the prediction calls
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="s2">&quot;custom-model&quot;</span><span class="p">)</span>
-    <span class="n">kserve</span><span class="o">.</span><span class="n">KFServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
+    <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
 <h2 id="build-the-custom-image-with-buildpacks">Build the custom image with Buildpacks<a class="headerlink" href="#build-the-custom-image-with-buildpacks" title="Permanent link">&para;</a></h2>
 <p><a href="https://buildpacks.io/">Buildpacks</a> allows you to transform your inference code into images that can be deployed on KServe without
@@ -2401,7 +2401,7 @@ as separate python workers so the inference can be ran in parallel.</p>
 <span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">serve</span>
 
 <span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;custom-model&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;num_replicas&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">})</span>
-<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">KFModel</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;custom-model&quot;</span>
        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -2414,7 +2414,7 @@ as separate python workers so the inference can be ran in parallel.</p>
         <span class="k">pass</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">kserve</span><span class="o">.</span><span class="n">KFServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">&quot;custom-model&quot;</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
+    <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">&quot;custom-model&quot;</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
 </code></pre></div>
 <p>Modify the <code>Procfile</code> to <code>web: python -m model_remote</code> and then run the above <code>pack</code> command, it builds the serving image which launches
 each model as separate python worker and tornado webserver routes to the model workers by name. </p>
