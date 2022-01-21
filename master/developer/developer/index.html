@@ -2531,14 +2531,14 @@ The built image is only for development and testing purpose, the current limitat
 </div>
 <h3 id="smoke-test-after-deployment">Smoke test after deployment<a class="headerlink" href="#smoke-test-after-deployment" title="Permanent link">&para;</a></h3>
 <p>Run the following command to smoke test the deployment
-<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
 </code></pre></div></p>
 <p>You should see model serving deployment running under default or your specified namespace.</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flowers-sample
+<div class="highlight"><pre><span></span><code>$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
 </code></pre></div>
 <p><mark><strong>Expected Output</strong></mark>  <br />
 <div class="highlight"><pre><span></span><code>NAME                                                      READY   STATUS    RESTARTS   AGE
-flowers-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
+flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
 </code></pre></div></p>
 <h2 id="running-unitintegration-tests">Running unit/integration tests<a class="headerlink" href="#running-unitintegration-tests" title="Permanent link">&para;</a></h2>
 <p><code>kserver-controller-manager</code> has a few integration tests which requires mock apiserver
