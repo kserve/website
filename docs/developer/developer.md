@@ -193,19 +193,19 @@ make deploy-dev-storageInitializer
 
 Run the following command to smoke test the deployment
 ```bash
-kubectl apply -f https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
+kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
 ```
 
 You should see model serving deployment running under default or your specified namespace.
 
 ```kubectl
-$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flowers-sample
+$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
 ```
 
 ==**Expected Output**==    
 ```
 NAME                                                      READY   STATUS    RESTARTS   AGE
-flowers-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
+flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
 ```
 ## Running unit/integration tests
 `kserver-controller-manager` has a few integration tests which requires mock apiserver
