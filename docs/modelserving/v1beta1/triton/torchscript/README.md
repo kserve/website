@@ -219,7 +219,7 @@ kubectl apply -f torchscript_grpc.yaml
 
 `Triton Inference Server` expects tensors as input data, often times a pre-processing step is required before making the prediction call
 when the user is sending in request with raw input format. Transformer component can be specified on InferenceService spec for user implemented pre/post processing code.
-User is responsible to create a python class which extends from KServe `KFModel` base class which implements `preprocess` handler to transform raw input
+User is responsible to create a python class which extends from KServe `Model` base class which implements `preprocess` handler to transform raw input
 format to tensor format according to V2 prediction protocol, `postprocess` handle is to convert raw prediction response to a more user friendly response.
 
 ### Implement pre/post processing functions
@@ -249,7 +249,7 @@ def image_transform(instance):
     return res.tolist()
 
 
-class ImageTransformer(kserve.KFModel):
+class ImageTransformer(kserve.Model):
     def __init__(self, name: str, predictor_host: str):
         super().__init__(name)
         self.predictor_host = predictor_host
