@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/master/modelserving/v1beta1/serving_runtime/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.7">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.9">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.cd566b2a.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.2b4465f4.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.e6a45f82.min.css">
@@ -2127,7 +2127,7 @@
 
 
 <h1 id="model-serving-runtimes">Model Serving Runtimes<a class="headerlink" href="#model-serving-runtimes" title="Permanent link">&para;</a></h1>
-<p>KServe provides a simple Kubernetes CRD to enable deploying single or multiple trained models onto model serving runtimes such as <a href="https://www.tensorflow.org/tfx/guide/serving">TFServing</a>, 
+<p>KServe provides a simple Kubernetes CRD to enable deploying single or multiple trained models onto model serving runtimes such as <a href="https://www.tensorflow.org/tfx/guide/serving">TFServing</a>,
 <a href="https://pytorch.org/serve/server.html">TorchServe</a>, <a href="https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs">Triton Inference Server</a>.
 In addition <a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">ModelServer</a> is the Python model serving runtime implemented in KServe itself with prediction v1 protocol,
 <a href="https://github.com/SeldonIO/MLServer">MLServer</a> implements the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction v2 protocol</a> with both REST and gRPC.
@@ -2156,6 +2156,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <th>HTTP</th>
 <th>gRPC</th>
 <th>Versions</th>
+<th>Examples</th>
 </tr>
 </thead>
 <tbody>
@@ -2166,6 +2167,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><a href="https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html">Compatibility Matrix</a></td>
+<td><a href="triton/torchscript">Torchscript cifar</a></td>
 </tr>
 <tr>
 <td><a href="https://www.tensorflow.org/tfx/guide/serving">TFServing</a></td>
@@ -2174,14 +2176,16 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><a href="https://github.com/tensorflow/serving/releases">TFServing Versions</a></td>
+<td><a href="./tensorflow">TensorFlow flower</a></td>
 </tr>
 <tr>
 <td><a href="https://pytorch.org/serve/server.html">TorchServe</a></td>
 <td><a href="https://pytorch.org/docs/master/generated/torch.save.html">Eager Model/TorchScript</a></td>
-<td>v1</td>
+<td>v1/v2 REST</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
-<td>0.4.1</td>
+<td>0.5.2</td>
+<td><a href="./torchserve">TorchServe mnist</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/SeldonIO/MLServer">SKLearn MLServer</a></td>
@@ -2189,7 +2193,8 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>v2</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
-<td>0.23.1</td>
+<td>1.0.1</td>
+<td><a href="./sklearn/v2">SKLearn Iris V2</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/SeldonIO/MLServer">XGBoost MLServer</a></td>
@@ -2197,7 +2202,8 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>v2</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
-<td>1.1.1</td>
+<td>1.5.0</td>
+<td><a href="./xgboost">XGBoost Iris V2</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kubeflow/kfserving/tree/master/python/sklearnserver">SKLearn ModelServer</a></td>
@@ -2205,7 +2211,8 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td>--</td>
-<td>0.20.3</td>
+<td>1.0.1</td>
+<td><a href="./sklearn/v1">SKLearn Iris</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">XGBoost ModelServer</a></td>
@@ -2213,7 +2220,8 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td>v1</td>
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td>--</td>
-<td>0.82</td>
+<td>1.5.0</td>
+<td><a href="./xgboost/v1">XGBoost Iris</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/pmmlserver">PMML ModelServer</a></td>
@@ -2222,6 +2230,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td>--</td>
 <td><a href="https://github.com/autodeployai/pypmml">PMML4.4.1</a></td>
+<td><a href="./pmml">SKLearn PMML</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/lightgbm">LightGBM ModelServer</a></td>
@@ -2230,6 +2239,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td>--</td>
 <td>2.3.1</td>
+<td><a href="./lightgbm">LightGBM Iris</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">Custom ModelServer</a></td>
@@ -2238,6 +2248,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 <td><img alt="✔" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2714.svg" title=":heavy_check_mark:" /></td>
 <td>--</td>
 <td>--</td>
+<td><a href="custom/custom_model">Custom Model</a></td>
 </tr>
 </tbody>
 </table>
@@ -2253,7 +2264,7 @@ setting this field for production services.</p>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/torchscript&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">21.08-py3</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">21.08-py3</span><span class="w"></span>
 </code></pre></div>
 </div>
 
@@ -2349,7 +2360,7 @@ setting this field for production services.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.22074ed6.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.01de222e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.960e086b.min.js"></script>
       
     
   </body>
