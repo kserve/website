@@ -137,7 +137,7 @@ Once you've created your json test input file (named something like "iris-input.
 ### 5. Run Performance Test
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
-kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.7/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
+kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
 ==**Expected Outpout**==
