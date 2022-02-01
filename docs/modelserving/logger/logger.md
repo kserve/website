@@ -40,7 +40,7 @@ spec:
       mode: all
       url: http://message-dumper.default/
     sklearn:
-      storageUri: gs://kfserving-samples/models/sklearn/iris
+      storageUri: gs://kfserving-examples/models/sklearn/1.0/model
 ```
 
 !!! Note
@@ -227,7 +227,7 @@ spec:
       mode: all
       url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
     sklearn:
-      storageUri: gs://kfserving-samples/models/sklearn/iris
+      storageUri: gs://kfserving-examples/models/sklearn/1.0/model
 ```
 
 === "kubectl"

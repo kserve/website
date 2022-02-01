@@ -18,7 +18,7 @@ it gets some **super powers out of the box** :rocket:.
     spec:
       predictor:
         sklearn:
-          storageUri: "gs://kfserving-samples/models/sklearn/iris"
+          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
     ```
 Once you've created your YAML file (named something like "sklearn.yaml"):
 ```bash
