@@ -97,19 +97,32 @@ mlserver start .
 Lastly, we will use KServe to deploy our trained model.
 For this, we will just need to use **version `v1beta1`** of the
 `InferenceService` CRD and set the the **`protocolVersion` field to `v2`**.
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "xgboost-iris"
-spec:
-  predictor:
-    xgboost:
-      protocolVersion: "v2"
-      storageUri: "gs://kfserving-samples/models/xgboost/iris"
-```
-
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "xgboost-iris"
+    spec:
+      predictor:
+        xgboost:
+          protocolVersion: "v2"
+          storageUri: "gs://kfserving-samples/models/xgboost/iris"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "xgboost-iris"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: xgboost
+          runtime: kserve-mlserver
+          storageUri: "gs://kfserving-samples/models/xgboost/iris"
+    ```
 Note that this makes the following assumptions:
 
 - Your model weights (i.e. your `model.bst` file) have already been uploaded
@@ -162,6 +175,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice xgboost-iris -o jsonpath='{.stat
 
 curl -v \
   -H "Host: ${SERVICE_HOSTNAME}" \
+  -H "Content-Type: application/json" \
   -d @./iris-input.json \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/xgboost-iris/infer
 ```

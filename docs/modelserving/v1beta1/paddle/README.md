@@ -2,16 +2,30 @@
 In this example, we use a trained paddle resnet50 model to classify images by running an inference service with Paddle predictor.
 
 ## Create the InferenceService
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "paddle-resnet50"
-spec:
-  predictor:
-    paddle:
-      storageUri: "https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "paddle-resnet50"
+    spec:
+      predictor:
+        paddle:
+          storageUri: "https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "paddle-resnet50"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: paddle
+          storageUri: "https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz"
+    ```
 Apply the above yaml to create the InferenceService
 ```bash
 kubectl apply -f paddle.yaml

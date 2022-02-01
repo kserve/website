@@ -42,16 +42,30 @@ gsutil cp ./DecisionTreeIris.pmml gs://$BUCKET_NAME/sparkpmml/model.pmml
 
 ## Create the InferenceService with PMMLServer
 Create the `InferenceService` with `pmml` predictor and specify the `storageUri` with bucket location you uploaded to
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "spark-pmml"
-spec:
-  predictor:
-    pmml:
-      storageUri: gs://kfserving-examples/models/sparkpmml
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "spark-pmml"
+    spec:
+      predictor:
+        pmml:
+          storageUri: gs://kfserving-examples/models/sparkpmml
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "spark-pmml"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pmml
+          storageUri: gs://kfserving-examples/models/sparkpmml
+    ```
 
 Apply the `InferenceService` custom resource
 ```

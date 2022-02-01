@@ -25,35 +25,66 @@ Horizontal Pod Autoscaler (HPA)
 You can configure InferenceService with annotation `autoscaling.knative.dev/target` for a soft limit. The soft limit is a targeted limit rather than
 a strictly enforced bound, particularly if there is a sudden burst of requests, this value can be exceeded.
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "torchserve"
-  annotations:
-    autoscaling.knative.dev/target: "10"
-spec:
-  predictor:
-    pytorch:
-      storageUri: "gs://kfserving-examples/models/torchserve/image_classifier"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+      annotations:
+        autoscaling.knative.dev/target: "10"
+    spec:
+      predictor:
+        pytorch:
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+      annotations:
+        autoscaling.knative.dev/target: "10"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
 
 ### Hard limit
 
 You can also configure InferenceService with field `containerConcurrency` for a hard limit. The hard limit is an enforced upper bound. 
 If concurrency reaches the hard limit, surplus requests will be buffered and must wait until enough capacity is free to execute the requests.
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "torchserve"
-spec:
-  predictor:
-    containerConcurrency: 10
-    pytorch:
-      storageUri: "gs://kfserving-examples/models/torchserve/image_classifier"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        containerConcurrency: 10
+        pytorch:
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        containerConcurrency: 10
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
 
 ### Create the InferenceService
 
@@ -81,7 +112,7 @@ Send concurrent inference requests
 MODEL_NAME=mnist
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchserve -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-./hey -m POST -z 30s -D ./mnist.json -host ${SERVICE_HOSTNAME} http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict
+hey -m POST -z 30s -D ../mnist.json -host ${SERVICE_HOSTNAME} http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict
 ```
 
 ### Check the pods that are scaled up

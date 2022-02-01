@@ -112,28 +112,52 @@ Please use the [YAML file](./transformer.yaml) to create the `InferenceService`,
 
 By default `InferenceService` uses `TorchServe` to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to `TorchServe` model repository layout.
 The model repository contains a MNIST model but you can store more than one model there.
-
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: torch-transformer
-spec:
-  predictor:
-    pytorch:
-      storageUri: gs://kfserving-examples/models/torchserve/image_classifier
-  transformer:
-    containers:
-      - image: kserve/image-transformer:latest
-        name: kserve-container
-        command:
-          - "python"
-          - "-m"
-          - "model"
-        args:
-          - --model_name
-          - mnist
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-transformer
+    spec:
+      predictor:
+        pytorch:
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      transformer:
+        containers:
+          - image: kserve/image-transformer:latest
+            name: kserve-container
+            command:
+              - "python"
+              - "-m"
+              - "model"
+            args:
+              - --model_name
+              - mnist
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-transformer
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      transformer:
+        containers:
+          - image: kserve/image-transformer:latest
+            name: kserve-container
+            command:
+              - "python"
+              - "-m"
+              - "model"
+            args:
+              - --model_name
+              - mnist
+    ```
 
 !!! note
     `STORAGE_URI` is a build-in environment variable used to inject the storage initializer for custom container just like `StorageURI` field for prepackaged predictors.

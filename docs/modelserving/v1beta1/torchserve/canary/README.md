@@ -2,16 +2,30 @@
 
 ## Create InferenceService with default model
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "torchserve"
-spec:
-  predictor:
-    pytorch:
-      storageUri: "gs://kfserving-examples/models/torchserve/image_classifier"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        pytorch:
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
 
 Apply the InferenceService
 
@@ -29,17 +43,32 @@ $inferenceservice.serving.kserve.io/torchserve created
 
 Change the `storageUri` for the new model version and apply the InferenceService
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "torchserve"
-spec:
-  predictor:
-    canaryTrafficPercent: 20
-    pytorch:
-      storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        canaryTrafficPercent: 20
+        pytorch:
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        canaryTrafficPercent: 20
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
+    ```
 
 Apply the InferenceService
 

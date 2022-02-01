@@ -4,7 +4,9 @@ metadata:
   name: "torchserve"
 spec:
   predictor:
-    pytorch:
+    model:
+      modelFormat:
+        name: pytorch
       storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
       resources:
         limits:
