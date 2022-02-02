@@ -6,9 +6,9 @@ input tensors model server expects. In this example we demonstrate an example of
 
 ### Extend ModelServer and implement pre/post processing functions
 `KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
-in sequence, the output of the `preprocess` is passed to `predict` as the input, when `predictor_host` is passed the `predict` handler by default makes a call to the predictor url
-and gets back a response which then passes to `postprocess` handler. KServe automatically fills in the `predictor_host` for `Transformer` and handle the call to the `Predictor`,
-by default transformer makes a call to predictor with REST protocol, to make a call to predictor with gRPC you can pass the `--protocol` argument with `grpc-v2`.
+in sequence where the output of the `preprocess` handler is passed to the `predict` handler as the input. When `predictor_host` is passed, the `predict` handler makes a call to the predictor
+and gets back a response which is then passed to the `postprocess` handler. KServe automatically fills in the `predictor_host` for `Transformer` and hands over the call to the `Predictor`.
+By default transformer makes a REST call to predictor, to make a gRPC call to predictor, you can pass the `--protocol` argument with value `grpc-v2`.
 
 To implement a `Transformer` you can derive from the base `Model` class and then overwrite the `preprocess` and `postprocess` handler to have your own customized transformation logic.
 
@@ -111,7 +111,7 @@ docker push {username}/image-transformer:latest
 Please use the [YAML file](./transformer.yaml) to create the `InferenceService`, which includes a Transformer and a PyTorch Predictor.
 
 By default `InferenceService` uses `TorchServe` to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to `TorchServe` model repository layout.
-The model repository contains a mnist model but you can store more than one models there.
+The model repository contains a MNIST model but you can store more than one model there.
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -124,7 +124,7 @@ spec:
       storageUri: gs://kfserving-examples/models/torchserve/image_classifier
   transformer:
     containers:
-      - image: kserve/grpc-image-transformer:latest
+      - image: kserve/image-transformer:latest
         name: kserve-container
         command:
           - "python"
@@ -132,12 +132,12 @@ spec:
           - "model"
         args:
           - --model_name
-          - cifar10
+          - mnist
 ```
 
 !!! note
-    `STORAGE_URI` environment variable is a build-in env to inject the storage initializer for custom container just like `StorageURI` field for prepackaged predictors,
-the downloaded artifacts are stored under `/mnt/models`.
+    `STORAGE_URI` is a build-in environment variable used to inject the storage initializer for custom container just like `StorageURI` field for prepackaged predictors.
+The downloaded artifacts are stored under `/mnt/models`.
 
 
 
@@ -208,7 +208,7 @@ spec:
         containerPort: 9000
   transformer:
     containers:
-    - image: kserve/grpc-image-transformer:latest
+    - image: kserve/image-transformer:latest
       name: kserve-container
       command:
       - "python"
@@ -237,7 +237,7 @@ The first step is to [determine the ingress IP and ports](../../../../get_starte
 ```
 SERVICE_NAME=torch-grpc-transformer
 MODEL_NAME=cifar10
-INPUT_PATH=@./input.json
+INPUT_PATH=@./image.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
@@ -245,23 +245,27 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${I
 
 ==** Expected Output **==
 ```
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
 > POST /v1/models/cifar10:predict HTTP/1.1
-> Host: torch-grpc-transformer.default.example.com
-> User-Agent: curl/7.73.0
+> Host: torch-transformer.default.example.com
+> User-Agent: curl/7.64.1
 > Accept: */*
-> Content-Length: 401
+> Content-Length: 3394
 > Content-Type: application/x-www-form-urlencoded
->
-* upload completely sent off: 401 out of 401 bytes
+> Expect: 100-continue
+> 
 Handling connection for 8080
-* Mark bundle as not supporting multiuse
+< HTTP/1.1 100 Continue
+* We are completely uploaded and fine
 < HTTP/1.1 200 OK
-< content-length: 20
+< content-length: 222
 < content-type: application/json; charset=UTF-8
-< date: Tue, 12 Jan 2021 09:52:30 GMT
+< date: Thu, 03 Feb 2022 01:50:07 GMT
 < server: istio-envoy
-< x-envoy-upstream-service-time: 83
-<
+< x-envoy-upstream-service-time: 73
+< 
 * Connection #0 to host localhost left intact
-{"predictions": [2]}
+{"predictions": [[-1.192867636680603, -0.35750141739845276, -2.3665435314178467, 3.9186441898345947, -2.0592284202575684, 4.091977119445801, 0.1266237050294876, -1.8284690380096436, 2.628898859024048, -4.255198001861572]]}* Closing connection 0
 ```
