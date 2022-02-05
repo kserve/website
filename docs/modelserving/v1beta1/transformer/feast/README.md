@@ -61,12 +61,12 @@ spec:
       - --entity_ids
       - driver_id
       - --feature_refs
-      - driver_statistics:acc_rate
-      - driver_statistics:avg_daily_trips
-      - driver_statistics:conv_rate
+      - driver_hourly_stats:acc_rate
+      - driver_hourly_stats:avg_daily_trips
+      - driver_hourly_stats:conv_rate
   predictor:
     sklearn:
-      storageUri: "gs://pv-kfserving/driver"
+      storageUri: "gs://kfserving-examples/models/feast/driver"
 ```
 
 Apply the CRD
@@ -110,5 +110,5 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${I
 < x-envoy-upstream-service-time: 47
 <
 * Connection #0 to host 1.2.3.4 left intact
-{"predictions": [1.8440737040128852, 1.7381656744054226, 3.6771303027855993, 2.241143189554492, 0.06753551272342406]}
+{"predictions": [1.3320522732903406, -0.49981088917615324, -0.17008354122857838, 0.8017473264530217, 1.2042992134934583]}
 ```
