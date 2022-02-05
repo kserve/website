@@ -2303,12 +2303,12 @@ Then the <code>InferenceService</code> uses <code>SKLearn</code> to serve the <a
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--entity_ids</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_id</span><span class="w"></span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--feature_refs</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_statistics:acc_rate</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_statistics:avg_daily_trips</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_statistics:conv_rate</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_hourly_stats:acc_rate</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_hourly_stats:avg_daily_trips</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_hourly_stats:conv_rate</span><span class="w"></span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://pv-kfserving/driver&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/feast/driver&quot;</span><span class="w"></span>
 </code></pre></div>
 <p>Apply the CRD
 <div class="highlight"><pre><span></span><code>kubectl apply -f driver_transformer.yaml
@@ -2342,7 +2342,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 &lt; x-envoy-upstream-service-time: 47
 &lt;
 * Connection #0 to host 1.2.3.4 left intact
-{&quot;predictions&quot;: [1.8440737040128852, 1.7381656744054226, 3.6771303027855993, 2.241143189554492, 0.06753551272342406]}
+{&quot;predictions&quot;: [1.3320522732903406, -0.49981088917615324, -0.17008354122857838, 0.8017473264530217, 1.2042992134934583]}
 </code></pre></div></p>
 
               
