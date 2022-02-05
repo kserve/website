@@ -5,17 +5,30 @@ serve the PMML format model on `InferenceService`.
 
 
 ## Create the InferenceService
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "pmml-demo"
-spec:
-  predictor:
-    pmml:
-      storageUri: gs://kfserving-examples/models/pmml
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "pmml-demo"
+    spec:
+      predictor:
+        pmml:
+          storageUri: gs://kfserving-examples/models/pmml
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "pmml-demo"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pmml
+          storageUri: "gs://kfserving-examples/models/pmml"
+    ```
 Create the InferenceService with above yaml
 ```
 kubectl apply -f pmml.yaml

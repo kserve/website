@@ -54,16 +54,33 @@ The KServe/TorchServe integration supports KServe v1 protocol and we are working
 
 For deploying the `InferenceService` on CPU
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "torchserve"
-spec:
-  predictor:
-    pytorch:
-      storageUri: gs://kfserving-examples/models/torchserve/image_classifier
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        pytorch:
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+    ```
+
+Apply the `torchserve.yaml` to create the InferenceService.
+
 === "kubectl"
 ```bash
 kubectl apply -f torchserve.yaml
@@ -71,20 +88,41 @@ kubectl apply -f torchserve.yaml
 
 For deploying the `InferenceService` on GPU
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "torchserve"
-spec:
-  predictor:
-    pytorch:
-      storageUri: gs://kfserving-examples/models/torchserve/image_classifier
-      resources:
-        limits:
-          memory: 4Gi
-          nvidia.com/gpu: "1"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        pytorch:
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+          resources:
+            limits:
+              memory: 4Gi
+              nvidia.com/gpu: "1"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+          resources:
+            limits:
+              memory: 4Gi
+              nvidia.com/gpu: "1"
+    ```
+
+Apply the `gpu.yaml` to create the GPU InferenceService.
+
 === "kubectl"
 ```bash
 kubectl apply -f gpu.yaml

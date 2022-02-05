@@ -48,16 +48,30 @@ print(res.text)
 ```
 
 ## Create the InferenceService
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "lightgbm-iris"
-spec:
-  predictor:
-    lightgbm:
-      storageUri: "gs://kfserving-examples/models/lightgbm/iris"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-iris"
+    spec:
+      predictor:
+        lightgbm:
+          storageUri: "gs://kfserving-examples/models/lightgbm/iris"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-iris"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: lightgbm
+          storageUri: "gs://kfserving-examples/models/lightgbm/iris"
+    ```
 Apply the above yaml to create the InferenceService
 ```
 kubectl apply -f lightgbm.yaml

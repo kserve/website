@@ -86,17 +86,32 @@ Lastly, you will use KServe to deploy the trained model.
 For this, you will just need to use **version `v1beta1`** of the
 `InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "sklearn-irisv2"
-spec:
-  predictor:
-    sklearn:
-      protocolVersion: "v2"
-      storageUri: "gs://seldon-models/sklearn/iris"
-```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-irisv2"
+    spec:
+      predictor:
+        sklearn:
+          protocolVersion: "v2"
+          storageUri: "gs://seldon-models/sklearn/mms/lr_model"
+    ```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-irisv2"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: sklearn
+          runtime: kserve-mlserver
+          storageUri: "gs://seldon-models/sklearn/mms/lr_model"
+    ```
 
 Note that this makes the following assumptions:
 
@@ -147,6 +162,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-irisv2 -o jsonpath='{.st
 
 curl -v \
   -H "Host: ${SERVICE_HOSTNAME}" \
+  -H "Content-Type: application/json" \
   -d @./iris-input.json \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/sklearn-irisv2/infer
 ```
@@ -156,12 +172,12 @@ curl -v \
 ```json
 {
   "id": "823248cc-d770-4a51-9606-16803395569c",
-  "model_name": "iris-classifier",
+  "model_name": "sklearn-irisv2",
   "model_version": "v1.0.0",
   "outputs": [
     {
-      "data": [1, 2],
-      "datatype": "FP32",
+      "data": [1, 1],
+      "datatype": "INT64",
       "name": "predict",
       "parameters": null,
       "shape": [2]

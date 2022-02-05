@@ -8,5 +8,7 @@ metadata:
     autoscaling.knative.dev/target: "10"
 spec:
   predictor:
-    pytorch:
+    model:
+      modelFormat:
+        name: pytorch
       storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
