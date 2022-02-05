@@ -4,6 +4,8 @@ metadata:
   name: "sklearn-irisv2"
 spec:
   predictor:
-    sklearn:
-      protocolVersion: v2
+    model:
+      modelFormat:
+        name: sklearn
+      runtime: kserve-mlserver
       storageUri: "gs://seldon-models/sklearn/mms/lr_model"
