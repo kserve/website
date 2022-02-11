@@ -6,6 +6,7 @@ This page contains a list of organizations who are using KServe either in produc
 | ------------ | ------- |
 | [Amazon Web Services](https://aws.amazon.com/) | [Ellis Tarn](https://github.com/ellistarn) |
 | [Bloomberg](https://www.bloomberg.com/) | [Dan Sun](https://github.com/yuzisun) |
+| [Cars24](https://www.cars24.com/) | [Swapnesh Khare](https://github.com/swapkh91) |
 | [Cisco](https://www.cisco.com/) | [Krishna Durai](https://github.com/krishnadurai) |
 | [CoreWeave](https://coreweave.com/) | [Peter Salanki](https://github.com/salanki) |
 | [Gojek](https://www.gojek.com/) | [Willem Pienaar](https://github.com/woop) |
@@ -24,5 +25,3 @@ This page contains a list of organizations who are using KServe either in produc
 | [Samsung SDS](https://www.samsungsds.com/) | [Hanbae Seo](https://github.com/jazzsir) |
 | [Striveworks](https://striveworks.us/) | [Jake Neyer](https://github.com/JakeNeyer) |
 | [Zillow](https://www.zillow.com/) | [Peilun Li](https://github.com/Peilun-Li) |
-
-
