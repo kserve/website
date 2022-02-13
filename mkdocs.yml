@@ -86,6 +86,8 @@ site_url: https://kserve.io/website
 site_description: KServe Documentation
 extra_css:
   - stylesheets/extra.css
+extra_javascript:
+  - /javascripts/common.js
 
 repo_url: https://github.com/kserve/website
 edit_uri: edit/mkdocs/docs
