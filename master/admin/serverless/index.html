@@ -605,8 +605,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../kubernetes_deployment/" class="md-nav__link">
-        Kubernetes deployment installation
+      <a href="../modelmesh/" class="md-nav__link">
+        ModelMesh installation
       </a>
     </li>
   
@@ -619,8 +619,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../modelmesh/" class="md-nav__link">
-        ModelMesh installation
+      <a href="../kubernetes_deployment/" class="md-nav__link">
+        Kubernetes deployment installation
       </a>
     </li>
   
@@ -2228,7 +2228,7 @@
 <h1 id="serverless-installation-guide">Serverless Installation Guide<a class="headerlink" href="#serverless-installation-guide" title="Permanent link">&para;</a></h1>
 <p>KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.</p>
-<p>Kubernetes 1.17 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
+<p>Kubernetes 1.20 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.</p>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">&para;</a></h2>
 <table>
@@ -2241,34 +2241,19 @@ Kubernetes version.</p>
 </thead>
 <tbody>
 <tr>
-<td align="left">1.17</td>
-<td align="left">1.9</td>
-<td align="left">0.19, 0.20</td>
-</tr>
-<tr>
-<td align="left">1.18</td>
-<td align="left">1.9, 1.10</td>
-<td align="left">0.21, 0.22</td>
-</tr>
-<tr>
-<td align="left">1.19</td>
-<td align="left">1.9, 1.10, 1.11</td>
-<td align="left">0.23, 0.24</td>
-</tr>
-<tr>
 <td align="left">1.20</td>
 <td align="left">1.9, 1.10, 1.11</td>
-<td align="left">0.24, 0.25</td>
+<td align="left">0.25, 0.26, 1.0</td>
 </tr>
 <tr>
 <td align="left">1.21</td>
 <td align="left">1.10, 1.11</td>
-<td align="left">0.25, 0.26</td>
+<td align="left">0.25, 0.26, 1.0</td>
 </tr>
 <tr>
 <td align="left">1.22</td>
-<td align="left">1.11</td>
-<td align="left">0.25, 0.26</td>
+<td align="left">1.11, 1.12</td>
+<td align="left">0.25, 0.26, 1.0</td>
 </tr>
 </tbody>
 </table>
@@ -2291,7 +2276,7 @@ you need to turn on the corresponding <a href="https://knative.dev/docs/admin/se
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
 </code></pre></div>
 </div>
 </div>
@@ -2330,13 +2315,13 @@ you need to turn on the corresponding <a href="https://knative.dev/docs/admin/se
       
       
         
-        <a href="../kubernetes_deployment/" class="md-footer__link md-footer__link--next" aria-label="Next: Kubernetes deployment installation" rel="next">
+        <a href="../modelmesh/" class="md-footer__link md-footer__link--next" aria-label="Next: ModelMesh installation" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Kubernetes deployment installation
+              ModelMesh installation
             </div>
           </div>
           <div class="md-footer__button md-icon">

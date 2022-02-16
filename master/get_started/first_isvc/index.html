@@ -612,8 +612,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../admin/kubernetes_deployment/" class="md-nav__link">
-        Kubernetes deployment installation
+      <a href="../../admin/modelmesh/" class="md-nav__link">
+        ModelMesh installation
       </a>
     </li>
   
@@ -626,8 +626,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../admin/modelmesh/" class="md-nav__link">
-        ModelMesh installation
+      <a href="../../admin/kubernetes_deployment/" class="md-nav__link">
+        Kubernetes deployment installation
       </a>
     </li>
   
@@ -2363,7 +2363,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 </div>
 <h3 id="5-run-performance-test">5. Run Performance Test<a class="headerlink" href="#5-run-performance-test" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># use kubectl create instead of apply because the job template is using generateName which doesn&#39;t work with kubectl apply</span>
-kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.7/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
+kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 </code></pre></div>
 <p><mark><strong>Expected Outpout</strong></mark>
 <div class="highlight"><pre><span></span><code>kubectl logs load-test8b58n-rgfxr -n kserve-test

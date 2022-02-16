@@ -534,6 +534,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../modelmesh/" class="md-nav__link">
+        ModelMesh installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -601,20 +615,6 @@
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../modelmesh/" class="md-nav__link">
-        ModelMesh installation
-      </a>
     </li>
   
 
@@ -2213,7 +2213,7 @@
 
 <h1 id="kubernetes-deployment-installation-guide">Kubernetes Deployment Installation Guide<a class="headerlink" href="#kubernetes-deployment-installation-guide" title="Permanent link">&para;</a></h1>
 <p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
-<p>Kubernetes 1.19 is the minimally required version and please check the following recommended Istio versions for the corresponding
+<p>Kubernetes 1.20 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.</p>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">&para;</a></h2>
 <table>
@@ -2225,10 +2225,6 @@ Kubernetes version.</p>
 </thead>
 <tbody>
 <tr>
-<td align="left">1.19</td>
-<td align="left">1.9, 1.10, 1.11</td>
-</tr>
-<tr>
 <td align="left">1.20</td>
 <td align="left">1.9, 1.10, 1.11</td>
 </tr>
@@ -2238,7 +2234,7 @@ Kubernetes version.</p>
 </tr>
 <tr>
 <td align="left">1.22</td>
-<td align="left">1.11</td>
+<td align="left">1.11, 1.12</td>
 </tr>
 </tbody>
 </table>
@@ -2261,7 +2257,7 @@ Kubernetes version.</p>
 </div>
 <p><strong>i. Change default deployment mode</strong></p>
 <p>Download the KServe's install manifest yaml.
-<div class="highlight"><pre><span></span><code>wget https://github.com/kserve/kserve/releases/download/v0.7.0/kserve.yaml
+<div class="highlight"><pre><span></span><code>wget https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
 </code></pre></div>
 Open the <code>kserve.yaml</code>, find the <code>ConfigMap</code> with name <code>inferenceservice-config</code> in the manifest and modify the <code>deploy</code> section:
 <div class="highlight"><pre><span></span><code><span class="err">deploy</span><span class="p">:</span><span class="w"></span>
@@ -2296,7 +2292,7 @@ Open the <code>kserve.yaml</code>, find the <code>ConfigMap</code> with name <co
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../serverless/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Serverless installation" rel="prev">
+        <a href="../modelmesh/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ModelMesh installation" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -2305,20 +2301,20 @@ Open the <code>kserve.yaml</code>, find the <code>ConfigMap</code> with name <co
               <span class="md-footer__direction">
                 Previous
               </span>
-              Serverless installation
+              ModelMesh installation
             </div>
           </div>
         </a>
       
       
         
-        <a href="../modelmesh/" class="md-footer__link md-footer__link--next" aria-label="Next: ModelMesh installation" rel="next">
+        <a href="../migration/" class="md-footer__link md-footer__link--next" aria-label="Next: Migrating from KFServing" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              ModelMesh installation
+              Migrating from KFServing
             </div>
           </div>
           <div class="md-footer__button md-icon">
