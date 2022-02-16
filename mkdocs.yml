@@ -6,8 +6,8 @@ nav:
     - Administration Guide:
           - Install KServe:
                 - Serverless installation: admin/serverless.md
-                - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - ModelMesh installation: admin/modelmesh.md
+                - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - Migrating from KFServing: admin/migration.md
     - User Guide:
           - Concepts:
