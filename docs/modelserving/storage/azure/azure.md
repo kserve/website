@@ -61,18 +61,37 @@ kubectl apply -f create-azure-secret.yaml
 
 Create the InferenceService with the azure `storageUri` and the service account with azure credential attached.
 
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "sklearn-azure"
-spec:
-  predictor:
-    serviceAccountName: sa
-    sklearn:
-      storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-azure"
+    spec:
+      predictor:
+        serviceAccountName: sa
+        sklearn:
+          storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-azure"
+    spec:
+      predictor:
+        serviceAccountName: sa
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"
+    ```
+
+Apply the `sklearn-azure.yaml`.
 
 === "kubectl"
 ```bash

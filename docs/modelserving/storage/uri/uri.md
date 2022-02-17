@@ -83,18 +83,35 @@ Now, the frozen model object can be put it somewhere on the web to expose it. Fo
 
 ### Specify and create the `InferenceService`
 
-=== "yaml"
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: sklearn-from-uri
-spec:
-  predictor:
-    sklearn:
-      storageUri: https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true
+=== "Old Schema"
 
-```
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-from-uri
+    spec:
+      predictor:
+        sklearn:
+          storageUri: https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-from-uri
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true
+    ```
+
+Apply the `sklearn-from-uri.yaml`.
 
 === "kubectl"
 ```bash

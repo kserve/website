@@ -89,17 +89,35 @@ kubectl cp model.joblib model-store-pod:/pv/model.joblib -c model-store
 
 Update the ${PVC_NAME} to the created PVC name and create the InferenceService with the PVC `storageUri`.
 
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "sklearn-pvc"
-spec:
-  predictor:
-    sklearn:
-      storageUri: "pvc://${PVC_NAME}/model.joblib"
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-pvc"
+    spec:
+      predictor:
+        sklearn:
+          storageUri: "pvc://${PVC_NAME}/model.joblib"
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-pvc"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: "pvc://${PVC_NAME}/model.joblib"
+    ```
+
+Apply the `autoscale-gpu.yaml`.
 
 === "kubectl"
 ```bash

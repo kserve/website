@@ -6,19 +6,38 @@
 
 Apply the tensorflow example CR with scaling target set to 1. Annotation `autoscaling.knative.dev/target` is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.
 
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "flowers-sample"
-  annotations:
-    autoscaling.knative.dev/target: "1"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+      annotations:
+        autoscaling.knative.dev/target: "1"
+    spec:
+      predictor:
+        tensorflow:
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+      annotations:
+        autoscaling.knative.dev/target: "1"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+    ```
+Apply the `autoscale.yaml` to create the Autoscale InferenceService.
 
 === "kubectl"
 ```
@@ -215,21 +234,43 @@ Autoscaling on GPU is hard with GPU metrics, however thanks to Knative's concurr
 ### Create the InferenceService with GPU resource
 
 Apply the tensorflow gpu example CR
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "flowers-sample-gpu"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
-      runtimeVersion: "1.14.0-gpu"
-      resources:
-        limits:
-          nvidia.com/gpu: 1
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample-gpu"
+    spec:
+      predictor:
+        tensorflow:
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          runtimeVersion: "2.6.2-gpu"
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample-gpu"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          runtimeVersion: "2.6.2-gpu"
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+    ```
+
+Apply the `autoscale-gpu.yaml`.
 
 === "kubectl"
 ```bash
@@ -305,18 +346,37 @@ Status code distribution:
 at any given time, it is a hard limit and if the concurrency reaches the hard limit surplus requests will be buffered and must wait until
 enough capacity is free to execute the requests.
 
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "flowers-sample"
-spec:
-  predictor:
-    containerConcurrency: 10
-    tensorflow:
-      storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+    spec:
+      predictor:
+        containerConcurrency: 10
+        tensorflow:
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+    spec:
+      predictor:
+        containerConcurrency: 10
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+    ```
+
+Apply the `autoscale-custom.yaml`.
 
 === "kubectl"
 ```bash
@@ -328,18 +388,37 @@ kubectl apply -f autoscale-custom.yaml
 KServe by default sets `minReplicas` to 1, if you want to enable scaling down to zero especially for use cases like serving on GPUs you can
 set `minReplicas` to 0 so that the pods automatically scale down to zero when no traffic is received.
 
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "flowers-sample"
-spec:
-  predictor:
-    minReplicas: 0
-    tensorflow:
-      storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+    spec:
+      predictor:
+        minReplicas: 0
+        tensorflow:
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+    spec:
+      predictor:
+        minReplicas: 0
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+    ```
+
+Apply the `scale-down-to-zero.yaml`.
 
 === "kubectl"
 ```bash
