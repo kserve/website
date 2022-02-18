@@ -74,6 +74,7 @@ nav:
           - Debugging guide: developer/debug.md
     - Blog:
           - Releases:
+            - KServe 0.8 Release: blog/articles/2022-02-18-KServe-0.8-release.md
             - KServe 0.7 Release: blog/articles/2021-10-11-KServe-0.7-release.md
           - Articles:
             - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
