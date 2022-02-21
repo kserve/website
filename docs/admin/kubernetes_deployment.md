@@ -11,11 +11,34 @@ Kubernetes version.
 | 1.21       | 1.10, 1.11   |
 | 1.22       | 1.11, 1.12   |
 
-## 1. Install Istio
+## 1. Install Istio 
+
 The minimally required Istio version is 1.9.5 and you can refer to the [Istio install guide](https://istio.io/latest/docs/setup/install).
 
+Once Istio is installed, create `IngressClass` resource for istio.
+```
+apiVersion: networking.k8s.io/v1beta1
+kind: IngressClass
+metadata:
+  name: istio
+spec:
+  controller: istio.io/ingress-controller
+```
+
+
 !!! note 
-    Istio ingress is recommended, but you can choose to install with other [Ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/).
+    Istio ingress is recommended, but you can choose to install with other [Ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). To do that: 
+    1. Create `IngressClass` resource for your Ingress 
+    2. Open the kserve.yaml, find the ConfigMap with name inferenceservice-config in the manifest and modify the `ingressClassName` in `ingress` section to point to `IngressClass` name created in step 1.
+    ```
+    "ingress": {
+                ...
+               "ingressClassName" : "your-ingress-class"
+    }
+    ```
+
+
+
 
 ## 2. Install Cert Manager
 The minimally required Cert Manager version is 1.3.0 and you can refer to [Cert Manager installation guide](https://cert-manager.io/docs/installation/).
