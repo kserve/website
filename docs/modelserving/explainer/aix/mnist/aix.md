@@ -43,7 +43,7 @@ aixserver   http://aixserver.somecluster/v1/models/aixserver   True    100      
 ```
 
 ## Run Explanation
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, the example code for model training and explainer client can be found [here](https://github.com/kserve/kserve/blob/master/docs/samples/explanation/aix/mnist).
 
 ```
 MODEL_NAME=aix-explainer

@@ -66,6 +66,7 @@ The KServe/TorchServe integration supports KServe v1/v2 REST protocol, in the `c
 KServe by default selects the `TorchServe` runtime when you specify the model format `pytorch` on new model spec.
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -76,7 +77,9 @@ KServe by default selects the `TorchServe` runtime when you specify the model fo
         pytorch:
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -97,6 +100,7 @@ kubectl apply -f torchserve.yaml
 ```
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -111,7 +115,9 @@ kubectl apply -f torchserve.yaml
               memory: 4Gi
               nvidia.com/gpu: "1"
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -204,6 +210,7 @@ KServe by default selects the `TorchServe` runtime when you specify the model fo
 To enable v2 inference protocol, specify the `protocolVersion` field with the value `v2`.
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -215,7 +222,9 @@ To enable v2 inference protocol, specify the `protocolVersion` field with the va
           protocolVersion: v2
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -320,6 +329,7 @@ You can configure InferenceService with annotation `autoscaling.knative.dev/targ
 a strictly enforced bound, particularly if there is a sudden burst of requests, this value can be exceeded.
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -332,7 +342,9 @@ a strictly enforced bound, particularly if there is a sudden burst of requests, 
         pytorch:
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -352,6 +364,7 @@ You can also configure InferenceService with field `containerConcurrency` for a 
 If concurrency reaches the hard limit, surplus requests will be buffered and must wait until enough capacity is free to execute the requests.
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -363,7 +376,9 @@ If concurrency reaches the hard limit, surplus requests will be buffered and mus
         pytorch:
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -429,6 +444,7 @@ Canary rollout is a deployment strategy when you can release a new version of mo
 After the above experiments, now let's see how you can rollout a new model without moving full traffic to the new model by default.
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -443,6 +459,7 @@ After the above experiments, now let's see how you can rollout a new model witho
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
     ```
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
