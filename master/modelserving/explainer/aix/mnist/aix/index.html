@@ -2283,7 +2283,7 @@ NAME         URL                                               READY   DEFAULT T
 aixserver   http://aixserver.somecluster/v1/models/aixserver   True    <span class="m">100</span>                                40m
 </code></pre></div>
 <h2 id="run-explanation">Run Explanation<a class="headerlink" href="#run-explanation" title="Permanent link">&para;</a></h2>
-<p>The first step is to <a href="../../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>, the example code for model training and explainer client can be found <a href="https://github.com/kserve/kserve/blob/master/docs/samples/explanation/aix/mnist">here</a>.</p>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=aix-explainer
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME}
