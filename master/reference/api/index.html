@@ -2725,6 +2725,30 @@ Kubernetes core/v1.PodSpec
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.DeployConfig">DeployConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>defaultDeploymentMode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.ExplainerConfig">ExplainerConfig
 </h3>
 <p>
@@ -3446,6 +3470,105 @@ Valid values are: <br />
 <td><p>Logger mode to log only response</p>
 </td>
 </tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelFormat">ModelFormat
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelSpec">ModelSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name of the model format.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>version</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Version of the model format.
+Used in validating that a predictor is supported by a runtime.
+Can be &ldquo;major&rdquo;, &ldquo;major.minor&rdquo; or &ldquo;major.minor.patch&rdquo;.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelSpec">ModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>modelFormat</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelFormat">
+ModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>ModelFormat being served.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtime</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specific ClusterServingRuntime/ServingRuntime name to use for deployment.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec
 </h3>
@@ -4196,7 +4319,7 @@ bool
 <h3 id="serving.kserve.io/v1beta1.PredictorExtensionSpec">PredictorExtensionSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec</a>, <a href="#serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.PMMLSpec">PMMLSpec</a>, <a href="#serving.kserve.io/v1beta1.PaddleServerSpec">PaddleServerSpec</a>, <a href="#serving.kserve.io/v1beta1.SKLearnSpec">SKLearnSpec</a>, <a href="#serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec</a>, <a href="#serving.kserve.io/v1beta1.TorchServeSpec">TorchServeSpec</a>, <a href="#serving.kserve.io/v1beta1.TritonSpec">TritonSpec</a>, <a href="#serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec</a>)
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec</a>, <a href="#serving.kserve.io/v1beta1.ModelSpec">ModelSpec</a>, <a href="#serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.PMMLSpec">PMMLSpec</a>, <a href="#serving.kserve.io/v1beta1.PaddleServerSpec">PaddleServerSpec</a>, <a href="#serving.kserve.io/v1beta1.SKLearnSpec">SKLearnSpec</a>, <a href="#serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec</a>, <a href="#serving.kserve.io/v1beta1.TorchServeSpec">TorchServeSpec</a>, <a href="#serving.kserve.io/v1beta1.TritonSpec">TritonSpec</a>, <a href="#serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec</a>)
 </p>
 <div>
 <p>PredictorExtensionSpec defines configuration shared across all predictor frameworks</p>
@@ -4447,6 +4570,19 @@ PaddleServerSpec
 </tr>
 <tr>
 <td>
+<code>model</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelSpec">
+ModelSpec
+</a>
+</em>
+</td>
+<td>
+<p>Model spec for any arbitrary framework.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>PodSpec</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.PodSpec">
@@ -4550,8 +4686,8 @@ PredictorProtocols
 <td>
 <code>pytorch</code><br/>
 <em>
-<a href="#serving.kserve.io/v1beta1.PredictorProtocols">
-PredictorProtocols
+<a href="#serving.kserve.io/v1beta1.PredictorConfig">
+PredictorConfig
 </a>
 </em>
 </td>
@@ -4692,18 +4828,6 @@ PredictorExtensionSpec
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>
-<code>modelClassName</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<em>(Optional)</em>
-<p>When this field is specified KServe chooses the ModelServer implementation, otherwise KServe uses the TorchServe implementation</p>
-</td>
-</tr>
 <tr>
 <td>
 <code>PredictorExtensionSpec</code><br/>
@@ -4915,7 +5039,7 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>d3910e0f</code>.
+on git commit <code>ab2896d2</code>.
 </em></p>
 
               
