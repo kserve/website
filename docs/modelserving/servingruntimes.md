@@ -10,6 +10,9 @@ A _ServingRuntime_ defines the templates for Pods that can serve one or more par
 Each _ServingRuntime_ defines key information such as the container image of the runtime and a list of the model formats that the runtime supports.
 Other configuration settings for the runtime can be conveyed through environment variables in the container specification.
 
+The _ServingRuntime_ CRDs allow for improved flexibility and extensibility, enabling users to quickly define or customize reusable runtimes without having to modify
+any controller code or any resources in the controller namespace.
+
 The following is an example of a _ServingRuntime_:
 
 ```yaml
@@ -95,7 +98,7 @@ spec:
 ```
 
 Here, the runtime specified is `kserve-mlserver`, so the KServe controller will first search the namespace for a _ServingRuntime_ with that name. If
-none exist, the controller will then search the list of _ClusterServingRuntimes_. If one is found, the the controller will first
+none exist, the controller will then search the list of _ClusterServingRuntimes_. If one is found, the controller will first
 verify that the `modelFormat` provided in the predictor is in the list of `supportedModelFormats`. If it is, then the container and pod information provided
 by the runtime will be used for model deployment.
 
@@ -135,8 +138,26 @@ spec:
 
 Since `kserve-sklearnserver` has an entry in its `supportedModelFormats` list with `sklearn` and `autoSelect: true`, this _ClusterServingRuntime_
 will be used for model deployment.
-If multiple runtimes have `sklearn` as an auto-selectable supported format, then there is no guarantee _which_ runtime will be selected.
-So users and cluster-administrators should enable `autoSelect` with care.
+
+If a version is also specified:
+
+```yaml
+...
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+        version: "0"
+...
+```
+Then, then the version of the `supportedModelFormat` must also match. In this example, `kserve-sklearnserver` would not be eligible for selection since
+it only lists support for `sklearn` version `1`.
+
+
+!!! warning
+    If multiple runtimes list the same format and/or version as auto-selectable, then there is no guarantee _which_ runtime will be selected.
+    So users and cluster-administrators should enable `autoSelect` with care.
 
 ### Previous schema
 
@@ -173,7 +194,6 @@ The previous schema would mutate into the new schema where the `kserve-sklearnse
 > **Note**: The old schema will eventually be removed in favor of the new Model spec, where a user can specify a model format and optionally a corresponding version.
 
 In previous versions of KServe, supported predictor formats and container images were defined in a
-[config map](https://github.com/kserve/kserve/blob/release-0.7/config/configmap/inferenceservice.yaml#L7) in the control plane namespace.
-The ServingRuntime CRD allows for improved flexibility and extensibility for defining or customizing runtimes to how you see fit without having to modify
-any controller code or any resources in the controller namespace.
+[ConfigMap](https://github.com/kserve/kserve/blob/release-0.7/config/configmap/inferenceservice.yaml#L7) in the control plane namespace.
+Existing _InferenceServices_ upgraded from v0.7 will continue to make use of the configuration listed in this config map, but this will eventually be phased out.
 
