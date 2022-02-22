@@ -16,6 +16,7 @@ nav:
                 - Data Plane:
                   - Model Serving Data Plane: modelserving/data_plane.md
                   - V2 Inference Protocol: modelserving/inference_api.md
+                - Serving Runtimes: modelserving/servingruntimes.md
           - Single Model Serving:
               - Supported Model Frameworks/Formats:
                 - Overview: modelserving/v1beta1/serving_runtime.md
