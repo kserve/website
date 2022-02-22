@@ -2380,7 +2380,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 <div class="highlight"><pre><span></span><code><span class="c1"># use kubectl create instead of apply because the job template is using generateName which doesn&#39;t work with kubectl apply</span>
 kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 </code></pre></div>
-<p><mark><strong>Expected Outpout</strong></mark>
+<p><mark><strong>Expected Output</strong></mark>
 <div class="highlight"><pre><span></span><code>kubectl logs load-test8b58n-rgfxr -n kserve-test
 Requests      [total, rate, throughput]         30000, 500.02, 499.99
 Duration      [total, attack, wait]             1m0s, 59.998s, 3.336ms
