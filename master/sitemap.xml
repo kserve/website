@@ -146,6 +146,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/modelserving/servingruntimes/</loc>
+         <lastmod>2022-02-22</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/modelserving/autoscaling/autoscaling/</loc>
          <lastmod>2022-02-22</lastmod>
          <changefreq>daily</changefreq>
