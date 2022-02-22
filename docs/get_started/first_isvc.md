@@ -140,7 +140,7 @@ Once you've created your json test input file (named something like "iris-input.
 kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
-==**Expected Outpout**==
+==**Expected Output**==
 ```
 kubectl logs load-test8b58n-rgfxr -n kserve-test
 Requests      [total, rate, throughput]         30000, 500.02, 499.99
