@@ -17,25 +17,45 @@ This batcher is implemented in the KServe model agent sidecar, so the requests f
 
 ### Example
 
-We first create a pytorch predictor with a batcher. The `maxLatency` is set to a big value (5000 milliseconds) to make us be able to observe the batching process.
+We first create a pytorch predictor with a batcher. The `maxLatency` is set to a big value (500 milliseconds) to make us be able to observe the batching process.
 
-=== "yaml"
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "pytorch-cifar10"
-spec:
-  predictor:
-    minReplicas: 1
-    timeout: 60
-    batcher:
-      maxBatchSize: 32
-      maxLatency: 5000
-    pytorch:
-      modelClassName: Net
-      storageUri: "gs://kfserving-samples/models/pytorch/cifar10/"
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        minReplicas: 1
+        timeout: 60
+        batcher:
+          maxBatchSize: 32
+          maxLatency: 500
+        pytorch:
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        minReplicas: 1
+        timeout: 60
+        batcher:
+          maxBatchSize: 32
+          maxLatency: 500
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+    ```
 
 * `maxBatchSize`: the max batch size for triggering a prediction.
 
@@ -47,7 +67,7 @@ All of the bellowing fields have default values in the code. You can config them
 
 * `maxBatchSize`: 32.
 
-* `maxLatency`: 5000.
+* `maxLatency`: 500.
 
 * `timeout`: 60.
 
@@ -60,9 +80,9 @@ We can now send requests to the pytorch model using hey.
 The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
-MODEL_NAME=pytorch-cifar10
+MODEL_NAME=torchserve
 INPUT_PATH=@./input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice pytorch-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+SERVICE_HOSTNAME=$(kubectl get inferenceservice torchserve -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
 hey -z 10s -c 5 -m POST -host "${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -D ./input.json "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict"
 ```
@@ -77,45 +97,45 @@ The request will go to the model agent container first, the batcher in sidecar c
 
 ```
 Summary:
-  Total:        10.6268 secs
-  Slowest:      1.6477 secs
-  Fastest:      0.0050 secs
-  Average:      0.1006 secs
-  Requests/sec: 48.1800
-
-  Total data:   167424 bytes
-  Size/request: 327 bytes
+  Total:	10.5361 secs
+  Slowest:	0.5759 secs
+  Fastest:	0.4983 secs
+  Average:	0.5265 secs
+  Requests/sec:	9.4912
+  
+  Total data:	24100 bytes
+  Size/request:	241 bytes
 
 Response time histogram:
-  0.005 [1]     |
-  0.169 [447]   |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  0.334 [30]    |■■■
-  0.498 [7]     |■
-  0.662 [10]    |■
-  0.826 [3]     |
-  0.991 [6]     |■
-  1.155 [5]     |
-  1.319 [1]     |
-  1.483 [1]     |
-  1.648 [1]     |
+  0.498 [1]	|■
+  0.506 [0]	|
+  0.514 [44]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.522 [21]	|■■■■■■■■■■■■■■■■■■■
+  0.529 [4]	|■■■■
+  0.537 [5]	|■■■■■
+  0.545 [4]	|■■■■
+  0.553 [0]	|
+  0.560 [7]	|■■■■■■
+  0.568 [4]	|■■■■
+  0.576 [10]	|■■■■■■■■■
 
 
 Latency distribution:
-  10% in 0.0079 secs
-  25% in 0.0114 secs
-  50% in 0.0398 secs
-  75% in 0.0867 secs
-  90% in 0.2029 secs
-  95% in 0.5170 secs
-  99% in 1.1428 secs
+  10% in 0.5100 secs
+  25% in 0.5118 secs
+  50% in 0.5149 secs
+  75% in 0.5406 secs
+  90% in 0.5706 secs
+  95% in 0.5733 secs
+  99% in 0.5759 secs
 
 Details (average, fastest, slowest):
-  DNS+dialup:   0.0000 secs, 0.0050 secs, 1.6477 secs
-  DNS-lookup:   0.0000 secs, 0.0000 secs, 0.0000 secs
-  req write:    0.0002 secs, 0.0001 secs, 0.0004 secs
-  resp wait:    0.1000 secs, 0.0046 secs, 1.6473 secs
-  resp read:    0.0003 secs, 0.0000 secs, 0.0620 secs
+  DNS+dialup:	0.0004 secs, 0.4983 secs, 0.5759 secs
+  DNS-lookup:	0.0001 secs, 0.0000 secs, 0.0015 secs
+  req write:	0.0002 secs, 0.0000 secs, 0.0076 secs
+  resp wait:	0.5257 secs, 0.4981 secs, 0.5749 secs
+  resp read:	0.0001 secs, 0.0000 secs, 0.0009 secs
 
 Status code distribution:
-  [200] 512 responses
+  [200]	100 responses
 ```

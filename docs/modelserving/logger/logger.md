@@ -28,20 +28,39 @@ kubectl create -f message-dumper.yaml
 
 Create a sklearn predictor with the logger which points at the message dumper url.
 
-=== "yaml"
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: sklearn-iris
-spec:
-  predictor:
-    logger:
-      mode: all
-      url: http://message-dumper.default/
-    sklearn:
-      storageUri: gs://kfserving-examples/models/sklearn/1.0/model
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        logger:
+          mode: all
+          url: http://message-dumper.default/
+        sklearn:
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        logger:
+          mode: all
+          url: http://message-dumper.default/
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
 
 !!! Note
     Here we set the url explicitly, otherwise it defaults to the namespace knative broker or the value of `DefaultUrl` in the logger section of the inference service configmap.
@@ -214,21 +233,43 @@ kubectl create -f trigger.yaml
 
 Create a sklearn predictor with the `logger url` pointing to the Knative eventing multi-tenant broker in `knative-eventing` namespace.
 
-=== "yaml"
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: sklearn-iris
-spec:
-  predictor:
-    minReplicas: 1
-    logger:
-      mode: all
-      url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
-    sklearn:
-      storageUri: gs://kfserving-examples/models/sklearn/1.0/model
-```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        minReplicas: 1
+        logger:
+          mode: all
+          url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
+        sklearn:
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        minReplicas: 1
+        logger:
+          mode: all
+          url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
+Apply the `sklearn-knative-eventing.yaml`.
 
 === "kubectl"
 ```bash
