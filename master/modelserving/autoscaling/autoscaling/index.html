@@ -2432,11 +2432,9 @@
 <h2 id="inferenceservice-with-target-concurrency">InferenceService with target concurrency<a class="headerlink" href="#inferenceservice-with-target-concurrency" title="Permanent link">&para;</a></h2>
 <h3 id="create-inferenceservice">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice" title="Permanent link">&para;</a></h3>
 <p>Apply the tensorflow example CR with scaling target set to 1. Annotation <code>autoscaling.knative.dev/target</code> is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
@@ -2448,6 +2446,25 @@
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">autoscaling.knative.dev/target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Apply the <code>autoscale.yaml</code> to create the Autoscale InferenceService.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2608,11 +2625,9 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <p>Autoscaling on GPU is hard with GPU metrics, however thanks to Knative's concurrency based autoscaler scaling on GPU is pretty easy and effective!</p>
 <h3 id="create-the-inferenceservice-with-gpu-resource">Create the InferenceService with GPU resource<a class="headerlink" href="#create-the-inferenceservice-with-gpu-resource" title="Permanent link">&para;</a></h3>
 <p>Apply the tensorflow gpu example CR</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Old Schema</label><label for="__tabbed_5_2">New Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
@@ -2621,11 +2636,32 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.14.0-gpu&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.6.2-gpu&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
 <span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample-gpu&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.6.2-gpu&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Apply the <code>autoscale-gpu.yaml</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2691,11 +2727,9 @@ Status code distribution:
 <p><code>ContainerConcurrency</code> determines the number of simultaneous requests that can be processed by each replica of the <code>InferenceService</code>
 at any given time, it is a hard limit and if the concurrency reaches the hard limit surplus requests will be buffered and must wait until
 enough capacity is free to execute the requests.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Old Schema</label><label for="__tabbed_7_2">New Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
@@ -2706,6 +2740,24 @@ enough capacity is free to execute the requests.</p>
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">containerConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Apply the <code>autoscale-custom.yaml</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2716,11 +2768,9 @@ enough capacity is free to execute the requests.</p>
 <h3 id="enable-scale-down-to-zero">Enable scale down to zero<a class="headerlink" href="#enable-scale-down-to-zero" title="Permanent link">&para;</a></h3>
 <p>KServe by default sets <code>minReplicas</code> to 1, if you want to enable scaling down to zero especially for use cases like serving on GPUs you can
 set <code>minReplicas</code> to 0 so that the pods automatically scale down to zero when no traffic is received.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="9:1"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Old Schema</label><label for="__tabbed_9_2">New Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
@@ -2731,6 +2781,24 @@ set <code>minReplicas</code> to 0 so that the pods automatically scale down to z
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Apply the <code>scale-down-to-zero.yaml</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="10:1"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>

@@ -2217,27 +2217,45 @@
 </li>
 </ul>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<p>We first create a pytorch predictor with a batcher. The <code>maxLatency</code> is set to a big value (5000 milliseconds) to make us be able to observe the batching process.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<p>We first create a pytorch predictor with a batcher. The <code>maxLatency</code> is set to a big value (500 milliseconds) to make us be able to observe the batching process.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pytorch-cifar10&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;torchserve&quot;</span><span class="w"></span>
 <span class="nt">spec</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
 <span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w"></span>
 <span class="w">    </span><span class="nt">batcher</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">maxBatchSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span><span class="w"></span>
-<span class="w">      </span><span class="nt">maxLatency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span><span class="w"></span>
+<span class="w">      </span><span class="nt">maxLatency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"></span>
 <span class="w">    </span><span class="nt">pytorch</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Net</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/pytorch/cifar10/&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier/v1</span><span class="w"></span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;torchserve&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w"></span>
+<span class="w">    </span><span class="nt">batcher</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">maxBatchSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32</span><span class="w"></span>
+<span class="w">      </span><span class="nt">maxLatency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier/v1</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <ul>
 <li>
 <p><code>maxBatchSize</code>: the max batch size for triggering a prediction.</p>
@@ -2255,7 +2273,7 @@
 <p><code>maxBatchSize</code>: 32.</p>
 </li>
 <li>
-<p><code>maxLatency</code>: 5000.</p>
+<p><code>maxLatency</code>: 500.</p>
 </li>
 <li>
 <p><code>timeout</code>: 60.</p>
@@ -2270,9 +2288,9 @@
 </code></pre></div>
 <p>We can now send requests to the pytorch model using hey.
 The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>pytorch-cifar10
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>torchserve
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice pytorch-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchserve -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
 hey -z 10s -c <span class="m">5</span> -m POST -host <span class="s2">&quot;</span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> -H <span class="s2">&quot;Content-Type: application/json&quot;</span> -D ./input.json <span class="s2">&quot;http://</span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2">/v1/models/</span><span class="nv">$MODEL_NAME</span><span class="s2">:predict&quot;</span>
 </code></pre></div>
@@ -2283,47 +2301,47 @@ hey -z 10s -c <span class="m">5</span> -m POST -host <span class="s2">&quot;</sp
 </div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>Summary:
-  Total:        10.6268 secs
-  Slowest:      1.6477 secs
-  Fastest:      0.0050 secs
-  Average:      0.1006 secs
-  Requests/sec: 48.1800
+  Total:    10.5361 secs
+  Slowest:  0.5759 secs
+  Fastest:  0.4983 secs
+  Average:  0.5265 secs
+  Requests/sec: 9.4912
 
-  Total data:   167424 bytes
-  Size/request: 327 bytes
+  Total data:   24100 bytes
+  Size/request: 241 bytes
 
 Response time histogram:
-  0.005 [1]     |
-  0.169 [447]   |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  0.334 [30]    |■■■
-  0.498 [7]     |■
-  0.662 [10]    |■
-  0.826 [3]     |
-  0.991 [6]     |■
-  1.155 [5]     |
-  1.319 [1]     |
-  1.483 [1]     |
-  1.648 [1]     |
+  0.498 [1] |■
+  0.506 [0] |
+  0.514 [44]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  0.522 [21]    |■■■■■■■■■■■■■■■■■■■
+  0.529 [4] |■■■■
+  0.537 [5] |■■■■■
+  0.545 [4] |■■■■
+  0.553 [0] |
+  0.560 [7] |■■■■■■
+  0.568 [4] |■■■■
+  0.576 [10]    |■■■■■■■■■
 
 
 Latency distribution:
-  10% in 0.0079 secs
-  25% in 0.0114 secs
-  50% in 0.0398 secs
-  75% in 0.0867 secs
-  90% in 0.2029 secs
-  95% in 0.5170 secs
-  99% in 1.1428 secs
+  10% in 0.5100 secs
+  25% in 0.5118 secs
+  50% in 0.5149 secs
+  75% in 0.5406 secs
+  90% in 0.5706 secs
+  95% in 0.5733 secs
+  99% in 0.5759 secs
 
 Details (average, fastest, slowest):
-  DNS+dialup:   0.0000 secs, 0.0050 secs, 1.6477 secs
-  DNS-lookup:   0.0000 secs, 0.0000 secs, 0.0000 secs
-  req write:    0.0002 secs, 0.0001 secs, 0.0004 secs
-  resp wait:    0.1000 secs, 0.0046 secs, 1.6473 secs
-  resp read:    0.0003 secs, 0.0000 secs, 0.0620 secs
+  DNS+dialup:   0.0004 secs, 0.4983 secs, 0.5759 secs
+  DNS-lookup:   0.0001 secs, 0.0000 secs, 0.0015 secs
+  req write:    0.0002 secs, 0.0000 secs, 0.0076 secs
+  resp wait:    0.5257 secs, 0.4981 secs, 0.5749 secs
+  resp read:    0.0001 secs, 0.0000 secs, 0.0009 secs
 
 Status code distribution:
-  [200] 512 responses
+  [200] 100 responses
 </code></pre></div>
 
               
