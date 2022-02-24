@@ -80,8 +80,8 @@ To check out this repository:
 1. Clone it to your machine:
 
 ```shell
-mkdir -p ${GOPATH}/src/github.com/kubeflow
-cd ${GOPATH}/src/github.com/kubeflow
+mkdir -p ${GOPATH}/src/github.com/kserve
+cd ${GOPATH}/src/github.com/kserve
 git clone git@github.com:${YOUR_GITHUB_USERNAME}/kserve.git
 cd kserve
 git remote add upstream git@github.com:kserve/kserve.git

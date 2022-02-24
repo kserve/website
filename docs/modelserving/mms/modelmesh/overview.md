@@ -48,7 +48,7 @@ Note that the integration of KServe with ModelMesh is still in an alpha stage an
 transformers and explainers that do not yet work when deploying on ModelMesh.
 
 In any case, ModelMesh Serving supports deploying models using KServe's
-[InferenceService interface](https://github.com/kserve/kserve/blob/master/config/crd/serving.kubeflow.org_inferenceservices.yaml).
+[InferenceService interface](https://github.com/kserve/kserve/blob/master/config/crd/serving.kserve.io_inferenceservices.yaml).
 
 While ModelMesh Serving can handle both its original `Predictor` CRD and the KServe `InferenceService` CRD, there is work being done to
 eventually have both KServe and ModelMesh converge on the usage of `InferenceService` CRD.
