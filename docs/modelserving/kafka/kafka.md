@@ -100,7 +100,7 @@ kubectl apply -f mnist-kafka.yaml
 
 This creates transformer and predictor pods, the request goes to transformer first where it invokes the preprocess handler, transformer then calls out to predictor to get the prediction response which in turn invokes the postprocess handler. 
 ```
-kubectl get pods -l serving.kubeflow.org/inferenceservice=mnist
+kubectl get pods -l serving.kserve.io/inferenceservice=mnist
 mnist-predictor-default-9t5ms-deployment-74f5cd7767-khthf     2/2     Running       0          10s
 mnist-transformer-default-jmf98-deployment-8585cbc748-ftfhd   2/2     Running       0          14m
 ```
