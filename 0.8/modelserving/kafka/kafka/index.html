@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.8/modelserving/kafka/kafka/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.2">
     
     
       
@@ -33,7 +33,7 @@
       
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -2393,7 +2393,7 @@ docker push <span class="nv">$USER</span>/mnist-transformer:latest
 <div class="highlight"><pre><span></span><code>kubectl apply -f mnist-kafka.yaml 
 </code></pre></div></p>
 <p>This creates transformer and predictor pods, the request goes to transformer first where it invokes the preprocess handler, transformer then calls out to predictor to get the prediction response which in turn invokes the postprocess handler. 
-<div class="highlight"><pre><span></span><code>kubectl get pods -l serving.kubeflow.org/inferenceservice=mnist
+<div class="highlight"><pre><span></span><code>kubectl get pods -l serving.kserve.io/inferenceservice=mnist
 mnist-predictor-default-9t5ms-deployment-74f5cd7767-khthf     2/2     Running       0          10s
 mnist-transformer-default-jmf98-deployment-8585cbc748-ftfhd   2/2     Running       0          14m
 </code></pre></div></p>
@@ -2540,7 +2540,7 @@ you should expect a notification event like following sent to kafka topic <code>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.8aa65030.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.9f3ca3d1.min.js"></script>
       
     
   </body>

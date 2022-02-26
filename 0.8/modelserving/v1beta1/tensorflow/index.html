@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.8/modelserving/v1beta1/tensorflow/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.2">
     
     
       
@@ -33,7 +33,7 @@
       
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -2312,7 +2312,7 @@
 </div>
 </div>
 </div>
-<p>Apply the <code>tensorflow.yaml</code> to create the <code>InferenceService</code>, by default it exposes a HTTP/REST endpoint.</p>
+<p>Apply the <a href="tensorflow.yaml">tensorflow.yaml</a> to create the <code>InferenceService</code>, by default it exposes a HTTP/REST endpoint.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2329,12 +2329,13 @@ NAME            URL                                        READY   PREV   LATEST
 flower-sample   http://flower-sample.default.example.com   True           <span class="m">100</span>                                   flower-sample-predictor-default-n9zs6   7m15s
 </code></pre></div></p>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>
+<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>, the inference request input
+file can be downloaded <a href="input.json">here</a>.</p>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=flower-sample
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
 curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
-</code></pre></div></p>
+</code></pre></div>
 <p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>* Connected to localhost (::1) port 8080 (#0)
 &gt; POST /v1/models/tensorflow-sample:predict HTTP/1.1
@@ -2396,7 +2397,7 @@ To run a canary rollout, you can apply the <code>canary.yaml</code> with the <co
 </div>
 </div>
 </div>
-<p>Apply the <code>canary.yaml</code> to create the Canary InferenceService.</p>
+<p>Apply the <a href="canary.yaml">canary.yaml</a> to create the Canary InferenceService.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2454,7 +2455,7 @@ do not need to maintain both default and canary on the <code>InferenceService</c
 </div>
 </div>
 </div>
-<p>Apply <code>grpc.yaml</code> to create the gRPC InferenceService.</p>
+<p>Apply <a href="grpc.yaml">grpc.yaml</a> to create the gRPC InferenceService.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2471,12 +2472,12 @@ install the <code>tensorflow-serving-api</code>.
 <div class="highlight"><pre><span></span><code><span class="c1"># The prediction script is written in TensorFlow 1.x</span>
 pip install tensorflow-serving-api&gt;<span class="o">=</span><span class="m">1</span>.14.0,&lt;<span class="m">2</span>.0.0
 </code></pre></div></p>
-<p>Run prediction script
+<p>Run the <a href="grpc_client.py">gRPC prediction script</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flower-grpc
 <span class="nv">INPUT_PATH</span><span class="o">=</span>./input.json
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 python grpc_client.py --host <span class="nv">$INGRESS_HOST</span> --port <span class="nv">$INGRESS_PORT</span> --model <span class="nv">$MODEL_NAME</span> --hostname <span class="nv">$SERVICE_HOSTNAME</span> --input_path <span class="nv">$INPUT_PATH</span>
-</code></pre></div></p>
+</code></pre></div>
 <p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>outputs {
   key: &quot;key&quot;
@@ -2623,7 +2624,7 @@ model_spec {
     <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.bd0b6b67.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.8aa65030.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.9f3ca3d1.min.js"></script>
       
     
   </body>
