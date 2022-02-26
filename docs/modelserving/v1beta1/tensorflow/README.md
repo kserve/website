@@ -4,7 +4,9 @@
  
 Create an `InferenceService` yaml which specifies the framework `tensorflow` and `storageUri` that is pointed to a
 [saved tensorflow model](https://www.tensorflow.org/guide/saved_model), and name it as `tensorflow.yaml`.
+
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -15,7 +17,9 @@ Create an `InferenceService` yaml which specifies the framework `tensorflow` and
         tensorflow:
           storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -28,7 +32,8 @@ Create an `InferenceService` yaml which specifies the framework `tensorflow` and
             name: tensorflow
           storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
     ```
-Apply the `tensorflow.yaml` to create the `InferenceService`, by default it exposes a HTTP/REST endpoint.
+
+Apply the [tensorflow.yaml](./tensorflow.yaml) to create the `InferenceService`, by default it exposes a HTTP/REST endpoint.
 
 === "kubectl"
 ```
@@ -48,7 +53,9 @@ flower-sample   http://flower-sample.default.example.com   True           100   
 ```
  
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, the inference request input
+file can be downloaded [here](./input.json).
+
 ```
 MODEL_NAME=flower-sample
 INPUT_PATH=@./input.json
@@ -90,7 +97,9 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 
 Canary rollout is a great way to control the risk of rolling out a new model by first moving a small percent of the traffic to it and then gradually increase the percentage. 
 To run a canary rollout, you can apply the `canary.yaml` with the `canaryTrafficPercent` field specified.
+
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -102,7 +111,9 @@ To run a canary rollout, you can apply the `canary.yaml` with the `canaryTraffic
         tensorflow:
           storageUri: "gs://kfserving-samples/models/tensorflow/flowers-2"
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -117,7 +128,7 @@ To run a canary rollout, you can apply the `canary.yaml` with the `canaryTraffic
           storageUri: "gs://kfserving-samples/models/tensorflow/flowers-2"
     ```
 
-Apply the `canary.yaml` to create the Canary InferenceService.
+Apply the [canary.yaml](./canary.yaml) to create the Canary InferenceService.
 
 === "kubectl"
 ```
@@ -139,7 +150,9 @@ do not need to maintain both default and canary on the `InferenceService` as in 
 
 ## Create the gRPC InferenceService 
 Create `InferenceService` which exposes the gRPC port and by default it listens on port 9000.
+
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -154,7 +167,9 @@ Create `InferenceService` which exposes the gRPC port and by default it listens 
               name: h2c
               protocol: TCP
     ```
+
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -172,7 +187,7 @@ Create `InferenceService` which exposes the gRPC port and by default it listens 
               protocol: TCP
     ```
 
-Apply `grpc.yaml` to create the gRPC InferenceService.
+Apply [grpc.yaml](./grpc.yaml) to create the gRPC InferenceService.
 
 === "kubectl"
 ```
@@ -192,7 +207,8 @@ install the `tensorflow-serving-api`.
 pip install tensorflow-serving-api>=1.14.0,<2.0.0
 ```
 
-Run prediction script
+Run the [gRPC prediction script](./grpc_client.py).
+
 ```shell
 MODEL_NAME=flower-grpc
 INPUT_PATH=./input.json
