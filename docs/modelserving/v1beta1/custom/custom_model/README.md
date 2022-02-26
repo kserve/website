@@ -43,7 +43,7 @@ to run the image build on the cloud and continuously build/deploy new versions f
 
 ### Use pack to build and push the custom model server image
 ```bash
-pack build --builder paketobuildpacks/builder:base ${DOCKER_USER}/custom-model:v1
+pack build --builder paketobuildpacks/builder:full ${DOCKER_USER}/custom-model:v1
 docker push ${DOCKER_USER}/custom-model:v1
 ```
 
