@@ -33,3 +33,13 @@ The minimally required Cert Manager version is 1.3.0 and you can refer to [Cert 
     ```bash
     kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
     ```
+
+## 5. Install KServe Built-in ClusterServingRuntimes
+
+=== "kubectl"
+    ```bash
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve-runtimes.yaml
+    ```
+
+!!! note
+    **ClusterServingRuntimes** are required to create InferenceService for built-in model serving runtimes with KServe v0.8.0 or higher.
