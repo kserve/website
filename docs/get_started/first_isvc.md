@@ -1,16 +1,50 @@
-## Run your first `InferenceService`
+## Run your first InferenceService
 
-**In this tutorial, you will deploy a ScikitLearn InferenceService.**
+In this tutorial, you will deploy an InferenceService with a predictor that will load a scikit-learn model trained with
+the [iris](https://archive.ics.uci.edu/ml/datasets/iris) dataset. This dataset has three output class: Iris Setosa, Iris Versicolour, and Iris Virginica.
 
-This inference service loads a simple iris ML model, send a list of attributes and print the prediction for the class of iris plant."
+You will then send an inference request to your deployed model in order to get a prediction for the class of iris plant your request corresponds to.
 
-Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the trained model and
+Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the storage location of the model and
 it gets some **super powers out of the box** :rocket:.
 
-### 1. Create test `InferenceService`
-=== "YAML"
 
-    ```bash
+### 1. Create a namespace
+
+First, create a namespace to use for deploying KServe resources:
+
+```shell
+kubectl create namespace kserve-test
+```
+
+### 2. Create an `InferenceService`
+
+Next, define a new InferenceService YAML for the model and apply it to the cluster.
+
+A new predictor schema was introduced in `v0.8.0`. New `InferenceServices` should be deployed using the new schema. The old schema
+is provided as reference.
+
+=== "New Schema"
+
+    ```shell
+    kubectl apply -n kserve-test -f - <<EOF
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-iris"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+    EOF
+    ```
+
+=== "Old Schema"
+
+    ```shell
+    kubectl apply -n kserve-test -f - <<EOF
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
     metadata:
@@ -19,14 +53,11 @@ it gets some **super powers out of the box** :rocket:.
       predictor:
         sklearn:
           storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+    EOF
     ```
-Once you've created your YAML file (named something like "sklearn.yaml"):
-```bash
-kubectl create namespace kserve-test
-kubectl apply -f sklearn.yaml -n kserve-test
-```
 
-### 2. Check `InferenceService` status.
+### 3. Check `InferenceService` status.
+
 ```bash
 kubectl get inferenceservices sklearn-iris -n kserve-test
 NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
@@ -34,7 +65,8 @@ sklearn-iris   http://sklearn-iris.kserve-test.example.com         True         
 ```
 If your DNS contains example.com please consult your admin for configuring DNS or using [custom domain](https://knative.dev/docs/serving/using-a-custom-domain).
 
-### 3. Determine the ingress IP and ports
+### 4. Determine the ingress IP and ports
+
 Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
 ```bash
 $ kubectl get svc istio-ingressgateway -n istio-system
@@ -44,14 +76,14 @@ istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...     
 
 === "Load Balancer"
     If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.
-    
+
     ```bash
     export INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
     ```
 
 === "Node Port"
-    If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway. 
+    If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway.
     In this case, you can access the gateway using the service’s node port.
     ```bash
     # GKE
@@ -73,17 +105,22 @@ istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...     
     export INGRESS_PORT=8080
     ```
 
-### 4. Curl the `InferenceService`
-First prepare your inference input request
-```json
+### 5. Perform inference
+
+First, prepare your inference input request inside a file:
+
+```shell
+cat <<EOF > "./iris-input.json"
 {
   "instances": [
     [6.8,  2.8,  4.8,  1.4],
     [6.0,  3.4,  4.5,  1.6]
   ]
 }
+EOF
 ```
-Once you've created your json test input file (named something like "iris-input.json"):
+
+Depending on your setup, use one of the following commands to curl the `InferenceService`:
 
 === "Real DNS"
 
@@ -101,19 +138,19 @@ Once you've created your json test input file (named something like "iris-input.
     kubectl get svc istio-ingressgateway --namespace istio-system
     ```
     Look for the `EXTERNAL-IP` column's value(in this case 35.237.217.209)
-    
+
     ```bash
     NAME                   TYPE           CLUSTER-IP     EXTERNAL-IP      PORT(S)                                                                                                                                      AGE
     istio-ingressgateway   LoadBalancer   10.51.253.94   35.237.217.209
     ```
-    
+
     Next step is to setting up the custom domain:
     ```bash
     kubectl edit cm config-domain --namespace knative-serving
     ```
 
     Now in your editor, change example.com to {{external-ip}}.xip.io (make sure to replace {{external-ip}} with the IP you found earlier).
-    
+
     With the change applied you can now directly curl the URL
     ```bash
     curl -v http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict -d @./iris-input.json
@@ -134,7 +171,13 @@ Once you've created your json test input file (named something like "iris-input.
     curl -v http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
-### 5. Run Performance Test
+You should see two predictions returned (i.e. `{"predictions": [1, 1]}`). Both sets of data points sent for inference correspond to the flower with index `1`.
+In this case, the model predicts that both flowers are "Iris Versicolour".
+
+### 6. Run performance test (optional)
+
+If you want to load test the deployed model, try deploying the following Kubernetes Job to drive load to the model:
+
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
 kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
