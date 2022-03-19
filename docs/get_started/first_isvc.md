@@ -44,7 +44,7 @@ is provided as reference.
 === "Old Schema"
 
     ```shell
-    kubectl apply  -n kserve-test -f - <<EOF
+    kubectl apply -n kserve-test -f - <<EOF
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
     metadata:
