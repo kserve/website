@@ -6,11 +6,12 @@ C++ is very often the language of choice, The following example will outline the
 to a serialized representation that can be loaded and executed purely from C++ like Triton Inference Server, with no dependency on Python.
 
 ## Setup
-1. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
+1. Make sure you have installed [KServe](https://kserve.github.io/website/get_started/#install-the-kserve-quickstart-environment)
+2. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"registriesSkippingTagResolving":"nvcr.io"}}' -n knative-serving
 ```
-2. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
+3. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}}' -n knative-serving
 ```
@@ -138,7 +139,7 @@ $ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 
 
 ### Run a prediction with curl
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](https://kserve.github.io/website/get_started/first_isvc/#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 The latest Triton Inference Server already switched to use KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2), so
 the input request needs to follow the V2 schema with the specified data type, shape.
@@ -146,7 +147,7 @@ the input request needs to follow the V2 schema with the specified data type, sh
 MODEL_NAME=cifar10
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/$MODEL_NAME/infer -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
 ```
 ==** Expected Output **==
 ```bash
@@ -271,7 +272,7 @@ class ImageTransformer(kserve.Model):
         # since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.
         return {output["name"] : np.array(output["data"]).reshape(output["shape"]) for output in results["outputs"]}
 ```
-Please find the code example [here](https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/torchscript).
+Please find [the code example](https://github.com/kserve/kserve/tree/release-0.8/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
 
 ### Build Transformer docker image
 ```
@@ -342,7 +343,7 @@ INPUT_PATH=@./image.json
 
 SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v -X POST -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
 ```
 
 ==** Expected Output **==
