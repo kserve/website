@@ -485,36 +485,43 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-create-test-inferenceservice" class="md-nav__link">
-    1. Create test InferenceService
+  <a href="#1-create-a-namespace" class="md-nav__link">
+    1. Create a namespace
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-check-inferenceservice-status" class="md-nav__link">
-    2. Check InferenceService status.
+  <a href="#2-create-an-inferenceservice" class="md-nav__link">
+    2. Create an InferenceService
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-determine-the-ingress-ip-and-ports" class="md-nav__link">
-    3. Determine the ingress IP and ports
+  <a href="#3-check-inferenceservice-status" class="md-nav__link">
+    3. Check InferenceService status.
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-curl-the-inferenceservice" class="md-nav__link">
-    4. Curl the InferenceService
+  <a href="#4-determine-the-ingress-ip-and-ports" class="md-nav__link">
+    4. Determine the ingress IP and ports
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-run-performance-test" class="md-nav__link">
-    5. Run Performance Test
+  <a href="#5-perform-inference" class="md-nav__link">
+    5. Perform inference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-run-performance-test-optional" class="md-nav__link">
+    6. Run performance test (optional)
   </a>
   
 </li>
@@ -2216,36 +2223,43 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-create-test-inferenceservice" class="md-nav__link">
-    1. Create test InferenceService
+  <a href="#1-create-a-namespace" class="md-nav__link">
+    1. Create a namespace
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-check-inferenceservice-status" class="md-nav__link">
-    2. Check InferenceService status.
+  <a href="#2-create-an-inferenceservice" class="md-nav__link">
+    2. Create an InferenceService
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-determine-the-ingress-ip-and-ports" class="md-nav__link">
-    3. Determine the ingress IP and ports
+  <a href="#3-check-inferenceservice-status" class="md-nav__link">
+    3. Check InferenceService status.
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-curl-the-inferenceservice" class="md-nav__link">
-    4. Curl the InferenceService
+  <a href="#4-determine-the-ingress-ip-and-ports" class="md-nav__link">
+    4. Determine the ingress IP and ports
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#5-run-performance-test" class="md-nav__link">
-    5. Run Performance Test
+  <a href="#5-perform-inference" class="md-nav__link">
+    5. Perform inference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-run-performance-test-optional" class="md-nav__link">
+    6. Run performance test (optional)
   </a>
   
 </li>
@@ -2275,38 +2289,59 @@
 
   <h1>First InferenceService</h1>
 
-<h2 id="run-your-first-inferenceservice">Run your first <code>InferenceService</code><a class="headerlink" href="#run-your-first-inferenceservice" title="Permanent link">&para;</a></h2>
-<p><strong>In this tutorial, you will deploy a ScikitLearn InferenceService.</strong></p>
-<p>This inference service loads a simple iris ML model, send a list of attributes and print the prediction for the class of iris plant."</p>
-<p>Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the trained model and
+<h2 id="run-your-first-inferenceservice">Run your first InferenceService<a class="headerlink" href="#run-your-first-inferenceservice" title="Permanent link">&para;</a></h2>
+<p>In this tutorial, you will deploy an InferenceService with a predictor that will load a scikit-learn model trained with
+the <a href="https://archive.ics.uci.edu/ml/datasets/iris">iris</a> dataset. This dataset has three output class: Iris Setosa, Iris Versicolour, and Iris Virginica.</p>
+<p>You will then send an inference request to your deployed model in order to get a prediction for the class of iris plant your request corresponds to.</p>
+<p>Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the storage location of the model and
 it gets some <strong>super powers out of the box</strong> <img alt="🚀" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f680.svg" title=":rocket:" />.</p>
-<h3 id="1-create-test-inferenceservice">1. Create test <code>InferenceService</code><a class="headerlink" href="#1-create-test-inferenceservice" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">YAML</label></div>
+<h3 id="1-create-a-namespace">1. Create a namespace<a class="headerlink" href="#1-create-a-namespace" title="Permanent link">&para;</a></h3>
+<p>First, create a namespace to use for deploying KServe resources:</p>
+<div class="highlight"><pre><span></span><code>kubectl create namespace kserve-test
+</code></pre></div>
+<h3 id="2-create-an-inferenceservice">2. Create an <code>InferenceService</code><a class="headerlink" href="#2-create-an-inferenceservice" title="Permanent link">&para;</a></h3>
+<p>Next, define a new InferenceService YAML for the model and apply it to the cluster.</p>
+<p>A new predictor schema was introduced in <code>v0.8.0</code>. New <code>InferenceServices</code> should be deployed using the new schema. The old schema
+is provided as reference.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>apiVersion: <span class="s2">&quot;serving.kserve.io/v1beta1&quot;</span>
-kind: <span class="s2">&quot;InferenceService&quot;</span>
-metadata:
-  name: <span class="s2">&quot;sklearn-iris&quot;</span>
-spec:
-  predictor:
-    sklearn:
-      storageUri: <span class="s2">&quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span>
+<div class="highlight"><pre><span></span><code>kubectl apply -n kserve-test -f - <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="s">kind: &quot;InferenceService&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;sklearn-iris&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: sklearn</span>
+<span class="s">      storageUri: &quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kubectl apply -n kserve-test -f - <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="s">kind: &quot;InferenceService&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;sklearn-iris&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    sklearn:</span>
+<span class="s">      storageUri: &quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span>
+<span class="s">EOF</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<p>Once you've created your YAML file (named something like "sklearn.yaml"):
-<div class="highlight"><pre><span></span><code>kubectl create namespace kserve-test
-kubectl apply -f sklearn.yaml -n kserve-test
-</code></pre></div></p>
-<h3 id="2-check-inferenceservice-status">2. Check <code>InferenceService</code> status.<a class="headerlink" href="#2-check-inferenceservice-status" title="Permanent link">&para;</a></h3>
+<h3 id="3-check-inferenceservice-status">3. Check <code>InferenceService</code> status.<a class="headerlink" href="#3-check-inferenceservice-status" title="Permanent link">&para;</a></h3>
 <p><div class="highlight"><pre><span></span><code>kubectl get inferenceservices sklearn-iris -n kserve-test
 NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
 sklearn-iris   http://sklearn-iris.kserve-test.example.com         True           <span class="m">100</span>                              sklearn-iris-predictor-default-47q2g   7d23h
 </code></pre></div>
 If your DNS contains example.com please consult your admin for configuring DNS or using <a href="https://knative.dev/docs/serving/using-a-custom-domain">custom domain</a>.</p>
-<h3 id="3-determine-the-ingress-ip-and-ports">3. Determine the ingress IP and ports<a class="headerlink" href="#3-determine-the-ingress-ip-and-ports" title="Permanent link">&para;</a></h3>
+<h3 id="4-determine-the-ingress-ip-and-ports">4. Determine the ingress IP and ports<a class="headerlink" href="#4-determine-the-ingress-ip-and-ports" title="Permanent link">&para;</a></h3>
 <p>Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
 <div class="highlight"><pre><span></span><code>$ kubectl get svc istio-ingressgateway -n istio-system
 NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT<span class="o">(</span>S<span class="o">)</span>   AGE
@@ -2321,7 +2356,7 @@ istio-ingressgateway   LoadBalancer   <span class="m">172</span>.21.109.129   <s
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<p>If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway. 
+<p>If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway.
 In this case, you can access the gateway using the service’s node port.
 <div class="highlight"><pre><span></span><code><span class="c1"># GKE</span>
 <span class="nb">export</span> <span class="nv">INGRESS_HOST</span><span class="o">=</span>worker-node-address
@@ -2343,16 +2378,18 @@ kubectl port-forward --namespace istio-system svc/<span class="si">${</span><spa
 </div>
 </div>
 </div>
-<h3 id="4-curl-the-inferenceservice">4. Curl the <code>InferenceService</code><a class="headerlink" href="#4-curl-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<p>First prepare your inference input request
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w">  </span><span class="mf">2.8</span><span class="p">,</span><span class="w">  </span><span class="mf">4.8</span><span class="p">,</span><span class="w">  </span><span class="mf">1.4</span><span class="p">],</span><span class="w"></span>
-<span class="w">    </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w">  </span><span class="mf">3.4</span><span class="p">,</span><span class="w">  </span><span class="mf">4.5</span><span class="p">,</span><span class="w">  </span><span class="mf">1.6</span><span class="p">]</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<h3 id="5-perform-inference">5. Perform inference<a class="headerlink" href="#5-perform-inference" title="Permanent link">&para;</a></h3>
+<p>First, prepare your inference input request inside a file:</p>
+<div class="highlight"><pre><span></span><code>cat <span class="s">&lt;&lt;EOF &gt; &quot;./iris-input.json&quot;</span>
+<span class="s">{</span>
+<span class="s">  &quot;instances&quot;: [</span>
+<span class="s">    [6.8,  2.8,  4.8,  1.4],</span>
+<span class="s">    [6.0,  3.4,  4.5,  1.6]</span>
+<span class="s">  ]</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
 </code></pre></div>
-Once you've created your json test input file (named something like "iris-input.json"):</p>
+<p>Depending on your setup, use one of the following commands to curl the <code>InferenceService</code>:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:4"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><input id="__tabbed_3_4" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Real DNS</label><label for="__tabbed_3_2">Magic DNS</label><label for="__tabbed_3_3">From Ingress gateway with HOST Header</label><label for="__tabbed_3_4">From local cluster gateway</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -2391,7 +2428,10 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 </div>
 </div>
 </div>
-<h3 id="5-run-performance-test">5. Run Performance Test<a class="headerlink" href="#5-run-performance-test" title="Permanent link">&para;</a></h3>
+<p>You should see two predictions returned (i.e. <code>{"predictions": [1, 1]}</code>). Both sets of data points sent for inference correspond to the flower with index <code>1</code>.
+In this case, the model predicts that both flowers are "Iris Versicolour".</p>
+<h3 id="6-run-performance-test-optional">6. Run performance test (optional)<a class="headerlink" href="#6-run-performance-test-optional" title="Permanent link">&para;</a></h3>
+<p>If you want to load test the deployed model, try deploying the following Kubernetes Job to drive load to the model:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># use kubectl create instead of apply because the job template is using generateName which doesn&#39;t work with kubectl apply</span>
 kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 </code></pre></div>
