@@ -343,28 +343,29 @@ INPUT_PATH=@./image.json
 
 SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH
 ```
 
 ==** Expected Output **==
 ```
-> POST /v2/models/cifar:predict HTTP/2
-> user-agent: curl/7.71.1
-> accept: */*
-> content-length: 3422
-> content-type: application/x-www-form-urlencoded
+> POST /v1/models/cifar10:predict HTTP/1.1
+> Host: torch-transformer.kserve-triton.example.com
+> User-Agent: curl/7.68.0
+> Accept: */*
+> Content-Length: 3400
+> Content-Type: application/x-www-form-urlencoded
+> Expect: 100-continue
 >
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 100 Continue
 * We are completely uploaded and fine
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* old SSL session ID is stale, removing
-* Connection state changed (MAX_CONCURRENT_STREAMS == 4294967295)!
-< HTTP/2 200
-< content-length: 338
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< content-length: 219
 < content-type: application/json; charset=UTF-8
-< date: Thu, 08 Oct 2020 13:15:14 GMT
+< date: Sat, 19 Mar 2022 12:15:54 GMT
 < server: istio-envoy
-< x-envoy-upstream-service-time: 52
+< x-envoy-upstream-service-time: 41
 <
-{"model_name": "cifar", "model_version": "1", "outputs": [{"name": "OUTPUT__0", "datatype": "FP32", "shape": [1, 10], "data": [-0.7299326062202454, -2.186835289001465, -0.029627874493598938, 2.3753483295440674, -0.3476247489452362, 1.3253062963485718, 0.5721136927604675, 0.049311548471450806, -0.3691796362400055, -1.0804035663604736]}]}
+{"OUTPUT__0": [[-2.0964810848236084, -0.137007474899292, -0.5095658302307129, 2.795621395111084, -0.560547947883606, 1.9934231042861938, 1.1288189888000488, -1.4043136835098267, 0.600488007068634, -2.1237082481384277]]}%
 ```
