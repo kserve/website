@@ -144,6 +144,9 @@ The first step is to [determine the ingress IP and ports](https://kserve.github.
 The latest Triton Inference Server already switched to use KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2), so
 the input request needs to follow the V2 schema with the specified data type, shape.
 ```bash
+# download the input file
+curl -O https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/triton/torchscript/input.json
+
 MODEL_NAME=cifar10
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -337,6 +340,9 @@ The transformer does not enforce a specific schema like predictor but the genera
 ```
 
 ```bash
+# download the input file
+curl -O https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/triton/torchscript/image.json
+
 SERVICE_NAME=torch-transfomer
 MODEL_NAME=cifar10
 INPUT_PATH=@./image.json
