@@ -145,7 +145,7 @@ The latest Triton Inference Server already switched to use KServe [prediction V2
 the input request needs to follow the V2 schema with the specified data type, shape.
 ```bash
 # download the input file
-curl -O https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/triton/torchscript/input.json
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/input.json
 
 MODEL_NAME=cifar10
 INPUT_PATH=@./input.json
@@ -341,7 +341,7 @@ The transformer does not enforce a specific schema like predictor but the genera
 
 ```bash
 # download the input file
-curl -O https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/triton/torchscript/image.json
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/image.json
 
 SERVICE_NAME=torch-transfomer
 MODEL_NAME=cifar10
