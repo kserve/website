@@ -2429,6 +2429,7 @@ C++ is very often the language of choice, The following example will outline the
 to a serialized representation that can be loaded and executed purely from C++ like Triton Inference Server, with no dependency on Python.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
+<li>Make sure you have installed <a href="https://kserve.github.io/website/get_started/#install-the-kserve-quickstart-environment">KServe</a></li>
 <li>Skip <a href="https://knative.dev/docs/serving/tag-resolution/">tag resolution</a> for <code>nvcr.io</code> which requires auth to resolve triton inference server image digest
 <div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span> -n knative-serving
 </code></pre></div></li>
@@ -2545,13 +2546,16 @@ We want one thread per worker instead of many threads per worker to avoid conten
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 </code></pre></div></p>
 <h3 id="run-a-prediction-with-curl">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="https://kserve.github.io/website/get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so
 the input request needs to follow the V2 schema with the specified data type, shape.
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
+<div class="highlight"><pre><span></span><code><span class="c1"># download the input file</span>
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/input.json
+
+<span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchscript-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
-curl -v -X -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> POST http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="nv">$MODEL_NAME</span>/infer -d <span class="nv">$INPUT_PATH</span>
+curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer -d <span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>* Connected to torchscript-cifar.default.svc.cluster.local <span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
@@ -2664,7 +2668,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
         <span class="c1"># since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]}</span>
 </code></pre></div>
-Please find the code example <a href="https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/torchscript">here</a>.</p>
+Please find <a href="https://github.com/kserve/kserve/tree/release-0.8/docs/samples/v1beta1/triton/torchscript/image_transformer_v2">the code example</a> and <a href="https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile">Dockerfile</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker build -t $DOCKER_USER/image-transformer-v2:latest -f transformer.Dockerfile . --rm
 </code></pre></div>
@@ -2717,34 +2721,38 @@ Please find the code example <a href="https://github.com/kserve/kserve/tree/rele
 <span class="w">  </span><span class="p">]</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>torch-transfomer
+<div class="highlight"><pre><span></span><code><span class="c1"># download the input file</span>
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/image.json
+
+<span class="nv">SERVICE_NAME</span><span class="o">=</span>torch-transfomer
 <span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./image.json
 
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$SERVICE_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 
-curl -v -X POST -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict -d <span class="nv">$INPUT_PATH</span>
+curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict -d <span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>&gt; POST /v2/models/cifar:predict HTTP/2
-&gt; user-agent: curl/7.71.1
-&gt; accept: */*
-&gt; content-length: 3422
-&gt; content-type: application/x-www-form-urlencoded
+<div class="highlight"><pre><span></span><code>&gt; POST /v1/models/cifar10:predict HTTP/1.1
+&gt; Host: torch-transformer.kserve-triton.example.com
+&gt; User-Agent: curl/7.68.0
+&gt; Accept: */*
+&gt; Content-Length: 3400
+&gt; Content-Type: application/x-www-form-urlencoded
+&gt; Expect: 100-continue
 &gt;
+* Mark bundle as not supporting multiuse
+&lt; HTTP/1.1 100 Continue
 * We are completely uploaded and fine
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* old SSL session ID is stale, removing
-* Connection state changed (MAX_CONCURRENT_STREAMS == 4294967295)!
-&lt; HTTP/2 200
-&lt; content-length: 338
+* Mark bundle as not supporting multiuse
+&lt; HTTP/1.1 200 OK
+&lt; content-length: 219
 &lt; content-type: application/json; charset=UTF-8
-&lt; date: Thu, 08 Oct 2020 13:15:14 GMT
+&lt; date: Sat, 19 Mar 2022 12:15:54 GMT
 &lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 52
+&lt; x-envoy-upstream-service-time: 41
 &lt;
-{&quot;model_name&quot;: &quot;cifar&quot;, &quot;model_version&quot;: &quot;1&quot;, &quot;outputs&quot;: [{&quot;name&quot;: &quot;OUTPUT__0&quot;, &quot;datatype&quot;: &quot;FP32&quot;, &quot;shape&quot;: [1, 10], &quot;data&quot;: [-0.7299326062202454, -2.186835289001465, -0.029627874493598938, 2.3753483295440674, -0.3476247489452362, 1.3253062963485718, 0.5721136927604675, 0.049311548471450806, -0.3691796362400055, -1.0804035663604736]}]}
+{&quot;OUTPUT__0&quot;: [[-2.0964810848236084, -0.137007474899292, -0.5095658302307129, 2.795621395111084, -0.560547947883606, 1.9934231042861938, 1.1288189888000488, -1.4043136835098267, 0.600488007068634, -2.1237082481384277]]}%
 </code></pre></div></p>
 
               
