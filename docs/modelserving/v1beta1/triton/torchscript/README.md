@@ -6,11 +6,12 @@ C++ is very often the language of choice, The following example will outline the
 to a serialized representation that can be loaded and executed purely from C++ like Triton Inference Server, with no dependency on Python.
 
 ## Setup
-1. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
+1. Make sure you have installed [KServe](https://kserve.github.io/website/get_started/#install-the-kserve-quickstart-environment)
+2. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve triton inference server image digest
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"registriesSkippingTagResolving":"nvcr.io"}}' -n knative-serving
 ```
-2. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
+3. Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
 ```bash
 kubectl patch cm config-deployment --patch '{"data":{"progressDeadline": "600s"}}' -n knative-serving
 ```
@@ -138,15 +139,18 @@ $ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 
 
 ### Run a prediction with curl
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](https://kserve.github.io/website/get_started/first_isvc/#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 The latest Triton Inference Server already switched to use KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2), so
 the input request needs to follow the V2 schema with the specified data type, shape.
 ```bash
+# download the input file
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/input.json
+
 MODEL_NAME=cifar10
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-curl -v -X -H "Host: ${SERVICE_HOSTNAME}" POST http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/$MODEL_NAME/infer -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
 ```
 ==** Expected Output **==
 ```bash
@@ -271,7 +275,7 @@ class ImageTransformer(kserve.Model):
         # since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.
         return {output["name"] : np.array(output["data"]).reshape(output["shape"]) for output in results["outputs"]}
 ```
-Please find the code example [here](https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/torchscript).
+Please find [the code example](https://github.com/kserve/kserve/tree/release-0.8/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
 
 ### Build Transformer docker image
 ```
@@ -336,34 +340,38 @@ The transformer does not enforce a specific schema like predictor but the genera
 ```
 
 ```bash
+# download the input file
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/image.json
+
 SERVICE_NAME=torch-transfomer
 MODEL_NAME=cifar10
 INPUT_PATH=@./image.json
 
 SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v -X POST -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH
 ```
 
 ==** Expected Output **==
 ```
-> POST /v2/models/cifar:predict HTTP/2
-> user-agent: curl/7.71.1
-> accept: */*
-> content-length: 3422
-> content-type: application/x-www-form-urlencoded
+> POST /v1/models/cifar10:predict HTTP/1.1
+> Host: torch-transformer.kserve-triton.example.com
+> User-Agent: curl/7.68.0
+> Accept: */*
+> Content-Length: 3400
+> Content-Type: application/x-www-form-urlencoded
+> Expect: 100-continue
 >
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 100 Continue
 * We are completely uploaded and fine
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
-* old SSL session ID is stale, removing
-* Connection state changed (MAX_CONCURRENT_STREAMS == 4294967295)!
-< HTTP/2 200
-< content-length: 338
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< content-length: 219
 < content-type: application/json; charset=UTF-8
-< date: Thu, 08 Oct 2020 13:15:14 GMT
+< date: Sat, 19 Mar 2022 12:15:54 GMT
 < server: istio-envoy
-< x-envoy-upstream-service-time: 52
+< x-envoy-upstream-service-time: 41
 <
-{"model_name": "cifar", "model_version": "1", "outputs": [{"name": "OUTPUT__0", "datatype": "FP32", "shape": [1, 10], "data": [-0.7299326062202454, -2.186835289001465, -0.029627874493598938, 2.3753483295440674, -0.3476247489452362, 1.3253062963485718, 0.5721136927604675, 0.049311548471450806, -0.3691796362400055, -1.0804035663604736]}]}
+{"OUTPUT__0": [[-2.0964810848236084, -0.137007474899292, -0.5095658302307129, 2.795621395111084, -0.560547947883606, 1.9934231042861938, 1.1288189888000488, -1.4043136835098267, 0.600488007068634, -2.1237082481384277]]}%
 ```
