@@ -176,7 +176,9 @@ $ inferenceservice.serving.kserve.io/torchserve-transformer created
 ```
 
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+First, download the request [input payload](./input.json).
+
+Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```
 SERVICE_NAME=torch-transformer
@@ -256,7 +258,9 @@ $ inferenceservice.serving.kserve.io/torch-grpc-transformer created
 ```
 
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+First, download the request [input payload](./image.json).
+
+Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```
 SERVICE_NAME=torch-grpc-transformer
@@ -279,7 +283,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${I
 > Content-Length: 3394
 > Content-Type: application/x-www-form-urlencoded
 > Expect: 100-continue
-> 
+>
 Handling connection for 8080
 < HTTP/1.1 100 Continue
 * We are completely uploaded and fine
@@ -289,7 +293,7 @@ Handling connection for 8080
 < date: Thu, 03 Feb 2022 01:50:07 GMT
 < server: istio-envoy
 < x-envoy-upstream-service-time: 73
-< 
+<
 * Connection #0 to host localhost left intact
 {"predictions": [[-1.192867636680603, -0.35750141739845276, -2.3665435314178467, 3.9186441898345947, -2.0592284202575684, 4.091977119445801, 0.1266237050294876, -1.8284690380096436, 2.628898859024048, -4.255198001861572]]}* Closing connection 0
 ```
