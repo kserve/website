@@ -67,6 +67,9 @@ nav:
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
           - Kafka:
                 - Inference Kafka: modelserving/kafka/kafka.md
+          - Rollout Strategies:
+                - Canary:  modelserving/v1beta1/rollout/canary.md
+                - Canary Example: modelserving/v1beta1/rollout/canary-example.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Python Client SDK: sdk_docs/sdk_doc.md
