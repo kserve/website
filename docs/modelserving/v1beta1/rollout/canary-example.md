@@ -29,7 +29,7 @@ Add the `canaryTrafficPercent` field to the predictor component and update the `
 
 === "New Schema"
 
-    ```shell
+    ```
     kubectl apply -n kserve-test -f - <<EOF
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -176,7 +176,7 @@ explicitly routed to the canary model (model v2) or the old model (model v1) via
 
 Apply model v2 with `canaryTrafficPercent: 10` and `serving.kserve.io/enable-tag-routing: "true"`.
 
-```shell
+```
 kubectl apply -n kserve-test -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
@@ -196,7 +196,7 @@ EOF
 
 Check the InferenceService status to get the canary and previous model URL.
 
-```shell
+```
 kubectl get isvc sklearn-iris -ojsonpath="{.status.components.predictor}"  | jq
 ````
 
