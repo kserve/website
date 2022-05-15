@@ -27,9 +27,10 @@ Add the `canaryTrafficPercent` field to the predictor component and update the `
 
 > **_NOTE:_** A new predictor schema was introduced in `v0.8.0`. New `InferenceServices` should be deployed using the new schema. The old schema is provided as reference.
 
+
 === "New Schema"
 
-    ```
+    ```bash
     kubectl apply -n kserve-test -f - <<EOF
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -47,7 +48,7 @@ Add the `canaryTrafficPercent` field to the predictor component and update the `
 
 === "Old Schema"
 
-    ```shell
+    ```bash
     kubectl apply -n kserve-test -f - <<EOF
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -64,7 +65,7 @@ Add the `canaryTrafficPercent` field to the predictor component and update the `
 After rolling out the canary model, traffic is split between the latest ready revision 2 and the previously rolled out
 revision 1.
 
-```
+```bash
 kubectl get isvc sklearn-iris
 
 NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION              LATESTREADYREVISION                AGE
@@ -74,7 +75,7 @@ sklearn-iris   http://sklearn-iris.kserve-test.example.com   True    90     10  
 Check the running pods, you should now see port two pods running for the old and new model and 10% traffic is routed to
 the new model. Notice revision 1 contains `default-0001` in its name, while revision 2 contains `default-0002`.
 
-```
+```bash
 kubectl get pods 
 
 NAME                                                              READY   STATUS      RESTARTS   AGE
@@ -96,7 +97,7 @@ Send more requests to the `InferenceService` to observe the 10% of traffic that 
 If the canary model is healthy/passes your tests, you can promote it by removing the `canaryTrafficPercent` field and
 re-applying the `InferenceService` custom resource.
 
-```shell
+```
 kubectl apply -n kserve-test -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
@@ -135,7 +136,7 @@ model (model v2, for example). This rolls back from model v2 to model v1 and dec
 
 Apply the custom resource to set model v2's traffic to 0%.
 
-```shell
+```bash
 kubectl apply -n kserve-test -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
@@ -153,7 +154,7 @@ EOF
 
 Check the traffic split, now 100% traffic goes to the previous good model (model v1) for revision generation 1.
 
-```
+```bash
 kubectl get isvc sklearn-iris
 NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION              LATESTREADYREVISION                AGE
 sklearn-iris   http://sklearn-iris.kserve-test.example.com   True    100    0        sklearn-iris-predictor-default-00001   sklearn-iris-predictor-default-00002   18m
@@ -162,8 +163,9 @@ sklearn-iris   http://sklearn-iris.kserve-test.example.com   True    100    0   
 The pods for previous revision (model v1) now routes 100% of the traffic to its pods while the new
 model (model v2) routes 0% traffic to its pods.
 
-```
+```bash
 kubectl get pods -l serving.kserve.io/inferenceservice=sklearn-iris
+
 NAME                                                           READY   STATUS            RESTARTS   AGE
 sklearn-iris-predictor-default-00001-deployment-66c5f5b8d5-gmfvj   1/2     Running       0          35s
 sklearn-iris-predictor-default-00002-deployment-5bd9ff46f8-shtzd   2/2     Running       0          16m
@@ -176,7 +178,7 @@ explicitly routed to the canary model (model v2) or the old model (model v1) via
 
 Apply model v2 with `canaryTrafficPercent: 10` and `serving.kserve.io/enable-tag-routing: "true"`.
 
-```
+```bash
 kubectl apply -n kserve-test -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
@@ -196,13 +198,13 @@ EOF
 
 Check the InferenceService status to get the canary and previous model URL.
 
-```
+```bash
 kubectl get isvc sklearn-iris -ojsonpath="{.status.components.predictor}"  | jq
-````
+```
 
 The output should look like
 
-```
+```bash
 {
   "address": {
     "url": "http://sklearn-iris-predictor-default.kserve-test.svc.cluster.local"
@@ -239,18 +241,21 @@ from [Perform inference](https://kserve.github.io/website/master/get_started/fir
 add `latest-` or `prev-` to the model name to send a tag based request.
 
 For example, set the model name and use the following commands to send traffic to each service based on the `latest` or `prev` tag.
-```shell
+
+```bash
 MODEL_NAME=sklearn-iris
 ```
+
 curl the latest revision
-```shell
+
+```bash
 curl -v -H "Host: latest-${MODEL_NAME}-predictor-default.kserve-test.example.com" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d @./iris-input.json
 
 ```
 
 or curl the previous revision
 
-```shell
+```bash
 curl -v -H "Host: prev-${MODEL_NAME}-predictor-default.kserve-test.example.com" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d @./iris-input.json
 
 ```
