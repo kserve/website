@@ -70,7 +70,7 @@ Create a sklearn predictor with the logger which points at the message dumper ur
 kubectl create -f sklearn-basic-logger.yaml
 ```
 
-We can now send a request to the sklearn model. The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+We can now send a request to the sklearn model. The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=sklearn-iris
@@ -276,7 +276,7 @@ Apply the `sklearn-knative-eventing.yaml`.
 kubectl create -f sklearn-knative-eventing.yaml
 ```
 
-We can now send a request to the sklearn model. The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+We can now send a request to the sklearn model. The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=sklearn-iris

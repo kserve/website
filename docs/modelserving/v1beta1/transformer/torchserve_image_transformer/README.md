@@ -178,7 +178,7 @@ $ inferenceservice.serving.kserve.io/torchserve-transformer created
 ### Run a prediction
 First, download the request [input payload](./input.json).
 
-Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```
 SERVICE_NAME=torch-transformer
@@ -260,7 +260,7 @@ $ inferenceservice.serving.kserve.io/torch-grpc-transformer created
 ### Run a prediction
 First, download the request [input payload](./image.json).
 
-Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```
 SERVICE_NAME=torch-grpc-transformer
