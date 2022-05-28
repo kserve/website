@@ -1,16 +1,10 @@
 # Deploy MLflow models with InferenceService
 
-This example walks you through how to deploy a `mlflow` model leveraging
-the `v1beta1` version of the `InferenceService` CRD.
-Note that, by default the `v1beta1` version will expose your model through an
-API compatible with the existing V1 Dataplane.
-However, this example will show you how to serve a model through an API
-compatible with the new [V2 Dataplane](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
+This example walks you through how to deploy a `mlflow` model leveraging the KServe `InferenceService` CRD and how to send the inference request using [V2 Dataplane](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
 
 ## Training
 
-The first step will be to train a sample `mlflow` model.
-Note that this model will be then saved as `model.pkl`.
+The first step is to train a sample sklearn model and save as mlflow model format by calling mlflow `log_model` API.
 
 ```python
 # Original source code and more details can be found in:
@@ -130,8 +124,7 @@ model/
 
 ## Testing locally
 
-Once you've got your model serialised `model.pkl`, we can then use
-[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
+Once you've got your model serialised `model.pkl`, we can then use [MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
 For more details on MLServer, feel free to check the [MLflow example doc](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mlflow/README.md).
 
 !!! Note
@@ -165,18 +158,9 @@ These can be specified through environment variables or by creating a local
 }
 ```
 
-Note that, when you [deploy your model](#deployment), **KServe will already
-inject some sensible defaults** so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-`model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
+### Start the model server locally
 
-### Serving model locally
-
-With the `mlserver` package installed locally and a local `model-settings.json`
-file, you should now be ready to start our server as:
+With the `mlserver` package installed locally and a local `model-settings.json` file, you should now be ready to start our server as:
 
 ```bash
 mlserver start .
@@ -184,9 +168,11 @@ mlserver start .
 
 ## Deploy with InferenceService
 
-Lastly, you will use KServe to deploy the trained model.
-For this, you will just need to use **version `v1beta1`** of the
-`InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
+When you deploy the model with InferenceService, KServe injects sensible defaults so that it runs out-of-the-box without any
+further configuration. However, you can still override these defaults by providing a `model-settings.json` file similar to your local one.
+You can even provide a [set of `model-settings.json` files to load multiple models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
+
+To use v2 protocol for inference with the deployed model you set the **`protocolVersion` field to `v2`**, in this eample your model artifacts have already been uploaded to a "GCS model repository" and can be accessed as `gs://kfserving-examples/models/mlflow/wine`.
 
 === "New Schema"
 
@@ -204,14 +190,6 @@ spec:
       storageUri: "gs://kfserving-examples/models/mlflow/wine"
 ```
 
-Note that this makes the following assumptions:
-
-- Your model artifacts have already been uploaded
-  to a "model repository" (GCS in this example) and can be accessed as
-  `gs://kfserving-examples/models/mlflow/wine`.
-- There is a K8s cluster available, accessible through `kubectl`.
-- KServe has already been [installed in your cluster](../../../../get_started/README.md).
-
 === "kubectl"
 
 ```bash
@@ -222,8 +200,7 @@ kubectl apply -f mlflow-new.yaml
 
 You can now test your deployed model by sending a sample request.
 
-Note that this request **needs to follow the [V2 Dataplane
-protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
+Note that this request **needs to follow the [V2 Dataplane protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
 You can see an example payload below:
 
 ```json
@@ -303,7 +280,7 @@ You can see an example payload below:
 ```
 
 Now, assuming that your ingress can be accessed at
-`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports)
+`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
 you can use `curl` to send the inference request as:
