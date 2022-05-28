@@ -271,6 +271,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/modelserving/v1beta1/mlflow/v2/</loc>
+         <lastmod>2022-05-28</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/modelserving/v1beta1/paddle/</loc>
          <lastmod>2022-05-28</lastmod>
          <changefreq>daily</changefreq>
