@@ -1,8 +1,8 @@
-# Deploy Lightgbm model with InferenceService
+# Deploy LightGBM model with InferenceService
 
-## Creating your own model and testing the LightGBM server
+## Train a LightGBM model
 
-To test the LightGBM Server, first we need to generate a simple LightGBM model using Python.
+To test the LightGBM Server, first you need to train a simple LightGBM model with following python code.
 
 ```python
 import lightgbm as lgb
@@ -27,13 +27,16 @@ model_file = os.path.join(model_dir, BST_FILE)
 lgb_model.save_model(model_file)
 ```
 
-Then, we can install and run the [LightGBM Server](https://github.com/kserve/kserve/python/lgbserver) using the generated model and test for prediction. Models can be on local filesystem, S3 compatible object storage, Azure Blob Storage, or Google Cloud Storage.
+## Deploy LightGBM model with V1 protocol
+
+### Test the model locally
+Install and run the [LightGBM Server](https://github.com/kserve/kserve/python/lgbserver) using the trained model locally and test the prediction. 
 
 ```shell
 python -m lgbserver --model_dir /path/to/model_dir --model_name lgb
 ```
 
-We can also do some simple predictions
+After the `LightGBM Server` is up locally we can then test the model by sending an inference request.
 
 ```python
 import requests
@@ -47,9 +50,12 @@ print(res)
 print(res.text)
 ```
 
-## Create the InferenceService
+### Deploy with InferenceService
+
+To deploy the model on Kubernetes you can create the InferenceService by specifying the `modelFormat` with `lightgbm` and `storageUri`. 
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -61,6 +67,7 @@ print(res.text)
           storageUri: "gs://kfserving-examples/models/lightgbm/iris"
     ```
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -86,9 +93,9 @@ kubectl apply -f lightgbm.yaml
 inferenceservice.serving.kserve.io/lightgbm-iris created
 ```
 
-## Run a prediction
+### Test the deployed model
 
-The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+To test the deployed model the first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, then run the following curl command to send the inference request to the `InferenceService`.
 
 ```bash
 MODEL_NAME=lightgbm-iris
@@ -122,57 +129,18 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 {"predictions": [[0.9, 0.05, 0.05]]}
 ```
 
-## Run LightGBM InferenceService with your own image
+## Deploy the model with [V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
 
-Since the KServe LightGBM image is built from a specific version of `lightgbm` pip package, sometimes it might not be compatible with the pickled model
-you saved from your training environment, however you can build your own lgbserver image following [this instruction](https://github.com/kserve/kserve/python/lgbserver/README.md#building-your-own-ligthgbm-server-docker-image).
+### Test the model locally
+Once you've got your model serialised `model.bst`, we can then use [MLServer](https://github.com/SeldonIO/MLServer) which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the [LightGBM example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md).
 
-To use your lgbserver image:
-
-- Add the image to the KServe [configmap](https://github.com/kserve/kserve/config/configmap/inferenceservice.yaml)
-
-```yaml
-  "lightgbm": {
-      "image": "<your-dockerhub-id>/kserve/lgbserver",
-  },
-```
-
-- Specify the `runtimeVersion` on `InferenceService` spec
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "lightgbm-iris"
-spec:
-  predictor:
-    lightgbm:
-      storageUri: "gs://kfserving-examples/models/lightgbm/iris"
-      runtimeVersion: X.X.X
-```
-
-## Serve a model with [V2 Dataplane](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
-
-Once you've got your model serialised `model.bst`, we can then use
-[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
-For more details on MLServer, feel free to check the [SKLearn example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md).
-
-!!! Note
-    this step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
-
-### Pre-requisites
-
-Firstly, to use MLServer locally, you will first need to install the `mlserver`
-package in your local environment, as well as the LightGBM runtime.
+To run MLServer locally, you first install the `mlserver` package in your local environment, as well as the LightGBM runtime.
 
 ```bash
 pip install mlserver mlserver-lightgbm
 ```
 
-### Model settings
-
-The next step will be providing some model settings so that
-MLServer knows:
+The next step is to provide the model settings so that MLServer knows:
 
 - The inference runtime to serve your model (i.e. `mlserver_lightgbm.LightGBMModel`)
 - The model's name and version
@@ -188,16 +156,6 @@ These can be specified through environment variables or by creating a local
 }
 ```
 
-Note that, when you [deploy your model](#deployment), **KServe will already
-inject some sensible defaults** so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-`model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
-
-### Serving model locally
-
 With the `mlserver` package installed locally and a local `model-settings.json`
 file, you should now be ready to start our server as:
 
@@ -205,13 +163,16 @@ file, you should now be ready to start our server as:
 mlserver start .
 ```
 
-## Deploy with InferenceService
+### Deploy with InferenceService
 
-Lastly, you will use KServe to deploy the trained model.
-For this, you will just need to use **version `v1beta1`** of the
-`InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
+When you deploy your model with `InferenceService` KServe injects sensible defaults so that it runs out-of-the-box without any
+further configuration. However, you can still override these defaults by providing a `model-settings.json` file similar to your local one.
+You can even provide a [set of `model-settings.json` files to load multiple models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
+
+To deploy the LightGBM model with V2 inference protocol, you need to set the **`protocolVersion` field to `v2`**.
 
 === "Old Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -224,6 +185,7 @@ For this, you will just need to use **version `v1beta1`** of the
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
     ```
 === "New Schema"
+
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -238,14 +200,6 @@ For this, you will just need to use **version `v1beta1`** of the
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
     ```
 
-Note that this makes the following assumptions:
-
-- Your model weights (i.e. your `model.bst` file) have already been uploaded
-  to a "model repository" (GCS in this example) and can be accessed as
-  `gs://kfserving-examples/models/lightgbm/v2/iris`.
-- There is a K8s cluster available, accessible through `kubectl`.
-- KServe has already been [installed in your cluster](../../../../get_started/README.md).
-
 === "kubectl"
 
 ```bash
@@ -258,12 +212,11 @@ kubectl apply -f lightgbm-v2.yaml
 inferenceservice.serving.kserve.io/lightgbm-v2-iris created
 ```
 
-## Testing deployed model
+### Test the deployed model
 
 You can now test your deployed model by sending a sample request.
 
-Note that this request **needs to follow the [V2 Dataplane
-protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
+Note that this request **needs to follow the [V2 Dataplane protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
 You can see an example payload below:
 
 ```json
@@ -283,7 +236,7 @@ You can see an example payload below:
 ```
 
 Now, assuming that your ingress can be accessed at
-`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports)
+`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
 you can use `curl` to send the inference request as:
