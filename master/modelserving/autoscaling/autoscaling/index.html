@@ -2538,7 +2538,7 @@
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flowers-sample created
 </code></pre></div>
 <h3 id="predict-inferenceservice-with-concurrent-requests">Predict <code>InferenceService</code> with concurrent requests<a class="headerlink" href="#predict-inferenceservice-with-concurrent-requests" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send traffic in 30 seconds spurts maintaining 5 in-flight requests.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input.json
@@ -2623,7 +2623,7 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flowers-sample created
 </code></pre></div>
 <h3 id="predict-inferenceservice-with-target-qps">Predict InferenceService with target QPS<a class="headerlink" href="#predict-inferenceservice-with-target-qps" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send 30 seconds of traffic maintaining 50 qps.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input.json
@@ -2732,7 +2732,7 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <div class="highlight"><pre><span></span><code>kubectl apply -f autoscale-gpu.yaml
 </code></pre></div>
 <h3 id="predict-inferenceservice-with-concurrent-requests_1">Predict InferenceService with concurrent requests<a class="headerlink" href="#predict-inferenceservice-with-concurrent-requests_1" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send 30 seconds of traffic maintaining 5 in-flight requests.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample-gpu
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input.json

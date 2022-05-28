@@ -2607,7 +2607,7 @@ We want one thread per worker instead of many threads per worker to avoid conten
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torchscript-cifar10 created
 </code></pre></div></p>
 <h3 id="run-a-prediction-with-curl">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="https://kserve.github.io/website/get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="https://kserve.github.io/website/get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so
 the input request needs to follow the V2 schema with the specified data type, shape.
 <div class="highlight"><pre><span></span><code><span class="c1"># download the input file</span>

@@ -2321,7 +2321,7 @@ serve the PMML format model on <code>InferenceService</code>.</p>
 If you want to scale the PMMLServer to improve prediction performance, you should set the InferenceService's <code>resources.limits.cpu</code> to 1 and scale the replica size.</p>
 </div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
-<p>The first step is to <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=pmml-demo
 INPUT_PATH=@./pmml-input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice pmml-demo -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)

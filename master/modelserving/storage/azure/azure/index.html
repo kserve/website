@@ -2477,7 +2477,7 @@
 <div class="highlight"><pre><span></span><code>kubectl apply -f sklearn-azure.yaml
 </code></pre></div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
-<p>Now, the ingress can be accessed at <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or follow <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">this instruction</a>
+<p>Now, the ingress can be accessed at <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or follow <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out the ingress IP and port.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice sklearn-azure -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
 

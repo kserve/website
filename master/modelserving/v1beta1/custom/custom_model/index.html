@@ -2557,7 +2557,7 @@ class with replicas and in this case each model server is created as a python wo
 The data will be available at <code>/mnt/models</code> in the container. For example, the following <code>STORAGE_URI: "pvc://my_model/model.onnx"</code> will be accessible at <code>/mnt/models/model.onnx</code></li>
 </ul>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=custom-model
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)

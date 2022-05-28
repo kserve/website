@@ -2583,7 +2583,7 @@ The model repository contains a MNIST model but you can store more than one mode
 </code></pre></div></p>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>First, download the request <a href="input.json">input payload</a>.</p>
-<p>Then, <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
+<p>Then, <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
 <div class="highlight"><pre><span></span><code>SERVICE_NAME=torch-transformer
 MODEL_NAME=mnist
 INPUT_PATH=@./input.json
@@ -2651,7 +2651,7 @@ predictor with V2 gRPC Protocol.</p>
 </code></pre></div></p>
 <h3 id="run-a-prediction_1">Run a prediction<a class="headerlink" href="#run-a-prediction_1" title="Permanent link">&para;</a></h3>
 <p>First, download the request <a href="image.json">input payload</a>.</p>
-<p>Then, <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>Then, <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code>SERVICE_NAME=torch-grpc-transformer
 MODEL_NAME=cifar10
 INPUT_PATH=@./image.json

@@ -2502,7 +2502,7 @@ You can see an example payload below:</p>
 <code>${INGRESS_HOST}:${INGRESS_PORT}</code>, we can use <code>curl</code> to send our inference
 request as:</p>
 <blockquote>
-<p>You can follow <a href="../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">these instructions</a> to find
+<p>You can follow <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">these instructions</a> to find
 out your ingress IP and port.</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice xgboost-iris -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>

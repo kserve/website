@@ -2346,7 +2346,7 @@ The black box explainer algorithm we will use is the Tabular version of Anchors 
 </div>
 <div class="highlight"><pre><span></span><code>kubectl create -f income.yaml
 </code></pre></div>
-<p>The first step is to <a href="../../../../get_started/first_isvc/#3-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>
+<p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=income
 SERVICE_HOSTNAME=$(kubectl get inferenceservice income -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
 </code></pre></div></p>
