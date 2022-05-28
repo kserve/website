@@ -167,7 +167,7 @@ Now, assuming that our ingress can be accessed at
 `${INGRESS_HOST}:${INGRESS_PORT}`, we can use `curl` to send our inference
 request as:
 
-> You can follow [these instructions](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) to find
+> You can follow [these instructions](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) to find
 > out your ingress IP and port.
 
 ```bash

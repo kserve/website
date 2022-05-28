@@ -38,7 +38,7 @@ inferenceservice.serving.kserve.io/paddle-resnet50 created
 
 ## Run a Prediction
 
-The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=paddle-resnet50

@@ -112,7 +112,9 @@ Please use the [YAML file](./transformer.yaml) to create the `InferenceService`,
 
 By default `InferenceService` uses `TorchServe` to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to `TorchServe` model repository layout.
 The model repository contains a MNIST model but you can store more than one model there.
+
 === "Old Schema"
+
     ```yaml
     apiVersion: serving.kserve.io/v1beta1
     kind: InferenceService
@@ -135,6 +137,7 @@ The model repository contains a MNIST model but you can store more than one mode
               - mnist
     ```
 === "New Schema"
+
     ```yaml
     apiVersion: serving.kserve.io/v1beta1
     kind: InferenceService
@@ -176,7 +179,10 @@ $ inferenceservice.serving.kserve.io/torchserve-transformer created
 ```
 
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+
+First, download the request [input payload](./input.json).
+
+Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```
 SERVICE_NAME=torch-transformer
@@ -256,7 +262,10 @@ $ inferenceservice.serving.kserve.io/torch-grpc-transformer created
 ```
 
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+
+First, download the request [input payload](./image.json).
+
+Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```
 SERVICE_NAME=torch-grpc-transformer
