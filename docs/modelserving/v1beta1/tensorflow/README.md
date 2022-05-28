@@ -53,7 +53,7 @@ flower-sample   http://flower-sample.default.example.com   True           100   
 ```
  
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, the inference request input
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, the inference request input
 file can be downloaded [here](./input.json).
 
 ```
