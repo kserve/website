@@ -120,7 +120,7 @@ kubectl apply -f sklearn-from-uri.yaml
 
 ### Run a prediction
 
-Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) to find out the ingress IP and port.
+Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) to find out the ingress IP and port.
 
 An example payload below:
 ```json
@@ -248,7 +248,7 @@ kubectl apply -f tensorflow-from-uri-gzip.yaml
 
 ## Run a prediction
 
-Again, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports) to find out the ingress IP and port.
+Again, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) to find out the ingress IP and port.
 
 An example payload below:
 ```json

@@ -100,7 +100,7 @@ kubectl apply -f sklearn-azure.yaml
 
 ## Run a prediction
 
-Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#3-determine-the-ingress-ip-and-ports)
+Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out the ingress IP and port.
 
 ```bash
