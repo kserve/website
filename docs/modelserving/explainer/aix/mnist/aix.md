@@ -37,9 +37,10 @@ Then find the url.
 
 === "kubectl"
 ```bash
-kubectl get inferenceservice aixserver
-NAME         URL                                               READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
-aixserver   http://aixserver.somecluster/v1/models/aixserver   True    100                                40m
+kubectl get inferenceservice aix-explainer
+NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                     AGE
+aix-explainer   http://aix-explainer.default.example.com   True           100                              aix-explainer-predictor-default-00001   43m
+
 ```
 
 ## Run Explanation
