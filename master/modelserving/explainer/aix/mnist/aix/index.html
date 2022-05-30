@@ -2368,9 +2368,9 @@ To deploy the InferenceService with v1beta1 API</p>
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl get inferenceservice aixserver
-NAME         URL                                               READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
-aixserver   http://aixserver.somecluster/v1/models/aixserver   True    <span class="m">100</span>                                40m
+<div class="highlight"><pre><span></span><code>kubectl get inferenceservice aix-explainer
+NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                     AGE
+aix-explainer   http://aix-explainer.default.example.com   True           <span class="m">100</span>                              aix-explainer-predictor-default-00001   43m
 </code></pre></div>
 <h2 id="run-explanation">Run Explanation<a class="headerlink" href="#run-explanation" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>, the example code for model training and explainer client can be found <a href="https://github.com/kserve/kserve/blob/master/docs/samples/explanation/aix/mnist">here</a>.</p>
