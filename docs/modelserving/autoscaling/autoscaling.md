@@ -18,7 +18,7 @@ Apply the tensorflow example CR with scaling target set to 1. Annotation `autosc
     spec:
       predictor:
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 === "New Schema"
@@ -35,7 +35,7 @@ Apply the tensorflow example CR with scaling target set to 1. Annotation `autosc
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 Apply the `autoscale.yaml` to create the Autoscale InferenceService.
 
@@ -244,7 +244,7 @@ Apply the tensorflow gpu example CR
     spec:
       predictor:
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
           runtimeVersion: "2.6.2-gpu"
           resources:
             limits:
@@ -263,7 +263,7 @@ Apply the tensorflow gpu example CR
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
           runtimeVersion: "2.6.2-gpu"
           resources:
             limits:
@@ -357,7 +357,7 @@ enough capacity is free to execute the requests.
       predictor:
         containerConcurrency: 10
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 === "New Schema"
@@ -373,7 +373,7 @@ enough capacity is free to execute the requests.
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 Apply the `autoscale-custom.yaml`.
@@ -399,7 +399,7 @@ set `minReplicas` to 0 so that the pods automatically scale down to zero when no
       predictor:
         minReplicas: 0
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 === "New Schema"
@@ -415,7 +415,7 @@ set `minReplicas` to 0 so that the pods automatically scale down to zero when no
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 Apply the `scale-down-to-zero.yaml`.

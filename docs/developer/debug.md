@@ -51,8 +51,8 @@ NAME                                                              READY   STATUS
 sklearn-iris-predictor-default-29jks-deployment-5f7d4b9996hzrnc   0/3     Init:Error   1          10s
 
 kubectl logs -l model=sklearn-iris -c storage-initializer
-[I 200517 03:56:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-samples/models/sklearn/iris-1] dest_path[ [/mnt/models]
-[I 200517 03:56:19 storage:35] Copying contents of gs://kfserving-samples/models/sklearn/iris-1 to local
+[I 200517 03:56:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-examples/models/sklearn/iris-1] dest_path[ [/mnt/models]
+[I 200517 03:56:19 storage:35] Copying contents of gs://kfserving-examples/models/sklearn/iris-1 to local
 Traceback (most recent call last):
   File "/storage-initializer/scripts/initializer-entrypoint", line 14, in <module>
     kserve.Storage.download(src_uri, dest_path)
@@ -60,11 +60,11 @@ Traceback (most recent call last):
     Storage._download_gcs(uri, out_dir)
   File "/usr/local/lib/python3.7/site-packages/kfserving/storage.py", line 116, in _download_gcs
     The path or model %s does not exist." % (uri))
-RuntimeError: Failed to fetch model. The path or model gs://kfserving-samples/models/sklearn/iris-1 does not exist.
-[I 200517 03:40:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-samples/models/sklearn/iris] dest_path[ [/mnt/models]
-[I 200517 03:40:19 storage:35] Copying contents of gs://kfserving-samples/models/sklearn/iris to local
+RuntimeError: Failed to fetch model. The path or model gs://kfserving-examples/models/sklearn/iris-1 does not exist.
+[I 200517 03:40:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-examples/models/sklearn/iris] dest_path[ [/mnt/models]
+[I 200517 03:40:19 storage:35] Copying contents of gs://kfserving-examples/models/sklearn/iris to local
 [I 200517 03:40:20 storage:111] Downloading: /mnt/models/model.joblib
-[I 200517 03:40:20 storage:60] Successfully copied gs://kfserving-samples/models/sklearn/iris to /mnt/models
+[I 200517 03:40:20 storage:60] Successfully copied gs://kfserving-examples/models/sklearn/iris to /mnt/models
 ```
 
 #### Inference Service in OOM status

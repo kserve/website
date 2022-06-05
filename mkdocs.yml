@@ -55,7 +55,7 @@ nav:
           - Model Monitoring:
                 - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
                 - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
-                - ART Adversial Detector: modelserving/detect/art/mnist/README.md
+                - ART Adversarial Detector: modelserving/detect/art/mnist/README.md
           - Request Batching:
                 - Inference Batcher: modelserving/batcher/batcher.md
           - Payload Logging:
@@ -66,7 +66,7 @@ nav:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
           - Kafka:
-                - Inference Kafka: modelserving/kafka/kafka.md
+                - Inference with Kafka event source: modelserving/kafka/kafka.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Python Client SDK: sdk_docs/sdk_doc.md
