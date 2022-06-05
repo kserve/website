@@ -15,7 +15,7 @@ Create an `InferenceService` yaml which specifies the framework `tensorflow` and
     spec:
       predictor:
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 === "New Schema"
@@ -30,7 +30,7 @@ Create an `InferenceService` yaml which specifies the framework `tensorflow` and
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
 Apply the [tensorflow.yaml](./tensorflow.yaml) to create the `InferenceService`, by default it exposes a HTTP/REST endpoint.
@@ -109,7 +109,7 @@ To run a canary rollout, you can apply the `canary.yaml` with the `canaryTraffic
       predictor:
         canaryTrafficPercent: 20
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers-2"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
     ```
 
 === "New Schema"
@@ -125,7 +125,7 @@ To run a canary rollout, you can apply the `canary.yaml` with the `canaryTraffic
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers-2"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
     ```
 
 Apply the [canary.yaml](./canary.yaml) to create the Canary InferenceService.
@@ -161,7 +161,7 @@ Create `InferenceService` which exposes the gRPC port and by default it listens 
     spec:
       predictor:
         tensorflow:
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
           ports:
             - containerPort: 9000
               name: h2c
@@ -180,7 +180,7 @@ Create `InferenceService` which exposes the gRPC port and by default it listens 
         model:
           modelFormat:
             name: tensorflow
-          storageUri: "gs://kfserving-samples/models/tensorflow/flowers"
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
           ports:
             - containerPort: 9000
               name: h2c
