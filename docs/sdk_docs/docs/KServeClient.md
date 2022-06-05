@@ -107,7 +107,7 @@ from kserve import V1beta1InferenceServiceSpec
 from kserve import V1beta1InferenceService
 
 default_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(tensorflow=V1beta1TFServingSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
+    storage_uri='gs://kfserving-examples/models/tensorflow/flowers')))
 
 isvc = V1beta1InferenceService(api_version=constants.KSERVE_V1BETA1,
                           kind=constants.KSERVE_KIND,
@@ -197,7 +197,7 @@ service_name = 'flower-sample'
 kserve = KServeClient()
 
 default_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(tensorflow=V1beta1TFServingSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
+    storage_uri='gs://kfserving-examples/models/tensorflow/flowers')))
 
 isvc = V1beta1InferenceService(api_version=constants.KSERVE_V1BETA1,
                                    kind=constants.KSERVE_KIND,
@@ -210,7 +210,7 @@ kserve.wait_isvc_ready(service_name, namespace='kserve-models')
 
 canary_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(canary_traffic_percent=10,
     tensorflow=V1beta1TFServingSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers-2')))
+    storage_uri='gs://kfserving-examples/models/tensorflow/flowers-2')))
 
 isvc = V1beta1InferenceService(api_version= constants.KSERVE_V1BETA1,
                           kind=constants.KSERVE_KIND,
@@ -255,7 +255,7 @@ service_name = 'flower-sample'
 kserve = KServeClient()
 
 default_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(tensorflow=V1beta1TFServingSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers')))
+    storage_uri='gs://kfserving-examples/models/tensorflow/flowers')))
 
 isvc = V1beta1InferenceService(api_version=constants.KSERVE_V1BETA1,
                                    kind=constants.KSERVE_KIND,
@@ -268,7 +268,7 @@ kserve.wait_isvc_ready(service_name, namespace='kserve-models')
 
 canary_model_spec = V1beta1InferenceServiceSpec(predictor=V1beta1PredictorSpec(canary_traffic_percent=0,
     tensorflow=V1beta1TFServingSpec(
-    storage_uri='gs://kfserving-samples/models/tensorflow/flowers-2')))
+    storage_uri='gs://kfserving-examples/models/tensorflow/flowers-2')))
 
 isvc = V1beta1InferenceService(api_version= constants.KSERVE_V1BETA1,
                           kind=constants.KSERVE_KIND,
