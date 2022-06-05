@@ -75,8 +75,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-
-    <a href="http://kserve-survey.com/"><b>KServe User Survey</b></a>
+   <b>KServe v0.8 is Released</b>, <a href="/website/0.8/blog/articles/2022-02-18-KServe-0.8-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -1592,7 +1591,7 @@
   
     <li class="md-nav__item">
       <a href="../../detect/art/mnist/" class="md-nav__link">
-        ART Adversial Detector
+        ART Adversarial Detector
       </a>
     </li>
   
@@ -1841,7 +1840,7 @@
   
     <li class="md-nav__item">
       <a href="../../kafka/kafka/" class="md-nav__link">
-        Inference Kafka
+        Inference with Kafka event source
       </a>
     </li>
   
@@ -2293,7 +2292,7 @@
 <span class="nt">spec</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2306,7 +2305,7 @@
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 </code></pre></div>
 </div>
 </div>
@@ -2377,7 +2376,7 @@ To run a canary rollout, you can apply the <code>canary.yaml</code> with the <co
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">canaryTrafficPercent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w"></span>
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers-2&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers-2&quot;</span><span class="w"></span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2391,7 +2390,7 @@ To run a canary rollout, you can apply the <code>canary.yaml</code> with the <co
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers-2&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers-2&quot;</span><span class="w"></span>
 </code></pre></div>
 </div>
 </div>
@@ -2428,7 +2427,7 @@ do not need to maintain both default and canary on the <code>InferenceService</c
 <span class="nt">spec</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span><span class="w"></span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span><span class="w"></span>
@@ -2445,7 +2444,7 @@ do not need to maintain both default and canary on the <code>InferenceService</c
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span><span class="w"></span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span><span class="w"></span>

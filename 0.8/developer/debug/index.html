@@ -75,8 +75,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-
-    <a href="http://kserve-survey.com/"><b>KServe User Survey</b></a>
+   <b>KServe v0.8 is Released</b>, <a href="/website/0.8/blog/articles/2022-02-18-KServe-0.8-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -1505,7 +1504,7 @@
   
     <li class="md-nav__item">
       <a href="../../modelserving/detect/art/mnist/" class="md-nav__link">
-        ART Adversial Detector
+        ART Adversarial Detector
       </a>
     </li>
   
@@ -1754,7 +1753,7 @@
   
     <li class="md-nav__item">
       <a href="../../modelserving/kafka/kafka/" class="md-nav__link">
-        Inference Kafka
+        Inference with Kafka event source
       </a>
     </li>
   
@@ -2449,8 +2448,8 @@ NAME                                                              READY   STATUS
 sklearn-iris-predictor-default-29jks-deployment-5f7d4b9996hzrnc   <span class="m">0</span>/3     Init:Error   <span class="m">1</span>          10s
 
 kubectl logs -l <span class="nv">model</span><span class="o">=</span>sklearn-iris -c storage-initializer
-<span class="o">[</span>I <span class="m">200517</span> <span class="m">03</span>:56:19 initializer-entrypoint:13<span class="o">]</span> Initializing, args: src_uri <span class="o">[</span>gs://kfserving-samples/models/sklearn/iris-1<span class="o">]</span> dest_path<span class="o">[</span> <span class="o">[</span>/mnt/models<span class="o">]</span>
-<span class="o">[</span>I <span class="m">200517</span> <span class="m">03</span>:56:19 storage:35<span class="o">]</span> Copying contents of gs://kfserving-samples/models/sklearn/iris-1 to <span class="nb">local</span>
+<span class="o">[</span>I <span class="m">200517</span> <span class="m">03</span>:56:19 initializer-entrypoint:13<span class="o">]</span> Initializing, args: src_uri <span class="o">[</span>gs://kfserving-examples/models/sklearn/iris-1<span class="o">]</span> dest_path<span class="o">[</span> <span class="o">[</span>/mnt/models<span class="o">]</span>
+<span class="o">[</span>I <span class="m">200517</span> <span class="m">03</span>:56:19 storage:35<span class="o">]</span> Copying contents of gs://kfserving-examples/models/sklearn/iris-1 to <span class="nb">local</span>
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
   File <span class="s2">&quot;/storage-initializer/scripts/initializer-entrypoint&quot;</span>, line <span class="m">14</span>, <span class="k">in</span> &lt;module&gt;
     kserve.Storage.download<span class="o">(</span>src_uri, dest_path<span class="o">)</span>
@@ -2458,11 +2457,11 @@ Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
     Storage._download_gcs<span class="o">(</span>uri, out_dir<span class="o">)</span>
   File <span class="s2">&quot;/usr/local/lib/python3.7/site-packages/kfserving/storage.py&quot;</span>, line <span class="m">116</span>, <span class="k">in</span> _download_gcs
     The path or model %s does not exist.<span class="s2">&quot; % (uri))</span>
-<span class="s2">RuntimeError: Failed to fetch model. The path or model gs://kfserving-samples/models/sklearn/iris-1 does not exist.</span>
-<span class="s2">[I 200517 03:40:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-samples/models/sklearn/iris] dest_path[ [/mnt/models]</span>
-<span class="s2">[I 200517 03:40:19 storage:35] Copying contents of gs://kfserving-samples/models/sklearn/iris to local</span>
+<span class="s2">RuntimeError: Failed to fetch model. The path or model gs://kfserving-examples/models/sklearn/iris-1 does not exist.</span>
+<span class="s2">[I 200517 03:40:19 initializer-entrypoint:13] Initializing, args: src_uri [gs://kfserving-examples/models/sklearn/iris] dest_path[ [/mnt/models]</span>
+<span class="s2">[I 200517 03:40:19 storage:35] Copying contents of gs://kfserving-examples/models/sklearn/iris to local</span>
 <span class="s2">[I 200517 03:40:20 storage:111] Downloading: /mnt/models/model.joblib</span>
-<span class="s2">[I 200517 03:40:20 storage:60] Successfully copied gs://kfserving-samples/models/sklearn/iris to /mnt/models</span>
+<span class="s2">[I 200517 03:40:20 storage:60] Successfully copied gs://kfserving-examples/models/sklearn/iris to /mnt/models</span>
 </code></pre></div></p>
 <h4 id="inference-service-in-oom-status">Inference Service in OOM status<a class="headerlink" href="#inference-service-in-oom-status" title="Permanent link">&para;</a></h4>
 <p>If you see <code>ExitCode137</code> from the revision status, this means the revision has failed and this usually happens when the inference service pod is out of memory. To address it, you might need to bump up the memory limit of the <code>InferenceService</code>.

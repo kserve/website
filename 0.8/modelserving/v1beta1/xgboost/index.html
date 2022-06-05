@@ -75,8 +75,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-
-    <a href="http://kserve-survey.com/"><b>KServe User Survey</b></a>
+   <b>KServe v0.8 is Released</b>, <a href="/website/0.8/blog/articles/2022-02-18-KServe-0.8-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -1600,7 +1599,7 @@
   
     <li class="md-nav__item">
       <a href="../../detect/art/mnist/" class="md-nav__link">
-        ART Adversial Detector
+        ART Adversarial Detector
       </a>
     </li>
   
@@ -1849,7 +1848,7 @@
   
     <li class="md-nav__item">
       <a href="../../kafka/kafka/" class="md-nav__link">
-        Inference Kafka
+        Inference with Kafka event source
       </a>
     </li>
   
@@ -2384,7 +2383,7 @@ For this, we will just need to use <strong>version <code>v1beta1</code></strong>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">xgboost</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;v2&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/xgboost/iris&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/xgboost/iris&quot;</span><span class="w"></span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2398,7 +2397,7 @@ For this, we will just need to use <strong>version <code>v1beta1</code></strong>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xgboost</span><span class="w"></span>
 <span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-mlserver</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-samples/models/xgboost/iris&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/xgboost/iris&quot;</span><span class="w"></span>
 </code></pre></div>
 </div>
 </div>
@@ -2407,7 +2406,7 @@ For this, we will just need to use <strong>version <code>v1beta1</code></strong>
 <ul>
 <li>Your model weights (i.e. your <code>model.bst</code> file) have already been uploaded
   to a "model repository" (GCS in this example) and can be accessed as
-  <code>gs://kfserving-samples/models/xgboost/iris</code>.</li>
+  <code>gs://kfserving-examples/models/xgboost/iris</code>.</li>
 <li>There is a K8s cluster available, accessible through <code>kubectl</code>.</li>
 <li>KServe has already been <a href="../../../get_started/#4-Install-kserve">installed in your
   cluster</a>.</li>

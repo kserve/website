@@ -75,8 +75,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-
-    <a href="http://kserve-survey.com/"><b>KServe User Survey</b></a>
+   <b>KServe v0.8 is Released</b>, <a href="/website/0.8/blog/articles/2022-02-18-KServe-0.8-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -1503,7 +1502,7 @@
   
     <li class="md-nav__item">
       <a href="../../../modelserving/detect/art/mnist/" class="md-nav__link">
-        ART Adversial Detector
+        ART Adversarial Detector
       </a>
     </li>
   
@@ -1752,7 +1751,7 @@
   
     <li class="md-nav__item">
       <a href="../../../modelserving/kafka/kafka/" class="md-nav__link">
-        Inference Kafka
+        Inference with Kafka event source
       </a>
     </li>
   
@@ -2609,7 +2608,7 @@ INFO:kfserving.api.set_credentials:Created (or Patched) Service account: kfservi
 <span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
 
 <span class="n">default_model_spec</span> <span class="o">=</span> <span class="n">V1beta1InferenceServiceSpec</span><span class="p">(</span><span class="n">predictor</span><span class="o">=</span><span class="n">V1beta1PredictorSpec</span><span class="p">(</span><span class="n">tensorflow</span><span class="o">=</span><span class="n">V1beta1TFServingSpec</span><span class="p">(</span>
-    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-samples/models/tensorflow/flowers&#39;</span><span class="p">)))</span>
+    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-examples/models/tensorflow/flowers&#39;</span><span class="p">)))</span>
 
 <span class="n">isvc</span> <span class="o">=</span> <span class="n">V1beta1InferenceService</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_V1BETA1</span><span class="p">,</span>
                           <span class="n">kind</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_KIND</span><span class="p">,</span>
@@ -2743,7 +2742,7 @@ flower-sample        True       <span class="m">90</span>               <span cl
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 
 <span class="n">default_model_spec</span> <span class="o">=</span> <span class="n">V1beta1InferenceServiceSpec</span><span class="p">(</span><span class="n">predictor</span><span class="o">=</span><span class="n">V1beta1PredictorSpec</span><span class="p">(</span><span class="n">tensorflow</span><span class="o">=</span><span class="n">V1beta1TFServingSpec</span><span class="p">(</span>
-    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-samples/models/tensorflow/flowers&#39;</span><span class="p">)))</span>
+    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-examples/models/tensorflow/flowers&#39;</span><span class="p">)))</span>
 
 <span class="n">isvc</span> <span class="o">=</span> <span class="n">V1beta1InferenceService</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_V1BETA1</span><span class="p">,</span>
                                    <span class="n">kind</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_KIND</span><span class="p">,</span>
@@ -2756,7 +2755,7 @@ flower-sample        True       <span class="m">90</span>               <span cl
 
 <span class="n">canary_model_spec</span> <span class="o">=</span> <span class="n">V1beta1InferenceServiceSpec</span><span class="p">(</span><span class="n">predictor</span><span class="o">=</span><span class="n">V1beta1PredictorSpec</span><span class="p">(</span><span class="n">canary_traffic_percent</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">tensorflow</span><span class="o">=</span><span class="n">V1beta1TFServingSpec</span><span class="p">(</span>
-    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-samples/models/tensorflow/flowers-2&#39;</span><span class="p">)))</span>
+    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-examples/models/tensorflow/flowers-2&#39;</span><span class="p">)))</span>
 
 <span class="n">isvc</span> <span class="o">=</span> <span class="n">V1beta1InferenceService</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_V1BETA1</span><span class="p">,</span>
                           <span class="n">kind</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_KIND</span><span class="p">,</span>
@@ -2826,7 +2825,7 @@ flower-sample        True       <span class="m">90</span>               <span cl
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 
 <span class="n">default_model_spec</span> <span class="o">=</span> <span class="n">V1beta1InferenceServiceSpec</span><span class="p">(</span><span class="n">predictor</span><span class="o">=</span><span class="n">V1beta1PredictorSpec</span><span class="p">(</span><span class="n">tensorflow</span><span class="o">=</span><span class="n">V1beta1TFServingSpec</span><span class="p">(</span>
-    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-samples/models/tensorflow/flowers&#39;</span><span class="p">)))</span>
+    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-examples/models/tensorflow/flowers&#39;</span><span class="p">)))</span>
 
 <span class="n">isvc</span> <span class="o">=</span> <span class="n">V1beta1InferenceService</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_V1BETA1</span><span class="p">,</span>
                                    <span class="n">kind</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_KIND</span><span class="p">,</span>
@@ -2839,7 +2838,7 @@ flower-sample        True       <span class="m">90</span>               <span cl
 
 <span class="n">canary_model_spec</span> <span class="o">=</span> <span class="n">V1beta1InferenceServiceSpec</span><span class="p">(</span><span class="n">predictor</span><span class="o">=</span><span class="n">V1beta1PredictorSpec</span><span class="p">(</span><span class="n">canary_traffic_percent</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">tensorflow</span><span class="o">=</span><span class="n">V1beta1TFServingSpec</span><span class="p">(</span>
-    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-samples/models/tensorflow/flowers-2&#39;</span><span class="p">)))</span>
+    <span class="n">storage_uri</span><span class="o">=</span><span class="s1">&#39;gs://kfserving-examples/models/tensorflow/flowers-2&#39;</span><span class="p">)))</span>
 
 <span class="n">isvc</span> <span class="o">=</span> <span class="n">V1beta1InferenceService</span><span class="p">(</span><span class="n">api_version</span><span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_V1BETA1</span><span class="p">,</span>
                           <span class="n">kind</span><span class="o">=</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_KIND</span><span class="p">,</span>
