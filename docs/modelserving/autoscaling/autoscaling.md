@@ -424,3 +424,68 @@ Apply the `scale-down-to-zero.yaml`.
 ```bash
 kubectl apply -f scale-down-to-zero.yaml
 ```
+
+## Autoscaling configuration at component level
+
+Autoscaling options can also be configured at the component level.
+This allows more flexibility in terms of the autoscaling configuration. In a typical deployment, transformers may require a different autoscaling configuration than a predictor. This feature allows the user to scale individual components as required.
+
+=== "Old Schema"
+
+    ```yaml
+      apiVersion: serving.kserve.io/v1beta1
+      kind: InferenceService
+      metadata:
+        name: torch-transformer  
+      spec:
+        predictor:
+          scaleTarget: 2
+          scaleMetric: concurrency
+          pytorch:
+            storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+        transformer:
+          scaleTarget: 2
+          scaleMetric: concurrency
+          containers:
+            - image: kserve/image-transformer:latest
+              name: kserve-container
+              command:
+                - "python"
+                - "-m"
+                - "model"
+              args:
+                - --model_name
+                - mnist
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-transformer  
+    spec:
+      predictor:
+        scaleTarget: 2
+        scaleMetric: concurrency
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      transformer:
+        scaleTarget: 2
+        scaleMetric: concurrency
+        containers:
+          - image: kserve/image-transformer:latest
+            name: kserve-container
+            command:
+              - "python"
+              - "-m"
+              - "model"
+            args:
+              - --model_name
+              - mnist
+    ```
+Apply the `autoscale-adv.yaml` to create the Autoscale InferenceService.
+The default for scaleMetric is `concurrency`
