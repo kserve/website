@@ -444,8 +444,8 @@ This allows more flexibility in terms of the autoscaling configuration. In a typ
           pytorch:
             storageUri: gs://kfserving-examples/models/torchserve/image_classifier
         transformer:
-          scaleTarget: 2
-          scaleMetric: concurrency
+          scaleTarget: 8
+          scaleMetric: rps
           containers:
             - image: kserve/image-transformer:latest
               name: kserve-container
@@ -474,8 +474,8 @@ This allows more flexibility in terms of the autoscaling configuration. In a typ
             name: pytorch
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier
       transformer:
-        scaleTarget: 2
-        scaleMetric: concurrency
+        scaleTarget: 8
+        scaleMetric: rps
         containers:
           - image: kserve/image-transformer:latest
             name: kserve-container
