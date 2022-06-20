@@ -488,4 +488,4 @@ This allows more flexibility in terms of the autoscaling configuration. In a typ
               - mnist
     ```
 Apply the `autoscale-adv.yaml` to create the Autoscale InferenceService.
-The default for scaleMetric is `concurrency`
+The default for scaleMetric is `concurrency` and possible values are `concurrency`, `rps`, `cpu` and `memory`.
