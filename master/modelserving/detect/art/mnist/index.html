@@ -2327,14 +2327,14 @@ artserver   http://artserver.somecluster/v1/models/artserver   True    100      
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code>MODEL_NAME=artserver
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME}
+python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME}
 </code></pre></div>
 <p>After some time you should see a pop up containing the explanation, similar to the image below. If a pop up does not display and the message "Unable to find an adversarial example." appears then an adversarial example could not be found for the image given in a timely manner. If a pop up does display then the image on the left is the original image and the image on the right is the adversarial example. The labels above both images represent what classification the model made for each individual image.</p>
 <p><img alt="example explanation" src="art-explanation.png" /></p>
 <p>The <a href="https://arxiv.org/abs/1912.00049">Square Attack method</a> used in this example creates a random update at each iteration and adds this update to the adversarial input if it makes a misclassification more likely (more specifically, if it improves the objective function). Once enough random updates are added together and the model misclassifies then the resulting adversarial input will be returned and displayed.</p>
 <p>To try a different MNIST example add an integer to the end of the query between 0-9,999. The integer chosen will be the index of the image to be chosen in the MNIST dataset. Or to try a file with custom data add the file path to the end. Keep in mind that the data format must be <code>{"instances": [&lt;image&gt;, &lt;label&gt;]}</code></p>
-<div class="highlight"><pre><span></span><code>python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} 100
-python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} ./input.json
+<div class="highlight"><pre><span></span><code>python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} 100
+python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} ./input.json
 </code></pre></div>
 <h2 id="stopping-the-inference-service">Stopping the Inference Service<a class="headerlink" href="#stopping-the-inference-service" title="Permanent link">&para;</a></h2>
 <p><code>kubectl delete -f art.yaml</code></p>
