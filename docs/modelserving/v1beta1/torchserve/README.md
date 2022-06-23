@@ -49,7 +49,7 @@ job_queue_size=10
 enable_envvars_config=true
 install_py_dep_per_model=true
 model_store=/mnt/models/model-store
-model_snapshot={"name":"startup.cfg","modelCount":1,"models":{"mnist":{"1.0":{"defaultVersion":true,"marName":"mnist.mar","minWorkers":1,"maxWorkers":5,"batchSize":1,"responseTimeout":120}}}}
+model_snapshot={"name":"startup.cfg","modelCount":1,"models":{"mnist":{"1.0":{"defaultVersion":true,"marName":"mnist.mar","minWorkers":1,"maxWorkers":5,"batchSize":1,"maxBatchDelay":10,"responseTimeout":120}}}}
 ```  
 
 The KServe/TorchServe integration supports KServe v1/v2 REST protocol, in the `config.properties` we need to turn on the flag `enable_envvars_config` to enable setting the kserve envelop using environment variable.
