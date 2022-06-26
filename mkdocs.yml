@@ -94,7 +94,7 @@ extra_css:
   - stylesheets/extra.css
 
 repo_url: https://github.com/kserve/website
-edit_uri: edit/mkdocs/docs
+edit_uri: edit/main/docs
 
 theme:
   name: material
