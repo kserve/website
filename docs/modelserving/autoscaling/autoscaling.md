@@ -6,6 +6,9 @@
 
 Apply the tensorflow example CR with scaling target set to 1. Annotation `autoscaling.knative.dev/target` is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.
 
+The `scaleTarget` and `scaleMetric` are introduced in version 0.9 of kserve and should be available in both new and old schema.
+This is the preferred way of defining autoscaling options.
+
 === "Old Schema"
 
     ```yaml
@@ -28,15 +31,16 @@ Apply the tensorflow example CR with scaling target set to 1. Annotation `autosc
     kind: "InferenceService"
     metadata:
       name: "flowers-sample"
-      annotations:
-        autoscaling.knative.dev/target: "1"
     spec:
       predictor:
+        scaleTarget: 1
+        scaleMetric: concurrency
         model:
           modelFormat:
             name: tensorflow
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
+
 Apply the `autoscale.yaml` to create the Autoscale InferenceService.
 
 === "kubectl"
