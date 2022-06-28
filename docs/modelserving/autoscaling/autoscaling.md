@@ -6,6 +6,9 @@
 
 Apply the tensorflow example CR with scaling target set to 1. Annotation `autoscaling.knative.dev/target` is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.
 
+The `scaleTarget` and `scaleMetric` are introduced in version 0.9 of kserve and should be available in both new and old schema.
+This is the preferred way of defining autoscaling options.
+
 === "Old Schema"
 
     ```yaml
@@ -28,15 +31,16 @@ Apply the tensorflow example CR with scaling target set to 1. Annotation `autosc
     kind: "InferenceService"
     metadata:
       name: "flowers-sample"
-      annotations:
-        autoscaling.knative.dev/target: "1"
     spec:
       predictor:
+        scaleTarget: 1
+        scaleMetric: concurrency
         model:
           modelFormat:
             name: tensorflow
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
+
 Apply the `autoscale.yaml` to create the Autoscale InferenceService.
 
 === "kubectl"
@@ -424,3 +428,68 @@ Apply the `scale-down-to-zero.yaml`.
 ```bash
 kubectl apply -f scale-down-to-zero.yaml
 ```
+
+## Autoscaling configuration at component level
+
+Autoscaling options can also be configured at the component level.
+This allows more flexibility in terms of the autoscaling configuration. In a typical deployment, transformers may require a different autoscaling configuration than a predictor. This feature allows the user to scale individual components as required.
+
+=== "Old Schema"
+
+    ```yaml
+      apiVersion: serving.kserve.io/v1beta1
+      kind: InferenceService
+      metadata:
+        name: torch-transformer  
+      spec:
+        predictor:
+          scaleTarget: 2
+          scaleMetric: concurrency
+          pytorch:
+            storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+        transformer:
+          scaleTarget: 8
+          scaleMetric: rps
+          containers:
+            - image: kserve/image-transformer:latest
+              name: kserve-container
+              command:
+                - "python"
+                - "-m"
+                - "model"
+              args:
+                - --model_name
+                - mnist
+    ```
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-transformer  
+    spec:
+      predictor:
+        scaleTarget: 2
+        scaleMetric: concurrency
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      transformer:
+        scaleTarget: 8
+        scaleMetric: rps
+        containers:
+          - image: kserve/image-transformer:latest
+            name: kserve-container
+            command:
+              - "python"
+              - "-m"
+              - "model"
+            args:
+              - --model_name
+              - mnist
+    ```
+Apply the `autoscale-adv.yaml` to create the Autoscale InferenceService.
+The default for scaleMetric is `concurrency` and possible values are `concurrency`, `rps`, `cpu` and `memory`.
