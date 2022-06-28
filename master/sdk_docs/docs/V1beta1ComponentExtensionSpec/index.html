@@ -2274,6 +2274,18 @@
 <td>[optional]</td>
 </tr>
 <tr>
+<td><strong>scale_metric</strong></td>
+<td><strong>str</strong></td>
+<td>ScaleMetric defines the scaling metric type watched by autoscaler possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via Knative Pod Autoscaler(https://knative.dev/docs/serving/autoscaling/autoscaling-metrics).</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>scale_target</strong></td>
+<td><strong>int</strong></td>
+<td>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for. concurrency and rps targets are supported by Knative Pod Autoscaler (https://knative.dev/docs/serving/autoscaling/autoscaling-targets/).</td>
+<td>[optional]</td>
+</tr>
+<tr>
 <td><strong>timeout</strong></td>
 <td><strong>int</strong></td>
 <td>TimeoutSeconds specifies the number of seconds to wait before timing out a request to the component.</td>

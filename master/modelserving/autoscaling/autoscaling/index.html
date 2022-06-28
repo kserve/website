@@ -1817,6 +1817,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#autoscaling-configuration-at-component-level" class="md-nav__link">
+    Autoscaling configuration at component level
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2484,6 +2491,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#autoscaling-configuration-at-component-level" class="md-nav__link">
+    Autoscaling configuration at component level
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2505,6 +2519,8 @@
 <h2 id="inferenceservice-with-target-concurrency">InferenceService with target concurrency<a class="headerlink" href="#inferenceservice-with-target-concurrency" title="Permanent link">&para;</a></h2>
 <h3 id="create-inferenceservice">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice" title="Permanent link">&para;</a></h3>
 <p>Apply the tensorflow example CR with scaling target set to 1. Annotation <code>autoscaling.knative.dev/target</code> is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.</p>
+<p>The <code>scaleTarget</code> and <code>scaleMetric</code> are introduced in version 0.9 of kserve and should be available in both new and old schema.
+This is the preferred way of defining autoscaling options.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -2525,10 +2541,10 @@
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
 <span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">autoscaling.knative.dev/target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
 <span class="nt">spec</span><span class="p">:</span><span class="w"></span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span><span class="w"></span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
@@ -2879,6 +2895,69 @@ set <code>minReplicas</code> to 0 so that the pods automatically scale down to z
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f scale-down-to-zero.yaml
 </code></pre></div>
+<h2 id="autoscaling-configuration-at-component-level">Autoscaling configuration at component level<a class="headerlink" href="#autoscaling-configuration-at-component-level" title="Permanent link">&para;</a></h2>
+<p>Autoscaling options can also be configured at the component level.
+This allows more flexibility in terms of the autoscaling configuration. In a typical deployment, transformers may require a different autoscaling configuration than a predictor. This feature allows the user to scale individual components as required.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">Old Schema</label><label for="__tabbed_11_2">New Schema</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="w">  </span><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span><span class="w">  </span>
+<span class="w">  </span><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w">      </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span><span class="w"></span>
+<span class="w">      </span><span class="nt">pytorch</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span><span class="w"></span>
+<span class="w">    </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"></span>
+<span class="w">      </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span><span class="w"></span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span><span class="w"></span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
+<span class="w">          </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span><span class="w"></span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span><span class="w"></span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span><span class="w">  </span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span><span class="w"></span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"></span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span><span class="w"></span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Apply the <code>autoscale-adv.yaml</code> to create the Autoscale InferenceService.
+The default for scaleMetric is <code>concurrency</code> and possible values are <code>concurrency</code>, <code>rps</code>, <code>cpu</code> and <code>memory</code>.</p>
 
               
             </article>
