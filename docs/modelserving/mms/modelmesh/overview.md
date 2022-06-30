@@ -9,7 +9,7 @@ Please assume that the interface is subject to changes.
 
 ModelMesh Serving is a Kubernetes-based platform for realtime serving of ML/DL models, optimized for high volume/density use cases. Utilization of available system resources is maximized via intelligent management of in-memory model data across clusters of deployed Pods, based on usage of those models over time.
 
-Leveraging existing third-party model servers, a number of standard ML/DL [model formats](https://github.com/kserve/modelmesh-serving/tree/main/docs/model-types) are supported out-of-the box with more to follow: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM. It's also possible to extend with custom runtimes to support arbitrary model formats.
+Leveraging existing third-party model servers, a number of standard ML/DL [model formats](https://github.com/kserve/modelmesh-serving/tree/main/docs/model-types) are supported out-of-the box with more to follow: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It's also possible to extend with custom runtimes to support arbitrary model formats.
 
 The architecture comprises a controller Pod that orchestrates one or more Kubernetes "model runtime" Deployments which load/serve the models, and a Service that accepts inferencing requests. A routing layer spanning the runtime pods ensures that models are loaded in the right places at the right times and handles forwarding of those requests.
 
@@ -41,6 +41,7 @@ System-wide configuration parameters can be set by [creating a ConfigMap](https:
 
 - [triton-inference-server](https://github.com/triton-inference-server/server) - NVIDIA's Triton Inference Server
 - [seldon-mlserver](https://github.com/SeldonIO/MLServer) - Python-based inference server
+- [openVINO-model-server](https://github.com/openvinotoolkit/model_server) - OpenVINO Model Server
 
 ## KServe integration
 
