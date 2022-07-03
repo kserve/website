@@ -2342,9 +2342,17 @@ Kubernetes version.</p>
 </table>
 <h2 id="1-install-istio">1. Install Istio<a class="headerlink" href="#1-install-istio" title="Permanent link">&para;</a></h2>
 <p>The minimally required Istio version is 1.9.5 and you can refer to the <a href="https://istio.io/latest/docs/setup/install">Istio install guide</a>.</p>
+<p>Once Istio is installed, create <code>IngressClass</code> resource for istio.
+<div class="highlight"><pre><span></span><code>apiVersion: networking.k8s.io/v1beta1
+kind: IngressClass
+metadata:
+  name: istio
+spec:
+  controller: istio.io/ingress-controller
+</code></pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Istio ingress is recommended, but you can choose to install with other <a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/">Ingress controllers</a>.</p>
+<p>Istio ingress is recommended, but you can choose to install with other <a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/">Ingress controllers</a> and create <code>IngressClass</code> resource for your Ingress option.</p>
 </div>
 <h2 id="2-install-cert-manager">2. Install Cert Manager<a class="headerlink" href="#2-install-cert-manager" title="Permanent link">&para;</a></h2>
 <p>The minimally required Cert Manager version is 1.3.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager installation guide</a>.</p>
@@ -2357,25 +2365,42 @@ Kubernetes version.</p>
 <p class="admonition-title">Note</p>
 <p>The default KServe deployment mode is <code>Serverless</code> which depends on Knative. The following step changes the default deployment mode to <code>RawDeployment</code> before installing KServe.</p>
 </div>
-<p><strong>i. Change default deployment mode</strong></p>
-<p>Download the KServe's install manifest yaml.
-<div class="highlight"><pre><span></span><code>wget https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
-</code></pre></div>
-Open the <code>kserve.yaml</code>, find the <code>ConfigMap</code> with name <code>inferenceservice-config</code> in the manifest and modify the <code>deploy</code> section:
-<div class="highlight"><pre><span></span><code><span class="err">deploy</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;defaultDeploymentMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RawDeployment&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-</code></pre></div></p>
-<p><strong>ii. Install KServe</strong></p>
+<p><strong>i. Install KServe</strong></p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl apply -f kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
 </code></pre></div>
 </div>
 </div>
 </div>
+<p>Install KServe default serving runtimes:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve-runtimes.yaml
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><strong>ii. Change default deployment mode and ingress option</strong></p>
+<p>First in ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> in the <code>deploy</code> section,</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kubectl patch configmap/inferenceservice-config -n kserve --type<span class="o">=</span>strategic -p <span class="s1">&#39;{&quot;data&quot;: {&quot;deploy&quot;: &quot;{\&quot;defaultDeploymentMode\&quot;: \&quot;RawDeployment\&quot;}&quot;}}&#39;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>then modify the <code>ingressClassName</code> in <code>ingress</code> section to point to <code>IngressClass</code> name created in step 1.</p>
+<pre><code>```yaml
+ingress: |-
+{
+    "ingressClassName" : "your-ingress-class",
+}
+```
+</code></pre>
 
               
             </article>
