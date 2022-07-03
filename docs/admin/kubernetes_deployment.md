@@ -27,16 +27,7 @@ spec:
 
 
 !!! note 
-    Istio ingress is recommended, but you can choose to install with other [Ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/). To do that: 
-    1. Create `IngressClass` resource for your Ingress 
-    2. Open the kserve.yaml, find the ConfigMap with name inferenceservice-config in the manifest and modify the `ingressClassName` in `ingress` section to point to `IngressClass` name created in step 1.
-    ```
-    "ingress": {
-                ...
-               "ingressClassName" : "your-ingress-class"
-    }
-    ```
-
+    Istio ingress is recommended, but you can choose to install with other [Ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) and create `IngressClass` resource for your Ingress option.
 
 
 
@@ -50,22 +41,36 @@ The minimally required Cert Manager version is 1.3.0 and you can refer to [Cert 
 !!! note 
     The default KServe deployment mode is `Serverless` which depends on Knative. The following step changes the default deployment mode to `RawDeployment` before installing KServe.
 
-**i. Change default deployment mode**
 
-Download the KServe's install manifest yaml.
-```bash
-wget https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
-```
-Open the `kserve.yaml`, find the `ConfigMap` with name `inferenceservice-config` in the manifest and modify the `deploy` section:
-```json
-deploy:
-    {
-      "defaultDeploymentMode": "RawDeployment"
-    }
-```
+**i. Install KServe**
 
-**ii. Install KServe**
 === "kubectl"
     ```bash
-    kubectl apply -f kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve.yaml
     ```
+
+Install KServe default serving runtimes:
+
+=== "kubectl"
+    ```bash
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.8.0/kserve-runtimes.yaml
+    ```
+
+**ii. Change default deployment mode and ingress option**
+
+First in ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` in the `deploy` section,
+
+=== "kubectl"
+    ```bash
+    kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'
+    ```
+
+then modify the `ingressClassName` in `ingress` section to point to `IngressClass` name created in step 1.
+
+    ```yaml
+    ingress: |-
+    {
+        "ingressClassName" : "your-ingress-class",
+    }
+    ```
+
