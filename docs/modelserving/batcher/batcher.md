@@ -8,7 +8,7 @@ This batcher is implemented in the KServe model agent sidecar, so the requests f
 
 * We use webhook to inject the model agent container in the InferenceService pod to do the batching when batcher is enabled.
 
-* We use go channels to transfer data between http requset handler and batcher go routines.
+* We use go channels to transfer data between http request handler and batcher go routines.
 
 * Currently we only implemented batching with KServe v1 HTTP protocol, gRPC is not supported yet.
 
