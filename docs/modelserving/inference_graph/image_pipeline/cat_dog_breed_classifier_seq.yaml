@@ -35,4 +35,5 @@ spec:
         name: cat_dog_classifier
       - serviceName: dog-breed-classifier
         name: dog_breed_classifier
-        data: $request$response
+        data: $request
+        condition: "[@this].#(predictions.0==\"dog\")"

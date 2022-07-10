@@ -13,7 +13,7 @@ to classify the breed if the previous model prediction is dog.
 
 ### Train the models
 You can refer to [dog-cat classification](https://github.com/pytorch/serve/blob/master/examples/Workflows/dog_breed_classification/cat_dog_classification.ipynb)
-and [dog breed classification ](https://github.com/pytorch/serve/blob/master/examples/Workflows/dog_breed_classification/dog_breed_classification.ipynb) to train
+and [dog breed classification](https://github.com/pytorch/serve/blob/master/examples/Workflows/dog_breed_classification/dog_breed_classification.ipynb) to train
 the image classifier models for different stages.
 
 ### Deploy the InferenceServices
@@ -22,16 +22,16 @@ with the models trained from previous step.
 
 The models should be packaged with the following command and then upload to your model storage along with the [configuration](./config/config.properties):
 ```bash
-torch-model-archiver -f --model-name cat_dog_classification --version 1.0
---model-file cat_dog_classification_arch.py
---serialized-file cat_dog_classification.pth
---handler cat_dog_classification_handler.py
+torch-model-archiver -f --model-name cat_dog_classification --version 1.0 \
+--model-file cat_dog_classification_arch.py \
+--serialized-file cat_dog_classification.pth \
+--handler cat_dog_classification_handler.py \
 --extra-files index_to_name.json --export-path model_store
 
-torch-model-archiver -f --model-name dog_breed_classification --version 1.0
---model-file dog_breed_classification_arch.py
---serialized-file dog_breed_classification.pth
---handler dog_breed_classification_handler.py
+torch-model-archiver -f --model-name dog_breed_classification --version 1.0 \
+--model-file dog_breed_classification_arch.py \
+--serialized-file dog_breed_classification.pth \
+--handler dog_breed_classification_handler.py \
 --extra-files index_to_name.json --export-path model_store
 ```
 
@@ -82,13 +82,18 @@ spec:
         name: cat_dog_classifier # step name
       - serviceName: dog-breed-classifier
         name: dog_breed_classifier
-        data: $request$response
+        data: $request
+        condition: "[@this].#(predictions.0==\"dog\")"
 ```
 
 The `InferenceGraph` defines the two steps and each step targets to the `InferenceServices` deployed above. The steps
-are executed in sequence: it combines the request and response from `cat-dog-classifier` model and then send to the
-`dog-breed-classifier` if it is classified as dog. Note that `$request$response` is specified on `data` field to indicate
-that you want to combine both request and response from the previous step and send as input to the current step.
+are executed in sequence: it first sends the image as request to `cat-dog-classifier` model and then send to the
+`dog-breed-classifier` if it is classified as dog from the first model.
+
+* Note that `$request` is specified on `data` field to indicate that you want to forward the request from the previous step and send as input to the next step.
+* `condition` is specified on the second step so that the request is only sent to the current step if the `response` data matches the defined condition.
+  When condition is not matched the graph short circuits and return the response from the previous step. Refer to [gjson syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)
+  for how to express the condition.
 
 ## Test the InferenceGraph
 Before testing the `InferenceGraph`, first check if the graph is in the ready state and get the router url for sending the request.
@@ -100,10 +105,11 @@ dog-breed-pipeline   http://dog-breed-pipeline.default.example.com   True    17h
 
 Now you can test the inference graph by sending the cat and dog image data.
 ```bash
-curl -v -H "Host: dog-breed-pipeline.default.example.com" http://localhost -d @./cat.json
+SERVICE_HOSTNAME=$(kubectl get inferencegraph dog-breed-pipeline -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
 {"predictions": ["It's a cat!"]}
 
-curl -v -H "Host: dog-breed-pipeline.default.example.com" localhost/v1/models/dog-breed-classifier:predict -d @./dog.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./dog.json
 {"predictions": [{"Kuvasz": 0.9854059219360352, "American_water_spaniel": 0.006928909569978714, "Glen_of_imaal_terrier": 0.004635687451809645, "Manchester_terrier": 0.0011041086399927735, "American_eskimo_dog": 0.0003261661622673273}]}
 ```
 You can see that if the first model classifies the image as dog it then sends to the second model and further classifies the dog breed,
