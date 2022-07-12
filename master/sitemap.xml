@@ -206,6 +206,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/modelserving/inference_graph/</loc>
+         <lastmod>2022-07-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://kserve.io/website/master/modelserving/inference_graph/image_pipeline/</loc>
+         <lastmod>2022-07-12</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/modelserving/kafka/kafka/</loc>
          <lastmod>2022-07-12</lastmod>
          <changefreq>daily</changefreq>
