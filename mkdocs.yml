@@ -41,6 +41,9 @@ nav:
           - Transformers:
                 - Feast: modelserving/v1beta1/transformer/feast/README.md
                 - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
+          - Inference Graph:
+                - Concept: modelserving/inference_graph/README.md
+                - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
           - Model Storage:
                 - Azure: modelserving/storage/azure/azure.md
                 - PVC: modelserving/storage/pvc/pvc.md
