@@ -2584,6 +2584,36 @@ int
 </tr>
 <tr>
 <td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>containerConcurrency</code><br/>
 <em>
 int64
@@ -2743,8 +2773,37 @@ knative.dev/pkg/apis.URL
 </td>
 <td>
 <em>(Optional)</em>
-<p>URL holds the url that will distribute traffic over the provided traffic targets.
+<p>URL holds the primary url that will distribute traffic over the provided traffic targets.
+This will be one the REST or gRPC endpoints that are available.
 It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>restUrl</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>REST endpoint of the component if available.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcUrl</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>gRPC endpoint of the component if available.</p>
 </td>
 </tr>
 <tr>
@@ -3003,6 +3062,20 @@ Kubernetes core/v1.Container
 Each framework will have different defaults that are populated in the underlying container spec.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>storage</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.StorageSpec">
+StorageSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Storage Spec for model location</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec
@@ -3151,6 +3224,122 @@ ExplainerConfig
 </td>
 </tr>
 </tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.FailureInfo">FailureInfo
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>location</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Name of component to which the failure relates (usually Pod name)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>reason</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.FailureReason">
+FailureReason
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>High level class of failure</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>message</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Detailed error message</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelRevisionName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Internal Revision/ID of model, tied to specific Spec contents</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>time</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.18/#time-v1-meta">
+Kubernetes meta/v1.Time
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Time failure occurred or was discovered</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.FailureReason">FailureReason
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.FailureInfo">FailureInfo</a>)
+</p>
+<div>
+<p>FailureReason enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;InvalidPredictorSpec&#34;</p></td>
+<td><p>The current Predictor Spec is invalid or unsupported</p>
+</td>
+</tr><tr><td><p>&#34;ModelLoadFailed&#34;</p></td>
+<td><p>The model failed to load within a ServingRuntime container</p>
+</td>
+</tr><tr><td><p>&#34;NoSupportingRuntime&#34;</p></td>
+<td><p>There are no ServingRuntime which support the specified model type</p>
+</td>
+</tr><tr><td><p>&#34;RuntimeDisabled&#34;</p></td>
+<td><p>The ServingRuntime is disabled</p>
+</td>
+</tr><tr><td><p>&#34;RuntimeNotRecognized&#34;</p></td>
+<td><p>There is no ServingRuntime defined with the specified runtime name</p>
+</td>
+</tr><tr><td><p>&#34;RuntimeUnhealthy&#34;</p></td>
+<td><p>Corresponding ServingRuntime containers failed to start or are unhealthy</p>
+</td>
+</tr></tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.InferenceService">InferenceService
 </h3>
@@ -3392,6 +3581,19 @@ map[kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentType]kserve.io/v1beta1/p
 <p>Statuses for the components of the InferenceService</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>modelStatus</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelStatus">
+ModelStatus
+</a>
+</em>
+</td>
+<td>
+<p>Model related statuses</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.InferenceServicesConfig">InferenceServicesConfig
@@ -3509,6 +3711,36 @@ string
 <td>
 </td>
 </tr>
+<tr>
+<td>
+<code>ingressClassName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>domainTemplate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>urlScheme</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec
@@ -3619,6 +3851,46 @@ Valid values are: <br />
 </td>
 </tr></tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.ModelCopies">ModelCopies
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>failedCopies</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>How many copies of this predictor&rsquo;s models failed to load recently</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>totalCopies</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Total number copies of this predictor&rsquo;s models that are currently loaded</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.ModelFormat">ModelFormat
 </h3>
 <p>
@@ -3657,6 +3929,48 @@ string
 <p>Version of the model format.
 Used in validating that a predictor is supported by a runtime.
 Can be &ldquo;major&rdquo;, &ldquo;major.minor&rdquo; or &ldquo;major.minor.patch&rdquo;.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelRevisionStates">ModelRevisionStates
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>activeModelState</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelState">
+ModelState
+</a>
+</em>
+</td>
+<td>
+<p>High level state string: Pending, Standby, Loading, Loaded, FailedToLoad</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>targetModelState</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelState">
+ModelState
+</a>
+</em>
+</td>
+<td>
 </td>
 </tr>
 </tbody>
@@ -3714,6 +4028,110 @@ PredictorExtensionSpec
 <p>
 (Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
 </p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelState">ModelState
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelRevisionStates">ModelRevisionStates</a>)
+</p>
+<div>
+<p>ModelState enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;FailedToLoad&#34;</p></td>
+<td><p>All copies of the model failed to load</p>
+</td>
+</tr><tr><td><p>&#34;Loaded&#34;</p></td>
+<td><p>At least one copy of the model is loaded</p>
+</td>
+</tr><tr><td><p>&#34;Loading&#34;</p></td>
+<td><p>Model is loading</p>
+</td>
+</tr><tr><td><p>&#34;Pending&#34;</p></td>
+<td><p>Model is not yet registered</p>
+</td>
+</tr><tr><td><p>&#34;Standby&#34;</p></td>
+<td><p>Model is available but not loaded (will load when used)</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelStatus">ModelStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServiceStatus">InferenceServiceStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>transitionStatus</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TransitionStatus">
+TransitionStatus
+</a>
+</em>
+</td>
+<td>
+<p>Whether the available predictor endpoints reflect the current Spec or is in transition</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>states</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelRevisionStates">
+ModelRevisionStates
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>State information of the predictor&rsquo;s model.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>lastFailureInfo</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.FailureInfo">
+FailureInfo
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Details of last failure, when load of target model is failed or blocked.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>copies</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelCopies">
+ModelCopies
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Model copy information of the predictor&rsquo;s model.</p>
 </td>
 </tr>
 </tbody>
@@ -4513,7 +4931,7 @@ github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
 </td>
 <td>
 <em>(Optional)</em>
-<p>Protocol version to use by the predictor (i.e. v1 or v2)</p>
+<p>Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
 </td>
 </tr>
 <tr>
@@ -4532,6 +4950,20 @@ Kubernetes core/v1.Container
 <em>(Optional)</em>
 <p>Container enables overrides for the predictor.
 Each framework will have different defaults that are populated in the underlying container spec.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storage</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.StorageSpec">
+StorageSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Storage Spec for model location</p>
 </td>
 </tr>
 </tbody>
@@ -4926,6 +5358,97 @@ PredictorExtensionSpec
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.ScaleMetric">ScaleMetric
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">ComponentExtensionSpec</a>)
+</p>
+<div>
+<p>ScaleMetric enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;cpu&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;concurrency&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;memory&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;rps&#34;</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.StorageSpec">StorageSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerExtensionSpec">ExplainerExtensionSpec</a>, <a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">PredictorExtensionSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>path</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The path to the model object in the storage. It cannot co-exist
+with the storageURI.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>schemaPath</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The path to the model schema file in the storage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>parameters</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Parameters to override the default storage credentials and config.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>key</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The Storage Key in the secret for this model.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec
 </h3>
 <p>
@@ -5116,6 +5639,35 @@ TransformerConfig
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.TransitionStatus">TransitionStatus
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+<p>TransitionStatus enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;BlockedByFailedLoad&#34;</p></td>
+<td><p>Target model failed to load</p>
+</td>
+</tr><tr><td><p>&#34;InProgress&#34;</p></td>
+<td><p>Waiting for target model to reach state of active model</p>
+</td>
+</tr><tr><td><p>&#34;InvalidSpec&#34;</p></td>
+<td><p>Target predictor spec failed validation</p>
+</td>
+</tr><tr><td><p>&#34;UpToDate&#34;</p></td>
+<td><p>Predictor is up-to-date (reflects current spec)</p>
+</td>
+</tr></tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.TritonSpec">TritonSpec
 </h3>
 <p>
@@ -5187,7 +5739,7 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>ab2896d2</code>.
+on git commit <code>133ecebb</code>.
 </em></p>
 
               
