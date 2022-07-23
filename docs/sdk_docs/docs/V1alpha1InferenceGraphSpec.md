@@ -1,10 +1,10 @@
-# V1beta1ExplainerConfig
+# V1alpha1InferenceGraphSpec
 
+InferenceGraphSpec defines the InferenceGraph spec
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**default_image_version** | **str** | default explainer docker image version | [default to '']
-**image** | **str** | explainer docker image name | [default to '']
+**nodes** | [**dict(str, V1alpha1InferenceRouter)**](V1alpha1InferenceRouter.md) | Map of InferenceGraph router nodes Each node defines the router which can be different routing types | 
 
 [[Back to Model list]](../sdk_doc.md#documentation-for-models) [[Back to API list]](../sdk_doc.md#documentation-for-api-endpoints) [[Back to README]](../sdk_doc.md)
 
