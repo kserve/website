@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/master/sdk_docs/docs/V1beta1ModelSpec/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
     
     
       
@@ -2286,7 +2286,6 @@
 
 
 <h1 id="v1beta1modelspec">V1beta1ModelSpec<a class="headerlink" href="#v1beta1modelspec" title="Permanent link">&para;</a></h1>
-<p>ModelSpec describes a trained model</p>
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2299,22 +2298,172 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>framework</strong></td>
+<td><strong>args</strong></td>
+<td><strong>list[str]</strong></td>
+<td>Arguments to the entrypoint. The docker image&#39;s CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container&#39;s environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. &amp;quot;$$(VAR_NAME)&amp;quot; will produce the string literal &amp;quot;$(VAR_NAME)&amp;quot;. Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>command</strong></td>
+<td><strong>list[str]</strong></td>
+<td>Entrypoint array. Not executed within a shell. The docker image&#39;s ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container&#39;s environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. &amp;quot;$$(VAR_NAME)&amp;quot; will produce the string literal &amp;quot;$(VAR_NAME)&amp;quot;. Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>env</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1EnvVar.md"><strong>list[V1EnvVar]</strong></a></td>
+<td>List of environment variables to set in the container. Cannot be updated.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>env_from</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1EnvFromSource.md"><strong>list[V1EnvFromSource]</strong></a></td>
+<td>List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>image</strong></td>
 <td><strong>str</strong></td>
-<td>Machine Learning &lt;framework name&gt; The values could be: &amp;quot;tensorflow&amp;quot;,&amp;quot;pytorch&amp;quot;,&amp;quot;sklearn&amp;quot;,&amp;quot;onnx&amp;quot;,&amp;quot;xgboost&amp;quot;, &amp;quot;myawesomeinternalframework&amp;quot; etc.</td>
+<td>Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>image_pull_policy</strong></td>
+<td><strong>str</strong></td>
+<td>Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>lifecycle</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Lifecycle.md"><strong>V1Lifecycle</strong></a></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>liveness_probe</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Probe.md"><strong>V1Probe</strong></a></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>model_format</strong></td>
+<td><a href="../V1beta1ModelFormat/"><strong>V1beta1ModelFormat</strong></a></td>
+<td></td>
 <td></td>
 </tr>
 <tr>
-<td><strong>memory</strong></td>
-<td>[<strong>ResourceQuantity</strong>]</td>
+<td><strong>name</strong></td>
+<td><strong>str</strong></td>
+<td>Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.</td>
+<td>[optional] [default to '']</td>
+</tr>
+<tr>
+<td><strong>ports</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1ContainerPort.md"><strong>list[V1ContainerPort]</strong></a></td>
+<td>List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default &amp;quot;0.0.0.0&amp;quot; address inside a container will be accessible from the network. Cannot be updated.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>protocol_version</strong></td>
+<td><strong>str</strong></td>
+<td>Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>readiness_probe</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Probe.md"><strong>V1Probe</strong></a></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>resources</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1ResourceRequirements.md"><strong>V1ResourceRequirements</strong></a></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>runtime</strong></td>
+<td><strong>str</strong></td>
+<td>Specific ClusterServingRuntime/ServingRuntime name to use for deployment.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>runtime_version</strong></td>
+<td><strong>str</strong></td>
+<td>Runtime version of the predictor docker image</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>security_context</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1SecurityContext.md"><strong>V1SecurityContext</strong></a></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>startup_probe</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Probe.md"><strong>V1Probe</strong></a></td>
+<td></td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>stdin</strong></td>
+<td><strong>bool</strong></td>
+<td>Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>stdin_once</strong></td>
+<td><strong>bool</strong></td>
+<td>Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>storage</strong></td>
+<td><a href="../V1beta1StorageSpec/"><strong>V1beta1StorageSpec</strong></a></td>
 <td></td>
 <td>[optional]</td>
 </tr>
 <tr>
 <td><strong>storage_uri</strong></td>
 <td><strong>str</strong></td>
-<td>Storage URI for the model repository</td>
-<td></td>
+<td>This field points to the location of the trained model which is mounted onto the pod.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>termination_message_path</strong></td>
+<td><strong>str</strong></td>
+<td>Optional: Path at which the file to which the container&#39;s termination message will be written is mounted into the container&#39;s filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>termination_message_policy</strong></td>
+<td><strong>str</strong></td>
+<td>Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>tty</strong></td>
+<td><strong>bool</strong></td>
+<td>Whether this container should allocate a TTY for itself, also requires &#39;stdin&#39; to be true. Default is false.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>volume_devices</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1VolumeDevice.md"><strong>list[V1VolumeDevice]</strong></a></td>
+<td>volumeDevices is the list of block devices to be used by the container.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>volume_mounts</strong></td>
+<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1VolumeMount.md"><strong>list[V1VolumeMount]</strong></a></td>
+<td>Pod volumes to mount into the container&#39;s filesystem. Cannot be updated.</td>
+<td>[optional]</td>
+</tr>
+<tr>
+<td><strong>working_dir</strong></td>
+<td><strong>str</strong></td>
+<td>Container&#39;s working directory. If not specified, the container runtime&#39;s default will be used, which might be configured in the container image. Cannot be updated.</td>
+<td>[optional]</td>
 </tr>
 </tbody>
 </table>
