@@ -2416,12 +2416,12 @@
 
 <h1 id="deploy-image-processing-inference-pipeline-with-inferencegraph">Deploy Image Processing Inference pipeline with InferenceGraph<a class="headerlink" href="#deploy-image-processing-inference-pipeline-with-inferencegraph" title="Permanent link">&para;</a></h1>
 <p>The tutorial demonstrates how to deploy an image processing inference pipeline with multiple stages using <code>InferenceGraph</code>.
-The example uses the two models, first to classify if an image is a dog or a cat. If it is a dog the second model does
-the breed classification.</p>
+The example chains the two models, the first model is to classify if an image is a dog or a cat, if it is a dog the second model then does
+the dog breed classification.</p>
 <h2 id="inferencegraph-flow">InferenceGraph Flow<a class="headerlink" href="#inferencegraph-flow" title="Permanent link">&para;</a></h2>
-<p>In the InferenceGraph request flow, the image is encoded with base64 format and first send to the <code>dog-cat-classifier</code> model,
-the image input and response from the <code>dog-cat-classifier</code> InferenceService are then combined to send to the model on next stage
-to classify the breed if the previous model prediction is dog.</p>
+<p>In the <code>InferenceGraph</code> request flow, the image is encoded with base64 format and first sent to the <code>dog-cat-classifier</code> model,
+the image input for the <code>dog-cat-classifier</code> InferenceService are then forwarded to send to the model on the next stage
+to classify the breed if the previous model prediction is a dog.</p>
 <h2 id="deploy-the-individual-inferenceservices">Deploy the individual InferenceServices<a class="headerlink" href="#deploy-the-individual-inferenceservices" title="Permanent link">&para;</a></h2>
 <h3 id="train-the-models">Train the models<a class="headerlink" href="#train-the-models" title="Permanent link">&para;</a></h3>
 <p>You can refer to <a href="https://github.com/pytorch/serve/blob/master/examples/Workflows/dog_breed_classification/cat_dog_classification.ipynb">dog-cat classification</a>
@@ -2430,7 +2430,7 @@ the image classifier models for different stages.</p>
 <h3 id="deploy-the-inferenceservices">Deploy the InferenceServices<a class="headerlink" href="#deploy-the-inferenceservices" title="Permanent link">&para;</a></h3>
 <p>Before deploying the graph router with <code>InferenceGraph</code> custom resource, you need to first deploy the individual <code>InferenceServices</code>
 with the models trained from previous step.</p>
-<p>The models should be packaged with the following command and then upload to your model storage along with the <a href="config/config.properties">configuration</a>:
+<p>The models should be packaged with the following commands and then upload to your model storage along with the <a href="config/config.properties">configuration</a>:
 <div class="highlight"><pre><span></span><code>torch-model-archiver -f --model-name cat_dog_classification --version <span class="m">1</span>.0 <span class="se">\</span>
 --model-file cat_dog_classification_arch.py <span class="se">\</span>
 --serialized-file cat_dog_classification.pth <span class="se">\</span>
@@ -2443,62 +2443,76 @@ torch-model-archiver -f --model-name dog_breed_classification --version <span cl
 --handler dog_breed_classification_handler.py <span class="se">\</span>
 --extra-files index_to_name.json --export-path model_store
 </code></pre></div></p>
-<p>You can then deploy the models to KServe with following <code>InferenceService</code> custom resources.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cat-dog-classifier&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">pytorch</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/cat_dog_classification</span><span class="w"></span>
-<span class="nn">---</span><span class="w"></span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dog-breed-classifier&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">pytorch</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/dog_breed_classification</span><span class="w"></span>
-</code></pre></div></p>
+<p>You can then deploy the models to KServe with following <code>InferenceService</code> custom resources.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">InferenceService</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight"><pre><span></span><code>kubectl apply -f - <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="s">kind: &quot;InferenceService&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;cat-dog-classifier&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    pytorch:</span>
+<span class="s">      resources:</span>
+<span class="s">        requests:</span>
+<span class="s">          cpu: 100m</span>
+<span class="s">      storageUri: gs://kfserving-examples/models/torchserve/cat_dog_classification</span>
+<span class="s">---</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="s">kind: &quot;InferenceService&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;dog-breed-classifier&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    pytorch:</span>
+<span class="s">      resources:</span>
+<span class="s">        requests:</span>
+<span class="s">          cpu: 100m</span>
+<span class="s">      storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification</span>
+<span class="s">EOF</span>
+</code></pre></div>
 <p>Please check more details on <a href="../../v1beta1/torchserve/">PyTorch Tutorial</a> for how to package the model and deploy
 with <code>InferenceService</code>.</p>
 <h2 id="deploy-inferencegraph">Deploy InferenceGraph<a class="headerlink" href="#deploy-inferencegraph" title="Permanent link">&para;</a></h2>
-<p>After the <code>InferenceServices</code> are in ready state, you can now deploy the <code>InferenceGraph</code> to chain these two models to make the final inference result.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1alpha1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceGraph&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;dog-breed-pipeline&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">nodes</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">root</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">routerType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sequence</span><span class="w"></span>
-<span class="w">      </span><span class="nt">steps</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat-dog-classifier</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat_dog_classifier</span><span class="w"> </span><span class="c1"># step name</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dog-breed-classifier</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dog_breed_classifier</span><span class="w"></span>
-<span class="w">        </span><span class="nt">data</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$request</span><span class="w"></span>
-<span class="w">        </span><span class="nt">condition</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;[@this].#(predictions.0==\&quot;dog\&quot;)&quot;</span><span class="w"></span>
+<p>After the <code>InferenceServices</code> are in ready state, you can now deploy the <code>InferenceGraph</code> to chain these two models to produce the final inference result.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">InferenceGraph</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight"><pre><span></span><code>kubectl apply -f - <span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1alpha1&quot;</span>
+<span class="s">kind: &quot;InferenceGraph&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;dog-breed-pipeline&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  nodes:</span>
+<span class="s">    root:</span>
+<span class="s">      routerType: Sequence</span>
+<span class="s">      steps:</span>
+<span class="s">      - serviceName: cat-dog-classifier</span>
+<span class="s">        name: cat_dog_classifier # step name</span>
+<span class="s">      - serviceName: dog-breed-classifier</span>
+<span class="s">        name: dog_breed_classifier</span>
+<span class="s">        data: $request</span>
+<span class="s">        condition: &quot;[@this].#(predictions.0==\&quot;dog\&quot;)&quot;</span>
+<span class="s">EOF</span>
 </code></pre></div>
-<p>The <code>InferenceGraph</code> defines the two steps and each step targets to the <code>InferenceServices</code> deployed above. The steps
+<p>The <code>InferenceGraph</code> defines the two steps and each step targets the <code>InferenceServices</code> deployed above. The steps
 are executed in sequence: it first sends the image as request to <code>cat-dog-classifier</code> model and then send to the
-<code>dog-breed-classifier</code> if it is classified as dog from the first model.</p>
+<code>dog-breed-classifier</code> if it is classified as a dog from the first model.</p>
 <ul>
-<li>Note that <code>$request</code> is specified on <code>data</code> field to indicate that you want to forward the request from the previous step and send as input to the next step.</li>
+<li>Note that <code>$request</code> is specified on the <code>data</code> field to indicate that you want to forward the request from the previous step and send as input to the next step.</li>
 <li><code>condition</code> is specified on the second step so that the request is only sent to the current step if the <code>response</code> data matches the defined condition.
-  When condition is not matched the graph short circuits and return the response from the previous step. Refer to <a href="https://github.com/tidwall/gjson/blob/master/SYNTAX.md">gjson syntax</a>
-  for how to express the condition.</li>
+  When the condition is not matched the graph short circuits and returns the response from the previous step. Refer to <a href="https://github.com/tidwall/gjson/blob/master/SYNTAX.md">gjson syntax</a>
+  for how to express the condition and currently KServe only supports this with REST protocol.</li>
 </ul>
 <h2 id="test-the-inferencegraph">Test the InferenceGraph<a class="headerlink" href="#test-the-inferencegraph" title="Permanent link">&para;</a></h2>
-<p>Before testing the <code>InferenceGraph</code>, first check if the graph is in the ready state and get the router url for sending the request.
+<p>Before testing the <code>InferenceGraph</code>, first check if the graph is in the ready state and then get the router url for sending the request.
 <div class="highlight"><pre><span></span><code>kubectl get ig  dog-breed-pipeline
 NAME                 URL                                             READY   AGE
 dog-breed-pipeline   http://dog-breed-pipeline.default.example.com   True    17h

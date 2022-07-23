@@ -2350,34 +2350,34 @@
 <h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">&para;</a></h2>
 <p>ML inference system is getting bigger and more complex, it often consists of many models to make a single prediction. The common use cases are image classification and nature language processing pipelines.
 For example, a face recognition pipeline may need to find the face area first and then compute the features of the faces to match the database; a NLP pipeline needs to run a document classification first then
-downstream named entity detection based on previous classification result.</p>
+downstream named entity detection based on previous classification results.</p>
 <p>KServe has the unique strength to build distributed inference graph: graph router autoscaling, native integration with individual <code>InferenceServices</code>, standard inference protocol for chaining models. KServe
-leverage these strengths to build <code>InferenceGraph</code> and enable user to deploy complex ML inference pipeline to production in a declarative and scalable way.</p>
+leverage these strengths to build <code>InferenceGraph</code> and enable users to deploy complex ML inference pipelines to production in a declarative and scalable way.</p>
 <h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">&para;</a></h2>
 <p><img alt="image" src="images/inference_graph.png" /></p>
 <ul>
 <li>
-<p><strong>InferenceGraph</strong>: It is made up with a list of routing <code>Nodes</code>, each <code>Node</code> is consisted of a set of routing <code>Steps</code>.
+<p><strong>InferenceGraph</strong>: It is made up with a list of routing <code>Nodes</code>, each <code>Node</code> consists of a set of routing <code>Steps</code>.
   Each <code>Step</code> can either route to an <code>InferenceService</code> or another <code>Node</code> defined on the graph which makes the <code>InferenceGraph</code>
   highly composable. The graph router is deployed behind an HTTP endpoint and can be scaled dynamically based on request volume.
   The <code>InferenceGraph</code> supports four different types of Routing <code>Nodes</code>: <strong>Sequence</strong>, <strong>Switch</strong>, <strong>Ensemble</strong>, <strong>Splitter</strong>.</p>
 </li>
 <li>
-<p><strong>Sequence Node</strong>: It allows user to define multiple <code>Steps</code> with <code>InferenceServices</code> or <code>Nodes</code> as routing target in a sequence.
-  The <code>Steps</code> are executed in sequence and the request/response from previous step and be passed to the next step as input based on
+<p><strong>Sequence Node</strong>: It allows users to define multiple <code>Steps</code> with <code>InferenceServices</code> or <code>Nodes</code> as routing targets in a sequence.
+  The <code>Steps</code> are executed in sequence and the request/response from previous step can be passed to the next step as input based on
   configuration.</p>
 </li>
 <li>
-<p><strong>Switch Node</strong>: It allows user to define routing conditions and select a step to execute if it matches the condition, the response
+<p><strong>Switch Node</strong>: It allows users to define routing conditions and select a step to execute if it matches the condition, the response
   is returned as soon it finds the first step that matches the condition. If no condition is matched, the graph returns the original request.</p>
 </li>
 <li>
-<p><strong>Ensemble Node</strong>: A model ensemble requires scoring each model separately and then combine the results into a single prediction response.
+<p><strong>Ensemble Node</strong>: A model ensemble requires scoring each model separately and then combining the results into a single prediction response.
   You can then use different combination methods to produce the final result. Multiple classification trees, for example, are commonly combined
   using a "majority vote" method. Multiple regression trees are often combined using various averaging techniques.</p>
 </li>
 <li>
-<p><strong>Splitter Node</strong>: It allows user to split the traffic to multiple targets using a weighted distribution.</p>
+<p><strong>Splitter Node</strong>: It allows users to split the traffic to multiple targets using a weighted distribution.</p>
 </li>
 </ul>
 
