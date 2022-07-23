@@ -1,0 +1,30 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: mnist
+spec:
+  predictor:
+    serviceAccountName: sa
+    minReplicas: 1
+    tensorflow:
+      resources:
+        limits:
+          cpu: 100m
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 1Gi
+      runtimeVersion: 1.14.0
+      storageUri: s3://mnist
+  transformer:
+    containers:
+    - image: kserve/mnist-transformer:latest
+      name: kserve-container
+      resources:
+        limits:
+          cpu: 100m
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 1Gi
+    minReplicas: 1

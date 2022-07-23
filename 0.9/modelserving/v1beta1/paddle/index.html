@@ -1,0 +1,2517 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="KServe Documentation">
+      
+      
+      
+        <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/v1beta1/paddle/">
+      
+      <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
+      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+    
+    
+      
+        <title>Paddle - KServe Documentation Website</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a617204b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploy-paddle-model-with-inferenceservice" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+ <h1>
+   <b>KServe v0.8 is Released</b>, <a href="/website/0.8/blog/articles/2022-02-18-KServe-0.8-release/">Read blog &gt;&gt;</a>
+ </h1>
+
+          </div>
+        </aside>
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="KServe Documentation Website" class="md-header__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+      
+  <img src="../../../images/logo/kserve.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KServe Documentation Website
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Paddle
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/kserve/website" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../get_started/" class="md-tabs__link">
+        Getting started
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../admin/serverless/" class="md-tabs__link">
+        Administration Guide
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../control_plane/" class="md-tabs__link md-tabs__link--active">
+        User Guide
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../reference/api/" class="md-tabs__link">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../developer/developer/" class="md-tabs__link">
+        Developer Guide
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../blog/articles/2022-02-18-KServe-0.8-release/" class="md-tabs__link">
+        Blog
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../community/adopters/" class="md-tabs__link">
+        Community
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="KServe Documentation Website" class="md-nav__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+      
+  <img src="../../../images/logo/kserve.png" alt="logo">
+
+    </a>
+    KServe Documentation Website
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/kserve/website" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/" class="md-nav__link">
+        KServe Quickstart
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/first_isvc/" class="md-nav__link">
+        First InferenceService
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Administration Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Administration Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Administration Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Install KServe
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install KServe" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Install KServe
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/" class="md-nav__link">
+        Serverless installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/modelmesh/" class="md-nav__link">
+        ModelMesh installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/kubernetes_deployment/" class="md-nav__link">
+        Kubernetes deployment installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/migration/" class="md-nav__link">
+        Migrating from KFServing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Concepts" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" type="checkbox" id="__nav_4_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_1">
+          Control Plane
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Control Plane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_plane/" class="md-nav__link">
+        Model Serving Control Plane
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" type="checkbox" id="__nav_4_1_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_2">
+          Data Plane
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          Data Plane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_plane/" class="md-nav__link">
+        Model Serving Data Plane
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inference_api/" class="md-nav__link">
+        V2 Inference Protocol
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../servingruntimes/" class="md-nav__link">
+        Serving Runtimes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Single Model Serving
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Single Model Serving" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Single Model Serving
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_1">
+          Supported Model Frameworks/Formats
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Supported Model Frameworks/Formats" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Supported Model Frameworks/Formats
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serving_runtime/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tensorflow/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../torchserve/" class="md-nav__link">
+        PyTorch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sklearn/v2/" class="md-nav__link">
+        Scikit-learn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xgboost/" class="md-nav__link">
+        XGBoost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pmml/" class="md-nav__link">
+        PMML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spark/" class="md-nav__link">
+        Spark MLlib
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lightgbm/" class="md-nav__link">
+        LightGBM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Paddle
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Paddle
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-inferenceservice" class="md-nav__link">
+    Create the InferenceService
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-prediction" class="md-nav__link">
+    Run a Prediction
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlflow/v2/" class="md-nav__link">
+        MLFlow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../triton/torchscript/" class="md-nav__link">
+        Torchscript
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom/custom_model/" class="md-nav__link">
+        How to write a custom predictor
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Multi Model Serving
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi Model Serving" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Multi Model Serving
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Overview" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mms/multi-model-serving/" class="md-nav__link">
+        The Scalability Problem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mms/modelmesh/overview/" class="md-nav__link">
+        ModelMesh Overview
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Transformers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Transformers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Transformers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformer/feast/" class="md-nav__link">
+        Feast
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformer/torchserve_image_transformer/" class="md-nav__link">
+        How to write a custom transformer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Inference Graph
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Graph" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Graph
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inference_graph/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inference_graph/image_pipeline/" class="md-nav__link">
+        Image classification inference graph
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Model Storage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Storage" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Model Storage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/azure/azure/" class="md-nav__link">
+        Azure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/pvc/pvc/" class="md-nav__link">
+        PVC
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/s3/s3/" class="md-nav__link">
+        S3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/uri/uri/" class="md-nav__link">
+        URI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Model Explainability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Explainability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Model Explainability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/explainer/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_2" type="checkbox" id="__nav_4_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_7_2">
+          Alibi Explainer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/cifar10/" class="md-nav__link">
+        Image Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/income/" class="md-nav__link">
+        Income Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/moviesentiment/" class="md-nav__link">
+        Text Explainer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/aix/mnist/aix/" class="md-nav__link">
+        AIX Explainer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_8">
+          Model Monitoring
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Monitoring" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
+          Model Monitoring
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/alibi_detect/alibi_detect/" class="md-nav__link">
+        Alibi Detector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/aif/germancredit/" class="md-nav__link">
+        AIF Bias Detector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/art/mnist/" class="md-nav__link">
+        ART Adversarial Detector
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
+          Request Batching
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Batching" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
+          Request Batching
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../batcher/batcher/" class="md-nav__link">
+        Inference Batcher
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Payload Logging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Payload Logging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Payload Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logger/logger/" class="md-nav__link">
+        Inference Logger
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
+          Autoscaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Autoscaling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
+          Autoscaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../autoscaling/autoscaling/" class="md-nav__link">
+        Inference Autoscaling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
+          Node Scheduling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Node Scheduling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
+          Node Scheduling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodescheduling/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodescheduling/inferenceservicenodescheduling/" class="md-nav__link">
+        InferenceService Node Scheduling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kafka" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/kafka/" class="md-nav__link">
+        Inference with Kafka event source
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
+          Rollout Strategies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Rollout Strategies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
+          Rollout Strategies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rollout/canary/" class="md-nav__link">
+        Canary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rollout/canary-example/" class="md-nav__link">
+        Canary Example
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/api/" class="md-nav__link">
+        Control Plane API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sdk_docs/sdk_doc/" class="md-nav__link">
+        Python Client SDK
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Developer Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Developer Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer/developer/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer/debug/" class="md-nav__link">
+        Debugging guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Releases
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Releases" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Releases
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2022-02-18-KServe-0.8-release/" class="md-nav__link">
+        KServe 0.8 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2021-10-11-KServe-0.7-release/" class="md-nav__link">
+        KServe 0.7 Release
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Articles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Articles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Articles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2021-09-27-kfserving-transition/" class="md-nav__link">
+        KFserving Transition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Community
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/adopters/" class="md-nav__link">
+        Adopters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/presentations/" class="md-nav__link">
+        Demos and Presentations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-inferenceservice" class="md-nav__link">
+    Create the InferenceService
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-a-prediction" class="md-nav__link">
+    Run a Prediction
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/paddle/README.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="deploy-paddle-model-with-inferenceservice">Deploy Paddle model with InferenceService<a class="headerlink" href="#deploy-paddle-model-with-inferenceservice" title="Permanent link">&para;</a></h1>
+<p>In this example, we use a trained paddle resnet50 model to classify images by running an inference service with Paddle predictor.</p>
+<h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;paddle-resnet50&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">paddle</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz&quot;</span><span class="w"></span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;paddle-resnet50&quot;</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">paddle</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://zhouti-mcp-edge.cdn.bcebos.com/resnet50.tar.gz&quot;</span><span class="w"></span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Apply the above yaml to create the InferenceService
+<div class="highlight"><pre><span></span><code>kubectl apply -f paddle.yaml
+</code></pre></div></p>
+<p><mark><strong> Expected Output </strong></mark>
+<div class="highlight"><pre><span></span><code><span class="go">inferenceservice.serving.kserve.io/paddle-resnet50 created</span>
+</code></pre></div></p>
+<h2 id="run-a-prediction">Run a Prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
+<p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>paddle-resnet50
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict -d @./jay.json
+</code></pre></div>
+<p><mark><strong> Expected Output </strong></mark>
+<div class="highlight"><pre><span></span><code><span class="go">*   Trying 127.0.0.1:80...</span>
+<span class="go">* TCP_NODELAY set</span>
+<span class="go">* Connected to localhost (127.0.0.1) port 80 (#0)</span>
+<span class="go">&gt; POST /v1/models/paddle-resnet50:predict HTTP/1.1</span>
+<span class="go">&gt; Host: paddle-resnet50.default.example.com</span>
+<span class="go">&gt; User-Agent: curl/7.68.0</span>
+<span class="go">&gt; Accept: */*</span>
+<span class="go">&gt; Content-Length: 3010209</span>
+<span class="go">&gt; Content-Type: application/x-www-form-urlencoded</span>
+<span class="go">&gt; Expect: 100-continue</span>
+<span class="go">&gt;</span>
+<span class="go">* Mark bundle as not supporting multiuse</span>
+<span class="go">&lt; HTTP/1.1 100 Continue</span>
+<span class="go">* We are completely uploaded and fine</span>
+<span class="go">* Mark bundle as not supporting multiuse</span>
+<span class="go">&lt; HTTP/1.1 200 OK</span>
+<span class="go">&lt; content-length: 23399</span>
+<span class="go">&lt; content-type: application/json; charset=UTF-8</span>
+<span class="go">&lt; date: Mon, 17 May 2021 03:34:58 GMT</span>
+<span class="go">&lt; server: istio-envoy</span>
+<span class="go">&lt; x-envoy-upstream-service-time: 511</span>
+<span class="go">&lt;</span>
+<span class="go">{&quot;predictions&quot;: [[6.736678770380422e-09, 1.1535990829258935e-08, 5.142250714129659e-08, 6.647170636142619e-08, 4.094492567219277e-08, 1.3402451770616608e-07, 9.355561303436843e-08, 2.8935891904779965e-08, 6.845367295227334e-08, 7.680615965455218e-08, 2.0334689452283783e-06, 1.1085678579547675e-06, 2.3477592492326949e-07, 6.582037030966603e-07, 0.00012373103527352214, 4.2878804151769145e-07, 6.419959845516132e-06, 0.9993496537208557, 7.372002437477931e-05, 3.101135735050775e-05, 5.6028093240456656e-06, 2.1862508674530545e-06, 1.9544044604913324e-08, 3.728893887000595e-07, 4.2903633357127546e-07, 1.8251179767503345e-07, 7.159925985433802e-08, 9.231618136595898e-09, 6.469241498052725e-07, 7.031690341108288e-09, 4.451231561120039e-08, 1.2455971898361895e-07, 9.44632745358831e-08, 4.347704418705689e-08, 4.658220120745682e-07, 6.797721141538204e-08, 2.1060276367279585e-07, 2.2605123106700376e-08, 1.4311490303953178e-07, 7.951298641728499e-08, 1.2341783417468832e-07, 1.0921713737843675e-06, 1.5243892448779661e-05, 3.1173343018053856e-07, 2.4152058131221565e-07, 6.863762536113427e-08, 8.467682022228473e-08, 9.4246772164297e-08, 1.0219210366813058e-08, 3.3770753304906975e-08, 3.6928835100979995e-08, 1.3694031508748594e-07, 1.0674284567357972e-07, 2.599483650556067e-07, 3.4866405940192635e-07, 3.132053549848024e-08, 3.574873232992104e-07, 6.64843895492595e-08, 3.1638955988455564e-07, 1.2095878219042788e-06, 8.66409024524728e-08, 4.0144172430700564e-08, 1.2544761318622477e-07, 3.3201178695208e-08, 1.9731444922399533e-07, 3.806405572959193e-07, 1.3827865075199952e-07, 2.300225965257141e-08, 7.14422512260171e-08, 2.851114544455413e-08, 2.982567437470607e-08, 8.936032713791064e-08, 6.22388370175031e-07, 6.478838798784636e-08, 1.3663023423760023e-07, 9.973181391842445e-08, 2.5761554667269593e-08, 4.130220077058766e-08, 3.9384463690339544e-08, 1.2158079698565416e-07, 4.302821707824478e-06, 1.8179063090428826e-06, 1.8520155435908237e-06, 1.6246107179540559e-06, 1.6448313544970006e-05, 1.0544916221988387e-05, 3.993061909568496e-06, 2.646479799750523e-07, 1.9193475964129902e-05, 4.803242745765601e-07, 1.696285067964709e-07, 4.550505764200352e-06, 4.235929372953251e-05, 4.443338639248395e-06, 5.104009687784128e-06, 1.3506396498996764e-05, 4.1758724478313525e-07, 4.494491463447048e-07, 3.156698369366495e-07, 1.0557599807725637e-06, 1.336463917311903e-08, 1.3893659556174498e-08, 6.770379457066156e-08, 1.4129696523923485e-07, 7.170518756538513e-08, 7.934466594861078e-08, 2.639154317307657e-08, 2.6134321373660896e-08, 7.196725881897237e-09, 2.1752363466021052e-08, 6.684639686227456e-08, 3.417795824134373e-08, 1.6228275967478112e-07, 4.107114648377319e-07, 6.472135396506928e-07, 2.951379372007068e-07, 5.653474133282543e-09, 4.830144462175667e-08, 8.887481861563629e-09, 3.7306168820805397e-08, 1.7784264727538357e-08, 4.641905082536368e-09, 3.413118676576232e-08, 1.937393818707278e-07, 1.2980176506971475e-06, 3.5641004814124244e-08, 2.149332445355867e-08, 3.055293689158134e-07, 1.5532516783878236e-07, 1.4520978766086046e-06, 3.488464628276233e-08, 3.825438398052938e-05, 4.5088432898410247e-07, 4.1766969616219285e-07, 6.770622462681786e-07, 1.4142248971893423e-07, 1.4235997696232516e-05, 6.293820433711517e-07, 4.762866865348769e-06, 9.024900577969674e-07, 9.058987870957935e-07, 1.5713684433649178e-06, 1.5720647184025438e-07, 1.818536503606083e-07, 7.193188622522939e-08, 1.1952824934269302e-06, 8.874837362782273e-07, 2.0870831463071227e-07, 9.906239029078279e-08, 7.793621747964607e-09, 1.0058498389753368e-07, 4.2059440374941914e-07, 1.843624630737395e-07, 1.6437947181202617e-07, 7.025352743994517e-08, 2.570448600636155e-07, 7.586877615040066e-08, 7.841313731660193e-07, 2.495309274763713e-07, 5.157681925993529e-08, 4.0674127177453556e-08, 7.531796519799627e-09, 4.797485431140558e-08, 1.7419973019627832e-08, 1.7958679165985814e-07, 1.2566392371127222e-08, 8.975440124459055e-08, 3.26965476915575e-08, 1.1208359751435637e-07, 3.906746215420753e-08, 4.6769045525252295e-08, 1.8523553535487736e-07, 1.4833052830454108e-07, 1.2279349448363064e-07, 1.0729105497375713e-06, 3.6538490011395197e-09, 1.6198403329781286e-07, 1.6190719875908144e-08, 1.2004933580556099e-07, 1.4800277448046018e-08, 4.02294837442696e-08, 2.15060893538066e-07, 1.1925696696835075e-07, 4.8982514044837444e-08, 7.608920071788816e-08, 2.3137479487900237e-08, 8.521050176568679e-08, 9.586213423062873e-08, 1.3351650807180704e-07, 3.021699157557123e-08, 4.423876376336011e-08, 2.610667060309879e-08, 2.3977091245797055e-07, 1.3192564551900432e-07, 1.6734931662654162e-08, 1.588336999702733e-07, 4.0643516285854275e-07, 8.753454494581092e-08, 8.366999395548191e-07, 3.437598650180007e-08, 7.847892646850596e-08, 8.526394701391382e-09, 9.601382799928615e-08, 5.258924034023948e-07, 1.3557448141909845e-07, 1.0307226716577134e-07, 1.0429813457335513e-08, 5.187714435805901e-08, 2.187001335585137e-08, 1.1791439824548888e-08, 2.98065643278278e-08, 4.338393466696289e-08, 2.9991046091026874e-08, 2.8507610494443725e-08, 3.058665143385042e-08, 6.441099031917474e-08, 1.5364101102477434e-08, 1.5973883549236234e-08, 2.5736850872704053e-08, 1.0903765712555469e-07, 3.2118737891551064e-08, 6.819742992547617e-09, 1.9251311300649832e-07, 5.8258109447706374e-08, 1.8765761922168167e-07, 4.0070790419122204e-07, 1.5791577823165426e-08, 1.950158434738114e-07, 1.0142063189277906e-08, 2.744815041921811e-08, 1.2843531571604672e-08, 3.7297493094001766e-08, 7.407496838141014e-08, 4.20607833007125e-08, 1.6924804668860816e-08, 1.459203531339881e-07, 4.344977000414474e-08, 1.7191403856031684e-07, 3.5817443233554513e-08, 8.440249388286247e-09, 4.194829728021432e-08, 2.514032360068086e-08, 2.8340199520471288e-08, 8.747196034164517e-08, 8.277125651545703e-09, 1.1676293709683705e-08, 1.4548514570833504e-07, 7.200282148289716e-09, 2.623600948936655e-06, 5.675736929333652e-07, 1.9483527466945816e-06, 6.752595282932816e-08, 8.168475318370838e-08, 1.0933046468153407e-07, 1.670913718498923e-07, 3.1387276777650186e-08, 2.973524537708272e-08, 5.752163900751839e-08, 5.850877471402782e-08, 3.2544622285968217e-07, 3.330221431951941e-08, 4.186786668469722e-07, 1.5085906568401697e-07, 2.3346819943981245e-07, 2.86402780602657e-07, 2.2940319865938363e-07, 1.8537603807544656e-07, 3.151798182443599e-07, 1.1075967449869495e-06, 1.5369782602192572e-07, 1.9237509718550427e-07, 1.64044664074936e-07, 2.900835340824415e-07, 1.246654903752642e-07, 5.802622027317739e-08, 5.186220519703966e-08, 6.0094205167615655e-09, 1.2333241272699524e-07, 1.3798474185477971e-07, 1.7370231830682314e-07, 5.617761189569137e-07, 5.1604470030497396e-08, 4.813277598714194e-08, 8.032698417537176e-08, 2.0645263703045202e-06, 5.638597713186755e-07, 8.794199857220519e-07, 3.4785980460583232e-06, 2.972389268052211e-07, 3.3904532870110415e-07, 9.469074058188198e-08, 3.754845678827223e-08, 1.5679037801419327e-07, 8.203105039683578e-08, 6.847962641387539e-09, 1.8251624211984563e-08, 6.050240841659615e-08, 3.956342808919544e-08, 1.0699947949888156e-07, 3.2566634899922065e-07, 3.5369430406717584e-07, 7.326295303755614e-08, 4.85765610847011e-07, 7.717713401689252e-07, 3.4567779749750116e-08, 3.246204585138912e-07, 3.1608601602783892e-06, 5.33099466792919e-08, 3.645687343123427e-07, 5.48158936908294e-07, 4.62306957160763e-08, 1.3466177506415988e-07, 4.3529482240955986e-08, 1.6404105451783835e-07, 2.463695381038633e-08, 5.958712634424046e-08, 9.493651020875404e-08, 5.523462576206839e-08, 5.7412357534758485e-08, 1.1850350347231142e-05, 5.8263944993086625e-06, 7.4208674050169066e-06, 9.127966222877149e-07, 2.0019581370434025e-06, 1.033498961078294e-06, 3.5146850763112525e-08, 2.058995278275688e-06, 3.5655509122989315e-07, 6.873234070781109e-08, 2.1935298022413008e-09, 5.560363547374436e-08, 3.3266996979364194e-07, 1.307369217329324e-07, 2.718762992515167e-08, 1.0462929189714032e-08, 7.466680358447775e-07, 6.923166040451179e-08, 1.6145664361033596e-08, 8.568521003837759e-09, 4.76221018175238e-09, 1.233977116044116e-07, 8.340628632197422e-09, 3.2649041248333788e-09, 5.0632489312363305e-09, 4.0704994930251814e-09, 1.2043538610839732e-08, 5.105608380517879e-09, 7.267142887457112e-09, 1.184516307262129e-07, 7.53557927168913e-08, 6.386964201965384e-08, 1.6212936770898523e-08, 2.610429419291904e-07, 6.979425393183192e-07, 6.647513117741255e-08, 7.717492849224072e-07, 6.651206945207377e-07, 3.324495310152997e-07, 3.707282019149716e-07, 3.99564243025452e-07, 6.411632114122767e-08, 7.107352217872176e-08, 1.6380016631956096e-07, 6.876800995314625e-08, 3.462474467141874e-07, 2.0256503319160402e-07, 6.19610148078209e-07, 2.6841073363925716e-08, 6.720335363752383e-07, 1.1348340649419697e-06, 1.8397931853542104e-06, 6.397251581802266e-07, 7.257533241045167e-08, 4.2213909523525217e-07, 3.9657925299252383e-07, 1.4037439655112394e-07, 3.249856774800719e-07, 1.5857655455420172e-07, 1.1122217102865761e-07, 7.391420808744442e-08, 3.42322238111592e-07, 5.39796154441774e-08, 8.517296379295658e-08, 4.061009803990601e-06, 1.4478755474556237e-05, 7.317032757470088e-09, 6.9484960008026064e-09, 4.468917325084476e-08, 9.23141172393116e-08, 5.411982328951126e-08, 2.2242811326123046e-07, 1.7609554703312824e-08, 2.0906279374344194e-08, 3.6797682678724186e-09, 6.177919686933819e-08, 1.7920288541972695e-07, 2.6279179721200308e-08, 2.6988200119149042e-08, 1.6432807115052128e-07, 1.2827612749788386e-07, 4.468908798571647e-08, 6.316552969565237e-08, 1.9461760203398626e-08, 2.087125849925542e-08, 2.2414580413965268e-08, 2.4765244077684656e-08, 6.785398465325443e-09, 2.4248794971981624e-08, 4.554979504689527e-09, 2.8977037658250993e-08, 2.0402325162649504e-08, 1.600950270130852e-07, 2.0199709638291097e-07, 1.611188515937556e-08, 5.964113825029926e-08, 4.098318573397819e-09, 3.9080127578472457e-08, 7.511338218080255e-09, 5.965624154669058e-07, 1.6478223585636442e-07, 1.4106989354445432e-08, 3.2855584919389e-08, 3.3387166364917675e-09, 1.220043444050134e-08, 4.624639160510924e-08, 6.842309385746148e-09, 1.74262879681919e-08, 4.6611329906909305e-08, 9.331947836699328e-08, 1.2306078644996887e-07, 1.2359445022980253e-08, 1.1173199254699284e-08, 2.7724862405875683e-08, 2.419210147763806e-07, 3.451186785241589e-07, 2.593766978975509e-08, 9.964568192799561e-08, 9.797809674694236e-09, 1.9085564417764544e-07, 3.972706252852731e-08, 2.6639204619982593e-08, 6.874148805735558e-09, 3.146993776681484e-08, 2.4086594407890516e-07, 1.3126927456141857e-07, 2.1254339799270383e-07, 2.050203384840188e-08, 3.694976058454813e-08, 6.563175816154398e-07, 2.560050127442537e-08, 2.6882981174480847e-08, 6.880636078676616e-07, 2.0092733166166e-07, 2.788039665801989e-08, 2.628409134786125e-08, 5.1678345158734373e-08, 1.8935413947929192e-07, 4.61852835087484e-07, 1.1086777718105623e-08, 1.4542604276357451e-07, 2.8737009216683873e-08, 6.105167926762078e-07, 1.2016463379893594e-08, 1.3944705301582871e-07, 2.093712758721722e-08, 4.3801410498645055e-08, 1.966320795077081e-08, 6.654448991838535e-09, 1.1149590584125235e-08, 6.424939158478082e-08, 6.971554888934861e-09, 3.260019587614238e-09, 1.4260189473702667e-08, 2.7895078247297533e-08, 8.11578289017234e-08, 2.5995715802196173e-08, 2.2855578762914774e-08, 1.055962854934478e-07, 8.145542551574181e-08, 3.7793686402665116e-08, 4.881891513264236e-08, 2.342062366267328e-08, 1.059935517133681e-08, 3.604105103249822e-08, 5.062430830093945e-08, 3.6804440384230475e-08, 1.501580193519203e-09, 1.4475033367489232e-06, 1.076210423889279e-06, 1.304991315009829e-07, 3.073601462233455e-08, 1.7184021317007137e-08, 2.0421090596300928e-08, 7.904992216367646e-09, 1.6902052379919041e-07, 1.2416506933732308e-08, 5.4758292122869534e-08, 2.6250422280327257e-08, 1.3261367115546818e-08, 6.29807459517906e-08, 1.270998595259698e-08, 2.0171681569536304e-07, 4.386637186826192e-08, 6.962349630157405e-08, 2.9565120485131047e-07, 7.925131626507209e-07, 2.0868920103112032e-07, 1.7341794489311724e-07, 4.2942417621816276e-08, 4.213406956665722e-09, 8.824785169281313e-08, 1.7341569957807224e-08, 7.321587247588468e-08, 1.7941774288487977e-08, 1.1245148101579616e-07, 4.242405395871174e-07, 8.259573469615589e-09, 1.1336403105133286e-07, 8.268798978861014e-08, 2.2186977588489754e-08, 1.9539720952366224e-08, 1.0675703876472653e-08, 3.288517547161973e-08, 2.4340963022950746e-08, 6.639137239972115e-08, 5.604687380866835e-09, 1.386604697728444e-08, 6.675873720496384e-08, 1.1355886009312144e-08, 3.132159633878473e-07, 3.12451788886392e-08, 1.502181845580708e-07, 1.3461754377885882e-08, 1.8882955998833495e-07, 4.645742279762999e-08, 4.6453880742092224e-08, 7.714453964524637e-09, 3.5857155467056145e-08, 7.60832108426257e-09, 4.221501370693659e-08, 4.3407251126836854e-09, 1.340157496088068e-08, 8.565600495558101e-08, 1.7045413969185574e-08, 5.4221903411644234e-08, 3.021912675649219e-08, 6.153376119755194e-08, 3.938857240370908e-09, 4.135628017820636e-08, 1.781920389021252e-08, 4.3105885083605244e-08, 3.903354972578654e-09, 7.663085455078544e-08, 1.1890405993142394e-08, 9.304217840622186e-09, 1.0968062014171664e-09, 1.0536767902635802e-08, 1.1516804221400889e-07, 8.134522886393825e-07, 5.952623993721318e-08, 2.806350174466843e-08, 1.2833099027886874e-08, 1.0605690192733164e-07, 7.872949936427176e-07, 2.7501393162765453e-08, 3.936289072470345e-09, 2.0519442145428002e-08, 7.394815870753746e-09, 3.598397313453461e-08, 2.5378517065632877e-08, 4.698972233541099e-08, 7.54952989012736e-09, 6.322805461422831e-07, 5.582006412652163e-09, 1.29640980617296e-07, 1.5874988434916304e-08, 3.3837810775594335e-08, 6.474512037613067e-09, 9.121148281110436e-08, 1.3918511676536127e-08, 8.230025549949005e-09, 2.7061290097663004e-08, 2.6095918315149902e-08, 5.722363471960534e-09, 6.963475698285038e-07, 4.685091781198025e-08, 9.590579885809802e-09, 2.099205858030473e-07, 3.082160660028421e-08, 3.563162565001221e-08, 7.326312925215461e-07, 2.1759731225756695e-06, 2.407518309155421e-07, 2.974515780351794e-07, 2.529018416908002e-08, 7.667950718825978e-09, 2.663289251358947e-07, 3.4358880185436647e-08, 2.3130198201215535e-08, 3.1239693498719134e-08, 2.8691621878351725e-07, 3.895845068768722e-08, 2.4184130253956937e-08, 1.1582445225144511e-08, 5.1545349322168477e-08, 2.034345492063494e-08, 8.201963197507212e-08, 1.164153573540716e-08, 5.496356720868789e-07, 1.1682151246361627e-08, 4.7576914852243135e-08, 1.6349824605299546e-08, 4.090862759653646e-08, 2.1271189609706198e-07, 1.6697286753242224e-07, 3.989708119433999e-08, 2.852450279533514e-06, 1.2500372292834072e-07, 2.4846613655427063e-07, 1.245429093188477e-08, 2.9700272463628608e-08, 4.250991558762962e-09, 1.61443480806156e-07, 2.6386018703306036e-07, 7.638056409575711e-09, 3.4455793773702226e-09, 7.273289526210647e-08, 1.7631434090503717e-08, 7.58661311550668e-09, 2.1547013062672704e-08, 1.2675349125856883e-07, 2.5637149292379036e-08, 3.500976220038865e-08, 6.472243541111311e-08, 8.387915251262257e-09, 3.069512288789156e-08, 7.520387867998579e-08, 1.5724964441687916e-07, 1.9634005354873807e-07, 1.2290831818972947e-07, 1.112118730439704e-09, 1.546895944670723e-08, 9.91701032404535e-09, 6.882473257974198e-07, 8.267616635748709e-08, 4.469531234008173e-08, 2.075201344098332e-08, 8.649378457903367e-08, 5.202766573120243e-08, 4.5564942041664835e-08, 2.0319955496006514e-08, 8.705182352741758e-09, 6.452066969586667e-08, 2.1777438519166026e-08, 1.030954166481024e-08, 3.211904342492744e-08, 2.3336936294526822e-07, 8.054096056753224e-09, 1.9623354319264763e-07, 1.2888089884199871e-07, 1.5392496166555247e-08, 1.401903038100727e-09, 5.696818305978013e-08, 6.080025372057207e-09, 1.0782793324892737e-08, 2.4260730313585555e-08, 1.9388659566743627e-08, 2.2970310453729326e-07, 1.9971754028347277e-08, 2.8477993296860404e-08, 5.2273552597625894e-08, 2.7392806600801123e-07, 9.857291161097237e-08, 3.12910977129377e-08, 4.151442212219081e-08, 5.251196366629074e-09, 1.580681100676884e-06, 8.547603442821128e-07, 1.068913135782168e-08, 1.0621830597301596e-06, 7.737313012512459e-08, 6.394216711669287e-08, 1.1698345758759388e-07, 1.0486609625104393e-07, 2.1161000063329993e-07, 1.53396815250062e-08, 5.094453570109181e-08, 1.4005379966874898e-08, 2.6282036102998063e-08, 8.778433624456738e-08, 7.772066545896905e-09, 4.228875383205377e-08, 3.3243779284930497e-07, 7.729244799747903e-08, 7.636901111496286e-10, 5.989500806435899e-08, 1.326090597331131e-07, 1.2853634245857393e-07, 8.844242671557367e-09, 1.0194374766570036e-07, 2.493779334145074e-07, 1.6547971881664125e-07, 1.1762754326127833e-08, 1.1496195639892903e-07, 2.9342709240154363e-07, 1.326124099421122e-08, 8.630262726683213e-08, 5.7394842656322e-08, 1.1094081031615133e-07, 2.2933713239581266e-07, 3.4706170026765903e-07, 1.4751107357824367e-07, 1.502495017291494e-08, 6.454319390059027e-08, 5.164533689594464e-08, 6.23741556182722e-08, 1.293601457064142e-07, 1.4052071506398534e-08, 5.386946000385251e-08, 2.0827554791935654e-08, 1.3040637902861363e-08, 1.0578981601838677e-07, 1.5079727688771527e-08, 8.92632726845477e-07, 4.6374381668101705e-08, 7.481006036869076e-07, 5.883147302654379e-09, 2.8707685117979054e-09, 8.381598490814213e-07, 7.341958596640552e-09, 1.4245998158912698e-08, 1.0926417104428765e-07, 1.1308178216040687e-07, 2.52339901862797e-07, 1.1782835684925885e-07, 4.6678056975224536e-08, 2.7959197179683315e-09, 3.4363861090014325e-08, 1.4674496640054713e-07, 3.5396915620822256e-08, 2.0581127557761647e-07, 7.18387909159901e-08, 2.7693943138729082e-08, 4.5493386835460115e-08, 1.9559182717898693e-08, 1.5359708172013598e-08, 1.2336623278486059e-08, 2.9570605519779747e-08, 2.877552560676122e-07, 9.051845495378075e-07, 2.3732602016934834e-07, 1.6521676471370483e-08, 1.5478875070584763e-08, 3.526786329643983e-08, 3.616410637619083e-08, 1.61590953950963e-08, 7.65007328595857e-08, 1.9661483108279754e-08, 4.917534823789538e-08, 1.1712612746350715e-07, 1.0889253054813253e-08, 1.494120169809321e-06, 1.018585660261806e-08, 3.7575969003000864e-08, 2.097097784314883e-08, 3.368558054717141e-08, 4.845588819080149e-09, 6.039624622644624e-07, 1.037331109898787e-08, 2.841650257323636e-07, 4.4990630954089283e-07, 3.463186004637464e-08, 7.720684180867465e-08, 1.471122175189521e-07, 1.1601575522490748e-07, 4.007488030310924e-07, 3.025649775167949e-08, 6.706784461130155e-08, 2.0128741340386114e-08, 1.5987744461654074e-09, 4.1919822280078733e-08, 1.3167154477855547e-08, 3.231814815762846e-08, 9.247659704669786e-08, 1.3075300842047e-07, 1.0574301256838226e-07, 3.762165334819656e-08, 1.0942246575496029e-07, 7.001474955359299e-08, 2.742706151082075e-08, 2.0766625752344225e-08, 4.5403403703403455e-08, 3.39040298058535e-08, 1.0469661759771043e-07, 2.8271578855765256e-08, 3.406226767310727e-07, 5.146206945028098e-07, 6.740708613506285e-07, 6.382248063374618e-09, 3.63878704945364e-08, 3.626059807970705e-08, 1.6065602892467723e-07, 3.639055989879125e-07, 6.232691696084203e-09, 4.805490050330263e-08, 3.372633727849461e-08, 6.328880317596486e-07, 6.480631498106959e-08, 2.1165197949812864e-07, 8.38779143919055e-08, 1.7589144363228115e-08, 2.729027670511641e-09, 2.144795097080987e-08, 7.861271456022223e-08, 2.0118186228046397e-08, 2.8407685093156942e-08, 2.4922530883486615e-07, 2.0156670998972004e-08, 2.6551649767725394e-08, 2.7848242822869906e-08, 6.907123761834555e-09, 1.880543720744754e-08, 1.3006903998302732e-08, 3.685918272822164e-07, 3.967941211158177e-07, 2.7592133022835696e-08, 2.5228947819755376e-08, 1.547002881352455e-07, 3.689306637966183e-08, 1.440177199718562e-09, 2.1504929392790473e-08, 5.068111263994979e-08, 5.081711407228795e-08, 1.171875219085905e-08, 5.409278358570191e-08, 7.138276600926474e-07, 2.5237213208129106e-07, 7.072044638789521e-08, 7.199763984999663e-08, 1.2525473103153217e-08, 3.4803417747752974e-07, 1.9591827538079087e-07, 1.2404700555634918e-07, 1.234617457157583e-07, 1.9201337408958352e-08, 1.9895249181445251e-07, 3.7876677794201896e-08, 1.0629785052174157e-08, 1.2437127772102485e-08, 2.1861892207653e-07, 2.6181456291851646e-07, 1.112900775979142e-07, 1.0776630432474121e-07, 6.380325157095967e-09, 3.895085143312826e-09, 1.5762756788717525e-07, 2.909027019271093e-09, 1.0381050685737137e-08, 2.8135211493918177e-08, 1.0778002490496874e-08, 1.3605974125141529e-08, 2.9236465692861202e-08, 1.9189795352758665e-07, 2.199506354827463e-07, 1.326399790002597e-08, 4.9004846403022384e-08, 2.980837132682268e-09, 8.926045680368588e-09, 1.0996975774446582e-08, 7.71560149104289e-09, 7.454491246505768e-09, 5.086162246925596e-08, 1.5129764108223753e-07, 1.1960075596562092e-08, 1.1323334270230134e-08, 9.391332156383214e-09, 9.585701832293125e-08, 1.905532798218701e-08, 1.8105303922766325e-08, 6.179227796110354e-08, 6.389401363549041e-08, 1.1853179771037503e-08, 9.37277544466042e-09, 1.2332148457971925e-07, 1.6522022860954166e-08, 1.246116454467483e-07, 4.196171854431441e-09, 3.996593278543514e-08, 1.2554556505506298e-08, 1.4302138140465104e-08, 6.631793780798034e-09, 5.964224669696705e-09, 5.556936244488497e-09, 1.4192455921602232e-07, 1.7613080771639034e-08, 3.380189639301534e-07, 7.85651934620546e-08, 2.966783085867064e-08, 2.8992105853831163e-06, 1.3787366697215475e-06, 5.313622430946907e-09, 2.512852859126724e-08, 8.406627216572815e-08, 4.492839167369311e-08, 5.408793057881667e-08, 2.4239175999696272e-08, 4.016805235096399e-07, 4.1083545454512205e-08, 5.4153481698904216e-08, 8.640767212853007e-09, 5.773256717134245e-08, 2.6443152023603034e-07, 8.953217047746875e-07, 2.7994001783326894e-08, 5.889480014786841e-09, 4.1788819515886644e-08, 2.8880645430717777e-08, 2.135752907861388e-08, 2.3024175277441827e-07, 8.786625471657317e-08, 2.0697297209437693e-09, 2.236410523437371e-08, 3.203276310870251e-09, 1.176874686592555e-08, 6.963571053120177e-08, 2.271932153519174e-08, 7.360382525689602e-09, 6.922528772435044e-09, 3.213871480056696e-08, 1.370577820125618e-07, 1.9815049157045905e-08, 1.0578956377571558e-08, 2.7049420481262132e-08, 2.9755937713815683e-09, 2.1773699288019088e-08, 1.09755387001087e-08, 1.991872444762066e-08, 2.3882098076910552e-08, 2.1357365653784655e-08, 6.109098560358461e-09, 1.1890497475519624e-08, 1.1459891702259029e-08, 3.73173456580389e-08, 1.572620256240498e-08, 3.404023374287135e-08, 3.6921580459647885e-08, 9.281765045443535e-08, 1.2323201303843234e-07, 4.2347593876002065e-08, 1.7423728237986325e-08, 5.8113389656000436e-08, 3.931436154402945e-08, 2.3690461148362374e-08, 1.792850135018398e-08, 1.440664210150544e-08, 7.019830494670032e-09, 6.041522482291839e-08, 4.867479930226182e-08, 1.0685319296044327e-08, 1.0051243393149889e-08, 4.2426261614991745e-08, 2.607815297039906e-08, 5.136670200300* Connection #0 to host localhost left intact</span>
+<span class="go">841e-09, 1.69729952315123e-09, 1.9131586981302462e-08, 2.111743526711507e-07, 1.337269672774255e-08, 2.0002481448955223e-08, 1.0454256482717028e-07, 2.8144228281234973e-08, 2.1344791889532644e-07, 2.1046110632028103e-08, 1.9114453664315079e-07, 3.957693550660224e-08, 2.931631826186276e-08, 1.105203111251285e-07, 4.84007678380749e-08, 5.583606110803885e-08, 1.2130111315400427e-07, 1.77621615193857e-08, 2.5610853882085394e-08, 1.203865309662433e-07, 4.674859610531712e-09, 1.5916098661250544e-08, 3.147594185293201e-08, 6.147686093527227e-08, 2.204641802450169e-08, 3.257763410147163e-07, 1.198914532096751e-07, 2.3818989802748547e-07, 1.4909986134625797e-08, 5.10168831624469e-08, 5.5142201915714395e-08, 2.288550327023131e-08, 5.714110073995471e-08, 5.185095801607531e-07, 4.977285783525076e-08, 1.1049896109227575e-08, 1.264099296349741e-07, 8.174881571676451e-08]]}</span>
+</code></pre></div></p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../lightgbm/" class="md-footer__link md-footer__link--prev" aria-label="Previous: LightGBM" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              LightGBM
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../mlflow/v2/" class="md-footer__link md-footer__link--next" aria-label="Next: MLFlow" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              MLFlow
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 The KServe Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://github.com/kserve" target="_blank" rel="noopener" title="KServe Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#" target="_blank" rel="noopener" title="Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      
+    
+  </body>
+</html>

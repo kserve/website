@@ -1,0 +1,14 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "flower-grpc"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: tensorflow
+      storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+      ports:
+        - containerPort: 9000
+          name: h2c
+          protocol: TCP

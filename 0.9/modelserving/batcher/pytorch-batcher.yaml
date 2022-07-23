@@ -1,0 +1,13 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: "torchserve"
+spec:
+  predictor:
+    minReplicas: 1
+    timeout: 60
+    batcher:
+      maxBatchSize: 32
+      maxLatency: 500
+    pytorch:
+      storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
