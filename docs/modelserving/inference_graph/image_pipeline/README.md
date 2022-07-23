@@ -1,13 +1,13 @@
 # Deploy Image Processing Inference pipeline with InferenceGraph
 
 The tutorial demonstrates how to deploy an image processing inference pipeline with multiple stages using `InferenceGraph`.
-The example uses the two models, first to classify if an image is a dog or a cat. If it is a dog the second model does
-the breed classification.
+The example chains the two models, the first model is to classify if an image is a dog or a cat, if it is a dog the second model then does
+the dog breed classification.
 
 ## InferenceGraph Flow
-In the InferenceGraph request flow, the image is encoded with base64 format and first send to the `dog-cat-classifier` model,
-the image input and response from the `dog-cat-classifier` InferenceService are then combined to send to the model on next stage
-to classify the breed if the previous model prediction is dog.
+In the `InferenceGraph` request flow, the image is encoded with base64 format and first sent to the `dog-cat-classifier` model,
+the image input for the `dog-cat-classifier` InferenceService are then forwarded to send to the model on the next stage
+to classify the breed if the previous model prediction is a dog.
 
 ## Deploy the individual InferenceServices
 
@@ -20,7 +20,7 @@ the image classifier models for different stages.
 Before deploying the graph router with `InferenceGraph` custom resource, you need to first deploy the individual `InferenceServices`
 with the models trained from previous step.
 
-The models should be packaged with the following command and then upload to your model storage along with the [configuration](./config/config.properties):
+The models should be packaged with the following commands and then upload to your model storage along with the [configuration](./config/config.properties):
 ```bash
 torch-model-archiver -f --model-name cat_dog_classification --version 1.0 \
 --model-file cat_dog_classification_arch.py \
@@ -36,7 +36,10 @@ torch-model-archiver -f --model-name dog_breed_classification --version 1.0 \
 ```
 
 You can then deploy the models to KServe with following `InferenceService` custom resources.
-```yaml
+
+=== "InferenceService"
+```bash
+kubectl apply -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
@@ -60,15 +63,18 @@ spec:
         requests:
           cpu: 100m
       storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification
+EOF
 ```
 
 Please check more details on [PyTorch Tutorial](../../../modelserving/v1beta1/torchserve/README.md) for how to package the model and deploy
 with `InferenceService`.
 
 ## Deploy InferenceGraph
-After the `InferenceServices` are in ready state, you can now deploy the `InferenceGraph` to chain these two models to make the final inference result.
+After the `InferenceServices` are in ready state, you can now deploy the `InferenceGraph` to chain these two models to produce the final inference result.
 
-```yaml
+=== "InferenceGraph"
+```bash
+kubectl apply -f - <<EOF
 apiVersion: "serving.kserve.io/v1alpha1"
 kind: "InferenceGraph"
 metadata:
@@ -84,19 +90,20 @@ spec:
         name: dog_breed_classifier
         data: $request
         condition: "[@this].#(predictions.0==\"dog\")"
+EOF
 ```
 
-The `InferenceGraph` defines the two steps and each step targets to the `InferenceServices` deployed above. The steps
+The `InferenceGraph` defines the two steps and each step targets the `InferenceServices` deployed above. The steps
 are executed in sequence: it first sends the image as request to `cat-dog-classifier` model and then send to the
-`dog-breed-classifier` if it is classified as dog from the first model.
+`dog-breed-classifier` if it is classified as a dog from the first model.
 
-* Note that `$request` is specified on `data` field to indicate that you want to forward the request from the previous step and send as input to the next step.
+* Note that `$request` is specified on the `data` field to indicate that you want to forward the request from the previous step and send as input to the next step.
 * `condition` is specified on the second step so that the request is only sent to the current step if the `response` data matches the defined condition.
-  When condition is not matched the graph short circuits and return the response from the previous step. Refer to [gjson syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)
-  for how to express the condition.
+  When the condition is not matched the graph short circuits and returns the response from the previous step. Refer to [gjson syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)
+  for how to express the condition and currently KServe only supports this with REST protocol.
 
 ## Test the InferenceGraph
-Before testing the `InferenceGraph`, first check if the graph is in the ready state and get the router url for sending the request.
+Before testing the `InferenceGraph`, first check if the graph is in the ready state and then get the router url for sending the request.
 ```bash
 kubectl get ig  dog-breed-pipeline
 NAME                 URL                                             READY   AGE
