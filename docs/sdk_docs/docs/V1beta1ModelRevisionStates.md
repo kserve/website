@@ -1,10 +1,10 @@
-# V1beta1ExplainerConfig
+# V1beta1ModelRevisionStates
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**default_image_version** | **str** | default explainer docker image version | [default to '']
-**image** | **str** | explainer docker image name | [default to '']
+**active_model_state** | **str** | High level state string: Pending, Standby, Loading, Loaded, FailedToLoad | [default to '']
+**target_model_state** | **str** |  | [optional] 
 
 [[Back to Model list]](../sdk_doc.md#documentation-for-models) [[Back to API list]](../sdk_doc.md#documentation-for-api-endpoints) [[Back to README]](../sdk_doc.md)
 

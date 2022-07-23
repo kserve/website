@@ -1,13 +1,13 @@
-# V1beta1TrainedModelStatus
+# V1alpha1InferenceGraphStatus
 
-TrainedModelStatus defines the observed state of TrainedModel
+InferenceGraphStatus defines the InferenceGraph conditions and status
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**address** | [**KnativeAddressable**](KnativeAddressable.md) |  | [optional] 
 **annotations** | **dict(str, str)** | Annotations is additional Status fields for the Resource to save some additional State as well as convey more information to the user. This is roughly akin to Annotations on any k8s resource, just the reconciler conveying richer information outwards. | [optional] 
 **conditions** | [**list[KnativeCondition]**](KnativeCondition.md) | Conditions the latest available observations of a resource&#39;s current state. | [optional] 
 **observed_generation** | **int** | ObservedGeneration is the &#39;Generation&#39; of the Service that was last processed by the controller. | [optional] 
+**url** | [**KnativeURL**](KnativeURL.md) |  | [optional] 
 
 [[Back to Model list]](../sdk_doc.md#documentation-for-models) [[Back to API list]](../sdk_doc.md#documentation-for-api-endpoints) [[Back to README]](../sdk_doc.md)
 
