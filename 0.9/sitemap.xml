@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kserve.io/website/0.9/blog/articles/2022-07-21-KServe-0.9-release/</loc>
+         <lastmod>2022-07-26</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kserve.io/website/0.9/blog/articles/_index/</loc>
          <lastmod>2022-07-26</lastmod>
          <changefreq>daily</changefreq>
