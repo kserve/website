@@ -19,6 +19,6 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
 You can get started with a local deployment of KServe by using _KServe Quick installation script on Kind_:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.8/hack/quick_install.sh" | bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.9/hack/quick_install.sh" | bash
 ```
 
