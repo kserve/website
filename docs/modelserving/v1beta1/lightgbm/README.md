@@ -15,7 +15,7 @@ BST_FILE = "model.bst"
 iris = load_iris()
 y = iris['target']
 X = iris['data']
-dtrain = lgb.Dataset(X, label=y)
+dtrain = lgb.Dataset(X, label=y, feature_names=iris['feature_names'])
 
 params = {
     'objective':'multiclass', 
