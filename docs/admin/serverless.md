@@ -8,9 +8,10 @@ Kubernetes version.
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version   | Recommended Knative Version  |
 | :---------- | :------------ | :------------|
-| 1.20       | 1.9, 1.10, 1.11   | 0.25, 0.26, 1.0  |
 | 1.21       | 1.10, 1.11   | 0.25, 0.26, 1.0  |
 | 1.22       | 1.11, 1.12   | 0.25, 0.26, 1.0  |
+| 1.23       | 1.12, 1.13   | 1.0-1.4  |
+| 1.24       | 1.13, 1.14   | 1.0-1.4  |
 
 ## 1. Install Istio
 Please refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
