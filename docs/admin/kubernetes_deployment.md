@@ -7,9 +7,10 @@ Kubernetes version.
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version   |
 | :---------- | :------------ |
-| 1.20       | 1.9, 1.10, 1.11   |
 | 1.21       | 1.10, 1.11   |
 | 1.22       | 1.11, 1.12   |
+| 1.23       | 1.12, 1.13   |
+| 1.24       | 1.13, 1.14   |
 
 ## 1. Install Istio 
 
