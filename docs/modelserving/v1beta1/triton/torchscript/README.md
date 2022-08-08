@@ -219,6 +219,37 @@ Apply the gRPC `InferenceService` yaml and then you can call the model with `tri
 kubectl apply -f torchscript_grpc.yaml
 ```
 
+
+### Run a prediction with grpcurl
+
+After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fullstorydev/grpcurl) can be used to send gRPC requests to it.
+
+```bash
+# download the proto file
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+
+INPUT_PATH=@./input-grpc.json
+PROTO_FILE=grpc_predict_v2.proto
+SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+```
+
+Call `ServerReady` API :
+
+```bash
+grpcurl -H "Host: ${SERVICE_HOSTNAME}" -proto ${PROTO_FILE} -plaintext ${INGRESS_HOST}:${INGRESS_PORT} \
+  inference.GRPCInferenceService.ServerReady
+```
+
+Expected Output
+```json
+{
+  "ready": true
+}
+```
+
+TODO: Call ModelInfer API
+
+
 ## Add Transformer to the InferenceService
 
 `Triton Inference Server` expects tensors as input data, often times a pre-processing step is required before making the prediction call
