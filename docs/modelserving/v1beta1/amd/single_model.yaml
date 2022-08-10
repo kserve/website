@@ -1,0 +1,28 @@
+---
+apiVersion: "serving.kserve.io/v1beta1"
+kind: InferenceService
+metadata:
+  annotations:
+    autoscaling.knative.dev/target: "5"
+  labels:
+    controller-tools.k8s.io: "1.0"
+    app: example-amdserver-single-isvc
+  name: example-amdserver-single-isvc
+spec:
+  predictor:
+    containers:
+      - name: custom
+        image: <image>
+        args:
+          - proteus-server
+          - --model-repository=/mnt/models
+          - --enable-repository-watcher
+          - --grpc-port=9000
+          - --http-port=8080
+        env:
+          - name: STORAGE_URI
+            value: "https://github.com/Xilinx/inference-server/raw/main/tests/assets/mnist.zip"
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+---
