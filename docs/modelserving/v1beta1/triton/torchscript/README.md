@@ -228,7 +228,7 @@ format to tensor format according to V2 prediction protocol, `postprocess` handl
 
 ### Implement pre/post processing functions
 
-```python
+```python title="image_transformer_v2.py"
 import kserve
 from typing import Dict
 from PIL import Image
