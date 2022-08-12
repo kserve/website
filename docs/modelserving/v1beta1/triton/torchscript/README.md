@@ -227,9 +227,10 @@ User is responsible to create a python class which extends from KServe `Model` b
 format to tensor format according to V2 prediction protocol, `postprocess` handle is to convert raw prediction response to a more user friendly response.
 
 ### Implement pre/post processing functions
+
 ```python
 import kserve
-from typing import List, Dict
+from typing import Dict
 from PIL import Image
 import torchvision.transforms as transforms
 import logging
@@ -253,10 +254,11 @@ def image_transform(instance):
     return res.tolist()
 
 
-class ImageTransformer(kserve.Model):
-    def __init__(self, name: str, predictor_host: str):
+class ImageTransformerV2(kserve.Model):
+    def __init__(self, name: str, predictor_host: str, protocol: str):
         super().__init__(name)
         self.predictor_host = predictor_host
+        self.protocol = protocol
 
     def preprocess(self, inputs: Dict) -> Dict:
         return {
@@ -271,11 +273,10 @@ class ImageTransformer(kserve.Model):
         }
 
     def postprocess(self, results: Dict) -> Dict:
-        # Here we reshape the data because triton always returns the flatten 1D array as json if not explicitly requesting binary
-        # since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.
-        return {output["name"] : np.array(output["data"]).reshape(output["shape"]) for output in results["outputs"]}
+        return {output["name"]: np.array(output["data"]).reshape(output["shape"]).tolist()
+                for output in results["outputs"]}
 ```
-Please find [the code example](https://github.com/kserve/kserve/tree/release-0.8/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
+Please find [the code example](https://github.com/kserve/kserve/tree/release-0.9/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
 
 ### Build Transformer docker image
 ```
