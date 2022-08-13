@@ -1131,6 +1131,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#run-a-prediction-with-grpcurl" class="md-nav__link">
+    Run a prediction with grpcurl
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2505,6 +2512,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#run-a-prediction-with-grpcurl" class="md-nav__link">
+    Run a prediction with grpcurl
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2762,6 +2776,86 @@ Error Set:
 <p>Apply the gRPC <code>InferenceService</code> yaml and then you can call the model with <code>tritonclient</code> python library after <code>InferenceService</code> is ready.
 <div class="highlight"><pre><span></span><code>kubectl apply -f torchscript_grpc.yaml
 </code></pre></div></p>
+<h3 id="run-a-prediction-with-grpcurl">Run a prediction with grpcurl<a class="headerlink" href="#run-a-prediction-with-grpcurl" title="Permanent link">&para;</a></h3>
+<p>After the gRPC <code>InferenceService</code> becomes ready, <a href="https://github.com/fullstorydev/grpcurl">grpcurl</a>, can be used to send gRPC requests to the <code>InferenceService</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># download the proto file</span>
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+
+<span class="c1"># download the input json file</span>
+curl -O https://raw.githubusercontent.com/kserve/website/triton-grpc/docs/modelserving/v1beta1/triton/torchscript/input-grpc.json
+
+<span class="nv">INPUT_PATH</span><span class="o">=</span>input-grpc.json
+<span class="nv">PROTO_FILE</span><span class="o">=</span>grpc_predict_v2.proto
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchscript-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+</code></pre></div>
+<p>The gRPC APIs follow the KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>.</p>
+<p>For example, <code>ServerReady</code> API can be used to check if the server is ready:</p>
+<div class="highlight"><pre><span></span><code>grpcurl <span class="se">\</span>
+  -plaintext <span class="se">\</span>
+  -proto <span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span> <span class="se">\</span>
+  -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  <span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span> <span class="se">\</span>
+  inference.GRPCInferenceService.ServerReady
+</code></pre></div>
+<p>Expected Output
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div></p>
+<p><code>ModelInfer</code> API takes input following the <code>ModelInferRequest</code> schema defined in the <code>grpc_predict_v2.proto</code> file. Notice that the input file differs from that used in the previous <code>curl</code> example. </p>
+<div class="highlight"><pre><span></span><code>grpcurl <span class="se">\</span>
+  -vv <span class="se">\</span>
+  -plaintext <span class="se">\</span>
+  -proto <span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span> <span class="se">\</span>
+  -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
+  -d @ <span class="se">\</span>
+  <span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span> <span class="se">\</span>
+  inference.GRPCInferenceService.ModelInfer <span class="se">\</span>
+  <span class="o">&lt;&lt;&lt;</span> <span class="k">$(</span>cat <span class="s2">&quot;</span><span class="nv">$INPUT_PATH</span><span class="s2">&quot;</span><span class="k">)</span>
+</code></pre></div>
+<p><mark><strong> Expected Output </strong></mark></p>
+<div class="highlight"><pre><span></span><code>Resolved method descriptor:
+// The ModelInfer API performs inference using the specified model. Errors are
+// indicated by the google.rpc.Status returned for the request. The OK code
+// indicates success and other codes indicate failure.
+rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+
+Request metadata to send:
+host: torchscript-cifar10.default.example.com
+
+Response headers received:
+accept-encoding: identity,gzip
+content-type: application/grpc
+date: Fri, 12 Aug 2022 01:49:53 GMT
+grpc-accept-encoding: identity,deflate,gzip
+server: istio-envoy
+x-envoy-upstream-service-time: 16
+
+Response contents:
+{
+  &quot;modelName&quot;: &quot;cifar10&quot;,
+  &quot;modelVersion&quot;: &quot;1&quot;,
+  &quot;outputs&quot;: [
+    {
+      &quot;name&quot;: &quot;OUTPUT__0&quot;,
+      &quot;datatype&quot;: &quot;FP32&quot;,
+      &quot;shape&quot;: [
+        &quot;1&quot;,
+        &quot;10&quot;
+      ]
+    }
+  ],
+  &quot;rawOutputContents&quot;: [
+    &quot;wCwGwOJLDL7icgK/dusyQAqAD799KP8/In2QP4zAs7+WuRk/2OoHwA==&quot;
+  ]
+}
+
+Response trailers received:
+(empty)
+Sent 1 request and received 1 response
+</code></pre></div>
+<p>The content of output tensor is encoded in <code>rawOutputContents</code> field. It can be <code>base64</code> decoded and loaded into a Numpy array with the given datatype and shape.</p>
+<p>Alternatively, Triton also provides <a href="https://pypi.org/project/tritonclient/">Python client library</a> which has many <a href="https://github.com/triton-inference-server/client/tree/main/src/python/examples">examples</a> showing how to interact with the KServe V2 gPRC protocol.</p>
 <h2 id="add-transformer-to-the-inferenceservice">Add Transformer to the InferenceService<a class="headerlink" href="#add-transformer-to-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p><code>Triton Inference Server</code> expects tensors as input data, often times a pre-processing step is required before making the prediction call
 when the user is sending in request with raw input format. Transformer component can be specified on InferenceService spec for user implemented pre/post processing code.
