@@ -2862,8 +2862,8 @@ when the user is sending in request with raw input format. Transformer component
 User is responsible to create a python class which extends from KServe <code>Model</code> base class which implements <code>preprocess</code> handler to transform raw input
 format to tensor format according to V2 prediction protocol, <code>postprocess</code> handle is to convert raw prediction response to a more user friendly response.</p>
 <h3 id="implement-prepost-processing-functions">Implement pre/post processing functions<a class="headerlink" href="#implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span>
+<p><div class="highlight"><span class="filename">image_transformer_v2.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -2887,10 +2887,11 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
     <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">ImageTransformerV2</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">predictor_host</span> <span class="o">=</span> <span class="n">predictor_host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">protocol</span>
 
     <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
@@ -2905,11 +2906,10 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
         <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="c1"># Here we reshape the data because triton always returns the flatten 1D array as json if not explicitly requesting binary</span>
-        <span class="c1"># since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.</span>
-        <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]}</span>
 </code></pre></div>
-Please find <a href="https://github.com/kserve/kserve/tree/release-0.8/docs/samples/v1beta1/triton/torchscript/image_transformer_v2">the code example</a> and <a href="https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile">Dockerfile</a>.</p>
+Please find <a href="https://github.com/kserve/kserve/tree/release-0.9/docs/samples/v1beta1/triton/torchscript/image_transformer_v2">the code example</a> and <a href="https://github.com/kserve/kserve/blob/release-0.9/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile">Dockerfile</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker build -t $DOCKER_USER/image-transformer-v2:latest -f transformer.Dockerfile . --rm
 </code></pre></div>
