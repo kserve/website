@@ -4,7 +4,7 @@ The [AMD Inference Server](https://xilinx.github.io/inference-server/main/index.
 It can be deployed as a standalone executable or on a Kubernetes cluster with KServe or used to create custom applications by linking to its C++ API.
 This example demonstrates how to deploy a Tensorflow GraphDef model on KServe with the AMD Inference Server.
 
-## Setup
+## Prerequisites
 
 These example was tested on an Ubuntu 18.04 host machine using the Bash shell.
 
@@ -12,16 +12,16 @@ These instructions assume:
 - You have a machine with a modern version of Docker (>=18.09) and sufficient disk space to build the image
 - You have a Kubernetes cluster set up
 - KServe has been installed on the Kubernetes cluster
-- Some familliarity with Kubernetes / KServe
+- Some familiarity with Kubernetes / KServe
 
 Refer to the installation instructions for these tools to install them if needed.
 
-## Setting Up the Image
+## Set Up the Image
 
 This example uses the [AMD ZenDNN](https://developer.amd.com/zendnn/) backend to run inference on TensorFlow models.
 To build a Docker image for the AMD Inference Server that uses this backend, download the `TF_v2.9_ZenDNN_v3.3_C++_API.zip` package from ZenDNN.
 You must agree to the EULA to download this package.
-You will need a modern version of Docker (at least 18.09) to build this image.
+You need a modern version of Docker (at least 18.09) to build this image.
 
 ```bash
 # clone the inference server repository
@@ -37,15 +37,17 @@ cd inference-server
 
 This builds an image on your host: `<username>/proteus:latest`.
 This image can now be uploaded to a [local Docker registry server](https://docs.docker.com/registry/deploying/) to use with KServe.
+You will need to update the YAML files in this example to use this image.
 
 More documentation for building a ZenDNN image for KServe is available: [ZenDNN + Inference Server](https://xilinx.github.io/inference-server/main/zendnn.html) and [KServe + Inference Server](https://xilinx.github.io/inference-server/main/kserve.html).
 
-## Setting Up the Model
+## Set up the model
 
-In this example, we will use an [MNIST Tensorflow model](https://github.com/Xilinx/inference-server/blob/main/tests/assets/mnist.zip).
+In this example, you will use an [MNIST Tensorflow model](https://github.com/Xilinx/inference-server/blob/main/tests/assets/mnist.zip).
 
-To use your own models, you will first need a GraphDef model to serve. One way to do this is to [freeze a checkpoint](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/freeze_graph.py).
-Once you have the model, you will also need a `config.pbtxt`, which defines some metadata about your model such as its name and input/output tensors.
+To use your own models, you first need a GraphDef model to serve.
+One way to do this is to [freeze a checkpoint](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/freeze_graph.py).
+Once you have the model, you also need a `config.pbtxt`, which defines some metadata about your model such as its name and input/output tensors.
 The `config.pbtxt` for our example MNIST model is the following:
 
 ```
@@ -87,23 +89,23 @@ The final model directory structure looks like:
 
 The names for the files (`saved_model.x` and `config.pbtxt`) must match as above.
 The file extension for `tfzendnn_graphdef` and `vitis_xmodel` models should be `.pb` and `.xmodel`, respectively.
-This model can now be zipped and stored on a webserver or made available on a cloud storage platform compatible with KServe.
+This model can now be zipped and stored on a web server or made available on a cloud storage platform compatible with KServe.
 
-## Making an Inference
+## Make an inference
 
 The AMD Inference Server can be used in single or multi-model serving mode in KServe.
 The code snippets below use the environment variables `INGRESS_HOST` and `INGRESS_PORT` to make requests to the cluster.
 [Find the ingress host and port](https://kserve.github.io/website/master/get_started/first_isvc/#4-determine-the-ingress-ip-and-ports) for making requests to your cluster and set these values appropriately.
 
-### Single Model Serving
+### Single model serving
 
-```console
+```bash
 # download the inference service file and input data
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/single_model.yaml
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/input.json
 
-# update the single_model.yaml to use the custom image
-sed -i 's/<image>/hostname:port\/new_image/' single_model.yaml
+# update the single_model.yaml to use your custom image
+sed -i 's/<image>/some_new_image/' single_model.yaml
 
 # create the inference service
 kubectl apply -f single_model.yaml
@@ -114,15 +116,15 @@ kubectl wait --for=condition=ready isvc -l app=example-amdserver-single-isvc
 export SERVICE_HOSTNAME=$(kubectl get inferenceservice example-amdserver-single-isvc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-### Multi Model Serving
+### Multi model serving
 
-```console
+```bash
 # download the inference service file and input data
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/multi_model.yaml
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/input.json
 
 # update the multi_model.yaml to use the custom image
-sed -i 's/<image>/hostname:port\/new_image/' multi_model.yaml
+sed -i 's/<image>/some_new_image/' multi_model.yaml
 
 # create the inference service
 kubectl apply -f multi_model.yaml
@@ -139,23 +141,23 @@ export SERVICE_HOSTNAME=$(kubectl get inferenceservice example-amdserver-multi-i
 until curl --fail -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/mnist/ready &> /dev/null; do echo "Waiting for model..."; sleep 2; done
 ```
 
-Additional models can be added on the same `InferenceService` by applying more `TrainedModel` yaml files.
+You can add additional models on the same `InferenceService` by applying more `TrainedModel` yaml files.
 
-### Making Requests with REST
+### Make a request with REST
 
-Once the service is ready, we can make requests to it.
+Once the service is ready, you can make requests to it.
 Assuming that `INGRESS_HOST`, `INGRESS_PORT`, and `SERVICE_HOSTNAME` have been defined as above, the following command runs an inference over REST to the example MNIST model.
 
-```console
+```bash
 export MODEL_NAME=mnist
 export INPUT_DATA=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d ${INPUT_DATA}
 ```
 
 This shows the response from the server in KServe's v2 API format.
-For this example, it should be similar to:
+For this example, it will be similar to:
 
-```
+```{ .bash .no-copy }
 {
   "id":"",
   "model_name":"TFModel",
@@ -184,4 +186,4 @@ For this example, it should be similar to:
 ```
 
 For MNIST, the data indicates the likely classification for the input image, which is the number 9.
-As expected, the index with the highest value is the ninth one.
+In this response, the index with the highest value is the last one, indicating that the image was correctly classified as nine.
