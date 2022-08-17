@@ -2,7 +2,7 @@
 
 The [AMD Inference Server](https://xilinx.github.io/inference-server/main/index.html) is an easy-to-use inferencing solution specially designed for AMD CPUs, GPUs, and FPGAs.
 It can be deployed as a standalone executable or on a Kubernetes cluster with KServe or used to create custom applications by linking to its C++ API.
-This example demonstrates how to deploy a Tensorflow GraphDef model on KServe with the AMD Inference Server.
+This example demonstrates how to deploy a Tensorflow GraphDef model on KServe with the AMD Inference Server to run inference on AMD EPYC CPUs.
 
 ## Prerequisites
 
@@ -18,7 +18,7 @@ Refer to the installation instructions for these tools to install them if needed
 
 ## Set Up the Image
 
-This example uses the [AMD ZenDNN](https://developer.amd.com/zendnn/) backend to run inference on TensorFlow models.
+This example uses the [AMD ZenDNN](https://developer.amd.com/zendnn/) backend to run inference on TensorFlow models on AMD EPYC CPUs.
 To build a Docker image for the AMD Inference Server that uses this backend, download the `TF_v2.9_ZenDNN_v3.3_C++_API.zip` package from ZenDNN.
 You must agree to the EULA to download this package.
 You need a modern version of Docker (at least 18.09) to build this image.
@@ -105,7 +105,7 @@ curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1be
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/input.json
 
 # update the single_model.yaml to use your custom image
-sed -i 's/<image>/some_new_image/' single_model.yaml
+sed -i "s/<image>/$(whoami)\/proteus:latest/" single_model.yaml
 
 # create the inference service
 kubectl apply -f single_model.yaml
@@ -124,7 +124,7 @@ curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1be
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/input.json
 
 # update the multi_model.yaml to use the custom image
-sed -i 's/<image>/some_new_image/' multi_model.yaml
+sed -i "s/<image>/$(whoami)\/proteus:latest/" multi_model.yaml
 
 # create the inference service
 kubectl apply -f multi_model.yaml
