@@ -59,7 +59,7 @@ import kserve
 from typing import Dict
 from ray import serve
 
-@serve.deployment(name="custom-model", config={"num_replicas": 2})
+@serve.deployment(name="custom-model", num_replicas=2)
 class AlexNetModel(kserve.Model):
     def __init__(self):
        self.name = "custom-model"
