@@ -1,4 +1,4 @@
-#1 KServe documentation
+#2 KServe documentation
 
 Welcome to the source file repository for our documentation on
 https://kserve.github.io/website/
