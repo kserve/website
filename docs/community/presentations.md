@@ -23,3 +23,4 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 | [KubeCon AI Days 2022: Enhancing the Performance Testing Process for gRPC Model Inferencing at Scale](https://www.youtube.com/watch?v=PYB5P82kQns) | Ted Chang, Paul Van Eck |
 | [KubeCon Edge Days 2022: Model Serving at the Edge Made Easier](https://www.youtube.com/watch?v=0BlK7PaLCFM) | Paul Van Eck |
 | [KnativeCon 2022: How We Built an ML inference Platform with Knative](https://www.youtube.com/watch?v=yuxC1UVU_ec) | Dan Sun |
+| [Kubecon EU 2022: Exploring ML Model Serving with KServe (with fun drawings)](https://www.youtube.com/watch?v=FX6naJLaq2Y) | Alexa Griffith |
