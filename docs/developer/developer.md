@@ -15,7 +15,7 @@ Before submitting a PR, see also [CONTRIBUTING.md](https://github.com/kserve/kse
 
 You must install these tools:
 
-1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.17.0+.
+1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.18.0+.
 1. [`git`](https://help.github.com/articles/set-up-git/): For source control.
 1. [`Go Module`](https://blog.golang.org/using-go-modules): Go's new dependency management system.
 1. [`ko`](https://github.com/google/ko):
