@@ -45,7 +45,7 @@ python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL
 
 ## Build a Development ART Explainer Docker Image
 
-If you would like to build a development image for the ART Explainer then follow [these instructions](/python/artexplainer#build-a-development-art-model-explainer-docker-image)
+If you would like to build a development image for the ART Explainer then follow [these instructions](https://github.com/kserve/kserve/blob/master/python/artexplainer/README.md#build-your-own-art-model-explainer-docker-image)
 
 ## Troubleshooting
 

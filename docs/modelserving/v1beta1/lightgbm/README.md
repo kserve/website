@@ -236,7 +236,7 @@ You can see an example payload below:
 ```
 
 Now, assuming that your ingress can be accessed at
-`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
+`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
 you can use `curl` to send the inference request as:

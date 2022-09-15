@@ -5,7 +5,7 @@ This example walks you through how to deploy a `xgboost` model leveraging the
 Note that, by default the `v1beta1` version will expose your model through an
 API compatible with the existing V1 Dataplane.
 However, this example will show you how to serve a model through an API
-compatible with the new [V2 Dataplane](../../../predict-api/v2).
+compatible with the new [V2 Dataplane](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
 
 ## Training
 
