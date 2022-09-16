@@ -38,44 +38,43 @@ github_io_base_url = "https://kserve.github.io/website"
 # glob expressions to find markdown files in project
 md_file_path_expressions = [
     "/**/*.md",
+    "/.github/**/*.md",
 ]
 
 # don't process .md files in excluded folders
 excluded_paths = [
-    "node_modules",
-    "temp",
+    "/node_modules/",
+    "/temp/",
+    "/.venv/",
 ]
 
-# don't analyze URLs that are not actual links like in the style guide or
-# any <host>:<port> style URLs are assumed to be meant as examples only
-url_excludes = [
+# don't analyze URLs with variables to be replaced by the user
+url_excludes = ["<", ">", "$", "{", "}"]
+
+# also exclude example URLs and non-public or local URLs in a <host>:<port> style
+url_excludes.extend([
+    ".default",
     ".svc.cluster.local",
     "/docs/help/style-guide/../kafka-broker/",
     "/docs/help/style-guide/../serving/",
-    "127.0.0",
+    "0.0.0.0",
     ":80",
     ":90",
     ":port",
-    "CLUSTER_IP",
-    "CONTAINER",
-    "CUSTOM_DOMAIN",
-    "INGRESS_HOST",
-    "INGRESS_PORT",
-    "MODEL_NAME",
-    "modelstoreaccount",
-    "PATH",
-    "sklearn-iris.kserve-test",
-    "STORAGE_ACCOUNT_NAME",
-    "example",
+    "blob.core.windows.net",
+    "example.com",
     "localhost",
+    "modelstoreaccount",
+    "sklearn-iris.kserve-test",
     "somecluster",
     "sslip.io",
+    "templates",
     "xip.io",
     "your-domain",
     "zhouti-mcp-edge.cdn.bcebos.com",
-]
+])
 
-# GitHub rate limiting is 60 requests per minute, then we sleep a bit
+# GitHub rate-limiting is 60 requests per minute, then we sleep a bit
 parallel_requests = 60  # use no more than 60 parallel requests
 retry_wait = 60  # 1 minute before retrying GitHub requests after 429 error
 extra_wait = 5  # additional wait time before retrying GitHub requests
@@ -126,21 +125,27 @@ def get_links_from_md_file(md_file_path: str) -> [(int, str, str)]:  # -> [(line
     line_text_url = []
     for line_number, line_text in enumerate(md_file_content.splitlines()):
 
+        # don't capture the same URL multiple times on the same line
+        all_urls_in_this_line = set()
+
+        # replace /website links that only work on github.io
+        if f"{github_repo_main_path}/website/" in line_text:
+            line_text = line_text.replace(f"{github_repo_main_path}/website/",
+                                          f"{github_io_base_url}/")
+
         # find markdown-styled links [text](url)
-        for (link_text, url) in re.findall(r"\[([^]]+)\]\((%s[^)]+)\)" % "http", line_text):
-            # replace /website links that only work on github.io
-            if f"{github_repo_main_path}/website/" in url:
-                url = url.replace(f"{github_repo_main_path}/website/",
-                                  f"{github_io_base_url}/")
+        for (link_text, url) in re.findall(r"\[([^][]+)\]\((%s[^)]+)\)" % "http", line_text):
             if not any(s in url for s in url_excludes):
                 line_text_url.append((line_number + 1, link_text, url))
+                all_urls_in_this_line.add(url)
 
         # find plain http(s)-style links
-        for url in re.findall(r"[\n\r\s\"'](https?://[^\s]+)[\n\r\s\"']", line_text):
-            if not any(s in url for s in url_excludes):
+        for url in re.findall(r"https?://[a-zA-Z0-9./?=_&%${}<>:-]+", line_text):
+            if url not in all_urls_in_this_line\
+                    and not any(s in url for s in url_excludes):
                 try:
                     urlparse(url)
-                    line_text_url.append((line_number + 1, "", url.strip('"').strip("'")))
+                    line_text_url.append((line_number + 1, "", url.strip(".")))
                 except URLError:
                     pass
 
@@ -155,7 +160,7 @@ def test_url(file: str, line: int, text: str, url: str) -> (str, int, str, str, 
 
     if short_url not in url_status_cache:
 
-        # mind GitHub rate limiting, use local files to verify link
+        # mind GitHub rate-limiting, use local files to verify link
         if short_url.startswith(github_repo_main_path):
             local_path = short_url.replace(github_repo_main_path, "")
             if exists(abspath(project_root_dir + local_path)):
@@ -175,12 +180,16 @@ def test_url(file: str, line: int, text: str, url: str) -> (str, int, str, str, 
         if status == 405:  # method not allowed, use GET instead of HEAD
             status = request_url(short_url, method="GET")
 
-        if status in [429, 503]:  # GitHub rate limiting or service unavailable, try again after 1 minute
+        if status in [429, 503]:  # GitHub rate-limiting or service unavailable, try again after 1 minute
             sleep(retry_wait + extra_wait)
             status = request_url(short_url, method="GET")
 
         if status in [444, 555]:  # other URLError or Exception, retry with longer timeout
             status = request_url(short_url, method="GET", timeout=15)
+
+        # if we keep getting the same error, mark it as 404 to be reported at the end
+        if status in [444, 555]:
+            status = 404
 
         url_status_cache[short_url] = status
 
@@ -216,9 +225,9 @@ def request_url(url, method="HEAD", timeout=5, headers={}) -> int:
     except HTTPError as e:
         status = e.code
         set_retry_time(url, status)
-    except URLError as e:
+    except URLError:
         status = 444  # custom code used script-internally
-    except Exception as e:
+    except Exception:
         status = 555  # custom code used script-internally
 
     return status
@@ -236,7 +245,7 @@ def verify_urls_concurrently(file_line_text_url: [(str, int, str, str)]) -> [(st
             try:
                 file, line, text, url, status = url_check.result()
                 file_line_text_url_status.append((file, line, text, url, status))
-            except Exception as e:
+            except Exception:
                 # set 555 status as a custom code used script-internally
                 file_line_text_url_status.append((file, line, text, url, 555))
             finally:
