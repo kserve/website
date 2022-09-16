@@ -41,7 +41,7 @@ xgb_model.save_model(model_file)
 Once we've got our `model.bst` model serialised, we can then use
 [MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
 For more details on MLServer, feel free to check the [XGBoost example in their
-docs](https://github.com/SeldonIO/MLServer/tree/master/examples/xgboost).
+docs](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/xgboost).
 
 > Note that this step is optional and just meant for testing.
 > Feel free to jump straight to [deploying your trained model](#deployment).
@@ -81,7 +81,7 @@ further configuration.
 However, you can still override these defaults by providing a
 `model-settings.json` file similar to your local one.
 You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/examples/mms).
+models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
 
 ### Serving our model locally
 
@@ -144,7 +144,7 @@ kubectl apply -f xgboost.yaml
 We can now test our deployed model by sending a sample request.
 
 Note that this request **needs to follow the [V2 Dataplane
-protocol](../../../predict-api/v2)**.
+protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
 You can see an example payload below:
 
 ```json
