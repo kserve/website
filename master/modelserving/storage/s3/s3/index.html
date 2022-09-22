@@ -1391,6 +1391,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#create-service-account-with-iam-role" class="md-nav__link">
+    Create Service Account with IAM Role
+  </a>
+  
+    <nav class="md-nav" aria-label="Create Service Account with IAM Role">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-service-account" class="md-nav__link">
+    Create Service Account
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-s3-secret-and-attach-to-service-account" class="md-nav__link">
     Create S3 Secret and attach to Service Account
   </a>
@@ -2357,6 +2377,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#create-service-account-with-iam-role" class="md-nav__link">
+    Create Service Account with IAM Role
+  </a>
+  
+    <nav class="md-nav" aria-label="Create Service Account with IAM Role">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-service-account" class="md-nav__link">
+    Create Service Account
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#create-s3-secret-and-attach-to-service-account" class="md-nav__link">
     Create S3 Secret and attach to Service Account
   </a>
@@ -2415,10 +2455,42 @@
 
 
 <h1 id="deploy-inferenceservice-with-a-saved-model-on-s3">Deploy InferenceService with a saved model on S3<a class="headerlink" href="#deploy-inferenceservice-with-a-saved-model-on-s3" title="Permanent link">&para;</a></h1>
+<p>There are two supported methods for configuring credentials for AWS S3 storage:</p>
+<ol>
+<li>AWS IAM Role for Service Account (Recommended)</li>
+<li>AWS IAM User Credentials</li>
+</ol>
+<p>Global configuration options for S3 credentials can be found in the <code>inferenceservice</code> configmap, and will be used as a backup if the relevant annotations aren't found on the secret or service account.</p>
+<h2 id="create-service-account-with-iam-role">Create Service Account with IAM Role<a class="headerlink" href="#create-service-account-with-iam-role" title="Permanent link">&para;</a></h2>
+<p>Create an IAM Role and configure according to the <a href="https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html">AWS Documentation</a>. <code>KServe</code> will read the annotations on the Service Acccount in order to inject the proper environment variables on the storage initializer container.</p>
+<h3 id="create-service-account">Create Service Account<a class="headerlink" href="#create-service-account" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span><span class="w"></span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span><span class="w"></span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span><span class="w"></span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">eks.amazonaws.com/role-arn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arn:aws:iam::123456789012:role/s3access</span><span class="w"> </span><span class="c1"># replace with your IAM role ARN</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serving.kserve.io/s3-endpoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3.amazonaws.com</span><span class="w"> </span><span class="c1"># replace with your s3 endpoint e.g minio-service.kubeflow:9000</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serving.kserve.io/s3-usehttps</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="c1"># by default 1, if testing with minio you can set to 0</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serving.kserve.io/s3-region</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;us-east-2&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serving.kserve.io/s3-useanoncredential</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="c1"># omitting this is the same as false, if true will ignore provided credential and use anonymous credentials</span><span class="w"></span>
+</code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</div>
+<div class="highlight"><pre><span></span><code>kubectl apply -f create-s3-sa.yaml
+</code></pre></div>
 <h2 id="create-s3-secret-and-attach-to-service-account">Create S3 Secret and attach to Service Account<a class="headerlink" href="#create-s3-secret-and-attach-to-service-account" title="Permanent link">&para;</a></h2>
 <p>Create a secret with your <a href="https://console.aws.amazon.com/iam/home#/users">S3 user credential</a>, <code>KServe</code> reads the secret annotations to inject the S3 environment variables on storage initializer or model agent to download the models from S3 storage.</p>
 <h3 id="create-s3-secret">Create S3 secret<a class="headerlink" href="#create-s3-secret" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
@@ -2438,7 +2510,7 @@
 <span class="w">  </span><span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">XXXXXXXX</span><span class="w"></span>
 </code></pre></div>
 <h3 id="attach-secret-to-a-service-account">Attach secret to a service account<a class="headerlink" href="#attach-secret-to-a-service-account" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
@@ -2450,7 +2522,7 @@
 <span class="nt">secrets</span><span class="p">:</span><span class="w"></span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3creds</span><span class="w"></span>
 </code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
@@ -2465,7 +2537,7 @@
 </div>
 <h2 id="deploy-the-model-on-s3-with-inferenceservice">Deploy the model on S3 with <code>InferenceService</code><a class="headerlink" href="#deploy-the-model-on-s3-with-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Create the InferenceService with the s3 <code>storageUri</code> and the service account with s3 credential attached.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Old Schema</label><label for="__tabbed_4_2">New Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Old Schema</label><label for="__tabbed_6_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
@@ -2496,7 +2568,7 @@
 </div>
 </div>
 <p>Apply the <code>autoscale-gpu.yaml</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
