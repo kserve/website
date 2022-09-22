@@ -212,7 +212,7 @@ If the note regards an issue that could lead to data loss, the note should be a 
 
 The following is an embedded image reference in markdown.
 
-![Annotated procedure topic](../../../images/annotated-procedure-topic.png)
+![Canary Deployment - Step 3](/docs/images/canary-step-3.png)
 
 
 #### Tabs

@@ -9,9 +9,9 @@ To check out your fork of the `kserve/website` repository:
 
 1. Create your own
    [fork](https://help.github.com/articles/fork-a-repo/) of the [`kserve/website` repo](https://github.com/kserve/website).
-1. Configure
+2. Configure
    [GitHub access through SSH](https://help.github.com/articles/connecting-to-github-with-ssh/).
-1. Clone your fork to your machine and set the `upstream` remote to the
+3. Clone your fork to your machine and set the `upstream` remote to the
    `kserve/website` repository:
 
     ```bash
@@ -108,9 +108,9 @@ Here's what generally happens after you send the PR for review:
       `lgtm` label.
 
     - The
-      [KServe technical writers](https://github.com/kserve/website/blob/main/OWNERS_ALIASES)
+      [KServe technical writers](/OWNERS)
       are who provide the `approved` label when the content meets quality,
-      clarity, and organization standards (see [Style Guide](#style-guide)).
+      clarity, and organization standards (see [Style Guide](./../style-guide/style-and-formatting.md)).
 
 We appreciate contributions to the docs, so if you open a PR we will help you
 get it merged.
@@ -128,7 +128,7 @@ Use the `/assign` command to set the owner. For example: `/assign @owner_id`
 **For code related changes**, initially set the owner of your PR to the SME who
 should review for technical accuracy. If you don't know who the appropriate
 owner is, nor who your reviewers should be for your PR, you can assign the
-[current working group lead](https://github.com/kserve/community/tree/main/WORKING-GROUPS.md) of the related component.
+[current working group lead](https://github.com/kserve/kserve/blob/master/OWNERS) of the related component.
 
 If you want to notify and include other stakeholders in your PR review, use the
 `/cc` command. For example: `/cc @stakeholder_id1 @stakeholder_id2`
@@ -136,7 +136,7 @@ If you want to notify and include other stakeholders in your PR review, use the
 
 ## Reviewing PRs
 
-[See the KServe community guidelines about reviewing PRs](https://github.com/kserve/community/blob/main/reviewing.md)
+[See the KServe community guidelines about reviewing PRs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request)
 
 
 ## Using Prow to manage PRs and Issues
@@ -156,9 +156,9 @@ the known commands:
 
 - `/lgtm` and `/approve` to approve a PR. Note that _anyone_ may `/lgtm` a PR,
   but only someone listed in an `OWNERS` file may `/approve` the PR. A PR needs
-  both an approval and an LGTM — the `/lgtm` review is a good opportunity for
+  both an approval and an LGTM -- the `/lgtm` review is a good opportunity for
   non-approvers to practice and develop reviewing skills. `/lgtm` is removed
-  when a PR is updated, but `/approve` is sticky — once applied, anyone can
+  when a PR is updated, but `/approve` is sticky -- once applied, anyone can
   supply an `/lgtm`.
 
 - Both Prow (legacy) and GitHub actions (preferred) can run tests on PRs; once
@@ -168,7 +168,7 @@ the known commands:
 - You can also use Prow to manage labels on PRs with `/kind ...`,
   `/good-first-issue`, or `/area ...`
 
-- See [Branches](structure.md#branches) for details about how
+- See [Branches](https://github.com/kubernetes/test-infra/tree/master/prow/external-plugins/cherrypicker) for details about how
   to use the `/cherrypick` command.
 
 ### Common GitHub PRs FAQs

@@ -308,7 +308,7 @@ KServe supports the implementation of **Knative Pod Autoscaler (KPA)** and **Kub
 The features and limitations of each of these Autoscalers are listed below.
 
 !!! Note
-    If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install [HPA extension](https://knative.dev/docs/install/any-kubernetes-cluster/#optional-serving-extensions)
+    If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install [HPA extension](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#install-optional-serving-extensions)
 
 Knative Pod Autoscaler (KPA)
 
@@ -393,7 +393,7 @@ If concurrency reaches the hard limit, surplus requests will be buffered and mus
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
     ```
 
-After specifying the soft or hard limits of the scaling target, you can now deploy the `InferenceService` with [autoscaling.yaml](./autoscale/autoscaling.yaml).
+After specifying the soft or hard limits of the scaling target, you can now deploy the `InferenceService` with [autoscaling.yaml](autoscaling/autoscaling.yaml).
 
 === "kubectl"
 ```bash

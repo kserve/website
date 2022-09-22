@@ -10,7 +10,7 @@ The KServe documentation website is built using [Material for MkDocs](https://sq
 ### View published documentation
 
 View all KServe documentation and walk-through our code samples on the
-[website](https://kserve.io).
+[website](https://kserve.github.io/website/).
 
 The KServe website includes versioned docs for recent releases, the KServe
 blog, links to all community resources, as well as KServe governance and
@@ -27,9 +27,10 @@ Source files for the documentation on the website are located within the
 
 ### Documentation versions for KServe releases
 
-Each release of the KServe docs is available in the website (starting with
-0.3) and their source files are all stored in
-[branches of this repo](doc-releases.md).
+Each release of the KServe docs is available in the website (starting with 0.3)
+and their source files are all stored in branches of this repo. Take a look at
+the [release process](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS.md)
+for more information.
 
 ## Contributing to docs
 
@@ -47,7 +48,7 @@ reading about how to contribute to the docs, you should take a moment to learn
 about the KServe code of conduct, governance, values, and the KServe working
 groups and committees.
 
-[KServe community and contributor guidelines](docs/community/contributing/)
+[KServe community and contributor guidelines](https://github.com/kserve/kserve/blob/master/CONTRIBUTING.md).
 
 Source files for all KServe community and governance topics are located
 separately in the [kserve/community](docs/community/)
