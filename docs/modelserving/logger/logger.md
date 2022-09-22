@@ -206,7 +206,7 @@ Take note of the broker **URL** as that is what we'll be using in the InferenceS
 
 ### Create Trigger
 
-We now create a [trigger](https://knative.dev/docs/eventing/broker/triggers/) to forward the events to message-dumper service.
+We now create a [trigger](https://knative.dev/docs/eventing/triggers/) to forward the events to message-dumper service.
 The trigger can specify a filter that enables selection of relevant events based on the Cloud Event context attributes.
 
 === "yaml"

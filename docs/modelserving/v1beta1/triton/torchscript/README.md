@@ -229,7 +229,7 @@ After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fu
 curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
 
 # download the input json file
-curl -O https://raw.githubusercontent.com/kserve/website/triton-grpc/docs/modelserving/v1beta1/triton/torchscript/input-grpc.json
+curl -O https://raw.githubusercontent.com/kserve/website/main/docs/modelserving/v1beta1/triton/torchscript/input-grpc.json
 
 INPUT_PATH=input-grpc.json
 PROTO_FILE=grpc_predict_v2.proto

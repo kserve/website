@@ -229,7 +229,7 @@ kubectl port-forward --namespace knative-monitoring $(kubectl get pods --namespa
 
 ![scaling dashboard](images/scaling_debug_qps.png)
 
-Autoscaler calculates average concurrency over 60 second window so it takes a minute to stabilize at the desired concurrency level,however it also calculates the 6 second panic window and will enter into [panic mode](https://github.com/knative/serving/blob/master/docs/scaling/DEVELOPMENT.md#panic-mode) if that window reaches 2x target concurrency. From the dashboard you can see that it enters panic mode in which autoscaler operates on shorter and more sensitive window. Once the panic conditions are no longer met for 60 seconds, autoscaler will return back to 60 seconds stable window.
+Autoscaler calculates average concurrency over 60 second window so it takes a minute to stabilize at the desired concurrency level,however it also calculates the 6 second panic window and will enter into [panic mode](https://knative.dev/docs/serving/autoscaling/kpa-specific/#panic-mode-threshold) if that window reaches 2x target concurrency. From the dashboard you can see that it enters panic mode in which autoscaler operates on shorter and more sensitive window. Once the panic conditions are no longer met for 60 seconds, autoscaler will return back to 60 seconds stable window.
 
 ## Autoscaling on GPU!
 
