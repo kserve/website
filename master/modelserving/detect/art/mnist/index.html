@@ -2414,7 +2414,7 @@ python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL
 <h2 id="stopping-the-inference-service">Stopping the Inference Service<a class="headerlink" href="#stopping-the-inference-service" title="Permanent link">&para;</a></h2>
 <p><code>kubectl delete -f art.yaml</code></p>
 <h2 id="build-a-development-art-explainer-docker-image">Build a Development ART Explainer Docker Image<a class="headerlink" href="#build-a-development-art-explainer-docker-image" title="Permanent link">&para;</a></h2>
-<p>If you would like to build a development image for the ART Explainer then follow <a href="/python/artexplainer#build-a-development-art-model-explainer-docker-image">these instructions</a></p>
+<p>If you would like to build a development image for the ART Explainer then follow <a href="https://github.com/kserve/kserve/blob/master/python/artexplainer/README.md#build-your-own-art-model-explainer-docker-image">these instructions</a></p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <p><code>&lt;504&gt; Gateway Timeout &lt;504&gt;</code> - the explainer is probably taking too long and not sending a response back quickly enough. Either there aren't enough resources allocated or the number of samples the explainer is allowed to take needs to be reduced. To fix this go to art.yaml and increase resources.</p>
 <p>If you see <code>Configuration "artserver-default" does not have any ready Revision</code> the container may have taken too long to download. If you run <code>kubectl get revision</code> and see your revision is stuck in <code>ContainerCreating</code> try deleting the inferenceservice and redeploying.</p>

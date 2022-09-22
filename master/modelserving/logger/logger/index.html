@@ -2697,7 +2697,7 @@ kubectl get broker default
 </code></pre></div>
 <p>Take note of the broker <strong>URL</strong> as that is what we'll be using in the InferenceService later on.</p>
 <h3 id="create-trigger">Create Trigger<a class="headerlink" href="#create-trigger" title="Permanent link">&para;</a></h3>
-<p>We now create a <a href="https://knative.dev/docs/eventing/broker/triggers/">trigger</a> to forward the events to message-dumper service.
+<p>We now create a <a href="https://knative.dev/docs/eventing/triggers/">trigger</a> to forward the events to message-dumper service.
 The trigger can specify a filter that enables selection of relevant events based on the Cloud Event context attributes.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="10:1"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">yaml</label></div>
 <div class="tabbed-content">

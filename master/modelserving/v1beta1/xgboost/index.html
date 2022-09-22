@@ -2450,7 +2450,7 @@
 Note that, by default the <code>v1beta1</code> version will expose your model through an
 API compatible with the existing V1 Dataplane.
 However, this example will show you how to serve a model through an API
-compatible with the new <a href="../../../predict-api/v2">V2 Dataplane</a>.</p>
+compatible with the new <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane</a>.</p>
 <h2 id="training">Training<a class="headerlink" href="#training" title="Permanent link">&para;</a></h2>
 <p>The first step will be to train a sample <code>xgboost</code> model.
 We will save this model as <code>model.bst</code>.</p>
@@ -2479,7 +2479,7 @@ We will save this model as <code>model.bst</code>.</p>
 <h2 id="testing-locally">Testing locally<a class="headerlink" href="#testing-locally" title="Permanent link">&para;</a></h2>
 <p>Once we've got our <code>model.bst</code> model serialised, we can then use
 <a href="https://github.com/SeldonIO/MLServer">MLServer</a> to spin up a local server.
-For more details on MLServer, feel free to check the <a href="https://github.com/SeldonIO/MLServer/tree/master/examples/xgboost">XGBoost example in their
+For more details on MLServer, feel free to check the <a href="https://github.com/SeldonIO/MLServer/tree/master/docs/examples/xgboost">XGBoost example in their
 docs</a>.</p>
 <blockquote>
 <p>Note that this step is optional and just meant for testing.
@@ -2511,7 +2511,7 @@ inject some sensible defaults</strong> so that it runs out-of-the-box without an
 further configuration.
 However, you can still override these defaults by providing a
 <code>model-settings.json</code> file similar to your local one.
-You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master/examples/mms">set of <code>model-settings.json</code> files to load multiple
+You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms">set of <code>model-settings.json</code> files to load multiple
 models</a>.</p>
 <h3 id="serving-our-model-locally">Serving our model locally<a class="headerlink" href="#serving-our-model-locally" title="Permanent link">&para;</a></h3>
 <p>With the <code>mlserver</code> package installed locally and a local <code>model-settings.json</code>
@@ -2567,7 +2567,7 @@ already installed, we can deploy our model as:</p>
 </code></pre></div>
 <h2 id="testing-deployed-model">Testing deployed model<a class="headerlink" href="#testing-deployed-model" title="Permanent link">&para;</a></h2>
 <p>We can now test our deployed model by sending a sample request.</p>
-<p>Note that this request <strong>needs to follow the <a href="../../../predict-api/v2">V2 Dataplane
+<p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane
 protocol</a></strong>.
 You can see an example payload below:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>

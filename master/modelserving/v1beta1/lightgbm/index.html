@@ -2672,7 +2672,7 @@ You can see an example payload below:</p>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
 <p>Now, assuming that your ingress can be accessed at
-<code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">this instruction</a>
+<code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out your ingress IP and port.</p>
 <p>you can use <code>curl</code> to send the inference request as:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice lightgbm-v2-iris -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>

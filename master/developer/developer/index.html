@@ -2562,7 +2562,7 @@ meet these requirements, you can make changes and
 <ul>
 <li>
 <p>To install Knative components on your Kubernetes cluster, follow the <a href="https://knative.dev/docs/admin/install/">installation guide</a> or alternatively, 
-use the <a href="https://knative.dev/docs/install/knative-with-operators/">Knative Operators</a> to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
+use the <a href="https://knative.dev/docs/install/operator/knative-with-operators/">Knative Operators</a> to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
 they can be installed via the <a href="https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md">directions here</a>.</p>
 </li>
 <li>
@@ -2650,11 +2650,11 @@ istiod                  ClusterIP      <span class="m">10</span>.101.116.203   &
 </code></pre></div>
 </div>
 <h3 id="deploy-kserve-from-master-branch">Deploy KServe from master branch<a class="headerlink" href="#deploy-kserve-from-master-branch" title="Permanent link">&para;</a></h3>
-<p>We suggest using <a href="https://github.com/jetstack/cert-manager">cert manager</a> for
+<p>We suggest using <a href="https://github.com/cert-manager/cert-manager">cert manager</a> for
 provisioning the certificates for the webhook server. Other solutions should
 also work as long as they put the certificates in the desired location.</p>
 <p>You can follow
-<a href="https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html">the cert manager documentation</a>
+<a href="https://cert-manager.io/docs/installation/">the cert manager documentation</a>
 to install it.</p>
 <p>If you don't want to install cert manager, you can set the <code>KSERVE_ENABLE_SELF_SIGNED_CA</code> environment variable to true.
 <code>KSERVE_ENABLE_SELF_SIGNED_CA</code> will execute a script to create a self-signed CA and patch it to the webhook config.

@@ -2469,9 +2469,9 @@ for Pull Requests (PRs).</p>
 </li>
 <li>
 <p>The
-  <a href="https://github.com/kserve/website/blob/main/OWNERS_ALIASES">KServe technical writers</a>
+  <a href="/OWNERS">KServe technical writers</a>
   are who provide the <code>approved</code> label when the content meets quality,
-  clarity, and organization standards (see <a href="#style-guide">Style Guide</a>).</p>
+  clarity, and organization standards (see <a href="../../style-guide/style-and-formatting/">Style Guide</a>).</p>
 </li>
 </ul>
 </li>
@@ -2487,11 +2487,11 @@ assign reviewers.</p>
 <p><strong>For code related changes</strong>, initially set the owner of your PR to the SME who
 should review for technical accuracy. If you don't know who the appropriate
 owner is, nor who your reviewers should be for your PR, you can assign the
-<a href="https://github.com/kserve/community/tree/main/WORKING-GROUPS.md">current working group lead</a> of the related component.</p>
+<a href="https://github.com/kserve/kserve/blob/master/OWNERS">current working group lead</a> of the related component.</p>
 <p>If you want to notify and include other stakeholders in your PR review, use the
 <code>/cc</code> command. For example: <code>/cc @stakeholder_id1 @stakeholder_id2</code></p>
 <h2 id="reviewing-prs">Reviewing PRs<a class="headerlink" href="#reviewing-prs" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/kserve/community/blob/main/reviewing.md">See the KServe community guidelines about reviewing PRs</a></p>
+<p><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request">See the KServe community guidelines about reviewing PRs</a></p>
 <h2 id="using-prow-to-manage-prs-and-issues">Using Prow to manage PRs and Issues<a class="headerlink" href="#using-prow-to-manage-prs-and-issues" title="Permanent link">&para;</a></h2>
 <p>KServe uses several sets of tools to manage pull requests (PR)s and issues in a
 more fine-grained way than GitHub permissions allow. In particular, you'll
@@ -2510,9 +2510,9 @@ the known commands:</p>
 <li>
 <p><code>/lgtm</code> and <code>/approve</code> to approve a PR. Note that <em>anyone</em> may <code>/lgtm</code> a PR,
   but only someone listed in an <code>OWNERS</code> file may <code>/approve</code> the PR. A PR needs
-  both an approval and an LGTM — the <code>/lgtm</code> review is a good opportunity for
+  both an approval and an LGTM -- the <code>/lgtm</code> review is a good opportunity for
   non-approvers to practice and develop reviewing skills. <code>/lgtm</code> is removed
-  when a PR is updated, but <code>/approve</code> is sticky — once applied, anyone can
+  when a PR is updated, but <code>/approve</code> is sticky -- once applied, anyone can
   supply an <code>/lgtm</code>.</p>
 </li>
 <li>
@@ -2525,7 +2525,7 @@ the known commands:</p>
   <code>/good-first-issue</code>, or <code>/area ...</code></p>
 </li>
 <li>
-<p>See <a href="structure.md#branches">Branches</a> for details about how
+<p>See <a href="https://github.com/kubernetes/test-infra/tree/master/prow/external-plugins/cherrypicker">Branches</a> for details about how
   to use the <code>/cherrypick</code> command.</p>
 </li>
 </ul>

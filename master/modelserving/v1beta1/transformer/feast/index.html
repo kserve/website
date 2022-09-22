@@ -2432,9 +2432,9 @@
 <p>Transformer is an <code>InferenceService</code> component which does pre/post processing alongside with model inference. In this example, instead of typical input transformation of raw data to tensors, we demonstrate a use case of online feature augmentation as part of preprocessing. We use a <a href="https://github.com/feast-dev/feast">Feast</a> <code>Transformer</code> to gather online features, run inference with a <code>SKLearn</code> predictor, and leave post processing as pass-through.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="../../../../get_started/#4-install-kserve">KServe installed</a>.</li>
+<li>Your ~/.kube/config should point to a cluster with <a href="/docs/get_started/README.md#install-the-kserve-quickstart-environment">KServe installed</a>.</li>
 <li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
-<li>Your Feast online store is populated with driver <a href="https://github.com/tedhtchang/populate_feast_online_store/blob/main/driver_stats.parquet">data</a>, instructions available <a href="https://github.com/tedhtchang/populate_feast_online_store">here</a>, and network accessible.</li>
+<li>Your Feast online store is populated with driver <a href="https://github.com/tedhtchang/driver_rank_repo/blob/master/data/driver_stats.parquet">data</a>, instructions available <a href="https://github.com/tedhtchang/populate_feast_online_store">here</a>, and network accessible.</li>
 </ol>
 <h2 id="create-a-transformer-with-feast">Create a Transformer with Feast<a class="headerlink" href="#create-a-transformer-with-feast" title="Permanent link">&para;</a></h2>
 <h3 id="extend-the-model-class-and-implement-prepost-processing-functions">Extend the Model class and implement pre/post processing functions<a class="headerlink" href="#extend-the-model-class-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>

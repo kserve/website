@@ -2944,7 +2944,7 @@ based on the configured metrics.</p>
 The features and limitations of each of these Autoscalers are listed below.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install <a href="https://knative.dev/docs/install/any-kubernetes-cluster/#optional-serving-extensions">HPA extension</a></p>
+<p>If you want to use Kubernetes Horizontal Pod Autoscaler (HPA), you must install <a href="https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#install-optional-serving-extensions">HPA extension</a></p>
 </div>
 <p>Knative Pod Autoscaler (KPA)</p>
 <ul>
@@ -3026,7 +3026,7 @@ If concurrency reaches the hard limit, surplus requests will be buffered and mus
 </div>
 </div>
 </div>
-<p>After specifying the soft or hard limits of the scaling target, you can now deploy the <code>InferenceService</code> with <a href="./autoscale/autoscaling.yaml">autoscaling.yaml</a>.</p>
+<p>After specifying the soft or hard limits of the scaling target, you can now deploy the <code>InferenceService</code> with <a href="autoscaling/autoscaling.yaml">autoscaling.yaml</a>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="9:1"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
