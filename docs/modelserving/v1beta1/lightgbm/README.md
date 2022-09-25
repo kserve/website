@@ -200,6 +200,7 @@ To deploy the LightGBM model with V2 inference protocol, you need to set the **`
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
     ```
 
+Apply the InferenceService yaml to get the REST endpoint
 === "kubectl"
 
 ```bash
@@ -312,6 +313,7 @@ Create the inference service yaml and expose the gRPC port, currently only one p
             containerPort: 9000
     ```
 
+Apply the InferenceService yaml to get the gRPC endpoint
 === "kubectl"
 
 ```
