@@ -163,7 +163,7 @@ file, you should now be ready to start our server as:
 mlserver start .
 ```
 
-### Deploy with InferenceService
+### Deploy InferenceService with REST endpoint
 
 When you deploy your model with `InferenceService` KServe injects sensible defaults so that it runs out-of-the-box without any
 further configuration. However, you can still override these defaults by providing a `model-settings.json` file similar to your local one.
@@ -200,6 +200,7 @@ To deploy the LightGBM model with V2 inference protocol, you need to set the **`
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
     ```
 
+Apply the InferenceService yaml to get the REST endpoint
 === "kubectl"
 
 ```bash
@@ -212,7 +213,7 @@ kubectl apply -f lightgbm-v2.yaml
 inferenceservice.serving.kserve.io/lightgbm-v2-iris created
 ```
 
-### Test the deployed model
+### Test the deployed model with curl
 
 You can now test your deployed model by sending a sample request.
 
@@ -236,7 +237,7 @@ You can see an example payload below:
 ```
 
 Now, assuming that your ingress can be accessed at
-`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
+`${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
 you can use `curl` to send the inference request as:
@@ -267,6 +268,148 @@ curl -v \
       "parameters":null,
       "data":
         [8.796664107010673e-06,0.9992300031041593,0.0007612002317336916,4.974786820804187e-06,0.9999919650711493,3.0601420299625077e-06]
+    }
+  ]
+}
+```
+
+### Create the InferenceService with gRPC endpoint
+Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-v2-iris"
+    spec:
+      predictor:
+        lightgbm:
+          protocolVersion: v2
+          storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
+          ports:
+          - name: h2c
+            protocol: TCP
+            containerPort: 9000
+    ```
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-v2-iris"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: lightgbm
+          protocolVersion: v2
+          storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
+          ports:
+          - name: h2c
+            protocol: TCP
+            containerPort: 9000
+    ```
+
+Apply the InferenceService yaml to get the gRPC endpoint
+=== "kubectl"
+
+```
+kubectl apply -f lightgbm-v2-grpc.yaml
+```
+
+### Test the deployed model with grpcurl
+
+After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fullstorydev/grpcurl), can be used to send gRPC requests to the `InferenceService`.
+
+```bash
+# download the proto file
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+
+INPUT_PATH=iris-input-v2-grpc.json
+PROTO_FILE=grpc_predict_v2.proto
+SERVICE_HOSTNAME=$(kubectl get inferenceservice lightgbm-v2-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+```
+
+The gRPC APIs follow the KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
+
+For example, `ServerReady` API can be used to check if the server is ready:
+
+```bash
+grpcurl \
+  -plaintext \
+  -proto ${PROTO_FILE} \
+  -authority ${SERVICE_HOSTNAME}" \
+  ${INGRESS_HOST}:${INGRESS_PORT} \
+  inference.GRPCInferenceService.ServerReady
+```
+
+Expected Output
+```json
+{
+  "ready": true
+}
+```
+
+`ModelInfer` API takes input following the `ModelInferRequest` schema defined in the `grpc_predict_v2.proto` file. Notice that the input file differs from that used in the previous `curl` example.
+
+```bash
+grpcurl \
+  -vv \
+  -plaintext \
+  -proto ${PROTO_FILE} \
+  -authority ${SERVICE_HOSTNAME} \
+  -d @ \
+  ${INGRESS_HOST}:${INGRESS_PORT} \
+  inference.GRPCInferenceService.ModelInfer \
+  <<< $(cat "$INPUT_PATH")
+```
+
+==** Expected Output **==
+
+```
+Resolved method descriptor:
+// The ModelInfer API performs inference using the specified model. Errors are
+// indicated by the google.rpc.Status returned for the request. The OK code
+// indicates success and other codes indicate failure.
+rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+
+Request metadata to send:
+(empty)
+
+Response headers received:
+accept-encoding: identity,gzip
+content-type: application/grpc
+date: Sun, 25 Sep 2022 10:25:05 GMT
+grpc-accept-encoding: identity,deflate,gzip
+server: istio-envoy
+x-envoy-upstream-service-time: 99
+
+Estimated response size: 91 bytes
+
+Response contents:
+{
+  "modelName": "lightgbm-v2-iris",
+  "outputs": [
+    {
+      "name": "predict",
+      "datatype": "FP64",
+      "shape": [
+        "2",
+        "3"
+      ],
+      "contents": {
+        "fp64Contents": [
+          8.796664107010673e-06,
+          0.9992300031041593,
+          0.0007612002317336916,
+          4.974786820804187e-06,
+          0.9999919650711493,
+          3.0601420299625077e-06
+        ]
+      }
     }
   ]
 }

@@ -15,7 +15,7 @@ Before submitting a PR, see also [CONTRIBUTING.md](https://github.com/kserve/kse
 
 You must install these tools:
 
-1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.17.0+.
+1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.18.0+.
 1. [`git`](https://help.github.com/articles/set-up-git/): For source control.
 1. [`Go Module`](https://blog.golang.org/using-go-modules): Go's new dependency management system.
 1. [`ko`](https://github.com/google/ko):
@@ -30,7 +30,7 @@ You must install these tools:
 KServe currently requires `Knative Serving` for auto-scaling, canary rollout, `Istio` for traffic routing and ingress.
 
 * To install Knative components on your Kubernetes cluster, follow the [installation guide](https://knative.dev/docs/admin/install/) or alternatively, 
-use the [Knative Operators](https://knative.dev/docs/install/knative-with-operators/) to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
+use the [Knative Operators](https://knative.dev/docs/install/operator/knative-with-operators/) to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
 they can be installed via the [directions here](https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md).
 
 * If you start from scratch, KServe requires Kubernetes 1.17+, Knative 0.19+, Istio 1.9+.
@@ -123,12 +123,12 @@ Once you've [setup your development environment](#prerequisites), you can verify
     ```
 
 ### Deploy KServe from master branch
-We suggest using [cert manager](https://github.com/jetstack/cert-manager) for
+We suggest using [cert manager](https://github.com/cert-manager/cert-manager) for
 provisioning the certificates for the webhook server. Other solutions should
 also work as long as they put the certificates in the desired location.
 
 You can follow
-[the cert manager documentation](https://docs.cert-manager.io/en/latest/getting-started/install/kubernetes.html)
+[the cert manager documentation](https://cert-manager.io/docs/installation/)
 to install it.
 
 If you don't want to install cert manager, you can set the `KSERVE_ENABLE_SELF_SIGNED_CA` environment variable to true.

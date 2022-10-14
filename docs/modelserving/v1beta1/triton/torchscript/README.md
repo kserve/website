@@ -219,6 +219,106 @@ Apply the gRPC `InferenceService` yaml and then you can call the model with `tri
 kubectl apply -f torchscript_grpc.yaml
 ```
 
+
+### Run a prediction with grpcurl
+
+After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fullstorydev/grpcurl), can be used to send gRPC requests to the `InferenceService`.
+
+```bash
+# download the proto file
+curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+
+# download the input json file
+curl -O https://raw.githubusercontent.com/kserve/website/main/docs/modelserving/v1beta1/triton/torchscript/input-grpc.json
+
+INPUT_PATH=input-grpc.json
+PROTO_FILE=grpc_predict_v2.proto
+SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+```
+
+The gRPC APIs follow the KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
+
+For example, `ServerReady` API can be used to check if the server is ready:
+
+```bash
+grpcurl \
+  -plaintext \
+  -proto ${PROTO_FILE} \
+  -authority ${SERVICE_HOSTNAME}" \
+  ${INGRESS_HOST}:${INGRESS_PORT} \
+  inference.GRPCInferenceService.ServerReady
+```
+
+Expected Output
+```json
+{
+  "ready": true
+}
+```
+
+`ModelInfer` API takes input following the `ModelInferRequest` schema defined in the `grpc_predict_v2.proto` file. Notice that the input file differs from that used in the previous `curl` example. 
+
+```bash
+grpcurl \
+  -vv \
+  -plaintext \
+  -proto ${PROTO_FILE} \
+  -H "Host: ${SERVICE_HOSTNAME}" \
+  -d @ \
+  ${INGRESS_HOST}:${INGRESS_PORT} \
+  inference.GRPCInferenceService.ModelInfer \
+  <<< $(cat "$INPUT_PATH")
+```
+
+==** Expected Output **==
+
+```
+Resolved method descriptor:
+// The ModelInfer API performs inference using the specified model. Errors are
+// indicated by the google.rpc.Status returned for the request. The OK code
+// indicates success and other codes indicate failure.
+rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+
+Request metadata to send:
+host: torchscript-cifar10.default.example.com
+
+Response headers received:
+accept-encoding: identity,gzip
+content-type: application/grpc
+date: Fri, 12 Aug 2022 01:49:53 GMT
+grpc-accept-encoding: identity,deflate,gzip
+server: istio-envoy
+x-envoy-upstream-service-time: 16
+
+Response contents:
+{
+  "modelName": "cifar10",
+  "modelVersion": "1",
+  "outputs": [
+    {
+      "name": "OUTPUT__0",
+      "datatype": "FP32",
+      "shape": [
+        "1",
+        "10"
+      ]
+    }
+  ],
+  "rawOutputContents": [
+    "wCwGwOJLDL7icgK/dusyQAqAD799KP8/In2QP4zAs7+WuRk/2OoHwA=="
+  ]
+}
+
+Response trailers received:
+(empty)
+Sent 1 request and received 1 response
+```
+
+The content of output tensor is encoded in `rawOutputContents` field. It can be `base64` decoded and loaded into a Numpy array with the given datatype and shape.
+
+Alternatively, Triton also provides [Python client library](https://pypi.org/project/tritonclient/) which has many [examples](https://github.com/triton-inference-server/client/tree/main/src/python/examples) showing how to interact with the KServe V2 gPRC protocol.
+
+
 ## Add Transformer to the InferenceService
 
 `Triton Inference Server` expects tensors as input data, often times a pre-processing step is required before making the prediction call
@@ -227,9 +327,10 @@ User is responsible to create a python class which extends from KServe `Model` b
 format to tensor format according to V2 prediction protocol, `postprocess` handle is to convert raw prediction response to a more user friendly response.
 
 ### Implement pre/post processing functions
-```python
+
+```python title="image_transformer_v2.py"
 import kserve
-from typing import List, Dict
+from typing import Dict
 from PIL import Image
 import torchvision.transforms as transforms
 import logging
@@ -253,10 +354,11 @@ def image_transform(instance):
     return res.tolist()
 
 
-class ImageTransformer(kserve.Model):
-    def __init__(self, name: str, predictor_host: str):
+class ImageTransformerV2(kserve.Model):
+    def __init__(self, name: str, predictor_host: str, protocol: str):
         super().__init__(name)
         self.predictor_host = predictor_host
+        self.protocol = protocol
 
     def preprocess(self, inputs: Dict) -> Dict:
         return {
@@ -271,11 +373,10 @@ class ImageTransformer(kserve.Model):
         }
 
     def postprocess(self, results: Dict) -> Dict:
-        # Here we reshape the data because triton always returns the flatten 1D array as json if not explicitly requesting binary
-        # since we are not using the triton python client library which takes care of the reshape it is up to user to reshape the returned tensor.
-        return {output["name"] : np.array(output["data"]).reshape(output["shape"]) for output in results["outputs"]}
+        return {output["name"]: np.array(output["data"]).reshape(output["shape"]).tolist()
+                for output in results["outputs"]}
 ```
-Please find [the code example](https://github.com/kserve/kserve/tree/release-0.8/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.8/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
+Please find [the code example](https://github.com/kserve/kserve/tree/release-0.9/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.9/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
 
 ### Build Transformer docker image
 ```

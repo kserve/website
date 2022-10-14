@@ -59,7 +59,7 @@ import kserve
 from typing import Dict
 from ray import serve
 
-@serve.deployment(name="custom-model", config={"num_replicas": 2})
+@serve.deployment(name="custom-model", num_replicas=2)
 class AlexNetModel(kserve.Model):
     def __init__(self):
        self.name = "custom-model"
@@ -129,9 +129,10 @@ You can supply additional command arguments on the container spec to configure t
 - `--workers`: fork the specified number of model server workers(multi-processing), the default value is 1. If you start the server after model is loaded
 you need to make sure model object is fork friendly for multi-processing to work. Alternatively you can decorate your model server
 class with replicas and in this case each model server is created as a python worker independent of the server.
-- `--http_port`: the http port model server is listening on, the default port is 8080 
+- `--http_port`: the http port model server is listening on, the default port is 8080.
 - `--max_buffer_size`: Max socker buffer size for tornado http client, the default limit is 10Mi.
-- `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`
+- `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
+- `enable_latency_logging`: whether to log latency metrics per request, the default is False.
 
 ### Environment Variables
 

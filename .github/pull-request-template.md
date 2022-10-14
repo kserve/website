@@ -24,7 +24,7 @@ into the main branch.
 After the cherry-pick PR has merged, remove the cherry-pick label from the original PR.
 
 For all resources for contributing to the KServe documentation, see the
-[KServe contributor's guide](docs/help/contributor/mkdocs-contributor-guide.md).
+[KServe contributor's guide](/docs/help/contributor/mkdocs-contributor-guide.md).
 
  -->
 
