@@ -2,7 +2,7 @@
 
 The [AMD Inference Server](https://xilinx.github.io/inference-server/main/index.html) is an easy-to-use inferencing solution specially designed for AMD CPUs, GPUs, and FPGAs.
 It can be deployed as a standalone executable or on a Kubernetes cluster with KServe or used to create custom applications by linking to its C++ API.
-This example demonstrates how to deploy a Tensorflow GraphDef model on KServe with the AMD Inference Server to run inference on AMD EPYC CPUs.
+This example demonstrates how to deploy a Tensorflow GraphDef model on KServe with the AMD Inference Server to run inference on [AMD EPYC CPUs](https://www.amd.com/en/processors/epyc-server-cpu-family).
 
 ## Prerequisites
 
@@ -72,7 +72,7 @@ outputs [
 The name, platform, inputs and outputs must all be defined.
 Some notes about the acceptable values:
 - the name must uniquely identify a model for the server
-- the platform must be one of `tfzendnn_graphdef` or `vitis_xmodel`
+- the platform must be `tfzendnn_graphdef`
 - for each input/output, the name, datatype, and shape must be defined
   - the name corresponds to the name of the input/output tensor(s). Multiple input/output tensors aren't currently supported
   - the shape must be a flat array describing the shape of the input/output tensor
@@ -101,8 +101,8 @@ The code snippets below use the environment variables `INGRESS_HOST` and `INGRES
 
 ```bash
 # download the inference service file and input data
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/single_model.yaml
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/input.json
+curl -O https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/single_model.yaml
+curl -O https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/input.json
 
 # update the single_model.yaml to use your custom image
 sed -i "s/<image>/$(whoami)\/proteus:latest/" single_model.yaml
@@ -120,8 +120,8 @@ export SERVICE_HOSTNAME=$(kubectl get inferenceservice example-amdserver-single-
 
 ```bash
 # download the inference service file and input data
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/multi_model.yaml
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/amd/input.json
+curl -O https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/multi_model.yaml
+curl -O https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/input.json
 
 # update the multi_model.yaml to use the custom image
 sed -i "s/<image>/$(whoami)\/proteus:latest/" multi_model.yaml
