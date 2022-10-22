@@ -14,7 +14,7 @@ KNative to detect outliers.
 
 ## CIFAR10 Outlier Detector
 
-A [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) Outlier Detector. Run the [notebook demo](cifar10_outlier.ipynb) to test.
+A [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) Outlier Detector. Run the [notebook demo](https://github.com/kserve/kserve/blob/master/docs/samples/outlier-detection/alibi-detect/cifar10/cifar10_outlier.ipynb) to test.
 
 The notebook requires KNative Eventing >= 0.18.
 
@@ -23,7 +23,3 @@ The notebook requires KNative Eventing >= 0.18.
 A [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) Drift Detector. Run the [notebook demo](cifar10_drift.ipynb) to test.
 
 The notebook requires KNative Eventing >= 0.18.
-
-
-
-
