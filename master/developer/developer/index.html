@@ -2555,7 +2555,7 @@ meet these requirements, you can make changes and
 <li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/"><code>kubectl</code></a>: For
    managing development environments.</li>
 <li><a href="https://github.com/kubernetes-sigs/kustomize/"><code>kustomize</code></a> To customize YAMLs for different environments, requires v3.5.4+.</li>
-<li><a href="https://github.com/mikefarah/yq"><code>yq</code></a> yq is used in the project makefiles to parse and display YAML output. Please use yq version <a href="https://github.com/mikefarah/yq/releases/tag/3.4.1"><code>3.*</code></a>. Latest yq version <code>4.*</code> has remove <code>-d</code> command so doesn't work with the scripts.</li>
+<li><a href="https://github.com/mikefarah/yq"><code>yq</code></a> yq is used in the project makefiles to parse and display YAML output, requires yq <code>4.*</code>.</li>
 </ol>
 <h3 id="install-knative-on-a-kubernetes-cluster">Install Knative on a Kubernetes cluster<a class="headerlink" href="#install-knative-on-a-kubernetes-cluster" title="Permanent link">&para;</a></h3>
 <p>KServe currently requires <code>Knative Serving</code> for auto-scaling, canary rollout, <code>Istio</code> for traffic routing and ingress.</p>
