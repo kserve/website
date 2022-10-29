@@ -265,3 +265,13 @@ to the latest version, `go get golang.org/x/text@v0.3.0` to upgrade to a specifi
 make deploy-dev
 ```
 
+## Contribute to the code 
+
+See the guidelines for 
+* [contributing a feature](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature)
+* [contributing to an existing issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests)
+
+## Feedback 
+
+The best place to provide feedback about the KServe code is via a Github issue. See [creating a Github issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#issues) for guidelines on submitting bugs and feature requests.
+
