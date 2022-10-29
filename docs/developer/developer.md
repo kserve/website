@@ -254,6 +254,8 @@ of:
     [apis/serving/v1beta1](https://github.com/kserve/kserve/tree/master/pkg/apis/serving/v1beta1),
   - Manifests or kustomize patches stored in [config](https://github.com/kserve/kserve/tree/master/config).
 
+  To generate the KServe python/go clients, you should run `make generate`.
+
 - **If you want to add new dependencies**, then you add the imports and the specific version of the dependency
 module in `go.mod`. When it encounters an import of a package not provided by any module in `go.mod`, the go
 command automatically looks up the module containing the package and adds it to `go.mod` using the latest version.
@@ -268,8 +270,8 @@ make deploy-dev
 ## Contribute to the code 
 
 See the guidelines for 
-* [contributing a feature](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature)
-* [contributing to an existing issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests)
+- [contributing a feature](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature)
+- [contributing to an existing issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests)
 
 ## Feedback 
 
