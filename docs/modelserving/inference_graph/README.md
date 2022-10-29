@@ -2,29 +2,27 @@
 
 ## Motivation
 
-ML inference system is getting bigger and more complex, it often consists of many models to make a single prediction. The common use cases are image classification and nature language processing pipelines.
-For example, a face recognition pipeline may need to find the face area first and then compute the features of the faces to match the database; a NLP pipeline needs to run a document classification first then
-downstream named entity detection based on previous classification results.
+ML inference systems are getting bigger and more complex, they often consist of many models to make a single prediction. Some common use cases are image classification and natural language processing pipelines.
+For example, a face recognition pipeline may need to first locate faces in a image, then compute the features of the faces to match records in a database. An NLP pipeline needs to first run document classification, then perform named entity detection downstream based on the previous classification results.
 
-KServe has the unique strength to build distributed inference graph: graph router autoscaling, native integration with individual `InferenceServices`, standard inference protocol for chaining models. KServe
-leverage these strengths to build `InferenceGraph` and enable users to deploy complex ML inference pipelines to production in a declarative and scalable way.
+KServe has unique strengths for building a distributed inference graph: an autoscaling graph router, native integration with individual `InferenceServices`, and a standard inference protocol for chaining models. KServe leverages these strengths to build an `InferenceGraph` and enable users to deploy complex ML inference pipelines to production in a declarative and scalable way.
 
 ## Concepts
 
 ![image](images/inference_graph.png)
 
-* **InferenceGraph**: It is made up with a list of routing `Nodes`, each `Node` consists of a set of routing `Steps`.
+* **InferenceGraph**: Made up of a list of routing `Nodes`, where each `Node` consists of a set of routing `Steps`.
   Each `Step` can either route to an `InferenceService` or another `Node` defined on the graph which makes the `InferenceGraph`
   highly composable. The graph router is deployed behind an HTTP endpoint and can be scaled dynamically based on request volume.
   The `InferenceGraph` supports four different types of Routing `Nodes`: **Sequence**, **Switch**, **Ensemble**, **Splitter**.
 
 
-* **Sequence Node**: It allows users to define multiple `Steps` with `InferenceServices` or `Nodes` as routing targets in a sequence.
-  The `Steps` are executed in sequence and the request/response from previous step can be passed to the next step as input based on
+* **Sequence Node**: Allows users to define multiple `Steps` with `InferenceServices` or `Nodes` as routing targets in a sequence.
+  The `Steps` are executed in sequence and the request/response from the previous step can be passed to the next step as input based on
   configuration.
 
 
-* **Switch Node**: It allows users to define routing conditions and select a step to execute if it matches the condition, the response
+* **Switch Node**: Enables users to define routing conditions and select a step to execute if it matches a condition. The response
   is returned as soon it finds the first step that matches the condition. If no condition is matched, the graph returns the original request.
 
 
@@ -33,5 +31,5 @@ leverage these strengths to build `InferenceGraph` and enable users to deploy co
   using a "majority vote" method. Multiple regression trees are often combined using various averaging techniques.
 
 
-* **Splitter Node**: It allows users to split the traffic to multiple targets using a weighted distribution.
+* **Splitter Node**: Allows users to split the traffic to multiple targets using a weighted distribution.
 
