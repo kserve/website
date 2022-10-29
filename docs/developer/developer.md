@@ -269,8 +269,10 @@ make deploy-dev
 
 ## Contribute to the code 
 
-See the guidelines for 
+See the guidelines for
+
 - [contributing a feature](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature)
+
 - [contributing to an existing issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests)
 
 ## Feedback 
