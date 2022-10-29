@@ -2782,9 +2782,10 @@ of:</p>
 <p>API type definitions in
     <a href="https://github.com/kserve/kserve/tree/master/pkg/apis/serving/v1beta1">apis/serving/v1beta1</a>,</p>
 </li>
-<li>
-<p>Manifests or kustomize patches stored in <a href="https://github.com/kserve/kserve/tree/master/config">config</a>.</p>
-</li>
+<li>Manifests or kustomize patches stored in <a href="https://github.com/kserve/kserve/tree/master/config">config</a>.</li>
+</ul>
+<p>To generate the KServe python/go clients, you should run <code>make generate</code>.</p>
+<ul>
 <li>
 <p><strong>If you want to add new dependencies</strong>, then you add the imports and the specific version of the dependency
 module in <code>go.mod</code>. When it encounters an import of a package not provided by any module in <code>go.mod</code>, the go
@@ -2799,8 +2800,8 @@ to the latest version, <code>go get golang.org/x/text@v0.3.0</code> to upgrade t
 </code></pre></div>
 <h2 id="contribute-to-the-code">Contribute to the code<a class="headerlink" href="#contribute-to-the-code" title="Permanent link">&para;</a></h2>
 <p>See the guidelines for 
-* <a href="https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature">contributing a feature</a>
-* <a href="https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests">contributing to an existing issue</a></p>
+- <a href="https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature">contributing a feature</a>
+- <a href="https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests">contributing to an existing issue</a></p>
 <h2 id="feedback">Feedback<a class="headerlink" href="#feedback" title="Permanent link">&para;</a></h2>
 <p>The best place to provide feedback about the KServe code is via a Github issue. See <a href="https://github.com/kserve/community/blob/main/CONTRIBUTING.md#issues">creating a Github issue</a> for guidelines on submitting bugs and feature requests.</p>
 
