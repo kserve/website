@@ -75,6 +75,27 @@ class AlexNetModel(kserve.Model):
 if __name__ == "__main__":
     kserve.ModelServer().start({"custom-model": AlexNetModel})
 ```
+fractional gpu example
+```python
+@serve.deployment(name="custom-model", num_replicas=2, ray_actor_options={"num_cpus":1, "num_gpus": 0.5})
+class AlexNetModel(kserve.Model):
+    def __init__(self):
+       self.name = "custom-model"
+       super().__init__(self.name)
+       self.load()
+
+    def load(self):
+        pass
+
+    def predict(self, request: Dict) -> Dict:
+        pass
+
+if __name__ == "__main__":
+    ray.init(num_cpus=2, num_gpus=1)
+    kserve.ModelServer().start({"custom-model": AlexNetModel})
+```
+The more details for ray fractional cpu and gpu can be found [here](https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus).
+
 The full code example can be found [here](https://github.com/kserve/kserve/tree/master/python/custom_model/model_remote.py).
 
 Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
