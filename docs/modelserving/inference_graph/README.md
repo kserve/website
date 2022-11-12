@@ -49,7 +49,7 @@ config-map like this :
     "memoryRequest": "100Mi",
     "memoryLimit": "1Gi",
     "cpuRequest": "100m",
-    "cpuLimit": "1"
+    "cpuLimit": "1",
     "headers": {
       "propagate":[
         "Custom-Header"
