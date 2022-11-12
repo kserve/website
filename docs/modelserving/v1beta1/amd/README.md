@@ -9,10 +9,14 @@ This example demonstrates how to deploy a Tensorflow GraphDef model on KServe wi
 This example was tested on an Ubuntu 18.04 host machine using the Bash shell.
 
 These instructions assume:
-- You have a machine with a modern version of Docker (>=18.09) and sufficient disk space to build the image
-- You have a Kubernetes cluster set up
-- KServe has been installed on the Kubernetes cluster
-- Some familiarity with Kubernetes / KServe
+
+ - You have a machine with a modern version of Docker (>=18.09) and sufficient disk space to build the image
+
+ - You have a Kubernetes cluster set up
+
+ - KServe has been installed on the Kubernetes cluster
+
+ - Some familiarity with Kubernetes / KServe
 
 Refer to the installation instructions for these tools to install them if needed.
 
