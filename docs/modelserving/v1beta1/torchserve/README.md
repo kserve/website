@@ -1,10 +1,10 @@
-# Deploy PyTorch model with TorchServe InferenceService
+# Deploy a PyTorch Model with TorchServe InferenceService
 
-In this example, we deploy a trained PyTorch mnist model to predict handwritten digits by running an `InferenceService` with [TorchServe runtime](https://github.com/pytorch/serve) which is the default installed serving runtime for PyTorch models. Model interpretability is also an important aspect which helps to understand which of the input features were important for a particular classification. 
-[Captum](https://captum.ai) is a model interpretability library, in this example TorchServe **explain** endpoint implements with the Captum's state-of-the-art algorithm, including integrated gradients to provide user with an easy way to understand which features are contributing to the model output. You can refer to [Captum Tutorial](https://captum.ai/tutorials/) for more examples.
+In this example, we deploy a trained PyTorch MNIST model to predict handwritten digits by running an `InferenceService` with [TorchServe runtime](https://github.com/pytorch/serve) which is the default installed serving runtime for PyTorch models. Model interpretability is also an important aspect which helps to understand which of the input features were important for a particular classification. 
+[Captum](https://captum.ai) is a model interpretability library. In this example, TorchServe **explain** endpoint is implemented with Captum's state-of-the-art algorithm, including integrated gradients to provide users with an easy way to understand which features are contributing to the model output. You can refer to the [Captum Tutorial](https://captum.ai/tutorials/) for more examples.
 
-## Creating model storage with model archive and config file
-The KServe/TorchServe integration expects following model store layout on the storage with **TorchServe Model Archive** and **Model Configuration**.
+## Creating Model Storage with a Model Archive File and Config
+The KServe/TorchServe integration expects following model store layout.
 
 ```bash
 ├── config
@@ -14,13 +14,12 @@ The KServe/TorchServe integration expects following model store layout on the st
 │   ├── mnist.mar
 ```
 
-TorchServe provides a utility to package all the model artifacts into a single [TorchServe Model Archive Files (MAR)](https://github.com/pytorch/serve/blob/master/model-archiver/README.md), after model artifacts are packaged into MAR file you then upload to the **model-store** under model storage path.
+TorchServe provides a utility to package all the model artifacts into a single [TorchServe Model Archive File (MAR)](https://github.com/pytorch/serve/blob/master/model-archiver/README.md). After model artifacts are packaged into a MAR file, you then upload to the **model-store** under the model storage path.
 
-You can store your model and dependent files on remote storage or local persistent volume, the mnist model and dependent files can be obtained
-from [here](https://github.com/pytorch/serve/tree/master/examples/image_classifier/mnist).
+You can store your model and dependent files on remote storage or local persistent volume. The MNIST model and dependent files can be obtained from [here](https://github.com/pytorch/serve/tree/master/examples/image_classifier/mnist).
 
 !!! Note
-    For remote storage you can choose to start the example using the prebuilt mnist MAR file stored on KServe example GCS bucket
+    For remote storage you can choose to start the example using the prebuilt MNIST MAR file stored on KServe example GCS bucket
     `gs://kfserving-examples/models/torchserve/image_classifier`, or generate the MAR file with `torch-model-archiver` and 
     create the model store on remote storage according to the above layout.
 
@@ -34,7 +33,7 @@ from [here](https://github.com/pytorch/serve/tree/master/examples/image_classifi
     For PVC user please refer to [model archive file generation](./model-archiver/README.md) for auto generation of MAR files with
     the model and dependent files.
 
-TorchServe uses a **config.properties** file to store configuration, please see [here](https://pytorch.org/serve/configuration.html#config-properties-file) for more details with the properties supported on the configuration file and following is an sample file for KServe.
+TorchServe uses a **config.properties** file to store configuration. Please see [here](https://pytorch.org/serve/configuration.html#config-properties-file) for more details with the properties supported by the configuration file. The following is an sample file for KServe:
 
 ```
 inference_address=http://0.0.0.0:8085
@@ -52,7 +51,7 @@ model_store=/mnt/models/model-store
 model_snapshot={"name":"startup.cfg","modelCount":1,"models":{"mnist":{"1.0":{"defaultVersion":true,"marName":"mnist.mar","minWorkers":1,"maxWorkers":5,"batchSize":1,"maxBatchDelay":10,"responseTimeout":120}}}}
 ```  
 
-The KServe/TorchServe integration supports KServe v1/v2 REST protocol, in the `config.properties` we need to turn on the flag `enable_envvars_config` to enable setting the kserve envelop using environment variable.
+The KServe/TorchServe integration supports KServe v1/v2 REST protocol. In the `config.properties`, we need to turn on the flag `enable_envvars_config` to enable setting the KServe envelop using an environment variable.
 
 !!! warning
     The previous `service_envelope` property has beed deprecated and in the [config.properties](./config.properties) file use the flag `enable_envvars_config=true` to enable setting the service envelope at runtime.
@@ -60,7 +59,7 @@ The KServe/TorchServe integration supports KServe v1/v2 REST protocol, in the `c
     via local socket.
 
 
-## Deploy PyTorch model with V1 REST Protocol
+## Deploy PyTorch Model with V1 REST Protocol
 
 ### Create the TorchServe InferenceService 
 KServe by default selects the `TorchServe` runtime when you specify the model format `pytorch` on new model spec.
@@ -300,8 +299,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2
 
 ## Autoscaling
 One of the main serverless inference features is to automatically scale the replicas of an `InferenceService` matching the incoming workload.
-KServe by default enables [Knative Pod Autoscaler](https://knative.dev/docs/serving/autoscaling/) which watches traffic flow and scales up and down
-based on the configured metrics.
+KServe by default enables [Knative Pod Autoscaler](https://knative.dev/docs/serving/autoscaling/) which watches traffic flow and scales up and down based on the configured metrics.
 
 ### Knative Autoscaler
 KServe supports the implementation of **Knative Pod Autoscaler (KPA)** and **Kubernetes’ Horizontal Pod Autoscaler (HPA)**.
@@ -360,7 +358,7 @@ a strictly enforced bound, particularly if there is a sudden burst of requests, 
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
     ```
 
-You can also configure InferenceService with field `containerConcurrency` for a hard limit. The hard limit is an enforced upper bound. 
+You can also configure InferenceService with field `containerConcurrency` with a hard limit. The hard limit is an enforced upper bound. 
 If concurrency reaches the hard limit, surplus requests will be buffered and must wait until enough capacity is free to execute the requests.
 
 === "Old Schema"
@@ -436,10 +434,10 @@ torchserve-predictor-default-cj2d8-deployment-69444c9c74-xvn7t   2/2     Termina
 
 
 ## Canary Rollout
-Canary rollout is a deployment strategy when you can release a new version of model to a small percent of the production traffic.
+Canary rollout is a deployment strategy when you release a new version of model to a small percent of the production traffic.
 
 
-### Create InferenceService with canary model
+### Create InferenceService with Canary Model
 
 After the above experiments, now let's see how you can rollout a new model without moving full traffic to the new model by default.
 
@@ -611,7 +609,7 @@ kubectl get isvc torchserve -ojsonpath='{.status.components}'
 }
 ```
 
-### Rollback the model
+### Rollback the Model
 In case the new model version does not work after the traffic is moved to the new revision, you can still patch the **canaryTrafficPercent to 0**  and move the traffic back to the previously rolled model which is **torchserve-predictor-default-00001**.
 
 === "kubectl"
@@ -657,4 +655,4 @@ kubectl get isvc torchserve -ojsonpath='{.status.components}'
 ```
 
 ## Monitoring
-[Expose metrics and setup grafana dashboards](metrics/README.md)
+[Metrics Exposure and Grafana Dashboard Setup](metrics/README.md)
