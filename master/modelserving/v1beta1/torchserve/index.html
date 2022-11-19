@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deploy-pytorch-model-with-torchserve-inferenceservice" class="md-skip">
+        <a href="#deploy-a-pytorch-model-with-torchserve-inferenceservice" class="md-skip">
           Skip to content
         </a>
       
@@ -889,18 +889,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-model-storage-with-model-archive-and-config-file" class="md-nav__link">
-    Creating model storage with model archive and config file
+  <a href="#create-model-storage-with-a-model-archive-file-and-config" class="md-nav__link">
+    Create Model Storage with a Model Archive File and Config
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#deploy-pytorch-model-with-v1-rest-protocol" class="md-nav__link">
-    Deploy PyTorch model with V1 REST Protocol
+    Deploy PyTorch Model with V1 REST Protocol
   </a>
   
-    <nav class="md-nav" aria-label="Deploy PyTorch model with V1 REST Protocol">
+    <nav class="md-nav" aria-label="Deploy PyTorch Model with V1 REST Protocol">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1027,7 +1027,7 @@
         
           <li class="md-nav__item">
   <a href="#create-inferenceservice-with-canary-model" class="md-nav__link">
-    Create InferenceService with canary model
+    Create InferenceService with Canary Model
   </a>
   
 </li>
@@ -1048,7 +1048,7 @@
         
           <li class="md-nav__item">
   <a href="#rollback-the-model" class="md-nav__link">
-    Rollback the model
+    Rollback the Model
   </a>
   
 </li>
@@ -2509,18 +2509,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#creating-model-storage-with-model-archive-and-config-file" class="md-nav__link">
-    Creating model storage with model archive and config file
+  <a href="#create-model-storage-with-a-model-archive-file-and-config" class="md-nav__link">
+    Create Model Storage with a Model Archive File and Config
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#deploy-pytorch-model-with-v1-rest-protocol" class="md-nav__link">
-    Deploy PyTorch model with V1 REST Protocol
+    Deploy PyTorch Model with V1 REST Protocol
   </a>
   
-    <nav class="md-nav" aria-label="Deploy PyTorch model with V1 REST Protocol">
+    <nav class="md-nav" aria-label="Deploy PyTorch Model with V1 REST Protocol">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2647,7 +2647,7 @@
         
           <li class="md-nav__item">
   <a href="#create-inferenceservice-with-canary-model" class="md-nav__link">
-    Create InferenceService with canary model
+    Create InferenceService with Canary Model
   </a>
   
 </li>
@@ -2668,7 +2668,7 @@
         
           <li class="md-nav__item">
   <a href="#rollback-the-model" class="md-nav__link">
-    Rollback the model
+    Rollback the Model
   </a>
   
 </li>
@@ -2702,23 +2702,22 @@
 </a>
 
 
-<h1 id="deploy-pytorch-model-with-torchserve-inferenceservice">Deploy PyTorch model with TorchServe InferenceService<a class="headerlink" href="#deploy-pytorch-model-with-torchserve-inferenceservice" title="Permanent link">&para;</a></h1>
-<p>In this example, we deploy a trained PyTorch mnist model to predict handwritten digits by running an <code>InferenceService</code> with <a href="https://github.com/pytorch/serve">TorchServe runtime</a> which is the default installed serving runtime for PyTorch models. Model interpretability is also an important aspect which helps to understand which of the input features were important for a particular classification. 
-<a href="https://captum.ai">Captum</a> is a model interpretability library, in this example TorchServe <strong>explain</strong> endpoint implements with the Captum's state-of-the-art algorithm, including integrated gradients to provide user with an easy way to understand which features are contributing to the model output. You can refer to <a href="https://captum.ai/tutorials/">Captum Tutorial</a> for more examples.</p>
-<h2 id="creating-model-storage-with-model-archive-and-config-file">Creating model storage with model archive and config file<a class="headerlink" href="#creating-model-storage-with-model-archive-and-config-file" title="Permanent link">&para;</a></h2>
-<p>The KServe/TorchServe integration expects following model store layout on the storage with <strong>TorchServe Model Archive</strong> and <strong>Model Configuration</strong>.</p>
+<h1 id="deploy-a-pytorch-model-with-torchserve-inferenceservice">Deploy a PyTorch Model with TorchServe InferenceService<a class="headerlink" href="#deploy-a-pytorch-model-with-torchserve-inferenceservice" title="Permanent link">&para;</a></h1>
+<p>In this example, we deploy a trained PyTorch MNIST model to predict handwritten digits by running an <code>InferenceService</code> with <a href="https://github.com/pytorch/serve">TorchServe runtime</a> which is the default installed serving runtime for PyTorch models. Model interpretability is also an important aspect which helps to understand which of the input features were important for a particular classification. 
+<a href="https://captum.ai">Captum</a> is a model interpretability library. In this example, TorchServe <strong>explain</strong> endpoint is implemented with Captum's state-of-the-art algorithm, including integrated gradients to provide users with an easy way to understand which features are contributing to the model output. You can refer to the <a href="https://captum.ai/tutorials/">Captum Tutorial</a> for more examples.</p>
+<h2 id="create-model-storage-with-a-model-archive-file-and-config">Create Model Storage with a Model Archive File and Config<a class="headerlink" href="#create-model-storage-with-a-model-archive-file-and-config" title="Permanent link">&para;</a></h2>
+<p>The KServe/TorchServe integration expects following model store layout.</p>
 <div class="highlight"><pre><span></span><code>├── config
 │   ├── config.properties
 ├── model-store
 │   ├── densenet_161.mar
 │   ├── mnist.mar
 </code></pre></div>
-<p>TorchServe provides a utility to package all the model artifacts into a single <a href="https://github.com/pytorch/serve/blob/master/model-archiver/README.md">TorchServe Model Archive Files (MAR)</a>, after model artifacts are packaged into MAR file you then upload to the <strong>model-store</strong> under model storage path.</p>
-<p>You can store your model and dependent files on remote storage or local persistent volume, the mnist model and dependent files can be obtained
-from <a href="https://github.com/pytorch/serve/tree/master/examples/image_classifier/mnist">here</a>.</p>
+<p>TorchServe provides a utility to package all the model artifacts into a single <a href="https://github.com/pytorch/serve/blob/master/model-archiver/README.md">TorchServe Model Archive File (MAR)</a>. After model artifacts are packaged into a MAR file, you then upload to the <strong>model-store</strong> under the model storage path.</p>
+<p>You can store your model and dependent files on remote storage or local persistent volume. The MNIST model and dependent files can be obtained from <a href="https://github.com/pytorch/serve/tree/master/examples/image_classifier/mnist">here</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For remote storage you can choose to start the example using the prebuilt mnist MAR file stored on KServe example GCS bucket
+<p>For remote storage you can choose to start the example using the prebuilt MNIST MAR file stored on KServe example GCS bucket
 <code>gs://kfserving-examples/models/torchserve/image_classifier</code>, or generate the MAR file with <code>torch-model-archiver</code> and 
 create the model store on remote storage according to the above layout.</p>
 <div class="highlight"><pre><span></span><code>torch-model-archiver --model-name mnist --version <span class="m">1</span>.0 <span class="se">\</span>
@@ -2729,7 +2728,7 @@ create the model store on remote storage according to the above layout.</p>
 <p>For PVC user please refer to <a href="model-archiver/">model archive file generation</a> for auto generation of MAR files with
 the model and dependent files.</p>
 </div>
-<p>TorchServe uses a <strong>config.properties</strong> file to store configuration, please see <a href="https://pytorch.org/serve/configuration.html#config-properties-file">here</a> for more details with the properties supported on the configuration file and following is an sample file for KServe.</p>
+<p>TorchServe uses a <strong>config.properties</strong> file to store configuration. Please see <a href="https://pytorch.org/serve/configuration.html#config-properties-file">here</a> for more details with the properties supported by the configuration file. The following is an sample file for KServe:</p>
 <div class="highlight"><pre><span></span><code>inference_address=http://0.0.0.0:8085
 management_address=http://0.0.0.0:8085
 metrics_address=http://0.0.0.0:8082
@@ -2744,14 +2743,14 @@ install_py_dep_per_model=true
 model_store=/mnt/models/model-store
 model_snapshot={&quot;name&quot;:&quot;startup.cfg&quot;,&quot;modelCount&quot;:1,&quot;models&quot;:{&quot;mnist&quot;:{&quot;1.0&quot;:{&quot;defaultVersion&quot;:true,&quot;marName&quot;:&quot;mnist.mar&quot;,&quot;minWorkers&quot;:1,&quot;maxWorkers&quot;:5,&quot;batchSize&quot;:1,&quot;maxBatchDelay&quot;:10,&quot;responseTimeout&quot;:120}}}}
 </code></pre></div>
-<p>The KServe/TorchServe integration supports KServe v1/v2 REST protocol, in the <code>config.properties</code> we need to turn on the flag <code>enable_envvars_config</code> to enable setting the kserve envelop using environment variable.</p>
+<p>The KServe/TorchServe integration supports KServe v1/v2 REST protocol. In the <code>config.properties</code>, we need to turn on the flag <code>enable_envvars_config</code> to enable setting the KServe envelop using an environment variable.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The previous <code>service_envelope</code> property has beed deprecated and in the <a href="config.properties">config.properties</a> file use the flag <code>enable_envvars_config=true</code> to enable setting the service envelope at runtime.
 The requests are converted from KServe inference request format to TorchServe request format and sent to the <code>inference_address</code> configured
 via local socket.</p>
 </div>
-<h2 id="deploy-pytorch-model-with-v1-rest-protocol">Deploy PyTorch model with V1 REST Protocol<a class="headerlink" href="#deploy-pytorch-model-with-v1-rest-protocol" title="Permanent link">&para;</a></h2>
+<h2 id="deploy-pytorch-model-with-v1-rest-protocol">Deploy PyTorch Model with V1 REST Protocol<a class="headerlink" href="#deploy-pytorch-model-with-v1-rest-protocol" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-torchserve-inferenceservice">Create the TorchServe InferenceService<a class="headerlink" href="#create-the-torchserve-inferenceservice" title="Permanent link">&para;</a></h3>
 <p>KServe by default selects the <code>TorchServe</code> runtime when you specify the model format <code>pytorch</code> on new model spec.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
@@ -2951,8 +2950,7 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 </code></pre></div></p>
 <h2 id="autoscaling">Autoscaling<a class="headerlink" href="#autoscaling" title="Permanent link">&para;</a></h2>
 <p>One of the main serverless inference features is to automatically scale the replicas of an <code>InferenceService</code> matching the incoming workload.
-KServe by default enables <a href="https://knative.dev/docs/serving/autoscaling/">Knative Pod Autoscaler</a> which watches traffic flow and scales up and down
-based on the configured metrics.</p>
+KServe by default enables <a href="https://knative.dev/docs/serving/autoscaling/">Knative Pod Autoscaler</a> which watches traffic flow and scales up and down based on the configured metrics.</p>
 <h3 id="knative-autoscaler">Knative Autoscaler<a class="headerlink" href="#knative-autoscaler" title="Permanent link">&para;</a></h3>
 <p>KServe supports the implementation of <strong>Knative Pod Autoscaler (KPA)</strong> and <strong>Kubernetes’ Horizontal Pod Autoscaler (HPA)</strong>.
 The features and limitations of each of these Autoscalers are listed below.</p>
@@ -3008,7 +3006,7 @@ a strictly enforced bound, particularly if there is a sudden burst of requests, 
 </div>
 </div>
 </div>
-<p>You can also configure InferenceService with field <code>containerConcurrency</code> for a hard limit. The hard limit is an enforced upper bound. 
+<p>You can also configure InferenceService with field <code>containerConcurrency</code> with a hard limit. The hard limit is an enforced upper bound. 
 If concurrency reaches the hard limit, surplus requests will be buffered and must wait until enough capacity is free to execute the requests.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Old Schema</label><label for="__tabbed_8_2">New Schema</label></div>
 <div class="tabbed-content">
@@ -3071,8 +3069,8 @@ torchserve-predictor-default-cj2d8-deployment-69444c9c74-vvpjl   <span class="m"
 torchserve-predictor-default-cj2d8-deployment-69444c9c74-xvn7t   <span class="m">2</span>/2     Terminating   <span class="m">0</span>          103s
 </code></pre></div>
 <h2 id="canary-rollout">Canary Rollout<a class="headerlink" href="#canary-rollout" title="Permanent link">&para;</a></h2>
-<p>Canary rollout is a deployment strategy when you can release a new version of model to a small percent of the production traffic.</p>
-<h3 id="create-inferenceservice-with-canary-model">Create InferenceService with canary model<a class="headerlink" href="#create-inferenceservice-with-canary-model" title="Permanent link">&para;</a></h3>
+<p>Canary rollout is a deployment strategy when you release a new version of model to a small percent of the production traffic.</p>
+<h3 id="create-inferenceservice-with-canary-model">Create InferenceService with Canary Model<a class="headerlink" href="#create-inferenceservice-with-canary-model" title="Permanent link">&para;</a></h3>
 <p>After the above experiments, now let's see how you can rollout a new model without moving full traffic to the new model by default.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">Old Schema</label><label for="__tabbed_10_2">New Schema</label></div>
 <div class="tabbed-content">
@@ -3224,7 +3222,7 @@ torchserve-predictor-default-00002-deployment-c6fcc65dd-rjknq    <span class="m"
 <span class="w">  </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
-<h3 id="rollback-the-model">Rollback the model<a class="headerlink" href="#rollback-the-model" title="Permanent link">&para;</a></h3>
+<h3 id="rollback-the-model">Rollback the Model<a class="headerlink" href="#rollback-the-model" title="Permanent link">&para;</a></h3>
 <p>In case the new model version does not work after the traffic is moved to the new revision, you can still patch the <strong>canaryTrafficPercent to 0</strong>  and move the traffic back to the previously rolled model which is <strong>torchserve-predictor-default-00001</strong>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="14:1"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="__tabbed_14_1">kubectl</label></div>
 <div class="tabbed-content">
@@ -3267,7 +3265,7 @@ torchserve-predictor-default-00002-deployment-c6fcc65dd-rjknq    <span class="m"
 <span class="p">}</span><span class="w"></span>
 </code></pre></div></p>
 <h2 id="monitoring">Monitoring<a class="headerlink" href="#monitoring" title="Permanent link">&para;</a></h2>
-<p><a href="metrics/">Expose metrics and setup grafana dashboards</a></p>
+<p><a href="metrics/">Metrics Exposure and Grafana Dashboard Setup</a></p>
 
               
             </article>
