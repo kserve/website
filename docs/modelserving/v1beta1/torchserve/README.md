@@ -3,7 +3,7 @@
 In this example, we deploy a trained PyTorch MNIST model to predict handwritten digits by running an `InferenceService` with [TorchServe runtime](https://github.com/pytorch/serve) which is the default installed serving runtime for PyTorch models. Model interpretability is also an important aspect which helps to understand which of the input features were important for a particular classification. 
 [Captum](https://captum.ai) is a model interpretability library. In this example, TorchServe **explain** endpoint is implemented with Captum's state-of-the-art algorithm, including integrated gradients to provide users with an easy way to understand which features are contributing to the model output. You can refer to the [Captum Tutorial](https://captum.ai/tutorials/) for more examples.
 
-## Creating Model Storage with a Model Archive File and Config
+## Create Model Storage with a Model Archive File and Config
 The KServe/TorchServe integration expects following model store layout.
 
 ```bash
