@@ -33,3 +33,26 @@ KServe has unique strengths for building a distributed inference graph: an autos
 
 * **Splitter Node**: Allows users to split the traffic to multiple targets using a weighted distribution.
 
+## Features
+
+#### Headers Propagation
+If you want IG router to propagate the headers, you passed in the request to IG, to all the steps in your graph then you can do so using `inferenceservice-config`
+config-map in kserve namespace.
+For example:
+If you want to propagate a certain header, say "Custom-Header", then you can edit the `router` section of `inferenceservice-config`
+config-map like this :
+```
+{
+    "image" : "kserve/router:v0.10.0",
+    "memoryRequest": "100Mi",
+    "memoryLimit": "1Gi",
+    "cpuRequest": "100m",
+    "cpuLimit": "1",
+    "headers": {
+      "propagate":[
+        "Custom-Header"
+      ]
+    }
+}
+```
+Once you update this config-map, kserve controller will automatically reconcile IG to start propagating headers.
