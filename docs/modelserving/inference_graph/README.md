@@ -36,7 +36,7 @@ KServe has unique strengths for building a distributed inference graph: an autos
 ## Features
 
 #### Headers Propagation
-If you want IG router to propagate the headers, you passed in the request to IG, to all the steps in your graph then you can do so using `inferenceservice-config`
+If you want Inference Graph's router to propagate the headers, you passed in the request to Inference Graph, to all the steps in your graph then you can do so using `inferenceservice-config`
 config-map in kserve namespace.
 For example:
 If you want to propagate a certain header, say "Custom-Header", then you can edit the `router` section of `inferenceservice-config`
@@ -55,4 +55,4 @@ config-map like this :
     }
 }
 ```
-Once you update this config-map, kserve controller will automatically reconcile IG to start propagating headers.
+Once you update this config-map, kserve controller will automatically reconcile Inference Graph to start propagating headers.
