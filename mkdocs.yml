@@ -5,13 +5,13 @@ nav:
           - First InferenceService: get_started/first_isvc.md
     - Administration Guide:
           - Install KServe:
-                - Serverless installation: admin/serverless.md
+                - Serverless:
+                  - Serverless installation: admin/serverless/serverless.md
+                  - Istio Service Mesh: admin/serverless/servicemesh/README.md
+                  - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
                 - ModelMesh installation: admin/modelmesh.md
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - Migrating from KFServing: admin/migration.md
-          - Networking Layer:
-                - Istio Service Mesh: admin/servicemesh/README.md
-                - Kourier Networking Layer: admin/kourier_networking/README.md
     - User Guide:
           - Concepts:
                 - Control Plane:

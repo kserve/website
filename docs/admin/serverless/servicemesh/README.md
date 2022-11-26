@@ -1,4 +1,4 @@
-# Deploy InferenceService in ServiceMesh mode
+# Secure InferenceService with ServiceMesh
 A service mesh is a dedicated infrastructure layer that you can add to your InferenceService to allow you to transparently add capabilities like observability, traffic management and security.
 In this example we show how you can turn on the Istio service mesh mode to provide a uniform and efficient way to secure service-to-service communication in a cluster with TLS encryption, strong
 identity-based authentication and authorization.
@@ -87,9 +87,10 @@ First label the namespace with `istio-injection=enabled` to turn on the sidecar 
 kubectl label namespace user1 istio-injection=enabled --overwrite
 ```
 
-Create the InferenceService with and without Knative activator on the path, when `autoscaling.knative.dev/targetBurstCapacity` is set to 0,
-Knative removes the activator from the request path so the request from test service directly establishes the mTLS connection to the `InferenceService` and
-authorization policy can check the original namespace to lock down the traffic for namespace isolation.
+Create the InferenceService with and without Knative activator on the path:
+When `autoscaling.knative.dev/targetBurstCapacity` is set to 0,
+Knative removes the activator from the request path so the test service can directly establish the mTLS connection to the `InferenceService` and
+the authorization policy can check the original namespace of the request to lock down the traffic for namespace isolation.
 
 === "InferenceService with activator on path"
 
