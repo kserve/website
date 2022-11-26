@@ -2,7 +2,7 @@
 KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
-Kubernetes 1.20 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
+Kubernetes 1.22 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.
 
 ## Recommended Version Matrix
@@ -25,7 +25,7 @@ The recommended networking layer for KServe is [Istio](https://istio.io/) as cur
 Alternatively you can also choose other networking layers like [Kourier](https://github.com/knative-sandbox/net-kourier) or [Contour](https://projectcontour.io/), see [how to install Kourier with KServe guide](./kourier_networking/README.md).
 
 ## 3. Install Cert Manager
-The minimally required Cert Manager version is 1.3.0 and you can refer to [Cert Manager](https://cert-manager.io/docs/installation/).
+The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert Manager](https://cert-manager.io/docs/installation/).
 
 !!! note
     Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.
