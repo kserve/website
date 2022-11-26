@@ -1,28 +1,21 @@
-# Deploy model with alternative networking layer
+# Deploy InferenceService with Alternative Networking Layer
 
-Kserve v0.9 and before versions are all tightly coupled with istio network layer. It may cause the Kserve users who deployed the model in the GKE cluster to face deprecated warnings or errors. But Kserve now provides an option to disable top level virtual service and configure other network layers.
+KServe v0.9 and prior versions are all tightly coupled with Istio network layer because of the top level virtual service.
+Now KServe provides an option to disable top level virtual service and configure other network layers.
 
-**GKE has deprecated istio and won't support istio on existing clusters as well after September 2022.**
-Refer this [link](https://cloud.google.com/istio/docs/istio-on-gke/overview) to know more.
+Knative Operator can configure the Knative Serving component with different network layer options and now KServe is also able to support other networking layer.
 
-Knative Operator can configure the Knative Serving component with different network layer options. So Kserve also added support to configure other networking layer.
+Istio is a default networking layer in Knative, but it can be changed to any other network layers.
+For example, [Kourier](https://developers.redhat.com/blog/2020/06/30/kourier-a-lightweight-knative-serving-ingress) is an alternative network layer.
+The following steps show how you can deploy KServe with a `Kourier` network layer.
 
-Istio is a default networking layer in Knative and it can be changed to any other network layers. For example, [Kourier](https://developers.redhat.com/blog/2020/06/30/kourier-a-lightweight-knative-serving-ingress) is an alternative network layer. The following steps helps to migrate or set a Kourier network layer.
 
-## Delete Istio networking layer
-
-> **_NOTE:_** Skip this command if you are not install istio previously.
-
-```bash
-kubectl delete --filename https://github.com/knative/net-istio/releases/download/${KNATIVE_VERSION}/release.yaml
-```
-
-## Create Kourier networking layer
+## Install Kourier networking layer
 
 1. Install the Knative Kourier controller by running the command:
 
     ```bash
-    kubectl apply -f https://github.com/knative/net-kourier/releases/download/knative-v1.7.0/kourier.yaml
+    kubectl apply -f https://github.com/knative/net-kourier/releases/download/${KNATIVE_VERSION}/kourier.yaml
     ```
 
 2. Configure Knative Serving to use Kourier by default by running the command:
@@ -34,7 +27,7 @@ kubectl delete --filename https://github.com/knative/net-istio/releases/download
     --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
     ```
 
-## Verify Kourier has installed
+## Verify Kourier installation
 
 ```bash
 kubectl get pods -n knative-serving && kubectl get pods -n kourier-system
@@ -55,36 +48,27 @@ NAME                                      READY   STATUS    RESTARTS   AGE
 3scale-kourier-gateway-54c49c8ff5-x8tgn   1/1     Running   0          10m
 ```
 
-## Edit inference-configmap to disable istio virtual host
+## Edit inference-configmap to disable Istio top level virtual host
 
 ```bash
 kubectl edit configmap/inferenceservice-config --namespace kserve
+
+ingress : |- {
+    "disableIstioVirtualHost": true
+}
 ```
 
-Add the flag `"disableIstioVirtualHost": true` under **ingress** config in inferenceservice configmap.
+Add the flag `"disableIstioVirtualHost": true` under **ingress** config in `inferenceservice-config` configmap.
 
-## Restart the KServe controller
+## Restart the KServe Controller
 
-To know the kserve controller manager pod name
+Restart the KServe controller manager pod to take effect the configmap change.
 
 ```bash
-kubectl get pods --namespace kserve
+kubectl rollout restart deployment kserve-controller-manager -n kserve
 ```
 
-Example output:
-
-```bash
-NAME                                         READY   STATUS    RESTARTS   AGE
-kserve-controller-manager-6f6786b8b4-z9hv2   2/2     Running   0          34m
-```
-
-Restart the kserve controller manager pod by deleting pod
-
-```bash
-kubectl delete pods kserve-controller-manager-6f6786b8b4-z9hv2 --namespace kserve
-```
-
-## Port Forward Kourier
+## Port Forward Kourier Gateway
 
 You can do `Port Forward` for testing purpose.
 
@@ -93,9 +77,10 @@ kubectl port-forward --namespace kourier-system \
 $(kubectl get pod -n kourier-system -l "app=3scale-kourier-gateway" --output=jsonpath="{.items[0].metadata.name}") 8080:8080
 ```
 
-## Deploy PMML model for testing
+## Deploy InferenceService for testing Kourier Networking Layer
 
 ### Create the InferenceService
+
 === "Old Schema"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
@@ -134,7 +119,7 @@ inferenceservice.serving.kserve.io/pmml-demo created
 ```
 ## Run a prediction
 
-The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=pmml-demo

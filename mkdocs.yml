@@ -11,7 +11,7 @@ nav:
                 - Migrating from KFServing: admin/migration.md
           - Networking Layer:
                 - Istio Service Mesh: admin/servicemesh/README.md
-                - Kourier Networking: modelserving/kourier_networking/README.md
+                - Kourier Networking Layer: admin/kourier_networking/README.md
     - User Guide:
           - Concepts:
                 - Control Plane:

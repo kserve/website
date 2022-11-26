@@ -21,14 +21,6 @@ spec:
  - from:
    - source:
        namespaces: ["user1"]
- # mTLS for service from source "user1" namespace to destination service with TargetBurstCapacity=0 without activator on the path
- # Source Service from "user1" namespace -> Istio local gateway -> Destination Service in "user1" namespace
- - when:
-   - key: request.headers[knative-serving-namespace]
-     values: ["user1"]
-   from:
-   - source:
-       namespaces: ["istio-system"]
  # mTLS for service from source "user1" namespace to destination service with activator on the path
  # Source Service from "user1" namespace -> Activator(Knative Serving namespace) -> Destination service in "user1" namespace
  # unfortunately currently we could not lock down the source namespace as Activator does not capture the source namespace when proxying the request, see https://github.com/knative-sandbox/net-istio/issues/554.
