@@ -13,9 +13,13 @@ Create the namespace `user1` which is used for this example.
 kubectl create namespace user1
 ```
 
-- When activator is not on the request path, the rule should be simply checking the source namespace which is `user1` in this example.
+- When activator is not on the request path, the rule checks if the source namespace of the request is the same as the destination namespace of `InferenceService`.
 
-- When activator is on the request path, the rule needs to check the source namespace from `knative-serving` namespace, however currently it is not able to check the original namespace or identity due to the [net-istio issue](https://github.com/knative-sandbox/net-istio/issues/554).
+- When activator is on the request path, the rule checks the source namespace `knative-serving` namespace as the request is proxyed through activator.
+
+!!! warning
+
+    Currently when activator is on the request path, it is not able to check the originated namespace or original identity due to the [net-istio issue](https://github.com/knative-sandbox/net-istio/issues/554).
 
 ```yaml
 apiVersion: security.istio.io/v1beta1
@@ -62,9 +66,11 @@ kubectl apply -f auth.yaml
 ```
 
 ### Disable Top Level Virtual Service 
-KServe currently creates an Istio top level virtual service to support routing between InferenceService components like predictor, transformer and explainer, as well as support path based routing as an alternative routing with service hosts. However in serverless service mesh mode this creates a problem that in order to route through the underlying virtual service created by Knative Service, the top level virtual service is required to route to the Istio Gateway instead of the InferenceService component on the service mesh directly.
+KServe currently creates an Istio top level virtual service to support routing between InferenceService components like predictor, transformer and explainer, as well as support path based routing as an alternative routing with service hosts.
+In serverless service mesh mode this creates a problem that in order to route through the underlying virtual service created by Knative Service, the top level virtual service is required to route to the `Istio Gateway` instead of to the InferenceService component on the service mesh directly.
 
-By disabling the top level virtual service, it eliminates the extra route to istio local gateway and the authorization policy can check the source namespace when mTLS happens directly between service to service when activator is not on the request path. To disable the top level virtual service, add the flag `"disableIstioVirtualHost": true` under the **ingress** config in inferenceservice configmap.
+By disabling the top level virtual service, it eliminates the extra route to Istio local gateway and the authorization policy can check the source namespace when mTLS is established directly between service to service and activator is not on the request path.
+To disable the top level virtual service, add the flag `"disableIstioVirtualHost": true` under the **ingress** config in inferenceservice configmap.
 
 ```bash
 kubectl edit configmap/inferenceservice-config --namespace kserve
@@ -203,8 +209,8 @@ Deploy a test service in `default` namespace with [sleep.yaml](./sleep.yaml) whi
 kubectl apply -f sleep.yaml
 ```
 
-Run a prediction request to the `sklearn-iris` InferenceService without activator, you are expected to get HTTP 403 "RBAC denied" as the authorization rule only
-allows the traffic from the same namespace `user1` which the InferenceService is deployed to.
+When you send a prediction request to the `sklearn-iris` InferenceService without activator on the request path from a different namespace, you are expected to get HTTP 403 "RBAC denied" as the authorization rule only
+allows the traffic from the same namespace `user1` where the InferenceService is deployed.
 ```bash
 kubectl exec -it sleep-6d6b49d8b8-6ths6   -- curl -v sklearn-iris-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris
 ```
@@ -229,8 +235,9 @@ kubectl exec -it sleep-6d6b49d8b8-6ths6   -- curl -v sklearn-iris-predictor-defa
 * Connection #0 to host sklearn-iris-predictor-default.user1.svc.cluster.local left intact
 ```
 
-How when you send a prediction request to the `sklearn-iris-burst` InferenceService with activator, you are getting the HTTP 200 response due to the above limitation as we are
-not able to lock down the traffic original namespace as the request is proxyed through activator in `knative-serving` namespace.
+When you send a prediction request to the `sklearn-iris-burst` InferenceService with activator on the request path from a different namespace, you actually get HTTP 200 response due to the above limitation as the authorization policy is
+not able to lock down the traffic only from the same namespace as the request is proxyed through activator in `knative-serving` namespace, we expect to get HTTP 403 once upstream Knative `net-istio` is fixed.
+
 ```bash
 kubectl exec -it sleep-6d6b49d8b8-6ths6   -- curl -v sklearn-iris-burst-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris-burst
 ```
