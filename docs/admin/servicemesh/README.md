@@ -8,6 +8,11 @@ For namespace traffic isolation, we lock down the in cluster traffic to only all
 Because Knative requests are frequently routed through activator, when turning on mTLS additional traffic rules are required and activator/autoscaler in `knative-serving` namespace must have sidecar injected as well.
 For more details please see [mTLS in Knative](https://knative.dev/docs/serving/istio-authorization/#mutual-tls-in-knative), to understand when requests are forwarded through the activator, see [target burst capacity](https://knative.dev/docs/serving/load-balancing/target-burst-capacity/) docs.
 
+Create the namespace `user1` which is used for this example.
+```bash
+kubectl create namespace user1
+```
+
 - When activator is not on the request path, the rule should be simply checking the source namespace which is `user1` in this example.
 
 - When activator is on the request path, the rule needs to check the source namespace from `knative-serving` namespace and the original namespace or identity.
@@ -81,7 +86,7 @@ ingress : |- {
 First label the namespace with `istio-injection=enabled` to turn on the sidecar injection for the namespace.
 
 ```bash
-kubectl label namespace `user1` istio-injection=enabled --overwrite
+kubectl label namespace user1 istio-injection=enabled --overwrite
 ```
 
 === "InferenceService with activator on path"

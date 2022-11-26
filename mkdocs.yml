@@ -10,7 +10,7 @@ nav:
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - Migrating from KFServing: admin/migration.md
           - Networking Layer:
-                - Disable top-level VirtualHost: modelserving/disable_toplevel_virutalhost/README.md
+                - Istio Service Mesh: admin/servicemesh/README.md
                 - Kourier Networking: modelserving/kourier_networking/README.md
     - User Guide:
           - Concepts:
