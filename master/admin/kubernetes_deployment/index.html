@@ -220,11 +220,18 @@
   
   
   
+    
+
+  
+  
+  
     <li class="md-tabs__item">
-      <a href="../serverless/" class="md-tabs__link md-tabs__link--active">
+      <a href="../serverless/serverless/" class="md-tabs__link md-tabs__link--active">
         Administration Guide
       </a>
     </li>
+  
+
   
 
   
@@ -520,10 +527,71 @@
   
   
   
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" type="checkbox" id="__nav_3_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1_1">
+          Serverless
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Serverless" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Serverless
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../serverless/" class="md-nav__link">
+      <a href="../serverless/serverless/" class="md-nav__link">
         Serverless installation
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serverless/servicemesh/" class="md-nav__link">
+        Istio Service Mesh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../serverless/kourier_networking/" class="md-nav__link">
+        Kourier Networking Layer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -2404,7 +2472,7 @@
 
 <h1 id="kubernetes-deployment-installation-guide">Kubernetes Deployment Installation Guide<a class="headerlink" href="#kubernetes-deployment-installation-guide" title="Permanent link">&para;</a></h1>
 <p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
-<p>Kubernetes 1.20 is the minimally required version and please check the following recommended Istio versions for the corresponding
+<p>Kubernetes 1.22 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.</p>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">&para;</a></h2>
 <table>
@@ -2415,10 +2483,6 @@ Kubernetes version.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">1.21</td>
-<td align="left">1.10, 1.11</td>
-</tr>
 <tr>
 <td align="left">1.22</td>
 <td align="left">1.11, 1.12</td>
@@ -2431,10 +2495,14 @@ Kubernetes version.</p>
 <td align="left">1.24</td>
 <td align="left">1.13, 1.14</td>
 </tr>
+<tr>
+<td align="left">1.25</td>
+<td align="left">1.15, 1.16</td>
+</tr>
 </tbody>
 </table>
 <h2 id="1-install-istio">1. Install Istio<a class="headerlink" href="#1-install-istio" title="Permanent link">&para;</a></h2>
-<p>The minimally required Istio version is 1.9.5 and you can refer to the <a href="https://istio.io/latest/docs/setup/install">Istio install guide</a>.</p>
+<p>The minimally required Istio version is 1.13 and you can refer to the <a href="https://istio.io/latest/docs/setup/install">Istio install guide</a>.</p>
 <p>Once Istio is installed, create <code>IngressClass</code> resource for istio.
 <div class="highlight"><pre><span></span><code>apiVersion: networking.k8s.io/v1beta1
 kind: IngressClass
@@ -2448,7 +2516,7 @@ spec:
 <p>Istio ingress is recommended, but you can choose to install with other <a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/">Ingress controllers</a> and create <code>IngressClass</code> resource for your Ingress option.</p>
 </div>
 <h2 id="2-install-cert-manager">2. Install Cert Manager<a class="headerlink" href="#2-install-cert-manager" title="Permanent link">&para;</a></h2>
-<p>The minimally required Cert Manager version is 1.3.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager installation guide</a>.</p>
+<p>The minimally required Cert Manager version is 1.9.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager installation guide</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.</p>
