@@ -42,24 +42,26 @@ def image_transform(instance):
 
 # for REST predictor the preprocess handler converts to input dict to the v1 REST protocol dict
 class ImageTransformer(kserve.Model):
-    def __init__(self, name: str, predictor_host: str):
+    def __init__(self, name: str, predictor_host: str, headers: Dict[str, str] = None):
         super().__init__(name)
         self.predictor_host = predictor_host
+        self.ready = True
 
-    def preprocess(self, inputs: Dict) -> Dict:
+    def preprocess(self, inputs: Dict, headers: Dict[str, str] = None) -> Dict:
         return {'instances': [image_transform(instance) for instance in inputs['instances']]}
 
-    def postprocess(self, inputs: Dict) -> Dict:
+    def postprocess(self, inputs: Dict, headers: Dict[str, str] = None) -> Dict:
         return inputs
 
 # for gRPC predictor the preprocess handler converts the input dict to the v2 gRPC protocol ModelInferRequest
 class ImageTransformer(kserve.Model):
-    def __init__(self, name: str, predictor_host: str, protocol: str):
+    def __init__(self, name: str, predictor_host: str, protocol: str, headers: Dict[str, str] = None):
         super().__init__(name)
         self.predictor_host = predictor_host
         self.protocol = protocol
+        self.ready = True
 
-    def preprocess(self, request: Dict) -> ModelInferRequest:
+    def preprocess(self, request: Dict, headers: Dict[str, str] = None) -> ModelInferRequest:
         input_tensors = [image_transform(instance) for instance in request["instances"]]
         input_tensors = numpy.asarray(input_tensors)
         request = ModelInferRequest()
@@ -71,7 +73,7 @@ class ImageTransformer(kserve.Model):
             request.raw_input_contents.extend([input_0._get_content()])
         return request
 
-    def postprocess(self, infer_response: ModelInferResponse) -> Dict:
+    def postprocess(self, infer_response: ModelInferResponse, headers: Dict[str, str] = None) -> Dict:
         response = InferResult(infer_response)
         return {"predictions": response.as_numpy("OUTPUT__0").tolist()}
 ```

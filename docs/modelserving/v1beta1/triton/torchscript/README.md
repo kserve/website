@@ -376,7 +376,7 @@ class ImageTransformerV2(kserve.Model):
         return {output["name"]: np.array(output["data"]).reshape(output["shape"]).tolist()
                 for output in results["outputs"]}
 ```
-Please find [the code example](https://github.com/kserve/kserve/tree/release-0.9/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.9/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
+Please find [the code example](https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.10/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
 
 ### Build Transformer docker image
 ```
