@@ -1397,6 +1397,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+    <nav class="md-nav" aria-label="Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#headers-propagation" class="md-nav__link">
+    Headers Propagation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2425,6 +2445,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    Features
+  </a>
+  
+    <nav class="md-nav" aria-label="Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#headers-propagation" class="md-nav__link">
+    Headers Propagation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2474,6 +2514,27 @@ For example, a face recognition pipeline may need to first locate faces in a ima
 <p><strong>Splitter Node</strong>: Allows users to split the traffic to multiple targets using a weighted distribution.</p>
 </li>
 </ul>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
+<h4 id="headers-propagation">Headers Propagation<a class="headerlink" href="#headers-propagation" title="Permanent link">&para;</a></h4>
+<p>If you want Inference Graph's router to propagate the headers, you passed in the request to Inference Graph, to all the steps in your graph then you can do so using <code>inferenceservice-config</code>
+config-map in kserve namespace.
+For example:
+If you want to propagate a certain header, say "Custom-Header", then you can edit the <code>router</code> section of <code>inferenceservice-config</code>
+config-map like this :
+<div class="highlight"><pre><span></span><code>{
+    &quot;image&quot; : &quot;kserve/router:v0.10.0&quot;,
+    &quot;memoryRequest&quot;: &quot;100Mi&quot;,
+    &quot;memoryLimit&quot;: &quot;1Gi&quot;,
+    &quot;cpuRequest&quot;: &quot;100m&quot;,
+    &quot;cpuLimit&quot;: &quot;1&quot;,
+    &quot;headers&quot;: {
+      &quot;propagate&quot;:[
+        &quot;Custom-Header&quot;
+      ]
+    }
+}
+</code></pre></div>
+Once you update this config-map, kserve controller will automatically reconcile Inference Graph to start propagating headers.</p>
 
               
             </article>
