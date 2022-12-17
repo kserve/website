@@ -48,6 +48,8 @@ pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model:v1
 docker push ${DOCKER_USER}/custom-model:v1
 ```
 
+Note: If your buildpack command fails, make sure you have a `runtimes.txt` file with the correct python version specified. See the [custom model server runtime.txt](https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt) file as an example. 
+
 ## Parallel Inference
 By default the model is loaded and inference is ran in the same process as tornado http server, if you are hosting multiple models
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
