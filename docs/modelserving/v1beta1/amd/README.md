@@ -39,10 +39,10 @@ mv TF_v2.9_ZenDNN_v3.3_C++_API.zip ./inference-server/
 
 # build the image
 cd inference-server
-./proteus dockerize --production --tfzendnn=./TF_v2.9_ZenDNN_v3.3_C++_API.zip
+./amdinfer dockerize --production --tfzendnn=./TF_v2.9_ZenDNN_v3.3_C++_API.zip
 ```
 
-This builds an image on your host: `<username>/proteus:latest`.
+This builds an image on your host: `<username>/amdinfer:latest`.
 To use with KServe, you need to upload this image to a Docker registry server such as on a [local server](https://docs.docker.com/registry/deploying/).
 You will also need to update the YAML files in this example to use this image.
 
@@ -69,7 +69,7 @@ To apply it:
 ```bash
 # update the kserve-amdserver.yaml to use the right image
 # if you have a different image name, you'll need to edit it manually
-sed -i "s/<image>/$(whoami)\/proteus:latest/" kserve-amdserver.yaml
+sed -i "s/<image>/$(whoami)\/amdinfer:latest/" kserve-amdserver.yaml
 
 kubectl apply -f kserve-amdserver.yaml
 ```
