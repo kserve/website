@@ -2588,9 +2588,9 @@ mv TF_v2.9_ZenDNN_v3.3_C++_API.zip ./inference-server/
 
 <span class="c1"># build the image</span>
 <span class="nb">cd</span> inference-server
-./proteus dockerize --production --tfzendnn<span class="o">=</span>./TF_v2.9_ZenDNN_v3.3_C++_API.zip
+./amdinfer dockerize --production --tfzendnn<span class="o">=</span>./TF_v2.9_ZenDNN_v3.3_C++_API.zip
 </code></pre></div>
-<p>This builds an image on your host: <code>&lt;username&gt;/proteus:latest</code>.
+<p>This builds an image on your host: <code>&lt;username&gt;/amdinfer:latest</code>.
 To use with KServe, you need to upload this image to a Docker registry server such as on a <a href="https://docs.docker.com/registry/deploying/">local server</a>.
 You will also need to update the YAML files in this example to use this image.</p>
 <p>More documentation for building a ZenDNN image for KServe is available: <a href="https://xilinx.github.io/inference-server/main/zendnn.html">ZenDNN + AMD Inference Server</a> and <a href="https://xilinx.github.io/inference-server/main/kserve.html">KServe + AMD Inference Server</a>.</p>
@@ -2608,7 +2608,7 @@ A <code>ClusterServingRuntime</code> configuration file is included in this exam
 To apply it:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># update the kserve-amdserver.yaml to use the right image</span>
 <span class="c1"># if you have a different image name, you&#39;ll need to edit it manually</span>
-sed -i <span class="s2">&quot;s/&lt;image&gt;/</span><span class="k">$(</span>whoami<span class="k">)</span><span class="s2">\/proteus:latest/&quot;</span> kserve-amdserver.yaml
+sed -i <span class="s2">&quot;s/&lt;image&gt;/</span><span class="k">$(</span>whoami<span class="k">)</span><span class="s2">\/amdinfer:latest/&quot;</span> kserve-amdserver.yaml
 
 kubectl apply -f kserve-amdserver.yaml
 </code></pre></div>
