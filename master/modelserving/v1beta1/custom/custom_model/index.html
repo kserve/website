@@ -2650,6 +2650,7 @@ to run the image build on the cloud and continuously build/deploy new versions f
 <div class="highlight"><pre><span></span><code>pack build --builder<span class="o">=</span>heroku/buildpacks:20 <span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 docker push <span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div>
+<p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example. </p>
 <h2 id="parallel-inference">Parallel Inference<a class="headerlink" href="#parallel-inference" title="Permanent link">&para;</a></h2>
 <p>By default the model is loaded and inference is ran in the same process as tornado http server, if you are hosting multiple models
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
