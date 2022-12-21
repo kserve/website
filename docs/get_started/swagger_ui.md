@@ -13,6 +13,8 @@ Swagger UI allows visualizing and interacting with the KServe InferenceService A
     Be careful when enabling this for your **production** InferenceService deployments
     since the endpoint does not require authentication at this time.
 
+    Currently, `POST` request only work for `v2` endpoints in the UI.
+
 To enable, simply add an extra argument to the InferenceService YAML example from [First Inference](../first_isvc) chapter:
 
 ```bash hl_lines="9"
@@ -40,6 +42,10 @@ Click one of the V2 endpoints like `/v2`, it will expand and display the descrip
 
 ![V2 Metadata](../images/swagger/v2-metadata.png)
 
-Now click the "Try it out" button, then click "Execute", Swagger UI will sends a `GET` request to the `/v2` endpoint. At the bottom, the server response body and headers will be displayed:
+Now, when you click "Try it out" and then "Execute", Swagger UI will send a `GET` request to the `/v2` endpoint. The server response body and headers will be displayed at the bottom:
 
 ![V2 Metadata](../images/swagger/v2-metadata-try-out.png)
+
+Similarly, we can use Swagger UI to send request to check the model metadata and make prediction using the `/v2/models/{model_name}/infer` endpoint.
+
+For more reference, please check out [Model Serving Data Plane](../modelserving/data_plane.md) for detailed documentation on the Inference Protocol.
