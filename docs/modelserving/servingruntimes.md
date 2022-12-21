@@ -47,6 +47,9 @@ Several out-of-the-box _ClusterServingRuntimes_ are provided with KServe so that
 | kserve-tritonserver       | TensorFlow, ONNX, PyTorch, TensorRT |
 | kserve-xgbserver          | XGBoost                             |
 
+In addition to these included runtimes, you can extend your KServe installation by adding custom runtimes.
+This is demonstrated in the example for the [AMD Inference Server](./v1beta1/amd/).
+
 ## Spec Attributes
 
 Available attributes in the `ServingRuntime` spec:
@@ -201,4 +204,3 @@ The previous schema would mutate into the new schema where the `kserve-sklearnse
 In previous versions of KServe, supported predictor formats and container images were defined in a
 [ConfigMap](https://github.com/kserve/kserve/blob/release-0.7/config/configmap/inferenceservice.yaml#L7) in the control plane namespace.
 Existing _InferenceServices_ upgraded from v0.7 will continue to make use of the configuration listed in this config map, but this will eventually be phased out.
-

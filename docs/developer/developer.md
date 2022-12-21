@@ -23,7 +23,7 @@ You must install these tools:
 1. [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/): For
    managing development environments.
 1. [`kustomize`](https://github.com/kubernetes-sigs/kustomize/) To customize YAMLs for different environments, requires v3.5.4+.
-1. [`yq`](https://github.com/mikefarah/yq) yq is used in the project makefiles to parse and display YAML output. Please use yq version [`3.*`](https://github.com/mikefarah/yq/releases/tag/3.4.1). Latest yq version `4.*` has remove `-d` command so doesn't work with the scripts.
+1. [`yq`](https://github.com/mikefarah/yq) yq is used in the project makefiles to parse and display YAML output, requires yq `4.*`.
 
 ### Install Knative on a Kubernetes cluster
 
@@ -254,6 +254,8 @@ of:
     [apis/serving/v1beta1](https://github.com/kserve/kserve/tree/master/pkg/apis/serving/v1beta1),
   - Manifests or kustomize patches stored in [config](https://github.com/kserve/kserve/tree/master/config).
 
+  To generate the KServe python/go clients, you should run `make generate`.
+
 - **If you want to add new dependencies**, then you add the imports and the specific version of the dependency
 module in `go.mod`. When it encounters an import of a package not provided by any module in `go.mod`, the go
 command automatically looks up the module containing the package and adds it to `go.mod` using the latest version.
@@ -264,4 +266,16 @@ to the latest version, `go get golang.org/x/text@v0.3.0` to upgrade to a specifi
 ```shell
 make deploy-dev
 ```
+
+## Contribute to the code 
+
+See the guidelines for
+
+- [contributing a feature](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#contributing-a-feature)
+
+- [contributing to an existing issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests)
+
+## Feedback 
+
+The best place to provide feedback about the KServe code is via a Github issue. See [creating a Github issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#issues) for guidelines on submitting bugs and feature requests.
 
