@@ -3,6 +3,7 @@ nav:
     - Getting started:
           - KServe Quickstart: get_started/README.md
           - First InferenceService: get_started/first_isvc.md
+          - Interact with InferenceService Swagger UI: get_started/swagger_ui.md
     - Administration Guide:
           - Install KServe:
                 - Serverless:
@@ -158,9 +159,8 @@ extra:
     - icon: fontawesome/brands/slack
       link: https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#
       name: Slack
-  # TODO: Replace with https://github.com/mkdocs/mkdocs/pull/2267 once mkdocs 1.2 is out.
-  version_warning: !!python/object/apply:os.getenv ["VERSION_WARNING"]
-  kserve_version: !!python/object/apply:os.getenv ["KSERVE_VERSION"]
-  branch: !!python/object/apply:os.getenv ["SAMPLES_BRANCH", "mkdocs"]
+  version_warning: !ENV VERSION_WARNING
+  kserve_version: !ENV KSERVE_VERSION
+  branch: !ENV ["SAMPLES_BRANCH", "mkdocs"]
   version:
     provider: mike
