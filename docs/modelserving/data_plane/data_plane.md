@@ -31,7 +31,7 @@ KServe supports two versions of its data plane, V1 and V2. V1 protocol offers a 
 * V2 added Server Readiness/Liveness/Metadata endpoints
 * V2 endpoint paths contain `/` instead of `:`
 * V2 renamed `:predict` endpoint to `/infer`
-* V2 allows for model versions in the path 
+* V2 allows for model versions in the request path (optional)
 
 
 ### V1 APIs
