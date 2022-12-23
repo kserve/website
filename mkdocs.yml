@@ -81,6 +81,7 @@ nav:
                 - Canary Example: modelserving/v1beta1/rollout/canary-example.md
     - API Reference:
           - Control Plane API: reference/api.md
+          - Data Plane swagger-ui: reference/swagger-ui.md
           - Python Client SDK: sdk_docs/sdk_doc.md
     - Developer Guide:
           - How to contribute: developer/developer.md
@@ -150,6 +151,12 @@ plugins:
      version_selector: true
      css_dir: css
      javascript_dir: js
+  - swagger-ui-tag:
+        background: White
+        docExpansion: none
+        filter: ""
+        syntaxHighlightTheme: monokai
+        tryItOutEnabled: true
 
 extra:
   social:

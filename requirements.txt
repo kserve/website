@@ -4,3 +4,4 @@ mkdocs-macros-plugin>=0.5
 mkdocs-awesome-pages-plugin>=2.5
 mkdocs-redirects>=1.0.3
 mike>=1.1.2
+mkdocs-swagger-ui-tag
