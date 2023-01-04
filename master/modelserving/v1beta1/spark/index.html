@@ -2502,14 +2502,14 @@
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Install <code>pyspark</code> 3.0.x and <code>pyspark2pmml</code>
-<div class="highlight"><pre><span></span><code>pip install pyspark~<span class="o">=</span><span class="m">3</span>.0.0
-pip install pyspark2pmml
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pyspark~<span class="o">=</span><span class="m">3</span>.0.0
+pip<span class="w"> </span>install<span class="w"> </span>pyspark2pmml
 </code></pre></div></li>
 <li>Get <a href="https://github.com/jpmml/jpmml-sparkml/releases/download/1.6.3/jpmml-sparkml-executable-1.6.3.jar">JPMML-SparkML jar</a></li>
 </ol>
 <h2 id="train-a-spark-mllib-model-and-export-to-pmml-file">Train a Spark MLlib model and export to PMML file<a class="headerlink" href="#train-a-spark-mllib-model-and-export-to-pmml-file" title="Permanent link">&para;</a></h2>
 <p>Launch pyspark with <code>--jars</code> to specify the location of the <code>JPMML-SparkML</code> uber-JAR
-<div class="highlight"><pre><span></span><code>pyspark --jars ./jpmml-sparkml-executable-1.6.3.jar
+<div class="highlight"><pre><span></span><code>pyspark<span class="w"> </span>--jars<span class="w"> </span>./jpmml-sparkml-executable-1.6.3.jar
 </code></pre></div></p>
 <p>Fitting a Spark ML pipeline:
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
@@ -2530,34 +2530,34 @@ pip install pyspark2pmml
 <span class="n">pmmlBuilder</span><span class="o">.</span><span class="n">buildFile</span><span class="p">(</span><span class="s2">&quot;DecisionTreeIris.pmml&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <p>Upload the <code>DecisionTreeIris.pmml</code> to a GCS bucket, note that the <code>PMMLServer</code> expect model file name to be <code>model.pmml</code>
-<div class="highlight"><pre><span></span><code>gsutil cp ./DecisionTreeIris.pmml gs://<span class="nv">$BUCKET_NAME</span>/sparkpmml/model.pmml
+<div class="highlight"><pre><span></span><code>gsutil<span class="w"> </span>cp<span class="w"> </span>./DecisionTreeIris.pmml<span class="w"> </span>gs://<span class="nv">$BUCKET_NAME</span>/sparkpmml/model.pmml
 </code></pre></div></p>
 <h2 id="create-the-inferenceservice-with-pmmlserver">Create the InferenceService with PMMLServer<a class="headerlink" href="#create-the-inferenceservice-with-pmmlserver" title="Permanent link">&para;</a></h2>
 <p>Create the <code>InferenceService</code> with <code>pmml</code> predictor and specify the <code>storageUri</code> with bucket location you uploaded to</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spark-pmml&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">pmml</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sparkpmml</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spark-pmml&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">pmml</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sparkpmml</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spark-pmml&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pmml</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sparkpmml</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spark-pmml&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pmml</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sparkpmml</span>
 </code></pre></div>
 </div>
 </div>
@@ -2569,8 +2569,8 @@ pip install pyspark2pmml
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/spark-pmml created
 </code></pre></div></p>
 <p>Wait the <code>InferenceService</code> to be ready
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">wait</span> --for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready inferenceservice spark-pmml
-inferenceservice.serving.kserve.io/spark-pmml condition met
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>inferenceservice<span class="w"> </span>spark-pmml
+inferenceservice.serving.kserve.io/spark-pmml<span class="w"> </span>condition<span class="w"> </span>met
 </code></pre></div></p>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>

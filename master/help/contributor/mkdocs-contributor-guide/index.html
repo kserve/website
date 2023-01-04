@@ -2528,10 +2528,10 @@ Once you have those npm packages installed, run:
 </div>
 </div>
 <p>After awhile, your terminal should spit out:</p>
-<div class="no-copy highlight"><pre><span></span><code>INFO    -  Documentation built <span class="k">in</span> <span class="m">13</span>.54 seconds
-<span class="o">[</span>I <span class="m">210519</span> <span class="m">10</span>:47:10 server:335<span class="o">]</span> Serving on http://127.0.0.1:8000
-<span class="o">[</span>I <span class="m">210519</span> <span class="m">10</span>:47:10 handlers:62<span class="o">]</span> Start watching changes
-<span class="o">[</span>I <span class="m">210519</span> <span class="m">10</span>:47:10 handlers:64<span class="o">]</span> Start detecting changes
+<div class="no-copy highlight"><pre><span></span><code>INFO<span class="w">    </span>-<span class="w">  </span>Documentation<span class="w"> </span>built<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">13</span>.54<span class="w"> </span>seconds
+<span class="o">[</span>I<span class="w"> </span><span class="m">210519</span><span class="w"> </span><span class="m">10</span>:47:10<span class="w"> </span>server:335<span class="o">]</span><span class="w"> </span>Serving<span class="w"> </span>on<span class="w"> </span>http://127.0.0.1:8000
+<span class="o">[</span>I<span class="w"> </span><span class="m">210519</span><span class="w"> </span><span class="m">10</span>:47:10<span class="w"> </span>handlers:62<span class="o">]</span><span class="w"> </span>Start<span class="w"> </span>watching<span class="w"> </span>changes
+<span class="o">[</span>I<span class="w"> </span><span class="m">210519</span><span class="w"> </span><span class="m">10</span>:47:10<span class="w"> </span>handlers:64<span class="o">]</span><span class="w"> </span>Start<span class="w"> </span>detecting<span class="w"> </span>changes
 </code></pre></div>
 <p>Now access http://127.0.0.1:8000 and you should see the site is built! 🎉</p>
 <p><strong>Anytime you change any file in your /docs/ repo and hit save, the site will automatically rebuild itself to reflect your changes!</strong></p>
@@ -2539,9 +2539,9 @@ Once you have those npm packages installed, run:
 <p>If, for whatever reason, you want to share your work before submitting a PR (where Netlify would generate a preview for you), you can deploy your changes as a Github Page easily using the following command:
 <div class="highlight"><pre><span></span><code>mkdocs gh-deploy --force
 </code></pre></div></p>
-<p><div class="no-copy highlight"><pre><span></span><code>INFO    -  Documentation built <span class="k">in</span> <span class="m">14</span>.29 seconds
-WARNING -  Version check skipped: No version specified <span class="k">in</span> previous deployment.
-INFO    -  Your documentation should shortly be available at: https://&lt;your-github-handle&gt;.github.io/docs/
+<p><div class="no-copy highlight"><pre><span></span><code>INFO<span class="w">    </span>-<span class="w">  </span>Documentation<span class="w"> </span>built<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">14</span>.29<span class="w"> </span>seconds
+WARNING<span class="w"> </span>-<span class="w">  </span>Version<span class="w"> </span>check<span class="w"> </span>skipped:<span class="w"> </span>No<span class="w"> </span>version<span class="w"> </span>specified<span class="w"> </span><span class="k">in</span><span class="w"> </span>previous<span class="w"> </span>deployment.
+INFO<span class="w">    </span>-<span class="w">  </span>Your<span class="w"> </span>documentation<span class="w"> </span>should<span class="w"> </span>shortly<span class="w"> </span>be<span class="w"> </span>available<span class="w"> </span>at:<span class="w"> </span>https://&lt;your-github-handle&gt;.github.io/docs/
 </code></pre></div>
 Where <code>&lt;your-github-handle&gt;</code> is your Github handle.</p>
 <p>After a few moments, your changes should be available for public preview at the link provided by MkDocs! This means you can rapidly prototype and share your changes before making a PR!</p>
@@ -2584,21 +2584,21 @@ Example:
 <div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">C</label><label for="__tabbed_5_2">C++</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello world!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello world!&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 </div>
 </div>

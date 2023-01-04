@@ -2595,14 +2595,14 @@ This example demonstrates how to deploy a Tensorflow GraphDef model on KServe wi
 You must agree to the EULA to download this package.
 You need a modern version of Docker (at least 18.09) to build this image.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># clone the inference server repository</span>
-git clone https://github.com/Xilinx/inference-server.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Xilinx/inference-server.git
 
 <span class="c1"># place the downloaded ZenDNN zip in the repository</span>
-mv TF_v2.9_ZenDNN_v3.3_C++_API.zip ./inference-server/
+mv<span class="w"> </span>TF_v2.9_ZenDNN_v3.3_C++_API.zip<span class="w"> </span>./inference-server/
 
 <span class="c1"># build the image</span>
-<span class="nb">cd</span> inference-server
-./amdinfer dockerize --production --tfzendnn<span class="o">=</span>./TF_v2.9_ZenDNN_v3.3_C++_API.zip
+<span class="nb">cd</span><span class="w"> </span>inference-server
+./amdinfer<span class="w"> </span>dockerize<span class="w"> </span>--production<span class="w"> </span>--tfzendnn<span class="o">=</span>./TF_v2.9_ZenDNN_v3.3_C++_API.zip
 </code></pre></div>
 <p>This builds an image on your host: <code>&lt;username&gt;/amdinfer:latest</code>.
 To use with KServe, you need to upload this image to a Docker registry server such as on a <a href="https://docs.docker.com/registry/deploying/">local server</a>.
@@ -2622,57 +2622,57 @@ A <code>ClusterServingRuntime</code> configuration file is included in this exam
 To apply it:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># update the kserve-amdserver.yaml to use the right image</span>
 <span class="c1"># if you have a different image name, you&#39;ll need to edit it manually</span>
-sed -i <span class="s2">&quot;s/&lt;image&gt;/</span><span class="k">$(</span>whoami<span class="k">)</span><span class="s2">\/amdinfer:latest/&quot;</span> kserve-amdserver.yaml
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s/&lt;image&gt;/</span><span class="k">$(</span>whoami<span class="k">)</span><span class="s2">\/amdinfer:latest/&quot;</span><span class="w"> </span>kserve-amdserver.yaml
 
-kubectl apply -f kserve-amdserver.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>kserve-amdserver.yaml
 </code></pre></div>
 <h3 id="single-model-serving">Single model serving<a class="headerlink" href="#single-model-serving" title="Permanent link">&para;</a></h3>
 <p>Once the AMD Inference Server has been added as a serving runtime, you can start a service that uses it.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># download the inference service file and input data</span>
-curl -O https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/single_model.yaml
-curl -O https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/input.json
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/single_model.yaml
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/website/master/docs/modelserving/v1beta1/amd/input.json
 
 <span class="c1"># create the inference service</span>
-kubectl apply -f single_model.yaml
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>single_model.yaml
 
 <span class="c1"># wait for service to be ready</span>
-kubectl <span class="nb">wait</span> --for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>ready isvc -l <span class="nv">app</span><span class="o">=</span>example-amdserver-runtime-isvc
+kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>ready<span class="w"> </span>isvc<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>example-amdserver-runtime-isvc
 
-<span class="nb">export</span> <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice example-amdserver-runtime-isvc -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>example-amdserver-runtime-isvc<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 <h3 id="make-a-request-with-rest">Make a request with REST<a class="headerlink" href="#make-a-request-with-rest" title="Permanent link">&para;</a></h3>
 <p>Once the service is ready, you can make requests to it.
 Assuming that <code>INGRESS_HOST</code>, <code>INGRESS_PORT</code>, and <code>SERVICE_HOSTNAME</code> have been defined as above, the following command runs an inference over REST to the example MNIST model.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">MODEL_NAME</span><span class="o">=</span>mnist
-<span class="nb">export</span> <span class="nv">INPUT_DATA</span><span class="o">=</span>@./input.json
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer -d <span class="si">${</span><span class="nv">INPUT_DATA</span><span class="si">}</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">MODEL_NAME</span><span class="o">=</span>mnist
+<span class="nb">export</span><span class="w"> </span><span class="nv">INPUT_DATA</span><span class="o">=</span>@./input.json
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer<span class="w"> </span>-d<span class="w"> </span><span class="si">${</span><span class="nv">INPUT_DATA</span><span class="si">}</span>
 </code></pre></div>
 <p>This shows the response from the server in KServe's v2 API format.
 For this example, it will be similar to:</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="o">{</span>
-  <span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;&quot;</span>,
-  <span class="s2">&quot;model_name&quot;</span>:<span class="s2">&quot;TFModel&quot;</span>,
-  <span class="s2">&quot;outputs&quot;</span>:
-    <span class="o">[</span>
-      <span class="o">{</span>
-        <span class="s2">&quot;data&quot;</span>: <span class="o">[</span>
-          <span class="m">0</span>.11987821012735367,
-          <span class="m">0</span>.18648317456245422,
-          -0.83796119689941406,
-          -0.088459312915802002,
-          <span class="m">0</span>.030454874038696289,
-          <span class="m">0</span>.074872657656669617,
-          -1.1334009170532227,
-          -0.046301722526550293,
-          -0.31683838367462158,
-          <span class="m">0</span>.32014602422714233
-        <span class="o">]</span>,
-        <span class="s2">&quot;datatype&quot;</span>:<span class="s2">&quot;FP32&quot;</span>,
-        <span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;input-0&quot;</span>,
-        <span class="s2">&quot;parameters&quot;</span>:<span class="o">{}</span>,
-        <span class="s2">&quot;shape&quot;</span>:<span class="o">[</span><span class="m">10</span><span class="o">]</span>
-      <span class="o">}</span>
-    <span class="o">]</span>
+<span class="w">  </span><span class="s2">&quot;id&quot;</span>:<span class="s2">&quot;&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;model_name&quot;</span>:<span class="s2">&quot;TFModel&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;outputs&quot;</span>:
+<span class="w">    </span><span class="o">[</span>
+<span class="w">      </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;data&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="m">0</span>.11987821012735367,
+<span class="w">          </span><span class="m">0</span>.18648317456245422,
+<span class="w">          </span>-0.83796119689941406,
+<span class="w">          </span>-0.088459312915802002,
+<span class="w">          </span><span class="m">0</span>.030454874038696289,
+<span class="w">          </span><span class="m">0</span>.074872657656669617,
+<span class="w">          </span>-1.1334009170532227,
+<span class="w">          </span>-0.046301722526550293,
+<span class="w">          </span>-0.31683838367462158,
+<span class="w">          </span><span class="m">0</span>.32014602422714233
+<span class="w">        </span><span class="o">]</span>,
+<span class="w">        </span><span class="s2">&quot;datatype&quot;</span>:<span class="s2">&quot;FP32&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;input-0&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;parameters&quot;</span>:<span class="o">{}</span>,
+<span class="w">        </span><span class="s2">&quot;shape&quot;</span>:<span class="o">[</span><span class="m">10</span><span class="o">]</span>
+<span class="w">      </span><span class="o">}</span>
+<span class="w">    </span><span class="o">]</span>
 <span class="o">}</span>
 </code></pre></div>
 <p>For MNIST, the data indicates the likely classification for the input image, which is the number 9.

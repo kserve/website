@@ -2558,10 +2558,10 @@
 <ol>
 <li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
 <li>Skip <a href="https://knative.dev/docs/serving/tag-resolution/">tag resolution</a> for <code>nvcr.io</code> which requires auth to resolve triton inference server image digest
-<div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span> -n knative-serving
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>config-deployment<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span><span class="w"> </span>-n<span class="w"> </span>knative-serving
 </code></pre></div></li>
 <li>Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
-<div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;progressDeadline&quot;: &quot;600s&quot;}}&#39;</span> -n knative-serving
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>config-deployment<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;progressDeadline&quot;: &quot;600s&quot;}}&#39;</span><span class="w"> </span>-n<span class="w"> </span>knative-serving
 </code></pre></div></li>
 </ol>
 <h2 id="create-custom-transformer-for-bert-tokenizer">Create Custom Transformer for BERT Tokenizer<a class="headerlink" href="#create-custom-transformer-for-bert-tokenizer" title="Permanent link">&para;</a></h2>
@@ -2628,39 +2628,39 @@
 Please find the code example <a href="https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/bert">here</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <p>Build the KServe Transformer image with above code
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span> bert_tokenizer_v2
-docker build -t <span class="nv">$USER</span>/bert_transformer-v2:latest . --rm
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>bert_tokenizer_v2
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$USER</span>/bert_transformer-v2:latest<span class="w"> </span>.<span class="w"> </span>--rm
 </code></pre></div>
 Or you can use the prebuild image <code>kfserving/bert-transformer-v2:latest</code></p>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Add above custom KServe Transformer image and Triton Predictor to the <code>InferenceService</code> spec
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bert-v2&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;bert-v2&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w">      </span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving/bert-transformer-v2:latest</span><span class="w"></span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;bert_transformer_v2&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STORAGE_URI</span><span class="w"></span>
-<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/triton/bert-transformer&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span><span class="w"></span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/triton/bert&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving/bert-transformer-v2:latest</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;bert_transformer_v2&quot;</span>
+<span class="w">        </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STORAGE_URI</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/triton/bert-transformer&quot;</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8Gi</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/triton/bert&quot;</span>
 </code></pre></div></p>
 <p>Apply the <code>InferenceService</code> yaml.
 <div class="highlight"><pre><span></span><code>kubectl apply -f bert_v1beta1.yaml
@@ -2683,17 +2683,17 @@ bert-v2-transformer-default-sd6nc   bert-v2-transformer-default   bert-v2-transf
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send a question request with following input, the transformer expects sending a list of <code>instances</code> or <code>inputs</code> and <code>preprocess</code> then converts
 the inputs to expected tensor sending to <code>Triton Inference Server</code>.
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">    </span><span class="s2">&quot;What President is credited with the original notion of putting Americans in space?&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;What President is credited with the original notion of putting Americans in space?&quot;</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>bert-v2
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservices bert-v2 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>bert-v2<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> -d <span class="nv">$INPUT_PATH</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
 <p>Expected output
 <div class="highlight"><pre><span></span><code>{&quot;predictions&quot;: &quot;John F. Kennedy&quot;, &quot;prob&quot;: 77.91848979818604}

@@ -2476,7 +2476,7 @@ since the endpoint does not require authentication at this time.</p>
 <p>Currently, <code>POST</code> request only work for <code>v2</code> endpoints in the UI.</p>
 </div>
 <p>To enable, simply add an extra argument to the InferenceService YAML example from <a href="../first_isvc">First Inference</a> chapter:</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -n kserve-test -f - <span class="s">&lt;&lt;EOF</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="s">kind: &quot;InferenceService&quot;</span>
 <span class="s">metadata:</span>

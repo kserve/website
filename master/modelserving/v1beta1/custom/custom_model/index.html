@@ -2661,8 +2661,8 @@ needing to define the <code>Dockerfile</code>. Buildpacks automatically determin
 image manually with <code>pack</code>, you can also choose to use <a href="https://github.com/pivotal/kpack">kpack</a>
 to run the image build on the cloud and continuously build/deploy new versions from your source git repository.</p>
 <h3 id="use-pack-to-build-and-push-the-custom-model-server-image">Use pack to build and push the custom model server image<a class="headerlink" href="#use-pack-to-build-and-push-the-custom-model-server-image" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>pack build --builder<span class="o">=</span>heroku/buildpacks:20 <span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
-docker push <span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
+<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/buildpacks:20<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
+docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div>
 <p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example. </p>
 <h2 id="parallel-inference">Parallel Inference<a class="headerlink" href="#parallel-inference" title="Permanent link">&para;</a></h2>
@@ -2715,24 +2715,24 @@ each model as separate python worker and tornado webserver routes to the model w
 <p><img alt="parallel_inference" src="parallel_inference.png" /></p>
 <h2 id="deploy-locally-and-test">Deploy Locally and Test<a class="headerlink" href="#deploy-locally-and-test" title="Permanent link">&para;</a></h2>
 <p>Launch the docker image built from last step with <code>buildpack</code>.
-<div class="highlight"><pre><span></span><code>docker run -ePORT<span class="o">=</span><span class="m">8080</span> -p8080:8080 <span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div></p>
 <p>Send a test inference request locally
-<div class="highlight"><pre><span></span><code>curl localhost:8080/v1/models/custom-model:predict -d @./input.json
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
 
-<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>: <span class="o">[[</span><span class="m">14</span>.861763000488281, <span class="m">13</span>.94291877746582, <span class="m">13</span>.924378395080566, <span class="m">12</span>.182709693908691, <span class="m">12</span>.00634765625<span class="o">]]}</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[[</span><span class="m">14</span>.861763000488281,<span class="w"> </span><span class="m">13</span>.94291877746582,<span class="w"> </span><span class="m">13</span>.924378395080566,<span class="w"> </span><span class="m">12</span>.182709693908691,<span class="w"> </span><span class="m">12</span>.00634765625<span class="o">]]}</span>
 </code></pre></div></p>
 <h2 id="deploy-the-custom-predictor-on-kserve">Deploy the Custom Predictor on KServe<a class="headerlink" href="#deploy-the-custom-predictor-on-kserve" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-model</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
-<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">username</span><span class="p p-Indicator">}</span><span class="l l-Scalar l-Scalar-Plain">/custom-model:v1</span><span class="w"></span>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-model</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nv">username</span><span class="p p-Indicator">}</span><span class="l l-Scalar l-Scalar-Plain">/custom-model:v1</span>
 </code></pre></div>
 In the <code>custom.yaml</code> file edit the container image and replace {username} with your Docker Hub username.</p>
 <p>Apply the yaml to create the InferenceService</p>

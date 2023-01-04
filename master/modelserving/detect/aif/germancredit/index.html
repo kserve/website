@@ -2568,14 +2568,14 @@ A <code>data.json</code> file should have been created in this folder which cont
 </code></pre></div>
 <h2 id="run-an-explanation">Run an explanation<a class="headerlink" href="#run-an-explanation" title="Permanent link">&para;</a></h2>
 <p>Finally, now that we have collected a number of our model's predictions and their corresponding inputs we will send these to the AIF server to calculate the bias metrics.</p>
-<div class="highlight"><pre><span></span><code>python query_bias.py http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain <span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span> input.json
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>query_bias.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>input.json
 </code></pre></div>
 <h2 id="interpreting-the-results">Interpreting the results<a class="headerlink" href="#interpreting-the-results" title="Permanent link">&para;</a></h2>
 <p>Now let's look at one of the metrics. In this example disparate impact represents the ratio between the probability of applicants of the privileged class (age &gt; 25) getting a loan
 and the probability of applicants of the unprivileged class (age &lt;= 25) getting a loan <code>P(Y=1|D=privileged)/P(Y=1|D=unprivileged)</code>.
 Since, in the sample output below, the disparate impact is less that 1 then the probability that an applicant whose age is greater than 25 gets a loan is significantly higher than the probability that an applicant whose age is less than or equal to 25 gets a loan.
 This in and of itself is not proof that the model is biased, but does hint that there may be some bias and a deeper look may be needed.</p>
-<p><div class="highlight"><pre><span></span><code>python query_bias.py http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain <span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span> input.json
+<p><div class="highlight"><pre><span></span><code>python<span class="w"> </span>query_bias.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>input.json
 </code></pre></div>
 <mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>Sending bias query...

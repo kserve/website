@@ -2534,98 +2534,98 @@
 <p>Create a Persistent volume and volume claim. This document uses amazonEBS PV. For AWS EFS storage you can refer to <a href="https://github.com/pytorch/serve/blob/master/kubernetes/EKS/README.md#setup-persistentvolume-backed-by-efs">AWS EFS storage</a></p>
 <h3 id="11-create-pv">1.1 Create PV<a class="headerlink" href="#11-create-pv" title="Permanent link">&para;</a></h3>
 <p>Edit volume id in pv.yaml file</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f pv.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pv.yaml
 </code></pre></div>
 <p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>persistentvolume/model-pv-volume created
+<div class="highlight"><pre><span></span><code>persistentvolume/model-pv-volume<span class="w"> </span>created
 </code></pre></div>
 <h3 id="12-create-pvc">1.2 Create PVC<a class="headerlink" href="#12-create-pvc" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl apply -f pvc.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pvc.yaml
 </code></pre></div>
 <p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>persistentvolumeclaim/model-pv-claim created
+<div class="highlight"><pre><span></span><code>persistentvolumeclaim/model-pv-claim<span class="w"> </span>created
 </code></pre></div>
 <h2 id="2-create-model-store-files-layout-and-copy-to-pv">2 Create model store files layout and copy to PV<a class="headerlink" href="#2-create-model-store-files-layout-and-copy-to-pv" title="Permanent link">&para;</a></h2>
 <p>We create a pod with the PV attached to copy the model files and config.properties for generating model archive file.</p>
 <h3 id="21-create-pod-for-copying-model-store-files-to-pv">2.1 Create pod for copying model store files to PV<a class="headerlink" href="#21-create-pod-for-copying-model-store-files-to-pv" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl apply -f pvpod.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pvpod.yaml
 </code></pre></div>
 <p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>pod/model-store-pod created
+<div class="highlight"><pre><span></span><code>pod/model-store-pod<span class="w"> </span>created
 </code></pre></div>
 <h3 id="22-create-model-store-file-layout-on-pv">2.2 Create model store file layout on PV<a class="headerlink" href="#22-create-model-store-file-layout-on-pv" title="Permanent link">&para;</a></h3>
 <h4 id="221-create-propertiesjson-file">2.2.1 Create properties.json file<a class="headerlink" href="#221-create-propertiesjson-file" title="Permanent link">&para;</a></h4>
 <p>This file has model-name, version, model-file name, serialized-file name, extra-files, handlers, workers etc. of the models.</p>
-<div class="highlight"><pre><span></span><code><span class="p">[</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;model-name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;model-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;serialized-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mnist_cnn.pt&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;extra-files&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;handler&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mnist_handler.py&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min-workers&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max-workers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;batch-size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max-batch-delay&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;response-timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">},</span><span class="w"></span>
-<span class="w">  </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;model-name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;densenet_161&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;model-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;serialized-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;densenet161-8d451a50.pth&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;extra-files&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;index_to_name.json&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;handler&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_classifier&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;min-workers&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max-workers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;batch-size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;max-batch-delay&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;response-timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="nt">&quot;requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">}</span><span class="w"></span>
-<span class="p">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;model-name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;model-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;serialized-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mnist_cnn.pt&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;extra-files&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;handler&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mnist_handler.py&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min-workers&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max-workers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;batch-size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max-batch-delay&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;response-timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;model-name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;densenet_161&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;model-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;serialized-file&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;densenet161-8d451a50.pth&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;extra-files&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;index_to_name.json&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;handler&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image_classifier&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;min-workers&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max-workers&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;batch-size&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;max-batch-delay&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;response-timeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
 </code></pre></div>
 <h4 id="222-copy-model-and-its-dependent-files">2.2.2 Copy model and its dependent Files<a class="headerlink" href="#222-copy-model-and-its-dependent-files" title="Permanent link">&para;</a></h4>
 <p>Copy all the model and dependent files to the PV in the structure given below.
 An empty config folder, a model-store folder containing model name as folder name. Within that model folder, the files required to build the marfile.</p>
-<div class="highlight"><pre><span></span><code>├── config
-├── model-store
-│   ├── densenet_161
-│   │   ├── densenet161-8d451a50.pth
-│   │   ├── index_to_name.json
-│   │   └── model.py
-│   ├── mnist
-│   │   ├── mnist_cnn.pt
-│   │   ├── mnist_handler.py
-│   │   └── mnist.py
-│   └── properties.json
+<div class="highlight"><pre><span></span><code>├──<span class="w"> </span>config
+├──<span class="w"> </span>model-store
+│<span class="w">   </span>├──<span class="w"> </span>densenet_161
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>densenet161-8d451a50.pth
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>index_to_name.json
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>model.py
+│<span class="w">   </span>├──<span class="w"> </span>mnist
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>mnist_cnn.pt
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>mnist_handler.py
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>mnist.py
+│<span class="w">   </span>└──<span class="w"> </span>properties.json
 </code></pre></div>
 <h4 id="223-create-folders-for-model-store-and-config-in-pv">2.2.3 Create folders for model-store and config in PV<a class="headerlink" href="#223-create-folders-for-model-store-and-config-in-pv" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it model-store-pod -c model-store -n kserve-test -- mkdir /pv/model-store/
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>model-store-pod<span class="w"> </span>-c<span class="w"> </span>model-store<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>--<span class="w"> </span>mkdir<span class="w"> </span>/pv/model-store/
 
-kubectl <span class="nb">exec</span> -it model-store-pod -c model-store -n kserve-test -- mkdir /pv/config/
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>model-store-pod<span class="w"> </span>-c<span class="w"> </span>model-store<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>--<span class="w"> </span>mkdir<span class="w"> </span>/pv/config/
 </code></pre></div>
 <h3 id="23-copy-model-files-and-configproperties-to-the-pv">2.3 Copy model files and config.properties to the PV<a class="headerlink" href="#23-copy-model-files-and-configproperties-to-the-pv" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl cp model-store/* model-store-pod:/pv/model-store/ -c model-store -n kserve-test
-kubectl cp config.properties model-store-pod:/pv/config/ -c model-store -n kserve-test
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>cp<span class="w"> </span>model-store/*<span class="w"> </span>model-store-pod:/pv/model-store/<span class="w"> </span>-c<span class="w"> </span>model-store<span class="w"> </span>-n<span class="w"> </span>kserve-test
+kubectl<span class="w"> </span>cp<span class="w"> </span>config.properties<span class="w"> </span>model-store-pod:/pv/config/<span class="w"> </span>-c<span class="w"> </span>model-store<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
 <h3 id="24-delete-pv-pod">2.4 Delete pv pod<a class="headerlink" href="#24-delete-pv-pod" title="Permanent link">&para;</a></h3>
 <p>Since amazon EBS provide only ReadWriteOnce mode, we have to unbind the PV for use of model archiver.</p>
-<div class="highlight"><pre><span></span><code>kubectl delete pod model-store-pod -n kserve-test
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>model-store-pod<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
 <h2 id="3-generate-model-archive-file-and-server-configuration-file">3 Generate model archive file and server configuration file<a class="headerlink" href="#3-generate-model-archive-file-and-server-configuration-file" title="Permanent link">&para;</a></h2>
 <h3 id="31-create-model-archive-pod-and-run-model-archive-file-generation-script">3.1 Create model archive pod and run model archive file generation script<a class="headerlink" href="#31-create-model-archive-pod-and-run-model-archive-file-generation-script" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl apply -f model-archiver.yaml -n kserve-test
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>model-archiver.yaml<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
 <h3 id="32-check-the-output-and-delete-model-archive-pod">3.2 Check the output and delete model archive pod<a class="headerlink" href="#32-check-the-output-and-delete-model-archive-pod" title="Permanent link">&para;</a></h3>
 <p>Verify mar files and config.properties</p>
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it margen-pod -n kserve-test -- ls -lR /home/model-server/model-store
-kubectl <span class="nb">exec</span> -it margen-pod -n kserve-test -- cat /home/model-server/config/config.properties
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>margen-pod<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>--<span class="w"> </span>ls<span class="w"> </span>-lR<span class="w"> </span>/home/model-server/model-store
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>margen-pod<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>--<span class="w"> </span>cat<span class="w"> </span>/home/model-server/config/config.properties
 </code></pre></div>
 <h3 id="33-delete-model-archiver">3.3 Delete model archiver<a class="headerlink" href="#33-delete-model-archiver" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl delete -f model-archiver.yaml -n kserve-test
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>model-archiver.yaml<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
 
               

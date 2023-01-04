@@ -2722,9 +2722,9 @@ the authentication methods and repository paths mentioned in the sections below.
 Currently Docker Hub doesn't let you create subdirs under your username.</p>
 </div>
 <p><code>.bashrc</code> example:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/go&quot;</span>
-<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span><span class="s2">/bin&quot;</span>
-<span class="nb">export</span> <span class="nv">KO_DOCKER_REPO</span><span class="o">=</span><span class="s1">&#39;docker.io/&lt;username&gt;&#39;</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/go&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span><span class="s2">/bin&quot;</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">KO_DOCKER_REPO</span><span class="o">=</span><span class="s1">&#39;docker.io/&lt;username&gt;&#39;</span>
 </code></pre></div>
 <h3 id="checkout-your-fork">Checkout your fork<a class="headerlink" href="#checkout-your-fork" title="Permanent link">&para;</a></h3>
 <p>The Go tools require that you clone the repository to the
@@ -2736,12 +2736,12 @@ Currently Docker Hub doesn't let you create subdirs under your username.</p>
    <a href="https://help.github.com/articles/fork-a-repo/">fork of this repo</a></li>
 <li>Clone it to your machine:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>mkdir -p <span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span>/src/github.com/kserve
-<span class="nb">cd</span> <span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span>/src/github.com/kserve
-git clone git@github.com:<span class="si">${</span><span class="nv">YOUR_GITHUB_USERNAME</span><span class="si">}</span>/kserve.git
-<span class="nb">cd</span> kserve
-git remote add upstream git@github.com:kserve/kserve.git
-git remote set-url --push upstream no_push
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span>/src/github.com/kserve
+<span class="nb">cd</span><span class="w"> </span><span class="si">${</span><span class="nv">GOPATH</span><span class="si">}</span>/src/github.com/kserve
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:<span class="si">${</span><span class="nv">YOUR_GITHUB_USERNAME</span><span class="si">}</span>/kserve.git
+<span class="nb">cd</span><span class="w"> </span>kserve
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>git@github.com:kserve/kserve.git
+git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>--push<span class="w"> </span>upstream<span class="w"> </span>no_push
 </code></pre></div>
 <p><em>Adding the <code>upstream</code> remote sets you up nicely for regularly
 <a href="https://help.github.com/articles/syncing-a-fork/">syncing your fork</a>.</em></p>
@@ -2752,25 +2752,25 @@ described below.</p>
 <p>Once you've <a href="#prerequisites">setup your development environment</a>, you can verify the installation with following:</p>
 <div class="admonition success">
 <p class="admonition-title">Success</p>
-<div class="highlight"><pre><span></span><code>$ kubectl -n knative-serving get pods
-NAME                                                     READY   STATUS      RESTARTS   AGE
-activator-77784645fc-t2pjf                               <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-autoscaler-6fddf74d5-z2fzf                               <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-autoscaler-hpa-5bf4476cc5-tsbw6                          <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-controller-7b8cd7f95c-6jxxj                              <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-istio-webhook-866c5bc7f8-t5ztb                           <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-networking-istio-54fb8b5d4b-xznwd                        <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
-webhook-5f5f7bd9b4-cv27c                                 <span class="m">1</span>/1     Running     <span class="m">0</span>          11d
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>-n<span class="w"> </span>knative-serving<span class="w"> </span>get<span class="w"> </span>pods
+NAME<span class="w">                                                     </span>READY<span class="w">   </span>STATUS<span class="w">      </span>RESTARTS<span class="w">   </span>AGE
+activator-77784645fc-t2pjf<span class="w">                               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
+autoscaler-6fddf74d5-z2fzf<span class="w">                               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
+autoscaler-hpa-5bf4476cc5-tsbw6<span class="w">                          </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
+controller-7b8cd7f95c-6jxxj<span class="w">                              </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
+istio-webhook-866c5bc7f8-t5ztb<span class="w">                           </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
+networking-istio-54fb8b5d4b-xznwd<span class="w">                        </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
+webhook-5f5f7bd9b4-cv27c<span class="w">                                 </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11d
 
-$ kubectl get gateway -n knative-serving
-NAME                      AGE
-knative-ingress-gateway   11d
-knative-local-gateway     11d
+$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>gateway<span class="w"> </span>-n<span class="w"> </span>knative-serving
+NAME<span class="w">                      </span>AGE
+knative-ingress-gateway<span class="w">   </span>11d
+knative-local-gateway<span class="w">     </span>11d
 
-$ kubectl get svc -n istio-system
-NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>                                                      AGE
-istio-ingressgateway    LoadBalancer   <span class="m">10</span>.101.196.89    X.X.X.X       <span class="m">15021</span>:31101/TCP,80:31781/TCP,443:30372/TCP,15443:31067/TCP   11d
-istiod                  ClusterIP      <span class="m">10</span>.101.116.203   &lt;none&gt;        <span class="m">15010</span>/TCP,15012/TCP,443/TCP,15014/TCP,853/TCP                11d
+$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>istio-system
+NAME<span class="w">                    </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">       </span>EXTERNAL-IP<span class="w">   </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">                                                      </span>AGE
+istio-ingressgateway<span class="w">    </span>LoadBalancer<span class="w">   </span><span class="m">10</span>.101.196.89<span class="w">    </span>X.X.X.X<span class="w">       </span><span class="m">15021</span>:31101/TCP,80:31781/TCP,443:30372/TCP,15443:31067/TCP<span class="w">   </span>11d
+istiod<span class="w">                  </span>ClusterIP<span class="w">      </span><span class="m">10</span>.101.116.203<span class="w">   </span>&lt;none&gt;<span class="w">        </span><span class="m">15010</span>/TCP,15012/TCP,443/TCP,15014/TCP,853/TCP<span class="w">                </span>11d
 </code></pre></div>
 </div>
 <h3 id="deploy-kserve-from-master-branch">Deploy KServe from master branch<a class="headerlink" href="#deploy-kserve-from-master-branch" title="Permanent link">&para;</a></h3>
@@ -2782,21 +2782,21 @@ also work as long as they put the certificates in the desired location.</p>
 to install it.</p>
 <p>If you don't want to install cert manager, you can set the <code>KSERVE_ENABLE_SELF_SIGNED_CA</code> environment variable to true.
 <code>KSERVE_ENABLE_SELF_SIGNED_CA</code> will execute a script to create a self-signed CA and patch it to the webhook config.
-<div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">KSERVE_ENABLE_SELF_SIGNED_CA</span><span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">KSERVE_ENABLE_SELF_SIGNED_CA</span><span class="o">=</span><span class="nb">true</span>
 </code></pre></div></p>
 <p>After that you can run following command to deploy <code>KServe</code>, you can skip above step if cert manager is already installed.
-<div class="highlight"><pre><span></span><code>make deploy
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy
 </code></pre></div></p>
 <div class="admonition optional">
 <p class="admonition-title">Optional</p>
 <p>you can change CPU and memory limits when deploying <code>KServe</code>.
- <div class="highlight"><pre><span></span><code><span class="nb">export</span> <span class="nv">KSERVE_CONTROLLER_CPU_LIMIT</span><span class="o">=</span>&lt;cpu_limit&gt;
-<span class="nb">export</span> <span class="nv">KSERVE_CONTROLLER_MEMORY_LIMIT</span><span class="o">=</span>&lt;memory_limit&gt;
-make deploy
+ <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">KSERVE_CONTROLLER_CPU_LIMIT</span><span class="o">=</span>&lt;cpu_limit&gt;
+<span class="nb">export</span><span class="w"> </span><span class="nv">KSERVE_CONTROLLER_MEMORY_LIMIT</span><span class="o">=</span>&lt;memory_limit&gt;
+make<span class="w"> </span>deploy
 </code></pre></div></p>
 </div>
 <p><mark><strong>Expected Output</strong></mark>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl get pods -n kserve -l control-plane<span class="o">=</span>kserve-controller-manager
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>-l<span class="w"> </span>control-plane<span class="o">=</span>kserve-controller-manager
 <span class="go">NAME                             READY   STATUS    RESTARTS   AGE</span>
 <span class="go">kserve-controller-manager-0      2/2     Running   0          13m</span>
 </code></pre></div></p>
@@ -2806,7 +2806,7 @@ make deploy
 </div>
 <h3 id="deploy-kserve-with-your-own-version">Deploy KServe with your own version<a class="headerlink" href="#deploy-kserve-with-your-own-version" title="Permanent link">&para;</a></h3>
 <p>Run the following command to deploy <code>KServe</code> controller and model agent with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy-dev
 </code></pre></div></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2814,8 +2814,8 @@ make deploy
 Please also ensure you are logged in to <code>KO_DOCKER_REPO</code> from your client machine.</p>
 </div>
 <p>Run the following command to deploy model server with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev-sklearn
-make deploy-dev-xgb
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy-dev-sklearn
+make<span class="w"> </span>deploy-dev-xgb
 </code></pre></div></p>
 <p>Run the following command to deploy explainer with your local change.
 <div class="highlight"><pre><span></span><code>make deploy-dev-alibi
@@ -2831,7 +2831,7 @@ The built image is only for development and testing purpose, the current limitat
 </div>
 <h3 id="smoke-test-after-deployment">Smoke test after deployment<a class="headerlink" href="#smoke-test-after-deployment" title="Permanent link">&para;</a></h3>
 <p>Run the following command to smoke test the deployment
-<div class="highlight"><pre><span></span><code>kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
 </code></pre></div></p>
 <p>You should see model serving deployment running under default or your specified namespace.</p>
 <div class="highlight"><pre><span></span><code>$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
@@ -2844,7 +2844,7 @@ flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0    
 <p><code>kserver-controller-manager</code> has a few integration tests which requires mock apiserver
 and etcd, they get installed along with <a href="https://book.kubebuilder.io/quick-start.html#installation"><code>kubebuilder</code></a>.</p>
 <p>To run all unit/integration tests:</p>
-<div class="highlight"><pre><span></span><code>make <span class="nb">test</span>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span><span class="nb">test</span>
 </code></pre></div>
 <h2 id="run-e2e-tests-locally">Run e2e tests locally<a class="headerlink" href="#run-e2e-tests-locally" title="Permanent link">&para;</a></h2>
 <p>To setup from local code, do:</p>
@@ -2892,7 +2892,7 @@ command automatically looks up the module containing the package and adds it to 
 to the latest version, <code>go get golang.org/x/text@v0.3.0</code> to upgrade to a specific version.</p>
 </li>
 </ul>
-<div class="highlight"><pre><span></span><code>make deploy-dev
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy-dev
 </code></pre></div>
 <h2 id="contribute-to-the-code">Contribute to the code<a class="headerlink" href="#contribute-to-the-code" title="Permanent link">&para;</a></h2>
 <p>See the guidelines for</p>

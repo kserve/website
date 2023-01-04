@@ -2508,46 +2508,46 @@ the following steps show how you can deploy KServe with <code>Kourier</code>.</p
 <ol>
 <li>
 <p>Install the Kourier networking layer:</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f https://github.com/knative/net-kourier/releases/download/<span class="si">${</span><span class="nv">KNATIVE_VERSION</span><span class="si">}</span>/kourier.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/knative/net-kourier/releases/download/<span class="si">${</span><span class="nv">KNATIVE_VERSION</span><span class="si">}</span>/kourier.yaml
 </code></pre></div>
 </li>
 <li>
 <p>Configure Knative Serving to use Kourier:</p>
-<div class="highlight"><pre><span></span><code>kubectl patch configmap/config-network <span class="se">\</span>
---namespace knative-serving <span class="se">\</span>
---type merge <span class="se">\</span>
---patch <span class="s1">&#39;{&quot;data&quot;:{&quot;ingress-class&quot;:&quot;kourier.ingress.networking.knative.dev&quot;}}&#39;</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>configmap/config-network<span class="w"> </span><span class="se">\</span>
+--namespace<span class="w"> </span>knative-serving<span class="w"> </span><span class="se">\</span>
+--type<span class="w"> </span>merge<span class="w"> </span><span class="se">\</span>
+--patch<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;ingress-class&quot;:&quot;kourier.ingress.networking.knative.dev&quot;}}&#39;</span>
 </code></pre></div>
 </li>
 <li>
 <p>Verify Kourier installation:</p>
-<div class="highlight"><pre><span></span><code>kubectl get pods -n knative-serving <span class="o">&amp;&amp;</span> kubectl get pods -n kourier-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>knative-serving<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kourier-system
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>NAME                                      READY   STATUS    RESTARTS   AGE
-activator-77db7d9dd7-kbrgr                <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-autoscaler-67dbf79b95-htnp9               <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-controller-684b6bc97f-ffm58               <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-domain-mapping-6d99d99978-ktmrf           <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-domainmapping-webhook-5f998498b6-sddnm    <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-net-kourier-controller-68967d76dc-ncj2n   <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-webhook-97bdc7b4d-nr7qf                   <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
-NAME                                      READY   STATUS    RESTARTS   AGE
-3scale-kourier-gateway-54c49c8ff5-x8tgn   <span class="m">1</span>/1     Running   <span class="m">0</span>          10m
+<div class="highlight"><pre><span></span><code>NAME<span class="w">                                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+activator-77db7d9dd7-kbrgr<span class="w">                </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+autoscaler-67dbf79b95-htnp9<span class="w">               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+controller-684b6bc97f-ffm58<span class="w">               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+domain-mapping-6d99d99978-ktmrf<span class="w">           </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+domainmapping-webhook-5f998498b6-sddnm<span class="w">    </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+net-kourier-controller-68967d76dc-ncj2n<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+webhook-97bdc7b4d-nr7qf<span class="w">                   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
+NAME<span class="w">                                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+3scale-kourier-gateway-54c49c8ff5-x8tgn<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
 </code></pre></div>
 </li>
 <li>
 <p>Edit <code>inferenceservice-config</code> configmap to disable Istio top level virtual host:</p>
-<div class="highlight"><pre><span></span><code>kubectl edit configmap/inferenceservice-config --namespace kserve
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>configmap/inferenceservice-config<span class="w"> </span>--namespace<span class="w"> </span>kserve
 <span class="c1"># Add the flag `&quot;disableIstioVirtualHost&quot;: true` under the ingress section</span>
-ingress : <span class="p">|</span>- <span class="o">{</span>
-    <span class="s2">&quot;disableIstioVirtualHost&quot;</span>: <span class="nb">true</span>
+ingress<span class="w"> </span>:<span class="w"> </span><span class="p">|</span>-<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;disableIstioVirtualHost&quot;</span>:<span class="w"> </span><span class="nb">true</span>
 <span class="o">}</span>
 </code></pre></div>
 </li>
 <li>
 <p>Restart the KServe Controller</p>
-<div class="highlight"><pre><span></span><code>kubectl rollout restart deployment kserve-controller-manager -n kserve
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment<span class="w"> </span>kserve-controller-manager<span class="w"> </span>-n<span class="w"> </span>kserve
 </code></pre></div>
 </li>
 </ol>
@@ -2556,72 +2556,72 @@ ingress : <span class="p">|</span>- <span class="o">{</span>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pmml-demo&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">pmml</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/pmml</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pmml-demo&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">pmml</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/pmml</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pmml-demo&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pmml</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/pmml&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;pmml-demo&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pmml</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/pmml&quot;</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f pmml.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pmml.yaml
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/pmml-demo created
+<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/pmml-demo<span class="w"> </span>created
 </code></pre></div>
 <h3 id="run-a-prediction">Run a Prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>Note that when setting <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code> following the <a href="../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">determining the ingress IP and ports</a> guide you
 need to replace <code>istio-ingressgateway</code> with <code>kourier-gateway</code>.</p>
 <p>For example if you choose to do <code>Port Forward</code> for testing you need to select the <code>kourier-gateway</code> pod as following.</p>
-<div class="highlight"><pre><span></span><code>kubectl port-forward --namespace kourier-system <span class="se">\</span>
-<span class="k">$(</span>kubectl get pod -n kourier-system -l <span class="s2">&quot;app=3scale-kourier-gateway&quot;</span> --output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items[0].metadata.name}&quot;</span><span class="k">)</span> <span class="m">8080</span>:8080
-<span class="nb">export</span> <span class="nv">INGRESS_HOST</span><span class="o">=</span>localhost
-<span class="nb">export</span> <span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>kourier-system<span class="w"> </span><span class="se">\</span>
+<span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>kourier-system<span class="w"> </span>-l<span class="w"> </span><span class="s2">&quot;app=3scale-kourier-gateway&quot;</span><span class="w"> </span>--output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items[0].metadata.name}&quot;</span><span class="k">)</span><span class="w"> </span><span class="m">8080</span>:8080
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>localhost
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="m">8080</span>
 </code></pre></div>
 <p>Send a prediction request to the InferenceService and check the output.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>pmml-demo
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./pmml-input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice pmml-demo -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict -d <span class="nv">$INPUT_PATH</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>pmml-demo<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>*   Trying <span class="m">127</span>.0.0.1...
-* TCP_NODELAY <span class="nb">set</span>
-* Connected to localhost <span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span> port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; POST /v1/models/pmml-demo:predict HTTP/1.1
-&gt; Host: pmml-demo-predictor-default.default.example.com
-&gt; User-Agent: curl/7.58.0
-&gt; Accept: */*
-&gt; Content-Length: <span class="m">45</span>
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt; 
-* upload completely sent off: <span class="m">45</span> out of <span class="m">45</span> bytes
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">144</span>
-&lt; content-type: application/json<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
-&lt; date: Wed, <span class="m">14</span> Sep <span class="m">2022</span> <span class="m">13</span>:30:09 GMT
-&lt; server: envoy
-&lt; x-envoy-upstream-service-time: <span class="m">58</span>
-&lt; 
-* Connection <span class="c1">#0 to host localhost left intact</span>
-<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>: <span class="o">[{</span><span class="s2">&quot;Species&quot;</span>: <span class="s2">&quot;setosa&quot;</span>, <span class="s2">&quot;Probability_setosa&quot;</span>: <span class="m">1</span>.0, <span class="s2">&quot;Probability_versicolor&quot;</span>: <span class="m">0</span>.0, <span class="s2">&quot;Probability_virginica&quot;</span>: <span class="m">0</span>.0, <span class="s2">&quot;Node_Id&quot;</span>: <span class="s2">&quot;2&quot;</span><span class="o">}]}</span>
+<div class="highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/pmml-demo:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>pmml-demo-predictor-default.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.58.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">45</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">45</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">45</span><span class="w"> </span>bytes
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">144</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">14</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">13</span>:30:09<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">58</span>
+&lt;<span class="w"> </span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s2">&quot;Species&quot;</span>:<span class="w"> </span><span class="s2">&quot;setosa&quot;</span>,<span class="w"> </span><span class="s2">&quot;Probability_setosa&quot;</span>:<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="s2">&quot;Probability_versicolor&quot;</span>:<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="s2">&quot;Probability_virginica&quot;</span>:<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="s2">&quot;Node_Id&quot;</span>:<span class="w"> </span><span class="s2">&quot;2&quot;</span><span class="o">}]}</span>
 </code></pre></div>
 
               

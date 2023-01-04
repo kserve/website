@@ -2521,7 +2521,7 @@ identity-based authentication and authorization.</p>
 Because Knative requests are frequently routed through activator, when turning on mTLS additional traffic rules are required and activator/autoscaler in <code>knative-serving</code> namespace must have sidecar injected as well.
 For more details please see <a href="https://knative.dev/docs/serving/istio-authorization/#mutual-tls-in-knative">mTLS in Knative</a>, to understand when requests are forwarded through the activator, see <a href="https://knative.dev/docs/serving/load-balancing/target-burst-capacity/">target burst capacity</a> docs.</p>
 <p>Create the namespace <code>user1</code> which is used for this example.
-<div class="highlight"><pre><span></span><code>kubectl create namespace user1
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>user1
 </code></pre></div></p>
 <ul>
 <li>
@@ -2535,59 +2535,59 @@ For more details please see <a href="https://knative.dev/docs/serving/istio-auth
 <p class="admonition-title">Warning</p>
 <p>Currently when activator is on the request path, it is not able to check the originated namespace or original identity due to the <a href="https://github.com/knative-sandbox/net-istio/issues/554">net-istio issue</a>.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.istio.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PeerAuthentication</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"></span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">mtls</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STRICT</span><span class="w"></span>
-<span class="nn">---</span><span class="w"></span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.istio.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AuthorizationPolicy</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-serving-tests</span><span class="w"></span>
-<span class="w"> </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALLOW</span><span class="w"></span>
-<span class="w"> </span><span class="nt">rules</span><span class="p">:</span><span class="w"></span>
-<span class="w"> </span><span class="c1"># 1. mTLS for service from source &quot;user1&quot; namespace to destination service when TargetBurstCapacity=0 without local gateway and activator on the path</span><span class="w"></span>
-<span class="w"> </span><span class="c1"># Source Service from &quot;user1&quot; namespace -&gt; Destination Service in &quot;user1&quot; namespace</span><span class="w"></span>
-<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span><span class="w"></span>
-<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span><span class="w"></span>
-<span class="w">       </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;user1&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w"> </span><span class="c1"># 2. mTLS for service from source &quot;user1&quot; namespace to destination service with activator on the path</span><span class="w"></span>
-<span class="w"> </span><span class="c1"># Source Service from &quot;user1&quot; namespace -&gt; Activator(Knative Serving namespace) -&gt; Destination service in &quot;user1&quot; namespace</span><span class="w"></span>
-<span class="w"> </span><span class="c1"># unfortunately currently we could not lock down the source namespace as Activator does not capture the source namespace when proxying the request, see https://github.com/knative-sandbox/net-istio/issues/554. </span><span class="w"></span>
-<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span><span class="w"></span>
-<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;knative-serving&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w"> </span><span class="c1"># 3. allow metrics and probes from knative serving namespaces</span><span class="w"></span>
-<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span><span class="w"></span>
-<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;knative-serving&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">   </span><span class="nt">to</span><span class="p">:</span><span class="w"></span>
-<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">operation</span><span class="p">:</span><span class="w"></span>
-<span class="w">       </span><span class="nt">paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/metrics&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/healthz&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/ready&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/wait-for-drain&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.istio.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PeerAuthentication</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mtls</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STRICT</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">security.istio.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AuthorizationPolicy</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">allow-serving-tests</span>
+<span class="w"> </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w"> </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ALLOW</span>
+<span class="w"> </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w"> </span><span class="c1"># 1. mTLS for service from source &quot;user1&quot; namespace to destination service when TargetBurstCapacity=0 without local gateway and activator on the path</span>
+<span class="w"> </span><span class="c1"># Source Service from &quot;user1&quot; namespace -&gt; Destination Service in &quot;user1&quot; namespace</span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">       </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;user1&quot;</span><span class="p p-Indicator">]</span>
+<span class="w"> </span><span class="c1"># 2. mTLS for service from source &quot;user1&quot; namespace to destination service with activator on the path</span>
+<span class="w"> </span><span class="c1"># Source Service from &quot;user1&quot; namespace -&gt; Activator(Knative Serving namespace) -&gt; Destination service in &quot;user1&quot; namespace</span>
+<span class="w"> </span><span class="c1"># unfortunately currently we could not lock down the source namespace as Activator does not capture the source namespace when proxying the request, see https://github.com/knative-sandbox/net-istio/issues/554. </span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;knative-serving&quot;</span><span class="p p-Indicator">]</span>
+<span class="w"> </span><span class="c1"># 3. allow metrics and probes from knative serving namespaces</span>
+<span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">from</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">namespaces</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;knative-serving&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">   </span><span class="nt">to</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">operation</span><span class="p">:</span>
+<span class="w">       </span><span class="nt">paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;/metrics&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/healthz&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/ready&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;/wait-for-drain&quot;</span><span class="p p-Indicator">]</span>
 </code></pre></div>
 <p>Apply the <code>PeerAuthentication</code> and <code>AuthorizationPolicy</code> rules with <a href="auth.yaml">auth.yaml</a>:</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f auth.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>auth.yaml
 </code></pre></div>
 <h3 id="disable-top-level-virtual-service">Disable Top Level Virtual Service<a class="headerlink" href="#disable-top-level-virtual-service" title="Permanent link">&para;</a></h3>
 <p>KServe currently creates an Istio top level virtual service to support routing between InferenceService components like predictor, transformer and explainer, as well as support path based routing as an alternative routing with service hosts.
 In serverless service mesh mode this creates a problem that in order to route through the underlying virtual service created by Knative Service, the top level virtual service is required to route to the <code>Istio Gateway</code> instead of to the InferenceService component on the service mesh directly.</p>
 <p>By disabling the top level virtual service, it eliminates the extra route to Istio local gateway and the authorization policy can check the source namespace when mTLS is established directly between service to service and activator is not on the request path.
 To disable the top level virtual service, add the flag <code>"disableIstioVirtualHost": true</code> under the <strong>ingress</strong> config in inferenceservice configmap.</p>
-<div class="highlight"><pre><span></span><code>kubectl edit configmap/inferenceservice-config --namespace kserve
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>configmap/inferenceservice-config<span class="w"> </span>--namespace<span class="w"> </span>kserve
 
-ingress : <span class="p">|</span>- <span class="o">{</span>
-    <span class="s2">&quot;disableIstioVirtualHost&quot;</span>: <span class="nb">true</span>
+ingress<span class="w"> </span>:<span class="w"> </span><span class="p">|</span>-<span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;disableIstioVirtualHost&quot;</span>:<span class="w"> </span><span class="nb">true</span>
 <span class="o">}</span>
 </code></pre></div>
 <h2 id="deploy-inferenceservice-with-istio-sidecar-injection">Deploy InferenceService with Istio sidecar injection<a class="headerlink" href="#deploy-inferenceservice-with-istio-sidecar-injection" title="Permanent link">&para;</a></h2>
 <p>First label the namespace with <code>istio-injection=enabled</code> to turn on the sidecar injection for the namespace.</p>
-<div class="highlight"><pre><span></span><code>kubectl label namespace user1 istio-injection<span class="o">=</span>enabled --overwrite
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>label<span class="w"> </span>namespace<span class="w"> </span>user1<span class="w"> </span>istio-injection<span class="o">=</span>enabled<span class="w"> </span>--overwrite
 </code></pre></div>
 <p>Create the InferenceService with and without Knative activator on the path:
 When <code>autoscaling.knative.dev/targetBurstCapacity</code> is set to 0,
@@ -2596,143 +2596,143 @@ the authorization policy can check the original namespace of the request to lock
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">InferenceService with activator on path</label><label for="__tabbed_1_2">InferenceService without activator on path</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklearn-iris-burst&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span><span class="w"></span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;sidecar.istio.io/inject&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklearn-iris-burst&quot;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="s">&quot;sidecar.istio.io/inject&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span><span class="w"> </span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklearn-iris&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span><span class="w"></span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;autoscaling.knative.dev/targetBurstCapacity&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;sidecar.istio.io/inject&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklearn-iris&quot;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user1</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="s">&quot;autoscaling.knative.dev/targetBurstCapacity&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;0&quot;</span>
+<span class="w">    </span><span class="s">&quot;sidecar.istio.io/inject&quot;</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span><span class="w"> </span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<p><div class="highlight"><pre><span></span><code>kubectl apply -f sklearn_iris.yaml
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>sklearn_iris.yaml
 </code></pre></div>
 <mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/sklearn-iris created
-inferenceservice.serving.kserve.io/sklearn-iris-burst created
+<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/sklearn-iris<span class="w"> </span>created
+inferenceservice.serving.kserve.io/sklearn-iris-burst<span class="w"> </span>created
 
-kubectl get pods -n user1
-NAME                                                              READY   STATUS    RESTARTS   AGE
-httpbin-6484879498-qxqj8                                          <span class="m">2</span>/2     Running   <span class="m">0</span>          19h
-sklearn-iris-burst-predictor-default-00001-deployment-5685n46f6   <span class="m">3</span>/3     Running   <span class="m">0</span>          12h
-sklearn-iris-predictor-default-00001-deployment-985d5cd46-zzw4x   <span class="m">3</span>/3     Running   <span class="m">0</span>          12h
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>user1
+NAME<span class="w">                                                              </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+httpbin-6484879498-qxqj8<span class="w">                                          </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>19h
+sklearn-iris-burst-predictor-default-00001-deployment-5685n46f6<span class="w">   </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>12h
+sklearn-iris-predictor-default-00001-deployment-985d5cd46-zzw4x<span class="w">   </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>12h
 </code></pre></div>
 <h2 id="run-a-prediction-from-the-same-namespace">Run a prediction from the same namespace<a class="headerlink" href="#run-a-prediction-from-the-same-namespace" title="Permanent link">&para;</a></h2>
 <p>Deploy a test service in <code>user1</code> namespace with <a href="httpbin.yaml">httpbin.yaml</a>.</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f httpbin.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>httpbin.yaml
 </code></pre></div>
 <p>Run a prediction request to the <code>sklearn-iris</code> InferenceService without activator on the path, you are expected to get HTTP 200 as the authorization rule allows traffic from the same namespace.
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it httpbin-6484879498-qxqj8 -c istio-proxy -n user1 -- curl -v sklearn-iris-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>httpbin-6484879498-qxqj8<span class="w"> </span>-c<span class="w"> </span>istio-proxy<span class="w"> </span>-n<span class="w"> </span>user1<span class="w"> </span>--<span class="w"> </span>curl<span class="w"> </span>-v<span class="w"> </span>sklearn-iris-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris
 </code></pre></div></p>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>* Connected to sklearn-iris-predictor-default.user1.svc.cluster.local <span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; GET /v1/models/sklearn-iris HTTP/1.1
-&gt; Host: sklearn-iris-predictor-default.user1.svc.cluster.local
-&gt; User-Agent: curl/7.81.0
-&gt; Accept: */*
+<div class="highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>sklearn-iris-predictor-default.user1.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>GET<span class="w"> </span>/v1/models/sklearn-iris<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-iris-predictor-default.user1.svc.cluster.local
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.81.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">36</span>
-&lt; content-type: application/json
-&lt; date: Sat, <span class="m">26</span> Nov <span class="m">2022</span> <span class="m">01</span>:45:10 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: <span class="m">42</span>
-&lt; 
-* Connection <span class="c1">#0 to host sklearn-iris-predictor-default.user1.svc.cluster.local left intact</span>
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">36</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sat,<span class="w"> </span><span class="m">26</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">01</span>:45:10<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">42</span>
+&lt;<span class="w"> </span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host sklearn-iris-predictor-default.user1.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;sklearn-iris&quot;</span>,<span class="s2">&quot;ready&quot;</span>:true<span class="o">}</span>
 </code></pre></div>
 <p>Run a prediction request to the <code>sklearn-iris-burst</code> InferenceService with activator on the path, you are expected to get HTTP 200 as the authorization rule allows traffic from <code>knative-serving</code> namespace.
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it httpbin-6484879498-qxqj8 -c istio-proxy -n user1 -- curl -v sklearn-iris-burst-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris-burst
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>httpbin-6484879498-qxqj8<span class="w"> </span>-c<span class="w"> </span>istio-proxy<span class="w"> </span>-n<span class="w"> </span>user1<span class="w"> </span>--<span class="w"> </span>curl<span class="w"> </span>-v<span class="w"> </span>sklearn-iris-burst-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris-burst
 </code></pre></div></p>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>* Connected to sklearn-iris-burst-predictor-default.user1.svc.cluster.local <span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; GET /v1/models/sklearn-iris-burst HTTP/1.1
-&gt; Host: sklearn-iris-burst-predictor-default.user1.svc.cluster.local
-&gt; User-Agent: curl/7.81.0
-&gt; Accept: */*
+<div class="highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>sklearn-iris-burst-predictor-default.user1.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>GET<span class="w"> </span>/v1/models/sklearn-iris-burst<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-iris-burst-predictor-default.user1.svc.cluster.local
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.81.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">42</span>
-&lt; content-type: application/json
-&lt; date: Sat, <span class="m">26</span> Nov <span class="m">2022</span> <span class="m">13</span>:55:14 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: <span class="m">209</span>
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">42</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sat,<span class="w"> </span><span class="m">26</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">13</span>:55:14<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">209</span>
 &lt;
-* Connection <span class="c1">#0 to host sklearn-iris-burst-predictor-default.user1.svc.cluster.local left intact</span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host sklearn-iris-burst-predictor-default.user1.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;sklearn-iris-burst&quot;</span>,<span class="s2">&quot;ready&quot;</span>:true<span class="o">}</span>
 </code></pre></div>
 <h2 id="run-a-prediction-from-a-different-namespace">Run a prediction from a different namespace<a class="headerlink" href="#run-a-prediction-from-a-different-namespace" title="Permanent link">&para;</a></h2>
 <p>Deploy a test service in <code>default</code> namespace with <a href="sleep.yaml">sleep.yaml</a> which is different from the namespace the <code>InferenceService</code> is deployed to.</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f sleep.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>sleep.yaml
 </code></pre></div>
 <p>When you send a prediction request to the <code>sklearn-iris</code> InferenceService without activator on the request path from a different namespace, you are expected to get HTTP 403 "RBAC denied" as the authorization rule only
 allows the traffic from the same namespace <code>user1</code> where the InferenceService is deployed.
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it sleep-6d6b49d8b8-6ths6   -- curl -v sklearn-iris-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>sleep-6d6b49d8b8-6ths6<span class="w">   </span>--<span class="w"> </span>curl<span class="w"> </span>-v<span class="w"> </span>sklearn-iris-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris
 </code></pre></div></p>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>* Connected to sklearn-iris-predictor-default.user1.svc.cluster.local <span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; GET /v1/models/sklearn-iris HTTP/1.1
-&gt; Host: sklearn-iris-predictor-default.user1.svc.cluster.local
-&gt; User-Agent: curl/7.86.0-DEV
-&gt; Accept: */*
+<div class="highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>sklearn-iris-predictor-default.user1.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>GET<span class="w"> </span>/v1/models/sklearn-iris<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-iris-predictor-default.user1.svc.cluster.local
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.86.0-DEV
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 <span class="m">403</span> Forbidden
-&lt; content-length: <span class="m">19</span>
-&lt; content-type: text/plain
-&lt; date: Sat, <span class="m">26</span> Nov <span class="m">2022</span> <span class="m">02</span>:45:46 GMT
-&lt; server: envoy
-&lt; x-envoy-upstream-service-time: <span class="m">14</span>
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">403</span><span class="w"> </span>Forbidden
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">19</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>text/plain
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sat,<span class="w"> </span><span class="m">26</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">02</span>:45:46<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">14</span>
 &lt;
-* Connection <span class="c1">#0 to host sklearn-iris-predictor-default.user1.svc.cluster.local left intact</span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host sklearn-iris-predictor-default.user1.svc.cluster.local left intact</span>
 </code></pre></div>
 <p>When you send a prediction request to the <code>sklearn-iris-burst</code> InferenceService with activator on the request path from a different namespace, you actually get HTTP 200 response due to the above limitation as the authorization policy is
 not able to lock down the traffic only from the same namespace as the request is proxyed through activator in <code>knative-serving</code> namespace, we expect to get HTTP 403 once upstream Knative <code>net-istio</code> is fixed.</p>
-<div class="highlight"><pre><span></span><code>kubectl <span class="nb">exec</span> -it sleep-6d6b49d8b8-6ths6   -- curl -v sklearn-iris-burst-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris-burst
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>sleep-6d6b49d8b8-6ths6<span class="w">   </span>--<span class="w"> </span>curl<span class="w"> </span>-v<span class="w"> </span>sklearn-iris-burst-predictor-default.user1.svc.cluster.local/v1/models/sklearn-iris-burst
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>* Connected to sklearn-iris-burst-predictor-default.user1.svc.cluster.local <span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; GET /v1/models/sklearn-iris-burst HTTP/1.1
-&gt; Host: sklearn-iris-burst-predictor-default.user1.svc.cluster.local
-&gt; User-Agent: curl/7.86.0-DEV
-&gt; Accept: */*
+<div class="highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>sklearn-iris-burst-predictor-default.user1.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.96.137.152<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>GET<span class="w"> </span>/v1/models/sklearn-iris-burst<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-iris-burst-predictor-default.user1.svc.cluster.local
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.86.0-DEV
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">42</span>
-&lt; content-type: application/json
-&lt; date: Sat, <span class="m">26</span> Nov <span class="m">2022</span> <span class="m">13</span>:59:04 GMT
-&lt; server: envoy
-&lt; x-envoy-upstream-service-time: <span class="m">6</span>
-&lt; 
-* Connection <span class="c1">#0 to host sklearn-iris-burst-predictor-default.user1.svc.cluster.local left intact</span>
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">42</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sat,<span class="w"> </span><span class="m">26</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">13</span>:59:04<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">6</span>
+&lt;<span class="w"> </span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host sklearn-iris-burst-predictor-default.user1.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;sklearn-iris-burst&quot;</span>,<span class="s2">&quot;ready&quot;</span>:true<span class="o">}</span>
 </code></pre></div>
 
