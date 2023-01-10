@@ -1,10 +1,11 @@
 ## Open Inference Protocol (V2 Inference Protocol)
 
-**For an inference server to be compliant with this protocol the server must implement the health, metadata, and inference V2 APIs**. Optional features that are explicitly noted are not required. A compliant inference server may choose to implement the [HTTP/REST API](#httprest) and/or the [GRPC API](#grpc).
+**For an inference server to be compliant with this protocol the server must implement the health, metadata, and inference V2 APIs**. 
+Optional features that are explicitly noted are not required. A compliant inference server may choose to implement the [HTTP/REST API](#httprest) and/or the [GRPC API](#grpc).
 
-The V2 protocol supports an extension mechanism as a required part of the API, but this document does not propose any specific extensions. Any specific extensions will be proposed separately.
+Check the [model serving runtime table](../v1beta1/serving_runtime.md) / the `protocolVersion` field in the [runtime YAML](https://github.com/kserve/kserve/tree/master/config/runtimes) to ensure V2 protocol is supported for model serving runtime that you are using.
 
-Note: For all API descriptions on this page, all strings in all contexts are case-sensitive.
+Note: For all API descriptions on this page, all strings in all contexts are case-sensitive. The V2 protocol supports an extension mechanism as a required part of the API, but this document does not propose any specific extensions. Any specific extensions will be proposed separately.
 
 ### Note on changes between V1 & V2 
 
