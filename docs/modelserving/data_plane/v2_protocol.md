@@ -27,7 +27,7 @@ See also: The HTTP/REST endpoints are defined in [rest_predict_v2.yaml](https://
 | Server Ready | GET | v2/health/ready | | [$ready_server_response](#server-ready-response-json-object) | 
 | Server Live | GET | v2/health/live | | [$live_server_response](#server-live-response-json-objet)| 
 | Server Metadata | GET | v2 | | [$metadata_server_response](#server-metadata-response-json-object) |
-<!-- TODO: uncomment when implemented | Model Ready| GET   | |  | -->
+| Model Ready| GET   | v2/models/\<model_name\>[/versions/<model_version>]/ready |  | [$ready_model_response](#model-ready-response-json-object) |
 
 ** path contents in `[]` are optional
 
@@ -58,15 +58,18 @@ Kubernetes documentation.
 
 ### **Payload Contents**
 
-<!-- TODO: uncomment when implemented ### **Model Ready**
+### **Model Ready**
 
 The model ready endpoint returns the readiness probe response for the server along with the name of the model.
 
-    $ready_server_response =
+#### Model Ready Response JSON Object
+
+
+    $ready_model_response =
     {
       "name" : $string,
       "ready": $bool
-    } -->
+    }
 
 
 ### Server Ready

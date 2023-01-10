@@ -52,7 +52,7 @@ KServe supports two versions of its data plane, V1 and V2. V1 protocol offers a 
 | Server Readiness | GET | v2/health/ready |
 | Server Liveness | GET | v2/health/live |
 | Server Metadata | GET | v2 | 
-<!-- TODO: uncomment when implemented | Model Readiness| GET   | v2/models/\<model_name\>[/versions/<model_version>]/ready | -->
+| Model Readiness| GET   | v2/models/\<model_name\>[/versions/<model_version>]/ready |
 
 ** path contents in `[]` are optional
 
