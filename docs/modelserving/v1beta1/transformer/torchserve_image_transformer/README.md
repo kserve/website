@@ -303,7 +303,10 @@ Handling connection for 8080
 {"predictions": [[-1.192867636680603, -0.35750141739845276, -2.3665435314178467, 3.9186441898345947, -2.0592284202575684, 4.091977119445801, 0.1266237050294876, -1.8284690380096436, 2.628898859024048, -4.255198001861572]]}* Closing connection 0
 ```
 
-Comparing with REST, gRPC is faster than REST due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC.
+## Performance Comparison between gRPC and REST
+Comparing with REST, gRPC is faster due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC. From the following latency stats from both
+transformer and predictor you can see that the transformer to predictor call takes longer time(92ms vs 55ms) for REST and gRPC respectively, mostly REST takes more
+time serializing and deserializing 3*32*32 shape tensor and with GRPC it is transmitted as tightly packed `numpy array` serialized bytes.
 
 ```bash
 # from REST v1 transformer log
