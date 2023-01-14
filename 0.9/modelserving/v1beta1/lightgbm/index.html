@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/v1beta1/lightgbm/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
     
     
       
@@ -2511,7 +2511,7 @@
 <h2 id="deploy-lightgbm-model-with-v1-protocol">Deploy LightGBM model with V1 protocol<a class="headerlink" href="#deploy-lightgbm-model-with-v1-protocol" title="Permanent link">&para;</a></h2>
 <h3 id="test-the-model-locally">Test the model locally<a class="headerlink" href="#test-the-model-locally" title="Permanent link">&para;</a></h3>
 <p>Install and run the <a href="https://github.com/kserve/kserve/python/lgbserver">LightGBM Server</a> using the trained model locally and test the prediction. </p>
-<div class="highlight"><pre><span></span><code>python -m lgbserver --model_dir /path/to/model_dir --model_name lgb
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>lgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>lgb
 </code></pre></div>
 <p>After the <code>LightGBM Server</code> is up locally we can then test the model by sending an inference request.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -2529,71 +2529,71 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-iris&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-iris&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-iris&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-iris&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/iris&quot;</span>
 </code></pre></div>
 </div>
 </div>
 </div>
 <p>Apply the above yaml to create the InferenceService</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f lightgbm.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>lightgbm.yaml
 </code></pre></div>
 <p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/lightgbm-iris created
+<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/lightgbm-iris<span class="w"> </span>created
 </code></pre></div>
 <h3 id="test-the-deployed-model">Test the deployed model<a class="headerlink" href="#test-the-deployed-model" title="Permanent link">&para;</a></h3>
 <p>To test the deployed model the first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>, then run the following curl command to send the inference request to the <code>InferenceService</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>lightgbm-iris
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./iris-input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice lightgbm-iris -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict -d <span class="nv">$INPUT_PATH</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>lightgbm-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>*   Trying <span class="m">169</span>.63.251.68...
-* TCP_NODELAY <span class="nb">set</span>
-* Connected to <span class="m">169</span>.63.251.68 <span class="o">(</span><span class="m">169</span>.63.251.68<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; POST /models/lightgbm-iris:predict HTTP/1.1
-&gt; Host: lightgbm-iris.default.svc.cluster.local
-&gt; User-Agent: curl/7.60.0
-&gt; Accept: */*
-&gt; Content-Length: <span class="m">76</span>
-&gt; Content-Type: application/x-www-form-urlencoded
+<div class="highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">169</span>.63.251.68...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span><span class="m">169</span>.63.251.68<span class="w"> </span><span class="o">(</span><span class="m">169</span>.63.251.68<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/models/lightgbm-iris:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>lightgbm-iris.default.svc.cluster.local
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.60.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">76</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
 &gt;
-* upload completely sent off: <span class="m">76</span> out of <span class="m">76</span> bytes
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">27</span>
-&lt; content-type: application/json<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
-&lt; date: Tue, <span class="m">21</span> May <span class="m">2019</span> <span class="m">22</span>:40:09 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: <span class="m">13032</span>
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">76</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">76</span><span class="w"> </span>bytes
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">27</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Tue,<span class="w"> </span><span class="m">21</span><span class="w"> </span>May<span class="w"> </span><span class="m">2019</span><span class="w"> </span><span class="m">22</span>:40:09<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">13032</span>
 &lt;
-* Connection <span class="c1">#0 to host 169.63.251.68 left intact</span>
-<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>: <span class="o">[[</span><span class="m">0</span>.9, <span class="m">0</span>.05, <span class="m">0</span>.05<span class="o">]]}</span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host 169.63.251.68 left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[[</span><span class="m">0</span>.9,<span class="w"> </span><span class="m">0</span>.05,<span class="w"> </span><span class="m">0</span>.05<span class="o">]]}</span>
 </code></pre></div>
 <h2 id="deploy-the-model-with-v2-protocol">Deploy the model with <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 protocol</a><a class="headerlink" href="#deploy-the-model-with-v2-protocol" title="Permanent link">&para;</a></h2>
 <h3 id="test-the-model-locally_1">Test the model locally<a class="headerlink" href="#test-the-model-locally_1" title="Permanent link">&para;</a></h3>
 <p>Once you've got your model serialised <code>model.bst</code>, we can then use <a href="https://github.com/SeldonIO/MLServer">MLServer</a> which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the <a href="https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md">LightGBM example doc</a>.</p>
 <p>To run MLServer locally, you first install the <code>mlserver</code> package in your local environment, as well as the LightGBM runtime.</p>
-<div class="highlight"><pre><span></span><code>pip install mlserver mlserver-lightgbm
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>mlserver<span class="w"> </span>mlserver-lightgbm
 </code></pre></div>
 <p>The next step is to provide the model settings so that MLServer knows:</p>
 <ul>
@@ -2602,15 +2602,15 @@ curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span c
 </ul>
 <p>These can be specified through environment variables or by creating a local
 <code>model-settings.json</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lightgbm-iris&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1.0.0&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;implementation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mlserver_lightgbm.LightGBMModel&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lightgbm-iris&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;implementation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mlserver_lightgbm.LightGBMModel&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>With the <code>mlserver</code> package installed locally and a local <code>model-settings.json</code>
 file, you should now be ready to start our server as:</p>
-<div class="highlight"><pre><span></span><code>mlserver start .
+<div class="highlight"><pre><span></span><code>mlserver<span class="w"> </span>start<span class="w"> </span>.
 </code></pre></div>
 <h3 id="deploy-with-inferenceservice_1">Deploy with InferenceService<a class="headerlink" href="#deploy-with-inferenceservice_1" title="Permanent link">&para;</a></h3>
 <p>When you deploy your model with <code>InferenceService</code> KServe injects sensible defaults so that it runs out-of-the-box without any
@@ -2620,86 +2620,86 @@ You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Old Schema</label><label for="__tabbed_2_2">New Schema</label><label for="__tabbed_2_3">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-v2-iris&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/v2/iris&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-v2-iris&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/v2/iris&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-v2-iris&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span><span class="w"></span>
-<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/v2/iris&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;lightgbm-v2-iris&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/lightgbm/v2/iris&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f lightgbm-v2.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>lightgbm-v2.yaml
 </code></pre></div>
 <p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/lightgbm-v2-iris created
+<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/lightgbm-v2-iris<span class="w"> </span>created
 </code></pre></div>
 <h3 id="test-the-deployed-model_1">Test the deployed model<a class="headerlink" href="#test-the-deployed-model_1" title="Permanent link">&para;</a></h3>
 <p>You can now test your deployed model by sending a sample request.</p>
 <p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane protocol</a></strong>.
 You can see an example payload below:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;input-0&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FP32&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w"> </span><span class="mf">2.8</span><span class="p">,</span><span class="w"> </span><span class="mf">4.8</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">],</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.4</span><span class="p">,</span><span class="w"> </span><span class="mf">4.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.6</span><span class="p">]</span><span class="w"></span>
-<span class="w">      </span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;input-0&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FP32&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w"> </span><span class="mf">2.8</span><span class="p">,</span><span class="w"> </span><span class="mf">4.8</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.4</span><span class="p">,</span><span class="w"> </span><span class="mf">4.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.6</span><span class="p">]</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Now, assuming that your ingress can be accessed at
 <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out your ingress IP and port.</p>
 <p>you can use <code>curl</code> to send the inference request as:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice lightgbm-v2-iris -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>lightgbm-v2-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl -v <span class="se">\</span>
-  -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
-  -H <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
-  -d @./iris-input-v2.json <span class="se">\</span>
-  http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/lightgbm-v2-iris/infer
+curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span>@./iris-input-v2.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/lightgbm-v2-iris/infer
 </code></pre></div>
 <p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="s2">&quot;lightgbm-v2-iris&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;96253e27-83cf-4262-b279-1bd4b18d7922&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;outputs&quot;</span><span class="p">:[</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;shape&quot;</span><span class="p">:[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="s2">&quot;FP64&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="p">[</span><span class="mf">8.796664107010673e-06</span><span class="p">,</span><span class="mf">0.9992300031041593</span><span class="p">,</span><span class="mf">0.0007612002317336916</span><span class="p">,</span><span class="mf">4.974786820804187e-06</span><span class="p">,</span><span class="mf">0.9999919650711493</span><span class="p">,</span><span class="mf">3.0601420299625077e-06</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="s2">&quot;lightgbm-v2-iris&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;96253e27-83cf-4262-b279-1bd4b18d7922&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;outputs&quot;</span><span class="p">:[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;predict&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;shape&quot;</span><span class="p">:[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="s2">&quot;FP64&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="p">[</span><span class="mf">8.796664107010673e-06</span><span class="p">,</span><span class="mf">0.9992300031041593</span><span class="p">,</span><span class="mf">0.0007612002317336916</span><span class="p">,</span><span class="mf">4.974786820804187e-06</span><span class="p">,</span><span class="mf">0.9999919650711493</span><span class="p">,</span><span class="mf">3.0601420299625077e-06</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div>
 
               

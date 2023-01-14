@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/v1beta1/torchserve/bert/">
       
       <link rel="icon" href="../../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
     
     
       
@@ -2327,80 +2327,80 @@ on KServe.</p>
 <p>Clone <a href="https://github.com/pytorch/serve">pytorch/serve</a> repository,
 navigate to <code>examples/Huggingface_Transformers</code> and follow the steps for creating the MAR file including serialized model and other dependent files.
 TorchServe supports both eager model and torchscript and here we save as the pretrained model. </p>
-<div class="highlight"><pre><span></span><code>torch-model-archiver --model-name BERTSeqClassification --version <span class="m">1</span>.0 <span class="se">\</span>
---serialized-file Transformer_model/pytorch_model.bin <span class="se">\</span>
---handler ./Transformer_handler_generalized.py <span class="se">\</span>
---extra-files <span class="s2">&quot;Transformer_model/config.json,./setup_config.json,./Seq_classification_artifacts/index_to_name.json&quot;</span>
+<div class="highlight"><pre><span></span><code>torch-model-archiver<span class="w"> </span>--model-name<span class="w"> </span>BERTSeqClassification<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span><span class="se">\</span>
+--serialized-file<span class="w"> </span>Transformer_model/pytorch_model.bin<span class="w"> </span><span class="se">\</span>
+--handler<span class="w"> </span>./Transformer_handler_generalized.py<span class="w"> </span><span class="se">\</span>
+--extra-files<span class="w"> </span><span class="s2">&quot;Transformer_model/config.json,./setup_config.json,./Seq_classification_artifacts/index_to_name.json&quot;</span>
 </code></pre></div>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h2>
 <p>Apply the CRD</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f bert.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>bert.yaml
 </code></pre></div>
 <p>Expected Output</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$inferenceservice</span>.serving.kserve.io/torchserve-bert created
+<div class="highlight"><pre><span></span><code><span class="nv">$inferenceservice</span>.serving.kserve.io/torchserve-bert<span class="w"> </span>created
 </code></pre></div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>torchserve-bert
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -n &lt;namespace&gt; -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/BERTSeqClassification:predict -d ./sample_text.txt
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/BERTSeqClassification:predict<span class="w"> </span>-d<span class="w"> </span>./sample_text.txt
 </code></pre></div>
 <p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>*   Trying <span class="m">44</span>.239.20.204...
-* Connected to a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com <span class="o">(</span><span class="m">44</span>.239.20.204<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; PUT /v1/models/BERTSeqClassification:predict HTTP/1.1
-&gt; Host: torchserve-bert.kserve-test.example.com
-&gt; User-Agent: curl/7.47.0
-&gt; Accept: */*
-&gt; Content-Length: <span class="m">79</span>
-&gt; Expect: <span class="m">100</span>-continue
+<div class="highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">44</span>.239.20.204...
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com<span class="w"> </span><span class="o">(</span><span class="m">44</span>.239.20.204<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>PUT<span class="w"> </span>/v1/models/BERTSeqClassification:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>torchserve-bert.kserve-test.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.47.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">79</span>
+&gt;<span class="w"> </span>Expect:<span class="w"> </span><span class="m">100</span>-continue
 &gt;
-&lt; HTTP/1.1 <span class="m">100</span> Continue
-* We are completely uploaded and fine
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; cache-control: no-cache<span class="p">;</span> no-store, must-revalidate, private
-&lt; content-length: <span class="m">8</span>
-&lt; date: Wed, <span class="m">04</span> Nov <span class="m">2020</span> <span class="m">10</span>:54:49 GMT
-&lt; expires: Thu, <span class="m">01</span> Jan <span class="m">1970</span> <span class="m">00</span>:00:00 UTC
-&lt; pragma: no-cache
-&lt; x-request-id: 4b54d3ac-185f-444c-b344-b8a785fdeb50
-&lt; x-envoy-upstream-service-time: <span class="m">2085</span>
-&lt; server: istio-envoy
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">100</span><span class="w"> </span>Continue
+*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>cache-control:<span class="w"> </span>no-cache<span class="p">;</span><span class="w"> </span>no-store,<span class="w"> </span>must-revalidate,<span class="w"> </span>private
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">8</span>
+&lt;<span class="w"> </span>date:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">04</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">2020</span><span class="w"> </span><span class="m">10</span>:54:49<span class="w"> </span>GMT
+&lt;<span class="w"> </span>expires:<span class="w"> </span>Thu,<span class="w"> </span><span class="m">01</span><span class="w"> </span>Jan<span class="w"> </span><span class="m">1970</span><span class="w"> </span><span class="m">00</span>:00:00<span class="w"> </span>UTC
+&lt;<span class="w"> </span>pragma:<span class="w"> </span>no-cache
+&lt;<span class="w"> </span>x-request-id:<span class="w"> </span>4b54d3ac-185f-444c-b344-b8a785fdeb50
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">2085</span>
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
 &lt;
-* Connection <span class="c1">#0 to host torchserve-bert.kserve-test.example.com left intact</span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host torchserve-bert.kserve-test.example.com left intact</span>
 Accepted
 </code></pre></div>
 <h2 id="captum-explanations">Captum Explanations<a class="headerlink" href="#captum-explanations" title="Permanent link">&para;</a></h2>
 <p>In order to understand the word importances and attributions when we make an explanation Request, we use Captum Insights for the Hugginface Transformers pre-trained model.
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>torchserve-bert
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span> -n &lt;namespace&gt; -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/BERTSeqClassification:explaine -d ./sample_text.txt
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/BERTSeqClassification:explaine<span class="w"> </span>-d<span class="w"> </span>./sample_text.txt
 </code></pre></div>
 Expected output
-<div class="highlight"><pre><span></span><code>*   Trying ::1:8080...
-* Connected to localhost <span class="o">(</span>::1<span class="o">)</span> port <span class="m">8080</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; POST /v1/models/BERTSeqClassification:explain HTTP/1.1
-&gt; Host: torchserve-bert.default.example.com
-&gt; User-Agent: curl/7.73.0
-&gt; Accept: */*
-&gt; Content-Length: <span class="m">84</span>
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt;Handling connection <span class="k">for</span> <span class="m">8080</span>
+<div class="highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span>::1:8080...
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span>::1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/BERTSeqClassification:explain<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>torchserve-bert.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.73.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">84</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;Handling<span class="w"> </span>connection<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="m">8080</span>
 
-* upload completely sent off: <span class="m">84</span> out of <span class="m">84</span> bytes
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">292</span>
-&lt; content-type: application/json<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>UTF-8
-&lt; date: Sun, <span class="m">27</span> Dec <span class="m">2020</span> <span class="m">05</span>:53:52 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: <span class="m">5769</span>
-&lt; 
-* Connection <span class="c1">#0 to host localhost left intact</span>
-<span class="o">{</span><span class="s2">&quot;explanations&quot;</span>: <span class="o">[{</span><span class="s2">&quot;importances&quot;</span>: <span class="o">[</span><span class="m">0</span>.0, -0.6324463574494716, -0.033115653530477414, <span class="m">0</span>.2681695752722339, -0.29124745608778546, <span class="m">0</span>.5422589681903883, -0.3848768219546909, <span class="m">0</span>.0<span class="o">]</span>, 
-<span class="s2">&quot;words&quot;</span>: <span class="o">[</span><span class="s2">&quot;[CLS]&quot;</span>, <span class="s2">&quot;bloomberg&quot;</span>, <span class="s2">&quot;has&quot;</span>, <span class="s2">&quot;reported&quot;</span>, <span class="s2">&quot;on&quot;</span>, <span class="s2">&quot;the&quot;</span>, <span class="s2">&quot;economy&quot;</span>, <span class="s2">&quot;[SEP]&quot;</span><span class="o">]</span>, <span class="s2">&quot;delta&quot;</span>: -0.0007350619859377225<span class="o">}]}</span>
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">84</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">84</span><span class="w"> </span>bytes
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">292</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">27</span><span class="w"> </span>Dec<span class="w"> </span><span class="m">2020</span><span class="w"> </span><span class="m">05</span>:53:52<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">5769</span>
+&lt;<span class="w"> </span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">&quot;explanations&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s2">&quot;importances&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">0</span>.0,<span class="w"> </span>-0.6324463574494716,<span class="w"> </span>-0.033115653530477414,<span class="w"> </span><span class="m">0</span>.2681695752722339,<span class="w"> </span>-0.29124745608778546,<span class="w"> </span><span class="m">0</span>.5422589681903883,<span class="w"> </span>-0.3848768219546909,<span class="w"> </span><span class="m">0</span>.0<span class="o">]</span>,<span class="w"> </span>
+<span class="s2">&quot;words&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;[CLS]&quot;</span>,<span class="w"> </span><span class="s2">&quot;bloomberg&quot;</span>,<span class="w"> </span><span class="s2">&quot;has&quot;</span>,<span class="w"> </span><span class="s2">&quot;reported&quot;</span>,<span class="w"> </span><span class="s2">&quot;on&quot;</span>,<span class="w"> </span><span class="s2">&quot;the&quot;</span>,<span class="w"> </span><span class="s2">&quot;economy&quot;</span>,<span class="w"> </span><span class="s2">&quot;[SEP]&quot;</span><span class="o">]</span>,<span class="w"> </span><span class="s2">&quot;delta&quot;</span>:<span class="w"> </span>-0.0007350619859377225<span class="o">}]}</span>
 </code></pre></div></p>
 
               

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/inference_graph/image_pipeline/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
     
     
       
@@ -2445,17 +2445,17 @@ the image classifier models for different stages.</p>
 <p>Before deploying the graph router with <code>InferenceGraph</code> custom resource, you need to first deploy the individual <code>InferenceServices</code>
 with the models trained from previous step.</p>
 <p>The models should be packaged with the following commands and then upload to your model storage along with the <a href="config/config.properties">configuration</a>:
-<div class="highlight"><pre><span></span><code>torch-model-archiver -f --model-name cat_dog_classification --version <span class="m">1</span>.0 <span class="se">\</span>
---model-file cat_dog_classification_arch.py <span class="se">\</span>
---serialized-file cat_dog_classification.pth <span class="se">\</span>
---handler cat_dog_classification_handler.py <span class="se">\</span>
---extra-files index_to_name.json --export-path model_store
+<div class="highlight"><pre><span></span><code>torch-model-archiver<span class="w"> </span>-f<span class="w"> </span>--model-name<span class="w"> </span>cat_dog_classification<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span><span class="se">\</span>
+--model-file<span class="w"> </span>cat_dog_classification_arch.py<span class="w"> </span><span class="se">\</span>
+--serialized-file<span class="w"> </span>cat_dog_classification.pth<span class="w"> </span><span class="se">\</span>
+--handler<span class="w"> </span>cat_dog_classification_handler.py<span class="w"> </span><span class="se">\</span>
+--extra-files<span class="w"> </span>index_to_name.json<span class="w"> </span>--export-path<span class="w"> </span>model_store
 
-torch-model-archiver -f --model-name dog_breed_classification --version <span class="m">1</span>.0 <span class="se">\</span>
---model-file dog_breed_classification_arch.py <span class="se">\</span>
---serialized-file dog_breed_classification.pth <span class="se">\</span>
---handler dog_breed_classification_handler.py <span class="se">\</span>
---extra-files index_to_name.json --export-path model_store
+torch-model-archiver<span class="w"> </span>-f<span class="w"> </span>--model-name<span class="w"> </span>dog_breed_classification<span class="w"> </span>--version<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span><span class="se">\</span>
+--model-file<span class="w"> </span>dog_breed_classification_arch.py<span class="w"> </span><span class="se">\</span>
+--serialized-file<span class="w"> </span>dog_breed_classification.pth<span class="w"> </span><span class="se">\</span>
+--handler<span class="w"> </span>dog_breed_classification_handler.py<span class="w"> </span><span class="se">\</span>
+--extra-files<span class="w"> </span>index_to_name.json<span class="w"> </span>--export-path<span class="w"> </span>model_store
 </code></pre></div></p>
 <p>You can then deploy the models to KServe with following <code>InferenceService</code> custom resources.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">InferenceService</label></div>
@@ -2463,7 +2463,7 @@ torch-model-archiver -f --model-name dog_breed_classification --version <span cl
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f - <span class="s">&lt;&lt;EOF</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="s">kind: &quot;InferenceService&quot;</span>
 <span class="s">metadata:</span>
@@ -2498,7 +2498,7 @@ with <code>InferenceService</code>.</p>
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f - <span class="s">&lt;&lt;EOF</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: &quot;serving.kserve.io/v1alpha1&quot;</span>
 <span class="s">kind: &quot;InferenceGraph&quot;</span>
 <span class="s">metadata:</span>
@@ -2527,17 +2527,17 @@ are executed in sequence: it first sends the image as request to <code>cat-dog-c
 </ul>
 <h2 id="test-the-inferencegraph">Test the InferenceGraph<a class="headerlink" href="#test-the-inferencegraph" title="Permanent link">&para;</a></h2>
 <p>Before testing the <code>InferenceGraph</code>, first check if the graph is in the ready state and then get the router url for sending the request.
-<div class="highlight"><pre><span></span><code>kubectl get ig  dog-breed-pipeline
-NAME                 URL                                             READY   AGE
-dog-breed-pipeline   http://dog-breed-pipeline.default.example.com   True    17h
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ig<span class="w">  </span>dog-breed-pipeline
+NAME<span class="w">                 </span>URL<span class="w">                                             </span>READY<span class="w">   </span>AGE
+dog-breed-pipeline<span class="w">   </span>http://dog-breed-pipeline.default.example.com<span class="w">   </span>True<span class="w">    </span>17h
 </code></pre></div></p>
 <p>Now you can test the inference graph by sending the cat and dog image data.
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferencegraph dog-breed-pipeline -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span> -d @./cat.json
-<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>: <span class="o">[</span><span class="s2">&quot;It&#39;s a cat!&quot;</span><span class="o">]}</span>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferencegraph<span class="w"> </span>dog-breed-pipeline<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span>-d<span class="w"> </span>@./cat.json
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="s2">&quot;It&#39;s a cat!&quot;</span><span class="o">]}</span>
 
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span> -d @./dog.json
-<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>: <span class="o">[{</span><span class="s2">&quot;Kuvasz&quot;</span>: <span class="m">0</span>.9854059219360352, <span class="s2">&quot;American_water_spaniel&quot;</span>: <span class="m">0</span>.006928909569978714, <span class="s2">&quot;Glen_of_imaal_terrier&quot;</span>: <span class="m">0</span>.004635687451809645, <span class="s2">&quot;Manchester_terrier&quot;</span>: <span class="m">0</span>.0011041086399927735, <span class="s2">&quot;American_eskimo_dog&quot;</span>: <span class="m">0</span>.0003261661622673273<span class="o">}]}</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span>-d<span class="w"> </span>@./dog.json
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s2">&quot;Kuvasz&quot;</span>:<span class="w"> </span><span class="m">0</span>.9854059219360352,<span class="w"> </span><span class="s2">&quot;American_water_spaniel&quot;</span>:<span class="w"> </span><span class="m">0</span>.006928909569978714,<span class="w"> </span><span class="s2">&quot;Glen_of_imaal_terrier&quot;</span>:<span class="w"> </span><span class="m">0</span>.004635687451809645,<span class="w"> </span><span class="s2">&quot;Manchester_terrier&quot;</span>:<span class="w"> </span><span class="m">0</span>.0011041086399927735,<span class="w"> </span><span class="s2">&quot;American_eskimo_dog&quot;</span>:<span class="w"> </span><span class="m">0</span>.0003261661622673273<span class="o">}]}</span>
 </code></pre></div>
 You can see that if the first model classifies the image as dog it then sends to the second model and further classifies the dog breed,
 if the image is classified as cat the <code>InferenceGraph</code> router returns the response from the first model.</p>

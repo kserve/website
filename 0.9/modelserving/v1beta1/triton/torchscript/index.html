@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/v1beta1/triton/torchscript/">
       
       <link rel="icon" href="../../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
     
     
       
@@ -2592,10 +2592,10 @@ to a serialized representation that can be loaded and executed purely from C++ l
 <ol>
 <li>Make sure you have installed <a href="https://kserve.github.io/website/get_started/#install-the-kserve-quickstart-environment">KServe</a></li>
 <li>Skip <a href="https://knative.dev/docs/serving/tag-resolution/">tag resolution</a> for <code>nvcr.io</code> which requires auth to resolve triton inference server image digest
-<div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span> -n knative-serving
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>config-deployment<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;registriesSkippingTagResolving&quot;:&quot;nvcr.io&quot;}}&#39;</span><span class="w"> </span>-n<span class="w"> </span>knative-serving
 </code></pre></div></li>
 <li>Increase progress deadline since pulling triton image and big bert model may longer than default timeout for 120s, this setting requires knative 0.15.0+
-<div class="highlight"><pre><span></span><code>kubectl patch cm config-deployment --patch <span class="s1">&#39;{&quot;data&quot;:{&quot;progressDeadline&quot;: &quot;600s&quot;}}&#39;</span> -n knative-serving
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>cm<span class="w"> </span>config-deployment<span class="w"> </span>--patch<span class="w"> </span><span class="s1">&#39;{&quot;data&quot;:{&quot;progressDeadline&quot;: &quot;600s&quot;}}&#39;</span><span class="w"> </span>-n<span class="w"> </span>knative-serving
 </code></pre></div></li>
 </ol>
 <h2 id="export-as-torchscript-model">Export as Torchscript Model<a class="headerlink" href="#export-as-torchscript-model" title="Permanent link">&para;</a></h2>
@@ -2678,18 +2678,18 @@ instance_group [
 <h2 id="inference-with-http-endpoint">Inference with HTTP endpoint<a class="headerlink" href="#inference-with-http-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
 <p>Create the inference service yaml with the above specified model repository uri.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
-<span class="w">      </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span><span class="w"></span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -2711,33 +2711,33 @@ We want one thread per worker instead of many threads per worker to avoid conten
 <p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so
 the input request needs to follow the V2 schema with the specified data type, shape.
 <div class="highlight"><pre><span></span><code><span class="c1"># download the input file</span>
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/input.json
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/input.json
 
 <span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchscript-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer -d <span class="nv">$INPUT_PATH</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>torchscript-cifar10<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>* Connected to torchscript-cifar.default.svc.cluster.local <span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span> port <span class="m">80</span> <span class="o">(</span><span class="c1">#0)</span>
-&gt; POST /v2/models/cifar10/infer HTTP/1.1
-&gt; Host: torchscript-cifar.default.svc.cluster.local
-&gt; User-Agent: curl/7.47.0
-&gt; Accept: */*
-&gt; Content-Length: <span class="m">110765</span>
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt; Expect: <span class="m">100</span>-continue
+<div class="highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>torchscript-cifar.default.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v2/models/cifar10/infer<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>torchscript-cifar.default.svc.cluster.local
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.47.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">110765</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>Expect:<span class="w"> </span><span class="m">100</span>-continue
 &gt;
-&lt; HTTP/1.1 <span class="m">100</span> Continue
-* We are completely uploaded and fine
-&lt; HTTP/1.1 <span class="m">200</span> OK
-&lt; content-length: <span class="m">315</span>
-&lt; content-type: application/json
-&lt; date: Sun, <span class="m">11</span> Oct <span class="m">2020</span> <span class="m">21</span>:26:51 GMT
-&lt; x-envoy-upstream-service-time: <span class="m">8</span>
-&lt; server: istio-envoy
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">100</span><span class="w"> </span>Continue
+*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">315</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">11</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2020</span><span class="w"> </span><span class="m">21</span>:26:51<span class="w"> </span>GMT
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">8</span>
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
 &lt;
-* Connection <span class="c1">#0 to host torchscript-cifar.default.svc.cluster.local left intact</span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host torchscript-cifar.default.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;model_name&quot;</span>:<span class="s2">&quot;cifar10&quot;</span>,<span class="s2">&quot;model_version&quot;</span>:<span class="s2">&quot;1&quot;</span>,<span class="s2">&quot;outputs&quot;</span>:<span class="o">[{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;OUTPUT__0&quot;</span>,<span class="s2">&quot;datatype&quot;</span>:<span class="s2">&quot;FP32&quot;</span>,<span class="s2">&quot;shape&quot;</span>:<span class="o">[</span><span class="m">1</span>,10<span class="o">]</span>,<span class="s2">&quot;data&quot;</span>:<span class="o">[</span>-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279<span class="o">]}]}</span>
 </code></pre></div></p>
 <h3 id="run-a-performance-test">Run a performance test<a class="headerlink" href="#run-a-performance-test" title="Permanent link">&para;</a></h3>
@@ -2756,22 +2756,22 @@ Error Set:
 <h2 id="inference-with-grpc-endpoint">Inference with gRPC endpoint<a class="headerlink" href="#inference-with-grpc-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice_1">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice_1" title="Permanent link">&para;</a></h3>
 <p>Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
-<span class="w">      </span><span class="nt">ports</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span><span class="w"></span>
-<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span><span class="w"></span>
-<span class="w">      </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span><span class="w"></span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchscript-cifar10</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span>
+<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 </code></pre></div>
 <p>Apply the gRPC <code>InferenceService</code> yaml and then you can call the model with <code>tritonclient</code> python library after <code>InferenceService</code> is ready.
 <div class="highlight"><pre><span></span><code>kubectl apply -f torchscript_grpc.yaml
@@ -2779,39 +2779,39 @@ Error Set:
 <h3 id="run-a-prediction-with-grpcurl">Run a prediction with grpcurl<a class="headerlink" href="#run-a-prediction-with-grpcurl" title="Permanent link">&para;</a></h3>
 <p>After the gRPC <code>InferenceService</code> becomes ready, <a href="https://github.com/fullstorydev/grpcurl">grpcurl</a>, can be used to send gRPC requests to the <code>InferenceService</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># download the proto file</span>
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
 
 <span class="c1"># download the input json file</span>
-curl -O https://raw.githubusercontent.com/kserve/website/triton-grpc/docs/modelserving/v1beta1/triton/torchscript/input-grpc.json
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/website/triton-grpc/docs/modelserving/v1beta1/triton/torchscript/input-grpc.json
 
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input-grpc.json
 <span class="nv">PROTO_FILE</span><span class="o">=</span>grpc_predict_v2.proto
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice torchscript-cifar10 -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>torchscript-cifar10<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 <p>The gRPC APIs follow the KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>.</p>
 <p>For example, <code>ServerReady</code> API can be used to check if the server is ready:</p>
-<div class="highlight"><pre><span></span><code>grpcurl <span class="se">\</span>
-  -plaintext <span class="se">\</span>
-  -proto <span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span> <span class="se">\</span>
-  -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
-  <span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span> <span class="se">\</span>
-  inference.GRPCInferenceService.ServerReady
+<div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-plaintext<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-proto<span class="w"> </span><span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>inference.GRPCInferenceService.ServerReady
 </code></pre></div>
 <p>Expected Output
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <p><code>ModelInfer</code> API takes input following the <code>ModelInferRequest</code> schema defined in the <code>grpc_predict_v2.proto</code> file. Notice that the input file differs from that used in the previous <code>curl</code> example. </p>
-<div class="highlight"><pre><span></span><code>grpcurl <span class="se">\</span>
-  -vv <span class="se">\</span>
-  -plaintext <span class="se">\</span>
-  -proto <span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span> <span class="se">\</span>
-  -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> <span class="se">\</span>
-  -d @ <span class="se">\</span>
-  <span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span> <span class="se">\</span>
-  inference.GRPCInferenceService.ModelInfer <span class="se">\</span>
-  <span class="o">&lt;&lt;&lt;</span> <span class="k">$(</span>cat <span class="s2">&quot;</span><span class="nv">$INPUT_PATH</span><span class="s2">&quot;</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-vv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-plaintext<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-proto<span class="w"> </span><span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span>@<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>inference.GRPCInferenceService.ModelInfer<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_PATH</span><span class="s2">&quot;</span><span class="k">)</span>
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>Resolved method descriptor:
@@ -2915,31 +2915,31 @@ Please find <a href="https://github.com/kserve/kserve/tree/release-0.9/docs/samp
 </code></pre></div>
 <h3 id="create-the-inferenceservice-with-transformer">Create the InferenceService with Transformer<a class="headerlink" href="#create-the-inferenceservice-with-transformer" title="Permanent link">&para;</a></h3>
 <p>Please use the <a href="torch_transformer.yaml">YAML file</a> to create the InferenceService, which adds the image transformer component with the docker image built from above.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transfomer</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">triton</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span><span class="w"></span>
-<span class="w">      </span><span class="nt">env</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span><span class="w"></span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving/image-transformer-v2:latest</span><span class="w"></span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;image_transformer_v2&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cifar10</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--protocol</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transfomer</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">triton</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OMP_NUM_THREADS</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving/image-transformer-v2:latest</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;image_transformer_v2&quot;</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cifar10</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--protocol</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code>kubectl apply -f torch_transformer.yaml
 </code></pre></div>
@@ -2949,29 +2949,29 @@ Please find <a href="https://github.com/kserve/kserve/tree/release-0.9/docs/samp
 <h3 id="run-a-prediction-with-curl_1">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl_1" title="Permanent link">&para;</a></h3>
 <p>The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict):
 <code>"instances": &lt;value&gt;|&lt;list-of-objects&gt;</code>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;b64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aW1hZ2UgYnl0ZXM=&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seaside&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">},</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;b64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YXdlc29tZSBpbWFnZSBieXRlcw==&quot;</span><span class="w"> </span><span class="p">},</span><span class="w"></span>
-<span class="w">      </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mountains&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="w">  </span><span class="p">]</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;instances&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;b64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aW1hZ2UgYnl0ZXM=&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;seaside&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;image_bytes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;b64&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;YXdlc29tZSBpbWFnZSBieXRlcw==&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mountains&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># download the input file</span>
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/image.json
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/triton/torchscript/image.json
 
 <span class="nv">SERVICE_NAME</span><span class="o">=</span>torch-transfomer
 <span class="nv">MODEL_NAME</span><span class="o">=</span>cifar10
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./image.json
 
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$SERVICE_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="nv">$SERVICE_NAME</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl -v -H <span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict -d <span class="nv">$INPUT_PATH</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark>
 <div class="highlight"><pre><span></span><code>&gt; POST /v1/models/cifar10:predict HTTP/1.1

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/v1beta1/torchserve/model-archiver/model-archiver-image/">
       
       <link rel="icon" href="../../../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
     
     
       
@@ -2291,11 +2291,11 @@
 <li>Build docker image</li>
 <li>Push docker image to repo</li>
 </ol>
-<div class="highlight"><pre><span></span><code>docker build --file Dockerfile -t margen:latest .
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>--file<span class="w"> </span>Dockerfile<span class="w"> </span>-t<span class="w"> </span>margen:latest<span class="w"> </span>.
 
-docker tag margen:latest <span class="o">{</span>username<span class="o">}</span>/margen:latest
+docker<span class="w"> </span>tag<span class="w"> </span>margen:latest<span class="w"> </span><span class="o">{</span>username<span class="o">}</span>/margen:latest
 
-docker push <span class="o">{</span>username<span class="o">}</span>/margen:latest
+docker<span class="w"> </span>push<span class="w"> </span><span class="o">{</span>username<span class="o">}</span>/margen:latest
 </code></pre></div>
 
               

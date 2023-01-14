@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://kserve.io/website/0.9/modelserving/autoscaling/autoscaling/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
-      <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.0.5">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
     
     
       
@@ -2599,31 +2599,31 @@ This is the preferred way of defining autoscaling options.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">autoscaling.knative.dev/target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">autoscaling.knative.dev/target</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
-<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2644,53 +2644,53 @@ This is the preferred way of defining autoscaling options.</p>
 <p>Send traffic in 30 seconds spurts maintaining 5 in-flight requests.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$MODEL_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="nv">$MODEL_NAME</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-hey -z 30s -c <span class="m">5</span> -m POST -host <span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span> -D <span class="nv">$INPUT_PATH</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
+hey<span class="w"> </span>-z<span class="w"> </span>30s<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span>-host<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>-D<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>Summary:
-  Total:    <span class="m">30</span>.0193 secs
-  Slowest:  <span class="m">10</span>.1458 secs
-  Fastest:  <span class="m">0</span>.0127 secs
-  Average:  <span class="m">0</span>.0364 secs
-  Requests/sec: <span class="m">137</span>.4449
+<span class="w">  </span>Total:<span class="w">    </span><span class="m">30</span>.0193<span class="w"> </span>secs
+<span class="w">  </span>Slowest:<span class="w">  </span><span class="m">10</span>.1458<span class="w"> </span>secs
+<span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.0127<span class="w"> </span>secs
+<span class="w">  </span>Average:<span class="w">  </span><span class="m">0</span>.0364<span class="w"> </span>secs
+<span class="w">  </span>Requests/sec:<span class="w"> </span><span class="m">137</span>.4449
 
-  Total data:   <span class="m">1019122</span> bytes
-  Size/request: <span class="m">247</span> bytes
+<span class="w">  </span>Total<span class="w"> </span>data:<span class="w">   </span><span class="m">1019122</span><span class="w"> </span>bytes
+<span class="w">  </span>Size/request:<span class="w"> </span><span class="m">247</span><span class="w"> </span>bytes
 
-Response <span class="nb">time</span> histogram:
-  <span class="m">0</span>.013 <span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">1</span>.026 <span class="o">[</span><span class="m">4120</span><span class="o">]</span>  <span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  <span class="m">2</span>.039 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">3</span>.053 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">4</span>.066 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">5</span>.079 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">6</span>.093 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">7</span>.106 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">8</span>.119 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">9</span>.133 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">10</span>.146 <span class="o">[</span><span class="m">5</span><span class="o">]</span>    <span class="p">|</span>
+Response<span class="w"> </span><span class="nb">time</span><span class="w"> </span>histogram:
+<span class="w">  </span><span class="m">0</span>.013<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">1</span>.026<span class="w"> </span><span class="o">[</span><span class="m">4120</span><span class="o">]</span><span class="w">  </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">2</span>.039<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">3</span>.053<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">4</span>.066<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">5</span>.079<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">6</span>.093<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">7</span>.106<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">8</span>.119<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">9</span>.133<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">10</span>.146<span class="w"> </span><span class="o">[</span><span class="m">5</span><span class="o">]</span><span class="w">    </span><span class="p">|</span>
 
 
-Latency distribution:
-  <span class="m">10</span>% <span class="k">in</span> <span class="m">0</span>.0178 secs
-  <span class="m">25</span>% <span class="k">in</span> <span class="m">0</span>.0188 secs
-  <span class="m">50</span>% <span class="k">in</span> <span class="m">0</span>.0199 secs
-  <span class="m">75</span>% <span class="k">in</span> <span class="m">0</span>.0210 secs
-  <span class="m">90</span>% <span class="k">in</span> <span class="m">0</span>.0231 secs
-  <span class="m">95</span>% <span class="k">in</span> <span class="m">0</span>.0328 secs
-  <span class="m">99</span>% <span class="k">in</span> <span class="m">0</span>.1501 secs
+Latency<span class="w"> </span>distribution:
+<span class="w">  </span><span class="m">10</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0178<span class="w"> </span>secs
+<span class="w">  </span><span class="m">25</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0188<span class="w"> </span>secs
+<span class="w">  </span><span class="m">50</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0199<span class="w"> </span>secs
+<span class="w">  </span><span class="m">75</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0210<span class="w"> </span>secs
+<span class="w">  </span><span class="m">90</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0231<span class="w"> </span>secs
+<span class="w">  </span><span class="m">95</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0328<span class="w"> </span>secs
+<span class="w">  </span><span class="m">99</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.1501<span class="w"> </span>secs
 
-Details <span class="o">(</span>average, fastest, slowest<span class="o">)</span>:
-  DNS+dialup:   <span class="m">0</span>.0002 secs, <span class="m">0</span>.0127 secs, <span class="m">10</span>.1458 secs
-  DNS-lookup:   <span class="m">0</span>.0002 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.1502 secs
-  req write:    <span class="m">0</span>.0000 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0020 secs
-  resp wait:    <span class="m">0</span>.0360 secs, <span class="m">0</span>.0125 secs, <span class="m">9</span>.9791 secs
-  resp read:    <span class="m">0</span>.0001 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0021 secs
+Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> </span>fastest,<span class="w"> </span>slowest<span class="o">)</span>:
+<span class="w">  </span>DNS+dialup:<span class="w">   </span><span class="m">0</span>.0002<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0127<span class="w"> </span>secs,<span class="w"> </span><span class="m">10</span>.1458<span class="w"> </span>secs
+<span class="w">  </span>DNS-lookup:<span class="w">   </span><span class="m">0</span>.0002<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.1502<span class="w"> </span>secs
+<span class="w">  </span>req<span class="w"> </span>write:<span class="w">    </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0020<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>wait:<span class="w">    </span><span class="m">0</span>.0360<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0125<span class="w"> </span>secs,<span class="w"> </span><span class="m">9</span>.9791<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>read:<span class="w">    </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0021<span class="w"> </span>secs
 
-Status code distribution:
-  <span class="o">[</span><span class="m">200</span><span class="o">]</span> <span class="m">4126</span> responses
+Status<span class="w"> </span>code<span class="w"> </span>distribution:
+<span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">4126</span><span class="w"> </span>responses
 </code></pre></div>
 <p>Check the number of running pods now, <code>Kserve</code> uses <code>Knative Serving</code> autoscaler which is based on the average number of in-flight requests per pod(concurrency). As the scaling target is set to 1 and we load the service with 5 concurrent requests, so the autoscaler tries scaling up to 5 pods. Notice that out of all the requests there are 5 requests on the histogram that take around 10s, that's the cold start time cost to initially spawn the pods and download model to be readyto serve. The cold start may take longer(to pull the serving image) if the image is not cached on the node that the pod is scheduled on.</p>
 <div class="highlight"><pre><span></span><code>$ kubectl get pods
@@ -2708,7 +2708,7 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl port-forward --namespace knative-monitoring <span class="k">$(</span>kubectl get pods --namespace knative-monitoring --selector<span class="o">=</span><span class="nv">app</span><span class="o">=</span>grafana  --output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items..metadata.name}&quot;</span><span class="k">)</span> <span class="m">3000</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span>--selector<span class="o">=</span><span class="nv">app</span><span class="o">=</span>grafana<span class="w">  </span>--output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items..metadata.name}&quot;</span><span class="k">)</span><span class="w"> </span><span class="m">3000</span>
 </code></pre></div>
 <p><img alt="scaling dashboard" src="../images/scaling_debug.png" /></p>
 <h2 id="inferenceservice-with-target-qps">InferenceService with target QPS<a class="headerlink" href="#inferenceservice-with-target-qps" title="Permanent link">&para;</a></h2>
@@ -2719,7 +2719,7 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f autoscale.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale.yaml
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flowers-sample created
@@ -2729,59 +2729,59 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running
 <p>Send 30 seconds of traffic maintaining 50 qps.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$MODEL_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="nv">$MODEL_NAME</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-hey -z 30s -q <span class="m">50</span> -m POST -host <span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span> -D <span class="nv">$INPUT_PATH</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
+hey<span class="w"> </span>-z<span class="w"> </span>30s<span class="w"> </span>-q<span class="w"> </span><span class="m">50</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span>-host<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>-D<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>Summary:
-  Total:    <span class="m">30</span>.0264 secs
-  Slowest:  <span class="m">10</span>.8113 secs
-  Fastest:  <span class="m">0</span>.0145 secs
-  Average:  <span class="m">0</span>.0731 secs
-  Requests/sec: <span class="m">683</span>.5644
+<span class="w">  </span>Total:<span class="w">    </span><span class="m">30</span>.0264<span class="w"> </span>secs
+<span class="w">  </span>Slowest:<span class="w">  </span><span class="m">10</span>.8113<span class="w"> </span>secs
+<span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.0145<span class="w"> </span>secs
+<span class="w">  </span>Average:<span class="w">  </span><span class="m">0</span>.0731<span class="w"> </span>secs
+<span class="w">  </span>Requests/sec:<span class="w"> </span><span class="m">683</span>.5644
 
-  Total data:   <span class="m">5069675</span> bytes
-  Size/request: <span class="m">247</span> bytes
+<span class="w">  </span>Total<span class="w"> </span>data:<span class="w">   </span><span class="m">5069675</span><span class="w"> </span>bytes
+<span class="w">  </span>Size/request:<span class="w"> </span><span class="m">247</span><span class="w"> </span>bytes
 
-Response <span class="nb">time</span> histogram:
-  <span class="m">0</span>.014 <span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">1</span>.094 <span class="o">[</span><span class="m">20474</span><span class="o">]</span> <span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  <span class="m">2</span>.174 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">3</span>.254 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">4</span>.333 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">5</span>.413 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">6</span>.493 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">7</span>.572 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">8</span>.652 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">9</span>.732 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">10</span>.811 <span class="o">[</span><span class="m">50</span><span class="o">]</span>   <span class="p">|</span>
+Response<span class="w"> </span><span class="nb">time</span><span class="w"> </span>histogram:
+<span class="w">  </span><span class="m">0</span>.014<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">1</span>.094<span class="w"> </span><span class="o">[</span><span class="m">20474</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">2</span>.174<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">3</span>.254<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">4</span>.333<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">5</span>.413<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">6</span>.493<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">7</span>.572<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">8</span>.652<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">9</span>.732<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">10</span>.811<span class="w"> </span><span class="o">[</span><span class="m">50</span><span class="o">]</span><span class="w">   </span><span class="p">|</span>
 
 
-Latency distribution:
-  <span class="m">10</span>% <span class="k">in</span> <span class="m">0</span>.0284 secs
-  <span class="m">25</span>% <span class="k">in</span> <span class="m">0</span>.0334 secs
-  <span class="m">50</span>% <span class="k">in</span> <span class="m">0</span>.0408 secs
-  <span class="m">75</span>% <span class="k">in</span> <span class="m">0</span>.0527 secs
-  <span class="m">90</span>% <span class="k">in</span> <span class="m">0</span>.0765 secs
-  <span class="m">95</span>% <span class="k">in</span> <span class="m">0</span>.0949 secs
-  <span class="m">99</span>% <span class="k">in</span> <span class="m">0</span>.1334 secs
+Latency<span class="w"> </span>distribution:
+<span class="w">  </span><span class="m">10</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0284<span class="w"> </span>secs
+<span class="w">  </span><span class="m">25</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0334<span class="w"> </span>secs
+<span class="w">  </span><span class="m">50</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0408<span class="w"> </span>secs
+<span class="w">  </span><span class="m">75</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0527<span class="w"> </span>secs
+<span class="w">  </span><span class="m">90</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0765<span class="w"> </span>secs
+<span class="w">  </span><span class="m">95</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0949<span class="w"> </span>secs
+<span class="w">  </span><span class="m">99</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.1334<span class="w"> </span>secs
 
-Details <span class="o">(</span>average, fastest, slowest<span class="o">)</span>:
-  DNS+dialup:   <span class="m">0</span>.0001 secs, <span class="m">0</span>.0145 secs, <span class="m">10</span>.8113 secs
-  DNS-lookup:   <span class="m">0</span>.0000 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0196 secs
-  req write:    <span class="m">0</span>.0000 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0031 secs
-  resp wait:    <span class="m">0</span>.0728 secs, <span class="m">0</span>.0144 secs, <span class="m">10</span>.7688 secs
-  resp read:    <span class="m">0</span>.0000 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0031 secs
+Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> </span>fastest,<span class="w"> </span>slowest<span class="o">)</span>:
+<span class="w">  </span>DNS+dialup:<span class="w">   </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0145<span class="w"> </span>secs,<span class="w"> </span><span class="m">10</span>.8113<span class="w"> </span>secs
+<span class="w">  </span>DNS-lookup:<span class="w">   </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0196<span class="w"> </span>secs
+<span class="w">  </span>req<span class="w"> </span>write:<span class="w">    </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0031<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>wait:<span class="w">    </span><span class="m">0</span>.0728<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0144<span class="w"> </span>secs,<span class="w"> </span><span class="m">10</span>.7688<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>read:<span class="w">    </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0031<span class="w"> </span>secs
 
-Status code distribution:
-  <span class="o">[</span><span class="m">200</span><span class="o">]</span> <span class="m">20525</span> responses
+Status<span class="w"> </span>code<span class="w"> </span>distribution:
+<span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">20525</span><span class="w"> </span>responses
 </code></pre></div>
 <p>Check the number of running pods now, we are loading the service with 50 requests per second, and from the dashboard you can see
 that it hits the average concurrency 10 and autoscaler tries scaling up to 10 pods.</p>
 <h3 id="check-dashboard_1">Check Dashboard<a class="headerlink" href="#check-dashboard_1" title="Permanent link">&para;</a></h3>
 <p>View the Knative Serving Scaling dashboards (if configured).</p>
-<div class="highlight"><pre><span></span><code>kubectl port-forward --namespace knative-monitoring <span class="k">$(</span>kubectl get pods --namespace knative-monitoring --selector<span class="o">=</span><span class="nv">app</span><span class="o">=</span>grafana  --output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items..metadata.name}&quot;</span><span class="k">)</span> <span class="m">3000</span>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span>--selector<span class="o">=</span><span class="nv">app</span><span class="o">=</span>grafana<span class="w">  </span>--output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items..metadata.name}&quot;</span><span class="k">)</span><span class="w"> </span><span class="m">3000</span>
 </code></pre></div>
 <p><img alt="scaling dashboard" src="../images/scaling_debug_qps.png" /></p>
 <p>Autoscaler calculates average concurrency over 60 second window so it takes a minute to stabilize at the desired concurrency level,however it also calculates the 6 second panic window and will enter into <a href="https://github.com/knative/serving/blob/master/docs/scaling/DEVELOPMENT.md#panic-mode">panic mode</a> if that window reaches 2x target concurrency. From the dashboard you can see that it enters panic mode in which autoscaler operates on shorter and more sensitive window. Once the panic conditions are no longer met for 60 seconds, autoscaler will return back to 60 seconds stable window.</p>
@@ -2792,35 +2792,35 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Old Schema</label><label for="__tabbed_5_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample-gpu&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.6.2-gpu&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample-gpu&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.6.2-gpu&quot;</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample-gpu&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.6.2-gpu&quot;</span><span class="w"></span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample-gpu&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2.6.2-gpu&quot;</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </code></pre></div>
 </div>
 </div>
@@ -2831,60 +2831,60 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f autoscale-gpu.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale-gpu.yaml
 </code></pre></div>
 <h3 id="predict-inferenceservice-with-concurrent-requests_1">Predict InferenceService with concurrent requests<a class="headerlink" href="#predict-inferenceservice-with-concurrent-requests_1" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send 30 seconds of traffic maintaining 5 in-flight requests.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample-gpu
 <span class="nv">INPUT_PATH</span><span class="o">=</span>input.json
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl get inferenceservice <span class="nv">$MODEL_NAME</span> -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span> <span class="p">|</span> cut -d <span class="s2">&quot;/&quot;</span> -f <span class="m">3</span><span class="k">)</span>
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="nv">$MODEL_NAME</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-hey -z 30s -c <span class="m">5</span> -m POST -host <span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span> -D <span class="nv">$INPUT_PATH</span> http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
+hey<span class="w"> </span>-z<span class="w"> </span>30s<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span>-host<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>-D<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
 <p><mark><strong> Expected Output </strong></mark></p>
 <div class="highlight"><pre><span></span><code>Summary:
-  Total:    <span class="m">30</span>.0152 secs
-  Slowest:  <span class="m">9</span>.7581 secs
-  Fastest:  <span class="m">0</span>.0142 secs
-  Average:  <span class="m">0</span>.0350 secs
-  Requests/sec: <span class="m">142</span>.9942
+<span class="w">  </span>Total:<span class="w">    </span><span class="m">30</span>.0152<span class="w"> </span>secs
+<span class="w">  </span>Slowest:<span class="w">  </span><span class="m">9</span>.7581<span class="w"> </span>secs
+<span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.0142<span class="w"> </span>secs
+<span class="w">  </span>Average:<span class="w">  </span><span class="m">0</span>.0350<span class="w"> </span>secs
+<span class="w">  </span>Requests/sec:<span class="w"> </span><span class="m">142</span>.9942
 
-  Total data:   <span class="m">948532</span> bytes
-  Size/request: <span class="m">221</span> bytes
+<span class="w">  </span>Total<span class="w"> </span>data:<span class="w">   </span><span class="m">948532</span><span class="w"> </span>bytes
+<span class="w">  </span>Size/request:<span class="w"> </span><span class="m">221</span><span class="w"> </span>bytes
 
-Response <span class="nb">time</span> histogram:
-  <span class="m">0</span>.014 <span class="o">[</span><span class="m">1</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">0</span>.989 <span class="o">[</span><span class="m">4286</span><span class="o">]</span>  <span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  <span class="m">1</span>.963 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">2</span>.937 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">3</span>.912 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">4</span>.886 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">5</span>.861 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">6</span>.835 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">7</span>.809 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">8</span>.784 <span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="p">|</span>
-  <span class="m">9</span>.758 <span class="o">[</span><span class="m">5</span><span class="o">]</span> <span class="p">|</span>
+Response<span class="w"> </span><span class="nb">time</span><span class="w"> </span>histogram:
+<span class="w">  </span><span class="m">0</span>.014<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">0</span>.989<span class="w"> </span><span class="o">[</span><span class="m">4286</span><span class="o">]</span><span class="w">  </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">1</span>.963<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">2</span>.937<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">3</span>.912<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">4</span>.886<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">5</span>.861<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">6</span>.835<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">7</span>.809<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">8</span>.784<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">9</span>.758<span class="w"> </span><span class="o">[</span><span class="m">5</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
 
 
-Latency distribution:
-  <span class="m">10</span>% <span class="k">in</span> <span class="m">0</span>.0181 secs
-  <span class="m">25</span>% <span class="k">in</span> <span class="m">0</span>.0189 secs
-  <span class="m">50</span>% <span class="k">in</span> <span class="m">0</span>.0198 secs
-  <span class="m">75</span>% <span class="k">in</span> <span class="m">0</span>.0210 secs
-  <span class="m">90</span>% <span class="k">in</span> <span class="m">0</span>.0230 secs
-  <span class="m">95</span>% <span class="k">in</span> <span class="m">0</span>.0276 secs
-  <span class="m">99</span>% <span class="k">in</span> <span class="m">0</span>.0511 secs
+Latency<span class="w"> </span>distribution:
+<span class="w">  </span><span class="m">10</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0181<span class="w"> </span>secs
+<span class="w">  </span><span class="m">25</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0189<span class="w"> </span>secs
+<span class="w">  </span><span class="m">50</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0198<span class="w"> </span>secs
+<span class="w">  </span><span class="m">75</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0210<span class="w"> </span>secs
+<span class="w">  </span><span class="m">90</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0230<span class="w"> </span>secs
+<span class="w">  </span><span class="m">95</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0276<span class="w"> </span>secs
+<span class="w">  </span><span class="m">99</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0511<span class="w"> </span>secs
 
-Details <span class="o">(</span>average, fastest, slowest<span class="o">)</span>:
-  DNS+dialup:   <span class="m">0</span>.0000 secs, <span class="m">0</span>.0142 secs, <span class="m">9</span>.7581 secs
-  DNS-lookup:   <span class="m">0</span>.0000 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0291 secs
-  req write:    <span class="m">0</span>.0000 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0023 secs
-  resp wait:    <span class="m">0</span>.0348 secs, <span class="m">0</span>.0141 secs, <span class="m">9</span>.7158 secs
-  resp read:    <span class="m">0</span>.0001 secs, <span class="m">0</span>.0000 secs, <span class="m">0</span>.0021 secs
+Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> </span>fastest,<span class="w"> </span>slowest<span class="o">)</span>:
+<span class="w">  </span>DNS+dialup:<span class="w">   </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0142<span class="w"> </span>secs,<span class="w"> </span><span class="m">9</span>.7581<span class="w"> </span>secs
+<span class="w">  </span>DNS-lookup:<span class="w">   </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0291<span class="w"> </span>secs
+<span class="w">  </span>req<span class="w"> </span>write:<span class="w">    </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0023<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>wait:<span class="w">    </span><span class="m">0</span>.0348<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0141<span class="w"> </span>secs,<span class="w"> </span><span class="m">9</span>.7158<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>read:<span class="w">    </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0021<span class="w"> </span>secs
 
-Status code distribution:
-  <span class="o">[</span><span class="m">200</span><span class="o">]</span> <span class="m">4292</span> responses
+Status<span class="w"> </span>code<span class="w"> </span>distribution:
+<span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">4292</span><span class="w"> </span>responses
 </code></pre></div>
 <h2 id="autoscaling-customization">Autoscaling Customization<a class="headerlink" href="#autoscaling-customization" title="Permanent link">&para;</a></h2>
 <h3 id="autoscaling-with-containerconcurrency">Autoscaling with ContainerConcurrency<a class="headerlink" href="#autoscaling-with-containerconcurrency" title="Permanent link">&para;</a></h3>
@@ -2894,29 +2894,29 @@ enough capacity is free to execute the requests.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Old Schema</label><label for="__tabbed_7_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">containerConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containerConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">containerConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containerConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2927,7 +2927,7 @@ enough capacity is free to execute the requests.</p>
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f autoscale-custom.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale-custom.yaml
 </code></pre></div>
 <h3 id="enable-scale-down-to-zero">Enable scale down to zero<a class="headerlink" href="#enable-scale-down-to-zero" title="Permanent link">&para;</a></h3>
 <p>KServe by default sets <code>minReplicas</code> to 1, if you want to enable scaling down to zero especially for use cases like serving on GPUs you can
@@ -2935,29 +2935,29 @@ set <code>minReplicas</code> to 0 so that the pods automatically scale down to z
 <div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Old Schema</label><label for="__tabbed_9_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span><span class="w"></span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;flowers-sample&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/tensorflow/flowers&quot;</span>
 </code></pre></div>
 </div>
 </div>
@@ -2968,7 +2968,7 @@ set <code>minReplicas</code> to 0 so that the pods automatically scale down to z
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f scale-down-to-zero.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>scale-down-to-zero.yaml
 </code></pre></div>
 <h2 id="autoscaling-configuration-at-component-level">Autoscaling configuration at component level<a class="headerlink" href="#autoscaling-configuration-at-component-level" title="Permanent link">&para;</a></h2>
 <p>Autoscaling options can also be configured at the component level.
@@ -2976,57 +2976,57 @@ This allows more flexibility in terms of the autoscaling configuration. In a typ
 <div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">Old Schema</label><label for="__tabbed_11_2">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
-<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
-<span class="w">  </span><span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="w">  </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="w">  </span><span class="nt">metadata</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span><span class="w">  </span>
-<span class="w">  </span><span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
-<span class="w">      </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span><span class="w"></span>
-<span class="w">      </span><span class="nt">pytorch</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span><span class="w"></span>
-<span class="w">    </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"></span>
-<span class="w">      </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span><span class="w"></span>
-<span class="w">      </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span><span class="w"></span>
-<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
-<span class="w">          </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span><span class="w"></span>
-<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span><span class="w"></span>
+<span class="w">  </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span>
+<span class="w">      </span><span class="nt">pytorch</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span>
+<span class="w">    </span><span class="nt">transformer</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">      </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span>
+<span class="w">      </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span>
+<span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
+<span class="w">          </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span>
+<span class="w">          </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span><span class="w"></span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span><span class="w"></span>
-<span class="nt">metadata</span><span class="p">:</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span><span class="w">  </span>
-<span class="nt">spec</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
-<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span><span class="w"></span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch</span><span class="w"></span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span><span class="w"></span>
-<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span><span class="w"></span>
-<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span><span class="w"></span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span><span class="w"></span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span><span class="w"></span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="nt">args</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span><span class="w"></span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span><span class="w"></span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span>
+<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
 </code></pre></div>
 </div>
 </div>
