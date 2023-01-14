@@ -33,7 +33,7 @@ if __name__ == "__main__":
     model = AlexNetModel("custom-model")
     kserve.ModelServer().start([model])
 ```
-The full code example can be found [here](https://github.com/kserve/kserve/tree/master/python/custom_model/model.py).
+The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.9/python/custom_model/model.py).
 
 ## Build the custom image with Buildpacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
@@ -75,7 +75,7 @@ class AlexNetModel(kserve.Model):
 if __name__ == "__main__":
     kserve.ModelServer().start({"custom-model": AlexNetModel})
 ```
-The full code example can be found [here](https://github.com/kserve/kserve/tree/master/python/custom_model/model_remote.py).
+The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.9/python/custom_model/model_remote.py).
 
 Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
 each model as separate python worker and tornado webserver routes to the model workers by name. 

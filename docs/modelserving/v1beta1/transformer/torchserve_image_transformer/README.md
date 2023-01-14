@@ -76,7 +76,7 @@ class ImageTransformer(kserve.Model):
         return {"predictions": response.as_numpy("OUTPUT__0").tolist()}
 ```
 
-Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.8/python/custom_transformer).
+Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.9/python/custom_transformer).
 
 ### Transformer Server Entrypoint
 For single model you just create a transformer object and register that to the model server.
