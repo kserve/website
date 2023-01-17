@@ -6,6 +6,8 @@ We will be using the German Credit dataset maintained by the [UC Irvine Machine 
 
 We would like to be able to check if these "protected classes" are being used in a model's predictions. In this example we will feed the model some predictions and calculate metrics based off of the predictions the model makes. We will be using KServe payload logging capability collect the metrics. These metrics will give insight as to whether or not the model is biased for or against any protected classes. In this example we will look at the bias our deployed model has on those of age > 25 vs. those of age <= 25 and see if creditors are treating either unfairly.
 
+Sample resources for deploying the example can be found [here](https://github.com/kserve/kserve/tree/master/docs/samples/explanation/aif/germancredit)
+
 ## Create the InferenceService
 
 Apply the CRD
