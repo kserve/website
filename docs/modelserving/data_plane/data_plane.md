@@ -6,7 +6,7 @@ KServe's data plane protocol introduces an inference API that is independent of 
 
 By implementing this protocol both inference clients and servers will increase their utility and 
 portability by operating seamlessly on platforms that have standardized around this API. Kserve's inference protocol is endorsed by NVIDIA
-Triton Inference Server, TensorFlow Serving, and ONNX Runtime Server.
+Triton Inference Server, TensorFlow Serving, and TorchServe.
 
 ![Data Plane](../../images/dataplane.jpg)
 <br> Note: Protocol V2 uses /infer instead of :predict
