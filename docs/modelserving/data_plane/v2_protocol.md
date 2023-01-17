@@ -48,7 +48,7 @@ For example, if a model does not implement a version, the Model Metadata request
 | Server Ready | The “server ready” health API indicates if all the models are ready for inferencing. The “server ready” health API can be used directly to implement the Kubernetes readinessProbe |
 | Server Live | The “server live” health API indicates if the inference server is able to receive and respond to metadata and inference requests. The “server live” API can be used directly to implement the Kubernetes livenessProbe. |
 | Server Metadata | The "server metadata" API returns details describing the server. | 
-<!-- TODO: uncomment when implemented | Model Ready | The “model ready” health API indicates if a specific model is ready for inferencing. The model name and (optionally) version must be available in the URL. |  -->
+| Model Ready | The “model ready” health API indicates if a specific model is ready for inferencing. The model name and (optionally) version must be available in the URL. |
 
 ### Health/Readiness/Liveness Probes
 
@@ -140,15 +140,8 @@ status (typically 400). The HTTP body must contain the
 * “error” : The descriptive message for the error.
 
 
-The per-model metadata endpoint provides information about a model. A
-model metadata request is made with an HTTP GET to a model metadata
-endpoint. In the corresponding response the HTTP body contains the
-[Model Metadata Response JSON Object](#model-metadata-response-json-object)
-or the
-[Model Metadata Response JSON Error Object](#model-metadata-response-json-error-object).
-The model name and (optionally) version must be available in the
-URL. If a version is not provided the server may choose a version
-based on its own policies or return an error.
+The per-model metadata endpoint provides information about a model. A model metadata request is made with an HTTP GET to a model metadata endpoint. In the corresponding response the HTTP body contains the [Model Metadata Response JSON Object](#model-metadata-response-json-object) or the [Model Metadata Response JSON Error Object](#model-metadata-response-json-error-object).
+The model name and (optionally) version must be available in the URL. If a version is not provided the server may choose a version based on its own policies or return an error.
 
 ---
 

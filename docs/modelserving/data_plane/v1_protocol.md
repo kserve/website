@@ -12,7 +12,6 @@ KServe's V1 protocol offers a standardized prediction workflow across all model 
 
 Note: The response payload in V1 protocol is not strictly enforced. A custom server define and return its own response payload. We encourage using the KServe defined response payload for consistency.
 
-TODO: make sure list models/model ready is correct. 
 
 ## API Definitions
 
