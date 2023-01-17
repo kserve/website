@@ -31,6 +31,8 @@ spec:
       storageUri: "gs://seldon-models/sklearn/iris"
 ```
 
+The default values for `serving.kserve.io/enable-prometheus-scraping` can be set in the `inferenceservice-config` configmap. See [the docs](https://github.com/kserve/kserve/blob/master/qpext/README.md#configs) for more info.
+
 There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. 
 
 ## Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor
