@@ -1,0 +1,1337 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="KServe Documentation" name="description"/>
+<link href="https://kserve.io/website/local/sdk_docs/sdk_doc/" rel="canonical"/>
+<link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-8.0.5" name="generator"/>
+<title>Python Client SDK - KServe Documentation Website</title>
+<link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#kserve-python-sdk">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+<aside class="md-banner">
+<div class="md-banner__inner md-grid md-typeset">
+<h1>
+<b>KServe v0.9 is Released</b>, <a href="/website/0.9/blog/articles/2022-07-21-KServe-0.9-release/">Read blog &gt;&gt;</a>
+</h1>
+</div>
+</aside>
+</div>
+<div data-md-component="outdated" hidden="">
+<aside class="md-banner md-banner--warning">
+</aside>
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../.." title="KServe Documentation Website">
+<img alt="logo" src="../../images/logo/kserve.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            KServe Documentation Website
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Python Client SDK
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+      Home
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../get_started/">
+        Getting started
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../admin/serverless/serverless/">
+        Administration Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../modelserving/control_plane/">
+        User Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../../reference/api/">
+        API Reference
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../developer/developer/">
+        Developer Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../blog/articles/2022-07-21-KServe-0.9-release/">
+        Blog
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../community/adopters/">
+        Community
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="KServe Documentation Website">
+<img alt="logo" src="../../images/logo/kserve.png"/>
+</a>
+    KServe Documentation Website
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Getting started" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/">
+        KServe Quickstart
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/first_isvc/">
+        First InferenceService
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/swagger_ui/">
+        Interact with InferenceService Swagger UI
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          Administration Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Administration Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          Administration Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" id="__nav_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_1">
+          Install KServe
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Install KServe" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Install KServe
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" id="__nav_3_1_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_1_1">
+          Serverless
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Serverless" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_1_1">
+<span class="md-nav__icon md-icon"></span>
+          Serverless
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/serverless/">
+        Serverless installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/servicemesh/">
+        Istio Service Mesh
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/kourier_networking/">
+        Kourier Networking Layer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/modelmesh/">
+        ModelMesh installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/kubernetes_deployment/">
+        Kubernetes deployment installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/migration/">
+        Migrating from KFServing
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="User Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" id="__nav_4_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Concepts" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_1">
+<span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" id="__nav_4_1_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_1">
+          Control Plane
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Control Plane" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_1_1">
+<span class="md-nav__icon md-icon"></span>
+          Control Plane
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/control_plane/">
+        Model Serving Control Plane
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" id="__nav_4_1_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_2">
+          Data Plane
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data Plane" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_1_2">
+<span class="md-nav__icon md-icon"></span>
+          Data Plane
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/data_plane/">
+        Model Serving Data Plane
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/inference_api/">
+        V2 Inference Protocol
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/servingruntimes/">
+        Serving Runtimes
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2">
+          Single Model Serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Single Model Serving" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
+<span class="md-nav__icon md-icon"></span>
+          Single Model Serving
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" id="__nav_4_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_1">
+          Supported Model Frameworks/Formats
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Supported Model Frameworks/Formats" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Supported Model Frameworks/Formats
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/serving_runtime/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/tensorflow/">
+        Tensorflow
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/torchserve/">
+        PyTorch
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/sklearn/v2/">
+        Scikit-learn
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/xgboost/">
+        XGBoost
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/pmml/">
+        PMML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/spark/">
+        Spark MLlib
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/lightgbm/">
+        LightGBM
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/paddle/">
+        Paddle
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/mlflow/v2/">
+        MLFlow
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" id="__nav_4_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Multi-Framework Serving Runtimes" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" id="__nav_4_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Nvidia Triton" class="md-nav" data-md-level="4">
+<label class="md-nav__title" for="__nav_4_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/triton/torchscript/">
+        Torchscript
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/triton/bert/">
+        Tensorflow
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/amd/">
+        AMD
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/custom/custom_model/">
+        How to write a custom predictor
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3">
+          Multi Model Serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Multi Model Serving" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
+<span class="md-nav__icon md-icon"></span>
+          Multi Model Serving
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" id="__nav_4_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Overview" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/mms/multi-model-serving/">
+        The Scalability Problem
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/mms/modelmesh/overview/">
+        ModelMesh Overview
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4">
+          Transformers
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Transformers" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_4">
+<span class="md-nav__icon md-icon"></span>
+          Transformers
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/transformer/feast/">
+        Feast
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+        How to write a custom transformer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_5">
+          Inference Graph
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Inference Graph" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_5">
+<span class="md-nav__icon md-icon"></span>
+          Inference Graph
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/inference_graph/">
+        Concept
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/inference_graph/image_pipeline/">
+        Image classification inference graph
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6">
+          Model Storage
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Storage" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+          Model Storage
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/azure/azure/">
+        Azure
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/pvc/pvc/">
+        PVC
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/s3/s3/">
+        S3
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/uri/uri/">
+        URI
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7">
+          Model Explainability
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Explainability" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_7">
+<span class="md-nav__icon md-icon"></span>
+          Model Explainability
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/explainer/">
+        Concept
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_2" id="__nav_4_7_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7_2">
+          Alibi Explainer
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Alibi Explainer" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_7_2">
+<span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/alibi/cifar10/">
+        Image Explainer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/alibi/income/">
+        Income Explainer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/alibi/moviesentiment/">
+        Text Explainer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/aix/mnist/aix/">
+        AIX Explainer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" id="__nav_4_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_8">
+          Model Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_8">
+<span class="md-nav__icon md-icon"></span>
+          Model Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/detect/alibi_detect/alibi_detect/">
+        Alibi Detector
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/detect/aif/germancredit/">
+        AIF Bias Detector
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/detect/art/mnist/">
+        ART Adversarial Detector
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" id="__nav_4_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_9">
+          Request Batching
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Request Batching" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_9">
+<span class="md-nav__icon md-icon"></span>
+          Request Batching
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/batcher/batcher/">
+        Inference Batcher
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" id="__nav_4_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_10">
+          Payload Logging
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Payload Logging" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_10">
+<span class="md-nav__icon md-icon"></span>
+          Payload Logging
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/logger/logger/">
+        Inference Logger
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" id="__nav_4_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_11">
+          Autoscaling
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Autoscaling" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_11">
+<span class="md-nav__icon md-icon"></span>
+          Autoscaling
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/autoscaling/autoscaling/">
+        Inference Autoscaling
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_12">
+          Node Scheduling
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Node Scheduling" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_12">
+<span class="md-nav__icon md-icon"></span>
+          Node Scheduling
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/nodescheduling/overview/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+        InferenceService Node Scheduling
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" id="__nav_4_13" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_13">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Kafka" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_13">
+<span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/kafka/kafka/">
+        Inference with Kafka event source
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" id="__nav_4_14" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_14">
+          Rollout Strategies
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Rollout Strategies" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_14">
+<span class="md-nav__icon md-icon"></span>
+          Rollout Strategies
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/rollout/canary/">
+        Canary
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/rollout/canary-example/">
+        Canary Example
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="API Reference" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/api/">
+        Control Plane API
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/swagger-ui/">
+        Control Plane swagger-ui
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Python Client SDK
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Python Client SDK
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#installation">
+    Installation
+  </a>
+<nav aria-label="Installation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pip-install">
+    pip install
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setuptools">
+    Setuptools
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve-python-server">
+    KServe Python Server
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve-client">
+    KServe Client
+  </a>
+<nav aria-label="KServe Client" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+    Getting Started
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-for-client-api">
+    Documentation for Client API
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-for-models">
+    Documentation For Models
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6">
+          Developer Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Developer Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+          Developer Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../developer/developer/">
+        How to contribute
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../developer/debug/">
+        Debugging guide
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Blog" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1">
+          Releases
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Releases" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+          Releases
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2022-07-21-KServe-0.9-release/">
+        KServe 0.9 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2022-02-18-KServe-0.8-release/">
+        KServe 0.8 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2021-10-11-KServe-0.7-release/">
+        KServe 0.7 Release
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" id="__nav_7_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_2">
+          Articles
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Articles" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_2">
+<span class="md-nav__icon md-icon"></span>
+          Articles
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2021-09-27-kfserving-transition/">
+        KFserving Transition
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8">
+          Community
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Community" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/adopters/">
+        Adopters
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/presentations/">
+        Demos and Presentations
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#installation">
+    Installation
+  </a>
+<nav aria-label="Installation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pip-install">
+    pip install
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setuptools">
+    Setuptools
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve-python-server">
+    KServe Python Server
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve-client">
+    KServe Client
+  </a>
+<nav aria-label="KServe Client" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+    Getting Started
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-for-client-api">
+    Documentation for Client API
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-for-models">
+    Documentation For Models
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/sdk_docs/sdk_doc.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="kserve-python-sdk">KServe Python SDK<a class="headerlink" href="#kserve-python-sdk" title="Permanent link">¶</a></h1>
+<p>Python SDK for KServe Server and Client.</p>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
+<p>KServe Python SDK can be installed by <code>pip</code> or <code>Setuptools</code>.</p>
+<h3 id="pip-install">pip install<a class="headerlink" href="#pip-install" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>kserve
+</code></pre></div>
+<h3 id="setuptools">Setuptools<a class="headerlink" href="#setuptools" title="Permanent link">¶</a></h3>
+<p>Install via <a href="http://pypi.python.org/pypi/setuptools">Setuptools</a>.</p>
+<p><div class="highlight"><pre><span></span><code>python<span class="w"> </span>setup.py<span class="w"> </span>install<span class="w"> </span>--user
+</code></pre></div>
+(or <code>sudo python setup.py install</code> to install the package for all users)</p>
+<h2 id="kserve-python-server">KServe Python Server<a class="headerlink" href="#kserve-python-server" title="Permanent link">¶</a></h2>
+<p>KServe's python server libraries implement a standardized library that is extended by model serving frameworks such as Scikit Learn, XGBoost and PyTorch. It encapsulates data plane API definitions and storage retrieval for models.</p>
+<p>It provides many functionalities, including among others:</p>
+<ul>
+<li>Registering a model and starting the server</li>
+<li>Prediction Handler</li>
+<li>Pre/Post Processing Handler</li>
+<li>Liveness Handler</li>
+<li>Readiness Handlers</li>
+</ul>
+<p>It supports the following storage providers:</p>
+<ul>
+<li>Google Cloud Storage with a prefix: "gs://"<ul>
+<li>By default, it uses <code>GOOGLE_APPLICATION_CREDENTIALS</code> environment variable for user authentication.</li>
+<li>If <code>GOOGLE_APPLICATION_CREDENTIALS</code> is not provided, anonymous client will be used to download the artifacts.</li>
+</ul>
+</li>
+<li>S3 Compatible Object Storage with a prefix "s3://"<ul>
+<li>By default, it uses <code>S3_ENDPOINT</code>, <code>AWS_ACCESS_KEY_ID</code>, and <code>AWS_SECRET_ACCESS_KEY</code> environment variables for user authentication.</li>
+</ul>
+</li>
+<li>Azure Blob Storage with the format: "https://{$STORAGE_ACCOUNT_NAME}.blob.core.windows.net/{$CONTAINER}/{$PATH}"<ul>
+<li>By default, it uses anonymous client to download the artifacts.</li>
+<li>For e.g. https://kfserving.blob.core.windows.net/triton/simple_string/</li>
+</ul>
+</li>
+<li>Local filesystem either without any prefix or with a prefix "file://". For example:<ul>
+<li>Absolute path: <code>/absolute/path</code> or <code>file:///absolute/path</code></li>
+<li>Relative path: <code>relative/path</code> or <code>file://relative/path</code></li>
+<li>For local filesystem, we recommended to use relative path without any prefix.</li>
+</ul>
+</li>
+<li>Persistent Volume Claim (PVC) with the format "pvc://{$pvcname}/[path]".<ul>
+<li>The <code>pvcname</code> is the name of the PVC that contains the model.</li>
+<li>The <code>[path]</code> is the relative path to the model on the PVC.</li>
+<li>For e.g. <code>pvc://mypvcname/model/path/on/pvc</code></li>
+</ul>
+</li>
+<li>Generic URI, over either <code>HTTP</code>, prefixed with <code>http://</code> or <code>HTTPS</code>, prefixed with <code>https://</code>. For example:<ul>
+<li><code>https://&lt;some_url&gt;.com/model.joblib</code></li>
+<li><code>http://&lt;some_url&gt;.com/model.joblib</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="kserve-client">KServe Client<a class="headerlink" href="#kserve-client" title="Permanent link">¶</a></h2>
+<h3 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h3>
+<p>KServe's python client interacts with KServe control plane APIs for executing operations on a remote KServe cluster, such as creating, patching and deleting of a InferenceService instance. See the <a href="../samples/kserve_sdk_v1beta1_sample.ipynb">Sample for Python SDK Client</a> to get started.</p>
+<h3 id="documentation-for-client-api">Documentation for Client API<a class="headerlink" href="#documentation-for-client-api" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#set_credentials">set_credentials</a></td>
+<td>Set Credentials</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#create">create</a></td>
+<td>Create InferenceService</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#get">get</a></td>
+<td>Get or watch the specified InferenceService or all InferenceServices in the namespace</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#patch">patch</a></td>
+<td>Patch the specified InferenceService</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#replace">replace</a></td>
+<td>Replace the specified InferenceService</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#delete">delete</a></td>
+<td>Delete the specified InferenceService</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#wait_isvc_ready">wait_isvc_ready</a></td>
+<td>Wait for the InferenceService to be ready</td>
+</tr>
+<tr>
+<td><a href="../docs/KServeClient/">KServeClient</a></td>
+<td><a href="../docs/KServeClient/#is_isvc_ready">is_isvc_ready</a></td>
+<td>Check if the InferenceService is ready</td>
+</tr>
+</tbody>
+</table>
+<h2 id="documentation-for-models">Documentation For Models<a class="headerlink" href="#documentation-for-models" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../docs/KnativeAddressable/">KnativeAddressable</a></li>
+<li><a href="../docs/KnativeCondition/">KnativeCondition</a></li>
+<li><a href="../docs/KnativeURL/">KnativeURL</a></li>
+<li><a href="../docs/KnativeVolatileTime/">KnativeVolatileTime</a></li>
+<li><a href="../docs/NetUrlUserinfo/">NetUrlUserinfo</a></li>
+<li><a href="../docs/V1beta1AIXExplainerSpec/">V1beta1AIXExplainerSpec</a></li>
+<li><a href="../docs/V1beta1AlibiExplainerSpec/">V1beta1AlibiExplainerSpec</a></li>
+<li><a href="../docs/V1beta1Batcher/">V1beta1Batcher</a></li>
+<li><a href="../docs/V1beta1ComponentExtensionSpec/">V1beta1ComponentExtensionSpec</a></li>
+<li><a href="../docs/V1beta1ComponentStatusSpec/">V1beta1ComponentStatusSpec</a></li>
+<li><a href="../docs/V1beta1CustomExplainer/">V1beta1CustomExplainer</a></li>
+<li><a href="../docs/V1beta1CustomPredictor/">V1beta1CustomPredictor</a></li>
+<li><a href="../docs/V1beta1CustomTransformer/">V1beta1CustomTransformer</a></li>
+<li><a href="../docs/V1beta1ExplainerSpec/">V1beta1ExplainerSpec</a></li>
+<li><a href="../docs/V1beta1InferenceService/">V1beta1InferenceService</a></li>
+<li><a href="../docs/V1beta1InferenceServiceList/">V1beta1InferenceServiceList</a></li>
+<li><a href="../docs/V1beta1InferenceServiceSpec/">V1beta1InferenceServiceSpec</a></li>
+<li><a href="../docs/V1beta1InferenceServiceStatus/">V1beta1InferenceServiceStatus</a></li>
+<li><a href="../docs/V1alpha1InferenceGraph/">V1alpha1InferenceGraph</a></li>
+<li><a href="../docs/V1alpha1InferenceGraphList/">V1alpha1InferenceGraphList</a></li>
+<li><a href="../docs/V1alpha1InferenceGraphSpec/">V1alpha1InferenceGraphSpec</a></li>
+<li><a href="../docs/V1alpha1InferenceGraphStatus/">V1alpha1InferenceGraphStatus</a></li>
+<li><a href="../docs/V1beta1LightGBMSpec/">V1beta1LightGBMSpec</a></li>
+<li><a href="../docs/V1beta1LoggerSpec/">V1beta1LoggerSpec</a></li>
+<li><a href="../docs/V1beta1ModelSpec/">V1beta1ModelSpec</a></li>
+<li><a href="../docs/V1beta1ModelStatus/">V1beta1ModelStatus</a></li>
+<li><a href="../docs/V1beta1ONNXRuntimeSpec/">V1beta1ONNXRuntimeSpec</a></li>
+<li><a href="../docs/V1beta1PaddleServerSpec/">V1beta1PaddleServerSpec</a></li>
+<li><a href="../docs/V1beta1PMMLSpec/">V1beta1PMMLSpec</a></li>
+<li><a href="../docs/V1beta1PodSpec/">V1beta1PodSpec</a></li>
+<li><a href="../docs/V1beta1PredictorExtensionSpec/">V1beta1PredictorExtensionSpec</a></li>
+<li><a href="../docs/V1beta1PredictorSpec/">V1beta1PredictorSpec</a></li>
+<li><a href="../docs/V1beta1SKLearnSpec/">V1beta1SKLearnSpec</a></li>
+<li><a href="../docs/V1beta1TFServingSpec/">V1beta1TFServingSpec</a></li>
+<li><a href="../docs/V1beta1TorchServeSpec/">V1beta1TorchServeSpec</a></li>
+<li><a href="../docs/V1beta1TransformerSpec/">V1beta1TransformerSpec</a></li>
+<li><a href="../docs/V1beta1TritonSpec/">V1beta1TritonSpec</a></li>
+<li><a href="../docs/V1beta1XGBoostSpec/">V1beta1XGBoostSpec</a></li>
+</ul>
+</article>
+</div>
+</div>
+<a class="md-top md-icon" data-md-component="top" data-md-state="hidden" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path></svg>
+            Back to top
+          </a>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Control Plane swagger-ui" class="md-footer__link md-footer__link--prev" href="../../reference/swagger-ui/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Control Plane swagger-ui
+            </div>
+</div>
+</a>
+<a aria-label="Next: How to contribute" class="md-footer__link md-footer__link--next" href="../../developer/developer/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              How to contribute
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2021 The KServe Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/kserve" rel="noopener" target="_blank" title="KServe Community on Github">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+<a class="md-social__link" href="https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#" rel="noopener" target="_blank" title="Slack">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+</body>
+</html>

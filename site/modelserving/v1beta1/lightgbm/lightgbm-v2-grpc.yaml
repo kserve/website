@@ -1,0 +1,15 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "lightgbm-v2-iris"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: lightgbm
+      protocolVersion: v2
+      storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
+      ports:
+        - name: h2c
+          protocol: TCP
+          containerPort: 9000
