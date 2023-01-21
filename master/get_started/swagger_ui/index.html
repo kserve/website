@@ -848,7 +848,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../modelserving/data_plane/" class="md-nav__link">
+      <a href="../../modelserving/data_plane/data_plane/" class="md-nav__link">
         Model Serving Data Plane
       </a>
     </li>
@@ -862,8 +862,22 @@
   
   
     <li class="md-nav__item">
-      <a href="../../modelserving/inference_api/" class="md-nav__link">
-        V2 Inference Protocol
+      <a href="../../modelserving/data_plane/v1_protocol/" class="md-nav__link">
+        V1 Inference Protocol
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modelserving/data_plane/v2_protocol/" class="md-nav__link">
+        Open Inference Protocol (V2 Inference Protocol)
       </a>
     </li>
   
@@ -2052,6 +2066,53 @@
 
             
           
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Inference Observability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Observability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Observability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modelserving/observability/prometheus_metrics/" class="md-nav__link">
+        Prometheus Metrics
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2498,7 +2559,7 @@ In our example above, the Swagger UI will be available at <code>http://sklearn-i
 <p>Now, when you click "Try it out" and then "Execute", Swagger UI will send a <code>GET</code> request to the <code>/v2</code> endpoint. The server response body and headers will be displayed at the bottom:</p>
 <p><img alt="V2 Metadata" src="../../images/swagger/v2-metadata-try-out.png" /></p>
 <p>Similarly, we can use Swagger UI to send request to check the model metadata and make prediction using the <code>/v2/models/{model_name}/infer</code> endpoint.</p>
-<p>For more reference, please check out <a href="../../modelserving/data_plane/">Model Serving Data Plane</a> for detailed documentation on the Inference Protocol.</p>
+<p>For more reference, please check out <a href="../modelserving/data_plane.md">Model Serving Data Plane</a> for detailed documentation on the Inference Protocol.</p>
 
               
             </article>

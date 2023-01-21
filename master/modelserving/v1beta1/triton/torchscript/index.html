@@ -797,7 +797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../data_plane/" class="md-nav__link">
+      <a href="../../../data_plane/data_plane/" class="md-nav__link">
         Model Serving Data Plane
       </a>
     </li>
@@ -811,8 +811,22 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../inference_api/" class="md-nav__link">
-        V2 Inference Protocol
+      <a href="../../../data_plane/v1_protocol/" class="md-nav__link">
+        V1 Inference Protocol
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../data_plane/v2_protocol/" class="md-nav__link">
+        Open Inference Protocol (V2 Inference Protocol)
       </a>
     </li>
   
@@ -2164,6 +2178,53 @@
 
             
           
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Inference Observability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Observability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Observability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../observability/prometheus_metrics/" class="md-nav__link">
+        Prometheus Metrics
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -3005,7 +3066,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
         <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]}</span>
 </code></pre></div>
-Please find <a href="https://github.com/kserve/kserve/tree/release-0.9/docs/samples/v1beta1/triton/torchscript/image_transformer_v2">the code example</a> and <a href="https://github.com/kserve/kserve/blob/release-0.9/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile">Dockerfile</a>.</p>
+Please find <a href="https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/triton/torchscript/image_transformer_v2">the code example</a> and <a href="https://github.com/kserve/kserve/blob/release-0.10/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile">Dockerfile</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>docker build -t $DOCKER_USER/image-transformer-v2:latest -f transformer.Dockerfile . --rm
 </code></pre></div>
