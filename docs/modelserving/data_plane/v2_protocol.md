@@ -1,87 +1,103 @@
-# Predict Protocol - Version 2
+## Open Inference Protocol (V2 Inference Protocol)
 
-This document proposes a predict/inference API independent of any
-specific ML/DL framework and model server. The proposed APIs are
-able to support both easy-to-use and high-performance use cases.
-By implementing this protocol both
-inference clients and servers will increase their utility and
-portability by being able to operate seamlessly on platforms that have
-standardized around this API. This protocol is endorsed by NVIDIA
-Triton Inference Server, TensorFlow Serving, and ONNX Runtime
-Server.
+**For an inference server to be compliant with this protocol the server must implement the health, metadata, and inference V2 APIs**. 
+Optional features that are explicitly noted are not required. A compliant inference server may choose to implement the [HTTP/REST API](#httprest) and/or the [GRPC API](#grpc).
 
-For an inference server to be compliant with this protocol the server
-must implement all APIs described below, except where an optional
-feature is explicitly noted. A compliant inference server may choose
-to implement either or both of the HTTP/REST API and the GRPC API.
+Check the [model serving runtime table](../v1beta1/serving_runtime.md) / the `protocolVersion` field in the [runtime YAML](https://github.com/kserve/kserve/tree/master/config/runtimes) to ensure V2 protocol is supported for model serving runtime that you are using.
 
-The protocol supports an extension mechanism as a required part of the
-API, but this document does not propose any specific extensions. Any
-specific extensions will be proposed separately.
+Note: For all API descriptions on this page, all strings in all contexts are case-sensitive. The V2 protocol supports an extension mechanism as a required part of the API, but this document does not propose any specific extensions. Any specific extensions will be proposed separately.
+
+### Note on changes between V1 & V2 
+
+V2 protocol does not currently support the explain endpoint like V1 protocol does. If this is a feature you wish to have in the V2 protocol, please submit a [github issue](https://github.com/kserve/kserve/issues). 
+
 
 ## HTTP/REST
-
-A compliant server must implement the health, metadata, and inference
-APIs described in this section.
 
 The HTTP/REST API uses JSON because it is widely supported and
 language independent. In all JSON schemas shown in this document
 $number, $string, $boolean, $object and $array refer to the
 fundamental JSON types. #optional indicates an optional JSON field.
 
-All strings in all contexts are case-sensitive.
+See also: The HTTP/REST endpoints are defined in [rest_predict_v2.yaml](https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/rest_predict_v2.yaml)
 
-For KFServing the server must recognize the following URLs. The
-versions portion of the URL is shown as optional to allow
-implementations that don’t support versioning or for cases when the
-user does not want to specify a specific model version (in which case
-the server will choose a version based on its own policies).
+| API  | Verb | Path | Request Payload | Response Payload | 
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| Inference | POST | v2/models/<model_name>[/versions/\<model_version\>]/infer | [$inference_request](#inference-request-json-object) | [$inference_response](#inference-response-json-object) |
+| Model Metadata | GET | v2/models/\<model_name\>[/versions/\<model_version\>] | | [$metadata_model_response](#model-metadata-response-json-object) | 
+| Server Ready | GET | v2/health/ready | | [$ready_server_response](#server-ready-response-json-object) | 
+| Server Live | GET | v2/health/live | | [$live_server_response](#server-live-response-json-objet)| 
+| Server Metadata | GET | v2 | | [$metadata_server_response](#server-metadata-response-json-object) |
+| Model Ready| GET   | v2/models/\<model_name\>[/versions/<model_version>]/ready |  | [$ready_model_response](#model-ready-response-json-object) |
 
-**Health:**
+** path contents in `[]` are optional
 
- GET v2/health/live
- GET v2/health/ready
- GET v2/models/${MODEL_NAME}[/versions/${MODEL_VERSION}]/ready
+For more information regarding payload contents, see `Payload Contents`.
 
-**Server Metadata:**
+The versions portion of the `Path` URLs (in `[]`) is shown as **optional** to allow implementations that don’t support versioning or for cases when the user does not want to specify a specific model version (in which case the server will choose a version based on its own policies).
+For example, if a model does not implement a version, the Model Metadata request path could look like `v2/model/my_model`. If the model has been configured to implement a version, the request path could look something like `v2/models/my_model/versions/v10`, where the version of the model is v10.
 
- GET v2
+<!-- // TODO: add example with -d inputs. -->
 
-**Model Metadata:**
+### **API Definitions**
 
- GET v2/models/${MODEL_NAME}[/versions/${MODEL_VERSION}]
+| API  | Definition | 
+| --- | --- |
+| Inference | The `/infer` endpoint performs inference on a model. The response is the prediction result.| 
+| Model Metadata | The "model metadata" API is a per-model endpoint that returns details about the model passed in the path. | 
+| Server Ready | The “server ready” health API indicates if all the models are ready for inferencing. The “server ready” health API can be used directly to implement the Kubernetes readinessProbe |
+| Server Live | The “server live” health API indicates if the inference server is able to receive and respond to metadata and inference requests. The “server live” API can be used directly to implement the Kubernetes livenessProbe. |
+| Server Metadata | The "server metadata" API returns details describing the server. | 
+| Model Ready | The “model ready” health API indicates if a specific model is ready for inferencing. The model name and (optionally) version must be available in the URL. |
 
-**Inference:**
+### Health/Readiness/Liveness Probes
 
- POST v2/models/${MODEL_NAME}[/versions/${MODEL_VERSION}]/infer
+The Model Readiness probe the question "Did the model download and is it able to serve requests?" and responds with the available model name(s). The Server Readiness/Liveness probes answer the question "Is my service and its infrastructure running, healthy, and able to receive and process requests?"
 
-### Health
+To read more about liveness and readiness probe concepts, visit the [Configure Liveness, Readiness and Startup Probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
+Kubernetes documentation.
 
-A health request is made with an HTTP GET to a health endpoint. The
-HTTP response status code indicates a boolean result for the health
-request. A 200 status code indicates true and a 4xx status code
-indicates false. The HTTP response body should be empty. There are
-three health APIs.
+### **Payload Contents**
 
-#### Server Live
+### **Model Ready**
 
-The “server live” API indicates if the inference server is able to
-receive and respond to metadata and inference requests. The “server
-live” API can be used directly to implement the Kubernetes
-livenessProbe.
+The model ready endpoint returns the readiness probe response for the server along with the name of the model.
 
-#### Server Ready
+#### Model Ready Response JSON Object
 
-The “server ready” health API indicates if all the models are ready
-for inferencing. The “server ready” health API can be used directly to
-implement the Kubernetes readinessProbe.
 
-#### Model Ready
+    $ready_model_response =
+    {
+      "name" : $string,
+      "ready": $bool
+    }
 
-The “model ready” health API indicates if a specific model is ready
-for inferencing. The model name and (optionally) version must be
-available in the URL. If a version is not provided the server may
-choose a version based on its own policies.
+
+### Server Ready
+
+The server ready endpoint returns the readiness probe response for the server.
+
+#### Server Ready Response JSON Object
+
+    $ready_server_response =
+    {
+      "live" : $bool,
+    }
+
+---
+
+### Server Live
+
+The server live endpoint returns the liveness probe response for the server.
+
+#### Server Live Response JSON Objet
+
+    $live_server_response =
+    {
+      "live" : $bool,
+    }
+
+---
 
 ### Server Metadata
 
@@ -107,9 +123,8 @@ code. The server metadata response object, identified as
 
 * “name” : A descriptive name for the server.
 * "version" : The server version.
-* “extensions” : The extensions supported by the server. Currently no
-  standard extensions are defined. Individual inference servers may
-  define and document their own extensions.
+* “extensions” : The extensions supported by the server. Currently no standard extensions are defined. Individual inference servers may define and document their own extensions.
+
 
 #### Server Metadata Response JSON Error Object
 
@@ -123,6 +138,12 @@ status (typically 400). The HTTP body must contain the
     }
 
 * “error” : The descriptive message for the error.
+
+
+The per-model metadata endpoint provides information about a model. A model metadata request is made with an HTTP GET to a model metadata endpoint. In the corresponding response the HTTP body contains the [Model Metadata Response JSON Object](#model-metadata-response-json-object) or the [Model Metadata Response JSON Error Object](#model-metadata-response-json-error-object).
+The model name and (optionally) version must be available in the URL. If a version is not provided the server may choose a version based on its own policies or return an error.
+
+---
 
 ### Model Metadata
 
@@ -191,6 +212,8 @@ status (typically 400). The HTTP body must contain the
 
 * “error” : The descriptive message for the error.
 
+---
+
 ### Inference
 
 An inference request is made with an HTTP POST to an inference
@@ -224,20 +247,20 @@ return an error.
   inference request expressed as key/value pairs. See
   [Parameters](#parameters) for more information.
 * "inputs" : The input tensors. Each input is described using the
-  *$request_input* schema defined in [Request Input](#request-input).
+  *$request_input* schema defined in [Request Input](#inference_request-input).
 * "outputs" : The output tensors requested for this inference. Each
   requested output is described using the *$request_output* schema
-  defined in [Request Output](#request-output). Optional, if not
+  defined in [Request Output](#inference_request-output). Optional, if not
   specified all outputs produced by the model will be returned using
   default *$request_output* settings.
 
 ##### Request Input
 
-The *$request_input* JSON describes an input to the model. If the
+The *$inference_request_input* JSON describes an input to the model. If the
 input is batched, the shape and data must represent the full shape and
 contents of the entire batch.
 
-    $request_input =
+    $inference_request_input =
     {
       "name" : $string,
       "shape" : [ $number, ... ],
@@ -262,7 +285,7 @@ contents of the entire batch.
 The *$request_output* JSON is used to request which output tensors
 should be returned from the model.
 
-    $request_output =
+    $inference_request_output =
     {
       "name" : $string,
       "parameters" : $parameters #optional,
@@ -300,46 +323,12 @@ code. The inference response object, identified as
   $response_output schema defined in
   [Response Output](#response-output).
 
-##### Response Output
+---
 
-The *$response_output* JSON describes an output from the model. If the
-output is batched, the shape and data represents the full shape of the
-entire batch.
 
-    $response_output =
-    {
-      "name" : $string,
-      "shape" : [ $number, ... ],
-      "datatype"  : $string,
-      "parameters" : $parameters #optional,
-      "data" : $tensor_data
-    }
+### **Inference Request Examples**
 
-* "name" : The name of the output tensor.
-* "shape" : The shape of the output tensor. Each dimension must be an
-  integer representable as an unsigned 64-bit integer value.
-* "datatype" : The data-type of the output tensor elements as defined
-  in [Tensor Data Types](#tensor-data-types).
-* "parameters" : An object containing zero or more parameters for this
-  input expressed as key/value pairs. See [Parameters](#parameters)
-  for more information.
-* “data”: The contents of the tensor. See [Tensor Data](#tensor-data)
-  for more information.
-
-#### Inference Response JSON Error Object
-
-A failed inference request must be indicated by an HTTP error status
-(typically 400). The HTTP body must contain the
-*$inference_error_response* object.
-
-    $inference_error_response =
-    {
-      "error": <error message string>
-    }
-
-* “error” : The descriptive message for the error.
-
-#### Inference Request Examples
+### Inference Request Examples
 
 The following example shows an inference request to a model with two
 inputs and one output. The HTTP Content-Length header gives the size
@@ -391,61 +380,29 @@ type FP32 the following response would be returned.
       ]
     }
 
-### Parameters
 
-The *$parameters* JSON describes zero or more “name”/”value” pairs,
-where the “name” is the name of the parameter and the “value” is a
-$string, $number, or $boolean.
-
-    $parameters =
-    {
-      $parameter, ...
-    }
-
-    $parameter = $string : $string | $number | $boolean
-
-Currently no parameters are defined. As required a future proposal may
-define one or more standard parameters to allow portable functionality
-across different inference servers. A server can implement
-server-specific parameters to provide non-standard capabilities.
-
-### Tensor Data
-
-Tensor data must be presented in row-major order of the tensor
-elements. Element values must be given in "linear" order without any
-stride or padding between elements. Tensor elements may be presented
-in their nature multi-dimensional representation, or as a flattened
-one-dimensional representation.
-
-Tensor data given explicitly is provided in a JSON array. Each element
-of the array may be an integer, floating-point number, string or
-boolean value. The server can decide to coerce each element to the
-required type or return an error if an unexpected value is
-received. Note that fp16 is problematic to communicate explicitly
-since there is not a standard fp16 representation across backends nor
-typically the programmatic support to create the fp16 representation
-for a JSON number.
-
-For example, the 2-dimensional matrix:
-
-    [ 1 2
-      4 5 ]
-
-Can be represented in its natural format as:
-
-    "data" : [ [ 1, 2 ], [ 4, 5 ] ]
-
-Or in a flattened one-dimensional representation:
-
-    "data" : [ 1, 2, 4, 5 ]
-
-## GRPC
+## gRPC
 
 The GRPC API closely follows the concepts defined in the
 [HTTP/REST](#httprest) API. A compliant server must implement the
 health, metadata, and inference APIs described in this section.
 
-All strings in all contexts are case-sensitive.
+
+| API  | rpc Endpoint | Request Message | Response Message | 
+| --- | --- | --- | ---| 
+| Inference | [ModelInfer](#inference) | ModelInferRequest | ModelInferResponse | 
+| Model Ready | [ModelReady](#model-ready) | [ModelReadyRequest] | ModelReadyResponse |
+| Model Metadata | [ModelMetadata](#model-metadata)| ModelMetadataRequest | ModelMetadataResponse | 
+| Server Ready | [ServerReady](#server-ready) | ServerReadyRequest | ServerReadyResponse |
+| Server Live | [ServerLive](#server-live) | ServerLiveRequest | ServerLiveResponse | 
+
+For more detailed information on each endpoint and its contents, see `API Definitions` and `Message Contents`.
+
+See also: The gRPC endpoints, request/response messages and contents are defined in [grpc_predict_v2.proto](https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/grpc_predict_v2.proto)
+
+
+### **API Definitions** 
+
 
 The GRPC definition of the service is:
 
@@ -473,12 +430,12 @@ The GRPC definition of the service is:
       rpc ModelInfer(ModelInferRequest) returns (ModelInferResponse) {}
     }
 
+### **Message Contents**
+
 ### Health
 
 A health request is made using the ServerLive, ServerReady, or
-ModelReady endpoint. For each of these endpoints errors are indicated
-by the google.rpc.Status returned for the request. The OK code
-indicates success and other codes indicate failure.
+ModelReady endpoint. For each of these endpoints errors are indicated by the google.rpc.Status returned for the request. The OK code indicates success and other codes indicate failure.
 
 #### Server Live
 
@@ -528,12 +485,13 @@ inferencing. The request and response messages for ModelReady are:
       bool ready = 1;
     }
 
-### Server Metadata
+---
 
-The ServerMetadata API provides information about the server. Errors
-are indicated by the google.rpc.Status returned for the request. The
-OK code indicates success and other codes indicate failure. The
-request and response messages for ServerMetadata are:
+### Metadata
+
+#### Server Metadata 
+
+The ServerMetadata API provides information about the server. Errors are indicated by the google.rpc.Status returned for the request. The OK code indicates success and other codes indicate failure. The request and response messages for ServerMetadata are:
 
     message ServerMetadataRequest {}
 
@@ -549,7 +507,7 @@ request and response messages for ServerMetadata are:
       repeated string extensions = 3;
     }
 
-### Model Metadata
+#### Model Metadata
 
 The per-model metadata API provides information about a model. Errors
 are indicated by the google.rpc.Status returned for the request. The
@@ -598,11 +556,30 @@ request and response messages for ModelMetadata are:
       repeated TensorMetadata outputs = 5;
     }
 
+#### Platforms
+
+A platform is a string indicating a DL/ML framework or
+backend. Platform is returned as part of the response to a
+[Model Metadata](#model_metadata) request but is information only. The
+proposed inference APIs are generic relative to the DL/ML framework
+used by a model and so a client does not need to know the platform of
+a given model to use the API. Platform names use the format
+“<project>_<format>”. The following platform names are allowed:
+
+* tensorrt_plan : A TensorRT model encoded as a serialized engine or “plan”.
+* tensorflow_graphdef : A TensorFlow model encoded as a GraphDef.
+* tensorflow_savedmodel : A TensorFlow model encoded as a SavedModel.
+* onnx_onnxv1 : A ONNX model encoded for ONNX Runtime.
+* pytorch_torchscript : A PyTorch model encoded as TorchScript.
+* mxnet_mxnet: An MXNet model
+* caffe2_netdef : A Caffe2 model encoded as a NetDef.
+
+---
+
 ### Inference
 
 The ModelInfer API performs inference using the specified
-model. Errors are indicated by the google.rpc.Status returned for the
-request. The OK code indicates success and other codes indicate
+model. Errors are indicated by the google.rpc.Status returned for the request. The OK code indicates success and other codes indicate
 failure. The request and response messages for ModelInfer are:
 
     message ModelInferRequest
@@ -731,16 +708,13 @@ failure. The request and response messages for ModelInfer are:
       repeated bytes raw_output_contents = 6;
     }
 
-### Parameters
+#### Parameters
 
 The Parameters message describes a “name”/”value” pair, where the
 “name” is the name of the parameter and the “value” is a boolean,
 integer, or string corresponding to the parameter.
 
-Currently no parameters are defined. As required a future proposal may
-define one or more standard parameters to allow portable functionality
-across different inference servers. A server can implement
-server-specific parameters to provide non-standard capabilities.
+Currently no parameters are defined. As required a future proposal may define one or more standard parameters to allow portable functionality across different inference servers. A server can implement server-specific parameters to provide non-standard capabilities.
 
     //
     // An inference parameter value.
@@ -761,6 +735,8 @@ server-specific parameters to provide non-standard capabilities.
         string string_param = 3;
       }
     }
+
+---
 
 ### Tensor Data
 
@@ -829,25 +805,7 @@ matches the tensor's data type.
       repeated bytes bytes_contents = 8;
     }
 
-## Platforms
-
-A platform is a string indicating a DL/ML framework or
-backend. Platform is returned as part of the response to a
-[Model Metadata](#model_metadata) request but is information only. The
-proposed inference APIs are generic relative to the DL/ML framework
-used by a model and so a client does not need to know the platform of
-a given model to use the API. Platform names use the format
-“<project>_<format>”. The following platform names are allowed:
-
-* tensorrt_plan : A TensorRT model encoded as a serialized engine or “plan”.
-* tensorflow_graphdef : A TensorFlow model encoded as a GraphDef.
-* tensorflow_savedmodel : A TensorFlow model encoded as a SavedModel.
-* onnx_onnxv1 : A ONNX model encoded for ONNX Runtime.
-* pytorch_torchscript : A PyTorch model encoded as TorchScript.
-* mxnet_mxnet: An MXNet model
-* caffe2_netdef : A Caffe2 model encoded as a NetDef.
-
-## Tensor Data Types
+#### Tensor Data Types
 
 Tensor data types are shown in the following table along with the size
 of each type, in bytes.
@@ -868,3 +826,5 @@ of each type, in bytes.
 | FP32      | 4            |
 | FP64      | 8            |
 | BYTES     | Variable (max 2<sup>32</sup>) |
+
+---

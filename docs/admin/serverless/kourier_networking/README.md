@@ -1,5 +1,5 @@
 # Deploy InferenceService with Alternative Networking Layer
-KServe v0.9 and prior versions create the top level `Istio Virtual Service` for routing to `InferenceService` components based on the virtual host or path based routing.
+KServe creates the top level `Istio Virtual Service` for routing to `InferenceService` components based on the virtual host or path based routing.
 Now KServe provides an option for disabling the top level virtual service to allow configuring other networking layers Knative supports.
 For example, [Kourier](https://developers.redhat.com/blog/2020/06/30/kourier-a-lightweight-knative-serving-ingress) is an alternative networking layer and
 the following steps show how you can deploy KServe with `Kourier`.
