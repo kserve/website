@@ -1,7 +1,7 @@
 
 # End to end inference service example with Minio and Kafka
 
-This example shows an end to end inference pipeline which processes an kafka event and invoke the inference service to get the prediction with provided pre/post processing code.
+This example shows an end to end inference pipeline which processes an kafka event and invoke the inference service to get the prediction with provided pre/post processing code. The code for this example can be found [in the kafka sample folder in the KServe repository](https://github.com/kserve/kserve/tree/master/docs/samples/kafka).
 
 ![diagram](images/diagram.png)
 
