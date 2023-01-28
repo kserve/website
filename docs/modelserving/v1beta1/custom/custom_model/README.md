@@ -5,13 +5,14 @@ to deploy as `Custom Serving Runtime` on KServe.
 ## Setup
 1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
 
-## Create Custom REST Model Serving Runtime
+## Create and Deploy Custom REST ServingRuntime
+### Implement Custom Model using KServe API
 `KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
 in sequence, the output of the `preprocess` is passed to `predict` as the input, the `predictor` handler should execute the
 inference for your model, the `postprocess` handler then turns the raw prediction result into user-friendly inference response. There
 is an additional `load` handler which is used for writing custom code to load your model into the memory from local file system or
 remote model storage, a general good practice is to call the `load` handler in the model server class `__init__` function, so your model
-is loaded on startup and ready to serve when user is making the prediction calls.
+is loaded on startup and ready to serve prediction requests.
 
 ```python
 import argparse
@@ -47,9 +48,9 @@ if __name__ == "__main__":
     model = AlexNetModel("custom-model")
     ModelServer().start([model])
 ```
-The full code example can be found [here](https://github.com/kserve/kserve/tree/master/python/custom_model/model.py).
+The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model).
 
-### Build the custom image with Buildpacks
+### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
 needing to define the `Dockerfile`. Buildpacks automatically determines the python application and then install the dependencies from the
 `requirements.txt` file, it looks at the `Procfile` to determine how to start the model server. Here we are showing how to build the serving
@@ -77,7 +78,7 @@ curl localhost:8080/v1/models/custom-model:predict -d @./input.json
 {"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
 ```
 
-### Deploy the REST Custom Predictor on KServe
+### Deploy the REST Custom Serving Runtime on KServe
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -92,16 +93,16 @@ spec:
 ```
 In the `custom.yaml` file edit the container image and replace ${DOCKER_USER} with your Docker Hub username.
 
-### Arguments
+#### Arguments
 You can supply additional command arguments on the container spec to configure the model server.
 
 - `--workers`: Spawn the specified number of `uvicorn` workers(multi-processing) of the model server, the default value is 1, this option is often used
   to help increase the resource utilization of the container.
 - `--http_port`: the http port model server is listening on, the default REST port is 8080.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
-- `enable_latency_logging`: whether to log latency metrics per request, the default is False.
+- `enable_latency_logging`: whether to log latency metrics per request, the default is True.
 
-### Environment Variables
+#### Environment Variables
 
 You can supply additional environment variables on the container spec.
 
@@ -161,7 +162,19 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 ```
 kubectl delete -f custom.yaml
 ```
-## Create Custom gRPC Model Serving Runtime
+## Create and Deploy Custom gRPC ServingRuntime
+gRPC ServingRuntimes enables high performance inference data plane:
+
+- gRPC is built on top of HTTP/2 for addressing the
+  shortcomings of [head-of-line-blocking](https://en.wikipedia.org/wiki/Head-of-line_blocking) and [pipelining](https://en.wikipedia.org/wiki/HTTP_pipelining),
+- gRPC transports binary data format with [Protobuf](https://github.com/protocolbuffers/protobuf) which is efficient to send over the wire.
+
+Compared to REST it has limited support for browser and the message is not human-readable which requires additional debugging tools.
+
+### Implement Custom Model using KServe API
+For `V2(Open) Inference Protocol`, KServe provides `InferRequest` and `InferResponse` API object for `predict`, `preprocess`, `postprocess`
+handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
+
 ```python
 import argparse
 
@@ -208,6 +221,79 @@ class AlexNetModel(Model):
 if __name__ == "__main__":
     model = AlexNetModel("custom-model")
     ModelServer().start([model])
+```
+
+The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model).
+
+### Build Custom Serving Image with BuildPacks
+Similar to build the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
+```bash
+pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model-grpc:v1
+docker push ${DOCKER_USER}/custom-model-grpc:v1
+```
+
+Note: If your buildpack command fails, make sure you have a `runtimes.txt` file with the correct python version specified. See the [custom model server runtime.txt](https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt) file as an example.
+
+### Deploy Locally and Test
+Launch the docker image built from last step with `buildpack`.
+```bash
+docker run -ePORT=8081 -p8081:8081 ${DOCKER_USER}/custom-model-grpc:v1
+```
+
+Send a test inference request locally
+```bash
+grpccurl localhost:8080/v2/models/custom-model-grpc:predict -d @./input.json
+
+{"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
+```
+
+### Deploy the gRPC Custom Serving Runtime on KServe
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: custom-model-grpc
+spec:
+  predictor:
+    containers:
+      - name: kserve-container
+        image: ${DOCKER_USER}/custom-model-grpc:v1
+        ports:
+          - name: h2c
+            containerPort: 8081
+            protocol: TCP
+```
+In the `custom_grpc.yaml` file edit the container image and replace ${DOCKER_USER} with your Docker Hub username.
+
+#### Arguments
+You can supply additional command arguments on the container spec to configure the model server.
+
+- `--grpc_port`: the http port model server is listening on, the default gRPC port is 8081.
+- `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
+- `enable_latency_logging`: whether to log latency metrics per request, the default is True.
+
+Apply the yaml to deploy the InferenceService on KServe
+
+!!! "kubectl"
+```
+kubectl apply -f custom_grpc.yaml
+```
+
+==** Expected Output **==
+```
+$ inferenceservice.serving.kserve.io/custom-model-grpc created
+```
+
+### Run a gRPC Prediction
+The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+
+```
+MODEL_NAME=custom-model-grpc
+INPUT_PATH=@./input.json
+SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
+grpccurl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
 ```
 
 
