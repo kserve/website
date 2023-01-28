@@ -4,11 +4,13 @@ This is an example to show how adversarially modified inputs can trick models to
 
 We will be using the MNIST dataset which is a dataset of handwritten digits and find adversarial examples which will can make the model predict a classification incorrectly, thereby showing the vulnerability of the model against adversarial attacks.
 
+Sample resources for deploying the example can be found [here](https://github.com/kserve/kserve/tree/master/docs/samples/explanation/art/mnist)
+
 To deploy the inferenceservice with v1beta1 API
 
 `kubectl apply -f art.yaml`
 
-Then find the url.
+Then find the url
 
 `kubectl get inferenceservice`
 
