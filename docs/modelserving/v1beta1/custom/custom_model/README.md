@@ -44,7 +44,7 @@ to run the image build on the cloud and continuously build/deploy new versions f
 
 ### Use pack to build and push the custom model server image
 ```bash
-pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model:v1
+pack build --builder paketobuildpacks/builder:full ${DOCKER_USER}/custom-model:v1
 docker push ${DOCKER_USER}/custom-model:v1
 ```
 
@@ -118,6 +118,8 @@ curl localhost:8080/v1/models/custom-model:predict -d @./input.json
 
 {"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
 ```
+!!! tip
+    You can also use [`tilt`](https://tilt.dev/) along with `pack` and [`paketo`](https://paketo.io/) Buildpacks allowing you make code changes and have them reflected live in your custom inference service. For more details see - [Paketo Python Buildpacks - Enable Process Reloading](https://paketo.io/docs/howto/python/#enable-process-reloading)
 
 ## Deploy the Custom Predictor on KServe
 ### Create the InferenceService
