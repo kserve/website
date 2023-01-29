@@ -1373,8 +1373,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extend-modelserver-and-implement-prepost-processing-functions" class="md-nav__link">
-    Extend ModelServer and implement pre/post processing functions
+  <a href="#implement-prepost-processing-with-kserve-model-api" class="md-nav__link">
+    Implement pre/post processing with KServe Model API
   </a>
   
 </li>
@@ -1449,6 +1449,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-comparison-between-grpc-and-rest" class="md-nav__link">
+    Performance Comparison between gRPC and REST
+  </a>
   
 </li>
       
@@ -2569,8 +2576,8 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extend-modelserver-and-implement-prepost-processing-functions" class="md-nav__link">
-    Extend ModelServer and implement pre/post processing functions
+  <a href="#implement-prepost-processing-with-kserve-model-api" class="md-nav__link">
+    Implement pre/post processing with KServe Model API
   </a>
   
 </li>
@@ -2648,6 +2655,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#performance-comparison-between-grpc-and-rest" class="md-nav__link">
+    Performance Comparison between gRPC and REST
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2667,15 +2681,17 @@
 
 <h1 id="deploy-transformer-with-inferenceservice">Deploy Transformer with InferenceService<a class="headerlink" href="#deploy-transformer-with-inferenceservice" title="Permanent link">&para;</a></h1>
 <p>Transformer is an <code>InferenceService</code> component which does pre/post processing alongside with model inference. It usually takes raw input and transforms them to the
-input tensors model server expects. In this example we demonstrate an example of running inference with a custom image <code>Transformer</code> and  <code>Predictor</code> with REST and gRPC protocol.</p>
+input tensors model server expects. In this example we demonstrate an example of running inference with a custom <code>Transformer</code> communicating by REST and gRPC protocol.</p>
 <h2 id="create-custom-image-transformer">Create Custom Image Transformer<a class="headerlink" href="#create-custom-image-transformer" title="Permanent link">&para;</a></h2>
-<h3 id="extend-modelserver-and-implement-prepost-processing-functions">Extend ModelServer and implement pre/post processing functions<a class="headerlink" href="#extend-modelserver-and-implement-prepost-processing-functions" title="Permanent link">&para;</a></h3>
+<h3 id="implement-prepost-processing-with-kserve-model-api">Implement pre/post processing with KServe Model API<a class="headerlink" href="#implement-prepost-processing-with-kserve-model-api" title="Permanent link">&para;</a></h3>
 <p><code>KServe.Model</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
 in sequence where the output of the <code>preprocess</code> handler is passed to the <code>predict</code> handler as the input. When <code>predictor_host</code> is passed, the <code>predict</code> handler makes a call to the predictor
 and gets back a response which is then passed to the <code>postprocess</code> handler. KServe automatically fills in the <code>predictor_host</code> for <code>Transformer</code> and hands over the call to the <code>Predictor</code>.
 By default transformer makes a REST call to predictor, to make a gRPC call to predictor, you can pass the <code>--protocol</code> argument with value <code>grpc-v2</code>.</p>
-<p>To implement a <code>Transformer</code> you can derive from the base <code>Model</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own customized transformation logic.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
+<p>To implement a <code>Transformer</code> you can derive from the base <code>Model</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own customized transformation logic.
+For <code>Open(v2) Inference Protocol</code>, KServe provides <code>InferRequest</code> and <code>InferResponse</code> API object for <code>predict</code>, <code>preprocess</code>, <code>postprocess</code>
+handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">model_server</span><span class="p">,</span> <span class="n">InferInput</span><span class="p">,</span> <span class="n">InferRequest</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
@@ -2685,7 +2701,7 @@ By default transformer makes a REST call to predictor, to make a gRPC call to pr
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">kserve</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_LOGLEVEL</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">image_transform</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">image_transform</span><span class="p">(</span><span class="n">byte_array</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;converts the input image of Bytes Array into Tensor</span>
 <span class="sd">    Args:</span>
 <span class="sd">        instance (dict): The request input for image bytes.</span>
@@ -2696,13 +2712,11 @@ By default transformer makes a REST call to predictor, to make a gRPC call to pr
         <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
         <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,))</span>
     <span class="p">])</span>
-    <span class="n">byte_array</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">])</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">byte_array</span><span class="p">))</span>
-    <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">image_processing</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">instance</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">image_processing</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">tensor</span>
 
-<span class="c1"># for REST predictor the preprocess handler converts to input dict to the v1 REST protocol dict</span>
+<span class="c1"># for v1 REST predictor the preprocess handler converts to input image bytes to float tensor dict in v1 inference REST protocol format</span>
 <span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -2715,7 +2729,7 @@ By default transformer makes a REST call to predictor, to make a gRPC call to pr
     <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">inputs</span>
 
-<span class="c1"># for gRPC predictor the preprocess handler converts the input dict to the v2 gRPC protocol ModelInferRequest</span>
+<span class="c1"># for v2 gRPC predictor the preprocess handler converts the input image bytes tensor to float tensor in v2 inference protocol format</span>
 <span class="k">class</span> <span class="nc">ImageTransformer</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
@@ -2723,23 +2737,15 @@ By default transformer makes a REST call to predictor, to make a gRPC call to pr
         <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">protocol</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelInferRequest</span><span class="p">:</span>
-        <span class="n">input_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">image_transform</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">request</span><span class="p">[</span><span class="s2">&quot;instances&quot;</span><span class="p">]]</span>
-        <span class="n">input_tensors</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">)</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="n">ModelInferRequest</span><span class="p">()</span>
-        <span class="n">request</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
-        <span class="n">input_0</span> <span class="o">=</span> <span class="n">InferInput</span><span class="p">(</span><span class="s2">&quot;INPUT__0&quot;</span><span class="p">,</span> <span class="n">input_tensors</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s2">&quot;FP32&quot;</span><span class="p">)</span>
-        <span class="n">input_0</span><span class="o">.</span><span class="n">set_data_from_numpy</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">)</span>
-        <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">input_0</span><span class="o">.</span><span class="n">_get_tensor</span><span class="p">()])</span>
-        <span class="k">if</span> <span class="n">input_0</span><span class="o">.</span><span class="n">_get_content</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">request</span><span class="o">.</span><span class="n">raw_input_contents</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">input_0</span><span class="o">.</span><span class="n">_get_content</span><span class="p">()])</span>
-        <span class="k">return</span> <span class="n">request</span>
-
-    <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">infer_response</span><span class="p">:</span> <span class="n">ModelInferResponse</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">InferResult</span><span class="p">(</span><span class="n">infer_response</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">(</span><span class="s2">&quot;OUTPUT__0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}</span>
-</code></pre></div>
-<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.8/python/custom_transformer">here</a>.</p>
+    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferRequest</span><span class="p">:</span>
+        <span class="n">input_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">image_transform</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+        <span class="n">input_tensors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">input_tensors</span><span class="p">)</span>
+        <span class="n">infer_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">InferInput</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;INPUT__0&quot;</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="s1">&#39;FP32&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">input_tensors</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span>
+                                   <span class="n">data</span><span class="o">=</span><span class="n">input_tensors</span><span class="p">)]</span>
+        <span class="n">infer_request</span> <span class="o">=</span> <span class="n">InferRequest</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">infer_inputs</span><span class="o">=</span><span class="n">infer_inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">infer_request</span>
+</code></pre></div></p>
+<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.10/python/custom_transformer">here</a>.</p>
 <h3 id="transformer-server-entrypoint">Transformer Server Entrypoint<a class="headerlink" href="#transformer-server-entrypoint" title="Permanent link">&para;</a></h3>
 <p>For single model you just create a transformer object and register that to the model server.
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -2756,39 +2762,18 @@ or different transformers if each model requires its own transformation.
     <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>
 </code></pre></div></p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="o">{</span>username<span class="o">}</span>/image-transformer:latest<span class="w"> </span>-f<span class="w"> </span>transformer.Dockerfile<span class="w"> </span>.
+<p>Under <code>kserve/python</code> directory, build the transformer docker image using <a href="https://github.com/kserve/kserve/blob/release-0.10/python/custom_transformer.Dockerfile">Dockerfile</a>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>python
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$DOCKER_USER</span>/image-transformer:latest<span class="w"> </span>-f<span class="w"> </span>transformer.Dockerfile<span class="w"> </span>.
 
 docker<span class="w"> </span>push<span class="w"> </span><span class="o">{</span>username<span class="o">}</span>/image-transformer:latest
-</code></pre></div>
+</code></pre></div></p>
 <h2 id="deploy-the-inferenceservice-with-rest-predictor">Deploy the InferenceService with REST Predictor<a class="headerlink" href="#deploy-the-inferenceservice-with-rest-predictor" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<p>Please use the <a href="transformer.yaml">YAML file</a> to create the <code>InferenceService</code>, which includes a Transformer and a PyTorch Predictor.</p>
-<p>By default <code>InferenceService</code> uses <code>TorchServe</code> to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to <code>TorchServe</code> model repository layout.
-The model repository contains a MNIST model but you can store more than one model there.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
+<p>By default <code>InferenceService</code> uses <code>TorchServe</code> to serve the PyTorch models and the models can be loaded from a model repository in cloud storage according to <code>TorchServe</code> model repository layout.
+In this example, the model repository contains a MNIST model, but you can store more than one model there.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">pytorch</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span>
-<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span>
-<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
-</code></pre></div>
-</div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
@@ -2813,6 +2798,28 @@ The model repository contains a MNIST model but you can store more than one mode
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">pytorch</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span>
+<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
+</code></pre></div>
+</div>
 </div>
 </div>
 <div class="admonition note">
@@ -2820,11 +2827,11 @@ The model repository contains a MNIST model but you can store more than one mode
 <p><code>STORAGE_URI</code> is a build-in environment variable used to inject the storage initializer for custom container just like <code>StorageURI</code> field for prepackaged predictors.</p>
 </div>
 <p>The downloaded artifacts are stored under <code>/mnt/models</code>.</p>
-<p>Apply the InferenceService
-<div class="highlight"><pre><span></span><code>kubectl apply -f transformer.yaml
+<p>Apply the InferenceService <a href="transformer-new.yaml">transformer-new.yaml</a>
+<div class="highlight"><pre><span></span><code>kubectl apply -f transformer-new.yaml
 </code></pre></div></p>
 <p>Expected Output
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torchserve-transformer created
+<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torch-transformer created
 </code></pre></div></p>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>First, download the request <a href="input.json">input payload</a>.</p>
@@ -2858,13 +2865,52 @@ Handling connection for 8080
 {&quot;predictions&quot;: [2]}
 </code></pre></div></p>
 <h2 id="deploy-the-inferenceservice-calling-predictor-with-grpc-protocol">Deploy the InferenceService calling Predictor with gRPC protocol<a class="headerlink" href="#deploy-the-inferenceservice-calling-predictor-with-grpc-protocol" title="Permanent link">&para;</a></h2>
+<p>Comparing with REST, gRPC is faster due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC.
+In many case, gRPC can be more efficient communication protocol between Transformer and Predictor as you may need to
+transmit large tensors between them.</p>
 <h3 id="create-inferenceservice">Create InferenceService<a class="headerlink" href="#create-inferenceservice" title="Permanent link">&para;</a></h3>
-<p>Create the <code>InferenceService</code> with following yaml which includes a Transformer and a Triton Predictor, the transformer calls out to
-predictor with V2 gRPC Protocol.</p>
+<p>Create the <code>InferenceService</code> with following yaml which includes a Transformer and a Triton Predictor.
+As KServe by default uses <code>TorchServe</code> serving runtime for PyTorch model, here you need to override the
+serving runtime to <code>kserve-tritonserver</code> for using the gRPC protocol.
+The transformer calls out to predictor with V2 gRPC Protocol by specifying the <code>--protocol</code> argument.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">New Schema</label><label for="__tabbed_2_2">Old Schema</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-grpc-transformer</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchscript</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-tritonserver</span>
+<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20.10-py3</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span>
+<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">        </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
+<span class="w">      </span><span class="nt">command</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;python&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;-m&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;model&quot;</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cifar10</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--protocol</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grpc-v2</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-grpc-transformer</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">triton</span><span class="p">:</span>
@@ -2888,7 +2934,10 @@ predictor with V2 gRPC Protocol.</p>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--protocol</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grpc-v2</span>
 </code></pre></div>
-<p>Apply the InferenceService
+</div>
+</div>
+</div>
+<p>Apply the InferenceService <a href="grpc_transformer.yaml">grpc_transformer.yaml</a>
 <div class="highlight"><pre><span></span><code>kubectl apply -f grpc_transformer.yaml
 </code></pre></div></p>
 <p>Expected Output
@@ -2929,6 +2978,19 @@ Handling connection for 8080
 * Connection #0 to host localhost left intact
 {&quot;predictions&quot;: [[-1.192867636680603, -0.35750141739845276, -2.3665435314178467, 3.9186441898345947, -2.0592284202575684, 4.091977119445801, 0.1266237050294876, -1.8284690380096436, 2.628898859024048, -4.255198001861572]]}* Closing connection 0
 </code></pre></div></p>
+<h2 id="performance-comparison-between-grpc-and-rest">Performance Comparison between gRPC and REST<a class="headerlink" href="#performance-comparison-between-grpc-and-rest" title="Permanent link">&para;</a></h2>
+<p>From the following latency stats of both transformer and predictor you can see that the transformer to predictor call takes longer time(92ms vs 55ms) for REST than gRPC, REST takes more
+time serializing and deserializing <code>3*32*32</code> shape tensor and with gRPC it is transmitted as tightly packed <code>numpy array</code> serialized bytes.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># from REST v1 transformer log</span>
+<span class="m">2023</span>-01-09<span class="w"> </span><span class="m">07</span>:15:55.263<span class="w"> </span><span class="m">79476</span><span class="w"> </span>root<span class="w"> </span>INFO<span class="w"> </span><span class="o">[</span>__call__<span class="o">()</span>:128<span class="o">]</span><span class="w"> </span>requestId:<span class="w"> </span>N.A.,<span class="w"> </span>preprocess_ms:<span class="w"> </span><span class="m">6</span>.083965302,<span class="w"> </span>explain_ms:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>predict_ms:<span class="w"> </span><span class="m">92</span>.653036118,<span class="w"> </span>postprocess_ms:<span class="w"> </span><span class="m">0</span>.007867813
+<span class="c1"># from REST v1 predictor log</span>
+<span class="m">2023</span>-01-09<span class="w"> </span><span class="m">07</span>:16:02.581<span class="w"> </span><span class="m">79402</span><span class="w"> </span>root<span class="w"> </span>INFO<span class="w"> </span><span class="o">[</span>__call__<span class="o">()</span>:128<span class="o">]</span><span class="w"> </span>requestId:<span class="w"> </span>N.A.,<span class="w"> </span>preprocess_ms:<span class="w"> </span><span class="m">13</span>.532876968,<span class="w"> </span>explain_ms:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>predict_ms:<span class="w"> </span><span class="m">48</span>.450231552,<span class="w"> </span>postprocess_ms:<span class="w"> </span><span class="m">0</span>.006914139
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># from REST v1 transformer log</span>
+<span class="m">2023</span>-01-09<span class="w"> </span><span class="m">07</span>:27:52.172<span class="w"> </span><span class="m">79715</span><span class="w"> </span>root<span class="w"> </span>INFO<span class="w"> </span><span class="o">[</span>__call__<span class="o">()</span>:128<span class="o">]</span><span class="w"> </span>requestId:<span class="w"> </span>N.A.,<span class="w"> </span>preprocess_ms:<span class="w"> </span><span class="m">2</span>.567052841,<span class="w"> </span>explain_ms:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>predict_ms:<span class="w"> </span><span class="m">55</span>.0532341,<span class="w"> </span>postprocess_ms:<span class="w"> </span><span class="m">0</span>.101804733
+<span class="c1"># from gPPC v2 predictor log</span>
+<span class="m">2023</span>-01-09<span class="w"> </span><span class="m">07</span>:27:52.171<span class="w"> </span><span class="m">79711</span><span class="w"> </span>root<span class="w"> </span>INFO<span class="w"> </span><span class="o">[</span>__call__<span class="o">()</span>:128<span class="o">]</span><span class="w"> </span>requestId:<span class="w"> </span>,<span class="w"> </span>preprocess_ms:<span class="w"> </span><span class="m">0</span>.067949295,<span class="w"> </span>explain_ms:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>predict_ms:<span class="w"> </span><span class="m">51</span>.237106323,<span class="w"> </span>postprocess_ms:<span class="w"> </span><span class="m">0</span>.049114227
+</code></pre></div>
 
               
             </article>

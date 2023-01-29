@@ -2839,12 +2839,12 @@ So users and cluster-administrators should enable <code>autoSelect</code> with c
 </div>
 </div>
 <p>The previous schema would mutate into the new schema where the <code>kserve-sklearnserver</code> ClusterServingRuntime is explicitly specified.</p>
-<blockquote>
-<p><strong>Note</strong>: The old schema will eventually be removed in favor of the new Model spec, where a user can specify a model format and optionally a corresponding version.</p>
-</blockquote>
-<p>In previous versions of KServe, supported predictor formats and container images were defined in a
-<a href="https://github.com/kserve/kserve/blob/release-0.7/config/configmap/inferenceservice.yaml#L7">ConfigMap</a> in the control plane namespace.
-Existing <em>InferenceServices</em> upgraded from v0.7 will continue to make use of the configuration listed in this config map, but this will eventually be phased out.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The old schema will eventually be removed in favor of the new Model spec, where a user can specify a model format and optionally a corresponding version.
+In previous versions of KServe, supported predictor formats and container images were defined in a <a href="https://github.com/kserve/kserve/blob/release-0.9/config/configmap/inferenceservice.yaml#L7">ConfigMap</a> in the control plane namespace.
+Existing <em>InferenceServices</em> upgraded from v0.7, v0.8, v0.9 need to be converted to the new model spec as the predictor configurations are phased out in v0.10.</p>
+</div>
 
               
             </article>
