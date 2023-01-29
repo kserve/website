@@ -2,7 +2,7 @@ name: Mike deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ v0.10 ]
 
 jobs:
   build_docs:
@@ -41,4 +41,4 @@ jobs:
         
       - name: Deploy with mike
         run: |
-          mike deploy --push $(cat version.txt)
+          mike deploy --push $(cat version.txt) latest
