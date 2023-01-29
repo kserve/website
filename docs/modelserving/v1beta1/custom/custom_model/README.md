@@ -8,7 +8,7 @@ to deploy as `Custom Serving Runtime` on KServe.
 ## Create and Deploy Custom REST ServingRuntime
 ### Implement Custom Model using KServe API
 `KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
-in sequence, the output of the `preprocess` is passed to `predict` as the input, the `predictor` handler should execute the
+in sequence, the output of the `preprocess` is passed to `predict` as the input, the `predictor` handler executes the
 inference for your model, the `postprocess` handler then turns the raw prediction result into user-friendly inference response. There
 is an additional `load` handler which is used for writing custom code to load your model into the memory from local file system or
 remote model storage, a general good practice is to call the `load` handler in the model server class `__init__` function, so your model
@@ -35,8 +35,17 @@ class AlexNetModel(Model):
         self.ready = True
 
     def predict(self, payload: Dict, headers: Dict[str, str] = None) -> Dict:
-        np_array = np.asarray(payload["instances"][0]["data"])
-        input_tensor = torch.Tensor(np_array).unsqueeze(0)
+        img_data = payload["instances"][0]["image"]["b64"]
+        raw_img_data = base64.b64decode(img_data)
+        input_image = Image.open(io.BytesIO(raw_img_data))
+        preprocess = transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                 std=[0.229, 0.224, 0.225]),
+        ])
+        input_tensor = preprocess(input_image).unsqueeze(0)
         output = self.model(input_tensor)
         torch.nn.functional.softmax(output, dim=1)
         values, top_5 = torch.topk(output, 5)
@@ -48,7 +57,6 @@ if __name__ == "__main__":
     model = AlexNetModel("custom-model")
     ModelServer().start([model])
 ```
-The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model).
 
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
@@ -71,7 +79,7 @@ Launch the docker image built from last step with `buildpack`.
 docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model:v1
 ```
 
-Send a test inference request locally
+Send a test inference request locally with [input.json](./input.json)
 ```bash
 curl localhost:8080/v1/models/custom-model:predict -d @./input.json
 
@@ -111,7 +119,7 @@ You can supply additional environment variables on the container spec.
 
 Apply the yaml to deploy the InferenceService on KServe
 
-!!! "kubectl"
+=== "kubectl"
 ```
 kubectl apply -f custom.yaml
 ```
@@ -162,8 +170,10 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 ```
 kubectl delete -f custom.yaml
 ```
+
+
 ## Create and Deploy Custom gRPC ServingRuntime
-gRPC ServingRuntimes enables high performance inference data plane:
+KServe gRPC ServingRuntimes enables high performance inference data plane which implements the `Open(v2) Inference Protocol`:
 
 - gRPC is built on top of HTTP/2 for addressing the
   shortcomings of [head-of-line-blocking](https://en.wikipedia.org/wiki/Head-of-line_blocking) and [pipelining](https://en.wikipedia.org/wiki/HTTP_pipelining),
@@ -172,32 +182,45 @@ gRPC ServingRuntimes enables high performance inference data plane:
 Compared to REST it has limited support for browser and the message is not human-readable which requires additional debugging tools.
 
 ### Implement Custom Model using KServe API
-For `V2(Open) Inference Protocol`, KServe provides `InferRequest` and `InferResponse` API object for `predict`, `preprocess`, `postprocess`
+For `Open(v2) Inference Protocol`, KServe provides `InferRequest` and `InferResponse` API object for `predict`, `preprocess`, `postprocess`
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
 
-```python
-import argparse
+```python title="model_grpc.py"
+import io
+from typing import Dict
 
-from torchvision import models
-from typing import Dict, Union
 import torch
-import numpy as np
-from kserve import Model, ModelServer, InferRequest, InferResponse
+from kserve import InferRequest, Model, ModelServer
+from kserve.utils.utils import generate_uuid
+from PIL import Image
+from torchvision import models, transforms
 
 class AlexNetModel(Model):
     def __init__(self, name: str):
-       super().__init__(name)
-       self.name = name
-       self.load()
+        super().__init__(name)
+        self.name = name
+        self.load()
+        self.model = None
+        self.ready = False
 
     def load(self):
         self.model = models.alexnet(pretrained=True)
         self.model.eval()
         self.ready = True
 
-    def predict(self, payload: InferRequest, headers: Dict[str, str] = None) -> InferResponse:
-        np_array = payload.inputs[0].as_numpy()
-        input_tensor = torch.Tensor(np_array)
+    def predict(self, payload: InferRequest, headers: Dict[str, str] = None) -> Dict:
+        req = payload.inputs[0]
+        input_image = Image.open(io.BytesIO(req.data[0]))
+        preprocess = transforms.Compose([
+                transforms.Resize(256),
+                transforms.CenterCrop(224),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                     std=[0.229, 0.224, 0.225]),
+            ])
+
+        input_tensor = preprocess(input_image)
+        input_tensor = input_tensor.unsqueeze(0)
         output = self.model(input_tensor)
         torch.nn.functional.softmax(output, dim=1)
         values, top_5 = torch.topk(output, 5)
@@ -218,15 +241,15 @@ class AlexNetModel(Model):
             ]}
         return response
 
+
 if __name__ == "__main__":
     model = AlexNetModel("custom-model")
+    model.load()
     ModelServer().start([model])
 ```
 
-The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model).
-
 ### Build Custom Serving Image with BuildPacks
-Similar to build the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
+Similar to building the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
 ```bash
 pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model-grpc:v1
 docker push ${DOCKER_USER}/custom-model-grpc:v1
@@ -240,15 +263,63 @@ Launch the docker image built from last step with `buildpack`.
 docker run -ePORT=8081 -p8081:8081 ${DOCKER_USER}/custom-model-grpc:v1
 ```
 
-Send a test inference request locally
-```bash
-grpccurl localhost:8080/v2/models/custom-model-grpc:predict -d @./input.json
+Send a test inference request locally using `InferenceServerClient` [grpc_test_client.py](./grpc_test_client.py)
+```python
+from kserve import InferRequest, InferInput, InferenceServerClient
+import json
+import base64
+import os
 
-{"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
+client = InferenceServerClient(url=os.environ.get("INGRESS_HOST", "localhost")+":"+os.environ.get("INGRESS_PORT", "8081"),
+                               channel_args=(('grpc.ssl_target_name_override', os.environ.get("SERVICE_HOSTNAME", "")),))
+json_file = open("./input.json")
+data = json.load(json_file)
+infer_input = InferInput(name="input-0", shape=[1], datatype="BYTES", data=[base64.b64decode(data["instances"][0]["image"]["b64"])])
+request = InferRequest(infer_inputs=[infer_input], model_name="custom-model")
+res = client.infer(infer_request=request)
+print(res)
+```
+
+```bash
+python grpc_test_client.py
+```
+
+==** Expected Output **==
+```
+id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+outputs {
+  name: "output-0"
+  datatype: "FP32"
+  shape: 1
+  shape: 5
+  contents {
+    fp32_contents: 14.9756203
+    fp32_contents: 14.036808
+    fp32_contents: 13.9660349
+    fp32_contents: 12.2522783
+    fp32_contents: 12.0862684
+  }
+}
+
+model_name: "custom-model"
+id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+outputs {
+  name: "output-0"
+  datatype: "FP32"
+  shape: 1
+  shape: 5
+  contents {
+    fp32_contents: 14.9756203
+    fp32_contents: 14.036808
+    fp32_contents: 13.9660349
+    fp32_contents: 12.2522783
+    fp32_contents: 12.0862684
+  }
+}
 ```
 
 ### Deploy the gRPC Custom Serving Runtime on KServe
-
+Create the InferenceService yaml and expose the gRPC port by specifying on `ports` section, currently only one port is allowed to expose and by default HTTP port is exposed.
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
@@ -275,7 +346,7 @@ You can supply additional command arguments on the container spec to configure t
 
 Apply the yaml to deploy the InferenceService on KServe
 
-!!! "kubectl"
+=== "kubectl"
 ```
 kubectl apply -f custom_grpc.yaml
 ```
@@ -292,16 +363,55 @@ The first step is to [determine the ingress IP and ports](../../../../get_starte
 MODEL_NAME=custom-model-grpc
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-
-grpccurl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
+PROTO_FILE=grpc_predict_v2.proto
+INPUT_PATH=input_grpc.json
 ```
 
+Send an inference request to the gRPC service using `InferenceServerClient` [grpc_test_client.py](./grpc_test_client.py).
+
+```bash
+python grpc_test_client.py
+```
+
+==** Expected Output **==
+```
+id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+outputs {
+  name: "output-0"
+  datatype: "FP32"
+  shape: 1
+  shape: 5
+  contents {
+    fp32_contents: 14.9756203
+    fp32_contents: 14.036808
+    fp32_contents: 13.9660349
+    fp32_contents: 12.2522783
+    fp32_contents: 12.0862684
+  }
+}
+
+model_name: "custom-model"
+id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+outputs {
+  name: "output-0"
+  datatype: "FP32"
+  shape: 1
+  shape: 5
+  contents {
+    fp32_contents: 14.9756203
+    fp32_contents: 14.036808
+    fp32_contents: 13.9660349
+    fp32_contents: 12.2522783
+    fp32_contents: 12.0862684
+  }
+}
+```
 
 ## Parallel Model Inference
-By default the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
+By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
 KServe integrates [RayServe](https://docs.ray.io/en/master/serve/index.html) which provides a programmable API to deploy models
-as separate python workers so the inference can be performed in parallel.
+as separate python workers so the inference can be performed in parallel when serving multiple custom models.
 
 ```python
 import kserve
@@ -345,7 +455,7 @@ if __name__ == "__main__":
 ```
 The more details for ray fractional cpu and gpu can be found [here](https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus).
 
-The full code example can be found [here](https://github.com/kserve/kserve/tree/master/python/custom_model/model_remote.py).
+The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model/model_remote.py).
 
 Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
 each model as separate python worker and webserver routes to the model workers by name.

@@ -306,7 +306,7 @@ Handling connection for 8080
 ## Performance Comparison between gRPC and REST
 Comparing with REST, gRPC is faster due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC. From the following latency stats from both
 transformer and predictor you can see that the transformer to predictor call takes longer time(92ms vs 55ms) for REST and gRPC respectively, mostly REST takes more
-time serializing and deserializing 3*32*32 shape tensor and with GRPC it is transmitted as tightly packed `numpy array` serialized bytes.
+time serializing and deserializing `3*32*32` shape tensor and with GRPC it is transmitted as tightly packed `numpy array` serialized bytes.
 
 ```bash
 # from REST v1 transformer log
