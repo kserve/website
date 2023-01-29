@@ -191,11 +191,15 @@ import io
 from typing import Dict
 
 import torch
-from kserve import InferRequest, Model, ModelServer
+from kserve import InferRequest, InferResponse, InferOutput, Model, ModelServer
 from kserve.utils.utils import generate_uuid
 from PIL import Image
 from torchvision import models, transforms
 
+
+# This custom predictor example implements the custom model following KServe v2 inference gPPC protocol,
+# the input can be raw image bytes or image tensor which is pre-processed by transformer
+# and then passed to predictor, the output is the prediction response.
 class AlexNetModel(Model):
     def __init__(self, name: str):
         super().__init__(name)
@@ -209,7 +213,7 @@ class AlexNetModel(Model):
         self.model.eval()
         self.ready = True
 
-    def predict(self, payload: InferRequest, headers: Dict[str, str] = None) -> Dict:
+    def predict(self, payload: InferRequest, headers: Dict[str, str] = None) -> InferResponse:
         req = payload.inputs[0]
         input_image = Image.open(io.BytesIO(req.data[0]))
         preprocess = transforms.Compose([
@@ -226,21 +230,10 @@ class AlexNetModel(Model):
         torch.nn.functional.softmax(output, dim=1)
         values, top_5 = torch.topk(output, 5)
         result = values.flatten().tolist()
-        id = generate_uuid()
-        response = {
-            "id": id,
-            "model_name": "custom-model",
-            "outputs": [
-                {
-                    "contents": {
-                        "fp32_contents": result,
-                    },
-                    "datatype": "FP32",
-                    "name": "output-0",
-                    "shape": list(values.shape)
-                }
-            ]}
-        return response
+        response_id = generate_uuid()
+        infer_output = InferOutput(name="output-0", shape=list(values.shape), datatype="FP32", data=result)
+        infer_response = InferResponse(model_name=self.name, infer_outputs=[infer_output], response_id=response_id)
+        return infer_response
 
 
 if __name__ == "__main__":

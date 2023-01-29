@@ -1,17 +1,18 @@
 # Deploy Transformer with InferenceService
 Transformer is an `InferenceService` component which does pre/post processing alongside with model inference. It usually takes raw input and transforms them to the
-input tensors model server expects. In this example we demonstrate an example of running inference with a custom image `Transformer` and  `Predictor` with REST and gRPC protocol.
+input tensors model server expects. In this example we demonstrate an example of running inference with a custom `Transformer` communicating by REST and gRPC protocol.
 
 ## Create Custom Image Transformer
 
-### Extend ModelServer and implement pre/post processing functions
+### Implement pre/post processing with KServe Model API
 `KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
 in sequence where the output of the `preprocess` handler is passed to the `predict` handler as the input. When `predictor_host` is passed, the `predict` handler makes a call to the predictor
 and gets back a response which is then passed to the `postprocess` handler. KServe automatically fills in the `predictor_host` for `Transformer` and hands over the call to the `Predictor`.
 By default transformer makes a REST call to predictor, to make a gRPC call to predictor, you can pass the `--protocol` argument with value `grpc-v2`.
 
 To implement a `Transformer` you can derive from the base `Model` class and then overwrite the `preprocess` and `postprocess` handler to have your own customized transformation logic.
-
+For `Open(v2) Inference Protocol`, KServe provides `InferRequest` and `InferResponse` API object for `predict`, `preprocess`, `postprocess`
+handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
 ```python
 from kserve import Model, ModelServer, model_server, InferInput, InferRequest
 from typing import Dict
@@ -101,10 +102,8 @@ docker push {username}/image-transformer:latest
 ## Deploy the InferenceService with REST Predictor
 
 ### Create the InferenceService
-Please use the [YAML file](./transformer.yaml) to create the `InferenceService`, which includes a Transformer and a PyTorch Predictor.
-
-By default `InferenceService` uses `TorchServe` to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to `TorchServe` model repository layout.
-The model repository contains a MNIST model but you can store more than one model there.
+By default `InferenceService` uses `TorchServe` to serve the PyTorch models and the models can be loaded from a model repository in cloud storage according to `TorchServe` model repository layout.
+In this example, the model repository contains a MNIST model, but you can store more than one model there.
 
 === "New Schema"
 
@@ -162,9 +161,9 @@ The downloaded artifacts are stored under `/mnt/models`.
 
 
 
-Apply the InferenceService [transformer.yaml](transformer.yaml)
+Apply the InferenceService [transformer-new.yaml](transformer-new.yaml)
 ```
-kubectl apply -f transformer.yaml
+kubectl apply -f transformer-new.yaml
 ```
 
 Expected Output
@@ -210,74 +209,79 @@ Handling connection for 8080
 ```
 
 ## Deploy the InferenceService calling Predictor with gRPC protocol
+Comparing with REST, gRPC is faster due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC.
+In many case, gRPC can be more efficient communication protocol between Transformer and Predictor as you may need to
+transmit large tensors between them.
 
 ### Create InferenceService
-Create the `InferenceService` with following yaml which includes a Transformer and a Triton Predictor, the transformer calls out to
-predictor with V2 gRPC Protocol by specifying the `--protocol` argument.
+Create the `InferenceService` with following yaml which includes a Transformer and a Triton Predictor.
+As KServe by default uses `TorchServe` serving runtime for PyTorch model, here you need to override the
+serving runtime to `kserve-tritonserver` for using the gRPC protocol.
+The transformer calls out to predictor with V2 gRPC Protocol by specifying the `--protocol` argument.
 
 === "New Schema"
 
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: torch-grpc-transformer
-spec:
-  predictor:
-    model:
-      modelFormat: pytorch
-      storageUri: gs://kfserving-examples/models/torchscript
-      runtime: kserve-tritonserver
-      runtimeVersion: 20.10-py3
-      ports:
-      - name: h2c
-        protocol: TCP
-        containerPort: 9000
-  transformer:
-    containers:
-    - image: kserve/image-transformer:latest
-      name: kserve-container
-      command:
-      - "python"
-      - "-m"
-      - "model"
-      args:
-      - --model_name
-      - cifar10
-      - --protocol
-      - grpc-v2
-```
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-grpc-transformer
+    spec:
+      predictor:
+        model:
+          modelFormat: pytorch
+          storageUri: gs://kfserving-examples/models/torchscript
+          runtime: kserve-tritonserver
+          runtimeVersion: 20.10-py3
+          ports:
+          - name: h2c
+            protocol: TCP
+            containerPort: 9000
+      transformer:
+        containers:
+        - image: kserve/image-transformer:latest
+          name: kserve-container
+          command:
+          - "python"
+          - "-m"
+          - "model"
+          args:
+          - --model_name
+          - cifar10
+          - --protocol
+          - grpc-v2
+    ```
 
 === "Old Schema"
 
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: torch-grpc-transformer
-spec:
-  predictor:
-    triton:
-      storageUri: gs://kfserving-examples/models/torchscript
-      runtimeVersion: 20.10-py3
-      ports:
-      - name: h2c
-        protocol: TCP
-        containerPort: 9000
-  transformer:
-    containers:
-    - image: kserve/image-transformer:latest
-      name: kserve-container
-      command:
-      - "python"
-      - "-m"
-      - "model"
-      args:
-      - --model_name
-      - cifar10
-      - --protocol
-      - grpc-v2
-```
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+    name: torch-grpc-transformer
+    spec:
+      predictor:
+        triton:
+          storageUri: gs://kfserving-examples/models/torchscript
+          runtimeVersion: 20.10-py3
+          ports:
+          - name: h2c
+            protocol: TCP
+            containerPort: 9000
+      transformer:
+        containers:
+        - image: kserve/image-transformer:latest
+          name: kserve-container
+          command:
+          - "python"
+          - "-m"
+          - "model"
+          args:
+          - --model_name
+          - cifar10
+          - --protocol
+          - grpc-v2
+    ```
 
 Apply the InferenceService [grpc_transformer.yaml](./grpc_transformer.yaml)
 ```
@@ -331,9 +335,8 @@ Handling connection for 8080
 ```
 
 ## Performance Comparison between gRPC and REST
-Comparing with REST, gRPC is faster due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC. From the following latency stats from both
-transformer and predictor you can see that the transformer to predictor call takes longer time(92ms vs 55ms) for REST and gRPC respectively, mostly REST takes more
-time serializing and deserializing `3*32*32` shape tensor and with GRPC it is transmitted as tightly packed `numpy array` serialized bytes.
+From the following latency stats of both transformer and predictor you can see that the transformer to predictor call takes longer time(92ms vs 55ms) for REST than gRPC, REST takes more
+time serializing and deserializing `3*32*32` shape tensor and with gRPC it is transmitted as tightly packed `numpy array` serialized bytes.
 
 ```bash
 # from REST v1 transformer log
