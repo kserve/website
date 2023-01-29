@@ -87,7 +87,7 @@ class BertTransformer(kserve.Model):
            data_processing.get_predictions(self.doc_tokens, self.features, start_logits, end_logits, n_best_size, max_answer_length)
         return {"predictions": prediction, "prob": nbest_json[0]['probability'] * 100.0}
 ```
-Please find the code example [here](https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/triton/bert).
+Please find the code example [here](https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/triton/bert).
 
 ### Build Transformer docker image
 Build the KServe Transformer image with above code
