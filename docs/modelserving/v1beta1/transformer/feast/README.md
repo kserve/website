@@ -24,7 +24,7 @@ We created a class, DriverTransformer, which extends `Model` for this driver ran
 * __entity_ids__: The entity IDs for which to retrieve features from the Feast feature store
 * __feature_refs__: The feature references for the features to be retrieved
 
-Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.7/docs/samples/v1beta1/transformer/feast).
+Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/transformer/feast).
 
 ### Build Transformer docker image
 Checkout the feast code example and under the example directory run the commands as following:

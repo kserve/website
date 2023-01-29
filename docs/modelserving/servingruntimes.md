@@ -199,8 +199,8 @@ Currently, if a user uses the old schema for deploying predictors where you spec
 
 The previous schema would mutate into the new schema where the `kserve-sklearnserver` ClusterServingRuntime is explicitly specified.
 
-> **Note**: The old schema will eventually be removed in favor of the new Model spec, where a user can specify a model format and optionally a corresponding version.
 
-In previous versions of KServe, supported predictor formats and container images were defined in a
-[ConfigMap](https://github.com/kserve/kserve/blob/release-0.7/config/configmap/inferenceservice.yaml#L7) in the control plane namespace.
-Existing _InferenceServices_ upgraded from v0.7 will continue to make use of the configuration listed in this config map, but this will eventually be phased out.
+!!! warning
+    The old schema will eventually be removed in favor of the new Model spec, where a user can specify a model format and optionally a corresponding version.
+    In previous versions of KServe, supported predictor formats and container images were defined in a [ConfigMap](https://github.com/kserve/kserve/blob/release-0.9/config/configmap/inferenceservice.yaml#L7) in the control plane namespace.
+    Existing _InferenceServices_ upgraded from v0.7, v0.8, v0.9 need to be converted to the new model spec as the predictor configurations are phased out in v0.10.

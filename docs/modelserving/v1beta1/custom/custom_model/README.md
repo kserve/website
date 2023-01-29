@@ -107,6 +107,7 @@ You can supply additional command arguments on the container spec to configure t
 - `--workers`: Spawn the specified number of `uvicorn` workers(multi-processing) of the model server, the default value is 1, this option is often used
   to help increase the resource utilization of the container.
 - `--http_port`: the http port model server is listening on, the default REST port is 8080.
+- `--model_name`: the model name deployed in the model server, the default name the same as the service name.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
 - `enable_latency_logging`: whether to log latency metrics per request, the default is True.
 
@@ -341,7 +342,7 @@ In the `custom_grpc.yaml` file edit the container image and replace ${DOCKER_USE
 You can supply additional command arguments on the container spec to configure the model server.
 
 - `--grpc_port`: the http port model server is listening on, the default gRPC port is 8081.
-- `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
+- `--model_name`: the model name deployed in the model server, the default name the same as the service name.
 - `enable_latency_logging`: whether to log latency metrics per request, the default is True.
 
 Apply the yaml to deploy the InferenceService on KServe
@@ -360,11 +361,8 @@ $ inferenceservice.serving.kserve.io/custom-model-grpc created
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```
-MODEL_NAME=custom-model-grpc
-INPUT_PATH=@./input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-PROTO_FILE=grpc_predict_v2.proto
-INPUT_PATH=input_grpc.json
+MODEL_NAME=custom-model
+SERVICE_HOSTNAME=$(kubectl get inferenceservice custom-model-grpc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
 Send an inference request to the gRPC service using `InferenceServerClient` [grpc_test_client.py](./grpc_test_client.py).

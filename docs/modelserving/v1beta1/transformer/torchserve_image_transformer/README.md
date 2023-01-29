@@ -59,21 +59,13 @@ class ImageTransformer(kserve.Model):
         self.protocol = protocol
         self.ready = True
 
-    def preprocess(self, request: Dict, headers: Dict[str, str] = None) -> ModelInferRequest:
-        input_tensors = [image_transform(instance) for instance in request["instances"]]
-        input_tensors = numpy.asarray(input_tensors)
-        request = ModelInferRequest()
-        request.model_name = self.name
-        input_0 = InferInput("INPUT__0", input_tensors.shape, "FP32")
-        input_0.set_data_from_numpy(input_tensors)
-        request.inputs.extend([input_0._get_tensor()])
-        if input_0._get_content() is not None:
-            request.raw_input_contents.extend([input_0._get_content()])
-        return request
-
-    def postprocess(self, infer_response: ModelInferResponse, headers: Dict[str, str] = None) -> Dict:
-        response = InferResult(infer_response)
-        return {"predictions": response.as_numpy("OUTPUT__0").tolist()}
+    def preprocess(self, request: InferRequest, headers: Dict[str, str] = None) -> InferRequest:
+        input_tensors = [image_transform(instance) for instance in request.inputs[0].data]
+        input_tensors = np.asarray(input_tensors)
+        infer_inputs = [InferInput(name="INPUT__0", datatype='FP32', shape=list(input_tensors.shape),
+                                   data=input_tensors)]
+        infer_request = InferRequest(model_name=self.model_name, infer_inputs=infer_inputs)
+        return infer_request
 ```
 
 Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.10/python/custom_transformer).
@@ -114,30 +106,6 @@ Please use the [YAML file](./transformer.yaml) to create the `InferenceService`,
 By default `InferenceService` uses `TorchServe` to serve the PyTorch models and the models are loaded from a model repository in KServe example gcs bucket according to `TorchServe` model repository layout.
 The model repository contains a MNIST model but you can store more than one model there.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: torch-transformer
-    spec:
-      predictor:
-        pytorch:
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
-      transformer:
-        containers:
-          - image: kserve/image-transformer:latest
-            name: kserve-container
-            command:
-              - "python"
-              - "-m"
-              - "model"
-            args:
-              - --model_name
-              - mnist
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -164,13 +132,37 @@ The model repository contains a MNIST model but you can store more than one mode
               - mnist
     ```
 
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-transformer
+    spec:
+      predictor:
+        pytorch:
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      transformer:
+        containers:
+          - image: kserve/image-transformer:latest
+            name: kserve-container
+            command:
+              - "python"
+              - "-m"
+              - "model"
+            args:
+              - --model_name
+              - mnist
+    ```
+
 !!! note
     `STORAGE_URI` is a build-in environment variable used to inject the storage initializer for custom container just like `StorageURI` field for prepackaged predictors.
 The downloaded artifacts are stored under `/mnt/models`.
 
 
 
-Apply the InferenceService
+Apply the InferenceService [transformer.yaml](transformer.yaml)
 ```
 kubectl apply -f transformer.yaml
 ```
@@ -221,7 +213,42 @@ Handling connection for 8080
 
 ### Create InferenceService
 Create the `InferenceService` with following yaml which includes a Transformer and a Triton Predictor, the transformer calls out to
-predictor with V2 gRPC Protocol.
+predictor with V2 gRPC Protocol by specifying the `--protocol` argument.
+
+=== "New Schema"
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: torch-grpc-transformer
+spec:
+  predictor:
+    model:
+      modelFormat: pytorch
+      storageUri: gs://kfserving-examples/models/torchscript
+      runtime: kserve-tritonserver
+      runtimeVersion: 20.10-py3
+      ports:
+      - name: h2c
+        protocol: TCP
+        containerPort: 9000
+  transformer:
+    containers:
+    - image: kserve/image-transformer:latest
+      name: kserve-container
+      command:
+      - "python"
+      - "-m"
+      - "model"
+      args:
+      - --model_name
+      - cifar10
+      - --protocol
+      - grpc-v2
+```
+
+=== "Old Schema"
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -252,7 +279,7 @@ spec:
       - grpc-v2
 ```
 
-Apply the InferenceService
+Apply the InferenceService [grpc_transformer.yaml](./grpc_transformer.yaml)
 ```
 kubectl apply -f grpc_transformer.yaml
 ```
