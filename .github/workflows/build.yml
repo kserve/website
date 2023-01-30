@@ -41,4 +41,4 @@ jobs:
         
       - name: Deploy with mike
         run: |
-          mike deploy --push $(cat version.txt) latest
+          mike deploy --push --update-aliases $(cat version.txt) latest
