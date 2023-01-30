@@ -1,0 +1,4200 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="KServe Documentation">
+      
+      
+      
+        <link rel="canonical" href="https://kserve.io/website/0.10/modelserving/data_plane/v2_protocol/">
+      
+      <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.0.5">
+    
+    
+      
+        <title>Open Inference Protocol (V2 Inference Protocol) - KServe Documentation Website</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a617204b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#open-inference-protocol-v2-inference-protocol" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+ <h1>
+   <b>KServe v0.9 is Released</b>, <a href="/website/0.9/blog/articles/2022-07-21-KServe-0.9-release/">Read blog &gt;&gt;</a>
+ </h1>
+
+          </div>
+        </aside>
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="KServe Documentation Website" class="md-header__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+      
+  <img src="../../../images/logo/kserve.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            KServe Documentation Website
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Open Inference Protocol (V2 Inference Protocol)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/kserve/website" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../get_started/" class="md-tabs__link">
+        Getting started
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../admin/serverless/serverless/" class="md-tabs__link">
+        Administration Guide
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../control_plane/" class="md-tabs__link md-tabs__link--active">
+        User Guide
+      </a>
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../reference/api/" class="md-tabs__link">
+        API Reference
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../developer/developer/" class="md-tabs__link">
+        Developer Guide
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../blog/articles/2022-07-21-KServe-0.9-release/" class="md-tabs__link">
+        Blog
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../community/adopters/" class="md-tabs__link">
+        Community
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="KServe Documentation Website" class="md-nav__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+      
+  <img src="../../../images/logo/kserve.png" alt="logo">
+
+    </a>
+    KServe Documentation Website
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/kserve/website" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/" class="md-nav__link">
+        KServe Quickstart
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/first_isvc/" class="md-nav__link">
+        First InferenceService
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/swagger_ui/" class="md-nav__link">
+        Interact with InferenceService Swagger UI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Administration Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Administration Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Administration Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          Install KServe
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install KServe" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Install KServe
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" type="checkbox" id="__nav_3_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1_1">
+          Serverless
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Serverless" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Serverless
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/serverless/" class="md-nav__link">
+        Serverless installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/servicemesh/" class="md-nav__link">
+        Istio Service Mesh
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/kourier_networking/" class="md-nav__link">
+        Kourier Networking Layer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/modelmesh/" class="md-nav__link">
+        ModelMesh installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/kubernetes_deployment/" class="md-nav__link">
+        Kubernetes deployment installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/migration/" class="md-nav__link">
+        Migrating from KFServing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Concepts" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" type="checkbox" id="__nav_4_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_1">
+          Control Plane
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Control Plane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../control_plane/" class="md-nav__link">
+        Model Serving Control Plane
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" type="checkbox" id="__nav_4_1_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_2">
+          Data Plane
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          Data Plane
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_plane/" class="md-nav__link">
+        Model Serving Data Plane
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../v1_protocol/" class="md-nav__link">
+        V1 Inference Protocol
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Open Inference Protocol (V2 Inference Protocol)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Open Inference Protocol (V2 Inference Protocol)
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#open-inference-protocol-v2-inference-protocol" class="md-nav__link">
+    Open Inference Protocol (V2 Inference Protocol)
+  </a>
+  
+    <nav class="md-nav" aria-label="Open Inference Protocol (V2 Inference Protocol)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note-on-changes-between-v1-v2" class="md-nav__link">
+    Note on changes between V1 &amp; V2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#httprest" class="md-nav__link">
+    HTTP/REST
+  </a>
+  
+    <nav class="md-nav" aria-label="HTTP/REST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-definitions" class="md-nav__link">
+    API Definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#healthreadinessliveness-probes" class="md-nav__link">
+    Health/Readiness/Liveness Probes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payload-contents" class="md-nav__link">
+    Payload Contents
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-ready" class="md-nav__link">
+    Model Ready
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-ready-response-json-object" class="md-nav__link">
+    Model Ready Response JSON Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-ready" class="md-nav__link">
+    Server Ready
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-ready-response-json-object" class="md-nav__link">
+    Server Ready Response JSON Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-live" class="md-nav__link">
+    Server Live
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Live">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-live-response-json-objet" class="md-nav__link">
+    Server Live Response JSON Objet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata" class="md-nav__link">
+    Server Metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata-response-json-object" class="md-nav__link">
+    Server Metadata Response JSON Object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata-response-json-error-object" class="md-nav__link">
+    Server Metadata Response JSON Error Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata" class="md-nav__link">
+    Model Metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata-response-json-object" class="md-nav__link">
+    Model Metadata Response JSON Object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata-response-json-error-object" class="md-nav__link">
+    Model Metadata Response JSON Error Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference" class="md-nav__link">
+    Inference
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inference-request-json-object" class="md-nav__link">
+    Inference Request JSON Object
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference Request JSON Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-input" class="md-nav__link">
+    Request Input
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-output" class="md-nav__link">
+    Request Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-response-json-object" class="md-nav__link">
+    Inference Response JSON Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-request-examples" class="md-nav__link">
+    Inference Request Examples
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-request-examples_1" class="md-nav__link">
+    Inference Request Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grpc" class="md-nav__link">
+    gRPC
+  </a>
+  
+    <nav class="md-nav" aria-label="gRPC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-definitions_1" class="md-nav__link">
+    API Definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-contents" class="md-nav__link">
+    Message Contents
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health" class="md-nav__link">
+    Health
+  </a>
+  
+    <nav class="md-nav" aria-label="Health">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-live_1" class="md-nav__link">
+    Server Live
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-ready_1" class="md-nav__link">
+    Server Ready
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-ready_1" class="md-nav__link">
+    Model Ready
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata_1" class="md-nav__link">
+    Server Metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata_1" class="md-nav__link">
+    Model Metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platforms" class="md-nav__link">
+    Platforms
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference_1" class="md-nav__link">
+    Inference
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensor-data" class="md-nav__link">
+    Tensor Data
+  </a>
+  
+    <nav class="md-nav" aria-label="Tensor Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tensor-data-types" class="md-nav__link">
+    Tensor Data Types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../servingruntimes/" class="md-nav__link">
+        Serving Runtimes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Single Model Serving
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Single Model Serving" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Single Model Serving
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_1">
+          Supported Model Frameworks/Formats
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Supported Model Frameworks/Formats" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Supported Model Frameworks/Formats
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/serving_runtime/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/tensorflow/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/torchserve/" class="md-nav__link">
+        PyTorch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/sklearn/v2/" class="md-nav__link">
+        Scikit-learn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/xgboost/" class="md-nav__link">
+        XGBoost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/pmml/" class="md-nav__link">
+        PMML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/spark/" class="md-nav__link">
+        Spark MLlib
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/lightgbm/" class="md-nav__link">
+        LightGBM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/paddle/" class="md-nav__link">
+        Paddle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/mlflow/v2/" class="md-nav__link">
+        MLFlow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" type="checkbox" id="__nav_4_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" type="checkbox" id="__nav_4_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/triton/torchscript/" class="md-nav__link">
+        Torchscript
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/triton/bert/" class="md-nav__link">
+        Tensorflow
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/amd/" class="md-nav__link">
+        AMD
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/custom/custom_model/" class="md-nav__link">
+        How to write a custom predictor
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          Multi Model Serving
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi Model Serving" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Multi Model Serving
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Overview" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mms/multi-model-serving/" class="md-nav__link">
+        The Scalability Problem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mms/modelmesh/overview/" class="md-nav__link">
+        ModelMesh Overview
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Transformers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Transformers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Transformers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/transformer/feast/" class="md-nav__link">
+        Feast
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/transformer/torchserve_image_transformer/" class="md-nav__link">
+        How to write a custom transformer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Inference Graph
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Graph" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Graph
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inference_graph/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inference_graph/image_pipeline/" class="md-nav__link">
+        Image classification inference graph
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          Model Storage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Storage" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Model Storage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/azure/azure/" class="md-nav__link">
+        Azure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/pvc/pvc/" class="md-nav__link">
+        PVC
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/s3/s3/" class="md-nav__link">
+        S3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../storage/uri/uri/" class="md-nav__link">
+        URI
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
+          Model Explainability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Explainability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
+          Model Explainability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/explainer/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_2" type="checkbox" id="__nav_4_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_7_2">
+          Alibi Explainer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/cifar10/" class="md-nav__link">
+        Image Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/income/" class="md-nav__link">
+        Income Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/alibi/moviesentiment/" class="md-nav__link">
+        Text Explainer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explainer/aix/mnist/aix/" class="md-nav__link">
+        AIX Explainer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_8">
+          Model Monitoring
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Monitoring" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
+          Model Monitoring
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/alibi_detect/alibi_detect/" class="md-nav__link">
+        Alibi Detector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/aif/germancredit/" class="md-nav__link">
+        AIF Bias Detector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detect/art/mnist/" class="md-nav__link">
+        ART Adversarial Detector
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
+          Request Batching
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Batching" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
+          Request Batching
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../batcher/batcher/" class="md-nav__link">
+        Inference Batcher
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
+          Payload Logging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Payload Logging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
+          Payload Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../logger/logger/" class="md-nav__link">
+        Inference Logger
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
+          Autoscaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Autoscaling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
+          Autoscaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../autoscaling/autoscaling/" class="md-nav__link">
+        Inference Autoscaling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
+          Node Scheduling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Node Scheduling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
+          Node Scheduling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodescheduling/overview/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../nodescheduling/inferenceservicenodescheduling/" class="md-nav__link">
+        InferenceService Node Scheduling
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kafka" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kafka/kafka/" class="md-nav__link">
+        Inference with Kafka event source
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
+          Rollout Strategies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Rollout Strategies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
+          Rollout Strategies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/rollout/canary/" class="md-nav__link">
+        Canary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../v1beta1/rollout/canary-example/" class="md-nav__link">
+        Canary Example
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
+          Inference Observability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Observability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Observability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../observability/prometheus_metrics/" class="md-nav__link">
+        Prometheus Metrics
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/api/" class="md-nav__link">
+        Control Plane API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sdk_docs/sdk_doc/" class="md-nav__link">
+        Python Client SDK
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          Developer Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Developer Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer/developer/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer/debug/" class="md-nav__link">
+        Debugging guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Releases
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Releases" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Releases
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2022-07-21-KServe-0.9-release/" class="md-nav__link">
+        KServe 0.9 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2022-02-18-KServe-0.8-release/" class="md-nav__link">
+        KServe 0.8 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2021-10-11-KServe-0.7-release/" class="md-nav__link">
+        KServe 0.7 Release
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          Articles
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Articles" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Articles
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../blog/articles/2021-09-27-kfserving-transition/" class="md-nav__link">
+        KFserving Transition
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          Community
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/adopters/" class="md-nav__link">
+        Adopters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/presentations/" class="md-nav__link">
+        Demos and Presentations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#open-inference-protocol-v2-inference-protocol" class="md-nav__link">
+    Open Inference Protocol (V2 Inference Protocol)
+  </a>
+  
+    <nav class="md-nav" aria-label="Open Inference Protocol (V2 Inference Protocol)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#note-on-changes-between-v1-v2" class="md-nav__link">
+    Note on changes between V1 &amp; V2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#httprest" class="md-nav__link">
+    HTTP/REST
+  </a>
+  
+    <nav class="md-nav" aria-label="HTTP/REST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-definitions" class="md-nav__link">
+    API Definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#healthreadinessliveness-probes" class="md-nav__link">
+    Health/Readiness/Liveness Probes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#payload-contents" class="md-nav__link">
+    Payload Contents
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-ready" class="md-nav__link">
+    Model Ready
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-ready-response-json-object" class="md-nav__link">
+    Model Ready Response JSON Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-ready" class="md-nav__link">
+    Server Ready
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Ready">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-ready-response-json-object" class="md-nav__link">
+    Server Ready Response JSON Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-live" class="md-nav__link">
+    Server Live
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Live">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-live-response-json-objet" class="md-nav__link">
+    Server Live Response JSON Objet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata" class="md-nav__link">
+    Server Metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="Server Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata-response-json-object" class="md-nav__link">
+    Server Metadata Response JSON Object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata-response-json-error-object" class="md-nav__link">
+    Server Metadata Response JSON Error Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata" class="md-nav__link">
+    Model Metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata-response-json-object" class="md-nav__link">
+    Model Metadata Response JSON Object
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata-response-json-error-object" class="md-nav__link">
+    Model Metadata Response JSON Error Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference" class="md-nav__link">
+    Inference
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inference-request-json-object" class="md-nav__link">
+    Inference Request JSON Object
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference Request JSON Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-input" class="md-nav__link">
+    Request Input
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-output" class="md-nav__link">
+    Request Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-response-json-object" class="md-nav__link">
+    Inference Response JSON Object
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-request-examples" class="md-nav__link">
+    Inference Request Examples
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference-request-examples_1" class="md-nav__link">
+    Inference Request Examples
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grpc" class="md-nav__link">
+    gRPC
+  </a>
+  
+    <nav class="md-nav" aria-label="gRPC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-definitions_1" class="md-nav__link">
+    API Definitions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#message-contents" class="md-nav__link">
+    Message Contents
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#health" class="md-nav__link">
+    Health
+  </a>
+  
+    <nav class="md-nav" aria-label="Health">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-live_1" class="md-nav__link">
+    Server Live
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-ready_1" class="md-nav__link">
+    Server Ready
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-ready_1" class="md-nav__link">
+    Model Ready
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metadata" class="md-nav__link">
+    Metadata
+  </a>
+  
+    <nav class="md-nav" aria-label="Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#server-metadata_1" class="md-nav__link">
+    Server Metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-metadata_1" class="md-nav__link">
+    Model Metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platforms" class="md-nav__link">
+    Platforms
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inference_1" class="md-nav__link">
+    Inference
+  </a>
+  
+    <nav class="md-nav" aria-label="Inference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensor-data" class="md-nav__link">
+    Tensor Data
+  </a>
+  
+    <nav class="md-nav" aria-label="Tensor Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tensor-data-types" class="md-nav__link">
+    Tensor Data Types
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/kserve/website/edit/main/docs/modelserving/data_plane/v2_protocol.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+  <h1>Open Inference Protocol (V2 Inference Protocol)</h1>
+
+<h2 id="open-inference-protocol-v2-inference-protocol">Open Inference Protocol (V2 Inference Protocol)<a class="headerlink" href="#open-inference-protocol-v2-inference-protocol" title="Permanent link">&para;</a></h2>
+<p><strong>For an inference server to be compliant with this protocol the server must implement the health, metadata, and inference V2 APIs</strong>. 
+Optional features that are explicitly noted are not required. A compliant inference server may choose to implement the <a href="#httprest">HTTP/REST API</a> and/or the <a href="#grpc">GRPC API</a>.</p>
+<p>Check the <a href="../../v1beta1/serving_runtime/">model serving runtime table</a> / the <code>protocolVersion</code> field in the <a href="https://github.com/kserve/kserve/tree/master/config/runtimes">runtime YAML</a> to ensure V2 protocol is supported for model serving runtime that you are using.</p>
+<p>Note: For all API descriptions on this page, all strings in all contexts are case-sensitive. The V2 protocol supports an extension mechanism as a required part of the API, but this document does not propose any specific extensions. Any specific extensions will be proposed separately.</p>
+<h3 id="note-on-changes-between-v1-v2">Note on changes between V1 &amp; V2<a class="headerlink" href="#note-on-changes-between-v1-v2" title="Permanent link">&para;</a></h3>
+<p>V2 protocol does not currently support the explain endpoint like V1 protocol does. If this is a feature you wish to have in the V2 protocol, please submit a <a href="https://github.com/kserve/kserve/issues">github issue</a>. </p>
+<h2 id="httprest">HTTP/REST<a class="headerlink" href="#httprest" title="Permanent link">&para;</a></h2>
+<p>The HTTP/REST API uses JSON because it is widely supported and
+language independent. In all JSON schemas shown in this document
+$number, $string, $boolean, $object and $array refer to the
+fundamental JSON types. #optional indicates an optional JSON field.</p>
+<p>See also: The HTTP/REST endpoints are defined in <a href="https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/rest_predict_v2.yaml">rest_predict_v2.yaml</a></p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Verb</th>
+<th>Path</th>
+<th>Request Payload</th>
+<th>Response Payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inference</td>
+<td>POST</td>
+<td>v2/models/<model_name>[/versions/&lt;model_version&gt;]/infer</td>
+<td><a href="#inference-request-json-object">$inference_request</a></td>
+<td><a href="#inference-response-json-object">$inference_response</a></td>
+</tr>
+<tr>
+<td>Model Metadata</td>
+<td>GET</td>
+<td>v2/models/&lt;model_name&gt;[/versions/&lt;model_version&gt;]</td>
+<td></td>
+<td><a href="#model-metadata-response-json-object">$metadata_model_response</a></td>
+</tr>
+<tr>
+<td>Server Ready</td>
+<td>GET</td>
+<td>v2/health/ready</td>
+<td></td>
+<td><a href="#server-ready-response-json-object">$ready_server_response</a></td>
+</tr>
+<tr>
+<td>Server Live</td>
+<td>GET</td>
+<td>v2/health/live</td>
+<td></td>
+<td><a href="#server-live-response-json-objet">$live_server_response</a></td>
+</tr>
+<tr>
+<td>Server Metadata</td>
+<td>GET</td>
+<td>v2</td>
+<td></td>
+<td><a href="#server-metadata-response-json-object">$metadata_server_response</a></td>
+</tr>
+<tr>
+<td>Model Ready</td>
+<td>GET</td>
+<td>v2/models/&lt;model_name&gt;[/versions/<model_version>]/ready</td>
+<td></td>
+<td><a href="#model-ready-response-json-object">$ready_model_response</a></td>
+</tr>
+</tbody>
+</table>
+<p>** path contents in <code>[]</code> are optional</p>
+<p>For more information regarding payload contents, see <code>Payload Contents</code>.</p>
+<p>The versions portion of the <code>Path</code> URLs (in <code>[]</code>) is shown as <strong>optional</strong> to allow implementations that don’t support versioning or for cases when the user does not want to specify a specific model version (in which case the server will choose a version based on its own policies).
+For example, if a model does not implement a version, the Model Metadata request path could look like <code>v2/model/my_model</code>. If the model has been configured to implement a version, the request path could look something like <code>v2/models/my_model/versions/v10</code>, where the version of the model is v10.</p>
+<!-- // TODO: add example with -d inputs. -->
+
+<h3 id="api-definitions"><strong>API Definitions</strong><a class="headerlink" href="#api-definitions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inference</td>
+<td>The <code>/infer</code> endpoint performs inference on a model. The response is the prediction result.</td>
+</tr>
+<tr>
+<td>Model Metadata</td>
+<td>The "model metadata" API is a per-model endpoint that returns details about the model passed in the path.</td>
+</tr>
+<tr>
+<td>Server Ready</td>
+<td>The “server ready” health API indicates if all the models are ready for inferencing. The “server ready” health API can be used directly to implement the Kubernetes readinessProbe</td>
+</tr>
+<tr>
+<td>Server Live</td>
+<td>The “server live” health API indicates if the inference server is able to receive and respond to metadata and inference requests. The “server live” API can be used directly to implement the Kubernetes livenessProbe.</td>
+</tr>
+<tr>
+<td>Server Metadata</td>
+<td>The "server metadata" API returns details describing the server.</td>
+</tr>
+<tr>
+<td>Model Ready</td>
+<td>The “model ready” health API indicates if a specific model is ready for inferencing. The model name and (optionally) version must be available in the URL.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="healthreadinessliveness-probes">Health/Readiness/Liveness Probes<a class="headerlink" href="#healthreadinessliveness-probes" title="Permanent link">&para;</a></h3>
+<p>The Model Readiness probe the question "Did the model download and is it able to serve requests?" and responds with the available model name(s). The Server Readiness/Liveness probes answer the question "Is my service and its infrastructure running, healthy, and able to receive and process requests?"</p>
+<p>To read more about liveness and readiness probe concepts, visit the <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/">Configure Liveness, Readiness and Startup Probes</a>
+Kubernetes documentation.</p>
+<h3 id="payload-contents"><strong>Payload Contents</strong><a class="headerlink" href="#payload-contents" title="Permanent link">&para;</a></h3>
+<h3 id="model-ready"><strong>Model Ready</strong><a class="headerlink" href="#model-ready" title="Permanent link">&para;</a></h3>
+<p>The model ready endpoint returns the readiness probe response for the server along with the name of the model.</p>
+<h4 id="model-ready-response-json-object">Model Ready Response JSON Object<a class="headerlink" href="#model-ready-response-json-object" title="Permanent link">&para;</a></h4>
+<pre><code>$ready_model_response =
+{
+  "name" : $string,
+  "ready": $bool
+}
+</code></pre>
+<h3 id="server-ready">Server Ready<a class="headerlink" href="#server-ready" title="Permanent link">&para;</a></h3>
+<p>The server ready endpoint returns the readiness probe response for the server.</p>
+<h4 id="server-ready-response-json-object">Server Ready Response JSON Object<a class="headerlink" href="#server-ready-response-json-object" title="Permanent link">&para;</a></h4>
+<pre><code>$ready_server_response =
+{
+  "live" : $bool,
+}
+</code></pre>
+<hr />
+<h3 id="server-live">Server Live<a class="headerlink" href="#server-live" title="Permanent link">&para;</a></h3>
+<p>The server live endpoint returns the liveness probe response for the server.</p>
+<h4 id="server-live-response-json-objet">Server Live Response JSON Objet<a class="headerlink" href="#server-live-response-json-objet" title="Permanent link">&para;</a></h4>
+<pre><code>$live_server_response =
+{
+  "live" : $bool,
+}
+</code></pre>
+<hr />
+<h3 id="server-metadata">Server Metadata<a class="headerlink" href="#server-metadata" title="Permanent link">&para;</a></h3>
+<p>The server metadata endpoint provides information about the server. A
+server metadata request is made with an HTTP GET to a server metadata
+endpoint. In the corresponding response the HTTP body contains the
+<a href="#server-metadata-response-json-object">Server Metadata Response JSON Object</a>
+or the
+<a href="#server-metadata-response-json-error-object">Server Metadata Response JSON Error Object</a>.</p>
+<h4 id="server-metadata-response-json-object">Server Metadata Response JSON Object<a class="headerlink" href="#server-metadata-response-json-object" title="Permanent link">&para;</a></h4>
+<p>A successful server metadata request is indicated by a 200 HTTP status
+code. The server metadata response object, identified as
+<em>$metadata_server_response</em>, is returned in the HTTP body.</p>
+<pre><code>$metadata_server_response =
+{
+  "name" : $string,
+  "version" : $string,
+  "extensions" : [ $string, ... ]
+}
+</code></pre>
+<ul>
+<li>“name” : A descriptive name for the server.</li>
+<li>"version" : The server version.</li>
+<li>“extensions” : The extensions supported by the server. Currently no standard extensions are defined. Individual inference servers may define and document their own extensions.</li>
+</ul>
+<h4 id="server-metadata-response-json-error-object">Server Metadata Response JSON Error Object<a class="headerlink" href="#server-metadata-response-json-error-object" title="Permanent link">&para;</a></h4>
+<p>A failed server metadata request must be indicated by an HTTP error
+status (typically 400). The HTTP body must contain the
+<em>$metadata_server_error_response</em> object.</p>
+<pre><code>$metadata_server_error_response =
+{
+  "error": $string
+}
+</code></pre>
+<ul>
+<li>“error” : The descriptive message for the error.</li>
+</ul>
+<p>The per-model metadata endpoint provides information about a model. A model metadata request is made with an HTTP GET to a model metadata endpoint. In the corresponding response the HTTP body contains the <a href="#model-metadata-response-json-object">Model Metadata Response JSON Object</a> or the <a href="#model-metadata-response-json-error-object">Model Metadata Response JSON Error Object</a>.
+The model name and (optionally) version must be available in the URL. If a version is not provided the server may choose a version based on its own policies or return an error.</p>
+<hr />
+<h3 id="model-metadata">Model Metadata<a class="headerlink" href="#model-metadata" title="Permanent link">&para;</a></h3>
+<p>The per-model metadata endpoint provides information about a model. A
+model metadata request is made with an HTTP GET to a model metadata
+endpoint. In the corresponding response the HTTP body contains the
+<a href="#model-metadata-response-json-object">Model Metadata Response JSON Object</a>
+or the
+<a href="#model-metadata-response-json-error-object">Model Metadata Response JSON Error Object</a>.
+The model name and (optionally) version must be available in the
+URL. If a version is not provided the server may choose a version
+based on its own policies or return an error.</p>
+<h4 id="model-metadata-response-json-object">Model Metadata Response JSON Object<a class="headerlink" href="#model-metadata-response-json-object" title="Permanent link">&para;</a></h4>
+<p>A successful model metadata request is indicated by a 200 HTTP status
+code. The metadata response object, identified as
+<em>$metadata_model_response</em>, is returned in the HTTP body for every
+successful model metadata request.</p>
+<pre><code>$metadata_model_response =
+{
+  "name" : $string,
+  "versions" : [ $string, ... ] #optional,
+  "platform" : $string,
+  "inputs" : [ $metadata_tensor, ... ],
+  "outputs" : [ $metadata_tensor, ... ]
+}
+</code></pre>
+<ul>
+<li>“name” : The name of the model.</li>
+<li>"versions" : The model versions that may be explicitly requested via
+  the appropriate endpoint. Optional for servers that don’t support
+  versions. Optional for models that don’t allow a version to be
+  explicitly requested.</li>
+<li>“platform” : The framework/backend for the model. See
+  <a href="#platforms">Platforms</a>.</li>
+<li>“inputs” : The inputs required by the model.</li>
+<li>“outputs” : The outputs produced by the model.</li>
+</ul>
+<p>Each model input and output tensors’ metadata is described with a
+<em>$metadata_tensor object</em>.</p>
+<pre><code>$metadata_tensor =
+{
+  "name" : $string,
+  "datatype" : $string,
+  "shape" : [ $number, ... ]
+}
+</code></pre>
+<ul>
+<li>“name” : The name of the tensor.</li>
+<li>"datatype" : The data-type of the tensor elements as defined in
+  <a href="#tensor-data-types">Tensor Data Types</a>.</li>
+<li>"shape" : The shape of the tensor. Variable-size dimensions are
+  specified as -1.</li>
+</ul>
+<h4 id="model-metadata-response-json-error-object">Model Metadata Response JSON Error Object<a class="headerlink" href="#model-metadata-response-json-error-object" title="Permanent link">&para;</a></h4>
+<p>A failed model metadata request must be indicated by an HTTP error
+status (typically 400). The HTTP body must contain the
+<em>$metadata_model_error_response</em> object.</p>
+<pre><code>$metadata_model_error_response =
+{
+  "error": $string
+}
+</code></pre>
+<ul>
+<li>“error” : The descriptive message for the error.</li>
+</ul>
+<hr />
+<h3 id="inference">Inference<a class="headerlink" href="#inference" title="Permanent link">&para;</a></h3>
+<p>An inference request is made with an HTTP POST to an inference
+endpoint. In the request the HTTP body contains the
+<a href="#inference-request-json-object">Inference Request JSON Object</a>. In
+the corresponding response the HTTP body contains the
+<a href="#inference-response-json-object">Inference Response JSON Object</a> or
+<a href="#inference-response-json-error-object">Inference Response JSON Error Object</a>. See
+<a href="#inference-request-examples">Inference Request Examples</a> for some
+example HTTP/REST requests and responses.</p>
+<h4 id="inference-request-json-object">Inference Request JSON Object<a class="headerlink" href="#inference-request-json-object" title="Permanent link">&para;</a></h4>
+<p>The inference request object, identified as <em>$inference_request</em>, is
+required in the HTTP body of the POST request. The model name and
+(optionally) version must be available in the URL. If a version is not
+provided the server may choose a version based on its own policies or
+return an error.</p>
+<pre><code>$inference_request =
+{
+  "id" : $string #optional,
+  "parameters" : $parameters #optional,
+  "inputs" : [ $request_input, ... ],
+  "outputs" : [ $request_output, ... ] #optional
+}
+</code></pre>
+<ul>
+<li>"id" : An identifier for this request. Optional, but if specified
+  this identifier must be returned in the response.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  inference request expressed as key/value pairs. See
+  <a href="#parameters">Parameters</a> for more information.</li>
+<li>"inputs" : The input tensors. Each input is described using the
+  <em>$request_input</em> schema defined in <a href="#inference_request-input">Request Input</a>.</li>
+<li>"outputs" : The output tensors requested for this inference. Each
+  requested output is described using the <em>$request_output</em> schema
+  defined in <a href="#inference_request-output">Request Output</a>. Optional, if not
+  specified all outputs produced by the model will be returned using
+  default <em>$request_output</em> settings.</li>
+</ul>
+<h5 id="request-input">Request Input<a class="headerlink" href="#request-input" title="Permanent link">&para;</a></h5>
+<p>The <em>$inference_request_input</em> JSON describes an input to the model. If the
+input is batched, the shape and data must represent the full shape and
+contents of the entire batch.</p>
+<pre><code>$inference_request_input =
+{
+  "name" : $string,
+  "shape" : [ $number, ... ],
+  "datatype"  : $string,
+  "parameters" : $parameters #optional,
+  "data" : $tensor_data
+}
+</code></pre>
+<ul>
+<li>"name" : The name of the input tensor.</li>
+<li>"shape" : The shape of the input tensor. Each dimension must be an
+  integer representable as an unsigned 64-bit integer value.</li>
+<li>"datatype" : The data-type of the input tensor elements as defined
+  in <a href="#tensor-data-types">Tensor Data Types</a>.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  input expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+<li>“data”: The contents of the tensor. See <a href="#tensor-data">Tensor Data</a>
+  for more information.</li>
+</ul>
+<h5 id="request-output">Request Output<a class="headerlink" href="#request-output" title="Permanent link">&para;</a></h5>
+<p>The <em>$request_output</em> JSON is used to request which output tensors
+should be returned from the model.</p>
+<pre><code>$inference_request_output =
+{
+  "name" : $string,
+  "parameters" : $parameters #optional,
+}
+</code></pre>
+<ul>
+<li>"name" : The name of the output tensor.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  output expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+</ul>
+<h4 id="inference-response-json-object">Inference Response JSON Object<a class="headerlink" href="#inference-response-json-object" title="Permanent link">&para;</a></h4>
+<p>A successful inference request is indicated by a 200 HTTP status
+code. The inference response object, identified as
+<em>$inference_response</em>, is returned in the HTTP body.</p>
+<pre><code>$inference_response =
+{
+  "model_name" : $string,
+  "model_version" : $string #optional,
+  "id" : $string,
+  "parameters" : $parameters #optional,
+  "outputs" : [ $response_output, ... ]
+}
+</code></pre>
+<ul>
+<li>"model_name" : The name of the model used for inference.</li>
+<li>"model_version" : The specific model version used for
+  inference. Inference servers that do not implement versioning should
+  not provide this field in the response.</li>
+<li>"id" : The "id" identifier given in the request, if any.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  response expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+<li>"outputs" : The output tensors. Each output is described using the
+  $response_output schema defined in
+  <a href="#response-output">Response Output</a>.</li>
+</ul>
+<hr />
+<h3 id="inference-request-examples"><strong>Inference Request Examples</strong><a class="headerlink" href="#inference-request-examples" title="Permanent link">&para;</a></h3>
+<h3 id="inference-request-examples_1">Inference Request Examples<a class="headerlink" href="#inference-request-examples_1" title="Permanent link">&para;</a></h3>
+<p>The following example shows an inference request to a model with two
+inputs and one output. The HTTP Content-Length header gives the size
+of the JSON object.</p>
+<pre><code>POST /v2/models/mymodel/infer HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+Content-Length: &lt;xx&gt;
+{
+  "id" : "42",
+  "inputs" : [
+    {
+      "name" : "input0",
+      "shape" : [ 2, 2 ],
+      "datatype" : "UINT32",
+      "data" : [ 1, 2, 3, 4 ]
+    },
+    {
+      "name" : "input1",
+      "shape" : [ 3 ],
+      "datatype" : "BOOL",
+      "data" : [ true ]
+    }
+  ],
+  "outputs" : [
+    {
+      "name" : "output0"
+    }
+  ]
+}
+</code></pre>
+<p>For the above request the inference server must return the “output0”
+output tensor. Assuming the model returns a [ 3, 2 ] tensor of data
+type FP32 the following response would be returned.</p>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: &lt;yy&gt;
+{
+  "id" : "42"
+  "outputs" : [
+    {
+      "name" : "output0",
+      "shape" : [ 3, 2 ],
+      "datatype"  : "FP32",
+      "data" : [ 1.0, 1.1, 2.0, 2.1, 3.0, 3.1 ]
+    }
+  ]
+}
+</code></pre>
+<h2 id="grpc">gRPC<a class="headerlink" href="#grpc" title="Permanent link">&para;</a></h2>
+<p>The GRPC API closely follows the concepts defined in the
+<a href="#httprest">HTTP/REST</a> API. A compliant server must implement the
+health, metadata, and inference APIs described in this section.</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>rpc Endpoint</th>
+<th>Request Message</th>
+<th>Response Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inference</td>
+<td><a href="#inference">ModelInfer</a></td>
+<td>ModelInferRequest</td>
+<td>ModelInferResponse</td>
+</tr>
+<tr>
+<td>Model Ready</td>
+<td><a href="#model-ready">ModelReady</a></td>
+<td>[ModelReadyRequest]</td>
+<td>ModelReadyResponse</td>
+</tr>
+<tr>
+<td>Model Metadata</td>
+<td><a href="#model-metadata">ModelMetadata</a></td>
+<td>ModelMetadataRequest</td>
+<td>ModelMetadataResponse</td>
+</tr>
+<tr>
+<td>Server Ready</td>
+<td><a href="#server-ready">ServerReady</a></td>
+<td>ServerReadyRequest</td>
+<td>ServerReadyResponse</td>
+</tr>
+<tr>
+<td>Server Live</td>
+<td><a href="#server-live">ServerLive</a></td>
+<td>ServerLiveRequest</td>
+<td>ServerLiveResponse</td>
+</tr>
+</tbody>
+</table>
+<p>For more detailed information on each endpoint and its contents, see <code>API Definitions</code> and <code>Message Contents</code>.</p>
+<p>See also: The gRPC endpoints, request/response messages and contents are defined in <a href="https://github.com/kserve/kserve/blob/master/docs/predict-api/v2/grpc_predict_v2.proto">grpc_predict_v2.proto</a></p>
+<h3 id="api-definitions_1"><strong>API Definitions</strong><a class="headerlink" href="#api-definitions_1" title="Permanent link">&para;</a></h3>
+<p>The GRPC definition of the service is:</p>
+<pre><code>//
+// Inference Server GRPC endpoints.
+//
+service GRPCInferenceService
+{
+  // Check liveness of the inference server.
+  rpc ServerLive(ServerLiveRequest) returns (ServerLiveResponse) {}
+
+  // Check readiness of the inference server.
+  rpc ServerReady(ServerReadyRequest) returns (ServerReadyResponse) {}
+
+  // Check readiness of a model in the inference server.
+  rpc ModelReady(ModelReadyRequest) returns (ModelReadyResponse) {}
+
+  // Get server metadata.
+  rpc ServerMetadata(ServerMetadataRequest) returns (ServerMetadataResponse) {}
+
+  // Get model metadata.
+  rpc ModelMetadata(ModelMetadataRequest) returns (ModelMetadataResponse) {}
+
+  // Perform inference using a specific model.
+  rpc ModelInfer(ModelInferRequest) returns (ModelInferResponse) {}
+}
+</code></pre>
+<h3 id="message-contents"><strong>Message Contents</strong><a class="headerlink" href="#message-contents" title="Permanent link">&para;</a></h3>
+<h3 id="health">Health<a class="headerlink" href="#health" title="Permanent link">&para;</a></h3>
+<p>A health request is made using the ServerLive, ServerReady, or
+ModelReady endpoint. For each of these endpoints errors are indicated by the google.rpc.Status returned for the request. The OK code indicates success and other codes indicate failure.</p>
+<h4 id="server-live_1">Server Live<a class="headerlink" href="#server-live_1" title="Permanent link">&para;</a></h4>
+<p>The ServerLive API indicates if the inference server is able to
+receive and respond to metadata and inference requests. The request
+and response messages for ServerLive are:</p>
+<pre><code>message ServerLiveRequest {}
+
+message ServerLiveResponse
+{
+  // True if the inference server is live, false if not live.
+  bool live = 1;
+}
+</code></pre>
+<h4 id="server-ready_1">Server Ready<a class="headerlink" href="#server-ready_1" title="Permanent link">&para;</a></h4>
+<p>The ServerReady API indicates if the server is ready for
+inferencing. The request and response messages for ServerReady are:</p>
+<pre><code>message ServerReadyRequest {}
+
+message ServerReadyResponse
+{
+  // True if the inference server is ready, false if not ready.
+  bool ready = 1;
+}
+</code></pre>
+<h4 id="model-ready_1">Model Ready<a class="headerlink" href="#model-ready_1" title="Permanent link">&para;</a></h4>
+<p>The ModelReady API indicates if a specific model is ready for
+inferencing. The request and response messages for ModelReady are:</p>
+<pre><code>message ModelReadyRequest
+{
+  // The name of the model to check for readiness.
+  string name = 1;
+
+  // The version of the model to check for readiness. If not given the
+  // server will choose a version based on the model and internal policy.
+  string version = 2;
+}
+
+message ModelReadyResponse
+{
+  // True if the model is ready, false if not ready.
+  bool ready = 1;
+}
+</code></pre>
+<hr />
+<h3 id="metadata">Metadata<a class="headerlink" href="#metadata" title="Permanent link">&para;</a></h3>
+<h4 id="server-metadata_1">Server Metadata<a class="headerlink" href="#server-metadata_1" title="Permanent link">&para;</a></h4>
+<p>The ServerMetadata API provides information about the server. Errors are indicated by the google.rpc.Status returned for the request. The OK code indicates success and other codes indicate failure. The request and response messages for ServerMetadata are:</p>
+<pre><code>message ServerMetadataRequest {}
+
+message ServerMetadataResponse
+{
+  // The server name.
+  string name = 1;
+
+  // The server version.
+  string version = 2;
+
+  // The extensions supported by the server.
+  repeated string extensions = 3;
+}
+</code></pre>
+<h4 id="model-metadata_1">Model Metadata<a class="headerlink" href="#model-metadata_1" title="Permanent link">&para;</a></h4>
+<p>The per-model metadata API provides information about a model. Errors
+are indicated by the google.rpc.Status returned for the request. The
+OK code indicates success and other codes indicate failure. The
+request and response messages for ModelMetadata are:</p>
+<pre><code>message ModelMetadataRequest
+{
+  // The name of the model.
+  string name = 1;
+
+  // The version of the model to check for readiness. If not given the
+  // server will choose a version based on the model and internal policy.
+  string version = 2;
+}
+
+message ModelMetadataResponse
+{
+  // Metadata for a tensor.
+  message TensorMetadata
+  {
+    // The tensor name.
+    string name = 1;
+
+    // The tensor data type.
+    string datatype = 2;
+
+    // The tensor shape. A variable-size dimension is represented
+    // by a -1 value.
+    repeated int64 shape = 3;
+  }
+
+  // The model name.
+  string name = 1;
+
+  // The versions of the model available on the server.
+  repeated string versions = 2;
+
+  // The model's platform. See Platforms.
+  string platform = 3;
+
+  // The model's inputs.
+  repeated TensorMetadata inputs = 4;
+
+  // The model's outputs.
+  repeated TensorMetadata outputs = 5;
+}
+</code></pre>
+<h4 id="platforms">Platforms<a class="headerlink" href="#platforms" title="Permanent link">&para;</a></h4>
+<p>A platform is a string indicating a DL/ML framework or
+backend. Platform is returned as part of the response to a
+<a href="#model_metadata">Model Metadata</a> request but is information only. The
+proposed inference APIs are generic relative to the DL/ML framework
+used by a model and so a client does not need to know the platform of
+a given model to use the API. Platform names use the format
+“<project>_<format>”. The following platform names are allowed:</p>
+<ul>
+<li>tensorrt_plan : A TensorRT model encoded as a serialized engine or “plan”.</li>
+<li>tensorflow_graphdef : A TensorFlow model encoded as a GraphDef.</li>
+<li>tensorflow_savedmodel : A TensorFlow model encoded as a SavedModel.</li>
+<li>onnx_onnxv1 : A ONNX model encoded for ONNX Runtime.</li>
+<li>pytorch_torchscript : A PyTorch model encoded as TorchScript.</li>
+<li>mxnet_mxnet: An MXNet model</li>
+<li>caffe2_netdef : A Caffe2 model encoded as a NetDef.</li>
+</ul>
+<hr />
+<h3 id="inference_1">Inference<a class="headerlink" href="#inference_1" title="Permanent link">&para;</a></h3>
+<p>The ModelInfer API performs inference using the specified
+model. Errors are indicated by the google.rpc.Status returned for the request. The OK code indicates success and other codes indicate
+failure. The request and response messages for ModelInfer are:</p>
+<pre><code>message ModelInferRequest
+{
+  // An input tensor for an inference request.
+  message InferInputTensor
+  {
+    // The tensor name.
+    string name = 1;
+
+    // The tensor data type.
+    string datatype = 2;
+
+    // The tensor shape.
+    repeated int64 shape = 3;
+
+    // Optional inference input tensor parameters.
+    map&lt;string, InferParameter&gt; parameters = 4;
+
+    // The tensor contents using a data-type format. This field must
+    // not be specified if "raw" tensor contents are being used for
+    // the inference request.
+    InferTensorContents contents = 5;
+  }
+
+  // An output tensor requested for an inference request.
+  message InferRequestedOutputTensor
+  {
+    // The tensor name.
+    string name = 1;
+
+    // Optional requested output tensor parameters.
+    map&lt;string, InferParameter&gt; parameters = 2;
+  }
+
+  // The name of the model to use for inferencing.
+  string model_name = 1;
+
+  // The version of the model to use for inference. If not given the
+  // server will choose a version based on the model and internal policy.
+  string model_version = 2;
+
+  // Optional identifier for the request. If specified will be
+  // returned in the response.
+  string id = 3;
+
+  // Optional inference parameters.
+  map&lt;string, InferParameter&gt; parameters = 4;
+
+  // The input tensors for the inference.
+  repeated InferInputTensor inputs = 5;
+
+  // The requested output tensors for the inference. Optional, if not
+  // specified all outputs produced by the model will be returned.
+  repeated InferRequestedOutputTensor outputs = 6;
+
+  // The data contained in an input tensor can be represented in "raw"
+  // bytes form or in the repeated type that matches the tensor's data
+  // type. To use the raw representation 'raw_input_contents' must be
+  // initialized with data for each tensor in the same order as
+  // 'inputs'. For each tensor, the size of this content must match
+  // what is expected by the tensor's shape and data type. The raw
+  // data must be the flattened, one-dimensional, row-major order of
+  // the tensor elements without any stride or padding between the
+  // elements. Note that the FP16 data type must be represented as raw
+  // content as there is no specific data type for a 16-bit float
+  // type.
+  //
+  // If this field is specified then InferInputTensor::contents must
+  // not be specified for any input tensor.
+  repeated bytes raw_input_contents = 7;
+}
+
+message ModelInferResponse
+{
+  // An output tensor returned for an inference request.
+  message InferOutputTensor
+  {
+    // The tensor name.
+    string name = 1;
+
+    // The tensor data type.
+    string datatype = 2;
+
+    // The tensor shape.
+    repeated int64 shape = 3;
+
+    // Optional output tensor parameters.
+    map&lt;string, InferParameter&gt; parameters = 4;
+
+    // The tensor contents using a data-type format. This field must
+    // not be specified if "raw" tensor contents are being used for
+    // the inference response.
+    InferTensorContents contents = 5;
+  }
+
+  // The name of the model used for inference.
+  string model_name = 1;
+
+  // The version of the model used for inference.
+  string model_version = 2;
+
+  // The id of the inference request if one was specified.
+  string id = 3;
+
+  // Optional inference response parameters.
+  map&lt;string, InferParameter&gt; parameters = 4;
+
+  // The output tensors holding inference results.
+  repeated InferOutputTensor outputs = 5;
+
+  // The data contained in an output tensor can be represented in
+  // "raw" bytes form or in the repeated type that matches the
+  // tensor's data type. To use the raw representation 'raw_output_contents'
+  // must be initialized with data for each tensor in the same order as
+  // 'outputs'. For each tensor, the size of this content must match
+  // what is expected by the tensor's shape and data type. The raw
+  // data must be the flattened, one-dimensional, row-major order of
+  // the tensor elements without any stride or padding between the
+  // elements. Note that the FP16 data type must be represented as raw
+  // content as there is no specific data type for a 16-bit float
+  // type.
+  //
+  // If this field is specified then InferOutputTensor::contents must
+  // not be specified for any output tensor.
+  repeated bytes raw_output_contents = 6;
+}
+</code></pre>
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h4>
+<p>The Parameters message describes a “name”/”value” pair, where the
+“name” is the name of the parameter and the “value” is a boolean,
+integer, or string corresponding to the parameter.</p>
+<p>Currently no parameters are defined. As required a future proposal may define one or more standard parameters to allow portable functionality across different inference servers. A server can implement server-specific parameters to provide non-standard capabilities.</p>
+<pre><code>//
+// An inference parameter value.
+//
+message InferParameter
+{
+  // The parameter value can be a string, an int64, a boolean
+  // or a message specific to a predefined parameter.
+  oneof parameter_choice
+  {
+    // A boolean parameter value.
+    bool bool_param = 1;
+
+    // An int64 parameter value.
+    int64 int64_param = 2;
+
+    // A string parameter value.
+    string string_param = 3;
+  }
+}
+</code></pre>
+<hr />
+<h3 id="tensor-data">Tensor Data<a class="headerlink" href="#tensor-data" title="Permanent link">&para;</a></h3>
+<p>In all representations tensor data must be flattened to a
+one-dimensional, row-major order of the tensor elements. Element
+values must be given in "linear" order without any stride or padding
+between elements.</p>
+<p>Using a "raw" representation of tensors with
+ModelInferRequest::raw_input_contents and
+ModelInferResponse::raw_output_contents will typically allow higher
+performance due to the way protobuf allocation and reuse interacts
+with GRPC. For example, see https://github.com/grpc/grpc/issues/23231.</p>
+<p>An alternative to the "raw" representation is to use
+InferTensorContents to represent the tensor data in a format that
+matches the tensor's data type.</p>
+<pre><code>//
+// The data contained in a tensor represented by the repeated type
+// that matches the tensor's data type. Protobuf oneof is not used
+// because oneofs cannot contain repeated fields.
+//
+message InferTensorContents
+{
+  // Representation for BOOL data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated bool bool_contents = 1;
+
+  // Representation for INT8, INT16, and INT32 data types. The size
+  // must match what is expected by the tensor's shape. The contents
+  // must be the flattened, one-dimensional, row-major order of the
+  // tensor elements.
+  repeated int32 int_contents = 2;
+
+  // Representation for INT64 data types. The size must match what
+  // is expected by the tensor's shape. The contents must be the
+  // flattened, one-dimensional, row-major order of the tensor elements.
+  repeated int64 int64_contents = 3;
+
+  // Representation for UINT8, UINT16, and UINT32 data types. The size
+  // must match what is expected by the tensor's shape. The contents
+  // must be the flattened, one-dimensional, row-major order of the
+  // tensor elements.
+  repeated uint32 uint_contents = 4;
+
+  // Representation for UINT64 data types. The size must match what
+  // is expected by the tensor's shape. The contents must be the
+  // flattened, one-dimensional, row-major order of the tensor elements.
+  repeated uint64 uint64_contents = 5;
+
+  // Representation for FP32 data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated float fp32_contents = 6;
+
+  // Representation for FP64 data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated double fp64_contents = 7;
+
+  // Representation for BYTES data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated bytes bytes_contents = 8;
+}
+</code></pre>
+<h4 id="tensor-data-types">Tensor Data Types<a class="headerlink" href="#tensor-data-types" title="Permanent link">&para;</a></h4>
+<p>Tensor data types are shown in the following table along with the size
+of each type, in bytes.</p>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Size (bytes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOL</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UINT8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UINT16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>UINT32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>UINT64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>INT16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>INT32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>INT64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>FP32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>FP64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>BYTES</td>
+<td>Variable (max 2<sup>32</sup>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../v1_protocol/" class="md-footer__link md-footer__link--prev" aria-label="Previous: V1 Inference Protocol" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              V1 Inference Protocol
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../servingruntimes/" class="md-footer__link md-footer__link--next" aria-label="Next: Serving Runtimes" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Serving Runtimes
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 The KServe Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://github.com/kserve" target="_blank" rel="noopener" title="KServe Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#" target="_blank" rel="noopener" title="Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      
+    
+  </body>
+</html>
