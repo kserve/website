@@ -66,19 +66,3 @@ For more information on how to export metrics, see [Queue Proxy Extension](https
 ## Knative/Queue-Proxy metrics 
 
 Queue proxy emits metrics be default on port 9091. If aggregation metrics are set up with the queue proxy extension, the default port for the aggregated metrics will be 9088. See the [Knative documentation](https://knative.dev/development/serving/services/service-metrics/) (and [additional metrics defined in the code](https://github.com/vagababov/serving/blob/master/pkg/queue/prometheus_stats_reporter.go#L118)) for more information about the metrics queue-proxy exposes. 
-
-## Grafana Dashboards 
-
-Some example Grafana dashboards are available in GrafanaLabs. 
-
-### KServe ModelServer Latency Dashboard
-
-A template dashboard for [KServe ModelServer Latency](https://grafana.com/grafana/dashboards/17969-kserve-modelserver-latency/) contains example queries using the prometheus metrics for pre/post-process, predict and explain in milliseconds. The query is a [histogram quantile](https://prometheus.io/docs/prometheus/latest/querying/functions/#histogram_quantile). A fifth graph shows the total number of requests to the predict endpoint. This graph covers all KServe's ModelServer runtimes - lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor.
-
-## KServe TorchServe Latency Dashboard
-
-A template dashboard for [KServe TorchServe Latency](https://grafana.com/grafana/dashboards/18026-kserve-torchserve-latency/) contains an inference latency graph which plots the [rate](https://prometheus.io/docs/prometheus/latest/querying/functions/#rate) of the TorchServe metric `ts_inference_latency_microseconds` in milliseconds. A second graph plots the rate of TorchServe's internal queue latency metric `ts_queue_latency_microseconds` in milliseconds. A third graph plots the total requests to the TorchServe Inference Service. 
-
-## KServe Triton Latency Dashboard 
-
-A template dashboard for [KServe Triton Latency](https://grafana.com/grafana/dashboards/18027-kserve-triton-latency/) contains five latency graphs with the rate of Triton's input (preprocess), infer (predict), output (postprocess), internal queue and total latency metrics plotted in milliseconds. Triton outputs metrics on GPU usage as well, and the template plots a gauge of the percentage of GPU memory usage in bytes.
