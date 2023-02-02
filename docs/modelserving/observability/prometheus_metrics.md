@@ -77,8 +77,8 @@ A template dashboard for [KServe ModelServer Latency](https://grafana.com/grafan
 
 ## KServe TorchServe Latency Dashboard
 
-A template dashboard for [KServe TorchServe Latency](TODO) contains an inference latency graph which plots the [rate](https://prometheus.io/docs/prometheus/latest/querying/functions/#rate) of the TorchServe metric `ts_inference_latency_microseconds` in milliseconds. A second graph plots the rate of TorchServe's internal queue latency metric `ts_queue_latency_microseconds` in milliseconds. A third graph plots the total requests to the TorchServe Inference Service. 
+A template dashboard for [KServe TorchServe Latency](https://grafana.com/grafana/dashboards/18026-kserve-torchserve-latency/) contains an inference latency graph which plots the [rate](https://prometheus.io/docs/prometheus/latest/querying/functions/#rate) of the TorchServe metric `ts_inference_latency_microseconds` in milliseconds. A second graph plots the rate of TorchServe's internal queue latency metric `ts_queue_latency_microseconds` in milliseconds. A third graph plots the total requests to the TorchServe Inference Service. 
 
 ## KServe Triton Latency Dashboard 
 
-A template dashboard for [KServe Triton Latency](TODO) contains five latency graphs with the rate of Triton's input (preprocess), infer (predict), output (postprocess), internal queue and total latency metrics plotted in milliseconds. Triton outputs metrics on GPU usage as well, and the template plots a gauge of the percent GPU memory usage bytes.
+A template dashboard for [KServe Triton Latency](https://grafana.com/grafana/dashboards/18027-kserve-triton-latency/) contains five latency graphs with the rate of Triton's input (preprocess), infer (predict), output (postprocess), internal queue and total latency metrics plotted in milliseconds. Triton outputs metrics on GPU usage as well, and the template plots a gauge of the percentage of GPU memory usage in bytes.
