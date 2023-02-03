@@ -4,7 +4,7 @@ Some example Grafana dashboards are available in GrafanaLabs.
 
 ## Knative HTTP Dashboard (if using serverless mode)
 
-The [Knative HTTP Grafana dasbhoard](#TOODO! add when published) was built from [Knative's sandbox monitoring example]https://github.com/knative-sandbox/monitoring().
+The [Knative HTTP Grafana dasbhoard](https://grafana.com/grafana/dashboards/18032-knative-serving-revision-http-requests/) was built from [Knative's sandbox monitoring example]https://github.com/knative-sandbox/monitoring().
 
 ## KServe ModelServer Latency Dashboard
 
