@@ -2619,6 +2619,10 @@ Kubernetes version.</p>
 <p>If you are looking to use PodSpec fields such as nodeSelector, affinity or tolerations which are now supported in the v1beta1 API spec, 
 you need to turn on the corresponding <a href="https://knative.dev/docs/admin/serving/feature-flags">feature flags</a> in your Knative configuration.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In Knative 1.8, The cluster domain suffix is changed to <code>svc.cluster.local</code> as the default domain. As routes using the cluster domain suffix are not exposed through Ingress, you will need to <a href="https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns">configure DNS</a> in order to expose their services (most users probably already are).</p>
+</div>
 <h2 id="2-install-networking-layer">2. Install Networking Layer<a class="headerlink" href="#2-install-networking-layer" title="Permanent link">&para;</a></h2>
 <p>The recommended networking layer for KServe is <a href="https://istio.io/">Istio</a> as currently it works best with KServe, please refer to the <a href="https://knative.dev/docs/admin/install/installing-istio">Istio install guide</a>.
 Alternatively you can also choose other networking layers like <a href="https://github.com/knative-sandbox/net-kourier">Kourier</a> or <a href="https://projectcontour.io/">Contour</a>, see <a href="../kourier_networking/">how to install Kourier with KServe guide</a>.</p>
@@ -2632,7 +2636,7 @@ Alternatively you can also choose other networking layers like <a href="https://
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.9.0/kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.10.0/kserve.yaml
 </code></pre></div>
 </div>
 </div>
@@ -2641,7 +2645,7 @@ Alternatively you can also choose other networking layers like <a href="https://
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.9.0/kserve-runtimes.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.10.0/kserve-runtimes.yaml
 </code></pre></div>
 </div>
 </div>
