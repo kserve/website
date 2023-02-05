@@ -21,7 +21,7 @@ Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/i
     you need to turn on the corresponding [feature flags](https://knative.dev/docs/admin/serving/feature-flags) in your Knative configuration.
     
 !!! warning
-    In Knative 1.8, The cluster domain suffix is changed to `svc.cluster.local` as the default domain. As routes using the cluster domain suffix are not exposed           through Ingress, you will need to [configure DNS](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns) in order to expose their services (most users probably already are).
+    In Knative 1.8, The cluster domain suffix is changed to `svc.cluster.local` as the default domain. As routes using the cluster domain suffix are not exposed through Ingress, you will need to [configure DNS](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns) in order to expose their services (most users probably already are).
 
 ## 2. Install Networking Layer
 The recommended networking layer for KServe is [Istio](https://istio.io/) as currently it works best with KServe, please refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
