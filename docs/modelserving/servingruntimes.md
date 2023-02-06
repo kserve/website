@@ -41,7 +41,7 @@ Several out-of-the-box _ClusterServingRuntimes_ are provided with KServe so that
 | kserve-mlserver           | SKLearn, XGBoost, LightGBM, MLflow  |
 | kserve-paddleserver       | Paddle                              |
 | kserve-pmmlserver         | PMML                                |
-| kserver-sklearnserver     | SKLearn                             |
+| kserve-sklearnserver      | SKLearn                             |
 | kserve-tensorflow-serving | TensorFlow                          |
 | kserve-torchserve         | PyTorch                             |
 | kserve-tritonserver       | TensorFlow, ONNX, PyTorch, TensorRT |
