@@ -25,7 +25,7 @@ With these Grafana dashboards set up, debug latency issues with the following st
 First, (if in serverless mode) start with the Knative HTTP Dashboard to check if there is a queueing delay with queue-proxy
 
 - [x] compare the gateway latency percentile metrics with your target SLO  
-- [x] check the observed concurrency metrics to see if your service overloaded with a high number of inflight requests, indicating the service is over capacity and is unable to keep up with the number of requests 
+- [x] check the observed concurrency metrics to see if your service is overloaded with a high number of inflight requests, indicating the service is over capacity and is unable to keep up with the number of requests 
 - [x] check the GPU/CPU memory metrics to see if the service is close to its limits - if your service has a high number of inflight requests/high CPU/GPU usage, then a possible solution is to add more resources/replicas
 
 Next, take a look at the appropriate serving runtime dashboard to see if there is a bottleneck in the code
