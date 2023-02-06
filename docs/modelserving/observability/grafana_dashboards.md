@@ -18,7 +18,7 @@ A template dashboard for [KServe TorchServe Latency](https://grafana.com/grafana
 
 A template dashboard for [KServe Triton Latency](https://grafana.com/grafana/dashboards/18027-kserve-triton-latency/) contains five latency graphs with the rate of Triton's input (preprocess), infer (predict), output (postprocess), internal queue and total latency metrics plotted in milliseconds. Triton outputs metrics on GPU usage as well, and the template plots a gauge of the percentage of GPU memory usage in bytes. For more information see the [Triton Inference Server docs](https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md).
 
-## Debugging 
+## Debugging Performance
 
 With these Grafana dashboards set up, debug latency issues with the following steps
 
