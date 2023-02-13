@@ -82,6 +82,7 @@ nav:
                 - Canary Example: modelserving/v1beta1/rollout/canary-example.md
           - Inference Observability:
                 - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
+                - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Python Client SDK: sdk_docs/sdk_doc.md
