@@ -1,7 +1,7 @@
 # Getting Started with KServe
 ## Before you begin
 !!! warning
-    KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin/serverless.md)
+    KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin/serverless/serverless.md)
 
 Before you can get started with a KServe Quickstart deployment you must install kind and the Kubernetes CLI.
 
