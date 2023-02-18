@@ -22,7 +22,7 @@ nav:
                   - V1 Inference Protocol: modelserving/data_plane/v1_protocol.md
                   - Open Inference Protocol (V2 Inference Protocol): modelserving/data_plane/v2_protocol.md
                 - Serving Runtimes: modelserving/servingruntimes.md
-          - Single Model Serving:
+          - Model Serving Runtimes:
               - Supported Model Frameworks/Formats:
                 - Overview: modelserving/v1beta1/serving_runtime.md
                 - Tensorflow: modelserving/v1beta1/tensorflow/README.md
