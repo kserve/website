@@ -22,7 +22,7 @@ nav:
                   - V1 Inference Protocol: modelserving/data_plane/v1_protocol.md
                   - Open Inference Protocol (V2 Inference Protocol): modelserving/data_plane/v2_protocol.md
                 - Serving Runtimes: modelserving/servingruntimes.md
-          - Single Model Serving:
+          - Model Serving Runtimes:
               - Supported Model Frameworks/Formats:
                 - Overview: modelserving/v1beta1/serving_runtime.md
                 - Tensorflow: modelserving/v1beta1/tensorflow/README.md
@@ -91,6 +91,7 @@ nav:
           - Debugging guide: developer/debug.md
     - Blog:
           - Releases:
+            - KServe 0.10 Release: blog/articles/2023-02-05-KServe-0.10-release.md
             - KServe 0.9 Release: blog/articles/2022-07-21-KServe-0.9-release.md
             - KServe 0.8 Release: blog/articles/2022-02-18-KServe-0.8-release.md
             - KServe 0.7 Release: blog/articles/2021-10-11-KServe-0.7-release.md
