@@ -13,7 +13,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [Gojek](https://www.gojek.com/)                                              | [Willem Pienaar](https://github.com/woop)          |
 | [Deeploy](https://deeploy.ml)                                                | [Tim Kleinloog](https://github.com/TimKleinloog)   |
 | [Halodoc ID](https://halodoc.com/)                                           | [Joinal Ahmed](https://github.com/joinal-ahmed)    |
-| [IBM](https://www.ibm.com/)                                                  | [Animesh Singh](https://github.com/animeshsingh)   |
+| [IBM](https://www.ibm.com/)                                                  | [Nick Hill](https://github.com/njhill)             |
 | [Kubeflow on Google Cloud](https://www.kubeflow.org/docs/distributions/gke/) | [James Liu](https://github.com/zijianjoy)          |
 | [Inspur](https://www.inspur.com/)                                            | [Qingshan Chen](https://github.com/iamlovingit)    |
 | [Max Kelsen](https://www.maxkelsen.com/)                                     | [Jacob O'Farrell](https://github.com/ofaz)         |
