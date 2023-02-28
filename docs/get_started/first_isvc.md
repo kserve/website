@@ -60,9 +60,14 @@ is provided as reference.
 
 ```bash
 kubectl get inferenceservices sklearn-iris -n kserve-test
+```
+
+**Expected Output**
+```
 NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
 sklearn-iris   http://sklearn-iris.kserve-test.example.com         True           100                              sklearn-iris-predictor-default-47q2g   7d23h
 ```
+
 If your DNS contains example.com please consult your admin for configuring DNS or using [custom domain](https://knative.dev/docs/serving/using-a-custom-domain).
 
 ### 4. Determine the ingress IP and ports
@@ -70,6 +75,10 @@ If your DNS contains example.com please consult your admin for configuring DNS o
 Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
 ```bash
 $ kubectl get svc istio-ingressgateway -n istio-system
+```
+
+**Expected Output**
+```
 NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
 istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
 ```
@@ -96,11 +105,13 @@ istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...     
     ```
 
 === "Port Forward"
-    Alternatively you can do `Port Forward` for testing purpose
+    Alternatively you can do `Port Forward` for testing purposes.
     ```bash
     INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="app=istio-ingressgateway" --output jsonpath='{.items[0].metadata.name}')
     kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
-    # start another terminal
+    ```
+    Open another terminal, and enter the following:
+    ```bash
     export INGRESS_HOST=localhost
     export INGRESS_PORT=8080
     ```
@@ -161,7 +172,7 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
     If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
     ```bash
     SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -n kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-    curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict -d @./iris-input.json
+    curl -v -H "Host: ${SERVICE_HOSTNAME}" "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict" -d @./iris-input.json
     ```
 
 === "From local cluster gateway"
@@ -183,9 +194,15 @@ If you want to load test the deployed model, try deploying the following Kuberne
 kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
-==**Expected Output**==
-```
+Execute the following command to view output:
+
+```bash
 kubectl logs load-test8b58n-rgfxr -n kserve-test
+```
+
+==**Expected Output**==
+
+```
 Requests      [total, rate, throughput]         30000, 500.02, 499.99
 Duration      [total, attack, wait]             1m0s, 59.998s, 3.336ms
 Latencies     [min, mean, 50, 90, 95, 99, max]  1.743ms, 2.748ms, 2.494ms, 3.363ms, 4.091ms, 7.749ms, 46.354ms
