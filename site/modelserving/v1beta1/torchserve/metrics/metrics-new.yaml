@@ -1,0 +1,13 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: "torch-metrics"
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8082'
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: pytorch
+      storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1

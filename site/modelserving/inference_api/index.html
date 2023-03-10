@@ -1,0 +1,2326 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="KServe Documentation" name="description"/>
+<link href="https://kserve.io/website/local/modelserving/inference_api/" rel="canonical"/>
+<link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
+<meta content="mkdocs-1.4.2, mkdocs-material-8.0.5" name="generator"/>
+<title>V2 Inference Protocol - KServe Documentation Website</title>
+<link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#predict-protocol-version-2">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+<aside class="md-banner">
+<div class="md-banner__inner md-grid md-typeset">
+<h1>
+<b>KServe v0.9 is Released</b>, <a href="/website/0.9/blog/articles/2022-07-21-KServe-0.9-release/">Read blog &gt;&gt;</a>
+</h1>
+</div>
+</aside>
+</div>
+<div data-md-component="outdated" hidden="">
+<aside class="md-banner md-banner--warning">
+</aside>
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../.." title="KServe Documentation Website">
+<img alt="logo" src="../../images/logo/kserve.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            KServe Documentation Website
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              V2 Inference Protocol
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+      Home
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../get_started/">
+        Getting started
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../admin/serverless/serverless/">
+        Administration Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="../control_plane/">
+        User Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../reference/api/">
+        API Reference
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../developer/developer/">
+        Developer Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../blog/articles/2022-07-21-KServe-0.9-release/">
+        Blog
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../community/adopters/">
+        Community
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="KServe Documentation Website">
+<img alt="logo" src="../../images/logo/kserve.png"/>
+</a>
+    KServe Documentation Website
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Getting started" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/">
+        KServe Quickstart
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/first_isvc/">
+        First InferenceService
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/swagger_ui/">
+        Interact with InferenceService Swagger UI
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          Administration Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Administration Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          Administration Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" id="__nav_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_1">
+          Install KServe
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Install KServe" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Install KServe
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" id="__nav_3_1_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_1_1">
+          Serverless
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Serverless" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_1_1">
+<span class="md-nav__icon md-icon"></span>
+          Serverless
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/serverless/">
+        Serverless installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/servicemesh/">
+        Istio Service Mesh
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/kourier_networking/">
+        Kourier Networking Layer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/modelmesh/">
+        ModelMesh installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/kubernetes_deployment/">
+        Kubernetes deployment installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/migration/">
+        Migrating from KFServing
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="User Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" id="__nav_4_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Concepts" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_1">
+<span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" id="__nav_4_1_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_1">
+          Control Plane
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Control Plane" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_1_1">
+<span class="md-nav__icon md-icon"></span>
+          Control Plane
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../control_plane/">
+        Model Serving Control Plane
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" id="__nav_4_1_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_2">
+          Data Plane
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data Plane" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_1_2">
+<span class="md-nav__icon md-icon"></span>
+          Data Plane
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../data_plane/">
+        Model Serving Data Plane
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          V2 Inference Protocol
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+        V2 Inference Protocol
+      </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#httprest">
+    HTTP/REST
+  </a>
+<nav aria-label="HTTP/REST" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health">
+    Health
+  </a>
+<nav aria-label="Health" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-live">
+    Server Live
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-ready">
+    Server Ready
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-ready">
+    Model Ready
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata">
+    Server Metadata
+  </a>
+<nav aria-label="Server Metadata" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata-response-json-object">
+    Server Metadata Response JSON Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata-response-json-error-object">
+    Server Metadata Response JSON Error Object
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata">
+    Model Metadata
+  </a>
+<nav aria-label="Model Metadata" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata-response-json-object">
+    Model Metadata Response JSON Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata-response-json-error-object">
+    Model Metadata Response JSON Error Object
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference">
+    Inference
+  </a>
+<nav aria-label="Inference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-json-object">
+    Inference Request JSON Object
+  </a>
+<nav aria-label="Inference Request JSON Object" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-input">
+    Request Input
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-output">
+    Request Output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-response-json-object">
+    Inference Response JSON Object
+  </a>
+<nav aria-label="Inference Response JSON Object" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-output">
+    Response Output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-response-json-error-object">
+    Inference Response JSON Error Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-examples">
+    Inference Request Examples
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+    Parameters
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data">
+    Tensor Data
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grpc">
+    GRPC
+  </a>
+<nav aria-label="GRPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health_1">
+    Health
+  </a>
+<nav aria-label="Health" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-live_1">
+    Server Live
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-ready_1">
+    Server Ready
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-ready_1">
+    Model Ready
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata_1">
+    Server Metadata
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata_1">
+    Model Metadata
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference_1">
+    Inference
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters_1">
+    Parameters
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data_1">
+    Tensor Data
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#platforms">
+    Platforms
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data-types">
+    Tensor Data Types
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../servingruntimes/">
+        Serving Runtimes
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2">
+          Single Model Serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Single Model Serving" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
+<span class="md-nav__icon md-icon"></span>
+          Single Model Serving
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" id="__nav_4_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_1">
+          Supported Model Frameworks/Formats
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Supported Model Frameworks/Formats" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Supported Model Frameworks/Formats
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/serving_runtime/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/tensorflow/">
+        Tensorflow
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/torchserve/">
+        PyTorch
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/sklearn/v2/">
+        Scikit-learn
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/xgboost/">
+        XGBoost
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/pmml/">
+        PMML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/spark/">
+        Spark MLlib
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/lightgbm/">
+        LightGBM
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/paddle/">
+        Paddle
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/mlflow/v2/">
+        MLFlow
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2" id="__nav_4_2_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Multi-Framework Serving Runtimes" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_2_2">
+<span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_2_1" id="__nav_4_2_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Nvidia Triton" class="md-nav" data-md-level="4">
+<label class="md-nav__title" for="__nav_4_2_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/triton/torchscript/">
+        Torchscript
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/triton/bert/">
+        Tensorflow
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/amd/">
+        AMD
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/custom/custom_model/">
+        How to write a custom predictor
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3">
+          Multi Model Serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Multi Model Serving" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
+<span class="md-nav__icon md-icon"></span>
+          Multi Model Serving
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" id="__nav_4_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Overview" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mms/multi-model-serving/">
+        The Scalability Problem
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mms/modelmesh/overview/">
+        ModelMesh Overview
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4">
+          Transformers
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Transformers" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_4">
+<span class="md-nav__icon md-icon"></span>
+          Transformers
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/transformer/feast/">
+        Feast
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/transformer/torchserve_image_transformer/">
+        How to write a custom transformer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_5">
+          Inference Graph
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Inference Graph" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_5">
+<span class="md-nav__icon md-icon"></span>
+          Inference Graph
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../inference_graph/">
+        Concept
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../inference_graph/image_pipeline/">
+        Image classification inference graph
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6">
+          Model Storage
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Storage" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+          Model Storage
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../storage/azure/azure/">
+        Azure
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../storage/pvc/pvc/">
+        PVC
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../storage/s3/s3/">
+        S3
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../storage/uri/uri/">
+        URI
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7">
+          Model Explainability
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Explainability" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_7">
+<span class="md-nav__icon md-icon"></span>
+          Model Explainability
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../explainer/explainer/">
+        Concept
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7_2" id="__nav_4_7_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7_2">
+          Alibi Explainer
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Alibi Explainer" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_7_2">
+<span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../explainer/alibi/cifar10/">
+        Image Explainer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../explainer/alibi/income/">
+        Income Explainer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../explainer/alibi/moviesentiment/">
+        Text Explainer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../explainer/aix/mnist/aix/">
+        AIX Explainer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" id="__nav_4_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_8">
+          Model Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_8">
+<span class="md-nav__icon md-icon"></span>
+          Model Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../detect/alibi_detect/alibi_detect/">
+        Alibi Detector
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../detect/aif/germancredit/">
+        AIF Bias Detector
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../detect/art/mnist/">
+        ART Adversarial Detector
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" id="__nav_4_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_9">
+          Request Batching
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Request Batching" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_9">
+<span class="md-nav__icon md-icon"></span>
+          Request Batching
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../batcher/batcher/">
+        Inference Batcher
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" id="__nav_4_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_10">
+          Payload Logging
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Payload Logging" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_10">
+<span class="md-nav__icon md-icon"></span>
+          Payload Logging
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../logger/logger/">
+        Inference Logger
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" id="__nav_4_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_11">
+          Autoscaling
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Autoscaling" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_11">
+<span class="md-nav__icon md-icon"></span>
+          Autoscaling
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../autoscaling/autoscaling/">
+        Inference Autoscaling
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_12">
+          Node Scheduling
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Node Scheduling" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_12">
+<span class="md-nav__icon md-icon"></span>
+          Node Scheduling
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../nodescheduling/overview/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../nodescheduling/inferenceservicenodescheduling/">
+        InferenceService Node Scheduling
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" id="__nav_4_13" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_13">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Kafka" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_13">
+<span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../kafka/kafka/">
+        Inference with Kafka event source
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" id="__nav_4_14" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_14">
+          Rollout Strategies
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Rollout Strategies" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_14">
+<span class="md-nav__icon md-icon"></span>
+          Rollout Strategies
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/rollout/canary/">
+        Canary
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../v1beta1/rollout/canary-example/">
+        Canary Example
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="API Reference" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/api/">
+        Control Plane API
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/swagger-ui/">
+        Control Plane swagger-ui
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../sdk_docs/sdk_doc/">
+        Python Client SDK
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6">
+          Developer Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Developer Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+          Developer Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../developer/developer/">
+        How to contribute
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../developer/debug/">
+        Debugging guide
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Blog" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1">
+          Releases
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Releases" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+          Releases
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2022-07-21-KServe-0.9-release/">
+        KServe 0.9 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2022-02-18-KServe-0.8-release/">
+        KServe 0.8 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2021-10-11-KServe-0.7-release/">
+        KServe 0.7 Release
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" id="__nav_7_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_2">
+          Articles
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Articles" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_2">
+<span class="md-nav__icon md-icon"></span>
+          Articles
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2021-09-27-kfserving-transition/">
+        KFserving Transition
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8">
+          Community
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Community" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/adopters/">
+        Adopters
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/presentations/">
+        Demos and Presentations
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#httprest">
+    HTTP/REST
+  </a>
+<nav aria-label="HTTP/REST" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health">
+    Health
+  </a>
+<nav aria-label="Health" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-live">
+    Server Live
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-ready">
+    Server Ready
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-ready">
+    Model Ready
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata">
+    Server Metadata
+  </a>
+<nav aria-label="Server Metadata" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata-response-json-object">
+    Server Metadata Response JSON Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata-response-json-error-object">
+    Server Metadata Response JSON Error Object
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata">
+    Model Metadata
+  </a>
+<nav aria-label="Model Metadata" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata-response-json-object">
+    Model Metadata Response JSON Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata-response-json-error-object">
+    Model Metadata Response JSON Error Object
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference">
+    Inference
+  </a>
+<nav aria-label="Inference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-json-object">
+    Inference Request JSON Object
+  </a>
+<nav aria-label="Inference Request JSON Object" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-input">
+    Request Input
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-output">
+    Request Output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-response-json-object">
+    Inference Response JSON Object
+  </a>
+<nav aria-label="Inference Response JSON Object" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-output">
+    Response Output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-response-json-error-object">
+    Inference Response JSON Error Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-examples">
+    Inference Request Examples
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+    Parameters
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data">
+    Tensor Data
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grpc">
+    GRPC
+  </a>
+<nav aria-label="GRPC" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#health_1">
+    Health
+  </a>
+<nav aria-label="Health" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-live_1">
+    Server Live
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-ready_1">
+    Server Ready
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-ready_1">
+    Model Ready
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-metadata_1">
+    Server Metadata
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-metadata_1">
+    Model Metadata
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference_1">
+    Inference
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters_1">
+    Parameters
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data_1">
+    Tensor Data
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#platforms">
+    Platforms
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data-types">
+    Tensor Data Types
+  </a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/inference_api.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1 id="predict-protocol-version-2">Predict Protocol - Version 2<a class="headerlink" href="#predict-protocol-version-2" title="Permanent link">¶</a></h1>
+<p>This document proposes a predict/inference API independent of any
+specific ML/DL framework and model server. The proposed APIs are
+able to support both easy-to-use and high-performance use cases.
+By implementing this protocol both
+inference clients and servers will increase their utility and
+portability by being able to operate seamlessly on platforms that have
+standardized around this API. This protocol is endorsed by NVIDIA
+Triton Inference Server, TensorFlow Serving, and ONNX Runtime
+Server.</p>
+<p>For an inference server to be compliant with this protocol the server
+must implement all APIs described below, except where an optional
+feature is explicitly noted. A compliant inference server may choose
+to implement either or both of the HTTP/REST API and the GRPC API.</p>
+<p>The protocol supports an extension mechanism as a required part of the
+API, but this document does not propose any specific extensions. Any
+specific extensions will be proposed separately.</p>
+<h2 id="httprest">HTTP/REST<a class="headerlink" href="#httprest" title="Permanent link">¶</a></h2>
+<p>A compliant server must implement the health, metadata, and inference
+APIs described in this section.</p>
+<p>The HTTP/REST API uses JSON because it is widely supported and
+language independent. In all JSON schemas shown in this document
+$number, $string, $boolean, $object and $array refer to the
+fundamental JSON types. #optional indicates an optional JSON field.</p>
+<p>All strings in all contexts are case-sensitive.</p>
+<p>For KFServing the server must recognize the following URLs. The
+versions portion of the URL is shown as optional to allow
+implementations that don’t support versioning or for cases when the
+user does not want to specify a specific model version (in which case
+the server will choose a version based on its own policies).</p>
+<p><strong>Health:</strong></p>
+<p>GET v2/health/live
+ GET v2/health/ready
+ GET v2/models/${MODEL_NAME}[/versions/${MODEL_VERSION}]/ready</p>
+<p><strong>Server Metadata:</strong></p>
+<p>GET v2</p>
+<p><strong>Model Metadata:</strong></p>
+<p>GET v2/models/${MODEL_NAME}[/versions/${MODEL_VERSION}]</p>
+<p><strong>Inference:</strong></p>
+<p>POST v2/models/${MODEL_NAME}[/versions/${MODEL_VERSION}]/infer</p>
+<h3 id="health">Health<a class="headerlink" href="#health" title="Permanent link">¶</a></h3>
+<p>A health request is made with an HTTP GET to a health endpoint. The
+HTTP response status code indicates a boolean result for the health
+request. A 200 status code indicates true and a 4xx status code
+indicates false. The HTTP response body should be empty. There are
+three health APIs.</p>
+<h4 id="server-live">Server Live<a class="headerlink" href="#server-live" title="Permanent link">¶</a></h4>
+<p>The “server live” API indicates if the inference server is able to
+receive and respond to metadata and inference requests. The “server
+live” API can be used directly to implement the Kubernetes
+livenessProbe.</p>
+<h4 id="server-ready">Server Ready<a class="headerlink" href="#server-ready" title="Permanent link">¶</a></h4>
+<p>The “server ready” health API indicates if all the models are ready
+for inferencing. The “server ready” health API can be used directly to
+implement the Kubernetes readinessProbe.</p>
+<h4 id="model-ready">Model Ready<a class="headerlink" href="#model-ready" title="Permanent link">¶</a></h4>
+<p>The “model ready” health API indicates if a specific model is ready
+for inferencing. The model name and (optionally) version must be
+available in the URL. If a version is not provided the server may
+choose a version based on its own policies.</p>
+<h3 id="server-metadata">Server Metadata<a class="headerlink" href="#server-metadata" title="Permanent link">¶</a></h3>
+<p>The server metadata endpoint provides information about the server. A
+server metadata request is made with an HTTP GET to a server metadata
+endpoint. In the corresponding response the HTTP body contains the
+<a href="#server-metadata-response-json-object">Server Metadata Response JSON Object</a>
+or the
+<a href="#server-metadata-response-json-error-object">Server Metadata Response JSON Error Object</a>.</p>
+<h4 id="server-metadata-response-json-object">Server Metadata Response JSON Object<a class="headerlink" href="#server-metadata-response-json-object" title="Permanent link">¶</a></h4>
+<p>A successful server metadata request is indicated by a 200 HTTP status
+code. The server metadata response object, identified as
+<em>$metadata_server_response</em>, is returned in the HTTP body.</p>
+<pre><code>$metadata_server_response =
+{
+  "name" : $string,
+  "version" : $string,
+  "extensions" : [ $string, ... ]
+}
+</code></pre>
+<ul>
+<li>“name” : A descriptive name for the server.</li>
+<li>"version" : The server version.</li>
+<li>“extensions” : The extensions supported by the server. Currently no
+  standard extensions are defined. Individual inference servers may
+  define and document their own extensions.</li>
+</ul>
+<h4 id="server-metadata-response-json-error-object">Server Metadata Response JSON Error Object<a class="headerlink" href="#server-metadata-response-json-error-object" title="Permanent link">¶</a></h4>
+<p>A failed server metadata request must be indicated by an HTTP error
+status (typically 400). The HTTP body must contain the
+<em>$metadata_server_error_response</em> object.</p>
+<pre><code>$metadata_server_error_response =
+{
+  "error": $string
+}
+</code></pre>
+<ul>
+<li>“error” : The descriptive message for the error.</li>
+</ul>
+<h3 id="model-metadata">Model Metadata<a class="headerlink" href="#model-metadata" title="Permanent link">¶</a></h3>
+<p>The per-model metadata endpoint provides information about a model. A
+model metadata request is made with an HTTP GET to a model metadata
+endpoint. In the corresponding response the HTTP body contains the
+<a href="#model-metadata-response-json-object">Model Metadata Response JSON Object</a>
+or the
+<a href="#model-metadata-response-json-error-object">Model Metadata Response JSON Error Object</a>.
+The model name and (optionally) version must be available in the
+URL. If a version is not provided the server may choose a version
+based on its own policies or return an error.</p>
+<h4 id="model-metadata-response-json-object">Model Metadata Response JSON Object<a class="headerlink" href="#model-metadata-response-json-object" title="Permanent link">¶</a></h4>
+<p>A successful model metadata request is indicated by a 200 HTTP status
+code. The metadata response object, identified as
+<em>$metadata_model_response</em>, is returned in the HTTP body for every
+successful model metadata request.</p>
+<pre><code>$metadata_model_response =
+{
+  "name" : $string,
+  "versions" : [ $string, ... ] #optional,
+  "platform" : $string,
+  "inputs" : [ $metadata_tensor, ... ],
+  "outputs" : [ $metadata_tensor, ... ]
+}
+</code></pre>
+<ul>
+<li>“name” : The name of the model.</li>
+<li>"versions" : The model versions that may be explicitly requested via
+  the appropriate endpoint. Optional for servers that don’t support
+  versions. Optional for models that don’t allow a version to be
+  explicitly requested.</li>
+<li>“platform” : The framework/backend for the model. See
+  <a href="#platforms">Platforms</a>.</li>
+<li>“inputs” : The inputs required by the model.</li>
+<li>“outputs” : The outputs produced by the model.</li>
+</ul>
+<p>Each model input and output tensors’ metadata is described with a
+<em>$metadata_tensor object</em>.</p>
+<pre><code>$metadata_tensor =
+{
+  "name" : $string,
+  "datatype" : $string,
+  "shape" : [ $number, ... ]
+}
+</code></pre>
+<ul>
+<li>“name” : The name of the tensor.</li>
+<li>"datatype" : The data-type of the tensor elements as defined in
+  <a href="#tensor-data-types">Tensor Data Types</a>.</li>
+<li>"shape" : The shape of the tensor. Variable-size dimensions are
+  specified as -1.</li>
+</ul>
+<h4 id="model-metadata-response-json-error-object">Model Metadata Response JSON Error Object<a class="headerlink" href="#model-metadata-response-json-error-object" title="Permanent link">¶</a></h4>
+<p>A failed model metadata request must be indicated by an HTTP error
+status (typically 400). The HTTP body must contain the
+<em>$metadata_model_error_response</em> object.</p>
+<pre><code>$metadata_model_error_response =
+{
+  "error": $string
+}
+</code></pre>
+<ul>
+<li>“error” : The descriptive message for the error.</li>
+</ul>
+<h3 id="inference">Inference<a class="headerlink" href="#inference" title="Permanent link">¶</a></h3>
+<p>An inference request is made with an HTTP POST to an inference
+endpoint. In the request the HTTP body contains the
+<a href="#inference-request-json-object">Inference Request JSON Object</a>. In
+the corresponding response the HTTP body contains the
+<a href="#inference-response-json-object">Inference Response JSON Object</a> or
+<a href="#inference-response-json-error-object">Inference Response JSON Error Object</a>. See
+<a href="#inference-request-examples">Inference Request Examples</a> for some
+example HTTP/REST requests and responses.</p>
+<h4 id="inference-request-json-object">Inference Request JSON Object<a class="headerlink" href="#inference-request-json-object" title="Permanent link">¶</a></h4>
+<p>The inference request object, identified as <em>$inference_request</em>, is
+required in the HTTP body of the POST request. The model name and
+(optionally) version must be available in the URL. If a version is not
+provided the server may choose a version based on its own policies or
+return an error.</p>
+<pre><code>$inference_request =
+{
+  "id" : $string #optional,
+  "parameters" : $parameters #optional,
+  "inputs" : [ $request_input, ... ],
+  "outputs" : [ $request_output, ... ] #optional
+}
+</code></pre>
+<ul>
+<li>"id" : An identifier for this request. Optional, but if specified
+  this identifier must be returned in the response.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  inference request expressed as key/value pairs. See
+  <a href="#parameters">Parameters</a> for more information.</li>
+<li>"inputs" : The input tensors. Each input is described using the
+  <em>$request_input</em> schema defined in <a href="#request-input">Request Input</a>.</li>
+<li>"outputs" : The output tensors requested for this inference. Each
+  requested output is described using the <em>$request_output</em> schema
+  defined in <a href="#request-output">Request Output</a>. Optional, if not
+  specified all outputs produced by the model will be returned using
+  default <em>$request_output</em> settings.</li>
+</ul>
+<h5 id="request-input">Request Input<a class="headerlink" href="#request-input" title="Permanent link">¶</a></h5>
+<p>The <em>$request_input</em> JSON describes an input to the model. If the
+input is batched, the shape and data must represent the full shape and
+contents of the entire batch.</p>
+<pre><code>$request_input =
+{
+  "name" : $string,
+  "shape" : [ $number, ... ],
+  "datatype"  : $string,
+  "parameters" : $parameters #optional,
+  "data" : $tensor_data
+}
+</code></pre>
+<ul>
+<li>"name" : The name of the input tensor.</li>
+<li>"shape" : The shape of the input tensor. Each dimension must be an
+  integer representable as an unsigned 64-bit integer value.</li>
+<li>"datatype" : The data-type of the input tensor elements as defined
+  in <a href="#tensor-data-types">Tensor Data Types</a>.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  input expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+<li>“data”: The contents of the tensor. See <a href="#tensor-data">Tensor Data</a>
+  for more information.</li>
+</ul>
+<h5 id="request-output">Request Output<a class="headerlink" href="#request-output" title="Permanent link">¶</a></h5>
+<p>The <em>$request_output</em> JSON is used to request which output tensors
+should be returned from the model.</p>
+<pre><code>$request_output =
+{
+  "name" : $string,
+  "parameters" : $parameters #optional,
+}
+</code></pre>
+<ul>
+<li>"name" : The name of the output tensor.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  output expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+</ul>
+<h4 id="inference-response-json-object">Inference Response JSON Object<a class="headerlink" href="#inference-response-json-object" title="Permanent link">¶</a></h4>
+<p>A successful inference request is indicated by a 200 HTTP status
+code. The inference response object, identified as
+<em>$inference_response</em>, is returned in the HTTP body.</p>
+<pre><code>$inference_response =
+{
+  "model_name" : $string,
+  "model_version" : $string #optional,
+  "id" : $string,
+  "parameters" : $parameters #optional,
+  "outputs" : [ $response_output, ... ]
+}
+</code></pre>
+<ul>
+<li>"model_name" : The name of the model used for inference.</li>
+<li>"model_version" : The specific model version used for
+  inference. Inference servers that do not implement versioning should
+  not provide this field in the response.</li>
+<li>"id" : The "id" identifier given in the request, if any.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  response expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+<li>"outputs" : The output tensors. Each output is described using the
+  $response_output schema defined in
+  <a href="#response-output">Response Output</a>.</li>
+</ul>
+<h5 id="response-output">Response Output<a class="headerlink" href="#response-output" title="Permanent link">¶</a></h5>
+<p>The <em>$response_output</em> JSON describes an output from the model. If the
+output is batched, the shape and data represents the full shape of the
+entire batch.</p>
+<pre><code>$response_output =
+{
+  "name" : $string,
+  "shape" : [ $number, ... ],
+  "datatype"  : $string,
+  "parameters" : $parameters #optional,
+  "data" : $tensor_data
+}
+</code></pre>
+<ul>
+<li>"name" : The name of the output tensor.</li>
+<li>"shape" : The shape of the output tensor. Each dimension must be an
+  integer representable as an unsigned 64-bit integer value.</li>
+<li>"datatype" : The data-type of the output tensor elements as defined
+  in <a href="#tensor-data-types">Tensor Data Types</a>.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  input expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+<li>“data”: The contents of the tensor. See <a href="#tensor-data">Tensor Data</a>
+  for more information.</li>
+</ul>
+<h4 id="inference-response-json-error-object">Inference Response JSON Error Object<a class="headerlink" href="#inference-response-json-error-object" title="Permanent link">¶</a></h4>
+<p>A failed inference request must be indicated by an HTTP error status
+(typically 400). The HTTP body must contain the
+<em>$inference_error_response</em> object.</p>
+<pre><code>$inference_error_response =
+{
+  "error": &lt;error message string&gt;
+}
+</code></pre>
+<ul>
+<li>“error” : The descriptive message for the error.</li>
+</ul>
+<h4 id="inference-request-examples">Inference Request Examples<a class="headerlink" href="#inference-request-examples" title="Permanent link">¶</a></h4>
+<p>The following example shows an inference request to a model with two
+inputs and one output. The HTTP Content-Length header gives the size
+of the JSON object.</p>
+<pre><code>POST /v2/models/mymodel/infer HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+Content-Length: &lt;xx&gt;
+{
+  "id" : "42",
+  "inputs" : [
+    {
+      "name" : "input0",
+      "shape" : [ 2, 2 ],
+      "datatype" : "UINT32",
+      "data" : [ 1, 2, 3, 4 ]
+    },
+    {
+      "name" : "input1",
+      "shape" : [ 3 ],
+      "datatype" : "BOOL",
+      "data" : [ true ]
+    }
+  ],
+  "outputs" : [
+    {
+      "name" : "output0"
+    }
+  ]
+}
+</code></pre>
+<p>For the above request the inference server must return the “output0”
+output tensor. Assuming the model returns a [ 3, 2 ] tensor of data
+type FP32 the following response would be returned.</p>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: &lt;yy&gt;
+{
+  "id" : "42"
+  "outputs" : [
+    {
+      "name" : "output0",
+      "shape" : [ 3, 2 ],
+      "datatype"  : "FP32",
+      "data" : [ 1.0, 1.1, 2.0, 2.1, 3.0, 3.1 ]
+    }
+  ]
+}
+</code></pre>
+<h3 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h3>
+<p>The <em>$parameters</em> JSON describes zero or more “name”/”value” pairs,
+where the “name” is the name of the parameter and the “value” is a
+$string, $number, or $boolean.</p>
+<pre><code>$parameters =
+{
+  $parameter, ...
+}
+
+$parameter = $string : $string | $number | $boolean
+</code></pre>
+<p>Currently no parameters are defined. As required a future proposal may
+define one or more standard parameters to allow portable functionality
+across different inference servers. A server can implement
+server-specific parameters to provide non-standard capabilities.</p>
+<h3 id="tensor-data">Tensor Data<a class="headerlink" href="#tensor-data" title="Permanent link">¶</a></h3>
+<p>Tensor data must be presented in row-major order of the tensor
+elements. Element values must be given in "linear" order without any
+stride or padding between elements. Tensor elements may be presented
+in their nature multi-dimensional representation, or as a flattened
+one-dimensional representation.</p>
+<p>Tensor data given explicitly is provided in a JSON array. Each element
+of the array may be an integer, floating-point number, string or
+boolean value. The server can decide to coerce each element to the
+required type or return an error if an unexpected value is
+received. Note that fp16 is problematic to communicate explicitly
+since there is not a standard fp16 representation across backends nor
+typically the programmatic support to create the fp16 representation
+for a JSON number.</p>
+<p>For example, the 2-dimensional matrix:</p>
+<pre><code>[ 1 2
+  4 5 ]
+</code></pre>
+<p>Can be represented in its natural format as:</p>
+<pre><code>"data" : [ [ 1, 2 ], [ 4, 5 ] ]
+</code></pre>
+<p>Or in a flattened one-dimensional representation:</p>
+<pre><code>"data" : [ 1, 2, 4, 5 ]
+</code></pre>
+<h2 id="grpc">GRPC<a class="headerlink" href="#grpc" title="Permanent link">¶</a></h2>
+<p>The GRPC API closely follows the concepts defined in the
+<a href="#httprest">HTTP/REST</a> API. A compliant server must implement the
+health, metadata, and inference APIs described in this section.</p>
+<p>All strings in all contexts are case-sensitive.</p>
+<p>The GRPC definition of the service is:</p>
+<pre><code>//
+// Inference Server GRPC endpoints.
+//
+service GRPCInferenceService
+{
+  // Check liveness of the inference server.
+  rpc ServerLive(ServerLiveRequest) returns (ServerLiveResponse) {}
+
+  // Check readiness of the inference server.
+  rpc ServerReady(ServerReadyRequest) returns (ServerReadyResponse) {}
+
+  // Check readiness of a model in the inference server.
+  rpc ModelReady(ModelReadyRequest) returns (ModelReadyResponse) {}
+
+  // Get server metadata.
+  rpc ServerMetadata(ServerMetadataRequest) returns (ServerMetadataResponse) {}
+
+  // Get model metadata.
+  rpc ModelMetadata(ModelMetadataRequest) returns (ModelMetadataResponse) {}
+
+  // Perform inference using a specific model.
+  rpc ModelInfer(ModelInferRequest) returns (ModelInferResponse) {}
+}
+</code></pre>
+<h3 id="health_1">Health<a class="headerlink" href="#health_1" title="Permanent link">¶</a></h3>
+<p>A health request is made using the ServerLive, ServerReady, or
+ModelReady endpoint. For each of these endpoints errors are indicated
+by the google.rpc.Status returned for the request. The OK code
+indicates success and other codes indicate failure.</p>
+<h4 id="server-live_1">Server Live<a class="headerlink" href="#server-live_1" title="Permanent link">¶</a></h4>
+<p>The ServerLive API indicates if the inference server is able to
+receive and respond to metadata and inference requests. The request
+and response messages for ServerLive are:</p>
+<pre><code>message ServerLiveRequest {}
+
+message ServerLiveResponse
+{
+  // True if the inference server is live, false if not live.
+  bool live = 1;
+}
+</code></pre>
+<h4 id="server-ready_1">Server Ready<a class="headerlink" href="#server-ready_1" title="Permanent link">¶</a></h4>
+<p>The ServerReady API indicates if the server is ready for
+inferencing. The request and response messages for ServerReady are:</p>
+<pre><code>message ServerReadyRequest {}
+
+message ServerReadyResponse
+{
+  // True if the inference server is ready, false if not ready.
+  bool ready = 1;
+}
+</code></pre>
+<h4 id="model-ready_1">Model Ready<a class="headerlink" href="#model-ready_1" title="Permanent link">¶</a></h4>
+<p>The ModelReady API indicates if a specific model is ready for
+inferencing. The request and response messages for ModelReady are:</p>
+<pre><code>message ModelReadyRequest
+{
+  // The name of the model to check for readiness.
+  string name = 1;
+
+  // The version of the model to check for readiness. If not given the
+  // server will choose a version based on the model and internal policy.
+  string version = 2;
+}
+
+message ModelReadyResponse
+{
+  // True if the model is ready, false if not ready.
+  bool ready = 1;
+}
+</code></pre>
+<h3 id="server-metadata_1">Server Metadata<a class="headerlink" href="#server-metadata_1" title="Permanent link">¶</a></h3>
+<p>The ServerMetadata API provides information about the server. Errors
+are indicated by the google.rpc.Status returned for the request. The
+OK code indicates success and other codes indicate failure. The
+request and response messages for ServerMetadata are:</p>
+<pre><code>message ServerMetadataRequest {}
+
+message ServerMetadataResponse
+{
+  // The server name.
+  string name = 1;
+
+  // The server version.
+  string version = 2;
+
+  // The extensions supported by the server.
+  repeated string extensions = 3;
+}
+</code></pre>
+<h3 id="model-metadata_1">Model Metadata<a class="headerlink" href="#model-metadata_1" title="Permanent link">¶</a></h3>
+<p>The per-model metadata API provides information about a model. Errors
+are indicated by the google.rpc.Status returned for the request. The
+OK code indicates success and other codes indicate failure. The
+request and response messages for ModelMetadata are:</p>
+<pre><code>message ModelMetadataRequest
+{
+  // The name of the model.
+  string name = 1;
+
+  // The version of the model to check for readiness. If not given the
+  // server will choose a version based on the model and internal policy.
+  string version = 2;
+}
+
+message ModelMetadataResponse
+{
+  // Metadata for a tensor.
+  message TensorMetadata
+  {
+    // The tensor name.
+    string name = 1;
+
+    // The tensor data type.
+    string datatype = 2;
+
+    // The tensor shape. A variable-size dimension is represented
+    // by a -1 value.
+    repeated int64 shape = 3;
+  }
+
+  // The model name.
+  string name = 1;
+
+  // The versions of the model available on the server.
+  repeated string versions = 2;
+
+  // The model's platform. See Platforms.
+  string platform = 3;
+
+  // The model's inputs.
+  repeated TensorMetadata inputs = 4;
+
+  // The model's outputs.
+  repeated TensorMetadata outputs = 5;
+}
+</code></pre>
+<h3 id="inference_1">Inference<a class="headerlink" href="#inference_1" title="Permanent link">¶</a></h3>
+<p>The ModelInfer API performs inference using the specified
+model. Errors are indicated by the google.rpc.Status returned for the
+request. The OK code indicates success and other codes indicate
+failure. The request and response messages for ModelInfer are:</p>
+<pre><code>message ModelInferRequest
+{
+  // An input tensor for an inference request.
+  message InferInputTensor
+  {
+    // The tensor name.
+    string name = 1;
+
+    // The tensor data type.
+    string datatype = 2;
+
+    // The tensor shape.
+    repeated int64 shape = 3;
+
+    // Optional inference input tensor parameters.
+    map&lt;string, InferParameter&gt; parameters = 4;
+
+    // The tensor contents using a data-type format. This field must
+    // not be specified if "raw" tensor contents are being used for
+    // the inference request.
+    InferTensorContents contents = 5;
+  }
+
+  // An output tensor requested for an inference request.
+  message InferRequestedOutputTensor
+  {
+    // The tensor name.
+    string name = 1;
+
+    // Optional requested output tensor parameters.
+    map&lt;string, InferParameter&gt; parameters = 2;
+  }
+
+  // The name of the model to use for inferencing.
+  string model_name = 1;
+
+  // The version of the model to use for inference. If not given the
+  // server will choose a version based on the model and internal policy.
+  string model_version = 2;
+
+  // Optional identifier for the request. If specified will be
+  // returned in the response.
+  string id = 3;
+
+  // Optional inference parameters.
+  map&lt;string, InferParameter&gt; parameters = 4;
+
+  // The input tensors for the inference.
+  repeated InferInputTensor inputs = 5;
+
+  // The requested output tensors for the inference. Optional, if not
+  // specified all outputs produced by the model will be returned.
+  repeated InferRequestedOutputTensor outputs = 6;
+
+  // The data contained in an input tensor can be represented in "raw"
+  // bytes form or in the repeated type that matches the tensor's data
+  // type. To use the raw representation 'raw_input_contents' must be
+  // initialized with data for each tensor in the same order as
+  // 'inputs'. For each tensor, the size of this content must match
+  // what is expected by the tensor's shape and data type. The raw
+  // data must be the flattened, one-dimensional, row-major order of
+  // the tensor elements without any stride or padding between the
+  // elements. Note that the FP16 data type must be represented as raw
+  // content as there is no specific data type for a 16-bit float
+  // type.
+  //
+  // If this field is specified then InferInputTensor::contents must
+  // not be specified for any input tensor.
+  repeated bytes raw_input_contents = 7;
+}
+
+message ModelInferResponse
+{
+  // An output tensor returned for an inference request.
+  message InferOutputTensor
+  {
+    // The tensor name.
+    string name = 1;
+
+    // The tensor data type.
+    string datatype = 2;
+
+    // The tensor shape.
+    repeated int64 shape = 3;
+
+    // Optional output tensor parameters.
+    map&lt;string, InferParameter&gt; parameters = 4;
+
+    // The tensor contents using a data-type format. This field must
+    // not be specified if "raw" tensor contents are being used for
+    // the inference response.
+    InferTensorContents contents = 5;
+  }
+
+  // The name of the model used for inference.
+  string model_name = 1;
+
+  // The version of the model used for inference.
+  string model_version = 2;
+
+  // The id of the inference request if one was specified.
+  string id = 3;
+
+  // Optional inference response parameters.
+  map&lt;string, InferParameter&gt; parameters = 4;
+
+  // The output tensors holding inference results.
+  repeated InferOutputTensor outputs = 5;
+
+  // The data contained in an output tensor can be represented in
+  // "raw" bytes form or in the repeated type that matches the
+  // tensor's data type. To use the raw representation 'raw_output_contents'
+  // must be initialized with data for each tensor in the same order as
+  // 'outputs'. For each tensor, the size of this content must match
+  // what is expected by the tensor's shape and data type. The raw
+  // data must be the flattened, one-dimensional, row-major order of
+  // the tensor elements without any stride or padding between the
+  // elements. Note that the FP16 data type must be represented as raw
+  // content as there is no specific data type for a 16-bit float
+  // type.
+  //
+  // If this field is specified then InferOutputTensor::contents must
+  // not be specified for any output tensor.
+  repeated bytes raw_output_contents = 6;
+}
+</code></pre>
+<h3 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">¶</a></h3>
+<p>The Parameters message describes a “name”/”value” pair, where the
+“name” is the name of the parameter and the “value” is a boolean,
+integer, or string corresponding to the parameter.</p>
+<p>Currently no parameters are defined. As required a future proposal may
+define one or more standard parameters to allow portable functionality
+across different inference servers. A server can implement
+server-specific parameters to provide non-standard capabilities.</p>
+<pre><code>//
+// An inference parameter value.
+//
+message InferParameter
+{
+  // The parameter value can be a string, an int64, a boolean
+  // or a message specific to a predefined parameter.
+  oneof parameter_choice
+  {
+    // A boolean parameter value.
+    bool bool_param = 1;
+
+    // An int64 parameter value.
+    int64 int64_param = 2;
+
+    // A string parameter value.
+    string string_param = 3;
+  }
+}
+</code></pre>
+<h3 id="tensor-data_1">Tensor Data<a class="headerlink" href="#tensor-data_1" title="Permanent link">¶</a></h3>
+<p>In all representations tensor data must be flattened to a
+one-dimensional, row-major order of the tensor elements. Element
+values must be given in "linear" order without any stride or padding
+between elements.</p>
+<p>Using a "raw" representation of tensors with
+ModelInferRequest::raw_input_contents and
+ModelInferResponse::raw_output_contents will typically allow higher
+performance due to the way protobuf allocation and reuse interacts
+with GRPC. For example, see https://github.com/grpc/grpc/issues/23231.</p>
+<p>An alternative to the "raw" representation is to use
+InferTensorContents to represent the tensor data in a format that
+matches the tensor's data type.</p>
+<pre><code>//
+// The data contained in a tensor represented by the repeated type
+// that matches the tensor's data type. Protobuf oneof is not used
+// because oneofs cannot contain repeated fields.
+//
+message InferTensorContents
+{
+  // Representation for BOOL data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated bool bool_contents = 1;
+
+  // Representation for INT8, INT16, and INT32 data types. The size
+  // must match what is expected by the tensor's shape. The contents
+  // must be the flattened, one-dimensional, row-major order of the
+  // tensor elements.
+  repeated int32 int_contents = 2;
+
+  // Representation for INT64 data types. The size must match what
+  // is expected by the tensor's shape. The contents must be the
+  // flattened, one-dimensional, row-major order of the tensor elements.
+  repeated int64 int64_contents = 3;
+
+  // Representation for UINT8, UINT16, and UINT32 data types. The size
+  // must match what is expected by the tensor's shape. The contents
+  // must be the flattened, one-dimensional, row-major order of the
+  // tensor elements.
+  repeated uint32 uint_contents = 4;
+
+  // Representation for UINT64 data types. The size must match what
+  // is expected by the tensor's shape. The contents must be the
+  // flattened, one-dimensional, row-major order of the tensor elements.
+  repeated uint64 uint64_contents = 5;
+
+  // Representation for FP32 data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated float fp32_contents = 6;
+
+  // Representation for FP64 data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated double fp64_contents = 7;
+
+  // Representation for BYTES data type. The size must match what is
+  // expected by the tensor's shape. The contents must be the flattened,
+  // one-dimensional, row-major order of the tensor elements.
+  repeated bytes bytes_contents = 8;
+}
+</code></pre>
+<h2 id="platforms">Platforms<a class="headerlink" href="#platforms" title="Permanent link">¶</a></h2>
+<p>A platform is a string indicating a DL/ML framework or
+backend. Platform is returned as part of the response to a
+<a href="#model_metadata">Model Metadata</a> request but is information only. The
+proposed inference APIs are generic relative to the DL/ML framework
+used by a model and so a client does not need to know the platform of
+a given model to use the API. Platform names use the format
+“<project>_<format>”. The following platform names are allowed:</format></project></p>
+<ul>
+<li>tensorrt_plan : A TensorRT model encoded as a serialized engine or “plan”.</li>
+<li>tensorflow_graphdef : A TensorFlow model encoded as a GraphDef.</li>
+<li>tensorflow_savedmodel : A TensorFlow model encoded as a SavedModel.</li>
+<li>onnx_onnxv1 : A ONNX model encoded for ONNX Runtime.</li>
+<li>pytorch_torchscript : A PyTorch model encoded as TorchScript.</li>
+<li>mxnet_mxnet: An MXNet model</li>
+<li>caffe2_netdef : A Caffe2 model encoded as a NetDef.</li>
+</ul>
+<h2 id="tensor-data-types">Tensor Data Types<a class="headerlink" href="#tensor-data-types" title="Permanent link">¶</a></h2>
+<p>Tensor data types are shown in the following table along with the size
+of each type, in bytes.</p>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Size (bytes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOL</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UINT8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UINT16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>UINT32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>UINT64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>INT16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>INT32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>INT64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>FP32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>FP64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>BYTES</td>
+<td>Variable (max 2<sup>32</sup>)</td>
+</tr>
+</tbody>
+</table>
+</article>
+</div>
+</div>
+<a class="md-top md-icon" data-md-component="top" data-md-state="hidden" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path></svg>
+            Back to top
+          </a>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Model Serving Data Plane" class="md-footer__link md-footer__link--prev" href="../data_plane/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Model Serving Data Plane
+            </div>
+</div>
+</a>
+<a aria-label="Next: Serving Runtimes" class="md-footer__link md-footer__link--next" href="../servingruntimes/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Serving Runtimes
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2021 The KServe Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/kserve" rel="noopener" target="_blank" title="KServe Community on Github">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+<a class="md-social__link" href="https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#" rel="noopener" target="_blank" title="Slack">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+</body>
+</html>
