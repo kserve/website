@@ -25,7 +25,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [Seldon](https://www.seldon.io/)                                             | [Clive Cox](https://github.com/cliveseldon)        |
 | [Patterson Consulting](http://www.pattersonconsultingtn.com/)                | [Josh Patterson](https://github.com/jpatanooga)    |
 | [Samsung SDS](https://www.samsungsds.com/)                                   | [Hanbae Seo](https://github.com/jazzsir)           |
-| [Striveworks](https://striveworks.us/)                                       | [Jake Neyer](https://github.com/JakeNeyer)         |
+| [Striveworks](https://striveworks.us/)                                       | [Jordan Yono](https://github.com/jyono)            |
 | [Zillow](https://www.zillow.com/)                                            | [Peilun Li](https://github.com/Peilun-Li)          |
 | [Upstage](https://www.upstage.ai/)                                           | [JuHyung Son](https://github.com/JuHyung-Son)      |
 | [Intuit](https://www.intuit.com/)                                            | [Rachit Chauhan](https://github.com/rachitchauhan43)   |
