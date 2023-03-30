@@ -59,12 +59,11 @@ Deploy the Redis server
 ```bash
 kubectl apply -f redis.yaml
 ```
-Expected Output
-```
-$ deployment.apps/redis-server created
-$ service/redis-service created
-
-```
+!!! Success "Expected output"
+    ```{ .bash .no-copy }
+    $ deployment.apps/redis-server created
+    $ service/redis-service created
+    ```
 
 ## Create the Feast server
 
@@ -154,12 +153,12 @@ Once the Redis server is up and running deploy the Feast server
 ```bash
 kubectl apply -f feast_server.yaml
 ```
-Expected Output
-```
-$ deployment.apps/feature-server created
-$ service/feature-server-service created
 
-```
+!!! Success "Expected output"
+    ```{ .bash .no-copy }
+    $ deployment.apps/feature-server created
+    $ service/feature-server-service created
+    ```
 
 ## Create a Transformer with Feast
 
@@ -223,14 +222,14 @@ spec:
 ```
 
 Apply the CRD
-```
+```bash
 kubectl apply -f driver_transformer.yaml
 ```
 
-Expected Output
-```
-$ inferenceservice.serving.kserve.io/sklearn-driver-transformer created
-```
+!!! Success "Expected output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/sklearn-driver-transformer created
+    ```
 
 ## Run a prediction
 The first step is to prepare inputs for the inference request. Copy the following Json into a file named `driver-input.json`.
@@ -252,23 +251,23 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
 ```
 
-==** Expected Output **==
-```
-> POST /v1/models/sklearn-driver-transformer:predict HTTP/1.1
-> Host: sklearn-driver-transformer.default.example.com
-> User-Agent: curl/7.85.0
-> Accept: */*
-> Content-Length: 57
-> Content-Type: application/x-www-form-urlencoded
-> 
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 200 OK
-< content-length: 115
-< content-type: application/json
-< date: Thu, 30 Mar 2023 09:46:52 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 112
-< 
-* Connection #0 to host 1.2.3.4 left intact
-{"predictions":[0.45905828209879473,1.5118208033011165,0.21514156911776539,0.5555778492605103,0.49638665080127176]}
-```
+!!! Success "Expected output"
+    ```{ .bash .no-copy }
+    > POST /v1/models/sklearn-driver-transformer:predict HTTP/1.1
+    > Host: sklearn-driver-transformer.default.example.com
+    > User-Agent: curl/7.85.0
+    > Accept: */*
+    > Content-Length: 57
+    > Content-Type: application/x-www-form-urlencoded
+    > 
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 115
+    < content-type: application/json
+    < date: Thu, 30 Mar 2023 09:46:52 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 112
+    < 
+    * Connection #0 to host 1.2.3.4 left intact
+    {"predictions":[0.45905828209879473,1.5118208033011165,0.21514156911776539,0.5555778492605103,0.49638665080127176]}
+    ```
