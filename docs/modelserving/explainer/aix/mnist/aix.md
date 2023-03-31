@@ -45,7 +45,7 @@ aix-explainer   http://aix-explainer.default.example.com   True           100   
 ## Run Explanation
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, the example code for model training and explainer client can be found [here](https://github.com/kserve/kserve/blob/master/docs/samples/explanation/aix/mnist).
 
-```
+```bash
 MODEL_NAME=aix-explainer
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME}
@@ -61,19 +61,21 @@ Similarly, the bottom-right image with the title "Positive for 0 Actual 2" is th
 
 To try a different MNIST example add an integer to the end of the query between 0-10,000. The integer chosen will be the index of the image to be chosen in the MNIST dataset.
 
-```
+```bash
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} 100
 ```
 To try different parameters with explainer, add another string json argument to specify the parameters. Supported modified parameters: top_labels, segmentation_alg, num_samples, positive_only, and min_weight. 
 
-```
+```bash
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} 100 '{"top_labels":"10"}'
 
 ```
 
 ## Stopping the Inference Service
 
-`kubectl delete -f aix-explainer.yaml`
+```bash
+kubectl delete -f aix-explainer.yaml
+```
 
 ## Build a Development AIX Model Explainer Docker Image
 

@@ -68,14 +68,14 @@ Create the `InferenceService` with `pmml` predictor and specify the `storageUri`
     ```
 
 Apply the `InferenceService` custom resource
-```
+```bash
 kubectl apply -f spark_pmml.yaml
 ```
 
-Expected Output
-```
-$ inferenceservice.serving.kserve.io/spark-pmml created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/spark-pmml created
+    ```
 
 Wait the `InferenceService` to be ready
 ```bash
@@ -86,33 +86,33 @@ inferenceservice.serving.kserve.io/spark-pmml condition met
 ### Run a prediction
 The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-```
+```bash
 MODEL_NAME=spark-pmml
 INPUT_PATH=@./pmml-input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice spark-pmml -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-Expected Output
+!!! success "Expected Output"
 
-```
-* Connected to spark-pmml.default.35.237.217.209.xip.io (35.237.217.209) port 80 (#0)
-> POST /v1/models/spark-pmml:predict HTTP/1.1
-> Host: spark-pmml.default.35.237.217.209.xip.io
-> User-Agent: curl/7.73.0
-> Accept: */*
-> Content-Length: 45
-> Content-Type: application/x-www-form-urlencoded
->
-* upload completely sent off: 45 out of 45 bytes
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 200 OK
-< content-length: 39
-< content-type: application/json; charset=UTF-8
-< date: Sun, 07 Mar 2021 19:32:50 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 14
-<
-* Connection #0 to host spark-pmml.default.35.237.217.209.xip.io left intact
-{"predictions": [[1.0, 0.0, 1.0, 0.0]]}
-```
+    ```{ .bash .no-copy }
+    * Connected to spark-pmml.default.35.237.217.209.xip.io (35.237.217.209) port 80 (#0)
+    > POST /v1/models/spark-pmml:predict HTTP/1.1
+    > Host: spark-pmml.default.35.237.217.209.xip.io
+    > User-Agent: curl/7.73.0
+    > Accept: */*
+    > Content-Length: 45
+    > Content-Type: application/x-www-form-urlencoded
+    >
+    * upload completely sent off: 45 out of 45 bytes
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 39
+    < content-type: application/json; charset=UTF-8
+    < date: Sun, 07 Mar 2021 19:32:50 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 14
+    <
+    * Connection #0 to host spark-pmml.default.35.237.217.209.xip.io left intact
+    {"predictions": [[1.0, 0.0, 1.0, 0.0]]}
+    ```

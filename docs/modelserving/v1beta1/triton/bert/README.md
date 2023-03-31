@@ -130,23 +130,23 @@ spec:
 ```
 
 Apply the `InferenceService` yaml.
-```
+```bash
 kubectl apply -f bert_v1beta1.yaml
 ```
 
-Expected Output
-```
-inferenceservice.serving.kserve.io/bert-v2 created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/bert-v2 created
+    ```
 
 ## Check the InferenceService
-```
+```bash
 kubectl get inferenceservice bert-v2
 NAME      URL                                           READY   AGE
 bert-v2   http://bert-v2.default.35.229.120.99.xip.io   True    71s
 ```
 you will see both transformer and predictor are created and in ready state
-```
+```bash
 kubectl get revision -l serving.kserve.io/inferenceservice=bert-v2
 NAME                                CONFIG NAME                   K8S SERVICE NAME                    GENERATION   READY   REASON
 bert-v2-predictor-default-plhgs     bert-v2-predictor-default     bert-v2-predictor-default-plhgs     1            True    
@@ -173,7 +173,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservices bert-v2 -o jsonpath='{.status.u
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
 ```
 
-Expected output
-```
-{"predictions": "John F. Kennedy", "prob": 77.91848979818604}
-```
+!!! success "Expected output"
+    ```{ .bash .no-copy }
+    {"predictions": "John F. Kennedy", "prob": 77.91848979818604}
+    ```

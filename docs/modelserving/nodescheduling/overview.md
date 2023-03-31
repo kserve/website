@@ -25,7 +25,7 @@ You can learn more about node selector and node affinity from [this quick video]
 Having node selector/node affinity is great to ensure a pod runs only on a node, but what if we don't want other pods to also run on this node? We could add pod anti-affinity to every other pods but this quickly becomes hard to maintain. This is where kubernetes taints & tolerations comes into play (see [Taints and Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)). This feature is leveraged by KServe and it allows us to completely isolate a node so that only pods that are "authorized" or more precisely, that have the required **toleration** can run on it.  
 #### Taints  
 We can use a taint on a node to specify that only pods with a toleration to this taint can run on this node.  
-This can be illustrated as follow :  
+This can be illustrated as follow : 
 ![](./images/taints.svg)   
 Here we can see that node 1 has a taint while node 2 and node 3 have no taint.  
 Since no pod has a toleration that matches node 1's taint, no pod can be scheduled on node 1.  

@@ -123,7 +123,7 @@ Note that this makes the following assumptions:
 
 
 === "kubectl"
-    ```
+    ```bash
     kubectl apply -f ./sklearn.yaml
     ```
 
@@ -155,7 +155,7 @@ Now, assuming that your ingress can be accessed at
 `${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
-you can use `curl` to send the inference request as:
+You can use `curl` to send the inference request as:
  
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-irisv2 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -167,21 +167,21 @@ curl -v \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/sklearn-irisv2/infer
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```json
-{
-  "id": "823248cc-d770-4a51-9606-16803395569c",
-  "model_name": "sklearn-irisv2",
-  "model_version": "v1.0.0",
-  "outputs": [
+    ```{ .json .no-copy }
     {
-      "data": [1, 1],
-      "datatype": "INT64",
-      "name": "predict",
-      "parameters": null,
-      "shape": [2]
+      "id": "823248cc-d770-4a51-9606-16803395569c",
+      "model_name": "sklearn-irisv2",
+      "model_version": "v1.0.0",
+      "outputs": [
+        {
+          "data": [1, 1],
+          "datatype": "INT64",
+          "name": "predict",
+          "parameters": null,
+          "shape": [2]
+        }
+      ]
     }
-  ]
-}
-```
+    ```

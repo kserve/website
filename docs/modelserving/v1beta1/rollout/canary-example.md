@@ -16,7 +16,7 @@ After rolling out the first model, 100% traffic goes to the initial model with s
 Run `kubectl get isvc sklearn-iris` in the command line to see the amount of traffic routing to the InferenceService
 under the `LATEST` column.
 
-```
+```{ .bash .no-copy }
 NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
 sklearn-iris   http://sklearn-iris.kserve-test.example.com   True           100                              sklearn-iris-predictor-default-00001   46s                               2m39s                             70s
 ```
@@ -97,7 +97,7 @@ Send more requests to the `InferenceService` to observe the 10% of traffic that 
 If the canary model is healthy/passes your tests, you can promote it by removing the `canaryTrafficPercent` field and
 re-applying the `InferenceService` custom resource.
 
-```
+```bash
 kubectl apply -n kserve-test -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
@@ -114,7 +114,7 @@ EOF
 
 Now all traffic goes to the revision 2 for the new model.
 
-```
+```bash
 kubectl get isvc sklearn-iris
 NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
 sklearn-iris   http://sklearn-iris.kserve-test.example.com   True           100                              sklearn-iris-predictor-default-00002   17m
@@ -203,35 +203,35 @@ kubectl get isvc sklearn-iris -ojsonpath="{.status.components.predictor}"  | jq
 ```
 
 The output should look like
-
-```bash
-{
-  "address": {
-    "url": "http://sklearn-iris-predictor-default.kserve-test.svc.cluster.local"
-  },
-  "latestCreatedRevision": "sklearn-iris-predictor-default-00003",
-  "latestReadyRevision": "sklearn-iris-predictor-default-00003",
-  "latestRolledoutRevision": "sklearn-iris-predictor-default-00001",
-  "previousRolledoutRevision": "sklearn-iris-predictor-default-00001",
-  "traffic": [
+!!! success "Expected Output"
+    ```{ .json .no-copy }
     {
-      "latestRevision": true,
-      "percent": 10,
-      "revisionName": "sklearn-iris-predictor-default-00003",
-      "tag": "latest",
-      "url": "http://latest-sklearn-iris-predictor-default.kserve-test.example.com"
-    },
-    {
-      "latestRevision": false,
-      "percent": 90,
-      "revisionName": "sklearn-iris-predictor-default-00001",
-      "tag": "prev",
-      "url": "http://prev-sklearn-iris-predictor-default.kserve-test.example.com"
+      "address": {
+        "url": "http://sklearn-iris-predictor-default.kserve-test.svc.cluster.local"
+      },
+      "latestCreatedRevision": "sklearn-iris-predictor-default-00003",
+      "latestReadyRevision": "sklearn-iris-predictor-default-00003",
+      "latestRolledoutRevision": "sklearn-iris-predictor-default-00001",
+      "previousRolledoutRevision": "sklearn-iris-predictor-default-00001",
+      "traffic": [
+        {
+          "latestRevision": true,
+          "percent": 10,
+          "revisionName": "sklearn-iris-predictor-default-00003",
+          "tag": "latest",
+          "url": "http://latest-sklearn-iris-predictor-default.kserve-test.example.com"
+        },
+        {
+          "latestRevision": false,
+          "percent": 90,
+          "revisionName": "sklearn-iris-predictor-default-00001",
+          "tag": "prev",
+          "url": "http://prev-sklearn-iris-predictor-default.kserve-test.example.com"
+        }
+      ],
+      "url": "http://sklearn-iris-predictor-default.kserve-test.example.com"
     }
-  ],
-  "url": "http://sklearn-iris-predictor-default.kserve-test.example.com"
-}
-```
+    ```
 
 Since we updated the annotation on the `InferenceService`, model v2 now corresponds to `sklearn-iris-predictor-default-00003`.
 

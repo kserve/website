@@ -93,49 +93,49 @@ The request will go to the model agent container first, the batcher in sidecar c
     If the interval of sending the two requests is less than `maxLatency`, the returned `batchId` will be the same.
 
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-Summary:
-  Total:	10.5361 secs
-  Slowest:	0.5759 secs
-  Fastest:	0.4983 secs
-  Average:	0.5265 secs
-  Requests/sec:	9.4912
-  
-  Total data:	24100 bytes
-  Size/request:	241 bytes
-
-Response time histogram:
-  0.498 [1]	|■
-  0.506 [0]	|
-  0.514 [44]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  0.522 [21]	|■■■■■■■■■■■■■■■■■■■
-  0.529 [4]	|■■■■
-  0.537 [5]	|■■■■■
-  0.545 [4]	|■■■■
-  0.553 [0]	|
-  0.560 [7]	|■■■■■■
-  0.568 [4]	|■■■■
-  0.576 [10]	|■■■■■■■■■
-
-
-Latency distribution:
-  10% in 0.5100 secs
-  25% in 0.5118 secs
-  50% in 0.5149 secs
-  75% in 0.5406 secs
-  90% in 0.5706 secs
-  95% in 0.5733 secs
-  99% in 0.5759 secs
-
-Details (average, fastest, slowest):
-  DNS+dialup:	0.0004 secs, 0.4983 secs, 0.5759 secs
-  DNS-lookup:	0.0001 secs, 0.0000 secs, 0.0015 secs
-  req write:	0.0002 secs, 0.0000 secs, 0.0076 secs
-  resp wait:	0.5257 secs, 0.4981 secs, 0.5749 secs
-  resp read:	0.0001 secs, 0.0000 secs, 0.0009 secs
-
-Status code distribution:
-  [200]	100 responses
-```
+    ```{ .bash .no-copy }
+    Summary:
+      Total:	10.5361 secs
+      Slowest:	0.5759 secs
+      Fastest:	0.4983 secs
+      Average:	0.5265 secs
+      Requests/sec:	9.4912
+      
+      Total data:	24100 bytes
+      Size/request:	241 bytes
+    
+    Response time histogram:
+      0.498 [1]	|■
+      0.506 [0]	|
+      0.514 [44]	|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+      0.522 [21]	|■■■■■■■■■■■■■■■■■■■
+      0.529 [4]	|■■■■
+      0.537 [5]	|■■■■■
+      0.545 [4]	|■■■■
+      0.553 [0]	|
+      0.560 [7]	|■■■■■■
+      0.568 [4]	|■■■■
+      0.576 [10]	|■■■■■■■■■
+    
+    
+    Latency distribution:
+      10% in 0.5100 secs
+      25% in 0.5118 secs
+      50% in 0.5149 secs
+      75% in 0.5406 secs
+      90% in 0.5706 secs
+      95% in 0.5733 secs
+      99% in 0.5759 secs
+    
+    Details (average, fastest, slowest):
+      DNS+dialup:	0.0004 secs, 0.4983 secs, 0.5759 secs
+      DNS-lookup:	0.0001 secs, 0.0000 secs, 0.0015 secs
+      req write:	0.0002 secs, 0.0000 secs, 0.0076 secs
+      resp wait:	0.5257 secs, 0.4981 secs, 0.5749 secs
+      resp read:	0.0001 secs, 0.0000 secs, 0.0009 secs
+    
+    Status code distribution:
+      [200]	100 responses
+    ```

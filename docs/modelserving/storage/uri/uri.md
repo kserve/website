@@ -140,31 +140,31 @@ INPUT_PATH=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-$ *   Trying 127.0.0.1:8080...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 8080 (#0)
-> POST /v1/models/sklearn-from-uri:predict HTTP/1.1
-> Host: sklearn-from-uri.default.example.com
-> User-Agent: curl/7.68.0
-> Accept: */*
-> Content-Length: 76
-> Content-Type: application/x-www-form-urlencoded
->
-* upload completely sent off: 76 out of 76 bytes
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 200 OK
-< content-length: 23
-< content-type: application/json; charset=UTF-8
-< date: Mon, 06 Sep 2021 15:52:55 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 7
-<
-* Connection #0 to host localhost left intact
-{"predictions": [1, 1]}
-```
+    ```{ .bash .no-copy }
+    $ *   Trying 127.0.0.1:8080...
+    * TCP_NODELAY set
+    * Connected to localhost (127.0.0.1) port 8080 (#0)
+    > POST /v1/models/sklearn-from-uri:predict HTTP/1.1
+    > Host: sklearn-from-uri.default.example.com
+    > User-Agent: curl/7.68.0
+    > Accept: */*
+    > Content-Length: 76
+    > Content-Type: application/x-www-form-urlencoded
+    >
+    * upload completely sent off: 76 out of 76 bytes
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 23
+    < content-type: application/json; charset=UTF-8
+    < date: Mon, 06 Sep 2021 15:52:55 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 7
+    <
+    * Connection #0 to host localhost left intact
+    {"predictions": [1, 1]}
+    ```
 
 ## Tensorflow
 
@@ -268,45 +268,45 @@ INPUT_PATH=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-$ *   Trying 10.0.1.16...
-* TCP_NODELAY set
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Connected to 10.0.1.16 (10.0.1.16) port 30749 (#0)
-> POST /v1/models/tensorflow-from-uri:predict HTTP/1.1
-> Host: tensorflow-from-uri.default.example.com
-> User-Agent: curl/7.58.0
-> Accept: */*
-> Content-Length: 86
-> Content-Type: application/x-www-form-urlencoded
->
-} [86 bytes data]
-* upload completely sent off: 86 out of 86 bytes
-< HTTP/1.1 200 OK
-< content-length: 112
-< content-type: application/json
-< date: Thu, 06 Aug 2020 23:21:19 GMT
-< x-envoy-upstream-service-time: 151
-< server: istio-envoy
-<
-{ [112 bytes data]
-100   198  100   112  100    86    722    554 --:--:-- --:--:-- --:--:--  1285
-* Connection #0 to host 10.0.1.16 left intact
-{
-  "predictions": [
-    [
-      0.0204100646,
-      0.680984616,
-      0.298605353
-    ],
-    [
-      0.0296604875,
-      0.658412039,
-      0.311927497
-    ]
-  ]
-}
-```
+    ```{ .bash .no-copy }
+    $ *   Trying 10.0.1.16...
+    * TCP_NODELAY set
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+      0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Connected to 10.0.1.16 (10.0.1.16) port 30749 (#0)
+    > POST /v1/models/tensorflow-from-uri:predict HTTP/1.1
+    > Host: tensorflow-from-uri.default.example.com
+    > User-Agent: curl/7.58.0
+    > Accept: */*
+    > Content-Length: 86
+    > Content-Type: application/x-www-form-urlencoded
+    >
+    } [86 bytes data]
+    * upload completely sent off: 86 out of 86 bytes
+    < HTTP/1.1 200 OK
+    < content-length: 112
+    < content-type: application/json
+    < date: Thu, 06 Aug 2020 23:21:19 GMT
+    < x-envoy-upstream-service-time: 151
+    < server: istio-envoy
+    <
+    { [112 bytes data]
+    100   198  100   112  100    86    722    554 --:--:-- --:--:-- --:--:--  1285
+    * Connection #0 to host 10.0.1.16 left intact
+    {
+      "predictions": [
+        [
+          0.0204100646,
+          0.680984616,
+          0.298605353
+        ],
+        [
+          0.0296604875,
+          0.658412039,
+          0.311927497
+        ]
+      ]
+    }
+    ```

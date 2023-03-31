@@ -123,7 +123,7 @@ code. The server metadata response object, identified as
 
 * “name” : A descriptive name for the server.
 * "version" : The server version.
-* “extensions” : The extensions supported by the server. Currently no standard extensions are defined. Individual inference servers may define and document their own extensions.
+* “extensions” : The extensions supported by the server. Currently, no standard extensions are defined. Individual inference servers may define and document their own extensions.
 
 
 #### Server Metadata Response JSON Error Object
@@ -714,7 +714,7 @@ The Parameters message describes a “name”/”value” pair, where the
 “name” is the name of the parameter and the “value” is a boolean,
 integer, or string corresponding to the parameter.
 
-Currently no parameters are defined. As required a future proposal may define one or more standard parameters to allow portable functionality across different inference servers. A server can implement server-specific parameters to provide non-standard capabilities.
+Currently, no parameters are defined. As required a future proposal may define one or more standard parameters to allow portable functionality across different inference servers. A server can implement server-specific parameters to provide non-standard capabilities.
 
     //
     // An inference parameter value.
