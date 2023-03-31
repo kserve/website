@@ -12,9 +12,10 @@ Transformer is an `InferenceService` component which does pre/post processing al
 
 ## Create the Redis server
 This example uses the [Redis](https://redis.io/) as the online store. 
-Copy the following YAML into a file named `redis.yaml`
+Deploy the Redis server using the below command.
 
-```yaml
+```bash
+cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -53,12 +54,9 @@ spec:
     - protocol: TCP
       port: 6379
       targetPort: 6379
+EOF
 ```
 
-Deploy the Redis server
-```bash
-kubectl apply -f redis.yaml
-```
 !!! Success "Expected output"
     ```{ .bash .no-copy }
     $ deployment.apps/redis-server created
@@ -88,9 +86,11 @@ docker push {username}/feast-server:latest
 ```
 ### Deploy Feast server
 
-Copy the following YAML into a file named `feast_server.yaml` and update the container `image` url.
+Wait until the Redis `Deployment` is available.
+Now, update the init container and container's `image` field in the below command and deploy the Feast server.
 
-```yaml
+```bash
+cat <<EOF | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -147,11 +147,7 @@ spec:
     - protocol: TCP
       port: 6566
       targetPort: 6566
-```
-
-Once the Redis server is up and running deploy the Feast server
-```bash
-kubectl apply -f feast_server.yaml
+EOF
 ```
 
 !!! success "Expected output"
@@ -187,13 +183,13 @@ docker push {username}/driver-transformer:latest
 ```
 
 ## Create the InferenceService
-Copy the following YAML into a file named `driver_transformer.yaml`. Update the container `image` url and the `feast_serving_url` argument to create the `InferenceService`, which includes a Feast Transformer and a SKLearn Predictor.
-
 In the Feast Transformer image we packaged the driver transformer class so KServe knows to use the preprocess implementation to augment inputs with online features before making model inference requests.
 Then the `InferenceService` uses `SKLearn` to serve the [driver ranking model](https://github.com/feast-dev/feast-driver-ranking-tutorial), which is trained with Feast offline features, available in a gcs bucket specified under `storageUri`.
+Update the container's `image` field and the `feast_serving_url` argument to create the `InferenceService`, which includes a Feast Transformer and a SKLearn Predictor.
 
 === "New Schema"
-    ```yaml
+    ```bash
+    cat <<EOF | kubectl apply -f -
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
     metadata:
@@ -221,10 +217,11 @@ Then the `InferenceService` uses `SKLearn` to serve the [driver ranking model](h
           modelFormat:
             name: sklearn
           storageUri: "gs://kfserving-examples/models/feast/driver"
-    
+    EOF
     ```
 === "Old Schema"
-    ```yaml
+    ```bash
+    cat <<EOF | kubectl apply -f -
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
     metadata:
@@ -250,13 +247,8 @@ Then the `InferenceService` uses `SKLearn` to serve the [driver ranking model](h
       predictor:
         sklearn:
           storageUri: "gs://kfserving-examples/models/feast/driver"
-    
+    EOF
     ```
-
-Apply the CRD
-```bash
-kubectl apply -f driver_transformer.yaml
-```
 
 !!! success "Expected output"
     ```{ .bash .no-copy }
@@ -264,14 +256,15 @@ kubectl apply -f driver_transformer.yaml
     ```
 
 ## Run a prediction
-The first step is to prepare inputs for the inference request. Copy the following Json into a file named `driver-input.json`.
+Prepare the inputs for the inference request. Copy the following Json into a file named `driver-input.json`.
 
 ```json
 {
   "instances": [[1001], [1002], [1003], [1004], [1005]]
 }
 ```
-The second step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports
+Before testing the `InferenceService`, first check if it is in ready state.
+Now, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports
 ) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
