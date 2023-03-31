@@ -14,7 +14,7 @@ Transformer is an `InferenceService` component which does pre/post processing al
 This example uses the [Redis](https://redis.io/) as the online store. 
 Copy the following YAML into a file named `redis.yaml`
 
-```YAML
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -90,7 +90,7 @@ docker push {username}/feast-server:latest
 
 Copy the following YAML into a file named `feast_server.yaml` and update the container `image` url.
 
-```YAML
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -154,7 +154,7 @@ Once the Redis server is up and running deploy the Feast server
 kubectl apply -f feast_server.yaml
 ```
 
-!!! Success "Expected output"
+!!! success "Expected output"
     ```{ .bash .no-copy }
     $ deployment.apps/feature-server created
     $ service/feature-server-service created
@@ -192,41 +192,73 @@ Copy the following YAML into a file named `driver_transformer.yaml`. Update the 
 In the Feast Transformer image we packaged the driver transformer class so KServe knows to use the preprocess implementation to augment inputs with online features before making model inference requests.
 Then the `InferenceService` uses `SKLearn` to serve the [driver ranking model](https://github.com/feast-dev/feast-driver-ranking-tutorial), which is trained with Feast offline features, available in a gcs bucket specified under `storageUri`.
 
-```YAML
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "sklearn-driver-transformer"
-spec:
-  transformer:
-    containers:
-      - image: "{username}/driver-transformer:latest"
-        name: driver-container
-        command:
-          - "python"
-          - "-m"
-          - "driver_transformer"
-        args:
-          - --feast_serving_url
-          - "feature-server-service.default.svc.cluster.local:6566"
-          - --entity_id_name
-          - "driver_id"
-          - --feature_refs
-          - "driver_hourly_stats:conv_rate"
-          - "driver_hourly_stats:acc_rate"
-          - "driver_hourly_stats:avg_daily_trips"
-  predictor:
-    sklearn:
-      storageUri: "gs://kfserving-examples/models/feast/driver"
-
-```
+=== "New Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-driver-transformer"
+    spec:
+      transformer:
+        containers:
+          - image: "{username}/driver-transformer:latest"
+            name: driver-container
+            command:
+              - "python"
+              - "-m"
+              - "driver_transformer"
+            args:
+              - --feast_serving_url
+              - "feature-server-service.default.svc.cluster.local:6566"
+              - --entity_id_name
+              - "driver_id"
+              - --feature_refs
+              - "driver_hourly_stats:conv_rate"
+              - "driver_hourly_stats:acc_rate"
+              - "driver_hourly_stats:avg_daily_trips"
+      predictor:
+        model:
+          modelFormat:
+            name: sklearn
+          storageUri: "gs://kfserving-examples/models/feast/driver"
+    
+    ```
+=== "Old Schema"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-driver-transformer"
+    spec:
+      transformer:
+        containers:
+          - image: "{username}/driver-transformer:latest"
+            name: driver-container
+            command:
+              - "python"
+              - "-m"
+              - "driver_transformer"
+            args:
+              - --feast_serving_url
+              - "feature-server-service.default.svc.cluster.local:6566"
+              - --entity_id_name
+              - "driver_id"
+              - --feature_refs
+              - "driver_hourly_stats:conv_rate"
+              - "driver_hourly_stats:acc_rate"
+              - "driver_hourly_stats:avg_daily_trips"
+      predictor:
+        sklearn:
+          storageUri: "gs://kfserving-examples/models/feast/driver"
+    
+    ```
 
 Apply the CRD
 ```bash
 kubectl apply -f driver_transformer.yaml
 ```
 
-!!! Success "Expected output"
+!!! success "Expected output"
     ```{ .bash .no-copy }
     $ inferenceservice.serving.kserve.io/sklearn-driver-transformer created
     ```
@@ -251,7 +283,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
 ```
 
-!!! Success "Expected output"
+!!! success "Expected output"
     ```{ .bash .no-copy }
     > POST /v1/models/sklearn-driver-transformer:predict HTTP/1.1
     > Host: sklearn-driver-transformer.default.example.com
