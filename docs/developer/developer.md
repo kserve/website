@@ -251,7 +251,7 @@ of:
   `make manifests`. Inputs include:
 
   - API type definitions in
-    [apis/serving/v1beta1](https://github.com/kserve/kserve/tree/master/pkg/apis/serving/v1beta1),
+    [apis/serving](https://github.com/kserve/kserve/tree/master/pkg/apis/serving)
   - Manifests or kustomize patches stored in [config](https://github.com/kserve/kserve/tree/master/config).
 
   To generate the KServe python/go clients, you should run `make generate`.
