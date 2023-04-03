@@ -68,21 +68,22 @@ EOF
 ### Build Feature Store Initializer docker image
 The feature store initializer is a init container which initializes a new sample feature repository, populate the 
 online store with sample driver data and copies the feature repository to the volume mount.
-
+The [feature store initializer dockerfile](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/feature_store_initializer.Dockerfile) can be found in the code example directory.
 Checkout the feast code example and under the example directory run the commands as following:
 
 ```bash
-docker build -t {username}/feature-store-initializer:latest -f feature_store_initializer.Dockerfile .
+docker build -t $USERNAME/feature-store-initializer:latest -f feature_store_initializer.Dockerfile .
 
-docker push {username}/feature-store-initializer:latest
+docker push $USERNAME/feature-store-initializer:latest
 ```
 
 ### Build Feast server docker image
+The [feast server dockerfile](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/feast_server.Dockerfile) can be found in the code example directory.
 
 ```bash
-docker build -t {username}/feast-server:latest -f feast_server.Dockerfile .
+docker build -t $USERNAME/feast-server:latest -f feast_server.Dockerfile .
 
-docker push {username}/feast-server:latest
+docker push $USERNAME/feast-server:latest
 ```
 ### Deploy Feast server
 
@@ -174,12 +175,13 @@ We created a class, DriverTransformer, which extends `Model` for this driver ran
 * __feature_refs__: The feature references for the features to be retrieved
 
 ### Build Transformer docker image
+The [driver transformer dockerfile](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/driver_transformer.Dockerfile) can be found in the code example directory.
 Checkout the feast code example and under the example directory run the commands as following:
 
 ```bash
-docker build -t {username}/driver-transformer:latest -f driver_transformer.Dockerfile .
+docker build -t $USERNAME/driver-transformer:latest -f driver_transformer.Dockerfile .
 
-docker push {username}/driver-transformer:latest
+docker push $USERNAME/driver-transformer:latest
 ```
 
 ## Create the InferenceService
@@ -197,7 +199,7 @@ Update the container's `image` field and the `feast_serving_url` argument to cre
     spec:
       transformer:
         containers:
-          - image: "{username}/driver-transformer:latest"
+          - image: "kserve/driver-transformer:latest"
             name: driver-container
             command:
               - "python"
@@ -229,7 +231,7 @@ Update the container's `image` field and the `feast_serving_url` argument to cre
     spec:
       transformer:
         containers:
-          - image: "{username}/driver-transformer:latest"
+          - image: "kserve/driver-transformer:latest"
             name: driver-container
             command:
               - "python"
