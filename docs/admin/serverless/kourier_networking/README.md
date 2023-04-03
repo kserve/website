@@ -102,7 +102,7 @@ kubectl apply -f pmml.yaml
 
 ### Run a Prediction
 
-Note that when setting `INGRESS_HOST` and `INGRESS_PORT` following the [determining the ingress IP and ports](../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) guide you
+Note that when setting `INGRESS_HOST` and `INGRESS_PORT` following the [determining the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) guide you
 need to replace `istio-ingressgateway` with `kourier-gateway`.
 
 For example if you choose to do `Port Forward` for testing you need to select the `kourier-gateway` pod as following.
