@@ -13,44 +13,110 @@
   display: none;
 }
 
-@media screen and (min-width: 60em) {
+/********** Large devices only **********/
+@media (min-width: 1200px) {
+  /* Header */
+  .jumbotron-grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    align-items: center;
+  }
+  /* End Header */
+
+  /* Side bar */
   .md-sidebar--secondary {
     display: none;
   }
-}
-@media screen and (min-width: 76.25em) {
+
   .md-sidebar--primary {
     display: none;
   }
+  /* End Side bar */
+
+  /* Card Styling */
+
+  /* End Card Styling */
+
+
+  .components-container,
+  .whats-next-container,
+  .usedby-container,
+  .home-container,
+  .features-container,
+  .intro-container {
+    padding: 40px;
+  }
 }
 
-@keyframes continuousgradient {
-  0% {background-position: 0% 50%;}
-  50% {background-position: 100% 50%;}
-  100% {background-position: 0% 50%;}
+/********** Medium devices only **********/
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Header */
+  .jumbotron-grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    align-items: center;
+  }
+  /* End Header */
+
+  /* Card Styling */
+  
+  /* End Card Styling */
+
+  .components-container,
+  .whats-next-container,
+  .usedby-container,
+  .home-container,
+  .features-container,
+  .intro-container {
+    padding: 40px;
+  }
 }
 
-.animated-gradient {
-  animation-name: continuousgradient;
-  background: linear-gradient(-45deg, #1d6ba6, #000);
-  animation-duration: 0s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  background-repeat: no-repeat;
-  background-size: 300% 100%;
-  opacity: 0.4;
-  z-index: -1;
-  padding: 20px;
+/********** Small devices only **********/
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Header */
+  .jumbotron-grid-container {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-items: center;
+    align-items: center;
+  }
+  /* End Header */
+
+  /* Card Styling */
+
+  /* End Card Styling */
+  
 }
+
+/********** Extra small devices only **********/
+@media (max-width: 767px) {
+  /* Header */
+  .jumbotron-grid-container {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-items: center;
+    align-items: center;
+  }
+  /* End Header */
+}
+
+/********** Super extra small devices Only :-) (e.g., iPhone 4) **********/
+@media (max-width: 479px) {
+  /* Header */
+  .jumbotron-grid-container {
+    display: grid;
+    grid-template-columns: 100%;
+    justify-items: spac;
+    align-items: center;
+  }
+  /* End Header */
+}
+
 .md-typeset hr {
-  border-bottom: .05rem solid var(--md-default-fg-color--lightest);
+  border-bottom: 0.05rem solid var(--md-default-fg-color--lightest);
   display: flow-root;
   margin: 0.05em 0;
 }
@@ -59,17 +125,9 @@ hr {
   border: 0;
   box-sizing: content-box;
   display: block;
-  height: .001rem;
+  height: 0.001rem;
   overflow: visible;
   padding: 0;
-}
-.animated-gradient img {
-  display: block !important;
-}
-
-.md-typeset img,
-.md-typeset svg {
-  max-width: initial;
 }
 
 /* Fixes logo aspect ratio in Safari */
@@ -99,12 +157,10 @@ section#kubeflow {
   background-color: white;
   color: black;
 }
+
 section .main-section {
   position: relative;
   margin: auto;
-}
-.home-container > .md-typeset {
-  flex-grow: 2;
 }
 
 body {
@@ -119,14 +175,13 @@ body {
 .usedby-container,
 .home-container,
 .features-container,
-.intro-container{
+.intro-container {
   margin: 0;
   border: 0;
   padding-top: 2em;
   padding-bottom: 5em;
 
 }
-
 
 .components-container {
   margin: 0;
@@ -136,7 +191,7 @@ body {
   background-color: white;
   color: black;
 }
-    
+
 .home-container .md-button {
   margin-top: 0.5rem;
   margin-right: 0.5rem;
@@ -158,6 +213,10 @@ body {
 
 .home-container h2 {
   margin: 0;
+}
+
+.jumbotron-grid-container > div {
+  padding: 20px;
 }
 
 .whats-next-container {
@@ -279,7 +338,6 @@ footer nav.md-footer__inner {
 footer .md-footer-meta .md-footer-meta__inner {
   padding: 1em 0;
 }
-
 
 /* 
 
