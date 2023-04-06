@@ -426,6 +426,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/reference/swagger-ui/</loc>
+         <lastmod>2023-04-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/sdk_docs/sdk_doc/</loc>
          <lastmod>2023-04-06</lastmod>
          <changefreq>daily</changefreq>
