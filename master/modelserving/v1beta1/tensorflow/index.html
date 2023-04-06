@@ -2651,11 +2651,13 @@
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f tensorflow.yaml 
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>tensorflow.yaml<span class="w"> </span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flower-sample created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/flower-sample<span class="w"> </span>created
+</code></pre></div>
+</div>
 <p>Wait for the <code>InferenceService</code> to be in ready state
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>flower-sample
 NAME<span class="w">            </span>URL<span class="w">                                        </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">        </span>LATESTREADYREVISION<span class="w">                     </span>AGE
@@ -2664,39 +2666,41 @@ flower-sample<span class="w">   </span>http://flower-sample.default.example.com<
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>, the inference request input
 file can be downloaded <a href="input.json">here</a>.</p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=flower-sample
-INPUT_PATH=@./input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flower-sample
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>* Connected to localhost (::1) port 8080 (#0)
-&gt; POST /v1/models/tensorflow-sample:predict HTTP/1.1
-&gt; Host: tensorflow-sample.default.example.com
-&gt; User-Agent: curl/7.73.0
-&gt; Accept: */*
-&gt; Content-Length: 16201
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt; 
-* upload completely sent off: 16201 out of 16201 bytes
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 222
-&lt; content-type: application/json
-&lt; date: Sun, 31 Jan 2021 01:01:50 GMT
-&lt; x-envoy-upstream-service-time: 280
-&lt; server: istio-envoy
-&lt; 
-{
-    &quot;predictions&quot;: [
-        {
-            &quot;scores&quot;: [0.999114931, 9.20987877e-05, 0.000136786213, 0.000337257545, 0.000300532585, 1.84813616e-05],
-            &quot;prediction&quot;: 0,
-            &quot;key&quot;: &quot;   1&quot;
-        }
-    ]
-}
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span>::1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/tensorflow-sample:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>tensorflow-sample.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.73.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">16201</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">16201</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">16201</span><span class="w"> </span>bytes
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">222</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">31</span><span class="w"> </span>Jan<span class="w"> </span><span class="m">2021</span><span class="w"> </span><span class="m">01</span>:01:50<span class="w"> </span>GMT
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">280</span>
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;scores&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">0</span>.999114931,<span class="w"> </span><span class="m">9</span>.20987877e-05,<span class="w"> </span><span class="m">0</span>.000136786213,<span class="w"> </span><span class="m">0</span>.000337257545,<span class="w"> </span><span class="m">0</span>.000300532585,<span class="w"> </span><span class="m">1</span>.84813616e-05<span class="o">]</span>,
+<span class="w">            </span><span class="s2">&quot;prediction&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<span class="w">            </span><span class="s2">&quot;key&quot;</span>:<span class="w"> </span><span class="s2">&quot;   1&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">]</span>
+<span class="o">}</span>
+</code></pre></div>
+</div>
 <h2 id="canary-rollout">Canary Rollout<a class="headerlink" href="#canary-rollout" title="Permanent link">&para;</a></h2>
 <p>Canary rollout is a great way to control the risk of rolling out a new model by first moving a small percent of the traffic to it and then gradually increase the percentage. 
 To run a canary rollout, you can apply the <code>canary.yaml</code> with the <code>canaryTrafficPercent</code> field specified.</p>
@@ -2736,7 +2740,7 @@ To run a canary rollout, you can apply the <code>canary.yaml</code> with the <co
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f canary.yaml 
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>canary.yaml<span class="w"> </span>
 </code></pre></div>
 <p>To verify if the traffic split percentage is applied correctly, you can run the following command:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
@@ -2744,9 +2748,9 @@ To run a canary rollout, you can apply the <code>canary.yaml</code> with the <co
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl get isvc flower-sample
-NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION                   LATESTREADYREVISION                     AGE
-flower-sample   http://flower-sample.default.example.com   True    80     20       flower-sample-predictor-default-n9zs6   flower-sample-predictor-default-2kwtr   7m15s
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>flower-sample
+NAME<span class="w">            </span>URL<span class="w">                                        </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">                   </span>LATESTREADYREVISION<span class="w">                     </span>AGE
+flower-sample<span class="w">   </span>http://flower-sample.default.example.com<span class="w">   </span>True<span class="w">    </span><span class="m">80</span><span class="w">     </span><span class="m">20</span><span class="w">       </span>flower-sample-predictor-default-n9zs6<span class="w">   </span>flower-sample-predictor-default-2kwtr<span class="w">   </span>7m15s
 </code></pre></div>
 <p>As you can see the traffic is split between the last rolled out revision and the current latest ready revision, KServe automatically tracks the last rolled out(stable) revision for you so you
 do not need to maintain both default and canary on the <code>InferenceService</code> as in v1alpha2.</p>
@@ -2794,11 +2798,13 @@ do not need to maintain both default and canary on the <code>InferenceService</c
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f grpc.yaml 
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>grpc.yaml<span class="w"> </span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flower-grpc created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/flower-grpc<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h3 id="run-a-prediction_1">Run a prediction<a class="headerlink" href="#run-a-prediction_1" title="Permanent link">&para;</a></h3>
 <p>We use a python gRPC client for the prediction, so you need to create a python virtual environment and
 install the <code>tensorflow-serving-api</code>. 
@@ -2811,59 +2817,61 @@ pip<span class="w"> </span>install<span class="w"> </span>tensorflow-serving-api
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 python<span class="w"> </span>grpc_client.py<span class="w"> </span>--host<span class="w"> </span><span class="nv">$INGRESS_HOST</span><span class="w"> </span>--port<span class="w"> </span><span class="nv">$INGRESS_PORT</span><span class="w"> </span>--model<span class="w"> </span><span class="nv">$MODEL_NAME</span><span class="w"> </span>--hostname<span class="w"> </span><span class="nv">$SERVICE_HOSTNAME</span><span class="w"> </span>--input_path<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>outputs {
-  key: &quot;key&quot;
-  value {
-    dtype: DT_STRING
-    tensor_shape {
-      dim {
-        size: 1
-      }
-    }
-    string_val: &quot;   1&quot;
-  }
-}
-outputs {
-  key: &quot;prediction&quot;
-  value {
-    dtype: DT_INT64
-    tensor_shape {
-      dim {
-        size: 1
-      }
-    }
-    int64_val: 0
-  }
-}
-outputs {
-  key: &quot;scores&quot;
-  value {
-    dtype: DT_FLOAT
-    tensor_shape {
-      dim {
-        size: 1
-      }
-      dim {
-        size: 6
-      }
-    }
-    float_val: 0.9991149306297302
-    float_val: 9.209887502947822e-05
-    float_val: 0.00013678647519554943
-    float_val: 0.0003372581850271672
-    float_val: 0.0003005331673193723
-    float_val: 1.848137799242977e-05
-  }
-}
-model_spec {
-  name: &quot;flowers-sample&quot;
-  version {
-    value: 1
-  }
-  signature_name: &quot;serving_default&quot;
-}
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="err">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;key&quot;</span>
+<span class="w">  </span><span class="err">value</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="err">d</span><span class="kc">t</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="err">DT_STRING</span>
+<span class="w">    </span><span class="kc">tens</span><span class="err">or_shape</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="err">dim</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="err">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="err">s</span><span class="kc">tr</span><span class="err">i</span><span class="kc">n</span><span class="err">g_val</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;   1&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="err">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;prediction&quot;</span>
+<span class="w">  </span><span class="err">value</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="err">d</span><span class="kc">t</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="err">DT_INT</span><span class="mi">64</span>
+<span class="w">    </span><span class="kc">tens</span><span class="err">or_shape</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="err">dim</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="err">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="err">i</span><span class="kc">nt</span><span class="mi">64</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="err">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scores&quot;</span>
+<span class="w">  </span><span class="err">value</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="err">d</span><span class="kc">t</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="err">DT_FLOAT</span>
+<span class="w">    </span><span class="kc">tens</span><span class="err">or_shape</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="err">dim</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="err">size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="err">dim</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="err">size</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kc">fl</span><span class="err">oa</span><span class="kc">t</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9991149306297302</span>
+<span class="w">    </span><span class="kc">fl</span><span class="err">oa</span><span class="kc">t</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mf">9.209887502947822e-05</span>
+<span class="w">    </span><span class="kc">fl</span><span class="err">oa</span><span class="kc">t</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mf">0.00013678647519554943</span>
+<span class="w">    </span><span class="kc">fl</span><span class="err">oa</span><span class="kc">t</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0003372581850271672</span>
+<span class="w">    </span><span class="kc">fl</span><span class="err">oa</span><span class="kc">t</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0003005331673193723</span>
+<span class="w">    </span><span class="kc">fl</span><span class="err">oa</span><span class="kc">t</span><span class="err">_val</span><span class="p">:</span><span class="w"> </span><span class="mf">1.848137799242977e-05</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+<span class="err">model_spec</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;flowers-sample&quot;</span>
+<span class="w">  </span><span class="err">versio</span><span class="kc">n</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="err">value</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="err">sig</span><span class="kc">nature</span><span class="err">_</span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;serving_default&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
 
               
             </article>

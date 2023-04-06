@@ -2769,37 +2769,40 @@ to find out the ingress IP and port.</p>
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Note: Unnecessary use of -X or --request, POST is already inferred.
-*   Trying 35.237.217.209...
-* TCP_NODELAY set
-* Connected to mnist-s3.default.35.237.217.209.xip.io (35.237.217.209) port 80 (#0)
-&gt; POST /v1/models/mnist-s3:predict HTTP/1.1
-&gt; Host: mnist-s3.default.35.237.217.209.xip.io
-&gt; User-Agent: curl/7.55.1
-&gt; Accept: */*
-&gt; Content-Length: 2052
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt; Expect: 100-continue
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Note:<span class="w"> </span>Unnecessary<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>-X<span class="w"> </span>or<span class="w"> </span>--request,<span class="w"> </span>POST<span class="w"> </span>is<span class="w"> </span>already<span class="w"> </span>inferred.
+*<span class="w">   </span>Trying<span class="w"> </span><span class="m">35</span>.237.217.209...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>mnist-s3.default.35.237.217.209.xip.io<span class="w"> </span><span class="o">(</span><span class="m">35</span>.237.217.209<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/mnist-s3:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>mnist-s3.default.35.237.217.209.xip.io
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.55.1
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">2052</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>Expect:<span class="w"> </span><span class="m">100</span>-continue
 &gt;
-&lt; HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 251
-&lt; content-type: application/json
-&lt; date: Sun, 04 Apr 2021 20:06:27 GMT
-&lt; x-envoy-upstream-service-time: 5
-&lt; server: istio-envoy
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">100</span><span class="w"> </span>Continue
+*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">251</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">04</span><span class="w"> </span>Apr<span class="w"> </span><span class="m">2021</span><span class="w"> </span><span class="m">20</span>:06:27<span class="w"> </span>GMT
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">5</span>
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
 &lt;
-{
-    &quot;predictions&quot;: [
-        {
-            &quot;predictions&quot;: [0.327352405, 2.00153053e-07, 0.0113353515, 0.203903764, 3.62863029e-05, 0.416683704, 0.000281196437, 8.36911859e-05, 0.0403052084, 1.82206513e-05],
-            &quot;classes&quot;: 5
-        }
-    ]
-}* Connection #0 to host mnist-s3.default.35.237.217.209.xip.io left intact
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host mnist-s3.default.35.237.217.209.xip.io left intact</span>
+<span class="o">{</span>
+<span class="w">    </span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="o">{</span>
+<span class="w">            </span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">0</span>.327352405,<span class="w"> </span><span class="m">2</span>.00153053e-07,<span class="w"> </span><span class="m">0</span>.0113353515,<span class="w"> </span><span class="m">0</span>.203903764,<span class="w"> </span><span class="m">3</span>.62863029e-05,<span class="w"> </span><span class="m">0</span>.416683704,<span class="w"> </span><span class="m">0</span>.000281196437,<span class="w"> </span><span class="m">8</span>.36911859e-05,<span class="w"> </span><span class="m">0</span>.0403052084,<span class="w"> </span><span class="m">1</span>.82206513e-05<span class="o">]</span>,
+<span class="w">            </span><span class="s2">&quot;classes&quot;</span>:<span class="w"> </span><span class="m">5</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">]</span>
+<span class="o">}</span>
 </code></pre></div>
+</div>
 
               
             </article>

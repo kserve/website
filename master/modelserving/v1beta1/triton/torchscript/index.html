@@ -2827,38 +2827,38 @@ for inputs and outputs in a TorchScript model, the <code>name</code> attribute o
 follow a specific naming convention i.e. “<name>__<index>”. Where <name> can be any string and <index> refers to the position of the corresponding
 input/output. This means if there are two inputs and two outputs they must be named as: <code>INPUT__0</code>, <code>INPUT__1</code> and <code>OUTPUT__0</code>, <code>OUTPUT__1</code> such that <code>INPUT__0</code>
 refers to first input and INPUT__1 refers to the second input, etc.
-<div class="highlight"><pre><span></span><code>name: &quot;cifar&quot;
-platform: &quot;pytorch_libtorch&quot;
-max_batch_size: 1
-input [
-  {
-    name: &quot;INPUT__0&quot;
-    data_type: TYPE_FP32
-    dims: [3,32,32]
-  }
-]
-output [
-  {
-    name: &quot;OUTPUT__0&quot;
-    data_type: TYPE_FP32
-    dims: [10]
-  }
-]
+<div class="highlight"><pre><span></span><code><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cifar&quot;</span>
+<span class="err">pla</span><span class="kc">tf</span><span class="err">orm</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pytorch_libtorch&quot;</span>
+<span class="err">max_ba</span><span class="kc">t</span><span class="err">ch_size</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="err">i</span><span class="kc">n</span><span class="err">pu</span><span class="kc">t</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INPUT__0&quot;</span>
+<span class="w">    </span><span class="err">da</span><span class="kc">ta</span><span class="err">_</span><span class="kc">t</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="err">TYPE_FP</span><span class="mi">32</span>
+<span class="w">    </span><span class="err">dims</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">t</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span>
+<span class="w">    </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;OUTPUT__0&quot;</span>
+<span class="w">    </span><span class="err">da</span><span class="kc">ta</span><span class="err">_</span><span class="kc">t</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="err">TYPE_FP</span><span class="mi">32</span>
+<span class="w">    </span><span class="err">dims</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">]</span>
 
-instance_group [
-    {
-        count: 1
-        kind: KIND_CPU
-    }
-]
+<span class="err">i</span><span class="kc">nstan</span><span class="err">ce_group</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">cou</span><span class="kc">nt</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="err">ki</span><span class="kc">n</span><span class="err">d</span><span class="p">:</span><span class="w"> </span><span class="err">KIND_CPU</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
 </code></pre></div></p>
 <p>To schedule the model on GPU you would need to change the <code>instance_group</code> with GPU kind
-<div class="highlight"><pre><span></span><code>instance_group [
-    {
-        count: 1
-        kind: KIND_GPU
-    }
-]
+<div class="highlight"><pre><span></span><code><span class="err">i</span><span class="kc">nstan</span><span class="err">ce_group</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="err">cou</span><span class="kc">nt</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="err">ki</span><span class="kc">n</span><span class="err">d</span><span class="p">:</span><span class="w"> </span><span class="err">KIND_GPU</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
 </code></pre></div></p>
 <h2 id="inference-with-http-endpoint">Inference with HTTP endpoint<a class="headerlink" href="#inference-with-http-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">&para;</a></h3>
@@ -2886,11 +2886,13 @@ We want one thread per worker instead of many threads per worker to avoid conten
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f torchscript.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>torchscript.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torchscript-cifar10 created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/torchscript-cifar10<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h3 id="run-a-prediction-with-curl">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="https://kserve.github.io/website/get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>The latest Triton Inference Server already switched to use KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>, so
@@ -2902,9 +2904,10 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>torchscript-cifar10<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
-</code></pre></div>
-<mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>torchscript-cifar.default.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>torchscript-cifar.default.svc.cluster.local<span class="w"> </span><span class="o">(</span><span class="m">10</span>.51.242.87<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
 &gt;<span class="w"> </span>POST<span class="w"> </span>/v2/models/cifar10/infer<span class="w"> </span>HTTP/1.1
 &gt;<span class="w"> </span>Host:<span class="w"> </span>torchscript-cifar.default.svc.cluster.local
 &gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.47.0
@@ -2924,19 +2927,20 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 &lt;
 *<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host torchscript-cifar.default.svc.cluster.local left intact</span>
 <span class="o">{</span><span class="s2">&quot;model_name&quot;</span>:<span class="s2">&quot;cifar10&quot;</span>,<span class="s2">&quot;model_version&quot;</span>:<span class="s2">&quot;1&quot;</span>,<span class="s2">&quot;outputs&quot;</span>:<span class="o">[{</span><span class="s2">&quot;name&quot;</span>:<span class="s2">&quot;OUTPUT__0&quot;</span>,<span class="s2">&quot;datatype&quot;</span>:<span class="s2">&quot;FP32&quot;</span>,<span class="s2">&quot;shape&quot;</span>:<span class="o">[</span><span class="m">1</span>,10<span class="o">]</span>,<span class="s2">&quot;data&quot;</span>:<span class="o">[</span>-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279<span class="o">]}]}</span>
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <h3 id="run-a-performance-test">Run a performance test<a class="headerlink" href="#run-a-performance-test" title="Permanent link">&para;</a></h3>
 <p>QPS rate <code>--rate</code> can be changed in the <a href="perf.yaml">perf.yaml</a>.
-<div class="highlight"><pre><span></span><code>kubectl create -f perf.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>perf.yaml
 
-Requests      [total, rate, throughput]         6000, 100.02, 100.01
-Duration      [total, attack, wait]             59.995s, 59.99s, 4.961ms
-Latencies     [min, mean, 50, 90, 95, 99, max]  4.222ms, 5.7ms, 5.548ms, 6.384ms, 6.743ms, 9.286ms, 25.85ms
-Bytes In      [total, mean]                     1890000, 315.00
-Bytes Out     [total, mean]                     665874000, 110979.00
-Success       [ratio]                           100.00%
-Status Codes  [code:count]                      200:6000
-Error Set:
+Requests<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>rate,<span class="w"> </span>throughput<span class="o">]</span><span class="w">         </span><span class="m">6000</span>,<span class="w"> </span><span class="m">100</span>.02,<span class="w"> </span><span class="m">100</span>.01
+Duration<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>attack,<span class="w"> </span>wait<span class="o">]</span><span class="w">             </span><span class="m">59</span>.995s,<span class="w"> </span><span class="m">59</span>.99s,<span class="w"> </span><span class="m">4</span>.961ms
+Latencies<span class="w">     </span><span class="o">[</span>min,<span class="w"> </span>mean,<span class="w"> </span><span class="m">50</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">95</span>,<span class="w"> </span><span class="m">99</span>,<span class="w"> </span>max<span class="o">]</span><span class="w">  </span><span class="m">4</span>.222ms,<span class="w"> </span><span class="m">5</span>.7ms,<span class="w"> </span><span class="m">5</span>.548ms,<span class="w"> </span><span class="m">6</span>.384ms,<span class="w"> </span><span class="m">6</span>.743ms,<span class="w"> </span><span class="m">9</span>.286ms,<span class="w"> </span><span class="m">25</span>.85ms
+Bytes<span class="w"> </span>In<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">1890000</span>,<span class="w"> </span><span class="m">315</span>.00
+Bytes<span class="w"> </span>Out<span class="w">     </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">665874000</span>,<span class="w"> </span><span class="m">110979</span>.00
+Success<span class="w">       </span><span class="o">[</span>ratio<span class="o">]</span><span class="w">                           </span><span class="m">100</span>.00%
+Status<span class="w"> </span>Codes<span class="w">  </span><span class="o">[</span>code:count<span class="o">]</span><span class="w">                      </span><span class="m">200</span>:6000
+Error<span class="w"> </span>Set:
 </code></pre></div></p>
 <h2 id="inference-with-grpc-endpoint">Inference with gRPC endpoint<a class="headerlink" href="#inference-with-grpc-endpoint" title="Permanent link">&para;</a></h2>
 <h3 id="create-the-inferenceservice_1">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice_1" title="Permanent link">&para;</a></h3>
@@ -2959,7 +2963,7 @@ Error Set:
 <span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 </code></pre></div>
 <p>Apply the gRPC <code>InferenceService</code> yaml and then you can call the model with <code>tritonclient</code> python library after <code>InferenceService</code> is ready.
-<div class="highlight"><pre><span></span><code>kubectl apply -f torchscript_grpc.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>torchscript_grpc.yaml
 </code></pre></div></p>
 <h3 id="run-a-prediction-with-grpcurl">Run a prediction with grpcurl<a class="headerlink" href="#run-a-prediction-with-grpcurl" title="Permanent link">&para;</a></h3>
 <p>After the gRPC <code>InferenceService</code> becomes ready, <a href="https://github.com/fullstorydev/grpcurl">grpcurl</a>, can be used to send gRPC requests to the <code>InferenceService</code>.</p>
@@ -2982,11 +2986,13 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 <span class="s2">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2"> \</span>
 <span class="s2">  inference.GRPCInferenceService.ServerReady</span>
 </code></pre></div>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <p><code>ModelInfer</code> API takes input following the <code>ModelInferRequest</code> schema defined in the <code>grpc_predict_v2.proto</code> file. Notice that the input file differs from that used in the previous <code>curl</code> example. </p>
 <div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-vv<span class="w"> </span><span class="se">\</span>
@@ -2998,47 +3004,49 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 <span class="w">  </span>inference.GRPCInferenceService.ModelInfer<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_PATH</span><span class="s2">&quot;</span><span class="k">)</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Resolved method descriptor:
-// The ModelInfer API performs inference using the specified model. Errors are
-// indicated by the google.rpc.Status returned for the request. The OK code
-// indicates success and other codes indicate failure.
-rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Resolved<span class="w"> </span>method<span class="w"> </span>descriptor:
+//<span class="w"> </span>The<span class="w"> </span>ModelInfer<span class="w"> </span>API<span class="w"> </span>performs<span class="w"> </span>inference<span class="w"> </span>using<span class="w"> </span>the<span class="w"> </span>specified<span class="w"> </span>model.<span class="w"> </span>Errors<span class="w"> </span>are
+//<span class="w"> </span>indicated<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>google.rpc.Status<span class="w"> </span>returned<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>request.<span class="w"> </span>The<span class="w"> </span>OK<span class="w"> </span>code
+//<span class="w"> </span>indicates<span class="w"> </span>success<span class="w"> </span>and<span class="w"> </span>other<span class="w"> </span>codes<span class="w"> </span>indicate<span class="w"> </span>failure.
+rpc<span class="w"> </span>ModelInfer<span class="w"> </span><span class="o">(</span><span class="w"> </span>.inference.ModelInferRequest<span class="w"> </span><span class="o">)</span><span class="w"> </span>returns<span class="w"> </span><span class="o">(</span><span class="w"> </span>.inference.ModelInferResponse<span class="w"> </span><span class="o">)</span><span class="p">;</span>
 
-Request metadata to send:
-host: torchscript-cifar10.default.example.com
+Request<span class="w"> </span>metadata<span class="w"> </span>to<span class="w"> </span>send:
+host:<span class="w"> </span>torchscript-cifar10.default.example.com
 
-Response headers received:
-accept-encoding: identity,gzip
-content-type: application/grpc
-date: Fri, 12 Aug 2022 01:49:53 GMT
-grpc-accept-encoding: identity,deflate,gzip
-server: istio-envoy
-x-envoy-upstream-service-time: 16
+Response<span class="w"> </span>headers<span class="w"> </span>received:
+accept-encoding:<span class="w"> </span>identity,gzip
+content-type:<span class="w"> </span>application/grpc
+date:<span class="w"> </span>Fri,<span class="w"> </span><span class="m">12</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">01</span>:49:53<span class="w"> </span>GMT
+grpc-accept-encoding:<span class="w"> </span>identity,deflate,gzip
+server:<span class="w"> </span>istio-envoy
+x-envoy-upstream-service-time:<span class="w"> </span><span class="m">16</span>
 
-Response contents:
-{
-  &quot;modelName&quot;: &quot;cifar10&quot;,
-  &quot;modelVersion&quot;: &quot;1&quot;,
-  &quot;outputs&quot;: [
-    {
-      &quot;name&quot;: &quot;OUTPUT__0&quot;,
-      &quot;datatype&quot;: &quot;FP32&quot;,
-      &quot;shape&quot;: [
-        &quot;1&quot;,
-        &quot;10&quot;
-      ]
-    }
-  ],
-  &quot;rawOutputContents&quot;: [
-    &quot;wCwGwOJLDL7icgK/dusyQAqAD799KP8/In2QP4zAs7+WuRk/2OoHwA==&quot;
-  ]
-}
+Response<span class="w"> </span>contents:
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;modelName&quot;</span>:<span class="w"> </span><span class="s2">&quot;cifar10&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;modelVersion&quot;</span>:<span class="w"> </span><span class="s2">&quot;1&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;outputs&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;OUTPUT__0&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;datatype&quot;</span>:<span class="w"> </span><span class="s2">&quot;FP32&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;shape&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">&quot;1&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;10&quot;</span>
+<span class="w">      </span><span class="o">]</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">  </span><span class="o">]</span>,
+<span class="w">  </span><span class="s2">&quot;rawOutputContents&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="s2">&quot;wCwGwOJLDL7icgK/dusyQAqAD799KP8/In2QP4zAs7+WuRk/2OoHwA==&quot;</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="o">}</span>
 
-Response trailers received:
-(empty)
-Sent 1 request and received 1 response
+Response<span class="w"> </span>trailers<span class="w"> </span>received:
+<span class="o">(</span>empty<span class="o">)</span>
+Sent<span class="w"> </span><span class="m">1</span><span class="w"> </span>request<span class="w"> </span>and<span class="w"> </span>received<span class="w"> </span><span class="m">1</span><span class="w"> </span>response
 </code></pre></div>
+</div>
 <p>The content of output tensor is encoded in <code>rawOutputContents</code> field. It can be <code>base64</code> decoded and loaded into a Numpy array with the given datatype and shape.</p>
 <p>Alternatively, Triton also provides <a href="https://pypi.org/project/tritonclient/">Python client library</a> which has many <a href="https://github.com/triton-inference-server/client/tree/main/src/python/examples">examples</a> showing how to interact with the KServe V2 gPRC protocol.</p>
 <h2 id="add-transformer-to-the-inferenceservice">Add Transformer to the InferenceService<a class="headerlink" href="#add-transformer-to-the-inferenceservice" title="Permanent link">&para;</a></h2>
@@ -3096,7 +3104,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
 </code></pre></div>
 Please find <a href="https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/triton/torchscript/image_transformer_v2">the code example</a> and <a href="https://github.com/kserve/kserve/blob/release-0.10/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile">Dockerfile</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>docker build -t $DOCKER_USER/image-transformer-v2:latest -f transformer.Dockerfile . --rm
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$DOCKER_USER</span>/image-transformer-v2:latest<span class="w"> </span>-f<span class="w"> </span>transformer.Dockerfile<span class="w"> </span>.<span class="w"> </span>--rm
 </code></pre></div>
 <h3 id="create-the-inferenceservice-with-transformer">Create the InferenceService with Transformer<a class="headerlink" href="#create-the-inferenceservice-with-transformer" title="Permanent link">&para;</a></h3>
 <p>Please use the <a href="torch_transformer.yaml">YAML file</a> to create the InferenceService, which adds the image transformer component with the docker image built from above.
@@ -3126,11 +3134,13 @@ Please find <a href="https://github.com/kserve/kserve/tree/release-0.10/docs/sam
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--protocol</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
 </code></pre></div></p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f torch_transformer.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>torch_transformer.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/torch-transfomer created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/torch-transfomer<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h3 id="run-a-prediction-with-curl_1">Run a prediction with curl<a class="headerlink" href="#run-a-prediction-with-curl_1" title="Permanent link">&para;</a></h3>
 <p>The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict):
 <code>"instances": &lt;value&gt;|&lt;list-of-objects&gt;</code>
@@ -3158,28 +3168,30 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>&gt; POST /v1/models/cifar10:predict HTTP/1.1
-&gt; Host: torch-transformer.kserve-triton.example.com
-&gt; User-Agent: curl/7.68.0
-&gt; Accept: */*
-&gt; Content-Length: 3400
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt; Expect: 100-continue
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/cifar10:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>torch-transformer.kserve-triton.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.68.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">3400</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>Expect:<span class="w"> </span><span class="m">100</span>-continue
 &gt;
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 219
-&lt; content-type: application/json; charset=UTF-8
-&lt; date: Sat, 19 Mar 2022 12:15:54 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 41
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">100</span><span class="w"> </span>Continue
+*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">219</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sat,<span class="w"> </span><span class="m">19</span><span class="w"> </span>Mar<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">12</span>:15:54<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">41</span>
 &lt;
-{&quot;OUTPUT__0&quot;: [[-2.0964810848236084, -0.137007474899292, -0.5095658302307129, 2.795621395111084, -0.560547947883606, 1.9934231042861938, 1.1288189888000488, -1.4043136835098267, 0.600488007068634, -2.1237082481384277]]}%
-</code></pre></div></p>
+<span class="o">{</span><span class="s2">&quot;OUTPUT__0&quot;</span>:<span class="w"> </span><span class="o">[[</span>-2.0964810848236084,<span class="w"> </span>-0.137007474899292,<span class="w"> </span>-0.5095658302307129,<span class="w"> </span><span class="m">2</span>.795621395111084,<span class="w"> </span>-0.560547947883606,<span class="w"> </span><span class="m">1</span>.9934231042861938,<span class="w"> </span><span class="m">1</span>.1288189888000488,<span class="w"> </span>-<span class="w">    </span><span class="m">4043136835098267</span>,<span class="w"> </span><span class="m">0</span>.600488007068634,<span class="w"> </span>-2.1237082481384277<span class="o">]]}</span>%
+</code></pre></div>
+</div>
 
               
             </article>

@@ -2748,7 +2748,7 @@ For this, we will just need to use <strong>version <code>v1beta1</code></strong>
 </ul>
 <p>Assuming that we've got a cluster accessible through <code>kubectl</code> with KServe
 already installed, we can deploy our model as:</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -f xgboost.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>xgboost.yaml
 </code></pre></div>
 <h2 id="testing-deployed-model">Testing deployed model<a class="headerlink" href="#testing-deployed-model" title="Permanent link">&para;</a></h2>
 <p>We can now test our deployed model by sending a sample request.</p>
@@ -2785,7 +2785,9 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/xgboost-iris/infer
 </code></pre></div>
 <p>The output will be something similar to:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4e546709-0887-490a-abd6-00cbc4c26cf4&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xgboost-iris&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;v1.0.0&quot;</span><span class="p">,</span>
@@ -2800,6 +2802,7 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
+</div>
 
               
             </article>

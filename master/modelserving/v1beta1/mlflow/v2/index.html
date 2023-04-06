@@ -2779,7 +2779,7 @@ MLServer knows:</p>
 <p>When you deploy the model with InferenceService, KServe injects sensible defaults so that it runs out-of-the-box without any
 further configuration. However, you can still override these defaults by providing a <code>model-settings.json</code> file similar to your local one.
 You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms">set of <code>model-settings.json</code> files to load multiple models</a>.</p>
-<p>To use v2 protocol for inference with the deployed model you set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>, in this eample your model artifacts have already been uploaded to a "GCS model repository" and can be accessed as <code>gs://kfserving-examples/models/mlflow/wine</code>.</p>
+<p>To use v2 protocol for inference with the deployed model you set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>, in this example your model artifacts have already been uploaded to a "GCS model repository" and can be accessed as <code>gs://kfserving-examples/models/mlflow/wine</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -2885,7 +2885,7 @@ You can see an example payload below:</p>
 <p>Now, assuming that your ingress can be accessed at
 <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out your ingress IP and port.</p>
-<p>you can use <code>curl</code> to send the inference request as:</p>
+<p>You can use <code>curl</code> to send the inference request as:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>mlflow-v2-wine-classifier<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
 curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
@@ -2894,8 +2894,9 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span>@./mlflow-input.json<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/mlflow-v2-wine-classifier/infer
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="s2">&quot;mlflow-v2-wine-classifier&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;699cf11c-e843-444e-9dc3-000d991052cc&quot;</span><span class="p">,</span>
@@ -2911,6 +2912,7 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
+</div>
 
               
             </article>

@@ -2632,50 +2632,52 @@ hey<span class="w"> </span>-z<span class="w"> </span>10s<span class="w"> </span>
 <p class="admonition-title">Note</p>
 <p>If the interval of sending the two requests is less than <code>maxLatency</code>, the returned <code>batchId</code> will be the same.</p>
 </div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Summary:
-  Total:    10.5361 secs
-  Slowest:  0.5759 secs
-  Fastest:  0.4983 secs
-  Average:  0.5265 secs
-  Requests/sec: 9.4912
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Summary:
+<span class="w">  </span>Total:<span class="w">    </span><span class="m">10</span>.5361<span class="w"> </span>secs
+<span class="w">  </span>Slowest:<span class="w">  </span><span class="m">0</span>.5759<span class="w"> </span>secs
+<span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.4983<span class="w"> </span>secs
+<span class="w">  </span>Average:<span class="w">  </span><span class="m">0</span>.5265<span class="w"> </span>secs
+<span class="w">  </span>Requests/sec:<span class="w"> </span><span class="m">9</span>.4912
 
-  Total data:   24100 bytes
-  Size/request: 241 bytes
+<span class="w">  </span>Total<span class="w"> </span>data:<span class="w">   </span><span class="m">24100</span><span class="w"> </span>bytes
+<span class="w">  </span>Size/request:<span class="w"> </span><span class="m">241</span><span class="w"> </span>bytes
 
-Response time histogram:
-  0.498 [1] |■
-  0.506 [0] |
-  0.514 [44]    |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-  0.522 [21]    |■■■■■■■■■■■■■■■■■■■
-  0.529 [4] |■■■■
-  0.537 [5] |■■■■■
-  0.545 [4] |■■■■
-  0.553 [0] |
-  0.560 [7] |■■■■■■
-  0.568 [4] |■■■■
-  0.576 [10]    |■■■■■■■■■
+Response<span class="w"> </span><span class="nb">time</span><span class="w"> </span>histogram:
+<span class="w">  </span><span class="m">0</span>.498<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■
+<span class="w">  </span><span class="m">0</span>.506<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">0</span>.514<span class="w"> </span><span class="o">[</span><span class="m">44</span><span class="o">]</span><span class="w">    </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">0</span>.522<span class="w"> </span><span class="o">[</span><span class="m">21</span><span class="o">]</span><span class="w">    </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">0</span>.529<span class="w"> </span><span class="o">[</span><span class="m">4</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■
+<span class="w">  </span><span class="m">0</span>.537<span class="w"> </span><span class="o">[</span><span class="m">5</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■
+<span class="w">  </span><span class="m">0</span>.545<span class="w"> </span><span class="o">[</span><span class="m">4</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■
+<span class="w">  </span><span class="m">0</span>.553<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">0</span>.560<span class="w"> </span><span class="o">[</span><span class="m">7</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■
+<span class="w">  </span><span class="m">0</span>.568<span class="w"> </span><span class="o">[</span><span class="m">4</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■
+<span class="w">  </span><span class="m">0</span>.576<span class="w"> </span><span class="o">[</span><span class="m">10</span><span class="o">]</span><span class="w">    </span><span class="p">|</span>■■■■■■■■■
 
 
-Latency distribution:
-  10% in 0.5100 secs
-  25% in 0.5118 secs
-  50% in 0.5149 secs
-  75% in 0.5406 secs
-  90% in 0.5706 secs
-  95% in 0.5733 secs
-  99% in 0.5759 secs
+Latency<span class="w"> </span>distribution:
+<span class="w">  </span><span class="m">10</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5100<span class="w"> </span>secs
+<span class="w">  </span><span class="m">25</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5118<span class="w"> </span>secs
+<span class="w">  </span><span class="m">50</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5149<span class="w"> </span>secs
+<span class="w">  </span><span class="m">75</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5406<span class="w"> </span>secs
+<span class="w">  </span><span class="m">90</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5706<span class="w"> </span>secs
+<span class="w">  </span><span class="m">95</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5733<span class="w"> </span>secs
+<span class="w">  </span><span class="m">99</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.5759<span class="w"> </span>secs
 
-Details (average, fastest, slowest):
-  DNS+dialup:   0.0004 secs, 0.4983 secs, 0.5759 secs
-  DNS-lookup:   0.0001 secs, 0.0000 secs, 0.0015 secs
-  req write:    0.0002 secs, 0.0000 secs, 0.0076 secs
-  resp wait:    0.5257 secs, 0.4981 secs, 0.5749 secs
-  resp read:    0.0001 secs, 0.0000 secs, 0.0009 secs
+Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> </span>fastest,<span class="w"> </span>slowest<span class="o">)</span>:
+<span class="w">  </span>DNS+dialup:<span class="w">   </span><span class="m">0</span>.0004<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.4983<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.5759<span class="w"> </span>secs
+<span class="w">  </span>DNS-lookup:<span class="w">   </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0015<span class="w"> </span>secs
+<span class="w">  </span>req<span class="w"> </span>write:<span class="w">    </span><span class="m">0</span>.0002<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0076<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>wait:<span class="w">    </span><span class="m">0</span>.5257<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.4981<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.5749<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>read:<span class="w">    </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0009<span class="w"> </span>secs
 
-Status code distribution:
-  [200] 100 responses
+Status<span class="w"> </span>code<span class="w"> </span>distribution:
+<span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">100</span><span class="w"> </span>responses
 </code></pre></div>
+</div>
 
               
             </article>

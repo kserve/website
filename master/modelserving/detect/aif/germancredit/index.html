@@ -2627,11 +2627,13 @@
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f bias.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>bias.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/german-credit created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/german-credit<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h2 id="deploy-the-message-dumper-sample-backend-receiver-for-payload-logs">Deploy the message dumper (sample backend receiver for payload logs)<a class="headerlink" href="#deploy-the-message-dumper-sample-backend-receiver-for-payload-logs" title="Permanent link">&para;</a></h2>
 <p>Apply the message-dumper CRD which will collect the logs that are created when running predictions on the inferenceservice. In production setup, instead of message-dumper Kafka can be used to receive payload logs</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
@@ -2639,22 +2641,24 @@
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f message-dumper.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>message-dumper.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>service.serving.knative.dev/message-dumper created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>service.serving.knative.dev/message-dumper<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=german-credit
-SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-python simulate_predicts.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict ${SERVICE_HOSTNAME}
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>german-credit
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+python<span class="w"> </span>simulate_predicts.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span>
 </code></pre></div>
 <h2 id="process-payload-logs-for-metrics-calculation">Process payload logs for metrics calculation<a class="headerlink" href="#process-payload-logs-for-metrics-calculation" title="Permanent link">&para;</a></h2>
 <p>Run <code>json_from_logs.py</code> which will craft a payload that AIF can interpret. First, the events logs are taken from the message-dumper and then those
 logs are parsed to match inputs with outputs. Then the input/outputs pairs are all combined into a list of inputs and a list of outputs for AIF to interpret.
 A <code>data.json</code> file should have been created in this folder which contains the json payload.</p>
-<div class="highlight"><pre><span></span><code>python json_from_logs.py
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>json_from_logs.py
 </code></pre></div>
 <h2 id="run-an-explanation">Run an explanation<a class="headerlink" href="#run-an-explanation" title="Permanent link">&para;</a></h2>
 <p>Finally, now that we have collected a number of our model's predictions and their corresponding inputs we will send these to the AIF server to calculate the bias metrics.</p>
@@ -2665,20 +2669,22 @@ A <code>data.json</code> file should have been created in this folder which cont
 and the probability of applicants of the unprivileged class (age &lt;= 25) getting a loan <code>P(Y=1|D=privileged)/P(Y=1|D=unprivileged)</code>.
 Since, in the sample output below, the disparate impact is less that 1 then the probability that an applicant whose age is greater than 25 gets a loan is significantly higher than the probability that an applicant whose age is less than or equal to 25 gets a loan.
 This in and of itself is not proof that the model is biased, but does hint that there may be some bias and a deeper look may be needed.</p>
-<p><div class="highlight"><pre><span></span><code>python<span class="w"> </span>query_bias.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>input.json
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>query_bias.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>input.json
 </code></pre></div>
-<mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>Sending bias query...
-TIME TAKEN:  0.21137404441833496
-&lt;Response [200]&gt;
-base_rate :  0.9329608938547486
-consistency :  [0.982122905027933]
-disparate_impact :  0.52
-num_instances :  179.0
-num_negatives :  12.0
-num_positives :  167.0
-statistical_parity_difference :  -0.48
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Sending<span class="w"> </span>bias<span class="w"> </span>query...
+TIME<span class="w"> </span>TAKEN:<span class="w">  </span><span class="m">0</span>.21137404441833496
+&lt;Response<span class="w"> </span><span class="o">[</span><span class="m">200</span><span class="o">]</span>&gt;
+base_rate<span class="w"> </span>:<span class="w">  </span><span class="m">0</span>.9329608938547486
+consistency<span class="w"> </span>:<span class="w">  </span><span class="o">[</span><span class="m">0</span>.982122905027933<span class="o">]</span>
+disparate_impact<span class="w"> </span>:<span class="w">  </span><span class="m">0</span>.52
+num_instances<span class="w"> </span>:<span class="w">  </span><span class="m">179</span>.0
+num_negatives<span class="w"> </span>:<span class="w">  </span><span class="m">12</span>.0
+num_positives<span class="w"> </span>:<span class="w">  </span><span class="m">167</span>.0
+statistical_parity_difference<span class="w"> </span>:<span class="w">  </span>-0.48
+</code></pre></div>
+</div>
 <h2 id="dataset">Dataset<a class="headerlink" href="#dataset" title="Permanent link">&para;</a></h2>
 <p>The dataset used in this example is the German Credit dataset maintained by the <a href="https://archive.ics.uci.edu/ml/index.php">UC Irvine Machine Learning Repository</a>.</p>
 <p>Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.</p>

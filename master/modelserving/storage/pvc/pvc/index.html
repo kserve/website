@@ -2721,29 +2721,31 @@ to find out the ingress IP and port.</p>
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>*   Trying 127.0.0.1:8080...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 8080 (#0)
-&gt; POST /v1/models/sklearn-pvc:predict HTTP/1.1
-&gt; Host: sklearn-pvc.default.example.com
-&gt; User-Agent: curl/7.68.0
-&gt; Accept: */*
-&gt; Content-Length: 84
-&gt; Content-Type: application/x-www-form-urlencoded
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1:8080...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/sklearn-pvc:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-pvc.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.68.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">84</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
 &gt;
-* upload completely sent off: 84 out of 84 bytes
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 23
-&lt; content-type: application/json; charset=UTF-8
-&lt; date: Mon, 20 Sep 2021 04:55:50 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 6
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">84</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">84</span><span class="w"> </span>bytes
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">23</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Mon,<span class="w"> </span><span class="m">20</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2021</span><span class="w"> </span><span class="m">04</span>:55:50<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">6</span>
 &lt;
-* Connection #0 to host localhost left intact
-{&quot;predictions&quot;: [1, 1]}
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">]}</span>
 </code></pre></div>
+</div>
 
               
             </article>

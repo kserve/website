@@ -2581,11 +2581,13 @@ serve the PMML format model on <code>InferenceService</code>.</p>
 </div>
 </div>
 <p>Create the InferenceService with above yaml
-<div class="highlight"><pre><span></span><code>kubectl apply -f pmml.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pmml.yaml
 </code></pre></div></p>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/pmml-demo created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/pmml-demo<span class="w"> </span>created
+</code></pre></div>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The <code>pmmlserver</code> is based on <a href="https://github.com/bartdag/py4j">Py4J</a> and that doesn't support multi-process mode, so we can't set <code>spec.predictor.containerConcurrency</code>.
@@ -2593,32 +2595,34 @@ If you want to scale the PMMLServer to improve prediction performance, you shoul
 </div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=pmml-demo
-INPUT_PATH=@./pmml-input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice pmml-demo -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>pmml-demo
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./pmml-input.json
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>pmml-demo<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>* TCP_NODELAY set
-* Connected to localhost (::1) port 8081 (#0)
-&gt; POST /v1/models/pmml-demo:predict HTTP/1.1
-&gt; Host: pmml-demo.default.example.com
-&gt; User-Agent: curl/7.64.1
-&gt; Accept: */*
-&gt; Content-Length: 45
-&gt; Content-Type: application/x-www-form-urlencoded
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span>::1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8081</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/pmml-demo:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>pmml-demo.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.64.1
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">45</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
 &gt;
-* upload completely sent off: 45 out of 45 bytes
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 39
-&lt; content-type: application/json; charset=UTF-8
-&lt; date: Sun, 18 Oct 2020 15:50:02 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 12
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">45</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">45</span><span class="w"> </span>bytes
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">39</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">18</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2020</span><span class="w"> </span><span class="m">15</span>:50:02<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">12</span>
 &lt;
-* Connection #0 to host localhost left intact
-{&quot;predictions&quot;: [{&#39;Species&#39;: &#39;setosa&#39;, &#39;Probability_setosa&#39;: 1.0, &#39;Probability_versicolor&#39;: 0.0, &#39;Probability_virginica&#39;: 0.0, &#39;Node_Id&#39;: &#39;2&#39;}]}* Closing connection 0
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s1">&#39;Species&#39;</span>:<span class="w"> </span><span class="s1">&#39;setosa&#39;</span>,<span class="w"> </span><span class="s1">&#39;Probability_setosa&#39;</span>:<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="s1">&#39;Probability_versicolor&#39;</span>:<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="s1">&#39;Probability_virginica&#39;</span>:<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="s1">&#39;Node_Id&#39;</span>:<span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="o">}]}</span>*<span class="w"> </span>Closing<span class="w"> </span>connection<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
+</div>
 
               
             </article>

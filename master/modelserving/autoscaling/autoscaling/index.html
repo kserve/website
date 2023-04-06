@@ -2821,9 +2821,11 @@ This is the preferred way of defining autoscaling options.</p>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f autoscale.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flowers-sample created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/flowers-sample<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="predict-inferenceservice-with-concurrent-requests">Predict <code>InferenceService</code> with concurrent requests<a class="headerlink" href="#predict-inferenceservice-with-concurrent-requests" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send traffic in 30 seconds spurts maintaining 5 in-flight requests.</p>
@@ -2833,8 +2835,9 @@ This is the preferred way of defining autoscaling options.</p>
 
 hey<span class="w"> </span>-z<span class="w"> </span>30s<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span>-host<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>-D<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Summary:
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Summary:
 <span class="w">  </span>Total:<span class="w">    </span><span class="m">30</span>.0193<span class="w"> </span>secs
 <span class="w">  </span>Slowest:<span class="w">  </span><span class="m">10</span>.1458<span class="w"> </span>secs
 <span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.0127<span class="w"> </span>secs
@@ -2877,14 +2880,15 @@ Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> 
 Status<span class="w"> </span>code<span class="w"> </span>distribution:
 <span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">4126</span><span class="w"> </span>responses
 </code></pre></div>
-<p>Check the number of running pods now, <code>Kserve</code> uses <code>Knative Serving</code> autoscaler which is based on the average number of in-flight requests per pod(concurrency). As the scaling target is set to 1 and we load the service with 5 concurrent requests, so the autoscaler tries scaling up to 5 pods. Notice that out of all the requests there are 5 requests on the histogram that take around 10s, that's the cold start time cost to initially spawn the pods and download model to be readyto serve. The cold start may take longer(to pull the serving image) if the image is not cached on the node that the pod is scheduled on.</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods
-NAME                                                       READY   STATUS            RESTARTS   AGE
-flowers-sample-default-7kqt6-deployment-75d577dcdb-sr5wd         3/3     Running       0          42s
-flowers-sample-default-7kqt6-deployment-75d577dcdb-swnk5         3/3     Running       0          62s
-flowers-sample-default-7kqt6-deployment-75d577dcdb-t2njf         3/3     Running       0          62s
-flowers-sample-default-7kqt6-deployment-75d577dcdb-vdlp9         3/3     Running       0          64s
-flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running       0          42s
+</div>
+<p>Check the number of running pods now, <code>Kserve</code> uses <code>Knative Serving</code> autoscaler which is based on the average number of in-flight requests per pod(concurrency). As the scaling target is set to 1 and we load the service with 5 concurrent requests, so the autoscaler tries scaling up to 5 pods. Notice that out of all the requests there are 5 requests on the histogram that take around 10s, that's the cold start time cost to initially spawn the pods and download model to be ready to serve. The cold start may take longer(to pull the serving image) if the image is not cached on the node that the pod is scheduled on.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+NAME<span class="w">                                                       </span>READY<span class="w">   </span>STATUS<span class="w">            </span>RESTARTS<span class="w">   </span>AGE
+flowers-sample-default-7kqt6-deployment-75d577dcdb-sr5wd<span class="w">         </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>42s
+flowers-sample-default-7kqt6-deployment-75d577dcdb-swnk5<span class="w">         </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>62s
+flowers-sample-default-7kqt6-deployment-75d577dcdb-t2njf<span class="w">         </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>62s
+flowers-sample-default-7kqt6-deployment-75d577dcdb-vdlp9<span class="w">         </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>64s
+flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d<span class="w">         </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>42s
 </code></pre></div>
 <h3 id="check-dashboard">Check Dashboard<a class="headerlink" href="#check-dashboard" title="Permanent link">&para;</a></h3>
 <p>View the Knative Serving Scaling dashboards (if configured).</p>
@@ -2906,9 +2910,11 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running
 </div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/flowers-sample created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/flowers-sample<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="predict-inferenceservice-with-target-qps">Predict InferenceService with target QPS<a class="headerlink" href="#predict-inferenceservice-with-target-qps" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send 30 seconds of traffic maintaining 50 qps.</p>
@@ -2918,8 +2924,9 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d         3/3     Running
 
 hey<span class="w"> </span>-z<span class="w"> </span>30s<span class="w"> </span>-q<span class="w"> </span><span class="m">50</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span>-host<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>-D<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Summary:
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Summary:
 <span class="w">  </span>Total:<span class="w">    </span><span class="m">30</span>.0264<span class="w"> </span>secs
 <span class="w">  </span>Slowest:<span class="w">  </span><span class="m">10</span>.8113<span class="w"> </span>secs
 <span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.0145<span class="w"> </span>secs
@@ -2962,6 +2969,7 @@ Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> 
 Status<span class="w"> </span>code<span class="w"> </span>distribution:
 <span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">20525</span><span class="w"> </span>responses
 </code></pre></div>
+</div>
 <p>Check the number of running pods now, we are loading the service with 50 requests per second, and from the dashboard you can see
 that it hits the average concurrency 10 and autoscaler tries scaling up to 10 pods.</p>
 <h3 id="check-dashboard_1">Check Dashboard<a class="headerlink" href="#check-dashboard_1" title="Permanent link">&para;</a></h3>
@@ -2969,7 +2977,7 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span>--selector<span class="o">=</span><span class="nv">app</span><span class="o">=</span>grafana<span class="w">  </span>--output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">&quot;{.items..metadata.name}&quot;</span><span class="k">)</span><span class="w"> </span><span class="m">3000</span>
 </code></pre></div>
 <p><img alt="scaling dashboard" src="../images/scaling_debug_qps.png" /></p>
-<p>Autoscaler calculates average concurrency over 60 second window so it takes a minute to stabilize at the desired concurrency level,however it also calculates the 6 second panic window and will enter into <a href="https://knative.dev/docs/serving/autoscaling/kpa-specific/#panic-mode-threshold">panic mode</a> if that window reaches 2x target concurrency. From the dashboard you can see that it enters panic mode in which autoscaler operates on shorter and more sensitive window. Once the panic conditions are no longer met for 60 seconds, autoscaler will return back to 60 seconds stable window.</p>
+<p>Autoscaler calculates average concurrency over 60 second window so it takes a minute to stabilize at the desired concurrency level, however it also calculates the 6 second panic window and will enter into <a href="https://knative.dev/docs/serving/autoscaling/kpa-specific/#panic-mode-threshold">panic mode</a> if that window reaches 2x target concurrency. From the dashboard you can see that it enters panic mode in which autoscaler operates on shorter and more sensitive window. Once the panic conditions are no longer met for 60 seconds, autoscaler will return back to 60 seconds stable window.</p>
 <h2 id="autoscaling-on-gpu">Autoscaling on GPU!<a class="headerlink" href="#autoscaling-on-gpu" title="Permanent link">&para;</a></h2>
 <p>Autoscaling on GPU is hard with GPU metrics, however thanks to Knative's concurrency based autoscaler scaling on GPU is pretty easy and effective!</p>
 <h3 id="create-the-inferenceservice-with-gpu-resource">Create the InferenceService with GPU resource<a class="headerlink" href="#create-the-inferenceservice-with-gpu-resource" title="Permanent link">&para;</a></h3>
@@ -3027,8 +3035,9 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 
 hey<span class="w"> </span>-z<span class="w"> </span>30s<span class="w"> </span>-c<span class="w"> </span><span class="m">5</span><span class="w"> </span>-m<span class="w"> </span>POST<span class="w"> </span>-host<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>-D<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Summary:
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Summary:
 <span class="w">  </span>Total:<span class="w">    </span><span class="m">30</span>.0152<span class="w"> </span>secs
 <span class="w">  </span>Slowest:<span class="w">  </span><span class="m">9</span>.7581<span class="w"> </span>secs
 <span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.0142<span class="w"> </span>secs
@@ -3071,6 +3080,7 @@ Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> 
 Status<span class="w"> </span>code<span class="w"> </span>distribution:
 <span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">4292</span><span class="w"> </span>responses
 </code></pre></div>
+</div>
 <h2 id="autoscaling-customization">Autoscaling Customization<a class="headerlink" href="#autoscaling-customization" title="Permanent link">&para;</a></h2>
 <h3 id="autoscaling-with-containerconcurrency">Autoscaling with ContainerConcurrency<a class="headerlink" href="#autoscaling-with-containerconcurrency" title="Permanent link">&para;</a></h3>
 <p><code>ContainerConcurrency</code> determines the number of simultaneous requests that can be processed by each replica of the <code>InferenceService</code>

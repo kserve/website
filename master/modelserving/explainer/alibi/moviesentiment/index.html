@@ -2615,135 +2615,143 @@ More details on this algorithm and configuration settings that can be set can be
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl create -f moviesentiment.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>moviesentiment.yaml
 </code></pre></div>
 <h2 id="run-inference-and-explanation">Run Inference and Explanation<a class="headerlink" href="#run-inference-and-explanation" title="Permanent link">&para;</a></h2>
 <p>Set up some environment variables for the model name and cluster entrypoint.</p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=moviesentiment
-SERVICE_HOSTNAME=$(kubectl get inferenceservice moviesentiment -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>moviesentiment
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>moviesentiment<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 <p>Test the predictor on an example sentence:</p>
-<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;</span>
 </code></pre></div>
 <p>You should receive the response showing negative sentiment:</p>
-<div class="highlight"><pre><span></span><code>{&quot;predictions&quot;: [0]}
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;predictions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
 </code></pre></div>
+</div>
 <p>Test on another sentence:</p>
-<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d &#39;{&quot;instances&quot;:[&quot;a touching , sophisticated film that almost seems like a documentary in the way it captures an italian immigrant family on the brink of major changes .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;instances&quot;:[&quot;a touching , sophisticated film that almost seems like a documentary in the way it captures an italian immigrant family on the brink of major changes .&quot;]}&#39;</span>
 </code></pre></div>
 <p>You should receive the response showing positive sentiment:</p>
-<div class="highlight"><pre><span></span><code>{&quot;predictions&quot;: [1]}
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;predictions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
 </code></pre></div>
+</div>
 <p>Now lets get an explanation for the first sentence:</p>
-<div class="highlight"><pre><span></span><code>curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>{
-  &quot;names&quot;: [
-    &quot;exercise&quot;
-  ],
-  &quot;precision&quot;: 1,
-  &quot;coverage&quot;: 0.5005,
-  &quot;raw&quot;: {
-    &quot;feature&quot;: [
-      9
-    ],
-    &quot;mean&quot;: [
-      1
-    ],
-    &quot;precision&quot;: [
-      1
-    ],
-    &quot;coverage&quot;: [
-      0.5005
-    ],
-    &quot;examples&quot;: [
-      {
-        &quot;covered&quot;: [
-          [
-            &quot;a visually UNK UNK UNK opaque and emotionally vapid exercise UNK&quot;
-          ],
-          [
-            &quot;a visually flashy but UNK UNK and emotionally UNK exercise .&quot;
-          ],
-          [
-            &quot;a visually flashy but narratively UNK UNK UNK UNK exercise .&quot;
-          ],
-          [
-            &quot;UNK UNK flashy UNK narratively opaque UNK UNK vapid exercise .&quot;
-          ],
-          [
-            &quot;UNK visually UNK UNK UNK UNK and UNK vapid exercise UNK&quot;
-          ],
-          [
-            &quot;UNK UNK UNK but UNK opaque UNK emotionally UNK exercise UNK&quot;
-          ],
-          [
-            &quot;a UNK flashy UNK UNK UNK and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;UNK UNK flashy UNK narratively opaque UNK emotionally UNK exercise .&quot;
-          ],
-          [
-            &quot;UNK UNK flashy UNK narratively opaque UNK UNK vapid exercise UNK&quot;
-          ],
-          [
-            &quot;a visually UNK but narratively opaque UNK UNK vapid exercise UNK&quot;
-          ]
-        ],
-        &quot;covered_true&quot;: [
-          [
-            &quot;UNK visually flashy but UNK UNK and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;UNK visually UNK UNK UNK UNK and UNK UNK exercise .&quot;
-          ],
-          [
-            &quot;a UNK UNK UNK narratively opaque UNK UNK UNK exercise UNK&quot;
-          ],
-          [
-            &quot;a visually UNK UNK narratively opaque UNK UNK UNK exercise UNK&quot;
-          ],
-          [
-            &quot;a UNK UNK UNK UNK UNK and emotionally vapid exercise UNK&quot;
-          ],
-          [
-            &quot;a UNK flashy UNK narratively UNK and UNK vapid exercise UNK&quot;
-          ],
-          [
-            &quot;UNK visually UNK UNK narratively UNK and emotionally UNK exercise .&quot;
-          ],
-          [
-            &quot;UNK visually flashy UNK narratively opaque UNK emotionally UNK exercise UNK&quot;
-          ],
-          [
-            &quot;UNK UNK flashy UNK UNK UNK and UNK vapid exercise UNK&quot;
-          ],
-          [
-            &quot;a UNK flashy UNK UNK UNK and emotionally vapid exercise .&quot;
-          ]
-        ],
-        &quot;covered_false&quot;: [],
-        &quot;uncovered_true&quot;: [],
-        &quot;uncovered_false&quot;: []
-      }
-    ],
-    &quot;all_precision&quot;: 0,
-    &quot;num_preds&quot;: 1000101,
-    &quot;names&quot;: [
-      &quot;exercise&quot;
-    ],
-    &quot;positions&quot;: [
-      63
-    ],
-    &quot;instance&quot;: &quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;,
-    &quot;prediction&quot;: 0
-  }
-}
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;exercise&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;converage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5005</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;raw&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">9</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;mean&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">1</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.5005</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;covered&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually UNK UNK UNK opaque and emotionally vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually flashy but UNK UNK and emotionally UNK exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually flashy but narratively UNK UNK UNK UNK exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK UNK flashy UNK narratively opaque UNK UNK vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK visually UNK UNK UNK UNK and UNK vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK UNK UNK but UNK opaque UNK emotionally UNK exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a UNK flashy UNK UNK UNK and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK UNK flashy UNK narratively opaque UNK emotionally UNK exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK UNK flashy UNK narratively opaque UNK UNK vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually UNK but narratively opaque UNK UNK vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;covered_true&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK visually flashy but UNK UNK and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK visually UNK UNK UNK UNK and UNK UNK exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a UNK UNK UNK narratively opaque UNK UNK UNK exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually UNK UNK narratively opaque UNK UNK UNK exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a UNK UNK UNK UNK UNK and emotionally vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a UNK flashy UNK narratively UNK and UNK vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK visually UNK UNK narratively UNK and emotionally UNK exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK visually flashy UNK narratively opaque UNK emotionally UNK exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;UNK UNK flashy UNK UNK UNK and UNK vapid exercise UNK&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a UNK flashy UNK UNK UNK and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;covered_false&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nt">&quot;uncovered_true&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nt">&quot;uncovered_false&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;all_precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;num_preds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000101</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;exercise&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;positions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">63</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;prediction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
-<p>This shows the key word "bad" was indetified and examples show it in context using the default "UKN" placeholder for surrounding words.</p>
+</div>
+<p>This shows the key word "bad" was identified and examples show it in context using the default "UKN" placeholder for surrounding words.</p>
 <h2 id="custom-configuration">Custom Configuration<a class="headerlink" href="#custom-configuration" title="Permanent link">&para;</a></h2>
-<p>You can add custom configuration for the Anchor Text explainer in the 'config' section. For example we can change the text explainer to sample from the corpus rather than use UKN placeholders:</p>
+<p>You can add custom configuration for the Anchor Text explainer in the 'config' section. For example, we can change the text explainer to sample from the corpus rather than use UKN placeholders:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -2771,122 +2779,124 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice moviesentiment -o jsonpath=&#39;
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl create -f moviesentiment2.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>moviesentiment2.yaml
 </code></pre></div>
 <p>and then ask for an explanation:</p>
-<div class="highlight"><pre><span></span><code>curl -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d &#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;instances&quot;:[&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;]}&#39;</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>{
-  &quot;names&quot;: [
-    &quot;exercise&quot;
-  ],
-  &quot;precision&quot;: 0.9918032786885246,
-  &quot;coverage&quot;: 0.5072,
-  &quot;raw&quot;: {
-    &quot;feature&quot;: [
-      9
-    ],
-    &quot;mean&quot;: [
-      0.9918032786885246
-    ],
-    &quot;precision&quot;: [
-      0.9918032786885246
-    ],
-    &quot;coverage&quot;: [
-      0.5072
-    ],
-    &quot;examples&quot;: [
-      {
-        &quot;covered&quot;: [
-          [
-            &quot;each visually playful but enormously opaque and academically vapid exercise .&quot;
-          ],
-          [
-            &quot;each academically trashy but narratively pigmented and profoundly vapid exercise .&quot;
-          ],
-          [
-            &quot;a masterfully flashy but narratively straightforward and verbally disingenuous exercise .&quot;
-          ],
-          [
-            &quot;a visually gaudy but interestingly opaque and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;some concurrently flashy but philosophically voxel and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;a visually flashy but delightfully sensible and emotionally snobby exercise .&quot;
-          ],
-          [
-            &quot;a surprisingly bland but fantastically seamless and hideously vapid exercise .&quot;
-          ],
-          [
-            &quot;both visually classy but nonetheless robust and musically vapid exercise .&quot;
-          ],
-          [
-            &quot;a visually fancy but narratively robust and emotionally uninformed exercise .&quot;
-          ],
-          [
-            &quot;a visually flashy but tastefully opaque and weirdly vapid exercise .&quot;
-          ]
-        ],
-        &quot;covered_true&quot;: [
-          [
-            &quot;another visually flashy but narratively opaque and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;the visually classy but narratively opaque and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;the visually arty but overshadow yellowish and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;a objectively flashy but genuinely straightforward and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;a visually flashy but tastefully opaque and weirdly vapid exercise .&quot;
-          ],
-          [
-            &quot;a emotionally crafty but narratively opaque and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;some similarly eclectic but narratively dainty and emotionally illogical exercise .&quot;
-          ],
-          [
-            &quot;a nicely flashy but psychologically opaque and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;a visually flashy but narratively colorless and emotionally vapid exercise .&quot;
-          ],
-          [
-            &quot;every properly lavish but logistically opaque and someway incomprehensible exercise .&quot;
-          ]
-        ],
-        &quot;covered_false&quot;: [
-          [
-            &quot;another enormously inventive but socially opaque and somewhat idiotic exercise .&quot;
-          ],
-          [
-            &quot;each visually playful but enormously opaque and academically vapid exercise .&quot;
-          ]
-        ],
-        &quot;uncovered_true&quot;: [],
-        &quot;uncovered_false&quot;: []
-      }
-    ],
-    &quot;all_precision&quot;: 0,
-    &quot;num_preds&quot;: 1000101,
-    &quot;names&quot;: [
-      &quot;exercise&quot;
-    ],
-    &quot;positions&quot;: [
-      63
-    ],
-    &quot;instance&quot;: &quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;,
-    &quot;prediction&quot;: 0
-  }
-}
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;exercise&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9918032786885246</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5072</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;raw&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;feature&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">9</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;mean&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.9918032786885246</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.9918032786885246</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;coverage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mf">0.5072</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;covered&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;each visually playful but enormously opaque and academically vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;each academically trashy but narratively pigmented and profoundly vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a masterfully flashy but narratively straightforward and verbally disingenuous exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually gaudy but interestingly opaque and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;some concurrently flashy but philosophically voxel and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually flashy but delightfully sensible and emotionally snobby exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a surprisingly bland but fantastically seamless and hideously vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;both visually classy but nonetheless robust and musically vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually fancy but narratively robust and emotionally uninformed exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually flashy but tastefully opaque and weirdly vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;covered_true&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;another visually flashy but narratively opaque and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;the visually classy but narratively opaque and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;the visually arty but overshadow yellowish and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a objectively flashy but genuinely straightforward and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually flashy but tastefully opaque and weirdly vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a emotionally crafty but narratively opaque and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;some similarly eclectic but narratively dainty and emotionally illogical exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a nicely flashy but psychologically opaque and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;a visually flashy but narratively colorless and emotionally vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;every properly lavish but logistically opaque and someway incomprehensible exercise .&quot;</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;covered_false&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;another enormously inventive but socially opaque and somewhat idiotic exercise .&quot;</span>
+<span class="w">          </span><span class="p">],</span>
+<span class="w">          </span><span class="p">[</span>
+<span class="w">            </span><span class="s2">&quot;each visually playful but enormously opaque and academically vapid exercise .&quot;</span>
+<span class="w">          </span><span class="p">]</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;uncovered_true&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="nt">&quot;uncovered_false&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;all_precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;num_preds&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000101</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;names&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;exercise&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;positions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="mi">63</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;instance&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a visually flashy but narratively opaque and emotionally vapid exercise .&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;prediction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
+</div>
 <h2 id="run-on-notebook">Run on Notebook<a class="headerlink" href="#run-on-notebook" title="Permanent link">&para;</a></h2>
 <p>You can also run this example on <a href="movie_review_explanations.ipynb">notebook</a></p>
 

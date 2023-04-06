@@ -2891,9 +2891,12 @@ docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</s
 </code></pre></div></p>
 <p>Send a test inference request locally with <a href="input.json">input.json</a>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
-
-<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[[</span><span class="m">14</span>.861763000488281,<span class="w"> </span><span class="m">13</span>.94291877746582,<span class="w"> </span><span class="m">13</span>.924378395080566,<span class="w"> </span><span class="m">12</span>.182709693908691,<span class="w"> </span><span class="m">12</span>.00634765625<span class="o">]]}</span>
 </code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;predictions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">14.861763000488281</span><span class="p">,</span><span class="w"> </span><span class="mf">13.94291877746582</span><span class="p">,</span><span class="w"> </span><span class="mf">13.924378395080566</span><span class="p">,</span><span class="w"> </span><span class="mf">12.182709693908691</span><span class="p">,</span><span class="w"> </span><span class="mf">12.00634765625</span><span class="p">]]}</span>
+</code></pre></div>
+</div>
 <h3 id="deploy-the-rest-custom-serving-runtime-on-kserve">Deploy the REST Custom Serving Runtime on KServe<a class="headerlink" href="#deploy-the-rest-custom-serving-runtime-on-kserve" title="Permanent link">&para;</a></h3>
 <p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
@@ -2930,43 +2933,47 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 </div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f custom.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/custom-model created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/custom-model<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h3 id="run-a-prediction">Run a Prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=custom-model
-INPUT_PATH=@./input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>custom-model
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>*   Trying 169.47.250.204...
-* TCP_NODELAY set
-* Connected to 169.47.250.204 (169.47.250.204) port 80 (#0)
-&gt; POST /v1/models/custom-model:predict HTTP/1.1
-&gt; Host: custom-model.default.example.com
-&gt; User-Agent: curl/7.64.1
-&gt; Accept: */*
-&gt; Content-Length: 105339
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt; Expect: 100-continue
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">169</span>.47.250.204...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span><span class="m">169</span>.47.250.204<span class="w"> </span><span class="o">(</span><span class="m">169</span>.47.250.204<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/custom-model:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>custom-model.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.64.1
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">105339</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>Expect:<span class="w"> </span><span class="m">100</span>-continue
 &gt;
-&lt; HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 232
-&lt; content-type: text/html; charset=UTF-8
-&lt; date: Wed, 26 Feb 2020 15:19:15 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 213
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">100</span><span class="w"> </span>Continue
+*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">232</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>text/html<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">26</span><span class="w"> </span>Feb<span class="w"> </span><span class="m">2020</span><span class="w"> </span><span class="m">15</span>:19:15<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">213</span>
 &lt;
-* Connection #0 to host 169.47.250.204 left intact
-{&quot;predictions&quot;: [[14.861762046813965, 13.942917823791504, 13.9243803024292, 12.182711601257324, 12.00634765625]]}
-</code></pre></div></p>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host 169.47.250.204 left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[[</span><span class="m">14</span>.861762046813965,<span class="w"> </span><span class="m">13</span>.942917823791504,<span class="w"> </span><span class="m">13</span>.9243803024292,<span class="w"> </span><span class="m">12</span>.182711601257324,<span class="w"> </span><span class="m">12</span>.00634765625<span class="o">]]}</span>
+</code></pre></div>
+</div>
 <h3 id="delete-the-inferenceservice">Delete the InferenceService<a class="headerlink" href="#delete-the-inferenceservice" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl delete -f custom.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>custom.yaml
 </code></pre></div>
 <h2 id="create-and-deploy-custom-grpc-servingruntime">Create and Deploy Custom gRPC ServingRuntime<a class="headerlink" href="#create-and-deploy-custom-grpc-servingruntime" title="Permanent link">&para;</a></h2>
 <p>KServe gRPC ServingRuntimes enables high performance inference data plane which implements the <code>Open(v2) Inference Protocol</code>:</p>
@@ -3060,38 +3067,40 @@ docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</s
 </code></pre></div></p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>grpc_test_client.py
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>id: &quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;
-outputs {
-  name: &quot;output-0&quot;
-  datatype: &quot;FP32&quot;
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;output-0&quot;</span>
+<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FP32&quot;</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-model_name: &quot;custom-model&quot;
-id: &quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;
-outputs {
-  name: &quot;output-0&quot;
-  datatype: &quot;FP32&quot;
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
-</code></pre></div></p>
+<span class="err">model_</span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;custom-model&quot;</span>
+<span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;output-0&quot;</span>
+<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FP32&quot;</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
 <h3 id="deploy-the-grpc-custom-serving-runtime-on-kserve">Deploy the gRPC Custom Serving Runtime on KServe<a class="headerlink" href="#deploy-the-grpc-custom-serving-runtime-on-kserve" title="Permanent link">&para;</a></h3>
 <p>Create the InferenceService yaml and expose the gRPC port by specifying on <code>ports</code> section, currently only one port is allowed to expose and by default HTTP port is exposed.
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
@@ -3122,51 +3131,55 @@ In the <code>custom_grpc.yaml</code> file edit the container image and replace $
 <div class="tabbed-block"></div>
 </div>
 </div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f custom_grpc.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>custom_grpc.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/custom-model-grpc created
-</code></pre></div></p>
+<div class="admonition successs">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/custom-model-grpc<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h3 id="run-a-grpc-prediction">Run a gRPC Prediction<a class="headerlink" href="#run-a-grpc-prediction" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=custom-model
-SERVICE_HOSTNAME=$(kubectl get inferenceservice custom-model-grpc -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>custom-model
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>custom-model-grpc<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 <p>Send an inference request to the gRPC service using <code>InferenceServerClient</code> <a href="grpc_test_client.py">grpc_test_client.py</a>.</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>grpc_test_client.py
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>id: &quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;
-outputs {
-  name: &quot;output-0&quot;
-  datatype: &quot;FP32&quot;
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;output-0&quot;</span>
+<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FP32&quot;</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
 
-model_name: &quot;custom-model&quot;
-id: &quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;
-outputs {
-  name: &quot;output-0&quot;
-  datatype: &quot;FP32&quot;
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
-</code></pre></div></p>
+<span class="err">model_</span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;custom-model&quot;</span>
+<span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;df27b8a5-f13e-4c7a-af61-20bdb55b6523&quot;</span>
+<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;output-0&quot;</span>
+<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FP32&quot;</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
+<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
 <h2 id="parallel-model-inference">Parallel Model Inference<a class="headerlink" href="#parallel-model-inference" title="Permanent link">&para;</a></h2>
 <p>By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
@@ -3213,7 +3226,7 @@ fractional gpu example
 The more details for ray fractional cpu and gpu can be found <a href="https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus">here</a>.</p>
 <p>The full code example can be found <a href="https://github.com/kserve/kserve/blob/release-0.10/python/custom_model/model_remote.py">here</a>.</p>
 <p>Modify the <code>Procfile</code> to <code>web: python -m model_remote</code> and then run the above <code>pack</code> command, it builds the serving image which launches
-each model as separate python worker and webserver routes to the model workers by name.</p>
+each model as separate python worker and web server routes to the model workers by name.</p>
 <p><img alt="parallel_inference" src="parallel_inference.png" /></p>
 
               

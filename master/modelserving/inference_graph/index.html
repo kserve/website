@@ -2624,18 +2624,18 @@ config-map in kserve namespace.
 For example:
 If you want to propagate a certain header, say "Custom-Header", then you can edit the <code>router</code> section of <code>inferenceservice-config</code>
 config-map like this :
-<div class="highlight"><pre><span></span><code>{
-    &quot;image&quot; : &quot;kserve/router:v0.10.0&quot;,
-    &quot;memoryRequest&quot;: &quot;100Mi&quot;,
-    &quot;memoryLimit&quot;: &quot;1Gi&quot;,
-    &quot;cpuRequest&quot;: &quot;100m&quot;,
-    &quot;cpuLimit&quot;: &quot;1&quot;,
-    &quot;headers&quot;: {
-      &quot;propagate&quot;:[
-        &quot;Custom-Header&quot;
-      ]
-    }
-}
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;image&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kserve/router:v0.10.0&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;memoryRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100Mi&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;memoryLimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1Gi&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cpuRequest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100m&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;cpuLimit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;propagate&quot;</span><span class="p">:[</span>
+<span class="w">        </span><span class="s2">&quot;Custom-Header&quot;</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 Once you update this config-map, kserve controller will automatically reconcile Inference Graph to start propagating headers.</p>
 

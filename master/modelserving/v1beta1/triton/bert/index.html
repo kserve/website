@@ -2752,21 +2752,23 @@ Or you can use the prebuild image <code>kfserving/bert-transformer-v2:latest</co
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/triton/bert&quot;</span>
 </code></pre></div></p>
 <p>Apply the <code>InferenceService</code> yaml.
-<div class="highlight"><pre><span></span><code>kubectl apply -f bert_v1beta1.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>bert_v1beta1.yaml
 </code></pre></div></p>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/bert-v2 created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/bert-v2<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h2 id="check-the-inferenceservice">Check the InferenceService<a class="headerlink" href="#check-the-inferenceservice" title="Permanent link">&para;</a></h2>
-<p><div class="highlight"><pre><span></span><code>kubectl get inferenceservice bert-v2
-NAME      URL                                           READY   AGE
-bert-v2   http://bert-v2.default.35.229.120.99.xip.io   True    71s
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>bert-v2
+NAME<span class="w">      </span>URL<span class="w">                                           </span>READY<span class="w">   </span>AGE
+bert-v2<span class="w">   </span>http://bert-v2.default.35.229.120.99.xip.io<span class="w">   </span>True<span class="w">    </span>71s
 </code></pre></div>
 you will see both transformer and predictor are created and in ready state
-<div class="highlight"><pre><span></span><code>kubectl get revision -l serving.kserve.io/inferenceservice=bert-v2
-NAME                                CONFIG NAME                   K8S SERVICE NAME                    GENERATION   READY   REASON
-bert-v2-predictor-default-plhgs     bert-v2-predictor-default     bert-v2-predictor-default-plhgs     1            True    
-bert-v2-transformer-default-sd6nc   bert-v2-transformer-default   bert-v2-transformer-default-sd6nc   1            True  
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>revision<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>bert-v2
+NAME<span class="w">                                </span>CONFIG<span class="w"> </span>NAME<span class="w">                   </span>K8S<span class="w"> </span>SERVICE<span class="w"> </span>NAME<span class="w">                    </span>GENERATION<span class="w">   </span>READY<span class="w">   </span>REASON
+bert-v2-predictor-default-plhgs<span class="w">     </span>bert-v2-predictor-default<span class="w">     </span>bert-v2-predictor-default-plhgs<span class="w">     </span><span class="m">1</span><span class="w">            </span>True<span class="w">    </span>
+bert-v2-transformer-default-sd6nc<span class="w">   </span>bert-v2-transformer-default<span class="w">   </span>bert-v2-transformer-default-sd6nc<span class="w">   </span><span class="m">1</span><span class="w">            </span>True<span class="w">  </span>
 </code></pre></div></p>
 <h2 id="run-a-prediction">Run a Prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
@@ -2784,9 +2786,11 @@ the inputs to expected tensor sending to <code>Triton Inference Server</code>.
 
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
-<p>Expected output
-<div class="highlight"><pre><span></span><code>{&quot;predictions&quot;: &quot;John F. Kennedy&quot;, &quot;prob&quot;: 77.91848979818604}
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="s2">&quot;John F. Kennedy&quot;</span>,<span class="w"> </span><span class="s2">&quot;prob&quot;</span>:<span class="w"> </span><span class="m">77</span>.91848979818604<span class="o">}</span>
+</code></pre></div>
+</div>
 
               
             </article>

@@ -2652,13 +2652,16 @@
 helm<span class="w"> </span>repo<span class="w"> </span>update
 helm<span class="w"> </span>install<span class="w"> </span>my-kafka<span class="w"> </span>-f<span class="w"> </span>values.yaml<span class="w"> </span>--set<span class="w"> </span>cp-schema-registry.enabled<span class="o">=</span>false,cp-kafka-rest.enabled<span class="o">=</span>false,cp-kafka-connect.enabled<span class="o">=</span><span class="nb">false</span><span class="w"> </span>confluentinc/cp-helm-charts
 </code></pre></div>
-<p>after successful install you are expected to see the running kafka cluster
-<div class="highlight"><pre><span></span><code>NAME<span class="w">                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+<p>After successful install you are expected to see the running kafka cluster</p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
 my-kafka-cp-kafka-0<span class="w">       </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>126m
 my-kafka-cp-kafka-1<span class="w">       </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w">          </span>126m
 my-kafka-cp-kafka-2<span class="w">       </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>126m
 my-kafka-cp-zookeeper-0<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>127m
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <h2 id="install-knative-eventing-and-kafka-event-source">Install Knative Eventing and Kafka Event Source<a class="headerlink" href="#install-knative-eventing-and-kafka-event-source" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Install <a href="https://knative.dev/docs/admin/install/eventing/install-eventing-with-yaml/">Knative Eventing Core &gt;= 0.18</a>
@@ -2726,23 +2729,28 @@ docker<span class="w"> </span>push<span class="w"> </span><span class="nv">$USER
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>mnist-kafka.yaml<span class="w"> </span>
 </code></pre></div></p>
 <p>This creates transformer and predictor pods, the request goes to transformer first where it invokes the preprocess handler, transformer then calls out to predictor to get the prediction response which in turn invokes the postprocess handler. 
-<div class="highlight"><pre><span></span><code>kubectl get pods -l serving.kserve.io/inferenceservice=mnist
-mnist-predictor-default-9t5ms-deployment-74f5cd7767-khthf     2/2     Running       0          10s
-mnist-transformer-default-jmf98-deployment-8585cbc748-ftfhd   2/2     Running       0          14m
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>mnist
+mnist-predictor-default-9t5ms-deployment-74f5cd7767-khthf<span class="w">     </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>10s
+mnist-transformer-default-jmf98-deployment-8585cbc748-ftfhd<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>14m
 </code></pre></div></p>
 <h2 id="create-kafka-event-source">Create kafka event source<a class="headerlink" href="#create-kafka-event-source" title="Permanent link">&para;</a></h2>
 <p>Apply kafka event source which creates the kafka consumer pod to pull the events from kafka and deliver to inference service.
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>kafka-source.yaml
 </code></pre></div></p>
-<p>This creates the kafka source pod which consumers the events from <code>mnist</code> topic
-<div class="highlight"><pre><span></span><code>kafkasource-kafka-source-3d809fe2-1267-11ea-99d0-42010af00zbn5h<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>8h
-</code></pre></div></p>
+<p>This creates the kafka source pod which consumers the events from <code>mnist</code> topic</p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>kafkasource-kafka-source-3d809fe2-1267-11ea-99d0-42010af00zbn5h<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>8h
+</code></pre></div>
+</div>
 <h2 id="upload-a-digit-image-to-minio-mnist-bucket">Upload a digit image to Minio mnist bucket<a class="headerlink" href="#upload-a-digit-image-to-minio-mnist-bucket" title="Permanent link">&para;</a></h2>
 <p>The last step is to upload the image <code>images/0.png</code>, image then should be moved to the classified bucket based on the prediction response!
 <div class="highlight"><pre><span></span><code>mc<span class="w"> </span>cp<span class="w"> </span>images/0.png<span class="w"> </span>myminio/mnist
 </code></pre></div>
-you should expect a notification event like following sent to kafka topic <code>mnist</code> after uploading an image in <code>mnist</code> bucket
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+You should expect a notification event like following sent to kafka topic <code>mnist</code> after uploading an image in <code>mnist</code> bucket</p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">   </span><span class="nt">&quot;EventType&quot;</span><span class="p">:</span><span class="s2">&quot;s3:ObjectCreated:Put&quot;</span><span class="p">,</span>
 <span class="w">   </span><span class="nt">&quot;Key&quot;</span><span class="p">:</span><span class="s2">&quot;mnist/0.png&quot;</span><span class="p">,</span>
 <span class="w">   </span><span class="nt">&quot;Records&quot;</span><span class="p">:[</span>
@@ -2769,7 +2777,8 @@ you should expect a notification event like following sent to kafka topic <code>
 <span class="w">   </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
 <span class="w">   </span><span class="nt">&quot;time&quot;</span><span class="p">:</span><span class="s2">&quot;2019-11-17T19:08:08Z&quot;</span>
 <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <p>Check the transformer log, you should expect a prediction response and put the image to the corresponding bucket
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>mnist-transformer-default-rctjm-deployment-54d59c849c-2dq98<span class="w">  </span>kserve-container
 <span class="o">[</span>I<span class="w"> </span><span class="m">201128</span><span class="w"> </span><span class="m">22</span>:32:27<span class="w"> </span>kfserver:88<span class="o">]</span><span class="w"> </span>Registering<span class="w"> </span>model:<span class="w"> </span>mnist

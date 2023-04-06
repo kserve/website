@@ -2656,7 +2656,7 @@ Additionally, the latencies of each step are logged per request. See also <a hre
 <li><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/framework/metrics.cc">tensorflow</a> (Please see <a href="https://github.com/kserve/kserve/issues/2462">Github Issue #2462</a>)</li>
 </ul>
 <h2 id="exporting-metrics">Exporting metrics<a class="headerlink" href="#exporting-metrics" title="Permanent link">&para;</a></h2>
-<p>Exporting metrics in serverles mode requires that the queue-proxy extension image is used. </p>
+<p>Exporting metrics in serverless mode requires that the queue-proxy extension image is used. </p>
 <p>For more information on how to export metrics, see <a href="https://github.com/kserve/kserve/blob/master/qpext/README.md">Queue Proxy Extension</a> documentation.</p>
 <h2 id="knativequeue-proxy-metrics">Knative/Queue-Proxy metrics<a class="headerlink" href="#knativequeue-proxy-metrics" title="Permanent link">&para;</a></h2>
 <p>Queue proxy emits metrics be default on port 9091. If aggregation metrics are set up with the queue proxy extension, the default port for the aggregated metrics will be 9088. See the <a href="https://knative.dev/development/serving/services/service-metrics/">Knative documentation</a> (and <a href="https://github.com/vagababov/serving/blob/master/pkg/queue/prometheus_stats_reporter.go#L118">additional metrics defined in the code</a>) for more information about the metrics queue-proxy exposes. </p>

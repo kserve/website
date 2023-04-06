@@ -2625,23 +2625,29 @@
 <p>Edit volume id in pv.yaml file</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pv.yaml
 </code></pre></div>
-<p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>persistentvolume/model-pv-volume<span class="w"> </span>created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>persistentvolume/model-pv-volume<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="12-create-pvc">1.2 Create PVC<a class="headerlink" href="#12-create-pvc" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pvc.yaml
 </code></pre></div>
-<p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>persistentvolumeclaim/model-pv-claim<span class="w"> </span>created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>persistentvolumeclaim/model-pv-claim<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h2 id="2-create-model-store-files-layout-and-copy-to-pv">2 Create model store files layout and copy to PV<a class="headerlink" href="#2-create-model-store-files-layout-and-copy-to-pv" title="Permanent link">&para;</a></h2>
 <p>We create a pod with the PV attached to copy the model files and config.properties for generating model archive file.</p>
 <h3 id="21-create-pod-for-copying-model-store-files-to-pv">2.1 Create pod for copying model store files to PV<a class="headerlink" href="#21-create-pod-for-copying-model-store-files-to-pv" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pvpod.yaml
 </code></pre></div>
-<p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>pod/model-store-pod<span class="w"> </span>created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>pod/model-store-pod<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="22-create-model-store-file-layout-on-pv">2.2 Create model store file layout on PV<a class="headerlink" href="#22-create-model-store-file-layout-on-pv" title="Permanent link">&para;</a></h3>
 <h4 id="221-create-propertiesjson-file">2.2.1 Create properties.json file<a class="headerlink" href="#221-create-propertiesjson-file" title="Permanent link">&para;</a></h4>
 <p>This file has model-name, version, model-file name, serialized-file name, extra-files, handlers, workers etc. of the models.</p>

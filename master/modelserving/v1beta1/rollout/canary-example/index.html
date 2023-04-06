@@ -2628,8 +2628,8 @@ tutorial. Set up a namespace (if not already created), and create an InferenceSe
 <p>After rolling out the first model, 100% traffic goes to the initial model with service revision 1.</p>
 <p>Run <code>kubectl get isvc sklearn-iris</code> in the command line to see the amount of traffic routing to the InferenceService
 under the <code>LATEST</code> column.</p>
-<div class="highlight"><pre><span></span><code>NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
-sklearn-iris   http://sklearn-iris.kserve-test.example.com   True           100                              sklearn-iris-predictor-default-00001   46s                               2m39s                             70s
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">       </span>URL<span class="w">                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                </span>AGE
+sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">   </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-00001<span class="w">   </span>46s<span class="w">                               </span>2m39s<span class="w">                             </span>70s
 </code></pre></div>
 <h2 id="update-the-inferenceservice-with-the-canary-rollout-strategy">Update the InferenceService with the canary rollout strategy<a class="headerlink" href="#update-the-inferenceservice-with-the-canary-rollout-strategy" title="Permanent link">&para;</a></h2>
 <p>Add the <code>canaryTrafficPercent</code> field to the predictor component and update the <code>storageUri</code> to use a new/updated model.</p>
@@ -2693,23 +2693,23 @@ the <a href="https://kserve.github.io/website/0.8/get_started/first_isvc/">First
 <h2 id="promote-the-canary-model">Promote the canary model<a class="headerlink" href="#promote-the-canary-model" title="Permanent link">&para;</a></h2>
 <p>If the canary model is healthy/passes your tests, you can promote it by removing the <code>canaryTrafficPercent</code> field and
 re-applying the <code>InferenceService</code> custom resource.</p>
-<div class="highlight"><pre><span></span><code>kubectl apply -n kserve-test -f - &lt;&lt;EOF
-apiVersion: &quot;serving.kserve.io/v1beta1&quot;
-kind: &quot;InferenceService&quot;
-metadata:
-  name: &quot;sklearn-iris&quot;
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: sklearn
-      storageUri: &quot;gs://kfserving-examples/models/sklearn/1.0/model-2&quot;
-EOF
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="s">kind: &quot;InferenceService&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;sklearn-iris&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: sklearn</span>
+<span class="s">      storageUri: &quot;gs://kfserving-examples/models/sklearn/1.0/model-2&quot;</span>
+<span class="s">EOF</span>
 </code></pre></div>
 <p>Now all traffic goes to the revision 2 for the new model.</p>
-<div class="highlight"><pre><span></span><code>kubectl get isvc sklearn-iris
-NAME       URL                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
-sklearn-iris   http://sklearn-iris.kserve-test.example.com   True           100                              sklearn-iris-predictor-default-00002   17m
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>sklearn-iris
+NAME<span class="w">       </span>URL<span class="w">                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                </span>AGE
+sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">   </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-00002<span class="w">   </span>17m
 </code></pre></div>
 <p>The pods for revision generation 1 automatically scales down to 0 as it is no longer getting the traffic.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>sklearn-iris
@@ -2772,33 +2772,36 @@ explicitly routed to the canary model (model v2) or the old model (model v1) via
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>sklearn-iris<span class="w"> </span>-ojsonpath<span class="o">=</span><span class="s2">&quot;{.status.components.predictor}&quot;</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq
 </code></pre></div>
 <p>The output should look like</p>
-<div class="highlight"><pre><span></span><code><span class="o">{</span>
-<span class="w">  </span><span class="s2">&quot;address&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://sklearn-iris-predictor-default.kserve-test.svc.cluster.local&quot;</span>
-<span class="w">  </span><span class="o">}</span>,
-<span class="w">  </span><span class="s2">&quot;latestCreatedRevision&quot;</span>:<span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00003&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;latestReadyRevision&quot;</span>:<span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00003&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;latestRolledoutRevision&quot;</span>:<span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00001&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;previousRolledoutRevision&quot;</span>:<span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00001&quot;</span>,
-<span class="w">  </span><span class="s2">&quot;traffic&quot;</span>:<span class="w"> </span><span class="o">[</span>
-<span class="w">    </span><span class="o">{</span>
-<span class="w">      </span><span class="s2">&quot;latestRevision&quot;</span>:<span class="w"> </span>true,
-<span class="w">      </span><span class="s2">&quot;percent&quot;</span>:<span class="w"> </span><span class="m">10</span>,
-<span class="w">      </span><span class="s2">&quot;revisionName&quot;</span>:<span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00003&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;tag&quot;</span>:<span class="w"> </span><span class="s2">&quot;latest&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://latest-sklearn-iris-predictor-default.kserve-test.example.com&quot;</span>
-<span class="w">    </span><span class="o">}</span>,
-<span class="w">    </span><span class="o">{</span>
-<span class="w">      </span><span class="s2">&quot;latestRevision&quot;</span>:<span class="w"> </span>false,
-<span class="w">      </span><span class="s2">&quot;percent&quot;</span>:<span class="w"> </span><span class="m">90</span>,
-<span class="w">      </span><span class="s2">&quot;revisionName&quot;</span>:<span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00001&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;tag&quot;</span>:<span class="w"> </span><span class="s2">&quot;prev&quot;</span>,
-<span class="w">      </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://prev-sklearn-iris-predictor-default.kserve-test.example.com&quot;</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="w">  </span><span class="o">]</span>,
-<span class="w">  </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;http://sklearn-iris-predictor-default.kserve-test.example.com&quot;</span>
-<span class="o">}</span>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://sklearn-iris-predictor-default.kserve-test.svc.cluster.local&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;latestCreatedRevision&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00003&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;latestReadyRevision&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00003&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;latestRolledoutRevision&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;previousRolledoutRevision&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00001&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;traffic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;latestRevision&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;percent&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;revisionName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00003&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;latest&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://latest-sklearn-iris-predictor-default.kserve-test.example.com&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;latestRevision&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;percent&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;revisionName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sklearn-iris-predictor-default-00001&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;tag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;prev&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://prev-sklearn-iris-predictor-default.kserve-test.example.com&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://sklearn-iris-predictor-default.kserve-test.example.com&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
+</div>
 <p>Since we updated the annotation on the <code>InferenceService</code>, model v2 now corresponds to <code>sklearn-iris-predictor-default-00003</code>.</p>
 <p>You can now send the request explicitly to the new model or the previous model by using the tag in the request URL. Use
 the curl command

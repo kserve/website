@@ -2575,30 +2575,33 @@
 
 <h1 id="using-art-to-get-adversarial-examples-for-mnist-classifications">Using ART to get adversarial examples for MNIST classifications<a class="headerlink" href="#using-art-to-get-adversarial-examples-for-mnist-classifications" title="Permanent link">&para;</a></h1>
 <p>This is an example to show how adversarially modified inputs can trick models to predict incorrectly to highlight model vulnerability to adversarial attacks. It is using the <a href="https://adversarial-robustness-toolbox.org/">Adversarial Robustness Toolbox (ART)</a> on KServe. ART provides tools that enable developers to evaluate, defend, and verify ML models and applications against adversarial threats. Apart from giving capabilities to craft <a href="https://github.com/Trusted-AI/adversarial-robustness-toolbox/wiki/ART-Attacks">adversarial attacks</a>, it also provides <a href="https://github.com/Trusted-AI/adversarial-robustness-toolbox/wiki/ART-Defences">algorithms to defend</a> against them.</p>
-<p>We will be using the MNIST dataset which is a dataset of handwritten digits and find adversarial examples which will can make the model predict a classification incorrectly, thereby showing the vulnerability of the model against adversarial attacks.</p>
+<p>We will be using the MNIST dataset which is a dataset of handwritten digits and find adversarial examples which can make the model predict a classification incorrectly, thereby showing the vulnerability of the model against adversarial attacks.</p>
 <p>Sample resources for deploying the example can be found <a href="https://github.com/kserve/kserve/tree/master/docs/samples/explanation/art/mnist">here</a></p>
 <p>To deploy the inferenceservice with v1beta1 API</p>
-<p><code>kubectl apply -f art.yaml</code></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>art.yaml
+</code></pre></div>
 <p>Then find the url</p>
-<p><code>kubectl get inferenceservice</code></p>
-<div class="highlight"><pre><span></span><code>NAME         URL                                               READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
-artserver   http://artserver.somecluster/v1/models/artserver   True    100                                40m
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice
+</code></pre></div>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">         </span>URL<span class="w">                                               </span>READY<span class="w">   </span>DEFAULT<span class="w"> </span>TRAFFIC<span class="w">   </span>CANARY<span class="w"> </span>TRAFFIC<span class="w">   </span>AGE
+artserver<span class="w">   </span>http://artserver.somecluster/v1/models/artserver<span class="w">   </span>True<span class="w">    </span><span class="m">100</span><span class="w">                                </span>40m
 </code></pre></div>
 <h2 id="explanation">Explanation<a class="headerlink" href="#explanation" title="Permanent link">&para;</a></h2>
 <p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=artserver
-SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME}
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>artserver
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+python<span class="w"> </span>query_explain.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span>
 </code></pre></div>
 <p>After some time you should see a pop up containing the explanation, similar to the image below. If a pop up does not display and the message "Unable to find an adversarial example." appears then an adversarial example could not be found for the image given in a timely manner. If a pop up does display then the image on the left is the original image and the image on the right is the adversarial example. The labels above both images represent what classification the model made for each individual image.</p>
 <p><img alt="example explanation" src="art-explanation.png" /></p>
 <p>The <a href="https://arxiv.org/abs/1912.00049">Square Attack method</a> used in this example creates a random update at each iteration and adds this update to the adversarial input if it makes a misclassification more likely (more specifically, if it improves the objective function). Once enough random updates are added together and the model misclassifies then the resulting adversarial input will be returned and displayed.</p>
 <p>To try a different MNIST example add an integer to the end of the query between 0-9,999. The integer chosen will be the index of the image to be chosen in the MNIST dataset. Or to try a file with custom data add the file path to the end. Keep in mind that the data format must be <code>{"instances": [&lt;image&gt;, &lt;label&gt;]}</code></p>
-<div class="highlight"><pre><span></span><code>python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} 100
-python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} ./input.json
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>query_explain.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span><span class="m">100</span>
+python<span class="w"> </span>query_explain.py<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:explain<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span>./input.json
 </code></pre></div>
 <h2 id="stopping-the-inference-service">Stopping the Inference Service<a class="headerlink" href="#stopping-the-inference-service" title="Permanent link">&para;</a></h2>
-<p><code>kubectl delete -f art.yaml</code></p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>art.yaml
+</code></pre></div>
 <h2 id="build-a-development-art-explainer-docker-image">Build a Development ART Explainer Docker Image<a class="headerlink" href="#build-a-development-art-explainer-docker-image" title="Permanent link">&para;</a></h2>
 <p>If you would like to build a development image for the ART Explainer then follow <a href="https://github.com/kserve/kserve/blob/master/python/artexplainer/README.md#build-your-own-art-model-explainer-docker-image">these instructions</a></p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>

@@ -2798,29 +2798,31 @@ ewoiYWNjb3VudC1uYW1lIjogInNvbWVfYWNjb3VudF9uYW1lIiwKInNlY3JldC1rZXkiOiAic29tZV9z
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>$ *   Trying 127.0.0.1:8080...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 8080 (#0)
-&gt; POST /v1/models/sklearn-from-uri:predict HTTP/1.1
-&gt; Host: sklearn-from-uri.default.example.com
-&gt; User-Agent: curl/7.68.0
-&gt; Accept: */*
-&gt; Content-Length: 76
-&gt; Content-Type: application/x-www-form-urlencoded
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1:8080...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/sklearn-from-uri:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-from-uri.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.68.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">76</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
 &gt;
-* upload completely sent off: 76 out of 76 bytes
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 23
-&lt; content-type: application/json; charset=UTF-8
-&lt; date: Mon, 06 Sep 2021 15:52:55 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 7
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">76</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">76</span><span class="w"> </span>bytes
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">23</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Mon,<span class="w"> </span><span class="m">06</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2021</span><span class="w"> </span><span class="m">15</span>:52:55<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">7</span>
 &lt;
-* Connection #0 to host localhost left intact
-{&quot;predictions&quot;: [1, 1]}
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">]}</span>
 </code></pre></div>
+</div>
 <h2 id="tensorflow">Tensorflow<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h2>
 <p>This will serve as an example of the ability to also pull in a tarball containing all of the required model dependencies, for instance <code>tensorflow</code> requires multiple files in a strict directory structure in order to be servable.</p>
 <h3 id="train-and-freeze-the-model_1">Train and freeze the model<a class="headerlink" href="#train-and-freeze-the-model_1" title="Permanent link">&para;</a></h3>
@@ -2916,46 +2918,48 @@ Where we assume the <code>0001/</code> directory has the structure:
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>$ *   Trying 10.0.1.16...
-* TCP_NODELAY set
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Connected to 10.0.1.16 (10.0.1.16) port 30749 (#0)
-&gt; POST /v1/models/tensorflow-from-uri:predict HTTP/1.1
-&gt; Host: tensorflow-from-uri.default.example.com
-&gt; User-Agent: curl/7.58.0
-&gt; Accept: */*
-&gt; Content-Length: 86
-&gt; Content-Type: application/x-www-form-urlencoded
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">10</span>.0.1.16...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+<span class="w">  </span>%<span class="w"> </span>Total<span class="w">    </span>%<span class="w"> </span>Received<span class="w"> </span>%<span class="w"> </span>Xferd<span class="w">  </span>Average<span class="w"> </span>Speed<span class="w">   </span>Time<span class="w">    </span>Time<span class="w">     </span>Time<span class="w">  </span>Current
+<span class="w">                                 </span>Dload<span class="w">  </span>Upload<span class="w">   </span>Total<span class="w">   </span>Spent<span class="w">    </span>Left<span class="w">  </span>Speed
+<span class="w">  </span><span class="m">0</span><span class="w">     </span><span class="m">0</span><span class="w">    </span><span class="m">0</span><span class="w">     </span><span class="m">0</span><span class="w">    </span><span class="m">0</span><span class="w">     </span><span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w"> </span>--:--:--<span class="w"> </span>--:--:--<span class="w"> </span>--:--:--<span class="w">     </span><span class="m">0</span>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span><span class="m">10</span>.0.1.16<span class="w"> </span><span class="o">(</span><span class="m">10</span>.0.1.16<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">30749</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/tensorflow-from-uri:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>tensorflow-from-uri.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.58.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">86</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
 &gt;
-} [86 bytes data]
-* upload completely sent off: 86 out of 86 bytes
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 112
-&lt; content-type: application/json
-&lt; date: Thu, 06 Aug 2020 23:21:19 GMT
-&lt; x-envoy-upstream-service-time: 151
-&lt; server: istio-envoy
+<span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="m">86</span><span class="w"> </span>bytes<span class="w"> </span>data<span class="o">]</span>
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">86</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">86</span><span class="w"> </span>bytes
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">112</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Thu,<span class="w"> </span><span class="m">06</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">2020</span><span class="w"> </span><span class="m">23</span>:21:19<span class="w"> </span>GMT
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">151</span>
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
 &lt;
-{ [112 bytes data]
-100   198  100   112  100    86    722    554 --:--:-- --:--:-- --:--:--  1285
-* Connection #0 to host 10.0.1.16 left intact
-{
-  &quot;predictions&quot;: [
-    [
-      0.0204100646,
-      0.680984616,
-      0.298605353
-    ],
-    [
-      0.0296604875,
-      0.658412039,
-      0.311927497
-    ]
-  ]
-}
+<span class="o">{</span><span class="w"> </span><span class="o">[</span><span class="m">112</span><span class="w"> </span>bytes<span class="w"> </span>data<span class="o">]</span>
+<span class="m">100</span><span class="w">   </span><span class="m">198</span><span class="w">  </span><span class="m">100</span><span class="w">   </span><span class="m">112</span><span class="w">  </span><span class="m">100</span><span class="w">    </span><span class="m">86</span><span class="w">    </span><span class="m">722</span><span class="w">    </span><span class="m">554</span><span class="w"> </span>--:--:--<span class="w"> </span>--:--:--<span class="w"> </span>--:--:--<span class="w">  </span><span class="m">1285</span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host 10.0.1.16 left intact</span>
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">[</span>
+<span class="w">      </span><span class="m">0</span>.0204100646,
+<span class="w">      </span><span class="m">0</span>.680984616,
+<span class="w">      </span><span class="m">0</span>.298605353
+<span class="w">    </span><span class="o">]</span>,
+<span class="w">    </span><span class="o">[</span>
+<span class="w">      </span><span class="m">0</span>.0296604875,
+<span class="w">      </span><span class="m">0</span>.658412039,
+<span class="w">      </span><span class="m">0</span>.311927497
+<span class="w">    </span><span class="o">]</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="o">}</span>
 </code></pre></div>
+</div>
 
               
             </article>

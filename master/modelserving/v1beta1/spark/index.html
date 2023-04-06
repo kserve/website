@@ -2652,43 +2652,47 @@ pip<span class="w"> </span>install<span class="w"> </span>pyspark2pmml
 </div>
 </div>
 <p>Apply the <code>InferenceService</code> custom resource
-<div class="highlight"><pre><span></span><code>kubectl apply -f spark_pmml.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>spark_pmml.yaml
 </code></pre></div></p>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/spark-pmml created
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/spark-pmml<span class="w"> </span>created
+</code></pre></div>
+</div>
 <p>Wait the <code>InferenceService</code> to be ready
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span><span class="nb">wait</span><span class="w"> </span>--for<span class="o">=</span><span class="nv">condition</span><span class="o">=</span>Ready<span class="w"> </span>inferenceservice<span class="w"> </span>spark-pmml
 inferenceservice.serving.kserve.io/spark-pmml<span class="w"> </span>condition<span class="w"> </span>met
 </code></pre></div></p>
 <h3 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
-<div class="highlight"><pre><span></span><code>MODEL_NAME=spark-pmml
-INPUT_PATH=@./pmml-input.json
-SERVICE_HOSTNAME=$(kubectl get inferenceservice spark-pmml -o jsonpath=&#39;{.status.url}&#39; | cut -d &quot;/&quot; -f 3)
-curl -v -H &quot;Host: ${SERVICE_HOSTNAME}&quot; http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>spark-pmml
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./pmml-input.json
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>spark-pmml<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p>Expected Output</p>
-<div class="highlight"><pre><span></span><code>* Connected to spark-pmml.default.35.237.217.209.xip.io (35.237.217.209) port 80 (#0)
-&gt; POST /v1/models/spark-pmml:predict HTTP/1.1
-&gt; Host: spark-pmml.default.35.237.217.209.xip.io
-&gt; User-Agent: curl/7.73.0
-&gt; Accept: */*
-&gt; Content-Length: 45
-&gt; Content-Type: application/x-www-form-urlencoded
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>spark-pmml.default.35.237.217.209.xip.io<span class="w"> </span><span class="o">(</span><span class="m">35</span>.237.217.209<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/spark-pmml:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>spark-pmml.default.35.237.217.209.xip.io
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.73.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">45</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
 &gt;
-* upload completely sent off: 45 out of 45 bytes
-* Mark bundle as not supporting multiuse
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 39
-&lt; content-type: application/json; charset=UTF-8
-&lt; date: Sun, 07 Mar 2021 19:32:50 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 14
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">45</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">45</span><span class="w"> </span>bytes
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">39</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">07</span><span class="w"> </span>Mar<span class="w"> </span><span class="m">2021</span><span class="w"> </span><span class="m">19</span>:32:50<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">14</span>
 &lt;
-* Connection #0 to host spark-pmml.default.35.237.217.209.xip.io left intact
-{&quot;predictions&quot;: [[1.0, 0.0, 1.0, 0.0]]}
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host spark-pmml.default.35.237.217.209.xip.io left intact</span>
+<span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[[</span><span class="m">1</span>.0,<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="m">0</span>.0<span class="o">]]}</span>
 </code></pre></div>
+</div>
 
               
             </article>

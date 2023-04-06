@@ -2770,9 +2770,11 @@
 <p>Apply the above yaml to create the InferenceService</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>lightgbm.yaml
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/lightgbm-iris<span class="w"> </span>created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/lightgbm-iris<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="test-the-deployed-model">Test the deployed model<a class="headerlink" href="#test-the-deployed-model" title="Permanent link">&para;</a></h3>
 <p>To test the deployed model the first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>, then run the following curl command to send the inference request to the <code>InferenceService</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>lightgbm-iris
@@ -2780,8 +2782,9 @@
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>lightgbm-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">169</span>.63.251.68...
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">169</span>.63.251.68...
 *<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
 *<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span><span class="m">169</span>.63.251.68<span class="w"> </span><span class="o">(</span><span class="m">169</span>.63.251.68<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">80</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
 &gt;<span class="w"> </span>POST<span class="w"> </span>/models/lightgbm-iris:predict<span class="w"> </span>HTTP/1.1
@@ -2802,9 +2805,10 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 *<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host 169.63.251.68 left intact</span>
 <span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[[</span><span class="m">0</span>.9,<span class="w"> </span><span class="m">0</span>.05,<span class="w"> </span><span class="m">0</span>.05<span class="o">]]}</span>
 </code></pre></div>
+</div>
 <h2 id="deploy-the-model-with-v2-protocol">Deploy the model with <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 protocol</a><a class="headerlink" href="#deploy-the-model-with-v2-protocol" title="Permanent link">&para;</a></h2>
 <h3 id="test-the-model-locally_1">Test the model locally<a class="headerlink" href="#test-the-model-locally_1" title="Permanent link">&para;</a></h3>
-<p>Once you've got your model serialised <code>model.bst</code>, we can then use <a href="https://github.com/SeldonIO/MLServer">MLServer</a> which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the <a href="https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md">LightGBM example doc</a>.</p>
+<p>Once you've got your model serialized <code>model.bst</code>, we can then use <a href="https://github.com/SeldonIO/MLServer">MLServer</a> which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the <a href="https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md">LightGBM example doc</a>.</p>
 <p>To run MLServer locally, you first install the <code>mlserver</code> package in your local environment, as well as the LightGBM runtime.</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>mlserver<span class="w"> </span>mlserver-lightgbm
 </code></pre></div>
@@ -2868,9 +2872,11 @@ You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master
 </div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>lightgbm-v2.yaml
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/lightgbm-v2-iris<span class="w"> </span>created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/lightgbm-v2-iris<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="test-the-deployed-model-with-curl">Test the deployed model with curl<a class="headerlink" href="#test-the-deployed-model-with-curl" title="Permanent link">&para;</a></h3>
 <p>You can now test your deployed model by sending a sample request.</p>
 <p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane protocol</a></strong>.
@@ -2892,7 +2898,7 @@ You can see an example payload below:</p>
 <p>Now, assuming that your ingress can be accessed at
 <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out your ingress IP and port.</p>
-<p>you can use <code>curl</code> to send the inference request as:</p>
+<p>You can use <code>curl</code> to send the inference request as:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>lightgbm-v2-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
 curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
@@ -2901,8 +2907,9 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span>@./iris-input-v2.json<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/lightgbm-v2-iris/infer
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="s2">&quot;lightgbm-v2-iris&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;96253e27-83cf-4262-b279-1bd4b18d7922&quot;</span><span class="p">,</span>
@@ -2919,6 +2926,7 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
+</div>
 <h3 id="create-the-inferenceservice-with-grpc-endpoint">Create the InferenceService with gRPC endpoint<a class="headerlink" href="#create-the-inferenceservice-with-grpc-endpoint" title="Permanent link">&para;</a></h3>
 <p>Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Old Schema</label><label for="__tabbed_4_2">New Schema</label></div>
@@ -2985,11 +2993,13 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 <span class="s2">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2"> \</span>
 <span class="s2">  inference.GRPCInferenceService.ServerReady</span>
 </code></pre></div>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;ready&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 <span class="p">}</span>
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <p><code>ModelInfer</code> API takes input following the <code>ModelInferRequest</code> schema defined in the <code>grpc_predict_v2.proto</code> file. Notice that the input file differs from that used in the previous <code>curl</code> example.</p>
 <div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-vv<span class="w"> </span><span class="se">\</span>
@@ -3001,51 +3011,53 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 <span class="w">  </span>inference.GRPCInferenceService.ModelInfer<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_PATH</span><span class="s2">&quot;</span><span class="k">)</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>Resolved method descriptor:
-// The ModelInfer API performs inference using the specified model. Errors are
-// indicated by the google.rpc.Status returned for the request. The OK code
-// indicates success and other codes indicate failure.
-rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Resolved<span class="w"> </span>method<span class="w"> </span>descriptor:
+//<span class="w"> </span>The<span class="w"> </span>ModelInfer<span class="w"> </span>API<span class="w"> </span>performs<span class="w"> </span>inference<span class="w"> </span>using<span class="w"> </span>the<span class="w"> </span>specified<span class="w"> </span>model.<span class="w"> </span>Errors<span class="w"> </span>are
+//<span class="w"> </span>indicated<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>google.rpc.Status<span class="w"> </span>returned<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>request.<span class="w"> </span>The<span class="w"> </span>OK<span class="w"> </span>code
+//<span class="w"> </span>indicates<span class="w"> </span>success<span class="w"> </span>and<span class="w"> </span>other<span class="w"> </span>codes<span class="w"> </span>indicate<span class="w"> </span>failure.
+rpc<span class="w"> </span>ModelInfer<span class="w"> </span><span class="o">(</span><span class="w"> </span>.inference.ModelInferRequest<span class="w"> </span><span class="o">)</span><span class="w"> </span>returns<span class="w"> </span><span class="o">(</span><span class="w"> </span>.inference.ModelInferResponse<span class="w"> </span><span class="o">)</span><span class="p">;</span>
 
-Request metadata to send:
-(empty)
+Request<span class="w"> </span>metadata<span class="w"> </span>to<span class="w"> </span>send:
+<span class="o">(</span>empty<span class="o">)</span>
 
-Response headers received:
-accept-encoding: identity,gzip
-content-type: application/grpc
-date: Sun, 25 Sep 2022 10:25:05 GMT
-grpc-accept-encoding: identity,deflate,gzip
-server: istio-envoy
-x-envoy-upstream-service-time: 99
+Response<span class="w"> </span>headers<span class="w"> </span>received:
+accept-encoding:<span class="w"> </span>identity,gzip
+content-type:<span class="w"> </span>application/grpc
+date:<span class="w"> </span>Sun,<span class="w"> </span><span class="m">25</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">10</span>:25:05<span class="w"> </span>GMT
+grpc-accept-encoding:<span class="w"> </span>identity,deflate,gzip
+server:<span class="w"> </span>istio-envoy
+x-envoy-upstream-service-time:<span class="w"> </span><span class="m">99</span>
 
-Estimated response size: 91 bytes
+Estimated<span class="w"> </span>response<span class="w"> </span>size:<span class="w"> </span><span class="m">91</span><span class="w"> </span>bytes
 
-Response contents:
-{
-  &quot;modelName&quot;: &quot;lightgbm-v2-iris&quot;,
-  &quot;outputs&quot;: [
-    {
-      &quot;name&quot;: &quot;predict&quot;,
-      &quot;datatype&quot;: &quot;FP64&quot;,
-      &quot;shape&quot;: [
-        &quot;2&quot;,
-        &quot;3&quot;
-      ],
-      &quot;contents&quot;: {
-        &quot;fp64Contents&quot;: [
-          8.796664107010673e-06,
-          0.9992300031041593,
-          0.0007612002317336916,
-          4.974786820804187e-06,
-          0.9999919650711493,
-          3.0601420299625077e-06
-        ]
-      }
-    }
-  ]
-}
+Response<span class="w"> </span>contents:
+<span class="o">{</span>
+<span class="w">  </span><span class="s2">&quot;modelName&quot;</span>:<span class="w"> </span><span class="s2">&quot;lightgbm-v2-iris&quot;</span>,
+<span class="w">  </span><span class="s2">&quot;outputs&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">{</span>
+<span class="w">      </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;predict&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;datatype&quot;</span>:<span class="w"> </span><span class="s2">&quot;FP64&quot;</span>,
+<span class="w">      </span><span class="s2">&quot;shape&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="s2">&quot;2&quot;</span>,
+<span class="w">        </span><span class="s2">&quot;3&quot;</span>
+<span class="w">      </span><span class="o">]</span>,
+<span class="w">      </span><span class="s2">&quot;contents&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">&quot;fp64Contents&quot;</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">          </span><span class="m">8</span>.796664107010673e-06,
+<span class="w">          </span><span class="m">0</span>.9992300031041593,
+<span class="w">          </span><span class="m">0</span>.0007612002317336916,
+<span class="w">          </span><span class="m">4</span>.974786820804187e-06,
+<span class="w">          </span><span class="m">0</span>.9999919650711493,
+<span class="w">          </span><span class="m">3</span>.0601420299625077e-06
+<span class="w">        </span><span class="o">]</span>
+<span class="w">      </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">  </span><span class="o">]</span>
+<span class="o">}</span>
 </code></pre></div>
+</div>
 
               
             </article>

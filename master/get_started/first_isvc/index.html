@@ -2670,19 +2670,23 @@ is provided as reference.</p>
 <h3 id="3-check-inferenceservice-status">3. Check <code>InferenceService</code> status.<a class="headerlink" href="#3-check-inferenceservice-status" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
-<p><strong>Expected Output</strong>
-<div class="highlight"><pre><span></span><code>NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
-sklearn-iris   http://sklearn-iris.kserve-test.example.com         True           100                              sklearn-iris-predictor-default-47q2g   7d23h
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">           </span>URL<span class="w">                                                 </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                    </span>AGE
+sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">         </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-47q2g<span class="w">   </span>7d23h
+</code></pre></div>
+</div>
 <p>If your DNS contains example.com please consult your admin for configuring DNS or using <a href="https://knative.dev/docs/serving/using-a-custom-domain">custom domain</a>.</p>
 <h3 id="4-determine-the-ingress-ip-and-ports">4. Determine the ingress IP and ports<a class="headerlink" href="#4-determine-the-ingress-ip-and-ports" title="Permanent link">&para;</a></h3>
 <p>Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-n<span class="w"> </span>istio-system
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-n<span class="w"> </span>istio-system
 </code></pre></div></p>
-<p><strong>Expected Output</strong>
-<div class="highlight"><pre><span></span><code>NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
-istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                   </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">       </span>EXTERNAL-IP<span class="w">      </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">   </span>AGE
+istio-ingressgateway<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">172</span>.21.109.129<span class="w">   </span><span class="m">130</span>.211.10.121<span class="w">   </span>...<span class="w">       </span>17h
+</code></pre></div>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Load Balancer</label><label for="__tabbed_2_2">Node Port</label><label for="__tabbed_2_3">Port Forward</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -2775,16 +2779,18 @@ kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> 
 <p>Execute the following command to view output:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>load-test8b58n-rgfxr<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark></p>
-<div class="highlight"><pre><span></span><code>Requests      [total, rate, throughput]         30000, 500.02, 499.99
-Duration      [total, attack, wait]             1m0s, 59.998s, 3.336ms
-Latencies     [min, mean, 50, 90, 95, 99, max]  1.743ms, 2.748ms, 2.494ms, 3.363ms, 4.091ms, 7.749ms, 46.354ms
-Bytes In      [total, mean]                     690000, 23.00
-Bytes Out     [total, mean]                     2460000, 82.00
-Success       [ratio]                           100.00%
-Status Codes  [code:count]                      200:30000
-Error Set:
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Requests<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>rate,<span class="w"> </span>throughput<span class="o">]</span><span class="w">         </span><span class="m">30000</span>,<span class="w"> </span><span class="m">500</span>.02,<span class="w"> </span><span class="m">499</span>.99
+Duration<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>attack,<span class="w"> </span>wait<span class="o">]</span><span class="w">             </span>1m0s,<span class="w"> </span><span class="m">59</span>.998s,<span class="w"> </span><span class="m">3</span>.336ms
+Latencies<span class="w">     </span><span class="o">[</span>min,<span class="w"> </span>mean,<span class="w"> </span><span class="m">50</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">95</span>,<span class="w"> </span><span class="m">99</span>,<span class="w"> </span>max<span class="o">]</span><span class="w">  </span><span class="m">1</span>.743ms,<span class="w"> </span><span class="m">2</span>.748ms,<span class="w"> </span><span class="m">2</span>.494ms,<span class="w"> </span><span class="m">3</span>.363ms,<span class="w"> </span><span class="m">4</span>.091ms,<span class="w"> </span><span class="m">7</span>.749ms,<span class="w"> </span><span class="m">46</span>.354ms
+Bytes<span class="w"> </span>In<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">690000</span>,<span class="w"> </span><span class="m">23</span>.00
+Bytes<span class="w"> </span>Out<span class="w">     </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">2460000</span>,<span class="w"> </span><span class="m">82</span>.00
+Success<span class="w">       </span><span class="o">[</span>ratio<span class="o">]</span><span class="w">                           </span><span class="m">100</span>.00%
+Status<span class="w"> </span>Codes<span class="w">  </span><span class="o">[</span>code:count<span class="o">]</span><span class="w">                      </span><span class="m">200</span>:30000
+Error<span class="w"> </span>Set:
 </code></pre></div>
+</div>
 
               
             </article>

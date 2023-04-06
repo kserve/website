@@ -2612,8 +2612,9 @@ the following steps show how you can deploy KServe with <code>Kourier</code>.</p
 <p>Verify Kourier installation:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>knative-serving<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kourier-system
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>NAME<span class="w">                                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
 activator-77db7d9dd7-kbrgr<span class="w">                </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
 autoscaler-67dbf79b95-htnp9<span class="w">               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
 controller-684b6bc97f-ffm58<span class="w">               </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
@@ -2624,6 +2625,7 @@ webhook-97bdc7b4d-nr7qf<span class="w">                   </span><span class="m"
 NAME<span class="w">                                      </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
 3scale-kourier-gateway-54c49c8ff5-x8tgn<span class="w">   </span><span class="m">1</span>/1<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>10m
 </code></pre></div>
+</div>
 </li>
 <li>
 <p>Edit <code>inferenceservice-config</code> configmap to disable Istio top level virtual host:</p>
@@ -2672,11 +2674,13 @@ ingress<span class="w"> </span>:<span class="w"> </span><span class="p">|</span>
 </div>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>pmml.yaml
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/pmml-demo<span class="w"> </span>created
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/pmml-demo<span class="w"> </span>created
 </code></pre></div>
+</div>
 <h3 id="run-a-prediction">Run a Prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">&para;</a></h3>
-<p>Note that when setting <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code> following the <a href="../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">determining the ingress IP and ports</a> guide you
+<p>Note that when setting <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code> following the <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determining the ingress IP and ports</a> guide you
 need to replace <code>istio-ingressgateway</code> with <code>kourier-gateway</code>.</p>
 <p>For example if you choose to do <code>Port Forward</code> for testing you need to select the <code>kourier-gateway</code> pod as following.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>kourier-system<span class="w"> </span><span class="se">\</span>
@@ -2690,8 +2694,9 @@ need to replace <code>istio-ingressgateway</code> with <code>kourier-gateway</co
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>pmml-demo<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark></p>
-<div class="highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1...
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w"> </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1...
 *<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
 *<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
 &gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/pmml-demo:predict<span class="w"> </span>HTTP/1.1
@@ -2700,7 +2705,7 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 &gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">45</span>
 &gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
-&gt;<span class="w"> </span>
+&gt;
 *<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">45</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">45</span><span class="w"> </span>bytes
 &lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
 &lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">144</span>
@@ -2708,10 +2713,11 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 &lt;<span class="w"> </span>date:<span class="w"> </span>Wed,<span class="w"> </span><span class="m">14</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2022</span><span class="w"> </span><span class="m">13</span>:30:09<span class="w"> </span>GMT
 &lt;<span class="w"> </span>server:<span class="w"> </span>envoy
 &lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">58</span>
-&lt;<span class="w"> </span>
+&lt;
 *<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
 <span class="o">{</span><span class="s2">&quot;predictions&quot;</span>:<span class="w"> </span><span class="o">[{</span><span class="s2">&quot;Species&quot;</span>:<span class="w"> </span><span class="s2">&quot;setosa&quot;</span>,<span class="w"> </span><span class="s2">&quot;Probability_setosa&quot;</span>:<span class="w"> </span><span class="m">1</span>.0,<span class="w"> </span><span class="s2">&quot;Probability_versicolor&quot;</span>:<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="s2">&quot;Probability_virginica&quot;</span>:<span class="w"> </span><span class="m">0</span>.0,<span class="w"> </span><span class="s2">&quot;Node_Id&quot;</span>:<span class="w"> </span><span class="s2">&quot;2&quot;</span><span class="o">}]}</span>
 </code></pre></div>
+</div>
 
               
             </article>
