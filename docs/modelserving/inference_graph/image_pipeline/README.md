@@ -114,11 +114,19 @@ Now you can test the inference graph by sending the cat and dog image data.
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferencegraph dog-breed-pipeline -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
-{"predictions": ["It's a cat!"]}
-
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./dog.json
-{"predictions": [{"Kuvasz": 0.9854059219360352, "American_water_spaniel": 0.006928909569978714, "Glen_of_imaal_terrier": 0.004635687451809645, "Manchester_terrier": 0.0011041086399927735, "American_eskimo_dog": 0.0003261661622673273}]}
 ```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {"predictions": ["It's a cat!"]}
+    ```
+```bash
+curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./dog.json
+```
+
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {"predictions": [{"Kuvasz": 0.9854059219360352, "American_water_spaniel": 0.006928909569978714, "Glen_of_imaal_terrier": 0.004635687451809645, "Manchester_terrier": 0.0011041086399927735, "American_eskimo_dog": 0.0003261661622673273}]}
+    ```
 You can see that if the first model classifies the image as dog it then sends to the second model and further classifies the dog breed,
 if the image is classified as cat the `InferenceGraph` router returns the response from the first model.
 

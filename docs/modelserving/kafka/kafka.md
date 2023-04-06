@@ -1,4 +1,3 @@
-
 # End to end inference service example with Minio and Kafka
 
 This example shows an end to end inference pipeline which processes an kafka event and invoke the inference service to get the prediction with provided pre/post processing code. The code for this example can be found [in the kafka sample folder in the KServe repository](https://github.com/kserve/kserve/tree/master/docs/samples/kafka).
@@ -14,14 +13,15 @@ helm repo update
 helm install my-kafka -f values.yaml --set cp-schema-registry.enabled=false,cp-kafka-rest.enabled=false,cp-kafka-connect.enabled=false confluentinc/cp-helm-charts
 ```
 
-after successful install you are expected to see the running kafka cluster
-```bash
-NAME                      READY   STATUS    RESTARTS   AGE
-my-kafka-cp-kafka-0       2/2     Running   0          126m
-my-kafka-cp-kafka-1       2/2     Running   1          126m
-my-kafka-cp-kafka-2       2/2     Running   0          126m
-my-kafka-cp-zookeeper-0   2/2     Running   0          127m
-```
+After successful install you are expected to see the running kafka cluster
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    NAME                      READY   STATUS    RESTARTS   AGE
+    my-kafka-cp-kafka-0       2/2     Running   0          126m
+    my-kafka-cp-kafka-1       2/2     Running   1          126m
+    my-kafka-cp-kafka-2       2/2     Running   0          126m
+    my-kafka-cp-zookeeper-0   2/2     Running   0          127m
+    ```
 
 ## Install Knative Eventing and Kafka Event Source
 - Install [Knative Eventing Core >= 0.18](https://knative.dev/docs/admin/install/eventing/install-eventing-with-yaml/)
@@ -99,7 +99,7 @@ kubectl apply -f mnist-kafka.yaml
 ```
 
 This creates transformer and predictor pods, the request goes to transformer first where it invokes the preprocess handler, transformer then calls out to predictor to get the prediction response which in turn invokes the postprocess handler. 
-```
+```bash
 kubectl get pods -l serving.kserve.io/inferenceservice=mnist
 mnist-predictor-default-9t5ms-deployment-74f5cd7767-khthf     2/2     Running       0          10s
 mnist-transformer-default-jmf98-deployment-8585cbc748-ftfhd   2/2     Running       0          14m
@@ -112,45 +112,47 @@ kubectl apply -f kafka-source.yaml
 ```
 
 This creates the kafka source pod which consumers the events from `mnist` topic
-```bash
-kafkasource-kafka-source-3d809fe2-1267-11ea-99d0-42010af00zbn5h   1/1     Running   0          8h
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    kafkasource-kafka-source-3d809fe2-1267-11ea-99d0-42010af00zbn5h   1/1     Running   0          8h
+    ```
 
 ## Upload a digit image to Minio mnist bucket
 The last step is to upload the image `images/0.png`, image then should be moved to the classified bucket based on the prediction response!
 ```bash
 mc cp images/0.png myminio/mnist
 ```
-you should expect a notification event like following sent to kafka topic `mnist` after uploading an image in `mnist` bucket
-```json
-{
-   "EventType":"s3:ObjectCreated:Put",
-   "Key":"mnist/0.png",
-   "Records":[
-      {"eventVersion":"2.0",
-       "eventSource":"minio:s3",
-       "awsRegion":"",
-       "eventTime":"2019-11-17T19:08:08Z",
-       "eventName":"s3:ObjectCreated:Put",
-       "userIdentity":{"principalId":"minio"},
-       "requestParameters":{"sourceIPAddress":"127.0.0.1:37830"},
-       "responseElements":{"x-amz-request-id":"15D808BF706E0994",
-       "x-minio-origin-endpoint":"http://10.244.0.71:9000"},
-       "s3":{
-          "s3SchemaVersion":"1.0",
-          "configurationId":"Config",
-          "bucket":{
-               "name":"mnist",
-               "ownerIdentity":{"principalId":"minio"},
-               "arn":"arn:aws:s3:::mnist"},
-          "object":{"key":"0.png","size":324,"eTag":"ebed21f6f77b0a64673a3c96b0c623ba","contentType":"image/png","userMetadata":{"content-type":"image/png"},"versionId":"1","sequencer":"15D808BF706E0994"}},
-          "source":{"host":"","port":"","userAgent":""}}
-   ],
-   "level":"info",
-   "msg":"",
-   "time":"2019-11-17T19:08:08Z"
-}
-```
+You should expect a notification event like following sent to kafka topic `mnist` after uploading an image in `mnist` bucket
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {
+       "EventType":"s3:ObjectCreated:Put",
+       "Key":"mnist/0.png",
+       "Records":[
+          {"eventVersion":"2.0",
+           "eventSource":"minio:s3",
+           "awsRegion":"",
+           "eventTime":"2019-11-17T19:08:08Z",
+           "eventName":"s3:ObjectCreated:Put",
+           "userIdentity":{"principalId":"minio"},
+           "requestParameters":{"sourceIPAddress":"127.0.0.1:37830"},
+           "responseElements":{"x-amz-request-id":"15D808BF706E0994",
+           "x-minio-origin-endpoint":"http://10.244.0.71:9000"},
+           "s3":{
+              "s3SchemaVersion":"1.0",
+              "configurationId":"Config",
+              "bucket":{
+                   "name":"mnist",
+                   "ownerIdentity":{"principalId":"minio"},
+                   "arn":"arn:aws:s3:::mnist"},
+              "object":{"key":"0.png","size":324,"eTag":"ebed21f6f77b0a64673a3c96b0c623ba","contentType":"image/png","userMetadata":{"content-type":"image/png"},"versionId":"1","sequencer":"15D808BF706E0994"}},
+              "source":{"host":"","port":"","userAgent":""}}
+       ],
+       "level":"info",
+       "msg":"",
+       "time":"2019-11-17T19:08:08Z"
+    }
+    ```
 
 Check the transformer log, you should expect a prediction response and put the image to the corresponding bucket
 ```bash
@@ -163,4 +165,3 @@ kubectl logs mnist-transformer-default-rctjm-deployment-54d59c849c-2dq98  kserve
 [I 201128 22:32:58 image_transformer:51] {'predictions': [{'predictions': [0.0247901566, 1.37231364e-05, 0.0202635303, 0.39037028, 0.000513458275, 0.435112566, 0.000607515569, 0.00041125578, 0.127784252, 0.000133168287], 'classes': 5}]}
 [I 201128 22:32:58 image_transformer:53] digit:5
 ```
-

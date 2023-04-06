@@ -106,33 +106,34 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2
 This shows the response from the server in KServe's v2 API format.
 For this example, it will be similar to:
 
-```{ .bash .no-copy }
-{
-  "id":"",
-  "model_name":"TFModel",
-  "outputs":
-    [
-      {
-        "data": [
-          0.11987821012735367,
-          0.18648317456245422,
-          -0.83796119689941406,
-          -0.088459312915802002,
-          0.030454874038696289,
-          0.074872657656669617,
-          -1.1334009170532227,
-          -0.046301722526550293,
-          -0.31683838367462158,
-          0.32014602422714233
-        ],
-        "datatype":"FP32",
-        "name":"input-0",
-        "parameters":{},
-        "shape":[10]
-      }
-    ]
-}
-```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {
+      "id":"",
+      "model_name":"TFModel",
+      "outputs":
+        [
+          {
+            "data": [
+              0.11987821012735367,
+              0.18648317456245422,
+              -0.83796119689941406,
+              -0.088459312915802002,
+              0.030454874038696289,
+              0.074872657656669617,
+              -1.1334009170532227,
+              -0.046301722526550293,
+              -0.31683838367462158,
+              0.32014602422714233
+            ],
+            "datatype":"FP32",
+            "name":"input-0",
+            "parameters":{},
+            "shape":[10]
+          }
+        ]
+    }
+    ```
 
 For MNIST, the data indicates the likely classification for the input image, which is the number 9.
 In this response, the index with the highest value is the last one, indicating that the image was correctly classified as nine.

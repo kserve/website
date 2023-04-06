@@ -87,11 +87,11 @@ Apply the above yaml to create the InferenceService
 kubectl apply -f lightgbm.yaml
 ```
 
-==**Expected Output**==
+!!! success "Expected Output"
 
-```bash
-inferenceservice.serving.kserve.io/lightgbm-iris created
-```
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/lightgbm-iris created
+    ```
 
 ### Test the deployed model
 
@@ -104,35 +104,35 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice lightgbm-iris -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-==**Expected Output**==
+!!! success "Expected Output"
 
-```bash
-*   Trying 169.63.251.68...
-* TCP_NODELAY set
-* Connected to 169.63.251.68 (169.63.251.68) port 80 (#0)
-> POST /models/lightgbm-iris:predict HTTP/1.1
-> Host: lightgbm-iris.default.svc.cluster.local
-> User-Agent: curl/7.60.0
-> Accept: */*
-> Content-Length: 76
-> Content-Type: application/x-www-form-urlencoded
->
-* upload completely sent off: 76 out of 76 bytes
-< HTTP/1.1 200 OK
-< content-length: 27
-< content-type: application/json; charset=UTF-8
-< date: Tue, 21 May 2019 22:40:09 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 13032
-<
-* Connection #0 to host 169.63.251.68 left intact
-{"predictions": [[0.9, 0.05, 0.05]]}
-```
+    ```{ .bash .no-copy }
+    *   Trying 169.63.251.68...
+    * TCP_NODELAY set
+    * Connected to 169.63.251.68 (169.63.251.68) port 80 (#0)
+    > POST /models/lightgbm-iris:predict HTTP/1.1
+    > Host: lightgbm-iris.default.svc.cluster.local
+    > User-Agent: curl/7.60.0
+    > Accept: */*
+    > Content-Length: 76
+    > Content-Type: application/x-www-form-urlencoded
+    >
+    * upload completely sent off: 76 out of 76 bytes
+    < HTTP/1.1 200 OK
+    < content-length: 27
+    < content-type: application/json; charset=UTF-8
+    < date: Tue, 21 May 2019 22:40:09 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 13032
+    <
+    * Connection #0 to host 169.63.251.68 left intact
+    {"predictions": [[0.9, 0.05, 0.05]]}
+    ```
 
 ## Deploy the model with [V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
 
 ### Test the model locally
-Once you've got your model serialised `model.bst`, we can then use [MLServer](https://github.com/SeldonIO/MLServer) which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the [LightGBM example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md).
+Once you've got your model serialized `model.bst`, we can then use [MLServer](https://github.com/SeldonIO/MLServer) which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the [LightGBM example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md).
 
 To run MLServer locally, you first install the `mlserver` package in your local environment, as well as the LightGBM runtime.
 
@@ -207,11 +207,11 @@ Apply the InferenceService yaml to get the REST endpoint
 kubectl apply -f lightgbm-v2.yaml
 ```
 
-==**Expected Output**==
+!!! success "Expected Output"
 
-```bash
-inferenceservice.serving.kserve.io/lightgbm-v2-iris created
-```
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/lightgbm-v2-iris created
+    ```
 
 ### Test the deployed model with curl
 
@@ -240,7 +240,7 @@ Now, assuming that your ingress can be accessed at
 `${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
-you can use `curl` to send the inference request as:
+You can use `curl` to send the inference request as:
 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice lightgbm-v2-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -252,26 +252,26 @@ curl -v \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/lightgbm-v2-iris/infer
 ```
 
-==**Expected Output**==
+!!! success "Expected Output"
 
-```json
-{
-  "model_name":"lightgbm-v2-iris",
-  "model_version":null,
-  "id":"96253e27-83cf-4262-b279-1bd4b18d7922",
-  "parameters":null,
-  "outputs":[
+    ```{ .json .no-copy }
     {
-      "name":"predict",
-      "shape":[2,3],
-      "datatype":"FP64",
+      "model_name":"lightgbm-v2-iris",
+      "model_version":null,
+      "id":"96253e27-83cf-4262-b279-1bd4b18d7922",
       "parameters":null,
-      "data":
-        [8.796664107010673e-06,0.9992300031041593,0.0007612002317336916,4.974786820804187e-06,0.9999919650711493,3.0601420299625077e-06]
+      "outputs":[
+        {
+          "name":"predict",
+          "shape":[2,3],
+          "datatype":"FP64",
+          "parameters":null,
+          "data":
+            [8.796664107010673e-06,0.9992300031041593,0.0007612002317336916,4.974786820804187e-06,0.9999919650711493,3.0601420299625077e-06]
+        }
+      ]
     }
-  ]
-}
-```
+    ```
 
 ### Create the InferenceService with gRPC endpoint
 Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.
@@ -346,12 +346,12 @@ grpcurl \
   inference.GRPCInferenceService.ServerReady
 ```
 
-Expected Output
-```json
-{
-  "ready": true
-}
-```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {
+      "ready": true
+    }
+    ```
 
 `ModelInfer` API takes input following the `ModelInferRequest` schema defined in the `grpc_predict_v2.proto` file. Notice that the input file differs from that used in the previous `curl` example.
 
@@ -367,50 +367,50 @@ grpcurl \
   <<< $(cat "$INPUT_PATH")
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-Resolved method descriptor:
-// The ModelInfer API performs inference using the specified model. Errors are
-// indicated by the google.rpc.Status returned for the request. The OK code
-// indicates success and other codes indicate failure.
-rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
-
-Request metadata to send:
-(empty)
-
-Response headers received:
-accept-encoding: identity,gzip
-content-type: application/grpc
-date: Sun, 25 Sep 2022 10:25:05 GMT
-grpc-accept-encoding: identity,deflate,gzip
-server: istio-envoy
-x-envoy-upstream-service-time: 99
-
-Estimated response size: 91 bytes
-
-Response contents:
-{
-  "modelName": "lightgbm-v2-iris",
-  "outputs": [
+    ```{ .bash .no-copy }
+    Resolved method descriptor:
+    // The ModelInfer API performs inference using the specified model. Errors are
+    // indicated by the google.rpc.Status returned for the request. The OK code
+    // indicates success and other codes indicate failure.
+    rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+    
+    Request metadata to send:
+    (empty)
+    
+    Response headers received:
+    accept-encoding: identity,gzip
+    content-type: application/grpc
+    date: Sun, 25 Sep 2022 10:25:05 GMT
+    grpc-accept-encoding: identity,deflate,gzip
+    server: istio-envoy
+    x-envoy-upstream-service-time: 99
+    
+    Estimated response size: 91 bytes
+    
+    Response contents:
     {
-      "name": "predict",
-      "datatype": "FP64",
-      "shape": [
-        "2",
-        "3"
-      ],
-      "contents": {
-        "fp64Contents": [
-          8.796664107010673e-06,
-          0.9992300031041593,
-          0.0007612002317336916,
-          4.974786820804187e-06,
-          0.9999919650711493,
-          3.0601420299625077e-06
-        ]
-      }
+      "modelName": "lightgbm-v2-iris",
+      "outputs": [
+        {
+          "name": "predict",
+          "datatype": "FP64",
+          "shape": [
+            "2",
+            "3"
+          ],
+          "contents": {
+            "fp64Contents": [
+              8.796664107010673e-06,
+              0.9992300031041593,
+              0.0007612002317336916,
+              4.974786820804187e-06,
+              0.9999919650711493,
+              3.0601420299625077e-06
+            ]
+          }
+        }
+      ]
     }
-  ]
-}
-```
+    ```

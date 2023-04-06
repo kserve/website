@@ -62,11 +62,11 @@ is provided as reference.
 kubectl get inferenceservices sklearn-iris -n kserve-test
 ```
 
-**Expected Output**
-```
-NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
-sklearn-iris   http://sklearn-iris.kserve-test.example.com         True           100                              sklearn-iris-predictor-default-47q2g   7d23h
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    NAME           URL                                                 READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                    AGE
+    sklearn-iris   http://sklearn-iris.kserve-test.example.com         True           100                              sklearn-iris-predictor-default-47q2g   7d23h
+    ```
 
 If your DNS contains example.com please consult your admin for configuring DNS or using [custom domain](https://knative.dev/docs/serving/using-a-custom-domain).
 
@@ -74,14 +74,14 @@ If your DNS contains example.com please consult your admin for configuring DNS o
 
 Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
 ```bash
-$ kubectl get svc istio-ingressgateway -n istio-system
+kubectl get svc istio-ingressgateway -n istio-system
 ```
 
-**Expected Output**
-```
-NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
-istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
+    istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
+    ```
 
 === "Load Balancer"
     If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.
@@ -200,15 +200,15 @@ Execute the following command to view output:
 kubectl logs load-test8b58n-rgfxr -n kserve-test
 ```
 
-==**Expected Output**==
+!!! success "Expected Output"
 
-```
-Requests      [total, rate, throughput]         30000, 500.02, 499.99
-Duration      [total, attack, wait]             1m0s, 59.998s, 3.336ms
-Latencies     [min, mean, 50, 90, 95, 99, max]  1.743ms, 2.748ms, 2.494ms, 3.363ms, 4.091ms, 7.749ms, 46.354ms
-Bytes In      [total, mean]                     690000, 23.00
-Bytes Out     [total, mean]                     2460000, 82.00
-Success       [ratio]                           100.00%
-Status Codes  [code:count]                      200:30000
-Error Set:
-```
+    ``` { .bash .no-copy }
+    Requests      [total, rate, throughput]         30000, 500.02, 499.99
+    Duration      [total, attack, wait]             1m0s, 59.998s, 3.336ms
+    Latencies     [min, mean, 50, 90, 95, 99, max]  1.743ms, 2.748ms, 2.494ms, 3.363ms, 4.091ms, 7.749ms, 46.354ms
+    Bytes In      [total, mean]                     690000, 23.00
+    Bytes Out     [total, mean]                     2460000, 82.00
+    Success       [ratio]                           100.00%
+    Status Codes  [code:count]                      200:30000
+    Error Set:
+    ```

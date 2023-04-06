@@ -172,7 +172,7 @@ When you deploy the model with InferenceService, KServe injects sensible default
 further configuration. However, you can still override these defaults by providing a `model-settings.json` file similar to your local one.
 You can even provide a [set of `model-settings.json` files to load multiple models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
 
-To use v2 protocol for inference with the deployed model you set the **`protocolVersion` field to `v2`**, in this eample your model artifacts have already been uploaded to a "GCS model repository" and can be accessed as `gs://kfserving-examples/models/mlflow/wine`.
+To use v2 protocol for inference with the deployed model you set the **`protocolVersion` field to `v2`**, in this example your model artifacts have already been uploaded to a "GCS model repository" and can be accessed as `gs://kfserving-examples/models/mlflow/wine`.
 
 === "New Schema"
 
@@ -283,7 +283,7 @@ Now, assuming that your ingress can be accessed at
 `${INGRESS_HOST}:${INGRESS_PORT}` or you can follow [this instruction](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports)
 to find out your ingress IP and port.
 
-you can use `curl` to send the inference request as:
+You can use `curl` to send the inference request as:
 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice mlflow-v2-wine-classifier -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -295,22 +295,22 @@ curl -v \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/mlflow-v2-wine-classifier/infer
 ```
 
-==**Expected Output**==
+!!! success "Expected Output"
 
-```json
-{
-  "model_name":"mlflow-v2-wine-classifier",
-  "model_version":null,
-  "id":"699cf11c-e843-444e-9dc3-000d991052cc",
-  "parameters":null,
-  "outputs":[
+    ```{ .json .no-copy }
     {
-      "name":"predict",
-      "shape":[1],
-      "datatype":"FP64",
+      "model_name":"mlflow-v2-wine-classifier",
+      "model_version":null,
+      "id":"699cf11c-e843-444e-9dc3-000d991052cc",
       "parameters":null,
-      "data":[5.576883936610762]
+      "outputs":[
+        {
+          "name":"predict",
+          "shape":[1],
+          "datatype":"FP64",
+          "parameters":null,
+          "data":[5.576883936610762]
+        }
+      ]
     }
-  ]
-}
-```
+    ```

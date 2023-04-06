@@ -41,7 +41,7 @@ config-map in kserve namespace.
 For example:
 If you want to propagate a certain header, say "Custom-Header", then you can edit the `router` section of `inferenceservice-config`
 config-map like this :
-```
+```json
 {
     "image" : "kserve/router:v0.10.0",
     "memoryRequest": "100Mi",

@@ -82,9 +82,11 @@ docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model:v1
 Send a test inference request locally with [input.json](./input.json)
 ```bash
 curl localhost:8080/v1/models/custom-model:predict -d @./input.json
-
-{"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
 ```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
+    ```
 
 ### Deploy the REST Custom Serving Runtime on KServe
 
@@ -125,15 +127,15 @@ Apply the yaml to deploy the InferenceService on KServe
 kubectl apply -f custom.yaml
 ```
 
-==** Expected Output **==
-```
-$ inferenceservice.serving.kserve.io/custom-model created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/custom-model created
+    ```
 
 ### Run a Prediction
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-```
+```bash
 MODEL_NAME=custom-model
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -141,34 +143,34 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
-```
-*   Trying 169.47.250.204...
-* TCP_NODELAY set
-* Connected to 169.47.250.204 (169.47.250.204) port 80 (#0)
-> POST /v1/models/custom-model:predict HTTP/1.1
-> Host: custom-model.default.example.com
-> User-Agent: curl/7.64.1
-> Accept: */*
-> Content-Length: 105339
-> Content-Type: application/x-www-form-urlencoded
-> Expect: 100-continue
->
-< HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-< HTTP/1.1 200 OK
-< content-length: 232
-< content-type: text/html; charset=UTF-8
-< date: Wed, 26 Feb 2020 15:19:15 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 213
-<
-* Connection #0 to host 169.47.250.204 left intact
-{"predictions": [[14.861762046813965, 13.942917823791504, 13.9243803024292, 12.182711601257324, 12.00634765625]]}
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    *   Trying 169.47.250.204...
+    * TCP_NODELAY set
+    * Connected to 169.47.250.204 (169.47.250.204) port 80 (#0)
+    > POST /v1/models/custom-model:predict HTTP/1.1
+    > Host: custom-model.default.example.com
+    > User-Agent: curl/7.64.1
+    > Accept: */*
+    > Content-Length: 105339
+    > Content-Type: application/x-www-form-urlencoded
+    > Expect: 100-continue
+    >
+    < HTTP/1.1 100 Continue
+    * We are completely uploaded and fine
+    < HTTP/1.1 200 OK
+    < content-length: 232
+    < content-type: text/html; charset=UTF-8
+    < date: Wed, 26 Feb 2020 15:19:15 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 213
+    <
+    * Connection #0 to host 169.47.250.204 left intact
+    {"predictions": [[14.861762046813965, 13.942917823791504, 13.9243803024292, 12.182711601257324, 12.00634765625]]}
+    ```
 
 ### Delete the InferenceService
-```
+```bash
 kubectl delete -f custom.yaml
 ```
 
@@ -278,39 +280,39 @@ print(res)
 python grpc_test_client.py
 ```
 
-==** Expected Output **==
-```
-id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-outputs {
-  name: "output-0"
-  datatype: "FP32"
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
-
-model_name: "custom-model"
-id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-outputs {
-  name: "output-0"
-  datatype: "FP32"
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
-```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+    outputs {
+      name: "output-0"
+      datatype: "FP32"
+      shape: 1
+      shape: 5
+      contents {
+        fp32_contents: 14.9756203
+        fp32_contents: 14.036808
+        fp32_contents: 13.9660349
+        fp32_contents: 12.2522783
+        fp32_contents: 12.0862684
+      }
+    }
+    
+    model_name: "custom-model"
+    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+    outputs {
+      name: "output-0"
+      datatype: "FP32"
+      shape: 1
+      shape: 5
+      contents {
+        fp32_contents: 14.9756203
+        fp32_contents: 14.036808
+        fp32_contents: 13.9660349
+        fp32_contents: 12.2522783
+        fp32_contents: 12.0862684
+      }
+    }
+    ```
 
 ### Deploy the gRPC Custom Serving Runtime on KServe
 Create the InferenceService yaml and expose the gRPC port by specifying on `ports` section, currently only one port is allowed to expose and by default HTTP port is exposed.
@@ -341,19 +343,19 @@ You can supply additional command arguments on the container spec to configure t
 Apply the yaml to deploy the InferenceService on KServe
 
 === "kubectl"
-```
+```bash
 kubectl apply -f custom_grpc.yaml
 ```
 
-==** Expected Output **==
-```
-$ inferenceservice.serving.kserve.io/custom-model-grpc created
-```
+!!! successs "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/custom-model-grpc created
+    ```
 
 ### Run a gRPC Prediction
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-```
+```bash
 MODEL_NAME=custom-model
 SERVICE_HOSTNAME=$(kubectl get inferenceservice custom-model-grpc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
@@ -364,40 +366,40 @@ Send an inference request to the gRPC service using `InferenceServerClient` [grp
 python grpc_test_client.py
 ```
 
-==** Expected Output **==
-```
-id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-outputs {
-  name: "output-0"
-  datatype: "FP32"
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
-
-model_name: "custom-model"
-id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-outputs {
-  name: "output-0"
-  datatype: "FP32"
-  shape: 1
-  shape: 5
-  contents {
-    fp32_contents: 14.9756203
-    fp32_contents: 14.036808
-    fp32_contents: 13.9660349
-    fp32_contents: 12.2522783
-    fp32_contents: 12.0862684
-  }
-}
-```
-
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+    outputs {
+      name: "output-0"
+      datatype: "FP32"
+      shape: 1
+      shape: 5
+      contents {
+        fp32_contents: 14.9756203
+        fp32_contents: 14.036808
+        fp32_contents: 13.9660349
+        fp32_contents: 12.2522783
+        fp32_contents: 12.0862684
+      }
+    }
+    
+    model_name: "custom-model"
+    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
+    outputs {
+      name: "output-0"
+      datatype: "FP32"
+      shape: 1
+      shape: 5
+      contents {
+        fp32_contents: 14.9756203
+        fp32_contents: 14.036808
+        fp32_contents: 13.9660349
+        fp32_contents: 12.2522783
+        fp32_contents: 12.0862684
+      }
+    }
+    ```
+    
 ## Parallel Model Inference
 By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
@@ -449,7 +451,7 @@ The more details for ray fractional cpu and gpu can be found [here](https://docs
 The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model/model_remote.py).
 
 Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
-each model as separate python worker and webserver routes to the model workers by name.
+each model as separate python worker and web server routes to the model workers by name.
 
 ![parallel_inference](./parallel_inference.png)
 

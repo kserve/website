@@ -17,11 +17,11 @@ Edit volume id in pv.yaml file
 kubectl apply -f pv.yaml
 ```
 
-Expected Output
+!!! success "Expected Output"
 
-```bash
-persistentvolume/model-pv-volume created
-```
+    ```{ .bash .no-copy }
+    $ persistentvolume/model-pv-volume created
+    ```
 
 ### 1.2 Create PVC
 
@@ -29,11 +29,11 @@ persistentvolume/model-pv-volume created
 kubectl apply -f pvc.yaml
 ```
 
-Expected Output
+!!! success "Expected Output"
 
-```bash
-persistentvolumeclaim/model-pv-claim created
-```
+    ```{ .bash .no-copy }
+    $ persistentvolumeclaim/model-pv-claim created
+    ```
 
 ## 2 Create model store files layout and copy to PV
 
@@ -45,11 +45,11 @@ We create a pod with the PV attached to copy the model files and config.properti
 kubectl apply -f pvpod.yaml
 ```
 
-Expected Output
+!!! success "Expected Output"
 
-```bash
-pod/model-store-pod created
-```
+    ```{ .bash .no-copy }
+    $ pod/model-store-pod created
+    ```
 
 ### 2.2 Create model store file layout on PV
 

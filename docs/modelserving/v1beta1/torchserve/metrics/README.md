@@ -56,11 +56,11 @@ Apply the CRD
 kubectl apply -f metrics.yaml
 ```
 
-Expected Output
+!!! sucess "Expected Output"
 
-```bash
-$inferenceservice.serving.kserve.io/torch-metrics created
-```
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/torch-metrics created
+    ```
 
 ## Run a prediction
 
@@ -73,33 +73,33 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice torch-metrics <namespace> -o jso
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```bash
-*   Trying 52.89.19.61...
-* Connected to a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com (52.89.19.61) port 80 (#0)
-> PUT /v1/models/mnist:predict HTTP/1.1
-> Host: torch-metrics.kserve-test.example.com
-> User-Agent: curl/7.47.0
-> Accept: */*
-> Content-Length: 272
-> Expect: 100-continue
->
-< HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-< HTTP/1.1 200 OK
-< cache-control: no-cache; no-store, must-revalidate, private
-< content-length: 1
-< date: Fri, 23 Oct 2020 13:01:09 GMT
-< expires: Thu, 01 Jan 1970 00:00:00 UTC
-< pragma: no-cache
-< x-request-id: 8881f2b9-462e-4e2d-972f-90b4eb083e53
-< x-envoy-upstream-service-time: 5018
-< server: istio-envoy
-<
-* Connection #0 to host a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com left intact
-{"predictions": ["2"]}
-```
+    ```{ .bash .no-copy }
+    *   Trying 52.89.19.61...
+    * Connected to a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com (52.89.19.61) port 80 (#0)
+    > PUT /v1/models/mnist:predict HTTP/1.1
+    > Host: torch-metrics.kserve-test.example.com
+    > User-Agent: curl/7.47.0
+    > Accept: */*
+    > Content-Length: 272
+    > Expect: 100-continue
+    >
+    < HTTP/1.1 100 Continue
+    * We are completely uploaded and fine
+    < HTTP/1.1 200 OK
+    < cache-control: no-cache; no-store, must-revalidate, private
+    < content-length: 1
+    < date: Fri, 23 Oct 2020 13:01:09 GMT
+    < expires: Thu, 01 Jan 1970 00:00:00 UTC
+    < pragma: no-cache
+    < x-request-id: 8881f2b9-462e-4e2d-972f-90b4eb083e53
+    < x-envoy-upstream-service-time: 5018
+    < server: istio-envoy
+    <
+    * Connection #0 to host a881f5a8c676a41edbccdb0a394a80d6-2069247558.us-west-2.elb.amazonaws.com left intact
+    {"predictions": ["2"]}
+    ```
 
 ## Check the dashboard 
 

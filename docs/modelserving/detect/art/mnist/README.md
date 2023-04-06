@@ -2,19 +2,23 @@
 
 This is an example to show how adversarially modified inputs can trick models to predict incorrectly to highlight model vulnerability to adversarial attacks. It is using the [Adversarial Robustness Toolbox (ART)](https://adversarial-robustness-toolbox.org/) on KServe. ART provides tools that enable developers to evaluate, defend, and verify ML models and applications against adversarial threats. Apart from giving capabilities to craft [adversarial attacks](https://github.com/Trusted-AI/adversarial-robustness-toolbox/wiki/ART-Attacks), it also provides [algorithms to defend](https://github.com/Trusted-AI/adversarial-robustness-toolbox/wiki/ART-Defences) against them.
 
-We will be using the MNIST dataset which is a dataset of handwritten digits and find adversarial examples which will can make the model predict a classification incorrectly, thereby showing the vulnerability of the model against adversarial attacks.
+We will be using the MNIST dataset which is a dataset of handwritten digits and find adversarial examples which can make the model predict a classification incorrectly, thereby showing the vulnerability of the model against adversarial attacks.
 
 Sample resources for deploying the example can be found [here](https://github.com/kserve/kserve/tree/master/docs/samples/explanation/art/mnist)
 
 To deploy the inferenceservice with v1beta1 API
 
-`kubectl apply -f art.yaml`
+```bash
+kubectl apply -f art.yaml
+```
 
 Then find the url
 
-`kubectl get inferenceservice`
-
+```bash
+kubectl get inferenceservice
 ```
+
+```{ .bash .no-copy }
 NAME         URL                                               READY   DEFAULT TRAFFIC   CANARY TRAFFIC   AGE
 artserver   http://artserver.somecluster/v1/models/artserver   True    100                                40m
 ```
@@ -22,7 +26,7 @@ artserver   http://artserver.somecluster/v1/models/artserver   True    100      
 ## Explanation
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-```
+```bash
 MODEL_NAME=artserver
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME}
@@ -36,14 +40,16 @@ The [Square Attack method](https://arxiv.org/abs/1912.00049) used in this exampl
 
 To try a different MNIST example add an integer to the end of the query between 0-9,999. The integer chosen will be the index of the image to be chosen in the MNIST dataset. Or to try a file with custom data add the file path to the end. Keep in mind that the data format must be `{"instances": [<image>, <label>]}`
 
-```
+```bash
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} 100
 python query_explain.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:explain ${SERVICE_HOSTNAME} ./input.json
 ```
 
 ## Stopping the Inference Service
 
-`kubectl delete -f art.yaml`
+```bash
+kubectl delete -f art.yaml
+```
 
 ## Build a Development ART Explainer Docker Image
 

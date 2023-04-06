@@ -13,34 +13,34 @@ Sample resources for deploying the example can be found [here](https://github.co
 Apply the CRD
 
 === "kubectl"
-```
+```bash
 kubectl apply -f bias.yaml
 ```
 
-==** Expected Output **==
-```
-$ inferenceservice.serving.kserve.io/german-credit created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/german-credit created
+    ```
 
 ## Deploy the message dumper (sample backend receiver for payload logs)
 
 Apply the message-dumper CRD which will collect the logs that are created when running predictions on the inferenceservice. In production setup, instead of message-dumper Kafka can be used to receive payload logs
 
 === "kubectl"
-```
+```bash
 kubectl apply -f message-dumper.yaml
 ```
 
-==** Expected Output **==
-```
-service.serving.knative.dev/message-dumper created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    service.serving.knative.dev/message-dumper created
+    ```
 
 ## Run a prediction
 
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-```
+```bash
 MODEL_NAME=german-credit
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 python simulate_predicts.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict ${SERVICE_HOSTNAME}
@@ -52,7 +52,7 @@ Run `json_from_logs.py` which will craft a payload that AIF can interpret. First
 logs are parsed to match inputs with outputs. Then the input/outputs pairs are all combined into a list of inputs and a list of outputs for AIF to interpret.
 A `data.json` file should have been created in this folder which contains the json payload.
 
-```
+```bash
 python json_from_logs.py
 ```
 
@@ -74,19 +74,19 @@ This in and of itself is not proof that the model is biased, but does hint that 
 ```bash
 python query_bias.py http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain ${SERVICE_HOSTNAME} input.json
 ```
-==** Expected Output **==
-```
-Sending bias query...
-TIME TAKEN:  0.21137404441833496
-<Response [200]>
-base_rate :  0.9329608938547486
-consistency :  [0.982122905027933]
-disparate_impact :  0.52
-num_instances :  179.0
-num_negatives :  12.0
-num_positives :  167.0
-statistical_parity_difference :  -0.48
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    Sending bias query...
+    TIME TAKEN:  0.21137404441833496
+    <Response [200]>
+    base_rate :  0.9329608938547486
+    consistency :  [0.982122905027933]
+    disparate_impact :  0.52
+    num_instances :  179.0
+    num_negatives :  12.0
+    num_positives :  167.0
+    statistical_parity_difference :  -0.48
+    ```
 
 ## Dataset
 

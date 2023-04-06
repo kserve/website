@@ -65,7 +65,7 @@ for inputs and outputs in a TorchScript model, the `name` attribute of both the 
 follow a specific naming convention i.e. “<name>__<index>”. Where <name> can be any string and <index> refers to the position of the corresponding
 input/output. This means if there are two inputs and two outputs they must be named as: `INPUT__0`, `INPUT__1` and `OUTPUT__0`, `OUTPUT__1` such that `INPUT__0`
 refers to first input and INPUT__1 refers to the second input, etc.
-```
+```json
 name: "cifar"
 platform: "pytorch_libtorch"
 max_batch_size: 1
@@ -93,7 +93,7 @@ instance_group [
 ```
 
 To schedule the model on GPU you would need to change the `instance_group` with GPU kind
-```
+```json
 instance_group [
     {
         count: 1
@@ -128,14 +128,14 @@ spec:
     We want one thread per worker instead of many threads per worker to avoid contention.
 
 === "kubectl"
-```
+```bash
 kubectl apply -f torchscript.yaml
 ```
 
-==** Expected Output **==
-```
-$ inferenceservice.serving.kserve.io/torchscript-cifar10 created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/torchscript-cifar10 created
+    ```
 
 
 ### Run a prediction with curl
@@ -152,32 +152,32 @@ INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchscript-cifar10 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d $INPUT_PATH
 ```
-==** Expected Output **==
-```bash
-* Connected to torchscript-cifar.default.svc.cluster.local (10.51.242.87) port 80 (#0)
-> POST /v2/models/cifar10/infer HTTP/1.1
-> Host: torchscript-cifar.default.svc.cluster.local
-> User-Agent: curl/7.47.0
-> Accept: */*
-> Content-Length: 110765
-> Content-Type: application/x-www-form-urlencoded
-> Expect: 100-continue
->
-< HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-< HTTP/1.1 200 OK
-< content-length: 315
-< content-type: application/json
-< date: Sun, 11 Oct 2020 21:26:51 GMT
-< x-envoy-upstream-service-time: 8
-< server: istio-envoy
-<
-* Connection #0 to host torchscript-cifar.default.svc.cluster.local left intact
-{"model_name":"cifar10","model_version":"1","outputs":[{"name":"OUTPUT__0","datatype":"FP32","shape":[1,10],"data":[-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279]}]}
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    * Connected to torchscript-cifar.default.svc.cluster.local (10.51.242.87) port 80 (#0)
+    > POST /v2/models/cifar10/infer HTTP/1.1
+    > Host: torchscript-cifar.default.svc.cluster.local
+    > User-Agent: curl/7.47.0
+    > Accept: */*
+    > Content-Length: 110765
+    > Content-Type: application/x-www-form-urlencoded
+    > Expect: 100-continue
+    >
+    < HTTP/1.1 100 Continue
+    * We are completely uploaded and fine
+    < HTTP/1.1 200 OK
+    < content-length: 315
+    < content-type: application/json
+    < date: Sun, 11 Oct 2020 21:26:51 GMT
+    < x-envoy-upstream-service-time: 8
+    < server: istio-envoy
+    <
+    * Connection #0 to host torchscript-cifar.default.svc.cluster.local left intact
+    {"model_name":"cifar10","model_version":"1","outputs":[{"name":"OUTPUT__0","datatype":"FP32","shape":[1,10],"data":[-2.0964810848236086,-0.13700756430625916,-0.5095657706260681,2.795621395111084,-0.5605481863021851,1.9934231042861939,1.1288187503814698,-1.4043136835098267,0.6004879474639893,-2.1237082481384279]}]}
+    ```
 ### Run a performance test
 QPS rate `--rate` can be changed in the [perf.yaml](./perf.yaml).
-```
+```bash
 kubectl create -f perf.yaml
 
 Requests      [total, rate, throughput]         6000, 100.02, 100.01
@@ -215,7 +215,7 @@ spec:
 ```
 
 Apply the gRPC `InferenceService` yaml and then you can call the model with `tritonclient` python library after `InferenceService` is ready.
-```
+```bash
 kubectl apply -f torchscript_grpc.yaml
 ```
 
@@ -249,12 +249,12 @@ grpcurl \
   inference.GRPCInferenceService.ServerReady
 ```
 
-Expected Output
-```json
-{
-  "ready": true
-}
-```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {
+      "ready": true
+    }
+    ```
 
 `ModelInfer` API takes input following the `ModelInferRequest` schema defined in the `grpc_predict_v2.proto` file. Notice that the input file differs from that used in the previous `curl` example. 
 
@@ -270,49 +270,49 @@ grpcurl \
   <<< $(cat "$INPUT_PATH")
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-Resolved method descriptor:
-// The ModelInfer API performs inference using the specified model. Errors are
-// indicated by the google.rpc.Status returned for the request. The OK code
-// indicates success and other codes indicate failure.
-rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
-
-Request metadata to send:
-host: torchscript-cifar10.default.example.com
-
-Response headers received:
-accept-encoding: identity,gzip
-content-type: application/grpc
-date: Fri, 12 Aug 2022 01:49:53 GMT
-grpc-accept-encoding: identity,deflate,gzip
-server: istio-envoy
-x-envoy-upstream-service-time: 16
-
-Response contents:
-{
-  "modelName": "cifar10",
-  "modelVersion": "1",
-  "outputs": [
+    ```{ .bash .no-copy }
+    Resolved method descriptor:
+    // The ModelInfer API performs inference using the specified model. Errors are
+    // indicated by the google.rpc.Status returned for the request. The OK code
+    // indicates success and other codes indicate failure.
+    rpc ModelInfer ( .inference.ModelInferRequest ) returns ( .inference.ModelInferResponse );
+    
+    Request metadata to send:
+    host: torchscript-cifar10.default.example.com
+    
+    Response headers received:
+    accept-encoding: identity,gzip
+    content-type: application/grpc
+    date: Fri, 12 Aug 2022 01:49:53 GMT
+    grpc-accept-encoding: identity,deflate,gzip
+    server: istio-envoy
+    x-envoy-upstream-service-time: 16
+    
+    Response contents:
     {
-      "name": "OUTPUT__0",
-      "datatype": "FP32",
-      "shape": [
-        "1",
-        "10"
+      "modelName": "cifar10",
+      "modelVersion": "1",
+      "outputs": [
+        {
+          "name": "OUTPUT__0",
+          "datatype": "FP32",
+          "shape": [
+            "1",
+            "10"
+          ]
+        }
+      ],
+      "rawOutputContents": [
+        "wCwGwOJLDL7icgK/dusyQAqAD799KP8/In2QP4zAs7+WuRk/2OoHwA=="
       ]
     }
-  ],
-  "rawOutputContents": [
-    "wCwGwOJLDL7icgK/dusyQAqAD799KP8/In2QP4zAs7+WuRk/2OoHwA=="
-  ]
-}
-
-Response trailers received:
-(empty)
-Sent 1 request and received 1 response
-```
+    
+    Response trailers received:
+    (empty)
+    Sent 1 request and received 1 response
+    ```
 
 The content of output tensor is encoded in `rawOutputContents` field. It can be `base64` decoded and loaded into a Numpy array with the given datatype and shape.
 
@@ -379,7 +379,7 @@ class ImageTransformerV2(kserve.Model):
 Please find [the code example](https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-0.10/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile).
 
 ### Build Transformer docker image
-```
+```bash
 docker build -t $DOCKER_USER/image-transformer-v2:latest -f transformer.Dockerfile . --rm
 ```
 
@@ -413,14 +413,14 @@ spec:
       - v2
 ```
 
-```
+```bash
 kubectl apply -f torch_transformer.yaml
 ```
 
-==** Expected Output **==
-```
-$ inferenceservice.serving.kserve.io/torch-transfomer created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/torch-transfomer created
+    ```
 
 ### Run a prediction with curl
 The transformer does not enforce a specific schema like predictor but the general recommendation is to send in as a list of object(dict):
@@ -453,26 +453,26 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
-```
-> POST /v1/models/cifar10:predict HTTP/1.1
-> Host: torch-transformer.kserve-triton.example.com
-> User-Agent: curl/7.68.0
-> Accept: */*
-> Content-Length: 3400
-> Content-Type: application/x-www-form-urlencoded
-> Expect: 100-continue
->
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 200 OK
-< content-length: 219
-< content-type: application/json; charset=UTF-8
-< date: Sat, 19 Mar 2022 12:15:54 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 41
-<
-{"OUTPUT__0": [[-2.0964810848236084, -0.137007474899292, -0.5095658302307129, 2.795621395111084, -0.560547947883606, 1.9934231042861938, 1.1288189888000488, -1.4043136835098267, 0.600488007068634, -2.1237082481384277]]}%
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    > POST /v1/models/cifar10:predict HTTP/1.1
+    > Host: torch-transformer.kserve-triton.example.com
+    > User-Agent: curl/7.68.0
+    > Accept: */*
+    > Content-Length: 3400
+    > Content-Type: application/x-www-form-urlencoded
+    > Expect: 100-continue
+    >
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 100 Continue
+    * We are completely uploaded and fine
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 219
+    < content-type: application/json; charset=UTF-8
+    < date: Sat, 19 Mar 2022 12:15:54 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 41
+    <
+    {"OUTPUT__0": [[-2.0964810848236084, -0.137007474899292, -0.5095658302307129, 2.795621395111084, -0.560547947883606, 1.9934231042861938, 1.1288189888000488, -    4043136835098267, 0.600488007068634, -2.1237082481384277]]}%
+    ```

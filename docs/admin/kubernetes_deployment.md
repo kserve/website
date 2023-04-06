@@ -17,7 +17,7 @@ Kubernetes version.
 The minimally required Istio version is 1.13 and you can refer to the [Istio install guide](https://istio.io/latest/docs/setup/install).
 
 Once Istio is installed, create `IngressClass` resource for istio.
-```
+```yaml
 apiVersion: networking.k8s.io/v1beta1
 kind: IngressClass
 metadata:

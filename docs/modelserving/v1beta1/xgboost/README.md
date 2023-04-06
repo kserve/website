@@ -135,7 +135,7 @@ Note that this makes the following assumptions:
 Assuming that we've got a cluster accessible through `kubectl` with KServe
 already installed, we can deploy our model as:
 
-```
+```bash
 kubectl apply -f xgboost.yaml
 ```
 
@@ -182,19 +182,20 @@ curl -v \
 
 The output will be something similar to:
 
-```json
-{
-  "id": "4e546709-0887-490a-abd6-00cbc4c26cf4",
-  "model_name": "xgboost-iris",
-  "model_version": "v1.0.0",
-  "outputs": [
+!!! success "Expected Output"
+    ```{ .json .no-copy }
     {
-      "data": [1.0, 1.0],
-      "datatype": "FP32",
-      "name": "predict",
-      "parameters": null,
-      "shape": [2]
+      "id": "4e546709-0887-490a-abd6-00cbc4c26cf4",
+      "model_name": "xgboost-iris",
+      "model_version": "v1.0.0",
+      "outputs": [
+        {
+          "data": [1.0, 1.0],
+          "datatype": "FP32",
+          "name": "predict",
+          "parameters": null,
+          "shape": [2]
+        }
+      ]
     }
-  ]
-}
-```
+    ```

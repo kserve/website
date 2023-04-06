@@ -59,7 +59,7 @@ Some model servers define their own metrics.
 
 ## Exporting metrics
 
-Exporting metrics in serverles mode requires that the queue-proxy extension image is used. 
+Exporting metrics in serverless mode requires that the queue-proxy extension image is used. 
 
 For more information on how to export metrics, see [Queue Proxy Extension](https://github.com/kserve/kserve/blob/master/qpext/README.md) documentation.
 

@@ -80,13 +80,13 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -o jsonpath='{.stat
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```json
-{
-    "predictions": [1, 1]
-}
-```
+    ```{ .json .no-copy }
+    {
+        "predictions": [1, 1]
+    }
+    ```
 
 ### Check CloudEvents
 
@@ -97,62 +97,62 @@ Check the logs of the message dumper, we can see the CloudEvents associated with
 kubectl logs $(kubectl get pod -l serving.knative.dev/service=message-dumper -o jsonpath='{.items[0].metadata.name}') user-container
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-☁️  cloudevents.Event
-Validation: valid
-Context Attributes,
-  specversion: 1.0
-  type: org.kubeflow.serving.inference.request
-  source: http://localhost:9081/
-  id: 0009174a-24a8-4603-b098-09c8799950e9
-  time: 2021-04-10T00:23:26.0789529Z
-  datacontenttype: application/json
-Extensions,
-  endpoint:
-  inferenceservicename: sklearn-iris
-  namespace: default
-  traceparent: 00-90bdf848647d50283394155d2df58f19-84dacdfdf07cadfc-00
-Data,
-  {
-    "instances": [
-      [
-        6.8,
-        2.8,
-        4.8,
-        1.4
-      ],
-      [
-        6.0,
-        3.4,
-        4.5,
-        1.6
-      ]
-    ]
-  }
-☁️  cloudevents.Event
-Validation: valid
-Context Attributes,
-  specversion: 1.0
-  type: org.kubeflow.serving.inference.response
-  source: http://localhost:9081/
-  id: 0009174a-24a8-4603-b098-09c8799950e9
-  time: 2021-04-10T00:23:26.080736102Z
-  datacontenttype: application/json
-Extensions,
-  endpoint:
-  inferenceservicename: sklearn-iris
-  namespace: default
-  traceparent: 00-55de1514e1d23ee17eb50dda6167bb8c-b6c6e0f6dd8f741d-00
-Data,
-  {
-    "predictions": [
-      1,
-      1
-    ]
-  }
-```
+    ```{ .bash .no-copy }
+    ☁️  cloudevents.Event
+    Validation: valid
+    Context Attributes,
+      specversion: 1.0
+      type: org.kubeflow.serving.inference.request
+      source: http://localhost:9081/
+      id: 0009174a-24a8-4603-b098-09c8799950e9
+      time: 2021-04-10T00:23:26.0789529Z
+      datacontenttype: application/json
+    Extensions,
+      endpoint:
+      inferenceservicename: sklearn-iris
+      namespace: default
+      traceparent: 00-90bdf848647d50283394155d2df58f19-84dacdfdf07cadfc-00
+    Data,
+      {
+        "instances": [
+          [
+            6.8,
+            2.8,
+            4.8,
+            1.4
+          ],
+          [
+            6.0,
+            3.4,
+            4.5,
+            1.6
+          ]
+        ]
+      }
+    ☁️  cloudevents.Event
+    Validation: valid
+    Context Attributes,
+      specversion: 1.0
+      type: org.kubeflow.serving.inference.response
+      source: http://localhost:9081/
+      id: 0009174a-24a8-4603-b098-09c8799950e9
+      time: 2021-04-10T00:23:26.080736102Z
+      datacontenttype: application/json
+    Extensions,
+      endpoint:
+      inferenceservicename: sklearn-iris
+      namespace: default
+      traceparent: 00-55de1514e1d23ee17eb50dda6167bb8c-b6c6e0f6dd8f741d-00
+    Data,
+      {
+        "predictions": [
+          1,
+          1
+        ]
+      }
+    ```
 
 ## Knative Eventing Inference Logger
 
@@ -286,13 +286,13 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -o jsonpath='{.stat
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```json
-{
-    "predictions": [1, 1]
-}
-```
+    ```{ .json .no-copy }
+    {
+        "predictions": [1, 1]
+    }
+    ```
 
 ### Check CloudEvents
 
@@ -303,64 +303,64 @@ Check the logs of the message dumper, we can see the CloudEvents associated with
 kubectl logs $(kubectl get pod -l serving.knative.dev/service=message-dumper -o jsonpath='{.items[0].metadata.name}') user-container
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-☁️  cloudevents.Event
-Validation: valid
-Context Attributes,
-  specversion: 1.0
-  type: org.kubeflow.serving.inference.request
-  source: http://localhost:9081/
-  id: defb5816-35f7-4947-a2b1-b9e5d7764ad2
-  time: 2021-04-10T01:22:16.498917288Z
-  datacontenttype: application/json
-Extensions,
-  endpoint:
-  inferenceservicename: sklearn-iris
-  knativearrivaltime: 2021-04-10T01:22:16.500656431Z
-  knativehistory: default-kne-trigger-kn-channel.default.svc.cluster.local
-  namespace: default
-  traceparent: 00-16456300519c5227ffe5f784a88da2f7-2db26af1daae870c-00
-Data,
-  {
-    "instances": [
-      [
-        6.8,
-        2.8,
-        4.8,
-        1.4
-      ],
-      [
-        6.0,
-        3.4,
-        4.5,
-        1.6
-      ]
-    ]
-  }
-☁️  cloudevents.Event
-Validation: valid
-Context Attributes,
-  specversion: 1.0
-  type: org.kubeflow.serving.inference.response
-  source: http://localhost:9081/
-  id: defb5816-35f7-4947-a2b1-b9e5d7764ad2
-  time: 2021-04-10T01:22:16.500492939Z
-  datacontenttype: application/json
-Extensions,
-  endpoint:
-  inferenceservicename: sklearn-iris
-  knativearrivaltime: 2021-04-10T01:22:16.501931207Z
-  knativehistory: default-kne-trigger-kn-channel.default.svc.cluster.local
-  namespace: default
-  traceparent: 00-2156a24451a4d4ea575fcf6c4f52a672-2b6ea035c83d3200-00
-Data,
-  {
-    "predictions": [
-      1,
-      1
-    ]
-  }
-
-```
+    ```{ .bash .no-copy }
+    ☁️  cloudevents.Event
+    Validation: valid
+    Context Attributes,
+      specversion: 1.0
+      type: org.kubeflow.serving.inference.request
+      source: http://localhost:9081/
+      id: defb5816-35f7-4947-a2b1-b9e5d7764ad2
+      time: 2021-04-10T01:22:16.498917288Z
+      datacontenttype: application/json
+    Extensions,
+      endpoint:
+      inferenceservicename: sklearn-iris
+      knativearrivaltime: 2021-04-10T01:22:16.500656431Z
+      knativehistory: default-kne-trigger-kn-channel.default.svc.cluster.local
+      namespace: default
+      traceparent: 00-16456300519c5227ffe5f784a88da2f7-2db26af1daae870c-00
+    Data,
+      {
+        "instances": [
+          [
+            6.8,
+            2.8,
+            4.8,
+            1.4
+          ],
+          [
+            6.0,
+            3.4,
+            4.5,
+            1.6
+          ]
+        ]
+      }
+    ☁️  cloudevents.Event
+    Validation: valid
+    Context Attributes,
+      specversion: 1.0
+      type: org.kubeflow.serving.inference.response
+      source: http://localhost:9081/
+      id: defb5816-35f7-4947-a2b1-b9e5d7764ad2
+      time: 2021-04-10T01:22:16.500492939Z
+      datacontenttype: application/json
+    Extensions,
+      endpoint:
+      inferenceservicename: sklearn-iris
+      knativearrivaltime: 2021-04-10T01:22:16.501931207Z
+      knativehistory: default-kne-trigger-kn-channel.default.svc.cluster.local
+      namespace: default
+      traceparent: 00-2156a24451a4d4ea575fcf6c4f52a672-2b6ea035c83d3200-00
+    Data,
+      {
+        "predictions": [
+          1,
+          1
+        ]
+      }
+    
+    ```

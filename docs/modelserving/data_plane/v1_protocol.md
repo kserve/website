@@ -1,5 +1,5 @@
 # Data Plane (V1)
-KServe's V1 protocol offers a standardized prediction workflow across all model frameworks. This protocol version is still supported, but it is recommended that users migrate to the [V2 protocol](./v2_protocol.md) for better performance and standardization among serving runtimes. However, if a use case requires a more flexibile schema than protocol v2 provides, v1 protocol is still an option. 
+KServe's V1 protocol offers a standardized prediction workflow across all model frameworks. This protocol version is still supported, but it is recommended that users migrate to the [V2 protocol](./v2_protocol.md) for better performance and standardization among serving runtimes. However, if a use case requires a more flexible schema than protocol v2 provides, v1 protocol is still an option. 
 
 | API  | Verb | Path | Request Payload | Response Payload |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -10,7 +10,7 @@ KServe's V1 protocol offers a standardized prediction workflow across all model 
 
 ** = payload is optional
 
-Note: The response payload in V1 protocol is not strictly enforced. A custom server define and return its own response payload. We encourage using the KServe defined response payload for consistency.
+Note: The response payload in V1 protocol is not strictly enforced. A custom server can define and return its own response payload. We encourage using the KServe defined response payload for consistency.
 
 
 ## API Definitions

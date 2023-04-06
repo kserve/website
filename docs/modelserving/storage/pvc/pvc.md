@@ -137,28 +137,28 @@ INPUT_PATH=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-==** Expected Output **==
+!!! success "Expected Output"
 
-```
-*   Trying 127.0.0.1:8080...
-* TCP_NODELAY set
-* Connected to localhost (127.0.0.1) port 8080 (#0)
-> POST /v1/models/sklearn-pvc:predict HTTP/1.1
-> Host: sklearn-pvc.default.example.com
-> User-Agent: curl/7.68.0
-> Accept: */*
-> Content-Length: 84
-> Content-Type: application/x-www-form-urlencoded
->
-* upload completely sent off: 84 out of 84 bytes
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 200 OK
-< content-length: 23
-< content-type: application/json; charset=UTF-8
-< date: Mon, 20 Sep 2021 04:55:50 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 6
-<
-* Connection #0 to host localhost left intact
-{"predictions": [1, 1]}
-```
+    ```{ .bash .no-copy }
+    *   Trying 127.0.0.1:8080...
+    * TCP_NODELAY set
+    * Connected to localhost (127.0.0.1) port 8080 (#0)
+    > POST /v1/models/sklearn-pvc:predict HTTP/1.1
+    > Host: sklearn-pvc.default.example.com
+    > User-Agent: curl/7.68.0
+    > Accept: */*
+    > Content-Length: 84
+    > Content-Type: application/x-www-form-urlencoded
+    >
+    * upload completely sent off: 84 out of 84 bytes
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 23
+    < content-type: application/json; charset=UTF-8
+    < date: Mon, 20 Sep 2021 04:55:50 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 6
+    <
+    * Connection #0 to host localhost left intact
+    {"predictions": [1, 1]}
+    ```

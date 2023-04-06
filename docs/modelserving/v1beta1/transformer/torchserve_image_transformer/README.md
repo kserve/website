@@ -162,21 +162,21 @@ The downloaded artifacts are stored under `/mnt/models`.
 
 
 Apply the InferenceService [transformer-new.yaml](transformer-new.yaml)
-```
+```bash
 kubectl apply -f transformer-new.yaml
 ```
 
-Expected Output
-```
-$ inferenceservice.serving.kserve.io/torch-transformer created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/torch-transformer created
+    ```
 
 ### Run a prediction
 First, download the request [input payload](./input.json).
 
 Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
-```
+```bash
 SERVICE_NAME=torch-transformer
 MODEL_NAME=mnist
 INPUT_PATH=@./input.json
@@ -185,32 +185,32 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
 ```
 
-==** Expected Output **==
-```
-> POST /v1/models/mnist:predict HTTP/1.1
-> Host: torch-transformer.default.example.com
-> User-Agent: curl/7.73.0
-> Accept: */*
-> Content-Length: 401
-> Content-Type: application/x-www-form-urlencoded
->
-* upload completely sent off: 401 out of 401 bytes
-Handling connection for 8080
-* Mark bundle as not supporting multiuse
-< HTTP/1.1 200 OK
-< content-length: 20
-< content-type: application/json; charset=UTF-8
-< date: Tue, 12 Jan 2021 09:52:30 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 83
-<
-* Connection #0 to host localhost left intact
-{"predictions": [2]}
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    > POST /v1/models/mnist:predict HTTP/1.1
+    > Host: torch-transformer.default.example.com
+    > User-Agent: curl/7.73.0
+    > Accept: */*
+    > Content-Length: 401
+    > Content-Type: application/x-www-form-urlencoded
+    >
+    * upload completely sent off: 401 out of 401 bytes
+    Handling connection for 8080
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 20
+    < content-type: application/json; charset=UTF-8
+    < date: Tue, 12 Jan 2021 09:52:30 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 83
+    <
+    * Connection #0 to host localhost left intact
+    {"predictions": [2]}
+    ```
 
 ## Deploy the InferenceService calling Predictor with gRPC protocol
 Comparing with REST, gRPC is faster due to the tight packing of the Protocol Buffer and the use of HTTP/2 by gRPC.
-In many case, gRPC can be more efficient communication protocol between Transformer and Predictor as you may need to
+In many cases, gRPC can be more efficient communication protocol between Transformer and Predictor as you may need to
 transmit large tensors between them.
 
 ### Create InferenceService
@@ -284,21 +284,21 @@ The transformer calls out to predictor with V2 gRPC Protocol by specifying the `
     ```
 
 Apply the InferenceService [grpc_transformer.yaml](./grpc_transformer.yaml)
-```
+```bash
 kubectl apply -f grpc_transformer.yaml
 ```
 
-Expected Output
-```
-$ inferenceservice.serving.kserve.io/torch-grpc-transformer created
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/torch-grpc-transformer created
+    ```
 
 ### Run a prediction
 First, download the request [input payload](./image.json).
 
 Then, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-```
+```bash
 SERVICE_NAME=torch-grpc-transformer
 MODEL_NAME=cifar10
 INPUT_PATH=@./image.json
@@ -307,32 +307,32 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.sta
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -d $INPUT_PATH http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict
 ```
 
-==** Expected Output **==
-```
-*   Trying ::1...
-* TCP_NODELAY set
-* Connected to localhost (::1) port 8080 (#0)
-> POST /v1/models/cifar10:predict HTTP/1.1
-> Host: torch-transformer.default.example.com
-> User-Agent: curl/7.64.1
-> Accept: */*
-> Content-Length: 3394
-> Content-Type: application/x-www-form-urlencoded
-> Expect: 100-continue
->
-Handling connection for 8080
-< HTTP/1.1 100 Continue
-* We are completely uploaded and fine
-< HTTP/1.1 200 OK
-< content-length: 222
-< content-type: application/json; charset=UTF-8
-< date: Thu, 03 Feb 2022 01:50:07 GMT
-< server: istio-envoy
-< x-envoy-upstream-service-time: 73
-<
-* Connection #0 to host localhost left intact
-{"predictions": [[-1.192867636680603, -0.35750141739845276, -2.3665435314178467, 3.9186441898345947, -2.0592284202575684, 4.091977119445801, 0.1266237050294876, -1.8284690380096436, 2.628898859024048, -4.255198001861572]]}* Closing connection 0
-```
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    *   Trying ::1...
+    * TCP_NODELAY set
+    * Connected to localhost (::1) port 8080 (#0)
+    > POST /v1/models/cifar10:predict HTTP/1.1
+    > Host: torch-transformer.default.example.com
+    > User-Agent: curl/7.64.1
+    > Accept: */*
+    > Content-Length: 3394
+    > Content-Type: application/x-www-form-urlencoded
+    > Expect: 100-continue
+    >
+    Handling connection for 8080
+    < HTTP/1.1 100 Continue
+    * We are completely uploaded and fine
+    < HTTP/1.1 200 OK
+    < content-length: 222
+    < content-type: application/json; charset=UTF-8
+    < date: Thu, 03 Feb 2022 01:50:07 GMT
+    < server: istio-envoy
+    < x-envoy-upstream-service-time: 73
+    <
+    * Connection #0 to host localhost left intact
+    {"predictions": [[-1.192867636680603, -0.35750141739845276, -2.3665435314178467, 3.9186441898345947, -2.0592284202575684, 4.091977119445801, 0.1266237050294876, -1.8284690380096436, 2.628898859024048, -4.255198001861572]]}* Closing connection 0
+    ```
 
 ## Performance Comparison between gRPC and REST
 From the following latency stats of both transformer and predictor you can see that the transformer to predictor call takes longer time(92ms vs 55ms) for REST than gRPC, REST takes more

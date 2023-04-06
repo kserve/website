@@ -9,7 +9,7 @@ components:
 The architecture used is shown below and links the payload logging available within KServe with asynchronous processing of those payloads in
 KNative to detect outliers.
 
-![Architetcure](architecture.png)
+![Architecture](architecture.png)
 
 
 ## CIFAR10 Outlier Detector

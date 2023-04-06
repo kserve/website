@@ -1,7 +1,7 @@
 # ModelMesh Installation Guide
 KServe ModelMesh installation enables high-scale, high-density and frequently-changing model serving use cases.
 
-A Kubernetes cluster is required. You will need cluster-admin authority. Additionally [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) and an [etcd](https://etcd.io/) server on the Kubernetes cluster are required.
+A Kubernetes cluster is required. You will need cluster-admin authority. Additionally, [kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/) and an [etcd](https://etcd.io/) server on the Kubernetes cluster are required.
 
 ## 1. Standard Installation
 You can find the standard installation instructions in the ModelMesh Serving [installation guide](https://github.com/kserve/modelmesh-serving/blob/release-0.10/docs/install/install-script.md). This approach assumes you have installed the prerequisites such as etcd and S3-compatible object storage.
