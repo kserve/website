@@ -22,10 +22,11 @@ This page contains a list of organizations who are using KServe either in produc
 | [Nuance](https://www.nuance.com/)                                            | [Jeff Griffith](https://github.com/jeffgriffith)   |
 | [NVIDIA](https://www.nvidia.com/en-us/)                                      | [David Goodwin](https://github.com/deadeyegoodwin) |
 | [One Convergence](https://dkube.io/)                                         | [Subra Ongole](https://github.com/songole)         |
+| [Red Hat](https://www.redhat.com/)                                           | [Taneem Ibrahim](https://github.com/taneem-ibrahim)|
 | [Seldon](https://www.seldon.io/)                                             | [Clive Cox](https://github.com/cliveseldon)        |
 | [Patterson Consulting](http://www.pattersonconsultingtn.com/)                | [Josh Patterson](https://github.com/jpatanooga)    |
 | [Samsung SDS](https://www.samsungsds.com/)                                   | [Hanbae Seo](https://github.com/jazzsir)           |
 | [Striveworks](https://striveworks.us/)                                       | [Jordan Yono](https://github.com/jyono)            |
 | [Zillow](https://www.zillow.com/)                                            | [Peilun Li](https://github.com/Peilun-Li)          |
 | [Upstage](https://www.upstage.ai/)                                           | [JuHyung Son](https://github.com/JuHyung-Son)      |
-| [Intuit](https://www.intuit.com/)                                            | [Rachit Chauhan](https://github.com/rachitchauhan43)   |
+| [Intuit](https://www.intuit.com/)                                            | [Rachit Chauhan](https://github.com/rachitchauhan43)|
