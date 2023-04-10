@@ -114,6 +114,16 @@ export INGRESS_HOST=localhost
 export INGRESS_PORT=8080
 ```
 
+Make sure that you create a file named `pmml-input.json` with the following content, under your current terminal path.
+
+```yaml
+{
+   "instances": [
+      [5.1, 3.5, 1.4, 0.2]
+   ]
+}
+```
+
 Send a prediction request to the InferenceService and check the output.
 
 ```bash
