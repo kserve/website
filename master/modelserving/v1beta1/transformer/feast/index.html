@@ -566,9 +566,38 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
+<a class="md-nav__link" href="#before-you-begin">
+    Before you begin
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-redis-server">
+    Create the Redis server
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-feast-server">
+    Create the Feast server
+  </a>
+<nav aria-label="Create the Feast server" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build-feature-store-initializer-docker-image">
+    Build Feature Store Initializer docker image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build-feast-server-docker-image">
+    Build Feast server docker image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-feast-server">
+    Deploy Feast server
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-a-transformer-with-feast">
@@ -1078,9 +1107,38 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
+<a class="md-nav__link" href="#before-you-begin">
+    Before you begin
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-redis-server">
+    Create the Redis server
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-feast-server">
+    Create the Feast server
+  </a>
+<nav aria-label="Create the Feast server" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build-feature-store-initializer-docker-image">
+    Build Feature Store Initializer docker image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build-feast-server-docker-image">
+    Build Feast server docker image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-feast-server">
+    Deploy Feast server
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-a-transformer-with-feast">
@@ -1123,12 +1181,150 @@
 </a>
 <h1 id="deploy-inferenceservice-with-transformer-using-feast-online-feature-store">Deploy InferenceService with Transformer using Feast online feature store<a class="headerlink" href="#deploy-inferenceservice-with-transformer-using-feast-online-feature-store" title="Permanent link">¶</a></h1>
 <p>Transformer is an <code>InferenceService</code> component which does pre/post processing alongside with model inference. In this example, instead of typical input transformation of raw data to tensors, we demonstrate a use case of online feature augmentation as part of preprocessing. We use a <a href="https://github.com/feast-dev/feast">Feast</a> <code>Transformer</code> to gather online features, run inference with a <code>SKLearn</code> predictor, and leave post processing as pass-through.</p>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
+<h2 id="before-you-begin">Before you begin<a class="headerlink" href="#before-you-begin" title="Permanent link">¶</a></h2>
 <ol>
 <li>Your ~/.kube/config should point to a cluster with <a href="/docs/get_started/README.md#install-the-kserve-quickstart-environment">KServe installed</a>.</li>
 <li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
-<li>Your Feast online store is populated with driver <a href="https://github.com/tedhtchang/driver_rank_repo/blob/master/data/driver_stats.parquet">data</a>, instructions available <a href="https://github.com/tedhtchang/populate_feast_online_store">here</a>, and network accessible.</li>
+<li>You can find the <a href="https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/transformer/feast">code samples</a> on kserve repository.</li>
 </ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example uses Feast version <code>0.30.2</code></p>
+</div>
+<h2 id="create-the-redis-server">Create the Redis server<a class="headerlink" href="#create-the-redis-server" title="Permanent link">¶</a></h2>
+<p>This example uses the <a href="https://redis.io/">Redis</a> as the online store. 
+Deploy the Redis server using the below command.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: Deployment</span>
+<span class="s">metadata:</span>
+<span class="s">  name: redis-server</span>
+<span class="s">spec:</span>
+<span class="s">  replicas: 1</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      app: redis-server</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        app: redis-server</span>
+<span class="s">        name: redis-server</span>
+<span class="s">    spec:</span>
+<span class="s">      containers:</span>
+<span class="s">        - name: redis-server</span>
+<span class="s">          image: redis</span>
+<span class="s">          args: [ "--appendonly", "yes" ]</span>
+<span class="s">          ports:</span>
+<span class="s">            - name: redis-server</span>
+<span class="s">              containerPort: 6379</span>
+<span class="s">          env:</span>
+<span class="s">            - name: ALLOW_EMPTY_PASSWORD</span>
+<span class="s">              value: "yes"</span>
+<span class="s">---</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Service</span>
+<span class="s">metadata:</span>
+<span class="s">  name: redis-service</span>
+<span class="s">spec:</span>
+<span class="s">  type: LoadBalancer</span>
+<span class="s">  selector:</span>
+<span class="s">    app: redis-server</span>
+<span class="s">  ports:</span>
+<span class="s">    - protocol: TCP</span>
+<span class="s">      port: 6379</span>
+<span class="s">      targetPort: 6379</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>deployment.apps/redis-server<span class="w"> </span>created
+$<span class="w"> </span>service/redis-service<span class="w"> </span>created
+</code></pre></div>
+</div>
+<h2 id="create-the-feast-server">Create the Feast server<a class="headerlink" href="#create-the-feast-server" title="Permanent link">¶</a></h2>
+<h3 id="build-feature-store-initializer-docker-image">Build Feature Store Initializer docker image<a class="headerlink" href="#build-feature-store-initializer-docker-image" title="Permanent link">¶</a></h3>
+<p>The feature store initializer is a init container which initializes a new sample feature repository, populate the 
+online store with sample driver data and copies the feature repository to the volume mount.
+The <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/feature_store_initializer.Dockerfile">feature store initializer dockerfile</a> can be found in the code example directory.
+Checkout the feast code example and under the example directory run the commands as following:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$USERNAME</span>/feature-store-initializer:latest<span class="w"> </span>-f<span class="w"> </span>feature_store_initializer.Dockerfile<span class="w"> </span>.
+
+docker<span class="w"> </span>push<span class="w"> </span><span class="nv">$USERNAME</span>/feature-store-initializer:latest
+</code></pre></div>
+<h3 id="build-feast-server-docker-image">Build Feast server docker image<a class="headerlink" href="#build-feast-server-docker-image" title="Permanent link">¶</a></h3>
+<p>The <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/feast_server.Dockerfile">feast server dockerfile</a> can be found in the code example directory.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$USERNAME</span>/feast-server:latest<span class="w"> </span>-f<span class="w"> </span>feast_server.Dockerfile<span class="w"> </span>.
+
+docker<span class="w"> </span>push<span class="w"> </span><span class="nv">$USERNAME</span>/feast-server:latest
+</code></pre></div>
+<h3 id="deploy-feast-server">Deploy Feast server<a class="headerlink" href="#deploy-feast-server" title="Permanent link">¶</a></h3>
+<p>Wait until the Redis <code>Deployment</code> is available.
+Now, update the init container and container's <code>image</code> field in the below command and deploy the Feast server.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: apps/v1</span>
+<span class="s">kind: Deployment</span>
+<span class="s">metadata:</span>
+<span class="s">  name: feature-server</span>
+<span class="s">spec:</span>
+<span class="s">  replicas: 1</span>
+<span class="s">  selector:</span>
+<span class="s">    matchLabels:</span>
+<span class="s">      app: feature-server</span>
+<span class="s">  template:</span>
+<span class="s">    metadata:</span>
+<span class="s">      labels:</span>
+<span class="s">        app: feature-server</span>
+<span class="s">        name: feature-server</span>
+<span class="s">    spec:</span>
+<span class="s">      initContainers:</span>
+<span class="s">        - name: feature-store-initializer</span>
+<span class="s">          image: "{username}/feature-store-initializer:latest"</span>
+<span class="s">          volumeMounts:</span>
+<span class="s">            - mountPath: /mnt</span>
+<span class="s">              name: feature-store-volume</span>
+<span class="s">      containers:</span>
+<span class="s">        - name: feature-server</span>
+<span class="s">          image: "{username}/feast-server:latest"</span>
+<span class="s">          args: [ -c, /mnt/driver_feature_repo/feature_repo, serve, -h, 0.0.0.0 ]</span>
+<span class="s">          ports:</span>
+<span class="s">            - name: feature-server</span>
+<span class="s">              containerPort: 6566</span>
+<span class="s">          resources:</span>
+<span class="s">            requests:</span>
+<span class="s">              memory: "64Mi"</span>
+<span class="s">              cpu: "250m"</span>
+<span class="s">            limits:</span>
+<span class="s">              memory: "128Mi"</span>
+<span class="s">              cpu: "500m"</span>
+<span class="s">          volumeMounts:</span>
+<span class="s">            - mountPath: /mnt</span>
+<span class="s">              name: feature-store-volume</span>
+<span class="s">      volumes:</span>
+<span class="s">        - name: feature-store-volume</span>
+<span class="s">          emptyDir:</span>
+<span class="s">            sizeLimit: 100Mi</span>
+
+<span class="s">---</span>
+<span class="s">apiVersion: v1</span>
+<span class="s">kind: Service</span>
+<span class="s">metadata:</span>
+<span class="s">  name: feature-server-service</span>
+<span class="s">spec:</span>
+<span class="s">  type: LoadBalancer</span>
+<span class="s">  selector:</span>
+<span class="s">    app: feature-server</span>
+<span class="s">  ports:</span>
+<span class="s">    - protocol: TCP</span>
+<span class="s">      port: 6566</span>
+<span class="s">      targetPort: 6566</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>deployment.apps/feature-server<span class="w"> </span>created
+$<span class="w"> </span>service/feature-server-service<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h2 id="create-a-transformer-with-feast">Create a Transformer with Feast<a class="headerlink" href="#create-a-transformer-with-feast" title="Permanent link">¶</a></h2>
 <h3 id="extend-the-model-class-and-implement-prepost-processing-functions">Extend the Model class and implement pre/post processing functions<a class="headerlink" href="#extend-the-model-class-and-implement-prepost-processing-functions" title="Permanent link">¶</a></h3>
 <p><code>KServe.Model</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
@@ -1139,55 +1335,100 @@ predictor currently you would need to overwrite the <code>predict</code> handler
 customized transformation logic.</p>
 <p>We created a class, DriverTransformer, which extends <code>Model</code> for this driver ranking example. It takes additional arguments for the transformer to interact with Feast:</p>
 <ul>
-<li><strong>feast_serving_url</strong>: The Feast serving URL, in the form of <code>&lt;host_name_or_ip:port&gt;</code></li>
-<li><strong>entity_ids</strong>: The entity IDs for which to retrieve features from the Feast feature store</li>
+<li><strong>feast_serving_url</strong>: The Feast serving URL, in the form of <code>&lt;host_name:port&gt;</code> or <code>&lt;ip:port&gt;</code></li>
+<li><strong>entity_id_name</strong>: The name of the entity ID for which to retrieve features from the Feast feature store</li>
 <li><strong>feature_refs</strong>: The feature references for the features to be retrieved</li>
 </ul>
-<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.10/docs/samples/v1beta1/transformer/feast">here</a>.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">¶</a></h3>
-<p>Checkout the feast code example and under the example directory run the commands as following:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="o">{</span>username<span class="o">}</span>/driver-transformer:latest<span class="w"> </span>-f<span class="w"> </span>driver_transformer.Dockerfile<span class="w"> </span>.
+<p>The <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/driver_transformer.Dockerfile">driver transformer dockerfile</a> can be found in the code example directory.
+Checkout the feast code example and under the example directory run the commands as following:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$USERNAME</span>/driver-transformer:latest<span class="w"> </span>-f<span class="w"> </span>driver_transformer.Dockerfile<span class="w"> </span>.
 
-docker<span class="w"> </span>push<span class="w"> </span><span class="o">{</span>username<span class="o">}</span>/driver-transformer:latest
+docker<span class="w"> </span>push<span class="w"> </span><span class="nv">$USERNAME</span>/driver-transformer:latest
 </code></pre></div>
 <h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">¶</a></h2>
-<p>Please use the <a href="driver_transformer.yaml">YAML file</a> and update the <code>feast_serving_url</code> argument to create the <code>InferenceService</code>, which includes a Feast Transformer and a SKLearn Predictor.</p>
 <p>In the Feast Transformer image we packaged the driver transformer class so KServe knows to use the preprocess implementation to augment inputs with online features before making model inference requests.
-Then the <code>InferenceService</code> uses <code>SKLearn</code> to serve the <a href="https://github.com/feast-dev/feast-driver-ranking-tutorial">driver ranking model</a>, which is trained with Feast offline features, available in a gcs bucket specified under <code>storageUri</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-driver-transformer"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/driver-transformer:latest</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver-container</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"python"</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"-m"</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"driver_transformer"</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--feast_serving_url</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x.x.x.x:x</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--entity_ids</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_id</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--feature_refs</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_hourly_stats:acc_rate</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_hourly_stats:avg_daily_trips</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">driver_hourly_stats:conv_rate</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/feast/driver"</span>
+Then the <code>InferenceService</code> uses <code>SKLearn</code> to serve the <a href="https://github.com/feast-dev/feast-driver-ranking-tutorial">driver ranking model</a>, which is trained with Feast offline features, available in a gcs bucket specified under <code>storageUri</code>.
+Update the container's <code>image</code> field and the <code>feast_serving_url</code> argument to create the <code>InferenceService</code>, which includes a Feast Transformer and a SKLearn Predictor.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "sklearn-driver-transformer"</span>
+<span class="s">spec:</span>
+<span class="s">  transformer:</span>
+<span class="s">    containers:</span>
+<span class="s">      - image: "kserve/driver-transformer:latest"</span>
+<span class="s">        name: driver-container</span>
+<span class="s">        command:</span>
+<span class="s">          - "python"</span>
+<span class="s">          - "-m"</span>
+<span class="s">          - "driver_transformer"</span>
+<span class="s">        args:</span>
+<span class="s">          - --feast_serving_url</span>
+<span class="s">          - "feature-server-service.default.svc.cluster.local:6566"</span>
+<span class="s">          - --entity_id_name</span>
+<span class="s">          - "driver_id"</span>
+<span class="s">          - --feature_refs</span>
+<span class="s">          - "driver_hourly_stats:conv_rate"</span>
+<span class="s">          - "driver_hourly_stats:acc_rate"</span>
+<span class="s">          - "driver_hourly_stats:avg_daily_trips"</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: sklearn</span>
+<span class="s">      storageUri: "gs://kfserving-examples/models/feast/driver"</span>
+<span class="s">EOF</span>
 </code></pre></div>
-<p>Apply the CRD
-<div class="highlight"><pre><span></span><code>kubectl apply -f driver_transformer.yaml
-</code></pre></div></p>
-<p>Expected Output
-<div class="highlight"><pre><span></span><code>$ inferenceservice.serving.kserve.io/driver-transformer created
-</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "sklearn-driver-transformer"</span>
+<span class="s">spec:</span>
+<span class="s">  transformer:</span>
+<span class="s">    containers:</span>
+<span class="s">      - image: "kserve/driver-transformer:latest"</span>
+<span class="s">        name: driver-container</span>
+<span class="s">        command:</span>
+<span class="s">          - "python"</span>
+<span class="s">          - "-m"</span>
+<span class="s">          - "driver_transformer"</span>
+<span class="s">        args:</span>
+<span class="s">          - --feast_serving_url</span>
+<span class="s">          - "feature-server-service.default.svc.cluster.local:6566"</span>
+<span class="s">          - --entity_id_name</span>
+<span class="s">          - "driver_id"</span>
+<span class="s">          - --feature_refs</span>
+<span class="s">          - "driver_hourly_stats:conv_rate"</span>
+<span class="s">          - "driver_hourly_stats:acc_rate"</span>
+<span class="s">          - "driver_hourly_stats:avg_daily_trips"</span>
+<span class="s">  predictor:</span>
+<span class="s">    sklearn:</span>
+<span class="s">      storageUri: "gs://kfserving-examples/models/feast/driver"</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</div>
+</div>
+</input></input></div>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/sklearn-driver-transformer<span class="w"> </span>created
+</code></pre></div>
+</div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">¶</a></h2>
-<p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>Prepare the inputs for the inference request. Copy the following Json into a file named <code>driver-input.json</code>.</p>
+<p><div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"instances"</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mi">1001</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1002</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1003</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1004</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">1005</span><span class="p">]]</span>
+<span class="p">}</span>
+</code></pre></div>
+Before testing the <code>InferenceService</code>, first check if it is in ready state.
+Now, <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>sklearn-driver-transformer
 <span class="nv">MODEL_NAME</span><span class="o">=</span>sklearn-driver-transformer
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./driver-input.json
@@ -1195,25 +1436,27 @@ Then the <code>InferenceService</code> uses <code>SKLearn</code> to serve the <a
 
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div>
-<p><mark><strong> Expected Output </strong></mark>
-<div class="highlight"><pre><span></span><code>&gt; POST /v1/models/sklearn-driver-transformer:predict HTTP/1.1
-&gt; Host: sklearn-driver-transformer.default.example.com
-&gt; User-Agent: curl/7.58.0
-&gt; Accept: */*
-&gt; Content-Length: 57
-&gt; Content-Type: application/x-www-form-urlencoded
-&gt;
-* upload completely sent off: 57 out of 57 bytes
-&lt; HTTP/1.1 200 OK
-&lt; content-length: 117
-&lt; content-type: application/json; charset=UTF-8
-&lt; date: Thu, 27 May 2021 00:34:21 GMT
-&lt; server: istio-envoy
-&lt; x-envoy-upstream-service-time: 47
-&lt;
-* Connection #0 to host 1.2.3.4 left intact
-{"predictions": [1.3320522732903406, -0.49981088917615324, -0.17008354122857838, 0.8017473264530217, 1.2042992134934583]}
-</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/sklearn-driver-transformer:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-driver-transformer.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.85.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">57</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;<span class="w"> </span>
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">115</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Thu,<span class="w"> </span><span class="m">30</span><span class="w"> </span>Mar<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">09</span>:46:52<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">112</span>
+&lt;<span class="w"> </span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host 1.2.3.4 left intact</span>
+<span class="o">{</span><span class="s2">"predictions"</span>:<span class="o">[</span><span class="m">0</span>.45905828209879473,1.5118208033011165,0.21514156911776539,0.5555778492605103,0.49638665080127176<span class="o">]}</span>
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>
