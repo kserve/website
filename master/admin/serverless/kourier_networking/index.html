@@ -1202,6 +1202,13 @@ need to replace <code>istio-ingressgateway</code> with <code>kourier-gateway</co
 <span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>localhost
 <span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="m">8080</span>
 </code></pre></div>
+<p>Make sure that you create a file named <code>pmml-input.json</code> with the following content, under your current terminal path.</p>
+<div class="highlight"><pre><span></span><code><span class="p p-Indicator">{</span>
+<span class="w">   </span><span class="s">"instances"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="p p-Indicator">[</span>
+<span class="w">      </span><span class="p p-Indicator">[</span><span class="nv">5.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">3.5</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">1.4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0.2</span><span class="p p-Indicator">]</span>
+<span class="w">   </span><span class="p p-Indicator">]</span>
+<span class="p p-Indicator">}</span>
+</code></pre></div>
 <p>Send a prediction request to the InferenceService and check the output.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>pmml-demo
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./pmml-input.json
