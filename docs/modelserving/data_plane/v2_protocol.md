@@ -247,10 +247,10 @@ return an error.
   inference request expressed as key/value pairs. See
   [Parameters](#parameters) for more information.
 * "inputs" : The input tensors. Each input is described using the
-  *$request_input* schema defined in [Request Input](#inference_request-input).
+  *$request_input* schema defined in [Request Input](#request-input).
 * "outputs" : The output tensors requested for this inference. Each
   requested output is described using the *$request_output* schema
-  defined in [Request Output](#inference_request-output). Optional, if not
+  defined in [Request Output](#request-output). Optional, if not
   specified all outputs produced by the model will be returned using
   default *$request_output* settings.
 
@@ -323,12 +323,118 @@ code. The inference response object, identified as
   $response_output schema defined in
   [Response Output](#response-output).
 
+##### Response Output
+
+The *$response_output* JSON describes an output from the model. If the
+output is batched, the shape and data represents the full shape of the
+entire batch.
+
+    $response_output =
+    {
+      "name" : $string,
+      "shape" : [ $number, ... ],
+      "datatype"  : $string,
+      "parameters" : $parameters #optional,
+      "data" : $tensor_data
+    }
+
+* "name" : The name of the output tensor.
+* "shape" : The shape of the output tensor. Each dimension must be an
+  integer representable as an unsigned 64-bit integer value.
+* "datatype" : The data-type of the output tensor elements as defined
+  in [Tensor Data Types](#tensor-data-types).
+* "parameters" : An object containing zero or more parameters for this
+  input expressed as key/value pairs. See [Parameters](#parameters)
+  for more information.
+* “data”: The contents of the tensor. See [Tensor Data](#tensor-data)
+  for more information.
+
+#### Inference Response JSON Error Object
+
+A failed inference request must be indicated by an HTTP error status
+(typically 400). The HTTP body must contain the
+*$inference_error_response* object.
+
+    $inference_error_response =
+    {
+      "error": <error message string>
+    }
+
+* “error” : The descriptive message for the error.
+
+#### Parameters
+
+The *$parameters* JSON describes zero or more “name”/”value” pairs,
+where the “name” is the name of the parameter and the “value” is a
+$string, $number, or $boolean.
+
+    $parameters =
+    {
+      $parameter, ...
+    }
+
+    $parameter = $string : $string | $number | $boolean
+
+Currently no parameters are defined. As required a future proposal may
+define one or more standard parameters to allow portable functionality
+across different inference servers. A server can implement
+server-specific parameters to provide non-standard capabilities.
+
+### Tensor Data
+
+Tensor data must be presented in row-major order of the tensor
+elements. Element values must be given in "linear" order without any
+stride or padding between elements. Tensor elements may be presented
+in their nature multi-dimensional representation, or as a flattened
+one-dimensional representation.
+
+Tensor data given explicitly is provided in a JSON array. Each element
+of the array may be an integer, floating-point number, string or
+boolean value. The server can decide to coerce each element to the
+required type or return an error if an unexpected value is
+received. Note that fp16 and bf16 are problematic to communicate explicitly
+since there is not a standard fp16/bf16 representation across backends nor
+typically the programmatic support to create the fp16/bf16 representation
+for a JSON number.
+
+For example, the 2-dimensional matrix:
+
+    [ 1 2
+      4 5 ]
+
+Can be represented in its natural format as:
+
+    "data" : [ [ 1, 2 ], [ 4, 5 ] ]
+
+Or in a flattened one-dimensional representation:
+
+    "data" : [ 1, 2, 4, 5 ]
+
+#### Tensor Data Types
+
+Tensor data types are shown in the following table along with the size
+of each type, in bytes.
+
+
+| Data Type | Size (bytes) |
+| --------- | ------------ |
+| BOOL      | 1            |
+| UINT8     | 1            |
+| UINT16    | 2            |
+| UINT32    | 4            |
+| UINT64    | 8            |
+| INT8      | 1            |
+| INT16     | 2            |
+| INT32     | 4            |
+| INT64     | 8            |
+| FP16      | 2            |
+| FP32      | 4            |
+| FP64      | 8            |
+| BYTES     | Variable (max 2<sup>32</sup>) |
 ---
 
 
 ### **Inference Request Examples**
-
-### Inference Request Examples
 
 The following example shows an inference request to a model with two
 inputs and one output. The HTTP Content-Length header gives the size
@@ -390,7 +496,7 @@ health, metadata, and inference APIs described in this section.
 
 | API  | rpc Endpoint | Request Message | Response Message | 
 | --- | --- | --- | ---| 
-| Inference | [ModelInfer](#inference) | ModelInferRequest | ModelInferResponse | 
+| Inference | [ModelInfer](#inf) | ModelInferRequest | ModelInferResponse | 
 | Model Ready | [ModelReady](#model-ready) | [ModelReadyRequest] | ModelReadyResponse |
 | Model Metadata | [ModelMetadata](#model-metadata)| ModelMetadataRequest | ModelMetadataResponse | 
 | Server Ready | [ServerReady](#server-ready) | ServerReadyRequest | ServerReadyResponse |
@@ -560,7 +666,7 @@ request and response messages for ModelMetadata are:
 
 A platform is a string indicating a DL/ML framework or
 backend. Platform is returned as part of the response to a
-[Model Metadata](#model_metadata) request but is information only. The
+[Model Metadata](#model-metadata) request but is information only. The
 proposed inference APIs are generic relative to the DL/ML framework
 used by a model and so a client does not need to know the platform of
 a given model to use the API. Platform names use the format
