@@ -511,17 +511,45 @@
 <a class="md-nav__link" href="#inference-response-json-object">
     Inference Response JSON Object
   </a>
+<nav aria-label="Inference Response JSON Object" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-output">
+    Response Output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-response-json-error-object">
+    Inference Response JSON Error Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+    Parameters
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data">
+    Tensor Data
+  </a>
+<nav aria-label="Tensor Data" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data-types">
+    Tensor Data Types
+  </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#inference-request-examples">
-    Inference Request Examples
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#inference-request-examples_1">
     Inference Request Examples
   </a>
 </li>
@@ -599,7 +627,7 @@
 <nav aria-label="Inference" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#parameters">
+<a class="md-nav__link" href="#parameters_1">
     Parameters
   </a>
 </li>
@@ -607,13 +635,13 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#tensor-data">
+<a class="md-nav__link" href="#tensor-data_1">
     Tensor Data
   </a>
 <nav aria-label="Tensor Data" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#tensor-data-types">
+<a class="md-nav__link" href="#tensor-data-types_1">
     Tensor Data Types
   </a>
 </li>
@@ -1443,17 +1471,45 @@
 <a class="md-nav__link" href="#inference-response-json-object">
     Inference Response JSON Object
   </a>
+<nav aria-label="Inference Response JSON Object" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#response-output">
+    Response Output
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-response-json-error-object">
+    Inference Response JSON Error Object
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+    Parameters
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data">
+    Tensor Data
+  </a>
+<nav aria-label="Tensor Data" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tensor-data-types">
+    Tensor Data Types
+  </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#inference-request-examples">
-    Inference Request Examples
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#inference-request-examples_1">
     Inference Request Examples
   </a>
 </li>
@@ -1531,7 +1587,7 @@
 <nav aria-label="Inference" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#parameters">
+<a class="md-nav__link" href="#parameters_1">
     Parameters
   </a>
 </li>
@@ -1539,13 +1595,13 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#tensor-data">
+<a class="md-nav__link" href="#tensor-data_1">
     Tensor Data
   </a>
 <nav aria-label="Tensor Data" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#tensor-data-types">
+<a class="md-nav__link" href="#tensor-data-types_1">
     Tensor Data Types
   </a>
 </li>
@@ -1838,10 +1894,10 @@ return an error.</p>
   inference request expressed as key/value pairs. See
   <a href="#parameters">Parameters</a> for more information.</li>
 <li>"inputs" : The input tensors. Each input is described using the
-  <em>$request_input</em> schema defined in <a href="#inference_request-input">Request Input</a>.</li>
+  <em>$request_input</em> schema defined in <a href="#request-input">Request Input</a>.</li>
 <li>"outputs" : The output tensors requested for this inference. Each
   requested output is described using the <em>$request_output</em> schema
-  defined in <a href="#inference_request-output">Request Output</a>. Optional, if not
+  defined in <a href="#request-output">Request Output</a>. Optional, if not
   specified all outputs produced by the model will be returned using
   default <em>$request_output</em> settings.</li>
 </ul>
@@ -1911,9 +1967,152 @@ code. The inference response object, identified as
   $response_output schema defined in
   <a href="#response-output">Response Output</a>.</li>
 </ul>
-<hr/>
+<h5 id="response-output">Response Output<a class="headerlink" href="#response-output" title="Permanent link">¶</a></h5>
+<p>The <em>$response_output</em> JSON describes an output from the model. If the
+output is batched, the shape and data represents the full shape of the
+entire batch.</p>
+<pre><code>$response_output =
+{
+  "name" : $string,
+  "shape" : [ $number, ... ],
+  "datatype"  : $string,
+  "parameters" : $parameters #optional,
+  "data" : $tensor_data
+}
+</code></pre>
+<ul>
+<li>"name" : The name of the output tensor.</li>
+<li>"shape" : The shape of the output tensor. Each dimension must be an
+  integer representable as an unsigned 64-bit integer value.</li>
+<li>"datatype" : The data-type of the output tensor elements as defined
+  in <a href="#tensor-data-types">Tensor Data Types</a>.</li>
+<li>"parameters" : An object containing zero or more parameters for this
+  input expressed as key/value pairs. See <a href="#parameters">Parameters</a>
+  for more information.</li>
+<li>“data”: The contents of the tensor. See <a href="#tensor-data">Tensor Data</a>
+  for more information.</li>
+</ul>
+<h4 id="inference-response-json-error-object">Inference Response JSON Error Object<a class="headerlink" href="#inference-response-json-error-object" title="Permanent link">¶</a></h4>
+<p>A failed inference request must be indicated by an HTTP error status
+(typically 400). The HTTP body must contain the
+<em>$inference_error_response</em> object.</p>
+<pre><code>$inference_error_response =
+{
+  "error": &lt;error message string&gt;
+}
+</code></pre>
+<ul>
+<li>“error” : The descriptive message for the error.</li>
+</ul>
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h4>
+<p>The <em>$parameters</em> JSON describes zero or more “name”/”value” pairs,
+where the “name” is the name of the parameter and the “value” is a
+$string, $number, or $boolean.</p>
+<pre><code>$parameters =
+{
+  $parameter, ...
+}
+
+$parameter = $string : $string | $number | $boolean
+</code></pre>
+<p>Currently no parameters are defined. As required a future proposal may
+define one or more standard parameters to allow portable functionality
+across different inference servers. A server can implement
+server-specific parameters to provide non-standard capabilities.</p>
+<h3 id="tensor-data">Tensor Data<a class="headerlink" href="#tensor-data" title="Permanent link">¶</a></h3>
+<p>Tensor data must be presented in row-major order of the tensor
+elements. Element values must be given in "linear" order without any
+stride or padding between elements. Tensor elements may be presented
+in their nature multi-dimensional representation, or as a flattened
+one-dimensional representation.</p>
+<p>Tensor data given explicitly is provided in a JSON array. Each element
+of the array may be an integer, floating-point number, string or
+boolean value. The server can decide to coerce each element to the
+required type or return an error if an unexpected value is
+received. Note that fp16 and bf16 are problematic to communicate explicitly
+since there is not a standard fp16/bf16 representation across backends nor
+typically the programmatic support to create the fp16/bf16 representation
+for a JSON number.</p>
+<p>For example, the 2-dimensional matrix:</p>
+<pre><code>[ 1 2
+  4 5 ]
+</code></pre>
+<p>Can be represented in its natural format as:</p>
+<pre><code>"data" : [ [ 1, 2 ], [ 4, 5 ] ]
+</code></pre>
+<p>Or in a flattened one-dimensional representation:</p>
+<pre><code>"data" : [ 1, 2, 4, 5 ]
+</code></pre>
+<h4 id="tensor-data-types">Tensor Data Types<a class="headerlink" href="#tensor-data-types" title="Permanent link">¶</a></h4>
+<p>Tensor data types are shown in the following table along with the size
+of each type, in bytes.</p>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Size (bytes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOOL</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UINT8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UINT16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>UINT32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>UINT64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>INT16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>INT32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>INT64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>2</td>
+</tr>
+<tr>
+<td>FP32</td>
+<td>4</td>
+</tr>
+<tr>
+<td>FP64</td>
+<td>8</td>
+</tr>
+<tr>
+<td>BYTES</td>
+<td>Variable (max 2<sup>32</sup>)</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h3 id="inference-request-examples"><strong>Inference Request Examples</strong><a class="headerlink" href="#inference-request-examples" title="Permanent link">¶</a></h3>
-<h3 id="inference-request-examples_1">Inference Request Examples<a class="headerlink" href="#inference-request-examples_1" title="Permanent link">¶</a></h3>
 <p>The following example shows an inference request to a model with two
 inputs and one output. The HTTP Content-Length header gives the size
 of the JSON object.</p>
@@ -1978,7 +2177,7 @@ health, metadata, and inference APIs described in this section.</p>
 <tbody>
 <tr>
 <td>Inference</td>
-<td><a href="#inference">ModelInfer</a></td>
+<td><a href="#inf">ModelInfer</a></td>
 <td>ModelInferRequest</td>
 <td>ModelInferResponse</td>
 </tr>
@@ -2150,7 +2349,7 @@ message ModelMetadataResponse
 <h4 id="platforms">Platforms<a class="headerlink" href="#platforms" title="Permanent link">¶</a></h4>
 <p>A platform is a string indicating a DL/ML framework or
 backend. Platform is returned as part of the response to a
-<a href="#model_metadata">Model Metadata</a> request but is information only. The
+<a href="#model-metadata">Model Metadata</a> request but is information only. The
 proposed inference APIs are generic relative to the DL/ML framework
 used by a model and so a client does not need to know the platform of
 a given model to use the API. Platform names use the format
@@ -2295,7 +2494,7 @@ message ModelInferResponse
   repeated bytes raw_output_contents = 6;
 }
 </code></pre>
-<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h4>
+<h4 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">¶</a></h4>
 <p>The Parameters message describes a “name”/”value” pair, where the
 “name” is the name of the parameter and the “value” is a boolean,
 integer, or string corresponding to the parameter.</p>
@@ -2321,7 +2520,7 @@ message InferParameter
 }
 </code></pre>
 <hr/>
-<h3 id="tensor-data">Tensor Data<a class="headerlink" href="#tensor-data" title="Permanent link">¶</a></h3>
+<h3 id="tensor-data_1">Tensor Data<a class="headerlink" href="#tensor-data_1" title="Permanent link">¶</a></h3>
 <p>In all representations tensor data must be flattened to a
 one-dimensional, row-major order of the tensor elements. Element
 values must be given in "linear" order without any stride or padding
@@ -2384,7 +2583,7 @@ message InferTensorContents
   repeated bytes bytes_contents = 8;
 }
 </code></pre>
-<h4 id="tensor-data-types">Tensor Data Types<a class="headerlink" href="#tensor-data-types" title="Permanent link">¶</a></h4>
+<h4 id="tensor-data-types_1">Tensor Data Types<a class="headerlink" href="#tensor-data-types_1" title="Permanent link">¶</a></h4>
 <p>Tensor data types are shown in the following table along with the size
 of each type, in bytes.</p>
 <table>
