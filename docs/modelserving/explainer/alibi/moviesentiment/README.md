@@ -18,7 +18,7 @@ spec:
   predictor:
     minReplicas: 1
     sklearn:
-      storageUri: "gs://seldon-models/sklearn/moviesentiment"
+      storageUri: "gs://seldon-models/v1.16.0/sklearn/moviesentiment"
       resources:
         requests:
           cpu: 0.1
@@ -209,7 +209,7 @@ metadata:
 spec:
   predictor:
     sklearn:
-      storageUri: "gs://seldon-models/sklearn/moviesentiment"
+      storageUri: "gs://seldon-models/v1.16.0/sklearn/moviesentiment"
       resources:
         requests:
           cpu: 0.1
