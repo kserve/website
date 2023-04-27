@@ -1,5 +1,5 @@
 # Deploy Custom Python Serving Runtime with InferenceService
-When the out-of-the-box `Serving Runtime` does not fit your need, you can choose to build your own model server using `KServe ModelServer API` 
+When the out-of-the-box `Serving Runtime` does not fit your need, you can choose to build your own model server using `KServe ModelServer API`
 to deploy as `Custom Serving Runtime` on KServe.
 
 ## Setup
@@ -71,7 +71,7 @@ pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model:v1
 docker push ${DOCKER_USER}/custom-model:v1
 ```
 
-Note: If your buildpack command fails, make sure you have a `runtimes.txt` file with the correct python version specified. See the [custom model server runtime.txt](https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt) file as an example. 
+Note: If your buildpack command fails, make sure you have a `runtimes.txt` file with the correct python version specified. See the [custom model server runtime.txt](https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt) file as an example.
 
 ### Deploy Locally and Test
 Launch the docker image built from last step with `buildpack`.
@@ -108,10 +108,12 @@ You can supply additional command arguments on the container spec to configure t
 
 - `--workers`: Spawn the specified number of `uvicorn` workers(multi-processing) of the model server, the default value is 1, this option is often used
   to help increase the resource utilization of the container.
-- `--http_port`: the http port model server is listening on, the default REST port is 8080.
-- `--model_name`: the model name deployed in the model server, the default name the same as the service name.
+- `--http_port`: The http port model server is listening on, the default REST port is 8080.
+- `--model_name`: The model name deployed in the model server, the default name the same as the service name.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
-- `enable_latency_logging`: whether to log latency metrics per request, the default is True.
+- `enable_latency_logging`: Whether to log latency metrics per request, the default is True.
+- `log_config_file`: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
+- `access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
 
 #### Environment Variables
 
@@ -296,7 +298,7 @@ python grpc_test_client.py
         fp32_contents: 12.0862684
       }
     }
-    
+
     model_name: "custom-model"
     id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
     outputs {
@@ -382,7 +384,7 @@ python grpc_test_client.py
         fp32_contents: 12.0862684
       }
     }
-    
+
     model_name: "custom-model"
     id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
     outputs {
@@ -399,7 +401,7 @@ python grpc_test_client.py
       }
     }
     ```
-    
+
 ## Parallel Model Inference
 By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
@@ -454,4 +456,3 @@ Modify the `Procfile` to `web: python -m model_remote` and then run the above `p
 each model as separate python worker and web server routes to the model workers by name.
 
 ![parallel_inference](./parallel_inference.png)
-
