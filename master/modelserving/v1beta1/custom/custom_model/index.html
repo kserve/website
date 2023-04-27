@@ -1266,7 +1266,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="deploy-custom-python-serving-runtime-with-inferenceservice">Deploy Custom Python Serving Runtime with InferenceService<a class="headerlink" href="#deploy-custom-python-serving-runtime-with-inferenceservice" title="Permanent link">¶</a></h1>
-<p>When the out-of-the-box <code>Serving Runtime</code> does not fit your need, you can choose to build your own model server using <code>KServe ModelServer API</code> 
+<p>When the out-of-the-box <code>Serving Runtime</code> does not fit your need, you can choose to build your own model server using <code>KServe ModelServer API</code>
 to deploy as <code>Custom Serving Runtime</code> on KServe.</p>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
 <ol>
@@ -1332,7 +1332,7 @@ to run the image build on the cloud and continuously build/deploy new versions f
 <div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/buildpacks:20<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div></p>
-<p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example. </p>
+<p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example.</p>
 <h3 id="deploy-locally-and-test">Deploy Locally and Test<a class="headerlink" href="#deploy-locally-and-test" title="Permanent link">¶</a></h3>
 <p>Launch the docker image built from last step with <code>buildpack</code>.
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
@@ -1362,10 +1362,12 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 <ul>
 <li><code>--workers</code>: Spawn the specified number of <code>uvicorn</code> workers(multi-processing) of the model server, the default value is 1, this option is often used
   to help increase the resource utilization of the container.</li>
-<li><code>--http_port</code>: the http port model server is listening on, the default REST port is 8080.</li>
-<li><code>--model_name</code>: the model name deployed in the model server, the default name the same as the service name.</li>
+<li><code>--http_port</code>: The http port model server is listening on, the default REST port is 8080.</li>
+<li><code>--model_name</code>: The model name deployed in the model server, the default name the same as the service name.</li>
 <li><code>--max_asyncio_workers</code>: Max number of workers to spawn for python async io loop, by default it is <code>min(32,cpu.limit + 4)</code>.</li>
-<li><code>enable_latency_logging</code>: whether to log latency metrics per request, the default is True.</li>
+<li><code>enable_latency_logging</code>: Whether to log latency metrics per request, the default is True.</li>
+<li><code>log_config_file</code>: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.</li>
+<li><code>access_log_format</code>: A string representing the access log format configuration to use. The functionality is provided by the <code>asgi-logger</code> library and it allows to override only the <code>uvicorn.access</code>'s format configuration with a richer set of fields (output hardcoded to <code>stdout</code>). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn <a href="https://github.com/encode/uvicorn/issues/527">github issue</a> for more info). By default is None.</li>
 </ul>
 <h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h4>
 <p>You can supply additional environment variables on the container spec.</p>
