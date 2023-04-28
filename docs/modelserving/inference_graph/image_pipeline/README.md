@@ -37,34 +37,67 @@ torch-model-archiver -f --model-name dog_breed_classification --version 1.0 \
 
 You can then deploy the models to KServe with following `InferenceService` custom resources.
 
-=== "InferenceService"
-```bash
-kubectl apply -f - <<EOF
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "cat-dog-classifier"
-spec:
-  predictor:
-    pytorch:
-      resources:
-        requests:
-          cpu: 100m
-      storageUri: gs://kfserving-examples/models/torchserve/cat_dog_classification
----
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "dog-breed-classifier"
-spec:
-  predictor:
-    pytorch:
-      resources:
-        requests:
-          cpu: 100m
-      storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification
-EOF
-```
+=== "New Schema"
+    ```bash
+    kubectl apply -f - <<EOF
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "cat-dog-classifier"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          resources:
+            requests:
+              cpu: 100m
+          storageUri: gs://kfserving-examples/models/torchserve/cat_dog_classification
+    ---
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "dog-breed-classifier"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          resources:
+            requests:
+              cpu: 100m
+          storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification
+    EOF
+    ```
+
+=== "Old Schema"
+    ```bash
+    kubectl apply -f - <<EOF
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "cat-dog-classifier"
+    spec:
+      predictor:
+        pytorch:
+          resources:
+            requests:
+              cpu: 100m
+          storageUri: gs://kfserving-examples/models/torchserve/cat_dog_classification
+    ---
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "dog-breed-classifier"
+    spec:
+      predictor:
+        pytorch:
+          resources:
+            requests:
+              cpu: 100m
+          storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification
+    EOF
+    ```
 
 Please check more details on [PyTorch Tutorial](../../../modelserving/v1beta1/torchserve/README.md) for how to package the model and deploy
 with `InferenceService`.
@@ -109,8 +142,8 @@ kubectl get ig  dog-breed-pipeline
 NAME                 URL                                             READY   AGE
 dog-breed-pipeline   http://dog-breed-pipeline.default.example.com   True    17h
 ```
-
-Now you can test the inference graph by sending the cat and dog image data.
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+Now, you can test the inference graph by sending the [cat](cat.json) and [dog image data](dog.json).
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferencegraph dog-breed-pipeline -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
