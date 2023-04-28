@@ -1151,11 +1151,41 @@ torch-model-archiver<span class="w"> </span>-f<span class="w"> </span>--model-na
 --extra-files<span class="w"> </span>index_to_name.json<span class="w"> </span>--export-path<span class="w"> </span>model_store
 </code></pre></div></p>
 <p>You can then deploy the models to KServe with following <code>InferenceService</code> custom resources.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">InferenceService</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "cat-dog-classifier"</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: pytorch</span>
+<span class="s">      resources:</span>
+<span class="s">        requests:</span>
+<span class="s">          cpu: 100m</span>
+<span class="s">      storageUri: gs://kfserving-examples/models/torchserve/cat_dog_classification</span>
+<span class="s">---</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "dog-breed-classifier"</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: pytorch</span>
+<span class="s">      resources:</span>
+<span class="s">        requests:</span>
+<span class="s">          cpu: 100m</span>
+<span class="s">      storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification</span>
+<span class="s">EOF</span>
+</code></pre></div>
 </div>
-</input></div>
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
 <span class="s">kind: "InferenceService"</span>
@@ -1182,6 +1212,9 @@ torch-model-archiver<span class="w"> </span>-f<span class="w"> </span>--model-na
 <span class="s">      storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification</span>
 <span class="s">EOF</span>
 </code></pre></div>
+</div>
+</div>
+</input></input></div>
 <p>Please check more details on <a href="../../v1beta1/torchserve/">PyTorch Tutorial</a> for how to package the model and deploy
 with <code>InferenceService</code>.</p>
 <h2 id="deploy-inferencegraph">Deploy InferenceGraph<a class="headerlink" href="#deploy-inferencegraph" title="Permanent link">¶</a></h2>
@@ -1223,8 +1256,9 @@ are executed in sequence: it first sends the image as request to <code>cat-dog-c
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ig<span class="w">  </span>dog-breed-pipeline
 NAME<span class="w">                 </span>URL<span class="w">                                             </span>READY<span class="w">   </span>AGE
 dog-breed-pipeline<span class="w">   </span>http://dog-breed-pipeline.default.example.com<span class="w">   </span>True<span class="w">    </span>17h
-</code></pre></div></p>
-<p>Now you can test the inference graph by sending the cat and dog image data.
+</code></pre></div>
+The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.
+Now, you can test the inference graph by sending the <a href="cat.json">cat</a> and <a href="dog.json">dog image data</a>.
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferencegraph<span class="w"> </span>dog-breed-pipeline<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span>-d<span class="w"> </span>@./cat.json
 </code></pre></div></p>
