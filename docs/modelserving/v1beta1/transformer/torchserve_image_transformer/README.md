@@ -117,7 +117,7 @@ In this example, the model repository contains a MNIST model, but you can store 
         model:
           modelFormat:
             name: pytorch
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
       transformer:
         containers:
           - image: kserve/image-transformer:latest
@@ -141,7 +141,7 @@ In this example, the model repository contains a MNIST model, but you can store 
     spec:
       predictor:
         pytorch:
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
       transformer:
         containers:
           - image: kserve/image-transformer:latest
