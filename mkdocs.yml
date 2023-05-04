@@ -123,6 +123,8 @@ theme:
     - navigation.top
 
 markdown_extensions:
+  - markdown_include.include:
+      base_path: docs
   # - mdx_include:
   #     base_path: docs
   - pymdownx.emoji:
