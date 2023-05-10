@@ -121,6 +121,7 @@ You can supply additional environment variables on the container spec.
 
 - `STORAGE_URI`: load a model from a storage system supported by KServe e.g. `pvc://` `s3://`. This acts the same as `storageUri` when using a built-in predictor.
   The data will be available at `/mnt/models` in the container. For example, the following `STORAGE_URI: "pvc://my_model/model.onnx"` will be accessible at `/mnt/models/model.onnx`
+- `PROTOCOL`: specify the protocol version supported by the model e.g `V1`. This acts the same as `protocolVersion` when using a built-in predictor.
 
 Apply the yaml to deploy the InferenceService on KServe
 
