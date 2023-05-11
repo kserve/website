@@ -14,17 +14,33 @@ metadata:
 spec:
   predictor:
     containers:
-    - name: predictor
-      image: aipipeline/rf-predictor:0.4.1
-      command: ["python", "-m", "rfserver", "--model_name", "aix-explainer"]
-      imagePullPolicy: Always
+      - name: predictor
+        image: aipipeline/rf-predictor:0.4.1
+        command: [ "python", "-m", "rfserver", "--model_name", "aix-explainer" ]
+        imagePullPolicy: Always
   explainer:
-    aix:
-      type: LimeImages
-      config:
-        num_samples: "100"
-        top_labels: "10"
-        min_weight: "0.01"
+    containers:
+      - name: explainer
+        image: kserve/aix-explainer:v0.10.1
+        args:
+          - --model_name
+          - aix-explainer
+          - --explainer_type
+          - LimeImages
+          - --num_samples
+          - "100"
+          - --top_labels
+          - "10"
+          - --min_weight
+          - "0.01"
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 2Gi
 ``` 
 To deploy the InferenceService with v1beta1 API
 
@@ -79,7 +95,7 @@ kubectl delete -f aix-explainer.yaml
 
 ## Build a Development AIX Model Explainer Docker Image
 
-If you would like to build a development image for the AIX Model Explainer then follow [these instructions](https://github.com/kserve/kserve/blob/master/python/aixexplainer/README.md#build-a-development-aix-model-explainer-docker-image)
+If you would like to build a development image for the AIX Model Explainer then follow [these instructions](https://github.com/kserve/kserve/tree/release-0.10/python/aixexplainer/README.md#build-a-development-aix-model-explainer-docker-image)
 
 ## Troubleshooting
 
