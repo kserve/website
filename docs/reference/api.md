@@ -10,71 +10,6 @@
 </div>
 Resource Types:
 <ul></ul>
-<h3 id="serving.kserve.io/v1beta1.AIXExplainerSpec">AIXExplainerSpec
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>)
-</p>
-<div>
-<p>AIXExplainerSpec defines the arguments for configuring an AIX Explanation Server</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>type</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.AIXExplainerType">
-AIXExplainerType
-</a>
-</em>
-</td>
-<td>
-<p>The type of AIX explainer</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>ExplainerExtensionSpec</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.ExplainerExtensionSpec">
-ExplainerExtensionSpec
-</a>
-</em>
-</td>
-<td>
-<p>
-(Members of <code>ExplainerExtensionSpec</code> are embedded into this type.)
-</p>
-<p>Contains fields shared across all explainers</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="serving.kserve.io/v1beta1.AIXExplainerType">AIXExplainerType
-(<code>string</code> alias)</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.AIXExplainerSpec">AIXExplainerSpec</a>)
-</p>
-<div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr><td><p>&#34;LimeImages&#34;</p></td>
-<td></td>
-</tr></tbody>
-</table>
 <h3 id="serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec
 </h3>
 <p>
@@ -735,7 +670,7 @@ string
 <h3 id="serving.kserve.io/v1beta1.ExplainerExtensionSpec">ExplainerExtensionSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.AIXExplainerSpec">AIXExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.AlibiExplainerSpec">AlibiExplainerSpec</a>)
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.AlibiExplainerSpec">AlibiExplainerSpec</a>)
 </p>
 <div>
 <p>ExplainerExtensionSpec defines configuration shared across all explainer frameworks</p>
@@ -847,19 +782,6 @@ AlibiExplainerSpec
 </tr>
 <tr>
 <td>
-<code>aix</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.AIXExplainerSpec">
-AIXExplainerSpec
-</a>
-</em>
-</td>
-<td>
-<p>Spec for AIX explainer</p>
-</td>
-</tr>
-<tr>
-<td>
 <code>art</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">
@@ -927,18 +849,6 @@ ComponentExtensionSpec
 <tr>
 <td>
 <code>alibi</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.ExplainerConfig">
-ExplainerConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>aix</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ExplainerConfig">
 ExplainerConfig
