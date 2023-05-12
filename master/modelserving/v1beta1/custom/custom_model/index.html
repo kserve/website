@@ -1374,6 +1374,7 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 <ul>
 <li><code>STORAGE_URI</code>: load a model from a storage system supported by KServe e.g. <code>pvc://</code> <code>s3://</code>. This acts the same as <code>storageUri</code> when using a built-in predictor.
   The data will be available at <code>/mnt/models</code> in the container. For example, the following <code>STORAGE_URI: "pvc://my_model/model.onnx"</code> will be accessible at <code>/mnt/models/model.onnx</code></li>
+<li><code>PROTOCOL</code>: specify the protocol version supported by the model e.g <code>V1</code>. This acts the same as <code>protocolVersion</code> when using a built-in predictor.</li>
 </ul>
 <p>Apply the yaml to deploy the InferenceService on KServe</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
