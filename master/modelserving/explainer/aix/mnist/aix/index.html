@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/master/modelserving/explainer/aix/mnist/aix/" rel="canonical"/>
 <link href="../../../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.4.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.4.3, mkdocs-material-8.0.5" name="generator"/>
 <title>AIX Explainer - KServe Documentation Website</title>
 <link href="../../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -1115,17 +1115,33 @@ We will be using mnist dataset for handwritten digits for this model and explain
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">predictor</span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aipipeline/rf-predictor:0.4.1</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"python"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"-m"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"rfserver"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"--model_name"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"aix-explainer"</span><span class="p p-Indicator">]</span>
-<span class="w">      </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">predictor</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aipipeline/rf-predictor:0.4.1</span>
+<span class="w">        </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">"python"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"-m"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"rfserver"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"--model_name"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"aix-explainer"</span><span class="w"> </span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always</span>
 <span class="w">  </span><span class="nt">explainer</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">aix</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LimeImages</span>
-<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">num_samples</span><span class="p">:</span><span class="w"> </span><span class="s">"100"</span>
-<span class="w">        </span><span class="nt">top_labels</span><span class="p">:</span><span class="w"> </span><span class="s">"10"</span>
-<span class="w">        </span><span class="nt">min_weight</span><span class="p">:</span><span class="w"> </span><span class="s">"0.01"</span>
+<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">explainer</span>
+<span class="w">        </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/aix-explainer:v0.10.1</span>
+<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aix-explainer</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--explainer_type</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LimeImages</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--num_samples</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"100"</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--top_labels</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"10"</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--min_weight</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"0.01"</span>
+<span class="w">        </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Always</span>
+<span class="w">        </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">          </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
 </code></pre></div>
 To deploy the InferenceService with v1beta1 API</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
@@ -1165,7 +1181,7 @@ To try different parameters with explainer, add another string json argument to 
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>-f<span class="w"> </span>aix-explainer.yaml
 </code></pre></div>
 <h2 id="build-a-development-aix-model-explainer-docker-image">Build a Development AIX Model Explainer Docker Image<a class="headerlink" href="#build-a-development-aix-model-explainer-docker-image" title="Permanent link">¶</a></h2>
-<p>If you would like to build a development image for the AIX Model Explainer then follow <a href="https://github.com/kserve/kserve/blob/master/python/aixexplainer/README.md#build-a-development-aix-model-explainer-docker-image">these instructions</a></p>
+<p>If you would like to build a development image for the AIX Model Explainer then follow <a href="https://github.com/kserve/kserve/tree/release-0.10/python/aixexplainer/README.md#build-a-development-aix-model-explainer-docker-image">these instructions</a></p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <p><code>&lt;504&gt; Gateway Timeout &lt;504&gt;</code> - the explainer is probably taking too long and not sending a response back quickly enough. Either there aren't enough resources allocated or the number of samples the explainer is allowed to take needs to be reduced. To fix this go to aix-explainer.yaml and increase resources. Or to lower the number of allowed samples go to aix-explainer.yaml and add a flag to <code>explainer: command:</code> '--num_samples' (the default number of samples is 1000)</p>
 <p>If you see <code>Configuration "aixserver-explainer-default" does not have any ready Revision</code> the container may have taken too long to download. If you run <code>kubectl get revision</code> and see your revision is stuck in <code>ContainerCreating</code> try deleting the inferenceservice and redeploying.</p>
