@@ -1,4 +1,4 @@
-// Copyright 2022 The KServe Authors.
+// Copyright 2023 The KServe Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -42,12 +42,6 @@ service GRPCInferenceService
   // indicated by the google.rpc.Status returned for the request. The OK code 
   // indicates success and other codes indicate failure.
   rpc ModelInfer(ModelInferRequest) returns (ModelInferResponse) {}
-
-  // Load or reload a model from a repository.
-  rpc RepositoryModelLoad(RepositoryModelLoadRequest) returns (RepositoryModelLoadResponse) {}
-
-  // Unload a model.
-  rpc RepositoryModelUnload(RepositoryModelUnloadRequest) returns (RepositoryModelUnloadResponse) {}
 }
 
 message ServerLiveRequest {}
@@ -329,34 +323,4 @@ message InferTensorContents
   // expected by the tensor's shape. The contents must be the flattened,
   // one-dimensional, row-major order of the tensor elements.
   repeated bytes bytes_contents = 8;
-}
-
-message RepositoryModelLoadRequest
-{
-  // The name of the model to load, or reload.
-  string model_name = 1;
-}
-
-message RepositoryModelLoadResponse
-{
-  // The name of the model trying to load or reload.
-  string model_name = 1;
-
-  // boolean parameter to indicate whether model is loaded or not
-  bool isLoaded = 2;
-}
-
-message RepositoryModelUnloadRequest
-{
-  // The name of the model to unload.
-  string model_name = 1;
-}
-
-message RepositoryModelUnloadResponse
-{
-  // The name of the model trying to load or reload.
-  string model_name = 1;
-
-  // boolean parameter to indicate whether model is unloaded or not
-  bool isUnloaded = 2;
 }

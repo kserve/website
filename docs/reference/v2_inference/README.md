@@ -49,20 +49,6 @@ indicates success and other codes indicate failure.
 > rpc inference.GRPCInferenceService/ModelInfer([ModelInferRequest](#modelinferrequest))
 >   returns [ModelInferResponse](#modelinferresponse)
 
-### RepositoryModelLoad
-
-Load or reload a model from a repository.
-
-> rpc inference.GRPCInferenceService/RepositoryModelLoad([RepositoryModelLoadRequest](#repositorymodelloadrequest))
->   returns [RepositoryModelLoadResponse](#repositorymodelloadresponse)
-
-### RepositoryModelUnload
-
-Unload a model.
-
-> rpc inference.GRPCInferenceService/RepositoryModelUnload([RepositoryModelUnloadRequest](#repositorymodelunloadrequest))
->   returns [RepositoryModelUnloadResponse](#repositorymodelunloadresponse)
-
 
 
 
@@ -326,56 +312,6 @@ Metadata for a tensor.
 
 
 
-#### RepositoryModelLoadRequest
-
-
-
-
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| model_name | [string](#string) | The name of the model to load, or reload. |
-
-
-
-
-#### RepositoryModelLoadResponse
-
-
-
-
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| model_name | [string](#string) | The name of the model trying to load or reload. |
-| isLoaded | [bool](#bool) | boolean parameter to indicate whether model is loaded or not |
-
-
-
-
-#### RepositoryModelUnloadRequest
-
-
-
-
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| model_name | [string](#string) | The name of the model to unload. |
-
-
-
-
-#### RepositoryModelUnloadResponse
-
-
-
-
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-| model_name | [string](#string) | The name of the model trying to load or reload. |
-| isUnloaded | [bool](#bool) | boolean parameter to indicate whether model is unloaded or not |
-
-
-
-
 #### ServerLiveRequest
 
 
@@ -431,7 +367,6 @@ Metadata for a tensor.
 | Field | Type | Description |
 | ----- | ---- | ----------- |
 | ready | [bool](#bool) | True if the inference server is ready, false if not ready. |
-
 
 
 
