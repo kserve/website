@@ -1255,6 +1255,9 @@ they can be installed via the <a href="https://github.com/knative/docs/blob/rele
 <p>If you already have <code>Istio</code> or <code>Knative</code> (e.g. from a Kubeflow install) then you don't need to install them explictly, as long as version dependencies are satisfied.</p>
 </li>
 </ul>
+<blockquote>
+<p><strong><em>NOTE:</em></strong>  Note: On a local environment, when using <code>minikube</code> or <code>kind</code> as Kubernetes cluster, there has been a reported issue that <a href="https://knative.dev/docs/install/quickstart-install/">knative quickstart</a> bootstrap does not work as expected. It is recommended to follow the installation manual from knative using <a href="https://knative.dev/docs/install/yaml-install/">yaml</a> or using <a href="https://knative.dev/docs/install/operator/knative-with-operators/">knative operator</a> for a better result.</p>
+</blockquote>
 <h3 id="setup-your-environment">Setup your environment<a class="headerlink" href="#setup-your-environment" title="Permanent link">¶</a></h3>
 <p>To start your environment you'll need to set these environment variables (we
 recommend adding them to your <code>.bashrc</code>):</p>
