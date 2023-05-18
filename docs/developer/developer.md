@@ -37,6 +37,7 @@ they can be installed via the [directions here](https://github.com/knative/docs/
 
 * If you already have `Istio` or `Knative` (e.g. from a Kubeflow install) then you don't need to install them explictly, as long as version dependencies are satisfied.
   
+> **_NOTE:_**  Note: On a local environment, when using `minikube` or `kind` as Kubernetes cluster, there has been a reported issue that [knative quickstart](https://knative.dev/docs/install/quickstart-install/) bootstrap does not work as expected. It is recommended to follow the installation manual from knative using [yaml](https://knative.dev/docs/install/yaml-install/) or using [knative operator](https://knative.dev/docs/install/operator/knative-with-operators/) for a better result.
 
 ### Setup your environment
 
