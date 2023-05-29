@@ -1365,9 +1365,11 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 <li><code>--http_port</code>: The http port model server is listening on, the default REST port is 8080.</li>
 <li><code>--model_name</code>: The model name deployed in the model server, the default name the same as the service name.</li>
 <li><code>--max_asyncio_workers</code>: Max number of workers to spawn for python async io loop, by default it is <code>min(32,cpu.limit + 4)</code>.</li>
-<li><code>enable_latency_logging</code>: Whether to log latency metrics per request, the default is True.</li>
-<li><code>log_config_file</code>: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.</li>
-<li><code>access_log_format</code>: A string representing the access log format configuration to use. The functionality is provided by the <code>asgi-logger</code> library and it allows to override only the <code>uvicorn.access</code>'s format configuration with a richer set of fields (output hardcoded to <code>stdout</code>). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn <a href="https://github.com/encode/uvicorn/issues/527">github issue</a> for more info). By default is None.</li>
+<li><code>--enable_latency_logging</code>: Whether to log latency metrics per request, the default is True.</li>
+<li><code>--configure_logging</code>: Whether to configure KServe and Uvicorn logging, the default is True.
+In this case you may want to set the KServe <code>ModelServer</code>'s <code>log_config</code> parameter to pass a dictionary containing all the logging directives and configurations (see <a href="https://docs.python.org/3/library/logging.config.html#dictionary-schema-details">the Python upstream docs</a> for more info). The alternative is to use the <code>--log_config_file</code> argument described below.</li>
+<li><code>--log_config_file</code>: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.</li>
+<li><code>--access_log_format</code>: A string representing the access log format configuration to use. The functionality is provided by the <code>asgi-logger</code> library and it allows to override only the <code>uvicorn.access</code>'s format configuration with a richer set of fields (output hardcoded to <code>stdout</code>). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn <a href="https://github.com/encode/uvicorn/issues/527">github issue</a> for more info). By default is None.</li>
 </ul>
 <h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h4>
 <p>You can supply additional environment variables on the container spec.</p>
@@ -1375,6 +1377,7 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 <li><code>STORAGE_URI</code>: load a model from a storage system supported by KServe e.g. <code>pvc://</code> <code>s3://</code>. This acts the same as <code>storageUri</code> when using a built-in predictor.
   The data will be available at <code>/mnt/models</code> in the container. For example, the following <code>STORAGE_URI: "pvc://my_model/model.onnx"</code> will be accessible at <code>/mnt/models/model.onnx</code></li>
 <li><code>PROTOCOL</code>: specify the protocol version supported by the model e.g <code>V1</code>. This acts the same as <code>protocolVersion</code> when using a built-in predictor.</li>
+<li><code>KSERVE_LOGLEVEL</code>: sets the <code>kserve</code> and <code>kserve_trace</code>'s logger verbosity. Default is <code>INFO</code>.</li>
 </ul>
 <p>Apply the yaml to deploy the InferenceService on KServe</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
