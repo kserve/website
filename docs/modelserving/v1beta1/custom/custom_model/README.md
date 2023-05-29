@@ -111,9 +111,11 @@ You can supply additional command arguments on the container spec to configure t
 - `--http_port`: The http port model server is listening on, the default REST port is 8080.
 - `--model_name`: The model name deployed in the model server, the default name the same as the service name.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
-- `enable_latency_logging`: Whether to log latency metrics per request, the default is True.
-- `log_config_file`: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
-- `access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
+- `--enable_latency_logging`: Whether to log latency metrics per request, the default is True.
+- `--configure_logging`: Whether to configure KServe and Uvicorn logging, the default is True.
+In this case you may want to set the KServe `ModelServer`'s `log_config` parameter to pass a dictionary containing all the logging directives and configurations (see [the Python upstream docs](https://docs.python.org/3/library/logging.config.html#dictionary-schema-details) for more info). The alternative is to use the `--log_config_file` argument described below.
+- `--log_config_file`: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
+- `--access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
 
 #### Environment Variables
 
@@ -122,6 +124,7 @@ You can supply additional environment variables on the container spec.
 - `STORAGE_URI`: load a model from a storage system supported by KServe e.g. `pvc://` `s3://`. This acts the same as `storageUri` when using a built-in predictor.
   The data will be available at `/mnt/models` in the container. For example, the following `STORAGE_URI: "pvc://my_model/model.onnx"` will be accessible at `/mnt/models/model.onnx`
 - `PROTOCOL`: specify the protocol version supported by the model e.g `V1`. This acts the same as `protocolVersion` when using a built-in predictor.
+- `KSERVE_LOGLEVEL`: sets the `kserve` and `kserve_trace`'s logger verbosity. Default is `INFO`.
 
 Apply the yaml to deploy the InferenceService on KServe
 
