@@ -22,6 +22,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [Nuance](https://www.nuance.com/)                                            | [Jeff Griffith](https://github.com/jeffgriffith)   |
 | [NVIDIA](https://www.nvidia.com/en-us/)                                      | [David Goodwin](https://github.com/deadeyegoodwin) |
 | [One Convergence](https://dkube.io/)                                         | [Subra Ongole](https://github.com/songole)         |
+| [PITS Global Data Recovery Services](https://www.pitsdatarecovery.net/)      | [Pheianox](https://github.com/pheianox)            |
 | [Red Hat](https://www.redhat.com/)                                           | [Taneem Ibrahim](https://github.com/taneem-ibrahim)|
 | [Seldon](https://www.seldon.io/)                                             | [Clive Cox](https://github.com/cliveseldon)        |
 | [Patterson Consulting](http://www.pattersonconsultingtn.com/)                | [Josh Patterson](https://github.com/jpatanooga)    |
