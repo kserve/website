@@ -29,7 +29,7 @@ Source files for the documentation on the website are located within the
 
 Each release of the KServe docs is available in the website (starting with 0.3)
 and their source files are all stored in branches of this repo. Take a look at
-the [release process](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS.md)
+the [release process](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS_v2.md)
 for more information.
 
 ## Contributing to docs

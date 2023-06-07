@@ -2,7 +2,7 @@
 
 ## Setup
 
-1. Your ~/.kube/config should point to a cluster with [KServe installed](https://kserve.github.io/website/master/admin/serverless/).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](https://kserve.github.io/website/master/admin/serverless/serverless).
 2. Your cluster's Istio Ingress gateway must
    be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
