@@ -1,6 +1,6 @@
 # InferenceService Node Scheduling
 ## Setup
-The `InferenceService` spec supports node selector, node affinity and tolerations. To enable these features we must enable the knative flags (see [Install Knative Serving Note](https://kserve.github.io/website/admin/serverless/#2-install-knative-serving)).
+The `InferenceService` spec supports node selector, node affinity and tolerations. To enable these features we must enable the knative flags (see [Install Knative Serving Note](https://kserve.github.io/website/admin/serverless/serverless/#1-install-knative-serving)).
 
 ### Option 1: Pre-Kubeflow Install Feature Flags Setup
 If we install KServe as part of Kubeflow manifest and would like to enable the feature flags before installing Kubeflow, we can do so by editing the file `manifests/common/knative/knative-serving/base/upstream/serving-core.yaml`   
