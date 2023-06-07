@@ -1195,7 +1195,7 @@
 </a>
 <h1 id="inferenceservice-node-scheduling">InferenceService Node Scheduling<a class="headerlink" href="#inferenceservice-node-scheduling" title="Permanent link">¶</a></h1>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
-<p>The <code>InferenceService</code> spec supports node selector, node affinity and tolerations. To enable these features we must enable the knative flags (see <a href="https://kserve.github.io/website/admin/serverless/#2-install-knative-serving">Install Knative Serving Note</a>).</p>
+<p>The <code>InferenceService</code> spec supports node selector, node affinity and tolerations. To enable these features we must enable the knative flags (see <a href="https://kserve.github.io/website/admin/serverless/serverless/#1-install-knative-serving">Install Knative Serving Note</a>).</p>
 <h3 id="option-1-pre-kubeflow-install-feature-flags-setup">Option 1: Pre-Kubeflow Install Feature Flags Setup<a class="headerlink" href="#option-1-pre-kubeflow-install-feature-flags-setup" title="Permanent link">¶</a></h3>
 <p>If we install KServe as part of Kubeflow manifest and would like to enable the feature flags before installing Kubeflow, we can do so by editing the file <code>manifests/common/knative/knative-serving/base/upstream/serving-core.yaml</code> <br/>
 This is often a common approach that allows a reproducible configuration as the feature flags will be enabled everytime we install Kubeflow.  </p>
