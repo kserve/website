@@ -1,3 +1,9 @@
-# Swagger ui for Data Plane API
+# Open Inference Protocol API Specification
 
-<swagger-ui src="https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/rest_predict_v2.yaml"/>
+## REST
+
+<swagger-ui src="https://raw.githubusercontent.com/kserve/open-inference-protocol/main/specification/protocol/open_inference_rest.yaml"/>
+
+## GRPC
+
+{!reference/v2_inference/README.md!}

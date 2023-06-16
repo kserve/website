@@ -85,7 +85,7 @@ nav:
                 - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
     - API Reference:
           - Control Plane API: reference/api.md
-          - Data Plane swagger-ui: reference/swagger-ui.md
+          - Open Inference Protocol API Spec: reference/swagger-ui.md
           - Python Client SDK: sdk_docs/sdk_doc.md
     - Developer Guide:
           - How to contribute: developer/developer.md
@@ -123,6 +123,8 @@ theme:
     - navigation.top
 
 markdown_extensions:
+  - markdown_include.include:
+      base_path: docs
   # - mdx_include:
   #     base_path: docs
   - pymdownx.emoji:
