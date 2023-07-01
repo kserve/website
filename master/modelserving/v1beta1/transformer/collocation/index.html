@@ -6,24 +6,24 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/help/style-guide/documenting-code/" rel="canonical"/>
-<link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
+<link href="https://kserve.io/website/master/modelserving/v1beta1/transformer/collocation/" rel="canonical"/>
+<link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.4.3, mkdocs-material-8.0.5" name="generator"/>
-<title>Documenting Code - KServe Documentation Website</title>
-<link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<title>Collocate transformer and predictor - KServe Documentation Website</title>
+<link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../../stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#documenting-code">
+<a class="md-skip" href="#collocate-transformer-and-predictor-in-same-pod">
           Skip to content
         </a>
 </div>
@@ -42,8 +42,8 @@
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../../images/logo/kserve.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
@@ -58,7 +58,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Documenting Code
+              Collocate transformer and predictor
             
           </span>
 </div>
@@ -109,42 +109,42 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../..">
+<a class="md-tabs__link" href="../../../..">
       Home
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../get_started/">
+<a class="md-tabs__link" href="../../../../get_started/">
         Getting started
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../admin/serverless/serverless/">
+<a class="md-tabs__link" href="../../../../admin/serverless/serverless/">
         Administration Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../modelserving/control_plane/">
+<a class="md-tabs__link md-tabs__link--active" href="../../../control_plane/">
         User Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../reference/api/">
+<a class="md-tabs__link" href="../../../../reference/api/">
         API Reference
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../developer/developer/">
+<a class="md-tabs__link" href="../../../../developer/developer/">
         Developer Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-tabs__link" href="../../../../blog/articles/2023-02-05-KServe-0.10-release/">
         Blog
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../community/adopters/">
+<a class="md-tabs__link" href="../../../../community/adopters/">
         Community
       </a>
 </li>
@@ -160,8 +160,8 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../../images/logo/kserve.png"/>
 </a>
     KServe Documentation Website
   </label>
@@ -177,7 +177,7 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../..">
+<a class="md-nav__link" href="../../../..">
         Home
       </a>
 </li>
@@ -194,17 +194,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/">
+<a class="md-nav__link" href="../../../../get_started/">
         KServe Quickstart
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/first_isvc/">
+<a class="md-nav__link" href="../../../../get_started/first_isvc/">
         First InferenceService
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/swagger_ui/">
+<a class="md-nav__link" href="../../../../get_started/swagger_ui/">
         Interact with InferenceService Swagger UI
       </a>
 </li>
@@ -248,17 +248,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/serverless/">
+<a class="md-nav__link" href="../../../../admin/serverless/serverless/">
         Serverless installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/servicemesh/">
+<a class="md-nav__link" href="../../../../admin/serverless/servicemesh/">
         Istio Service Mesh
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/kourier_networking/">
+<a class="md-nav__link" href="../../../../admin/serverless/kourier_networking/">
         Kourier Networking Layer
       </a>
 </li>
@@ -266,17 +266,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/modelmesh/">
+<a class="md-nav__link" href="../../../../admin/modelmesh/">
         ModelMesh installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/kubernetes_deployment/">
+<a class="md-nav__link" href="../../../../admin/kubernetes_deployment/">
         Kubernetes deployment installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/migration/">
+<a class="md-nav__link" href="../../../../admin/migration/">
         Migrating from KFServing
       </a>
 </li>
@@ -286,8 +286,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
@@ -323,7 +323,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/control_plane/">
+<a class="md-nav__link" href="../../../control_plane/">
         Model Serving Control Plane
       </a>
 </li>
@@ -343,17 +343,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/data_plane/">
+<a class="md-nav__link" href="../../../data_plane/data_plane/">
         Model Serving Data Plane
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v1_protocol/">
+<a class="md-nav__link" href="../../../data_plane/v1_protocol/">
         V1 Inference Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v2_protocol/">
+<a class="md-nav__link" href="../../../data_plane/v2_protocol/">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
 </li>
@@ -361,7 +361,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/servingruntimes/">
+<a class="md-nav__link" href="../../../servingruntimes/">
         Serving Runtimes
       </a>
 </li>
@@ -393,52 +393,52 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/serving_runtime/">
+<a class="md-nav__link" href="../../serving_runtime/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/tensorflow/">
+<a class="md-nav__link" href="../../tensorflow/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/torchserve/">
+<a class="md-nav__link" href="../../torchserve/">
         PyTorch
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/sklearn/v2/">
+<a class="md-nav__link" href="../../sklearn/v2/">
         Scikit-learn
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/xgboost/">
+<a class="md-nav__link" href="../../xgboost/">
         XGBoost
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/pmml/">
+<a class="md-nav__link" href="../../pmml/">
         PMML
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/spark/">
+<a class="md-nav__link" href="../../spark/">
         Spark MLlib
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/lightgbm/">
+<a class="md-nav__link" href="../../lightgbm/">
         LightGBM
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/paddle/">
+<a class="md-nav__link" href="../../paddle/">
         Paddle
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/mlflow/v2/">
+<a class="md-nav__link" href="../../mlflow/v2/">
         MLFlow
       </a>
 </li>
@@ -470,12 +470,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/torchscript/">
+<a class="md-nav__link" href="../../triton/torchscript/">
         Torchscript
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/bert/">
+<a class="md-nav__link" href="../../triton/bert/">
         Tensorflow
       </a>
 </li>
@@ -483,7 +483,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/amd/">
+<a class="md-nav__link" href="../../amd/">
         AMD
       </a>
 </li>
@@ -491,7 +491,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/custom/custom_model/">
+<a class="md-nav__link" href="../../custom/custom_model/">
         How to write a custom predictor
       </a>
 </li>
@@ -523,12 +523,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/multi-model-serving/">
+<a class="md-nav__link" href="../../../mms/multi-model-serving/">
         The Scalability Problem
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/modelmesh/overview/">
+<a class="md-nav__link" href="../../../mms/modelmesh/overview/">
         ModelMesh Overview
       </a>
 </li>
@@ -538,8 +538,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_4">
           Transformers
           <span class="md-nav__icon md-icon"></span>
@@ -551,19 +551,52 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/feast/">
+<a class="md-nav__link" href="../feast/">
         Feast
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+<a class="md-nav__link" href="../torchserve_image_transformer/">
         How to write a custom transformer
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/collocation/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Collocate transformer and predictor
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Collocate transformer and predictor
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#before-you-begin">
+    Before you begin
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-inferenceservice">
+    Deploy the InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-inferenceservice-status">
+    Check InferenceService status
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-a-prediction">
+    Run a prediction
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -581,12 +614,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/">
+<a class="md-nav__link" href="../../../inference_graph/">
         Concept
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/image_pipeline/">
+<a class="md-nav__link" href="../../../inference_graph/image_pipeline/">
         Image classification inference graph
       </a>
 </li>
@@ -606,22 +639,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/azure/azure/">
+<a class="md-nav__link" href="../../../storage/azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/pvc/pvc/">
+<a class="md-nav__link" href="../../../storage/pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/s3/s3/">
+<a class="md-nav__link" href="../../../storage/s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/uri/uri/">
+<a class="md-nav__link" href="../../../storage/uri/uri/">
         URI
       </a>
 </li>
@@ -641,7 +674,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/explainer/">
+<a class="md-nav__link" href="../../../explainer/explainer/">
         Concept
       </a>
 </li>
@@ -658,17 +691,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/cifar10/">
+<a class="md-nav__link" href="../../../explainer/alibi/cifar10/">
         Image Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/income/">
+<a class="md-nav__link" href="../../../explainer/alibi/income/">
         Income Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/moviesentiment/">
+<a class="md-nav__link" href="../../../explainer/alibi/moviesentiment/">
         Text Explainer
       </a>
 </li>
@@ -676,7 +709,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/aix/mnist/aix/">
+<a class="md-nav__link" href="../../../explainer/aix/mnist/aix/">
         AIX Explainer
       </a>
 </li>
@@ -696,17 +729,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/alibi_detect/alibi_detect/">
+<a class="md-nav__link" href="../../../detect/alibi_detect/alibi_detect/">
         Alibi Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/aif/germancredit/">
+<a class="md-nav__link" href="../../../detect/aif/germancredit/">
         AIF Bias Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/art/mnist/">
+<a class="md-nav__link" href="../../../detect/art/mnist/">
         ART Adversarial Detector
       </a>
 </li>
@@ -726,7 +759,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/batcher/batcher/">
+<a class="md-nav__link" href="../../../batcher/batcher/">
         Inference Batcher
       </a>
 </li>
@@ -746,7 +779,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/logger/logger/">
+<a class="md-nav__link" href="../../../logger/logger/">
         Inference Logger
       </a>
 </li>
@@ -766,7 +799,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/autoscaling/">
+<a class="md-nav__link" href="../../../autoscaling/autoscaling/">
         Inference Autoscaling
       </a>
 </li>
@@ -786,12 +819,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/overview/">
+<a class="md-nav__link" href="../../../nodescheduling/overview/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+<a class="md-nav__link" href="../../../nodescheduling/inferenceservicenodescheduling/">
         InferenceService Node Scheduling
       </a>
 </li>
@@ -811,7 +844,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/kafka/kafka/">
+<a class="md-nav__link" href="../../../kafka/kafka/">
         Inference with Kafka event source
       </a>
 </li>
@@ -831,12 +864,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary/">
+<a class="md-nav__link" href="../../rollout/canary/">
         Canary
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary-example/">
+<a class="md-nav__link" href="../../rollout/canary-example/">
         Canary Example
       </a>
 </li>
@@ -856,12 +889,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/prometheus_metrics/">
+<a class="md-nav__link" href="../../../observability/prometheus_metrics/">
         Prometheus Metrics
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/grafana_dashboards/">
+<a class="md-nav__link" href="../../../observability/grafana_dashboards/">
         Grafana Dashboards
       </a>
 </li>
@@ -884,17 +917,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../reference/api/">
+<a class="md-nav__link" href="../../../../reference/api/">
         Control Plane API
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../reference/swagger-ui/">
+<a class="md-nav__link" href="../../../../reference/swagger-ui/">
         Open Inference Protocol API Spec
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../sdk_docs/sdk_doc/">
+<a class="md-nav__link" href="../../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
@@ -914,12 +947,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../developer/developer/">
+<a class="md-nav__link" href="../../../../developer/developer/">
         How to contribute
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../developer/debug/">
+<a class="md-nav__link" href="../../../../developer/debug/">
         Debugging guide
       </a>
 </li>
@@ -951,22 +984,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2023-02-05-KServe-0.10-release/">
         KServe 0.10 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-07-21-KServe-0.9-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2022-07-21-KServe-0.9-release/">
         KServe 0.9 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-02-18-KServe-0.8-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2022-02-18-KServe-0.8-release/">
         KServe 0.8 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-10-11-KServe-0.7-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
       </a>
 </li>
@@ -986,7 +1019,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-09-27-kfserving-transition/">
+<a class="md-nav__link" href="../../../../blog/articles/2021-09-27-kfserving-transition/">
         KFserving Transition
       </a>
 </li>
@@ -1009,12 +1042,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/adopters/">
+<a class="md-nav__link" href="../../../../community/adopters/">
         Adopters
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/presentations/">
+<a class="md-nav__link" href="../../../../community/presentations/">
         Demos and Presentations
       </a>
 </li>
@@ -1036,42 +1069,23 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#words-requiring-code-formatting">
-    Words requiring code formatting
+<a class="md-nav__link" href="#before-you-begin">
+    Before you begin
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#specify-the-programming-language">
-    Specify the programming language
+<a class="md-nav__link" href="#deploy-the-inferenceservice">
+    Deploy the InferenceService
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#documenting-yaml">
-    Documenting YAML
+<a class="md-nav__link" href="#check-inferenceservice-status">
+    Check InferenceService status
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#referencing-variables-in-code-blocks">
-    Referencing variables in code blocks
-  </a>
-<nav aria-label="Referencing variables in code blocks" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#single-variable">
-    Single variable
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#multiple-variables">
-    Multiple variables
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cli-output">
-    CLI output
+<a class="md-nav__link" href="#run-a-prediction">
+    Run a prediction
   </a>
 </li>
 </ul>
@@ -1081,193 +1095,118 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/help/style-guide/documenting-code.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/transformer/collocation/README.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="documenting-code">Documenting Code<a class="headerlink" href="#documenting-code" title="Permanent link">¶</a></h1>
-<h2 id="words-requiring-code-formatting">Words requiring code formatting<a class="headerlink" href="#words-requiring-code-formatting" title="Permanent link">¶</a></h2>
-<p>Apply code formatting only to special-purpose text:</p>
-<ul>
-<li>Filenames</li>
-<li>Path names</li>
-<li>Fields and values from a YAML file</li>
-<li>Any text that goes into a CLI</li>
-<li>CLI names</li>
-</ul>
-<h2 id="specify-the-programming-language">Specify the programming language<a class="headerlink" href="#specify-the-programming-language" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>Specify the language your code is in as part of the code block</p>
-<p>Specify non-language specific code, like CLI commands, with ```bash. See the following examples for formatting.</p>
-</blockquote>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"> Correct</img></label><label for="__tabbed_1_2"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"> Incorrect</img></label><label for="__tabbed_1_3"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"/> Correct Formatting</label><label for="__tabbed_1_4"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"/> Incorrect Formatting</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="s">"fmt"</span>
-
-<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">"hello world"</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>package<span class="w"> </span>main
-
-import<span class="w"> </span><span class="s2">"fmt"</span>
-
-func<span class="w"> </span>main<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span>fmt.Println<span class="o">(</span><span class="s2">"hello world"</span><span class="o">)</span>
-<span class="o">}</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>```go
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("hello world")
-}
-```
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>```bash
-package main
-
-import "fmt"
-
-func main() {
-    fmt.Println("hello world")
-}
-```
-</code></pre></div>
-</div>
-</div>
-</input></input></input></input></div>
-<h2 id="documenting-yaml">Documenting YAML<a class="headerlink" href="#documenting-yaml" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>When documenting YAML, use two steps. Use step 1 to create the YAML file, and step 2 to apply the YAML file.</p>
-<p>Use <strong>kubectl apply</strong> for files/objects that the user creates: it works for both “create” and “update”, and the source of truth is their local files.</p>
-<p>Use <strong>kubectl edit</strong> for files which are shipped as part of the KServe software, like the KServe ConfigMaps.</p>
-<p>Write ```yaml at the beginning of your code block if you are typing YAML code as part of a CLI command.</p>
-</blockquote>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"/> Correct</label><label for="__tabbed_2_2"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"/> Incorrect</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<ul>
-<li>
-<p>Creating or updating a resource:</p>
+<h1 id="collocate-transformer-and-predictor-in-same-pod">Collocate transformer and predictor in same pod<a class="headerlink" href="#collocate-transformer-and-predictor-in-same-pod" title="Permanent link">¶</a></h1>
+<p>KServe by default deploys the Transformer and Predictor as separate services, allowing you to deploy them on different devices and scale them independently.
+<br/>Nevertheless, there are certain situations where you might prefer to collocate the transformer and predictor within the same pod. Here are a few scenarios:</p>
 <ol>
-<li>
-<p>Create a YAML file using the following template:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># YAML FILE CONTENTS</span>
-</code></pre></div>
-</li>
-<li>
-<p>Apply the YAML file by running the command:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>&lt;filename&gt;.yaml
-</code></pre></div>
-Where <code>&lt;filename&gt;</code> is the name of the file you created in the previous step.</p>
-</li>
+<li>If your transformer is tightly coupled with the predictor and you want to perform canary deployment together.</li>
+<li>If you want to reduce sidecar resources.</li>
+<li>If you want to reduce networking latency.</li>
 </ol>
-</li>
-<li>
-<p>Editing a ConfigMap:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>edit<span class="w"> </span>configmap<span class="w"> </span>&lt;resource-name&gt;
+<h2 id="before-you-begin">Before you begin<a class="headerlink" href="#before-you-begin" title="Permanent link">¶</a></h2>
+<ol>
+<li>Your ~/.kube/config should point to a cluster with <a href="../../../../get_started/#install-the-kserve-quickstart-environment">KServe installed</a>.</li>
+<li>Your cluster's Istio Ingress gateway must be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
+<li>You can find the <a href="https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/transformer/collocation">code samples</a> on kserve repository.</li>
+</ol>
+<h2 id="deploy-the-inferenceservice">Deploy the InferenceService<a class="headerlink" href="#deploy-the-inferenceservice" title="Permanent link">¶</a></h2>
+<p>Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. <code>Transformer</code> is configured to listen on port 8000 and 8081 
+while, <code>Predictor</code> listens on port 8080 and 8082. <code>Transformer</code> calls <code>Predictor</code> on port 8082 via local socket. 
+Deploy the <code>Inferenceservice</code> using the below command.</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
+<span class="s">apiVersion: serving.kserve.io/v1beta1</span>
+<span class="s">kind: InferenceService</span>
+<span class="s">metadata:</span>
+<span class="s">  name: custom-transformer-collocation</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    containers:</span>
+<span class="s">      - name: kserve-container</span>
+<span class="s">        image: kserve/custom-model-grpc:latest</span>
+<span class="s">        args:</span>
+<span class="s">          - --model_name=custom-model</span>
+<span class="s">          - --grpc_port=8082</span>
+<span class="s">          - --http_port=8080</span>
+
+<span class="s">      - image: kserve/image-transformer:latest</span>
+<span class="s">        name: transformer-container    # Do not change the container name</span>
+<span class="s">        args:</span>
+<span class="s">          - --model_name=custom-model</span>
+<span class="s">          - --protocol=grpc-v2</span>
+<span class="s">          - --http_port=8000</span>
+<span class="s">          - --grpc_port=8081</span>
+<span class="s">          - --predictor_host=localhost:8082</span>
+<span class="s">        ports:</span>
+<span class="s">          - containerPort: 8000</span>
+<span class="s">            protocol: TCP</span>
+<span class="s">EOF</span>
 </code></pre></div>
-</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p><strong>Example 1:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl create -f -</span>
-<span class="l l-Scalar l-Scalar-Plain"># code</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
-</code></pre></div>
-<p><strong>Example 2:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
-<span class="l l-Scalar l-Scalar-Plain"># code</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<h2 id="referencing-variables-in-code-blocks">Referencing variables in code blocks<a class="headerlink" href="#referencing-variables-in-code-blocks" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>Format variables in code blocks like so: <service-name></service-name></p>
-<ul>
-<li>All lowercase</li>
-<li>Hyphens between words</li>
-<li>Explanation for each variable below code block</li>
-<li>Explanation format is “Where... <code>&lt;service-name&gt;</code> is…"</li>
-</ul>
-</blockquote>
-<h3 id="single-variable">Single variable<a class="headerlink" href="#single-variable" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"/> Correct</label><label for="__tabbed_3_2"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"/> Incorrect</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>&lt;service-name&gt;
-</code></pre></div>
-Where <code>&lt;service-name&gt;</code> is the name of your InferenceService.</p>
-</div>
-<div class="tabbed-block">
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span><span class="o">{</span>SERVICE_NAME<span class="o">}</span>
-</code></pre></div>
-{SERVICE_NAME} = The name of your service</p>
-</div>
-</div>
-</input></input></div>
-<h3 id="multiple-variables">Multiple variables<a class="headerlink" href="#multiple-variables" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"/> Correct</label><label for="__tabbed_4_2"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"/> Incorrect</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><div class="highlight"><pre><span></span><code>kn<span class="w"> </span>create<span class="w"> </span>service<span class="w"> </span>&lt;service-name&gt;<span class="w"> </span>--revision-name<span class="w"> </span>&lt;revision-name&gt;
-</code></pre></div>
-Where:</p>
-<ul>
-<li><code>&lt;service-name&gt;</code> is the name of your Knative Service.</li>
-<li><code>&lt;revision-name&gt;</code> is the desired name of your revision.</li>
-</ul>
-</div>
-<div class="tabbed-block">
-<p><div class="highlight"><pre><span></span><code>kn<span class="w"> </span>create<span class="w"> </span>service<span class="w"> </span>&lt;service-name&gt;<span class="w"> </span>--revision-name<span class="w"> </span>&lt;revision-name&gt;
-</code></pre></div>
-Where <code>&lt;service-name&gt;</code> is the name of your Knative Service.<br/>
-Where <code>&lt;revision-name&gt;</code> is the desired name of your revision.</p>
-</div>
-</div>
-</input></input></div>
-<h2 id="cli-output">CLI output<a class="headerlink" href="#cli-output" title="Permanent link">¶</a></h2>
-<blockquote>
-<p>CLI Output should include the custom css "{ .bash .no-copy }" in place of "bash" which removes the "Copy to clipboard button" on the right side of the code block</p>
-</blockquote>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:4"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><input id="__tabbed_5_3" name="__tabbed_5" type="radio"><input id="__tabbed_5_4" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"/> Correct</label><label for="__tabbed_5_2"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"/> Incorrect</label><label for="__tabbed_5_3"><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/2705.svg" title=":white_check_mark:"/> Correct Formatting</label><label for="__tabbed_5_4"><img alt="⛔" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/26d4.svg" title=":no_entry:"/> Incorrect Formatting</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="no-copy highlight"><pre><span></span><code>&lt;some-code&gt;
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/custom-transformer-collocation<span class="w"> </span>created
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>&lt;some-code&gt;
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always use the transformer container name as <code>transformer-container</code>. Otherwise, the model volume is not mounted to the transformer 
+container which may result in an error.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, The collocation support is limited to the custom container spec for kserve model container.</p>
+</div>
+<h2 id="check-inferenceservice-status">Check InferenceService status<a class="headerlink" href="#check-inferenceservice-status" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>custom-transformer-collocation
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                             </span>URL<span class="w">                                                         </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                              </span>AGE
+custom-transformer-collocation<span class="w">   </span>http://custom-transformer-collocation.default.example.com<span class="w">   </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>custom-transformer-collocation-predictor-00001<span class="w">   </span>133m
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>```{ .bash .no-copy }
-&lt;some-code&gt;
-```
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If your DNS contains <code>svc.cluster.local</code>, then <code>Inferenceservice</code> is not exposed through Ingress. you need to <a href="https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns">configure DNS</a> 
+or <a href="https://knative.dev/docs/serving/using-a-custom-domain/">use a custom domain</a> in order to expose the <code>isvc</code>.</p>
+</div>
+<h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">¶</a></h2>
+<p>Prepare the <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/collocation/input.json">inputs</a> for the inference request. Copy the following Json into a file named <code>input.json</code>.</p>
+<p>Now, <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p><div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>custom-transformer-collocation
+<span class="nv">MODEL_NAME</span><span class="o">=</span>custom-model
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="nv">$SERVICE_NAME</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+</code></pre></div>
+You can use <code>curl</code> to send the inference request as:
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="nv">$MODEL_NAME</span>/infer
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1:8080...
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v2/models/custom-model/infer<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>custom-transformer-collocation.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.85.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/json
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">105396</span>
+&gt;<span class="w"> </span>
+*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">298</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
+&lt;<span class="w"> </span>date:<span class="w"> </span>Thu,<span class="w"> </span><span class="m">04</span><span class="w"> </span>May<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">10</span>:35:30<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">1273</span>
+&lt;<span class="w"> </span>
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">"model_name"</span>:<span class="s2">"custom-model"</span>,<span class="s2">"model_version"</span>:null,<span class="s2">"id"</span>:<span class="s2">"d685805f-a310-4690-9c71-a2dc38085d6f"</span>,<span class="s2">"parameters"</span>:null,<span class="s2">"outputs"</span>:<span class="o">[{</span><span class="s2">"name"</span>:<span class="s2">"output-0"</span>,<span class="s2">"shape"</span>:<span class="o">[</span><span class="m">1</span>,5<span class="o">]</span>,<span class="s2">"datatype"</span>:<span class="s2">"FP32"</span>,<span class="s2">"parameters"</span>:null,<span class="s2">"data"</span>:<span class="o">[</span><span class="m">14</span>.975618362426758,14.036808967590332,13.966032028198242,12.252279281616211,12.086268424987793<span class="o">]}]}</span>
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>```bash
-&lt;some-code&gt;
-```
-</code></pre></div>
-</div>
-</div>
-</input></input></input></input></div>
 </article>
 </div>
 </div>
@@ -1277,6 +1216,34 @@ Where <code>&lt;revision-name&gt;</code> is the desired name of your revision.</
           </a>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: How to write a custom transformer" class="md-footer__link md-footer__link--prev" href="../torchserve_image_transformer/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              How to write a custom transformer
+            </div>
+</div>
+</a>
+<a aria-label="Next: Concept" class="md-footer__link md-footer__link--next" href="../../../inference_graph/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Concept
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1305,8 +1272,8 @@ Where <code>&lt;revision-name&gt;</code> is the desired name of your revision.</
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
 <script>document$.subscribe(() => {
             window.update_swagger_ui_iframe_height = function (id) {
                 var iFrameID = document.getElementById(id);
