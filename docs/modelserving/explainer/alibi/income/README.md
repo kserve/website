@@ -18,7 +18,7 @@ spec:
   predictor:
     minReplicas: 1
     sklearn:
-      storageUri: "gs://seldon-models/sklearn/income/model"
+      storageUri: "gs://kfserving-examples/models/sklearn/1.3/income/model"
       resources:
         requests:
           cpu: 0.1
@@ -30,7 +30,7 @@ spec:
     minReplicas: 1
     alibi:
       type: AnchorTabular
-      storageUri: "gs://kfserving-examples/models/sklearn/1.0/income/explainer-0.9.1"
+      storageUri: "gs://kfserving-examples/models/sklearn/1.3/income/explainer"
       resources:
         requests:
           cpu: 0.1
