@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/master/modelserving/explainer/alibi/income/" rel="canonical"/>
 <link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.4.3, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.1, mkdocs-material-8.0.5" name="generator"/>
 <title>Income Explainer - KServe Documentation Website</title>
 <link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -1111,7 +1111,7 @@ The black box explainer algorithm we will use is the Tabular version of Anchors 
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/income/model"</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.3/income/model"</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
@@ -1123,7 +1123,7 @@ The black box explainer algorithm we will use is the Tabular version of Anchors 
 <span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">    </span><span class="nt">alibi</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AnchorTabular</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.0/income/explainer-0.9.1"</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.3/income/explainer"</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
