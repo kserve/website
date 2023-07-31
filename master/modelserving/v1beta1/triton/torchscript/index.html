@@ -495,8 +495,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#store-your-trained-model-on-gcs-in-a-model-repository">
-    Store your trained model on GCS in a Model Repository
+<a class="md-nav__link" href="#store-your-trained-model-on-cloud-storage-in-a-model-repository">
+    Store your trained model on cloud storage in a Model Repository
   </a>
 </li>
 <li class="md-nav__item">
@@ -1146,8 +1146,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#store-your-trained-model-on-gcs-in-a-model-repository">
-    Store your trained model on GCS in a Model Repository
+<a class="md-nav__link" href="#store-your-trained-model-on-cloud-storage-in-a-model-repository">
+    Store your trained model on cloud storage in a Model Repository
   </a>
 </li>
 <li class="md-nav__item">
@@ -1259,8 +1259,8 @@ you must first convert your model to Torch Script.</p>
 <span class="n">traced_script_module</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
 <span class="n">traced_script_module</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"model.pt"</span><span class="p">)</span>
 </code></pre></div></p>
-<h2 id="store-your-trained-model-on-gcs-in-a-model-repository">Store your trained model on GCS in a Model Repository<a class="headerlink" href="#store-your-trained-model-on-gcs-in-a-model-repository" title="Permanent link">¶</a></h2>
-<p>Once the model is exported as Torchscript model file, the next step is to upload the model to a GCS bucket.
+<h2 id="store-your-trained-model-on-cloud-storage-in-a-model-repository">Store your trained model on cloud storage in a Model Repository<a class="headerlink" href="#store-your-trained-model-on-cloud-storage-in-a-model-repository" title="Permanent link">¶</a></h2>
+<p>Once the model is exported as <code>TorchScript</code> model file, the next step is to upload the model to a GCS bucket.
 Triton supports loading multiple models so it expects a model repository which follows a required layout in the bucket.
 <div class="highlight"><pre><span></span><code>&lt;model-repository-path&gt;/
   &lt;model-name&gt;/
@@ -1317,14 +1317,24 @@ refers to first input and INPUT__1 refers to the second input, etc.
 <span class="w">    </span><span class="p">}</span>
 <span class="p">]</span>
 </code></pre></div></index></name></index></name></p>
-<p>To schedule the model on GPU you would need to change the <code>instance_group</code> with GPU kind
-<div class="highlight"><pre><span></span><code><span class="err">i</span><span class="kc">nstan</span><span class="err">ce_group</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="err">cou</span><span class="kc">nt</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">        </span><span class="err">ki</span><span class="kc">n</span><span class="err">d</span><span class="p">:</span><span class="w"> </span><span class="err">KIND_GPU</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">]</span>
+<p><code>instance_group</code> provides multiple instances of a model so that multiple inference requests for that model can be
+handled simultaneously.
+<div class="highlight"><pre><span></span><code>instance_group [
+    {
+      count: 4
+      kind: KIND_CPU
+    }
+  ]
 </code></pre></div></p>
+<p>To schedule the model on GPU you would need to change the <code>instance_group</code> with GPU kind
+<div class="highlight"><pre><span></span><code>instance_group [
+    {
+        count: 1
+        kind: KIND_GPU
+    }
+]
+</code></pre></div>
+For more details, please refer to <a href="https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/user_guide/model_configuration.html">triton model configuration</a>.</p>
 <h2 id="inference-with-http-endpoint">Inference with HTTP endpoint<a class="headerlink" href="#inference-with-http-endpoint" title="Permanent link">¶</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">¶</a></h3>
 <p>Create the inference service yaml with the above specified model repository uri.</p>
@@ -1343,8 +1353,9 @@ refers to first input and INPUT__1 refers to the second input, etc.
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Setting OMP_NUM_THREADS env is critical for performance, OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra.
-We want one thread per worker instead of many threads per worker to avoid contention.</p>
+<p>Setting OMP_NUM_THREADS or MKL_NUM_THREADS envs are critical for performance, these environment variables are used
+to control the intra-op parallelism for TorchScript model inference, the number of CPU threads defaults to the number of CPU cores.
+Please refer to <a href="https://pytorch.org/docs/stable/notes/cpu_threading_torchscript_inference.html">CPU threading &amp; TorchScript Inference</a> for more details.</p>
 </div>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
 <div class="tabbed-content">
