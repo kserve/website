@@ -30,8 +30,8 @@ traced_script_module = torch.jit.trace(net, example)
 traced_script_module.save("model.pt")
 ```
 
-## Store your trained model on GCS in a Model Repository
-Once the model is exported as Torchscript model file, the next step is to upload the model to a GCS bucket.
+## Store your trained model on cloud storage in a Model Repository
+Once the model is exported as `TorchScript` model file, the next step is to upload the model to a GCS bucket.
 Triton supports loading multiple models so it expects a model repository which follows a required layout in the bucket.
 ```
 <model-repository-path>/
@@ -92,8 +92,20 @@ instance_group [
 ]
 ```
 
+`instance_group` provides multiple instances of a model so that multiple inference requests for that model can be
+handled simultaneously.
+```
+instance_group [
+    {
+      count: 4
+      kind: KIND_CPU
+    }
+  ]
+```
+
+
 To schedule the model on GPU you would need to change the `instance_group` with GPU kind
-```json
+```
 instance_group [
     {
         count: 1
@@ -101,7 +113,7 @@ instance_group [
     }
 ]
 ```
-
+For more details, please refer to [triton model configuration](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/user_guide/model_configuration.html).
 
 ## Inference with HTTP endpoint
 
@@ -124,8 +136,9 @@ spec:
 ```
 
 !!! warning
-    Setting OMP_NUM_THREADS env is critical for performance, OMP_NUM_THREADS is commonly used in numpy, PyTorch, and Tensorflow to perform multi-threaded linear algebra.
-    We want one thread per worker instead of many threads per worker to avoid contention.
+    Setting OMP_NUM_THREADS or MKL_NUM_THREADS envs are critical for performance, these environment variables are used
+    to control the intra-op parallelism, the number of threads defaults to the number of CPU cores.
+    Please refer to [CPU threading & TorchScript Inference](https://pytorch.org/docs/stable/notes/cpu_threading_torchscript_inference.html).
 
 === "kubectl"
 ```bash
