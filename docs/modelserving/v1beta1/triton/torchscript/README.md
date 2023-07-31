@@ -137,8 +137,8 @@ spec:
 
 !!! warning
     Setting OMP_NUM_THREADS or MKL_NUM_THREADS envs are critical for performance, these environment variables are used
-    to control the intra-op parallelism, the number of threads defaults to the number of CPU cores.
-    Please refer to [CPU threading & TorchScript Inference](https://pytorch.org/docs/stable/notes/cpu_threading_torchscript_inference.html).
+    to control the intra-op parallelism for TorchScript model inference, the number of CPU threads defaults to the number of CPU cores.
+    Please refer to [CPU threading & TorchScript Inference](https://pytorch.org/docs/stable/notes/cpu_threading_torchscript_inference.html) for more details.
 
 === "kubectl"
 ```bash
