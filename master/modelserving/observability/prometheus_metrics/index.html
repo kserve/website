@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/master/modelserving/observability/prometheus_metrics/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.1, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
 <title>Prometheus Metrics - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -1130,7 +1130,7 @@
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/iris"</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/mms/lr_model"</span>
 </code></pre></div>
 <p>The default values for <code>serving.kserve.io/enable-prometheus-scraping</code> can be set in the <code>inferenceservice-config</code> configmap. See <a href="https://github.com/kserve/kserve/blob/master/qpext/README.md#configs">the docs</a> for more info.</p>
 <p>There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. </p>
