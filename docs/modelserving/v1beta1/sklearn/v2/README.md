@@ -117,7 +117,7 @@ Note that this makes the following assumptions:
 
 - Your model weights (i.e. your `model.joblib` file) have already been uploaded
   to a "model repository" (GCS in this example) and can be accessed as
-  `gs://seldon-models/sklearn/iris`.
+  `gs://seldon-models/sklearn/mms/lr_model`.
 - There is a K8s cluster available, accessible through `kubectl`.
 - KServe has already been [installed in your cluster](../../../../get_started/README.md).
 
