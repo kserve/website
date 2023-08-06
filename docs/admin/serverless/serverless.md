@@ -8,8 +8,6 @@ Kubernetes version.
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version   | Recommended Knative Version  |
 | :---------- | :------------ | :------------|
-| 1.23       | 1.12, 1.13   | 1.4-1.8  |
-| 1.24       | 1.13, 1.14   | 1.4-1.9  |
 | 1.25       | 1.15, 1.16   | 1.4-1.9  |
 | 1.26       | 1.17  | 1.7-1.11  |
 | 1.27       | 1.17,1.18  | 1.9-1.11  |
