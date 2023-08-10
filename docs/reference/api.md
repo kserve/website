@@ -349,6 +349,32 @@ Batcher
 <p>Activate request batching and batching configurations</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Labels that will be add to the component pod.
+More info: <a href="http://kubernetes.io/docs/user-guide/labels">http://kubernetes.io/docs/user-guide/labels</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>annotations</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Annotations that will be add to the component pod.
+More info: <a href="http://kubernetes.io/docs/user-guide/annotations">http://kubernetes.io/docs/user-guide/annotations</a></p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.ComponentImplementation">ComponentImplementation
@@ -951,6 +977,18 @@ Kubernetes meta/v1.Time
 <p>Time failure occurred or was discovered</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>exitCode</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Exit status from the last termination of the container</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.FailureReason">FailureReason
@@ -1182,7 +1220,8 @@ knative.dev/pkg/apis/duck/v1.Status
 - PredictorReady: predictor readiness condition; <br/>
 - TransformerReady: transformer readiness condition; <br/>
 - ExplainerReady: explainer readiness condition; <br/>
-- RoutesReady: aggregated routing condition; <br/>
+- RoutesReady (serverless mode only): aggregated routing condition, i.e. endpoint readiness condition; <br/>
+- LatestDeploymentReady (serverless mode only): aggregated configuration condition, i.e. latest deployment readiness condition; <br/>
 - Ready: aggregated condition; <br/></p>
 </td>
 </tr>
@@ -1220,7 +1259,7 @@ It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-leve
 <code>components</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ComponentStatusSpec">
-map[kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentType]kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentStatusSpec
+map[./pkg/apis/serving/v1beta1.ComponentType]./pkg/apis/serving/v1beta1.ComponentStatusSpec
 </a>
 </em>
 </td>
@@ -1255,32 +1294,6 @@ ModelStatus
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>
-<code>transformers</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.TransformersConfig">
-TransformersConfig
-</a>
-</em>
-</td>
-<td>
-<p>Transformer configurations</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>predictors</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorsConfig">
-PredictorsConfig
-</a>
-</em>
-</td>
-<td>
-<p>Predictor configurations</p>
-</td>
-</tr>
 <tr>
 <td>
 <code>explainers</code><br/>
@@ -1381,6 +1394,26 @@ string
 <tr>
 <td>
 <code>urlScheme</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>disableIstioVirtualHost</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>pathTemplate</code><br/>
 <em>
 string
 </em>
@@ -1970,7 +2003,7 @@ Cannot be updated.</p>
 pod to perform user-initiated actions such as debugging. This list cannot be specified when
 creating a pod, and it cannot be modified by updating the pod spec. In order to add an
 ephemeral container to an existing pod, use the pod&rsquo;s ephemeralcontainers subresource.
-This field is alpha-level and is only honored by servers that enable the EphemeralContainers feature.</p>
+This field is beta-level and available on clusters that haven&rsquo;t disabled the EphemeralContainers feature gate.</p>
 </td>
 </tr>
 <tr>
@@ -2000,7 +2033,8 @@ int64
 <td>
 <em>(Optional)</em>
 <p>Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request.
-Value must be non-negative integer. The value zero indicates delete immediately.
+Value must be non-negative integer. The value zero indicates stop immediately via
+the kill signal (no opportunity to shut down).
 If this value is nil, the default grace period will be used instead.
 The grace period is the duration in seconds after the processes running in the pod are sent
 a termination signal and the time when the processes are forcibly halted with a kill signal.
@@ -2340,7 +2374,7 @@ configuration based on DNSPolicy.</p>
 <p>If specified, all readiness gates will be evaluated for pod readiness.
 A pod is ready when all its containers are ready AND
 all conditions specified in the readiness gates have status equal to &ldquo;True&rdquo;
-More info: <a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-network/580-pod-readiness-gates">https://github.com/kubernetes/enhancements/tree/master/keps/sig-network/580-pod-readiness-gates</a></p>
+More info: <a href="https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates">https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates</a></p>
 </td>
 </tr>
 <tr>
@@ -2356,7 +2390,7 @@ string
 to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run.
 If unset or empty, the &ldquo;legacy&rdquo; RuntimeClass will be used, which is an implicit class with an
 empty definition that uses the default runtime handler.
-More info: <a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/585-runtime-class">https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/585-runtime-class</a>
+More info: <a href="https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class">https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class</a>
 This is a beta feature as of Kubernetes v1.14.</p>
 </td>
 </tr>
@@ -2408,8 +2442,8 @@ the RuntimeClass admission controller is enabled, overhead must not be set in Po
 The RuntimeClass admission controller will reject Pod create requests which have the overhead already
 set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value
 defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero.
-More info: <a href="https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/688-pod-overhead">https://github.com/kubernetes/enhancements/blob/master/keps/sig-node/688-pod-overhead</a>
-This field is alpha-level as of Kubernetes v1.16, and is only honored by servers that enable the PodOverhead feature.</p>
+More info: <a href="https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md">https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md</a>
+This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.</p>
 </td>
 </tr>
 <tr>
@@ -2444,87 +2478,101 @@ If a pod does not have FQDN, this has no effect.
 Default to false.</p>
 </td>
 </tr>
-</tbody>
-</table>
-<h3 id="serving.kserve.io/v1beta1.PredictorConfig">PredictorConfig
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorProtocols">PredictorProtocols</a>, <a href="#serving.kserve.io/v1beta1.PredictorsConfig">PredictorsConfig</a>)
-</p>
-<div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td>
-<code>image</code><br/>
+<code>os</code><br/>
 <em>
-string
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podos-v1-core">
+Kubernetes core/v1.PodOS
+</a>
 </em>
 </td>
 <td>
-<p>predictor docker image name</p>
+<em>(Optional)</em>
+<p>Specifies the OS of the containers in the pod.
+Some pod and container fields are restricted if this is set.</p>
+<p>If the OS field is set to linux, the following fields must be unset:
+-securityContext.windowsOptions</p>
+<p>If the OS field is set to windows, following fields must be unset:
+- spec.hostPID
+- spec.hostIPC
+- spec.securityContext.seLinuxOptions
+- spec.securityContext.seccompProfile
+- spec.securityContext.fsGroup
+- spec.securityContext.fsGroupChangePolicy
+- spec.securityContext.sysctls
+- spec.shareProcessNamespace
+- spec.securityContext.runAsUser
+- spec.securityContext.runAsGroup
+- spec.securityContext.supplementalGroups
+- spec.containers[<em>].securityContext.seLinuxOptions
+- spec.containers[</em>].securityContext.seccompProfile
+- spec.containers[<em>].securityContext.capabilities
+- spec.containers[</em>].securityContext.readOnlyRootFilesystem
+- spec.containers[<em>].securityContext.privileged
+- spec.containers[</em>].securityContext.allowPrivilegeEscalation
+- spec.containers[<em>].securityContext.procMount
+- spec.containers[</em>].securityContext.runAsUser
+- spec.containers[*].securityContext.runAsGroup
+This is an alpha field and requires the IdentifyPodOS feature</p>
 </td>
 </tr>
 <tr>
 <td>
-<code>defaultImageVersion</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>default predictor docker image version on cpu</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>defaultGpuImageVersion</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>default predictor docker image version on gpu</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>defaultTimeout,string</code><br/>
-<em>
-int64
-</em>
-</td>
-<td>
-<p>Default timeout of predictor for serving a request, in seconds</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>multiModelServer,boolean</code><br/>
+<code>hostUsers</code><br/>
 <em>
 bool
 </em>
 </td>
 <td>
-<p>Flag to determine if multi-model serving is supported</p>
+<em>(Optional)</em>
+<p>Use the host&rsquo;s user namespace.
+Optional: Default to true.
+If set to true or not present, the pod will be run in the host user namespace, useful
+for when the pod needs a feature only available to the host user namespace, such as
+loading a kernel module with CAP_SYS_MODULE.
+When set to false, a new userns is created for the pod. Setting false is useful for
+mitigating container breakout vulnerabilities even allowing users to run their
+containers as root without actually having root privileges on the host.
+This field is alpha-level and is only honored by servers that enable the UserNamespacesSupport feature.</p>
 </td>
 </tr>
 <tr>
 <td>
-<code>supportedFrameworks</code><br/>
+<code>schedulingGates</code><br/>
 <em>
-[]string
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podschedulinggate-v1-core">
+[]Kubernetes core/v1.PodSchedulingGate
+</a>
 </em>
 </td>
 <td>
-<p>frameworks the model agent is able to run</p>
+<em>(Optional)</em>
+<p>SchedulingGates is an opaque list of values that if specified will block scheduling the pod.
+If schedulingGates is not empty, the pod will stay in the SchedulingGated state and the
+scheduler will not attempt to schedule the pod.</p>
+<p>SchedulingGates can only be set at pod creation time, and be removed only afterwards.</p>
+<p>This is a beta feature enabled by the PodSchedulingReadiness feature gate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resourceClaims</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podresourceclaim-v1-core">
+[]Kubernetes core/v1.PodResourceClaim
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ResourceClaims defines which ResourceClaims must be allocated
+and reserved before the Pod is allowed to start. The resources
+will be made available to those containers which consume them
+by name.</p>
+<p>This is an alpha field and requires enabling the
+DynamicResourceAllocation feature gate.</p>
+<p>This field is immutable.</p>
 </td>
 </tr>
 </tbody>
@@ -2620,47 +2668,6 @@ StorageSpec
 <div>
 <p>PredictorImplementation defines common functions for all predictors e.g Tensorflow, Triton, etc</p>
 </div>
-<h3 id="serving.kserve.io/v1beta1.PredictorProtocols">PredictorProtocols
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorsConfig">PredictorsConfig</a>)
-</p>
-<div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>v1</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>v2</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-</tbody>
-</table>
 <h3 id="serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec
 </h3>
 <p>
@@ -2842,131 +2849,6 @@ ComponentExtensionSpec
 (Members of <code>ComponentExtensionSpec</code> are embedded into this type.)
 </p>
 <p>Component extension defines the deployment configurations for a predictor</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="serving.kserve.io/v1beta1.PredictorsConfig">PredictorsConfig
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServicesConfig">InferenceServicesConfig</a>)
-</p>
-<div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>tensorflow</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>triton</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>xgboost</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorProtocols">
-PredictorProtocols
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>sklearn</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorProtocols">
-PredictorProtocols
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>pytorch</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>onnx</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>pmml</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>lightgbm</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<code>paddle</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.PredictorConfig">
-PredictorConfig
-</a>
-</em>
-</td>
-<td>
 </td>
 </tr>
 </tbody>
@@ -3164,45 +3046,6 @@ PredictorExtensionSpec
 </tr>
 </tbody>
 </table>
-<h3 id="serving.kserve.io/v1beta1.TransformerConfig">TransformerConfig
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.TransformersConfig">TransformersConfig</a>)
-</p>
-<div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>image</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>transformer docker image name</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>defaultImageVersion</code><br/>
-<em>
-string
-</em>
-</td>
-<td>
-<p>default transformer docker image version</p>
-</td>
-</tr>
-</tbody>
-</table>
 <h3 id="serving.kserve.io/v1beta1.TransformerSpec">TransformerSpec
 </h3>
 <p>
@@ -3253,35 +3096,6 @@ ComponentExtensionSpec
 (Members of <code>ComponentExtensionSpec</code> are embedded into this type.)
 </p>
 <p>Component extension defines the deployment configurations for a transformer</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="serving.kserve.io/v1beta1.TransformersConfig">TransformersConfig
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServicesConfig">InferenceServicesConfig</a>)
-</p>
-<div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>feast</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.TransformerConfig">
-TransformerConfig
-</a>
-</em>
-</td>
-<td>
 </td>
 </tr>
 </tbody>
@@ -3386,5 +3200,5 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>133ecebb</code>.
+on git commit <code>d42daddd</code>.
 </em></p>
