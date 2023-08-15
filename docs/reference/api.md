@@ -1259,7 +1259,7 @@ It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-leve
 <code>components</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ComponentStatusSpec">
-map[./pkg/apis/serving/v1beta1.ComponentType]./pkg/apis/serving/v1beta1.ComponentStatusSpec
+map[kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentType]kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentStatusSpec
 </a>
 </em>
 </td>
@@ -3200,5 +3200,5 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>d42daddd</code>.
+on git commit <code>d7bfd224</code>.
 </em></p>
