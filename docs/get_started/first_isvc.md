@@ -137,7 +137,7 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
 
     If you have configured the DNS, you can directly curl the `InferenceService` with the URL obtained from the status print.
     e.g
-    ```
+    ```bash
     curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
@@ -191,7 +191,7 @@ If you want to load test the deployed model, try deploying the following Kuberne
 
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
-kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
+kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.11/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
 Execute the following command to view output:
