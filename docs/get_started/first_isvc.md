@@ -137,8 +137,8 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
 
     If you have configured the DNS, you can directly curl the `InferenceService` with the URL obtained from the status print.
     e.g
-    ```
-    curl -v http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./iris-input.json
+    ```bash
+    curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 === "Magic DNS"
@@ -164,7 +164,7 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
 
     With the change applied you can now directly curl the URL
     ```bash
-    curl -v http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict -d @./iris-input.json
+    curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 === "From Ingress gateway with HOST Header"
@@ -172,14 +172,14 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
     If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
     ```bash
     SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -n kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-    curl -v -H "Host: ${SERVICE_HOSTNAME}" "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict" -d @./iris-input.json
+    curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict" -d @./iris-input.json
     ```
 
 === "From local cluster gateway"
 
     If you are calling from in cluster you can curl with the internal url with host {{InferenceServiceName}}.{{namespace}}
     ```bash
-    curl -v http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./iris-input.json
+    curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
 You should see two predictions returned (i.e. `{"predictions": [1, 1]}`). Both sets of data points sent for inference correspond to the flower with index `1`.
@@ -191,7 +191,7 @@ If you want to load test the deployed model, try deploying the following Kuberne
 
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
-kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
+kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.11/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
 Execute the following command to view output:
