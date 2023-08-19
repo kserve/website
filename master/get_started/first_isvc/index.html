@@ -1252,7 +1252,7 @@ Open another terminal, and enter the following:
 <div class="tabbed-block">
 <p>If you have configured the DNS, you can directly curl the <code>InferenceService</code> with the URL obtained from the status print.
 e.g
-<div class="highlight"><pre><span></span><code>curl -v http://sklearn-iris.kserve-test.${CUSTOM_DOMAIN}/v1/models/sklearn-iris:predict -d @./iris-input.json
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test.<span class="si">${</span><span class="nv">CUSTOM_DOMAIN</span><span class="si">}</span>/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
@@ -1269,18 +1269,18 @@ istio-ingressgateway<span class="w">   </span>LoadBalancer<span class="w">   </s
 </code></pre></div></p>
 <p>Now in your editor, change example.com to {{external-ip}}.xip.io (make sure to replace {{external-ip}} with the IP you found earlier).</p>
 <p>With the change applied you can now directly curl the URL
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
 <p>If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
 <div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
-curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2">/v1/models/sklearn-iris:predict"</span><span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2">/v1/models/sklearn-iris:predict"</span><span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
 <p>If you are calling from in cluster you can curl with the internal url with host {{InferenceServiceName}}.{{namespace}}
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
 </code></pre></div></p>
 </div>
 </div>
@@ -1290,7 +1290,7 @@ In this case, the model predicts that both flowers are "Iris Versicolour".</p>
 <h3 id="6-run-performance-test-optional">6. Run performance test (optional)<a class="headerlink" href="#6-run-performance-test-optional" title="Permanent link">¶</a></h3>
 <p>If you want to load test the deployed model, try deploying the following Kubernetes Job to drive load to the model:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply</span>
-kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/release-0.8/docs/samples/v1beta1/sklearn/v1/perf.yaml<span class="w"> </span>-n<span class="w"> </span>kserve-test
+kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/release-0.11/docs/samples/v1beta1/sklearn/v1/perf.yaml<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>
 <p>Execute the following command to view output:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>load-test8b58n-rgfxr<span class="w"> </span>-n<span class="w"> </span>kserve-test
