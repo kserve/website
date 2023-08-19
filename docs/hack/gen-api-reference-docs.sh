@@ -113,7 +113,7 @@ main() {
     # install bin
     gopath="$(mktemp -d)"
     cleanup_gopath_root="${gopath}"
-    env GOPATH="${gopath}"
+    export GOPATH="${gopath}"
     install_go_bin "${REFDOCS_PKG}@${REFDOCS_VER}"
     # move bin to final location
     refdocs_bin="${refdocs_dir}/refdocs"
@@ -133,6 +133,7 @@ main() {
         "${out_dir}/${KSERVE_OUT_FILE}" "${kserve_root}" "./pkg/apis/serving/v1beta1"
 
     cp "${out_dir}/${KSERVE_OUT_FILE}" "$SCRIPTDIR/../reference/${KSERVE_OUT_FILE}"
+    go clean -modcache
 
     # echo "Applying patches..."
     # git apply $SCRIPTDIR/patches/*.patch
