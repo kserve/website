@@ -6,11 +6,11 @@ Kubernetes 1.22 is the minimally required version and please check the following
 Kubernetes version.
 
 ## Recommended Version Matrix
-| Kubernetes Version | Recommended Istio Version   | Recommended Knative Version  |
-| :---------- | :------------ | :------------|
-| 1.25       | 1.15, 1.16   | 1.4-1.9  |
-| 1.26       | 1.17  | 1.7-1.11  |
-| 1.27       | 1.17,1.18  | 1.9-1.11  |
+| Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
+|:-------------------|:--------------------------|:----------------------------|
+| 1.25               | 1.15, 1.16                | 1.4-1.9                     |
+| 1.26               | 1.17                      | 1.7-1.11                    |
+| 1.27               | 1.17,1.18                 | 1.9-1.11                    |
 
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
@@ -35,14 +35,14 @@ The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert 
 ## 4. Install KServe
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.10.0/kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.0/kserve.yaml
     ```
 
 ## 5. Install KServe Built-in ClusterServingRuntimes
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.10.0/kserve-runtimes.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.0/kserve-runtimes.yaml
     ```
 
 !!! note

@@ -454,7 +454,7 @@ if __name__ == "__main__":
 ```
 The more details for ray fractional cpu and gpu can be found [here](https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus).
 
-The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.10/python/custom_model/model_remote.py).
+The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.11/python/custom_model/model_remote.py).
 
 Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
 each model as separate python worker and web server routes to the model workers by name.
