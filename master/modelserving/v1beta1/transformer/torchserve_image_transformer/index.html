@@ -1258,7 +1258,7 @@ handlers to abstract away the implementation details of REST/gRPC decoding and e
         <span class="n">infer_request</span> <span class="o">=</span> <span class="n">InferRequest</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">infer_inputs</span><span class="o">=</span><span class="n">infer_inputs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">infer_request</span>
 </code></pre></div></p>
-<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.10/python/custom_transformer">here</a>.</p>
+<p>Please see the code example <a href="https://github.com/kserve/kserve/tree/release-0.11/python/custom_transformer">here</a>.</p>
 <h3 id="transformer-server-entrypoint">Transformer Server Entrypoint<a class="headerlink" href="#transformer-server-entrypoint" title="Permanent link">¶</a></h3>
 <p>For single model you just create a transformer object and register that to the model server.
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
@@ -1275,7 +1275,7 @@ or different transformers if each model requires its own transformation.
     <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>
 </code></pre></div></p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">¶</a></h3>
-<p>Under <code>kserve/python</code> directory, build the transformer docker image using <a href="https://github.com/kserve/kserve/blob/release-0.10/python/custom_transformer.Dockerfile">Dockerfile</a>
+<p>Under <code>kserve/python</code> directory, build the transformer docker image using <a href="https://github.com/kserve/kserve/blob/release-0.11/python/custom_transformer.Dockerfile">Dockerfile</a>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>python
 docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span><span class="nv">$DOCKER_USER</span>/image-transformer:latest<span class="w"> </span>-f<span class="w"> </span>transformer.Dockerfile<span class="w"> </span>.
 

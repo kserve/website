@@ -1066,7 +1066,7 @@ KServe provides basic API primitives to allow you easily build custom model serv
 The KServe prediction protocol is noted as either "v1" or "v2". Some serving runtimes also support their own prediction protocol, these are noted with an <code>*</code>. 
 The default serving runtime version column defines the source and version of the serving runtime - MLServer, KServe or its own. 
 These versions can also be found in the <a href="https://github.com/kserve/kserve/blob/master/config/runtimes/kustomization.yaml">runtime kustomization YAML</a>. 
-All KServe native model serving runtimes use the current KServe release version (v0.10). The supported framework version column lists the <strong>major</strong> version of the model that is supported. 
+All KServe native model serving runtimes use the current KServe release version (v0.11). The supported framework version column lists the <strong>major</strong> version of the model that is supported. 
 These can also be found in the respective <a href="https://github.com/kserve/kserve/tree/master/config/runtimes">runtime YAML</a> under the <code>supportedModelFormats</code> field. 
 For model frameworks using the KServe serving runtime, the specific default version can be found in <a href="https://github.com/kserve/kserve/tree/master/python">kserve/python</a>. 
 In a given serving runtime directory the pyproject.toml file contains the exact model framework version used. For example, in <a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">kserve/python/lgbserver</a> the <a href="https://github.com/kserve/kserve/blob/master/python/lgbserver/pyproject.toml">pyproject.toml</a> file sets the model framework version to 3.3.2, <code>lightgbm ~= 3.3.2</code>.</p>
@@ -1104,9 +1104,9 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">LightGBM ModelServer</a></td>
 <td><a href="https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html#lightgbm.Booster.save_model">Saved LightGBM Model</a></td>
-<td>v1</td>
-<td>--</td>
-<td>v0.10 (KServe)</td>
+<td>v1, v2</td>
+<td>v2</td>
+<td>v0.11 (KServe)</td>
 <td>3</td>
 <td><a href="./lightgbm">LightGBM Iris</a></td>
 </tr>
@@ -1122,9 +1122,9 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/pmmlserver">PMML ModelServer</a></td>
 <td><a href="http://dmg.org/pmml/v4-4-1/GeneralStructure.html">PMML</a></td>
-<td>v1</td>
-<td>--</td>
-<td>v0.10 (KServe)</td>
+<td>v1, v2</td>
+<td>v2</td>
+<td>v0.11 (KServe)</td>
 <td>3, 4 (<a href="https://github.com/autodeployai/pypmml">PMML4.4.1</a>)</td>
 <td><a href="./pmml">SKLearn PMML</a></td>
 </tr>
@@ -1140,10 +1140,10 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/sklearnserver">SKLearn ModelServer</a></td>
 <td><a href="https://scikit-learn.org/stable/modules/model_persistence.html">Pickled Model</a></td>
-<td>v1</td>
-<td>--</td>
-<td>v0.10 (KServe)</td>
-<td>1</td>
+<td>v1, v2</td>
+<td>v2</td>
+<td>v0.11 (KServe)</td>
+<td>1.3</td>
 <td><a href="./sklearn/v2">SKLearn Iris</a></td>
 </tr>
 <tr>
@@ -1160,8 +1160,8 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td><a href="https://pytorch.org/docs/master/generated/torch.save.html">Eager Model/TorchScript</a></td>
 <td>v1, v2, *torchserve</td>
 <td>*torchserve</td>
-<td>0.7.0 (TorchServe)</td>
-<td>1</td>
+<td>0.8.0 (TorchServe)</td>
+<td>2</td>
 <td><a href="./torchserve">TorchServe mnist</a></td>
 </tr>
 <tr>
@@ -1169,8 +1169,8 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td><a href="https://github.com/triton-inference-server/server/blob/r21.09/docs/model_repository.md">TensorFlow,TorchScript,ONNX</a></td>
 <td>v2</td>
 <td>v2</td>
-<td>21.09-py3 (Triton)</td>
-<td>8 (TensoRT), 1, 2 (TensorFlow), 1 (PyTorch), 2 (Triton) <a href="https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html">Compatibility Matrix</a></td>
+<td>23.05-py3 (Triton)</td>
+<td>8 (TensoRT), 1, 2 (TensorFlow), 2 (PyTorch), 2 (Triton) <a href="https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html">Compatibility Matrix</a></td>
 <td><a href="triton/torchscript">Torchscript cifar</a></td>
 </tr>
 <tr>
@@ -1185,16 +1185,16 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">XGBoost ModelServer</a></td>
 <td><a href="https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html">Saved Model</a></td>
-<td>v1</td>
-<td>--</td>
-<td>v0.10 (KServe)</td>
+<td>v1, v2</td>
+<td>v2</td>
+<td>v0.11 (KServe)</td>
 <td>1</td>
 <td><a href="./xgboost">XGBoost Iris</a></td>
 </tr>
 </tbody>
 </table>
 <p>*tensorflow - Tensorflow implements its own prediction protocol in addition to KServe's. See: <a href="https://github.com/tensorflow/serving/blob/master/tensorflow_serving/apis/prediction_service.proto">Tensorflow Serving Prediction API</a> documentation</p>
-<p>*torchserve - PyTorch implements its own predicition protocol in addition to KServe's. See: <a href="https://pytorch.org/serve/grpc_api.html#">Torchserve gRPC API</a> documentation</p>
+<p>*torchserve - PyTorch implements its own prediction protocol in addition to KServe's. See: <a href="https://pytorch.org/serve/grpc_api.html#">Torchserve gRPC API</a> documentation</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The model serving runtime version can be overwritten with the <code>runtimeVersion</code> field on InferenceService yaml and we highly recommend

@@ -1683,7 +1683,7 @@ fractional gpu example
     <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">"custom-model"</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
 </code></pre></div>
 The more details for ray fractional cpu and gpu can be found <a href="https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus">here</a>.</p>
-<p>The full code example can be found <a href="https://github.com/kserve/kserve/blob/release-0.10/python/custom_model/model_remote.py">here</a>.</p>
+<p>The full code example can be found <a href="https://github.com/kserve/kserve/blob/release-0.11/python/custom_model/model_remote.py">here</a>.</p>
 <p>Modify the <code>Procfile</code> to <code>web: python -m model_remote</code> and then run the above <code>pack</code> command, it builds the serving image which launches
 each model as separate python worker and web server routes to the model workers by name.</p>
 <p><img alt="parallel_inference" src="parallel_inference.png"/></p>
