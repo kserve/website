@@ -1,0 +1,39 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default
+  namespace: user1
+spec:
+  mtls:
+    mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: allow-serving-tests
+ namespace: user1 
+spec:
+ action: ALLOW
+ rules:
+ # mTLS for service from source "user1" namespace to destination service with TargetBurstCapacity=0 without local gateway and activator on the path
+ # Source Service from "user1" namespace -> Destination Service in "user1" namespace
+ - from:
+   - source:
+       namespaces: ["user1"]
+ # mTLS for service from source "user1" namespace to destination service with activator on the path
+ # Source Service from "user1" namespace -> Activator(Knative Serving namespace) -> Destination service in "user1" namespace
+ # unfortunately currently we could not lock down the source namespace as Activator does not capture the source namespace when proxying the request, see https://github.com/knative-sandbox/net-istio/issues/554.
+ # - when:
+ #  - key: request.headers[knative-serving-namespace]
+ #    values: ["user1"]
+ - from:
+   - source:
+      namespaces: ["knative-serving"]
+ # allow metrics and probes from knative serving namespaces
+ - from:
+   - source:
+      namespaces: ["knative-serving"]
+   to:
+   - operation:
+       paths: ["/metrics", "/healthz", "/ready", "/wait-for-drain"]
