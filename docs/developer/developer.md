@@ -15,14 +15,14 @@ Before submitting a PR, see also [CONTRIBUTING.md](https://github.com/kserve/kse
 
 You must install these tools:
 
-1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.18.0+.
+1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.20.0+.
 1. [`git`](https://help.github.com/articles/set-up-git/): For source control.
 1. [`Go Module`](https://blog.golang.org/using-go-modules): Go's new dependency management system.
 1. [`ko`](https://github.com/google/ko):
    For development.
 1. [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/): For
    managing development environments.
-1. [`kustomize`](https://github.com/kubernetes-sigs/kustomize/) To customize YAMLs for different environments, requires v3.5.4+.
+1. [`kustomize`](https://github.com/kubernetes-sigs/kustomize/) To customize YAMLs for different environments, requires v5.0.0+.
 1. [`yq`](https://github.com/mikefarah/yq) yq is used in the project makefiles to parse and display YAML output, requires yq `4.*`.
 
 ### Install Knative on a Kubernetes cluster
@@ -33,9 +33,9 @@ KServe currently requires `Knative Serving` for auto-scaling, canary rollout, `I
 use the [Knative Operators](https://knative.dev/docs/install/operator/knative-with-operators/) to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
 they can be installed via the [directions here](https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md).
 
-* If you start from scratch, KServe requires Kubernetes 1.17+, Knative 0.19+, Istio 1.9+.
+* If you start from scratch, KServe requires Kubernetes 1.25+, Knative 1.7+, Istio 1.15+.
 
-* If you already have `Istio` or `Knative` (e.g. from a Kubeflow install) then you don't need to install them explictly, as long as version dependencies are satisfied.
+* If you already have `Istio` or `Knative` (e.g. from a Kubeflow install) then you don't need to install them explicitly, as long as version dependencies are satisfied.
   
 > **_NOTE:_**  Note: On a local environment, when using `minikube` or `kind` as Kubernetes cluster, there has been a reported issue that [knative quickstart](https://knative.dev/docs/install/quickstart-install/) bootstrap does not work as expected. It is recommended to follow the installation manual from knative using [yaml](https://knative.dev/docs/install/yaml-install/) or using [knative operator](https://knative.dev/docs/install/operator/knative-with-operators/) for a better result.
 

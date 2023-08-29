@@ -69,7 +69,7 @@ class ImageTransformer(kserve.Model):
         return infer_request
 ```
 
-Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.10/python/custom_transformer).
+Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.11/python/custom_transformer).
 
 ### Transformer Server Entrypoint
 For single model you just create a transformer object and register that to the model server.
@@ -91,7 +91,7 @@ if __name__ == "__main__":
 ```
 
 ### Build Transformer docker image
-Under `kserve/python` directory, build the transformer docker image using [Dockerfile](https://github.com/kserve/kserve/blob/release-0.10/python/custom_transformer.Dockerfile)
+Under `kserve/python` directory, build the transformer docker image using [Dockerfile](https://github.com/kserve/kserve/blob/release-0.11/python/custom_transformer.Dockerfile)
 ```bash
 cd python
 docker build -t $DOCKER_USER/image-transformer:latest -f transformer.Dockerfile .

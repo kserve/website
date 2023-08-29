@@ -43,7 +43,7 @@ If you want to propagate a certain header, say "Custom-Header", then you can edi
 config-map like this :
 ```json
 {
-    "image" : "kserve/router:v0.10.0",
+    "image" : "kserve/router:v0.11.0",
     "memoryRequest": "100Mi",
     "memoryLimit": "1Gi",
     "cpuRequest": "100m",
