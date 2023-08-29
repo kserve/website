@@ -2,7 +2,7 @@ name: Mike deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ v0.11 ]
 
 jobs:
   build_docs:
