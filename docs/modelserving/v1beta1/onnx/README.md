@@ -6,8 +6,20 @@
 
 ## Create the InferenceService
 Apply the CRD
-```
-kubectl apply -f onnx.yaml 
+
+```shell
+    kubectl apply -f - <<EOF
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+    name: "style-sample"
+    spec:
+    predictor:
+        model:
+        modelFormat:
+            name: onnx
+        storageUri: "gs://kfserving-examples/models/onnx"
+    EOF
 ```
 
 Expected Output
@@ -27,7 +39,7 @@ export SERVICE_HOSTNAME=$(kubectl get inferenceservice ${ISVC_NAME} -o jsonpath=
 ```
 2. Verify the service is healthy
 ```
-curl -v -H "Host:${SERVICE_HOSTNAME}" http://localhost:8080/v2/models/${MODEL_NAME}
+curl -v -H "Host:${SERVICE_HOSTNAME}" http://localhost:8080//v2/health/ready
 ```
 3. Install dependencies
 ```
