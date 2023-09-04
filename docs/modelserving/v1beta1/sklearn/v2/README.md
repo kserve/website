@@ -26,79 +26,13 @@ clf.fit(X, y)
 dump(clf, 'model.joblib')
 ```
 
-## Testing locally
-
-Once you've got your model serialised `model.joblib`, we can then use
-[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
-For more details on MLServer, feel free to check the [SKLearn example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/sklearn/README.md).
-
-!!! Note
-    this step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
-
-### Pre-requisites
-
-Firstly, to use MLServer locally, you will first need to install the `mlserver`
-package in your local environment, as well as the SKLearn runtime.
-
-```bash
-pip install mlserver mlserver-sklearn
-```
-
-### Model settings
-
-The next step will be providing some model settings so that
-MLServer knows:
-
-- The inference runtime to serve your model (i.e. `mlserver_sklearn.SKLearnModel`)
-- The model's name and version
-
-These can be specified through environment variables or by creating a local
-`model-settings.json` file:
-
-```json
-{
-  "name": "sklearn-iris",
-  "version": "v1.0.0",
-  "implementation": "mlserver_sklearn.SKLearnModel"
-}
-```
-
-Note that, when you [deploy your model](#deployment), **KServe will already
-inject some sensible defaults** so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-`model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
-
-### Serving model locally
-
-With the `mlserver` package installed locally and a local `model-settings.json`
-file, you should now be ready to start our server as:
-
-```bash
-mlserver start .
-```
-
 ## Deploy with InferenceService 
 
 Lastly, you will use KServe to deploy the trained model.
 For this, you will just need to use **version `v1beta1`** of the
 `InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
 
-=== "Old Schema"
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "sklearn-irisv2"
-    spec:
-      predictor:
-        sklearn:
-          protocolVersion: "v2"
-          storageUri: "gs://seldon-models/sklearn/mms/lr_model"
-    ```
-=== "New Schema"
+=== "Yaml"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -109,9 +43,12 @@ For this, you will just need to use **version `v1beta1`** of the
         model:
           modelFormat:
             name: sklearn
-          runtime: kserve-mlserver
+          protocolVersion: v2
+          runtime: kserve-sklearnserver
           storageUri: "gs://seldon-models/sklearn/mms/lr_model"
     ```
+!!! Note
+    For `V2 protocol (open inference protocol)` if `runtime` field is not provided then, by default `mlserver` runtime is used.
 
 Note that this makes the following assumptions:
 
@@ -185,3 +122,57 @@ curl -v \
       ]
     }
     ```
+
+## Testing the model locally with mlserver
+
+Once you've got your model serialised `model.joblib`, we can then use
+[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
+For more details on MLServer, feel free to check the [SKLearn example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/sklearn/README.md).
+
+!!! Note
+    This step is optional and just meant for testing only.
+
+### Pre-requisites
+
+Firstly, to use MLServer locally, you will first need to install the `mlserver`
+package in your local environment, as well as the SKLearn runtime.
+
+```bash
+pip install mlserver mlserver-sklearn
+```
+
+### Model settings
+
+The next step will be providing some model settings so that
+MLServer knows:
+
+- The inference runtime to serve your model (i.e. `mlserver_sklearn.SKLearnModel`)
+- The model's name and version
+
+These can be specified through environment variables or by creating a local
+`model-settings.json` file:
+
+```json
+{
+  "name": "sklearn-iris",
+  "version": "v1.0.0",
+  "implementation": "mlserver_sklearn.SKLearnModel"
+}
+```
+
+Note that, when you [deploy your model](#deployment), **KServe will already
+inject some sensible defaults** so that it runs out-of-the-box without any
+further configuration.
+However, you can still override these defaults by providing a
+`model-settings.json` file similar to your local one.
+You can even provide a [set of `model-settings.json` files to load multiple
+models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
+
+### Serving model locally
+
+With the `mlserver` package installed locally and a local `model-settings.json`
+file, you should now be ready to start our server as:
+
+```bash
+mlserver start .
+```

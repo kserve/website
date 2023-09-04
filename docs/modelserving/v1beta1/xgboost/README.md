@@ -36,80 +36,13 @@ model_file = os.path.join((model_dir), BST_FILE)
 xgb_model.save_model(model_file)
 ```
 
-## Testing locally
-
-Once we've got our `model.bst` model serialised, we can then use
-[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
-For more details on MLServer, feel free to check the [XGBoost example in their
-docs](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/xgboost).
-
-> Note that this step is optional and just meant for testing.
-> Feel free to jump straight to [deploying your trained model](#deployment).
-
-### Pre-requisites
-
-Firstly, to use MLServer locally, you will first need to install the `mlserver`
-package in your local environment as well as the XGBoost runtime.
-
-```bash
-pip install mlserver mlserver-xgboost
-```
-
-### Model settings
-
-The next step will be providing some model settings so that
-MLServer knows:
-
-- The inference runtime that we want our model to use (i.e.
-  `mlserver_xgboost.XGBoostModel`)
-- Our model's name and version
-
-These can be specified through environment variables or by creating a local
-`model-settings.json` file:
-
-```json
-{
-  "name": "xgboost-iris",
-  "version": "v1.0.0",
-  "implementation": "mlserver_xgboost.XGBoostModel"
-}
-```
-
-Note that, when we [deploy our model](#deployment), **KServe will already
-inject some sensible defaults** so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-`model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
-
-### Serving our model locally
-
-With the `mlserver` package installed locally and a local `model-settings.json`
-file, we should now be ready to start our server as:
-
-```bash
-mlserver start .
-```
-
 ## Deploy with InferenceService
 
 Lastly, we will use KServe to deploy our trained model.
 For this, we will just need to use **version `v1beta1`** of the
 `InferenceService` CRD and set the the **`protocolVersion` field to `v2`**.
-=== "Old Schema"
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "xgboost-iris"
-    spec:
-      predictor:
-        xgboost:
-          protocolVersion: "v2"
-          storageUri: "gs://kfserving-examples/models/xgboost/iris"
-    ```
-=== "New Schema"
+
+=== "Yaml"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -120,9 +53,13 @@ For this, we will just need to use **version `v1beta1`** of the
         model:
           modelFormat:
             name: xgboost
-          runtime: kserve-mlserver
+          protocolVersion: v2
+          runtime: kserve-xgbserver
           storageUri: "gs://kfserving-examples/models/xgboost/iris"
     ```
+!!! Note
+    For `V2 protocol (open inference protocol)` if `runtime` field is not provided then, by default `mlserver` runtime is used.
+
 Note that this makes the following assumptions:
 
 - Your model weights (i.e. your `model.bst` file) have already been uploaded
@@ -199,3 +136,59 @@ The output will be something similar to:
       ]
     }
     ```
+
+## Testing the model locally with mlserver
+
+Once we've got our `model.bst` model serialised, we can then use
+[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
+For more details on MLServer, feel free to check the [XGBoost example in their
+docs](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/xgboost).
+
+!!! Note 
+    This step is optional and just meant for testing only.
+
+### Pre-requisites
+
+Firstly, to use MLServer locally, you will first need to install the `mlserver`
+package in your local environment as well as the XGBoost runtime.
+
+```bash
+pip install mlserver mlserver-xgboost
+```
+
+### Model settings
+
+The next step will be providing some model settings so that
+MLServer knows:
+
+- The inference runtime that we want our model to use (i.e.
+  `mlserver_xgboost.XGBoostModel`)
+- Our model's name and version
+
+These can be specified through environment variables or by creating a local
+`model-settings.json` file:
+
+```json
+{
+  "name": "xgboost-iris",
+  "version": "v1.0.0",
+  "implementation": "mlserver_xgboost.XGBoostModel"
+}
+```
+
+Note that, when we [deploy our model](#deployment), **KServe will already
+inject some sensible defaults** so that it runs out-of-the-box without any
+further configuration.
+However, you can still override these defaults by providing a
+`model-settings.json` file similar to your local one.
+You can even provide a [set of `model-settings.json` files to load multiple
+models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
+
+### Serving our model locally
+
+With the `mlserver` package installed locally and a local `model-settings.json`
+file, we should now be ready to start our server as:
+
+```bash
+mlserver start .
+```
