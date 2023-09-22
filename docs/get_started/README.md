@@ -22,3 +22,18 @@ You can get started with a local deployment of KServe by using _KServe Quick ins
 curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.11/hack/quick_install.sh" | bash
 ```
 
+## For connection refused errors: 
+
+1. Create a Kind Cluster: 
+    ```shell
+   kind create cluster 
+    ```
+2. Confirm kind-kind cluster is available: 
+    ```shell
+    kubectl config get-contexts 
+    ```
+3. Set as context: 
+     ```shell
+     kubectl config use-context kind-kind
+    ```
+4. Run bash command agian 
