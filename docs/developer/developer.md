@@ -48,14 +48,14 @@ recommend adding them to your `.bashrc`):
    `export GOPATH=...`
 1. `$GOPATH/bin` on `PATH`: This is so that tooling installed via `go get` will
    work properly.
+1. `KO_DEFAULTPLATFORMS`: In M1 Mac books  the value is `linux/arm64`.
 1. `KO_DOCKER_REPO`: The docker repository to which developer images should be
    pushed (e.g. `docker.io/<username>`).
-
-- **Note**: Set up a docker repository for pushing images. You can use any container image registry by adjusting 
-the authentication methods and repository paths mentioned in the sections below.
-   - [Google Container Registry quickstart](https://cloud.google.com/container-registry/docs/pushing-and-pulling)
-   - [Docker Hub quickstart](https://docs.docker.com/docker-hub/)
-   - [Azure Container Registry quickstart](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal)
+   **Note**: Set up a docker repository for pushing images. You can use any container image registry by adjusting
+   the authentication methods and repository paths mentioned in the sections below.
+    * [Google Container Registry quickstart](https://cloud.google.com/container-registry/docs/pushing-and-pulling)
+    * [Docker Hub quickstart](https://docs.docker.com/docker-hub/)
+    * [Azure Container Registry quickstart](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal)
 !!! Note  
     if you are using docker hub to store your images your `KO_DOCKER_REPO` variable should be `docker.io/<username>`.
     Currently Docker Hub doesn't let you create subdirs under your username.
