@@ -22,7 +22,6 @@ nav:
                   - V1 Inference Protocol: modelserving/data_plane/v1_protocol.md
                   - Open Inference Protocol (V2 Inference Protocol): modelserving/data_plane/v2_protocol.md
                 - Serving Runtimes: modelserving/servingruntimes.md
-                - Storage Containers: modelserving/storagecontainers.md
           - Model Serving Runtimes:
               - Supported Model Frameworks/Formats:
                 - Overview: modelserving/v1beta1/serving_runtime.md
@@ -53,6 +52,7 @@ nav:
                 - Concept: modelserving/inference_graph/README.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
           - Model Storage:
+                - Storage Containers: modelserving/storage/storagecontainers.md
                 - Azure: modelserving/storage/azure/azure.md
                 - PVC: modelserving/storage/pvc/pvc.md
                 - S3: modelserving/storage/s3/s3.md
