@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/master/developer/developer/" rel="canonical"/>
 <link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
 <title>How to contribute - KServe Documentation Website</title>
 <link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -1271,17 +1271,16 @@ recommend adding them to your <code>.bashrc</code>):</p>
    <code>export GOPATH=...</code></li>
 <li><code>$GOPATH/bin</code> on <code>PATH</code>: This is so that tooling installed via <code>go get</code> will
    work properly.</li>
-<li>
-<p><code>KO_DOCKER_REPO</code>: The docker repository to which developer images should be
-   pushed (e.g. <code>docker.io/&lt;username&gt;</code>).</p>
-</li>
-<li>
-<p><strong>Note</strong>: Set up a docker repository for pushing images. You can use any container image registry by adjusting 
-the authentication methods and repository paths mentioned in the sections below.</p>
-</li>
+<li><code>KO_DEFAULTPLATFORMS</code>: If you are using M1 Mac book the value is <code>linux/arm64</code>.</li>
+<li><code>KO_DOCKER_REPO</code>: The docker repository to which developer images should be
+   pushed (e.g. <code>docker.io/&lt;username&gt;</code>).
+   <strong>Note</strong>: Set up a docker repository for pushing images. You can use any container image registry by adjusting
+   the authentication methods and repository paths mentioned in the sections below.<ul>
 <li><a href="https://cloud.google.com/container-registry/docs/pushing-and-pulling">Google Container Registry quickstart</a></li>
 <li><a href="https://docs.docker.com/docker-hub/">Docker Hub quickstart</a></li>
 <li><a href="https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal">Azure Container Registry quickstart</a></li>
+</ul>
+</li>
 </ol>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
