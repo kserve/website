@@ -17,7 +17,7 @@ The minimally required Istio version is 1.13 and you can refer to the [Istio ins
 
 Once Istio is installed, create `IngressClass` resource for istio.
 ```yaml
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: IngressClass
 metadata:
   name: istio
