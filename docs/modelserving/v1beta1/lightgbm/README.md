@@ -54,18 +54,6 @@ print(res.text)
 
 To deploy the model on Kubernetes you can create the InferenceService by specifying the `modelFormat` with `lightgbm` and `storageUri`. 
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "lightgbm-iris"
-    spec:
-      predictor:
-        lightgbm:
-          storageUri: "gs://kfserving-examples/models/lightgbm/iris"
-    ```
 === "New Schema"
 
     ```yaml
@@ -78,6 +66,18 @@ To deploy the model on Kubernetes you can create the InferenceService by specify
         model:
           modelFormat:
             name: lightgbm
+          storageUri: "gs://kfserving-examples/models/lightgbm/iris"
+    ```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-iris"
+    spec:
+      predictor:
+        lightgbm:
           storageUri: "gs://kfserving-examples/models/lightgbm/iris"
     ```
 
@@ -129,27 +129,26 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
     {"predictions": [[0.9, 0.05, 0.05]]}
     ```
 
-## Deploy the model with [V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
+## Deploy the model with [Open Inference Protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
 
 ### Test the model locally
-Once you've got your model serialized `model.bst`, we can then use either
-[Kserve LightGBM Server](https://github.com/kserve/kserve/tree/master/python/lgbserver) or [MLServer](https://github.com/SeldonIO/MLServer) which implements the KServe V2 inference protocol to spin up a local server.
+Once you've got your model serialized `model.bst`, we can then use [KServe LightGBM Server](https://github.com/kserve/kserve/tree/master/python/lgbserver) to create a local model server.
 
 !!! Note
     This step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
 
-### Using Kserve LigtGBM Server
+### Using KServe LightGBM Server
 
 #### Pre-requisites
 
 Firstly, to use kserve lightgbm server locally, you will first need to install the `lgbserver`
 runtime package in your local environment.
 
-1. Clone the Kserve repository and navigate into the directory.
+1. Clone the KServe repository and navigate into the directory.
     ```bash
     git clone https://github.com/kserve/kserve
     ```
-2. Install `lgbserver` runtime. Kserve uses [Poetry](https://python-poetry.org/) as the dependency management tool. Make sure you have already [installed poetry](https://python-poetry.org/docs/#installation).
+2. Install `lgbserver` runtime. KServe uses [Poetry](https://python-poetry.org/) as the dependency management tool. Make sure you have already [installed poetry](https://python-poetry.org/docs/#installation).
     ```bash
     cd python/lgbserver
     poetry install 
@@ -168,54 +167,8 @@ With the `lgbserver` runtime package installed locally, you should now be ready 
 python3 lgbserver --model_dir /path/to/model_dir --model_name lightgbm-iris
 ```
 
-### Using MLserver 
-
-#### Pre-requisites
-
-To run MLServer locally, you first install the `mlserver` package in your local environment, as well as the LightGBM runtime.
-For more details on MLServer, please check the [LightGBM example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md).
-
-
-```bash
-pip install mlserver mlserver-lightgbm
-```
-
-#### Model settings
-
-The next step is to provide the model settings so that MLServer knows:
-
-- The inference runtime to serve your model (i.e. `mlserver_lightgbm.LightGBMModel`)
-- The model's name and version
-
-These can be specified through environment variables or by creating a local
-`model-settings.json` file:
-
-```json
-{
-  "name": "lightgbm-iris",
-  "version": "v1.0.0",
-  "implementation": "mlserver_lightgbm.LightGBMModel"
-}
-```
-Note that, when you [deploy your model](#deployment), **KServe will already
-inject some sensible defaults** so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-`model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
-
-#### Serving model locally
-
-With the `mlserver` package installed locally and a local `model-settings.json`
-file, you should now be ready to start our server as:
-
-```bash
-mlserver start .
-```
-
 ### Deploy InferenceService with REST endpoint
-To deploy the LightGBM model with V2 inference protocol, you need to set the **`protocolVersion` field to `v2`**.
+To deploy the LightGBM model with Open Inference Protocol, you need to set the **`protocolVersion` field to `v2`**.
 
 === "Schema"
 
