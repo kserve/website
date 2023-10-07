@@ -109,7 +109,7 @@ site_description: KServe Documentation
 extra_css:
   - stylesheets/extra.css
 
-repo_url: https://github.com/kserve/website
+repo_url: https://github.com/kserve/kserve
 edit_uri: edit/main/docs
 
 theme:
