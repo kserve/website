@@ -36,6 +36,20 @@ KServe uses a number of extensions to MkDocs which can also be installed using p
     pip3 install mkdocs-material-extensions mkdocs-macros-plugin mkdocs-exclude mkdocs-awesome-pages-plugin mkdocs-redirects
     ```
 
+## Install Dependencies in Requirements.txt file
+
+Navigate to root folder and run below command to install required packages and libraries specified in the requirements.txt file.
+
+=== "pip"
+    ```
+    pip install -r requirements.txt
+    ```
+
+=== "pip3"
+    ```
+    pip3 install -r requirements.txt
+    ```
+
 ## Setting Up Local Preview
 Once you have installed Material for MkDocs and all of the extensions, head over to
 --8<-- "docs/snippets/links/main-docs-branch-link.md"
