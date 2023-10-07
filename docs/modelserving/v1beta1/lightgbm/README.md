@@ -137,8 +137,6 @@ Once you've got your model serialized `model.bst`, we can then use [KServe Light
 !!! Note
     This step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
 
-### Using KServe LightGBM Server
-
 #### Pre-requisites
 
 Firstly, to use kserve lightgbm server locally, you will first need to install the `lgbserver`
@@ -202,7 +200,7 @@ kubectl apply -f lightgbm-v2.yaml
     $ inferenceservice.serving.kserve.io/lightgbm-v2-iris created
     ```
 
-### Test the deployed model with curl
+#### Test the deployed model with curl
 
 You can now test your deployed model by sending a sample request.
 
@@ -295,7 +293,7 @@ Apply the InferenceService yaml to get the gRPC endpoint
 kubectl apply -f lightgbm-v2-grpc.yaml
 ```
 
-### Test the deployed model with grpcurl
+#### Test the deployed model with grpcurl
 
 After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fullstorydev/grpcurl), can be used to send gRPC requests to the `InferenceService`.
 
