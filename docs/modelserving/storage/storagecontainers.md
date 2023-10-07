@@ -32,7 +32,10 @@ spec:
 
 In a _ClusterStorageContainer_ spec, you can specify container resource requests and limits, and a list of Uri formats that this image supports. KServe can match the Uri with `prefix` and `regex` .
 
-If a storage URI is supported by two or more _ClusterStorageContainer_ CRs, there is no guarantee which one will be used. **Please make sure that the URI format is only supported by one ClusterStorageContainer CR**.
+!!! warning
+
+    If a storage URI is supported by two or more _ClusterStorageContainer_ CRs, there is no guarantee which one will be used. **Please make sure that the URI format is only supported by one ClusterStorageContainer CR**.
+
 
 If you would like to use a custom protocol `abc://`, for example, you can create a custom image and add a new ClusterStorageContainer CR like this:
 
