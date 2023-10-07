@@ -54,27 +54,29 @@ This is demonstrated in the example for the [AMD Inference Server](./v1beta1/amd
 
 Available attributes in the `ServingRuntime` spec:
 
-| Attribute                          | Description                                                                                                                                                                                |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `multiModel`                       | Whether this ServingRuntime is ModelMesh-compatible and intended for multi-model usage (as opposed to KServe single-model serving). Defaults to false                                      |
-| `disabled`                         | Disables this runtime                                                                                                                                                                      |
-| `containers`                       | List of containers associated with the runtime                                                                                                                                             |
-| `containers[ ].image`              | The container image for the current container                                                                                                                                              |
-| `containers[ ].command`            | Executable command found in the provided image                                                                                                                                             |
-| `containers[ ].args`               | List of command line arguments as strings                                                                                                                                                  |
-| `containers[ ].resources`          | Kubernetes [limits or requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)                                                        |
-| `containers[ ].env `               | List of environment variables to pass to the container                                                                                                                                     |
-| `containers[ ].imagePullPolicy`    | The container image pull policy                                                                                                                                                            |
-| `containers[ ].workingDir`         | The working directory for current container                                                                                                                                                |
-| `containers[ ].livenessProbe`      | Probe for checking container liveness                                                                                                                                                      |
-| `containers[ ].readinessProbe`     | Probe for checking container readiness                                                                                                                                                     |
-| `supportedModelFormats`            | List of model types supported by the current runtime                                                                                                                                       |
-| `supportedModelFormats[ ].name`    | Name of the model format                                                                                                                                                                   |
-| `supportedModelFormats[ ].version` | Version of the model format. Used in validating that a predictor is supported by a runtime. It is recommended to include only the major version here, for example "1" rather than "1.15.4" |
-| `storageHelper.disabled`           | Disables the storage helper                                                                                                                                                                |
-| `nodeSelector`                     | Influence Kubernetes scheduling to [assign pods to nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)                                                        |
-| `affinity`                         | Influence Kubernetes scheduling to [assign pods to nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity)                             |
-| `tolerations`                      | Allow pods to be scheduled onto nodes [with matching taints](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration)                                                 |
+| Attribute                             | Description                                                                                                                                                                                                                                                                                                                                                                                                          |
+|---------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `multiModel`                          | Whether this ServingRuntime is ModelMesh-compatible and intended for multi-model usage (as opposed to KServe single-model serving). Defaults to false                                                                                                                                                                                                                                                                |
+| `disabled`                            | Disables this runtime                                                                                                                                                                                                                                                                                                                                                                                                |
+| `containers`                          | List of containers associated with the runtime                                                                                                                                                                                                                                                                                                                                                                       |
+| `containers[ ].image`                 | The container image for the current container                                                                                                                                                                                                                                                                                                                                                                        |
+| `containers[ ].command`               | Executable command found in the provided image                                                                                                                                                                                                                                                                                                                                                                       |
+| `containers[ ].args`                  | List of command line arguments as strings                                                                                                                                                                                                                                                                                                                                                                            |
+| `containers[ ].resources`             | Kubernetes [limits or requests](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)                                                                                                                                                                                                                                                                                  |
+| `containers[ ].env `                  | List of environment variables to pass to the container                                                                                                                                                                                                                                                                                                                                                               |
+| `containers[ ].imagePullPolicy`       | The container image pull policy                                                                                                                                                                                                                                                                                                                                                                                      |
+| `containers[ ].workingDir`            | The working directory for current container                                                                                                                                                                                                                                                                                                                                                                          |
+| `containers[ ].livenessProbe`         | Probe for checking container liveness                                                                                                                                                                                                                                                                                                                                                                                |
+| `containers[ ].readinessProbe`        | Probe for checking container readiness                                                                                                                                                                                                                                                                                                                                                                               |
+| `supportedModelFormats`               | List of model types supported by the current runtime                                                                                                                                                                                                                                                                                                                                                                 |
+| `supportedModelFormats[ ].name`       | Name of the model format                                                                                                                                                                                                                                                                                                                                                                                             |
+| `supportedModelFormats[ ].version`    | Version of the model format. Used in validating that a predictor is supported by a runtime. It is recommended to include only the major version here, for example "1" rather than "1.15.4"                                                                                                                                                                                                                           |
+| `supportedModelFormats[ ].autoselect` | Set to true to allow the ServingRuntime to be used for automatic model placement if this model format is specified with no explicit runtime. The default value is false.                                                                                                                                                                                                                                             |
+| `supportedModelFormats[ ].priority`   | Priority of this serving runtime for auto selection. This is used to select the serving runtime if more than one serving runtime supports the same model format. <br/>The value should be greater than zero. The higher the value, the higher the priority. Priority is not considered if AutoSelect is either false or not specified. Priority can be overridden by specifying the runtime in the InferenceService. |
+| `storageHelper.disabled`              | Disables the storage helper                                                                                                                                                                                                                                                                                                                                                                                          |
+| `nodeSelector`                        | Influence Kubernetes scheduling to [assign pods to nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/)                                                                                                                                                                                                                                                                                  |
+| `affinity`                            | Influence Kubernetes scheduling to [assign pods to nodes](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity)                                                                                                                                                                                                                                                       |
+| `tolerations`                         | Allow pods to be scheduled onto nodes [with matching taints](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration)                                                                                                                                                                                                                                                                           |
 
 ModelMesh leverages additional fields not listed here. More information [here](https://github.com/kserve/modelmesh-serving/blob/main/docs/runtimes/custom_runtimes.md#spec-attributes).
 
@@ -112,7 +114,7 @@ by the runtime will be used for model deployment.
 
 ### Implicit: Automatic selection
 
-In each entry of the `supportedModelFormats` list, `autoSelect: true` can optionally be specified to indicate that that the given `ServingRuntime` can be
+In each entry of the `supportedModelFormats` list, `autoSelect: true` can optionally be specified to indicate that the given `ServingRuntime` can be
 considered for automatic selection for predictors with the corresponding model format if no runtime is explicitly specified.
 For example, the `kserve-sklearnserver` ClusterServingRuntime supports SKLearn version 1 and has `autoSelect` enabled:
 
@@ -162,9 +164,75 @@ spec:
 Then, then the version of the `supportedModelFormat` must also match. In this example, `kserve-sklearnserver` would not be eligible for selection since
 it only lists support for `sklearn` version `1`.
 
+#### Priority
+
+If more than one serving runtime supports the same `model format` with same `version` and also supports the same `protocolVersion` then, we can optionally specify `priority` for the serving runtime. 
+Based on the `priority` the runtime is automatically selected if no runtime is explicitly specified. Note that, `priority` is valid only if `autoSelect` is `true`. Higher value means higher priority.
+
+For example, let's consider the serving runtimes `mlserver` and `kserve-sklearnserver`. Both the serving runtimes supports the `sklearn` model format with version `1` and both supports
+the `protocolVersion` v2. Also note that `autoSelect` is enabled in both the serving runtimes.
+
+```yaml
+apiVersion: serving.kserve.io/v1alpha1
+kind: ClusterServingRuntime
+metadata:
+  name: kserve-sklearnserver
+spec:
+  protocolVersions:
+    - v1
+    - v2
+  supportedModelFormats:
+    - name: sklearn
+      version: "1"
+      autoSelect: true
+      priority: 1
+...
+```
+
+```yaml
+apiVersion: serving.kserve.io/v1alpha1
+kind: ClusterServingRuntime
+metadata:
+  name: mlserver
+spec:
+  protocolVersions:
+    - v2
+  supportedModelFormats:
+    - name: sklearn
+      version: "1"
+      autoSelect: true
+      priority: 2
+...
+```
+When the following InferenceService is deployed with no runtime specified, the controller will look for a runtime that supports `sklearn`:
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: example-sklearn-isvc
+spec:
+  predictor:
+    model:
+      protocolVersion: v2
+      modelFormat:
+        name: sklearn
+      storageUri: s3://bucket/sklearn/mnist.joblib
+```
+The controller will find the two runtimes `kserve-sklearnserver` and `mlserver` as both has an entry in its `supportedModelFormats` list with `sklearn` and `autoSelect: true`. 
+Now the runtime is sorted based on the priority by the controller as there are more than one supported runtime available. Since the `mlserver` has the higher `priority` value, this ClusterServingRuntime
+will be used for model deployment.
+
+**Constraints of priority**
+
+- The higher priority value means higher precedence. The value must be greater than 0.
+- The priority is valid only if auto select is enabled otherwise the priority is not considered.
+- The serving runtime with priority takes precedence over the serving runtime with priority not specified.
+- Two model formats with same name and same model version cannot have the same priority.
+- If more than one serving runtime supports the model format and none of them specified the priority then, there is no guarantee _which_ runtime will be selected.
 
 !!! warning
-    If multiple runtimes list the same format and/or version as auto-selectable, then there is no guarantee _which_ runtime will be selected.
+    If multiple runtimes list the same format and/or version as auto-selectable and the priority is not specified, the runtime is selected based on the `creationTimestamp` i.e. the most recently created runtime is selected. So there is no guarantee _which_ runtime will be selected.
     So users and cluster-administrators should enable `autoSelect` with care.
 
 ### Previous schema

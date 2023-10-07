@@ -30,7 +30,7 @@ lgb_model.save_model(model_file)
 ## Deploy LightGBM model with V1 protocol
 
 ### Test the model locally
-Install and run the [LightGBM Server](https://github.com/kserve/kserve/python/lgbserver) using the trained model locally and test the prediction. 
+Install and run the [LightGBM Server](https://github.com/kserve/kserve/tree/master/python/lgbserver) using the trained model locally and test the prediction. 
 
 ```shell
 python -m lgbserver --model_dir /path/to/model_dir --model_name lgb
@@ -54,18 +54,6 @@ print(res.text)
 
 To deploy the model on Kubernetes you can create the InferenceService by specifying the `modelFormat` with `lightgbm` and `storageUri`. 
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "lightgbm-iris"
-    spec:
-      predictor:
-        lightgbm:
-          storageUri: "gs://kfserving-examples/models/lightgbm/iris"
-    ```
 === "New Schema"
 
     ```yaml
@@ -78,6 +66,18 @@ To deploy the model on Kubernetes you can create the InferenceService by specify
         model:
           modelFormat:
             name: lightgbm
+          storageUri: "gs://kfserving-examples/models/lightgbm/iris"
+    ```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-iris"
+    spec:
+      predictor:
+        lightgbm:
           storageUri: "gs://kfserving-examples/models/lightgbm/iris"
     ```
 
@@ -129,62 +129,46 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
     {"predictions": [[0.9, 0.05, 0.05]]}
     ```
 
-## Deploy the model with [V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
+## Deploy the model with [Open Inference Protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
 
 ### Test the model locally
-Once you've got your model serialized `model.bst`, we can then use [MLServer](https://github.com/SeldonIO/MLServer) which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the [LightGBM example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md).
+Once you've got your model serialized `model.bst`, we can then use [KServe LightGBM Server](https://github.com/kserve/kserve/tree/master/python/lgbserver) to create a local model server.
 
-To run MLServer locally, you first install the `mlserver` package in your local environment, as well as the LightGBM runtime.
+!!! Note
+    This step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
+
+#### Pre-requisites
+
+Firstly, to use kserve lightgbm server locally, you will first need to install the `lgbserver`
+runtime package in your local environment.
+
+1. Clone the KServe repository and navigate into the directory.
+    ```bash
+    git clone https://github.com/kserve/kserve
+    ```
+2. Install `lgbserver` runtime. KServe uses [Poetry](https://python-poetry.org/) as the dependency management tool. Make sure you have already [installed poetry](https://python-poetry.org/docs/#installation).
+    ```bash
+    cd python/lgbserver
+    poetry install 
+    ```
+#### Serving model locally
+
+The `lgbserver` package takes three arguments.
+
+- `--model_dir`: The model directory path where the model is stored.
+- `--model_name`: The name of the model deployed in the model server, the default value is `model`. This is optional. 
+- `--nthread`: Number of threads to use by LightGBM. This is optional and the default value is 1.
+
+With the `lgbserver` runtime package installed locally, you should now be ready to start our server as:
 
 ```bash
-pip install mlserver mlserver-lightgbm
-```
-
-The next step is to provide the model settings so that MLServer knows:
-
-- The inference runtime to serve your model (i.e. `mlserver_lightgbm.LightGBMModel`)
-- The model's name and version
-
-These can be specified through environment variables or by creating a local
-`model-settings.json` file:
-
-```json
-{
-  "name": "lightgbm-iris",
-  "version": "v1.0.0",
-  "implementation": "mlserver_lightgbm.LightGBMModel"
-}
-```
-
-With the `mlserver` package installed locally and a local `model-settings.json`
-file, you should now be ready to start our server as:
-
-```bash
-mlserver start .
+python3 lgbserver --model_dir /path/to/model_dir --model_name lightgbm-iris
 ```
 
 ### Deploy InferenceService with REST endpoint
+To deploy the LightGBM model with Open Inference Protocol, you need to set the **`protocolVersion` field to `v2`**.
 
-When you deploy your model with `InferenceService` KServe injects sensible defaults so that it runs out-of-the-box without any
-further configuration. However, you can still override these defaults by providing a `model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
-
-To deploy the LightGBM model with V2 inference protocol, you need to set the **`protocolVersion` field to `v2`**.
-
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "lightgbm-v2-iris"
-    spec:
-      predictor:
-        lightgbm:
-          protocolVersion: v2
-          storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
-    ```
-=== "New Schema"
+=== "Schema"
 
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
@@ -196,9 +180,12 @@ To deploy the LightGBM model with V2 inference protocol, you need to set the **`
         model:
           modelFormat:
             name: lightgbm
+          runtime: kserve-lgbserver
           protocolVersion: v2
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
     ```
+!!! Note
+    For `V2 protocol (open inference protocol)` if `runtime` field is not provided then, by default `mlserver` runtime is used.
 
 Apply the InferenceService yaml to get the REST endpoint
 === "kubectl"
@@ -213,7 +200,7 @@ kubectl apply -f lightgbm-v2.yaml
     $ inferenceservice.serving.kserve.io/lightgbm-v2-iris created
     ```
 
-### Test the deployed model with curl
+#### Test the deployed model with curl
 
 You can now test your deployed model by sending a sample request.
 
@@ -276,24 +263,7 @@ curl -v \
 ### Create the InferenceService with gRPC endpoint
 Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "lightgbm-v2-iris"
-    spec:
-      predictor:
-        lightgbm:
-          protocolVersion: v2
-          storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
-          ports:
-          - name: h2c
-            protocol: TCP
-            containerPort: 9000
-    ```
-=== "New Schema"
+=== "Yaml"
 
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
@@ -306,12 +276,15 @@ Create the inference service yaml and expose the gRPC port, currently only one p
           modelFormat:
             name: lightgbm
           protocolVersion: v2
+          runtime: kserve-lgbserver
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
           ports:
-          - name: h2c
-            protocol: TCP
-            containerPort: 9000
+            - name: h2c
+              protocol: TCP
+              containerPort: 8081
     ```
+!!! Note
+    For `V2 protocol (open inference protocol)` if `runtime` field is not provided then, by default `mlserver` runtime is used.
 
 Apply the InferenceService yaml to get the gRPC endpoint
 === "kubectl"
@@ -320,7 +293,7 @@ Apply the InferenceService yaml to get the gRPC endpoint
 kubectl apply -f lightgbm-v2-grpc.yaml
 ```
 
-### Test the deployed model with grpcurl
+#### Test the deployed model with grpcurl
 
 After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fullstorydev/grpcurl), can be used to send gRPC requests to the `InferenceService`.
 

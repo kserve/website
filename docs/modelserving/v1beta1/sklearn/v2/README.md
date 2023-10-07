@@ -4,10 +4,9 @@ This example walks you through how to deploy a `scikit-learn` model leveraging
 the `v1beta1` version of the `InferenceService` CRD.
 Note that, by default the `v1beta1` version will expose your model through an
 API compatible with the existing V1 Dataplane.
-However, this example will show you how to serve a model through an API
-compatible with the new [V2 Dataplane](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
+This example will show you how to serve a model through [Open Inference Protocol](https://github.com/kserve/open-inference-protocol).
 
-## Training
+## Train the Model
 
 The first step will be to train a sample `scikit-learn` model.
 Note that this model will be then saved as `model.joblib`.
@@ -26,79 +25,49 @@ clf.fit(X, y)
 dump(clf, 'model.joblib')
 ```
 
-## Testing locally
+## Test the Model locally
 
-Once you've got your model serialised `model.joblib`, we can then use
-[MLServer](https://github.com/SeldonIO/MLServer) to spin up a local server.
-For more details on MLServer, feel free to check the [SKLearn example doc](https://github.com/SeldonIO/MLServer/blob/master/docs/examples/sklearn/README.md).
+Once you've got your model serialised `model.joblib`, we can then use [KServe Sklearn Server](https://github.com/kserve/kserve/tree/master/python/sklearnserver) to spin up a local server.
 
 !!! Note
-    this step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
+    This step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
 
-### Pre-requisites
+### Using KServe SklearnServer
 
-Firstly, to use MLServer locally, you will first need to install the `mlserver`
-package in your local environment, as well as the SKLearn runtime.
+#### Pre-requisites
 
-```bash
-pip install mlserver mlserver-sklearn
-```
+Firstly, to use KServe sklearn server locally, you will first need to install the `sklearnserver`
+runtime package in your local environment.
 
-### Model settings
+1. Clone the KServe repository and navigate into the directory.
+    ```bash
+    git clone https://github.com/kserve/kserve
+    ```
+2. Install `sklearnserver` runtime. Kserve uses [Poetry](https://python-poetry.org/) as the dependency management tool. Make sure you have already [installed poetry](https://python-poetry.org/docs/#installation).
+    ```bash
+    cd python/sklearnserver
+    poetry install 
+    ```
+#### Serving model locally
 
-The next step will be providing some model settings so that
-MLServer knows:
+The `sklearnserver` package takes two arguments.
 
-- The inference runtime to serve your model (i.e. `mlserver_sklearn.SKLearnModel`)
-- The model's name and version
+- `--model_dir`: The model directory path where the model is stored.
+- `--model_name`: The name of the model deployed in the model server, the default value is `model`. This is optional. 
 
-These can be specified through environment variables or by creating a local
-`model-settings.json` file:
-
-```json
-{
-  "name": "sklearn-iris",
-  "version": "v1.0.0",
-  "implementation": "mlserver_sklearn.SKLearnModel"
-}
-```
-
-Note that, when you [deploy your model](#deployment), **KServe will already
-inject some sensible defaults** so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-`model-settings.json` file similar to your local one.
-You can even provide a [set of `model-settings.json` files to load multiple
-models](https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms).
-
-### Serving model locally
-
-With the `mlserver` package installed locally and a local `model-settings.json`
-file, you should now be ready to start our server as:
+With the `sklearnserver` runtime package installed locally, you should now be ready to start our server as:
 
 ```bash
-mlserver start .
+python3 sklearnserver --model_dir /path/to/model_dir --model_name sklearn-irisv2
 ```
 
-## Deploy with InferenceService 
+## Deploy the Model with InferenceService 
 
-Lastly, you will use KServe to deploy the trained model.
+Lastly, you will use KServe to deploy the trained model onto Kubernetes.
 For this, you will just need to use **version `v1beta1`** of the
 `InferenceService` CRD and set the **`protocolVersion` field to `v2`**.
 
-=== "Old Schema"
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "sklearn-irisv2"
-    spec:
-      predictor:
-        sklearn:
-          protocolVersion: "v2"
-          storageUri: "gs://seldon-models/sklearn/mms/lr_model"
-    ```
-=== "New Schema"
+=== "Yaml"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -109,30 +78,24 @@ For this, you will just need to use **version `v1beta1`** of the
         model:
           modelFormat:
             name: sklearn
-          runtime: kserve-mlserver
-          storageUri: "gs://seldon-models/sklearn/mms/lr_model"
+          protocolVersion: v2
+          runtime: kserve-sklearnserver
+          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
     ```
 
-Note that this makes the following assumptions:
-
-- Your model weights (i.e. your `model.joblib` file) have already been uploaded
-  to a "model repository" (GCS in this example) and can be accessed as
-  `gs://seldon-models/sklearn/mms/lr_model`.
-- There is a K8s cluster available, accessible through `kubectl`.
-- KServe has already been [installed in your cluster](../../../../get_started/README.md).
-
+!!! Note
+    For `V2 protocol (open inference protocol)` if `runtime` field is not provided then, by default `mlserver` runtime is used.
 
 === "kubectl"
     ```bash
     kubectl apply -f ./sklearn.yaml
     ```
 
-## Testing deployed model
+## Test the Deployed Model
 
 You can now test your deployed model by sending a sample request.
 
-Note that this request **needs to follow the [V2 Dataplane
-protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
+Note that this request **needs to follow the [Open Inference Protocol](https://github.com/kserve/open-inference-protocol)**.
 You can see an example payload below:
 
 ```json
