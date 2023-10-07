@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/0.11/reference/api/" rel="canonical"/>
 <link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
 <title>Control Plane API - KServe Documentation Website</title>
 <link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -92,7 +92,7 @@
 </div>
 </div>
 <div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -163,7 +163,7 @@
     KServe Documentation Website
   </label>
 <div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -1026,16 +1026,1919 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/reference/api.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/reference/api.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1>Control Plane API</h1>
 <p>Packages:</p>
 <ul>
 <li>
-<a href="#serving.kserve.io%2fv1beta1">serving.kserve.io/v1beta1</a>
+<a href="#serving.kserve.io/v1alpha1">serving.kserve.io/v1alpha1</a>
+</li>
+<li>
+<a href="#serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</a>
 </li>
 </ul>
+<h2 id="serving.kserve.io/v1alpha1">serving.kserve.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains API Schema definitions for the serving v1alpha1 API group</p>
+</div>
+<p>Resource Types:</p>
+<ul></ul>
+<h3 id="serving.kserve.io/v1alpha1.BuiltInAdapter">BuiltInAdapter
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>serverType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServerType">
+ServerType
+</a>
+</em>
+</td>
+<td>
+<p>ServerType must be one of the supported built-in types such as “triton” or “mlserver”,
+and the runtime’s container must have the same name</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtimeManagementPort</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Port which the runtime server listens for model management requests</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>memBufferBytes</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Fixed memory overhead to subtract from runtime container’s memory allocation to determine model capacity</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelLoadingTimeoutMillis</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Timeout for model loading operations in milliseconds</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>env</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#envvar-v1-core">
+[]Kubernetes core/v1.EnvVar
+</a>
+</em>
+</td>
+<td>
+<p>Environment variables used to control other aspects of the built-in adapter’s behaviour (uncommon)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime
+</h3>
+<div>
+<p>ClusterServingRuntime is the Schema for the servingruntimes API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">
+ServingRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>supportedModelFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedModelFormat">
+[]SupportedModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>Model formats and version supported by this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>multiModel</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Whether this ServingRuntime is intended for multi-model usage or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to disable use of this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersions</code><br/>
+<em>
+[]github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for internal model-management (implementing mmesh.ModelRuntime gRPC service)
+Assumed to be single-model runtime if omitted</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>httpDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the Deployment generated by this ServingRuntime
+If specified, this overrides the podsPerRuntime configuration value</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageHelper</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageHelper">
+StorageHelper
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configuration for this runtime’s use of the storage helper (model puller)
+It is enabled unless explicitly disabled</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>builtInAdapter</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">
+BuiltInAdapter
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Provide the details about built-in runtime adapter</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeStatus">
+ServingRuntimeStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterStorageContainer">ClusterStorageContainer
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageContainerSpec">
+StorageContainerSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>container</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>Container spec for the storage initializer init container</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>supportedUriFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedUriFormat">
+[]SupportedUriFormat
+</a>
+</em>
+</td>
+<td>
+<p>List of URI formats that this container supports</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraph">InferenceGraph
+</h3>
+<div>
+<p>InferenceGraph is the Schema for the InferenceGraph API for multiple models</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceGraphSpec">
+InferenceGraphSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>nodes</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceRouter">
+map[string]./pkg/apis/serving/v1alpha1.InferenceRouter
+</a>
+</em>
+</td>
+<td>
+<p>Map of InferenceGraph router nodes
+Each node defines the router which can be different routing types</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resources</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcerequirements-v1-core">
+Kubernetes core/v1.ResourceRequirements
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceGraphStatus">
+InferenceGraphStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraphSpec">InferenceGraphSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraph">InferenceGraph</a>)
+</p>
+<div>
+<p>InferenceGraphSpec defines the InferenceGraph spec</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodes</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceRouter">
+map[string]./pkg/apis/serving/v1alpha1.InferenceRouter
+</a>
+</em>
+</td>
+<td>
+<p>Map of InferenceGraph router nodes
+Each node defines the router which can be different routing types</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resources</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcerequirements-v1-core">
+Kubernetes core/v1.ResourceRequirements
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraphStatus">InferenceGraphStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraph">InferenceGraph</a>)
+</p>
+<div>
+<p>InferenceGraphStatus defines the InferenceGraph conditions and status</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Status</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Status">
+knative.dev/pkg/apis/duck/v1.Status
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Status</code> are embedded into this type.)
+</p>
+<p>Conditions for InferenceGraph</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Url for the InferenceGraph</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraphSpec">InferenceGraphSpec</a>)
+</p>
+<div>
+<p>InferenceRouter defines the router for each InferenceGraph node with one or multiple steps</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: canary-route
+spec:
+nodes:
+root:
+routerType: Splitter
+routes:
+- service: mymodel1
+weight: 20
+- service: mymodel2
+weight: 80
+</code></pre>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: abtest
+spec:
+nodes:
+mymodel:
+routerType: Switch
+routes:
+- service: mymodel1
+condition: "{ .input.userId == 1 }"
+- service: mymodel2
+condition: "{ .input.userId == 2 }"
+</code></pre>
+<p>Scoring a case using a model ensemble consists of scoring it using each model separately,
+then combining the results into a single scoring result using one of the pre-defined combination methods.</p>
+<p>Tree Ensemble constitutes a case where simple algorithms for combining results of either classification or regression trees are well known.
+Multiple classification trees, for example, are commonly combined using a “majority-vote” method.
+Multiple regression trees are often combined using various averaging techniques.
+e.g tagging models with segment identifiers and weights to be used for their combination in these ways.</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: ensemble
+spec:
+nodes:
+root:
+routerType: Sequence
+routes:
+- service: feast
+- nodeName: ensembleModel
+data: $response
+ensembleModel:
+routerType: Ensemble
+routes:
+- service: sklearn-model
+- service: xgboost-model
+</code></pre>
+<p>Scoring a case using a sequence, or chain of models allows the output of one model to be passed in as input to the subsequent models.</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: model-chainer
+spec:
+nodes:
+root:
+routerType: Sequence
+routes:
+- service: mymodel-s1
+- service: mymodel-s2
+data: $response
+- service: mymodel-s3
+data: $response
+</code></pre>
+<p>In the flow described below, the pre_processing node base64 encodes the image and passes it to two model nodes in the flow.
+The encoded data is available to both these nodes for classification. The second node i.e. dog-breed-classification takes the
+original input from the pre_processing node along-with the response from the cat-dog-classification node to do further classification
+of the dog breed if required.</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: dog-breed-classification
+spec:
+nodes:
+root:
+routerType: Sequence
+routes:
+- service: cat-dog-classifier
+- nodeName: breed-classifier
+data: $request
+breed-classifier:
+routerType: Switch
+routes:
+- service: dog-breed-classifier
+condition: { .predictions.class == "dog" }
+- service: cat-breed-classifier
+condition: { .predictions.class == "cat" }
+</code></pre>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>routerType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceRouterType">
+InferenceRouterType
+</a>
+</em>
+</td>
+<td>
+<p>RouterType</p>
+<ul>
+<li><p><code>Sequence:</code> chain multiple inference steps with input/output from previous step</p></li>
+<li><p><code>Splitter:</code> randomly routes to the target service according to the weight</p></li>
+<li><p><code>Ensemble:</code> routes the request to multiple models and then merge the responses</p></li>
+<li><p><code>Switch:</code> routes the request to one of the steps based on condition</p></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<code>steps</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceStep">
+[]InferenceStep
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Steps defines destinations for the current router node</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceRouterType">InferenceRouterType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter</a>)
+</p>
+<div>
+<p>InferenceRouterType constant for inference routing types</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"Ensemble"</p></td>
+<td><p>Ensemble router routes the requests to multiple models and then merge the responses</p>
+</td>
+</tr><tr><td><p>"Sequence"</p></td>
+<td><p>Sequence Default type only route to one destination</p>
+</td>
+</tr><tr><td><p>"Splitter"</p></td>
+<td><p>Splitter router randomly routes the requests to the named service according to the weight</p>
+</td>
+</tr><tr><td><p>"Switch"</p></td>
+<td><p>Switch routes the request to the model based on certain condition</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceStep">InferenceStep
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter</a>)
+</p>
+<div>
+<p>InferenceStep defines the inference target of the current step with condition, weights and data.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Unique name for the step within this node</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>InferenceTarget</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceTarget">
+InferenceTarget
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>InferenceTarget</code> are embedded into this type.)
+</p>
+<p>Node or service used to process this step</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>data</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>request data sent to the next route with input/output from the previous step
+$request
+$response.predictions</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>weight</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>the weight for split of the traffic, only used for Split Router
+when weight is specified all the routing targets should be sum to 100</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>condition</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>routing based on the condition</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>dependency</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceStepDependencyType">
+InferenceStepDependencyType
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>to decide whether a step is a hard or a soft dependency in the Inference Graph</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceStepDependencyType">InferenceStepDependencyType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceStep">InferenceStep</a>)
+</p>
+<div>
+<p>InferenceStepDependencyType constant for inference step dependency</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"Hard"</p></td>
+<td><p>Hard</p>
+</td>
+</tr><tr><td><p>"Soft"</p></td>
+<td><p>Soft</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceTarget">InferenceTarget
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceStep">InferenceStep</a>)
+</p>
+<div>
+<p>Exactly one InferenceTarget field must be specified</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodeName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The node name for routing as next step</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>named reference for InferenceService</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceUrl</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>InferenceService URL, mutually exclusive with ServiceName</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ModelSpec">ModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.TrainedModelSpec">TrainedModelSpec</a>)
+</p>
+<div>
+<p>ModelSpec describes a TrainedModel</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>storageUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Storage URI for the model repository</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>framework</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Machine Learning <framework name="">
+The values could be: “tensorflow”,“pytorch”,“sklearn”,“onnx”,“xgboost”, “myawesomeinternalframework” etc.</framework></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>memory</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Maximum memory this model will consume, this field is used to decide if a model server has enough memory to load this model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServerType">ServerType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">BuiltInAdapter</a>)
+</p>
+<div>
+<p>ServerType constant for specifying the runtime name</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"mlserver"</p></td>
+<td><p>Model server is MLServer</p>
+</td>
+</tr><tr><td><p>"ovms"</p></td>
+<td><p>Model server is OpenVino Model Server</p>
+</td>
+</tr><tr><td><p>"triton"</p></td>
+<td><p>Model server is Triton</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntime">ServingRuntime
+</h3>
+<div>
+<p>ServingRuntime is the Schema for the servingruntimes API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">
+ServingRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>supportedModelFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedModelFormat">
+[]SupportedModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>Model formats and version supported by this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>multiModel</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Whether this ServingRuntime is intended for multi-model usage or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to disable use of this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersions</code><br/>
+<em>
+[]github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for internal model-management (implementing mmesh.ModelRuntime gRPC service)
+Assumed to be single-model runtime if omitted</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>httpDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the Deployment generated by this ServingRuntime
+If specified, this overrides the podsPerRuntime configuration value</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageHelper</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageHelper">
+StorageHelper
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configuration for this runtime’s use of the storage helper (model puller)
+It is enabled unless explicitly disabled</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>builtInAdapter</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">
+BuiltInAdapter
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Provide the details about built-in runtime adapter</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeStatus">
+ServingRuntimeStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntimePodSpec">ServingRuntimePodSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>containers</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+[]Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>List of containers belonging to the pod.
+Containers cannot currently be added or removed.
+There must be at least one container in a Pod.
+Cannot be updated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>volumes</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#volume-v1-core">
+[]Kubernetes core/v1.Volume
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>List of volumes that can be mounted by containers belonging to the pod.
+More info: <a href="https://kubernetes.io/docs/concepts/storage/volumes">https://kubernetes.io/docs/concepts/storage/volumes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeSelector</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>NodeSelector is a selector which must be true for the pod to fit on a node.
+Selector which must match a node’s labels for the pod to be scheduled on that node.
+More info: <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod’s scheduling constraints</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tolerations</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#toleration-v1-core">
+[]Kubernetes core/v1.Toleration
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod’s tolerations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Labels that will be add to the pod.
+More info: <a href="http://kubernetes.io/docs/user-guide/labels">http://kubernetes.io/docs/user-guide/labels</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>annotations</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Annotations that will be add to the pod.
+More info: <a href="http://kubernetes.io/docs/user-guide/annotations">http://kubernetes.io/docs/user-guide/annotations</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>imagePullSecrets</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#localobjectreference-v1-core">
+[]Kubernetes core/v1.LocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec.
+If specified, these secrets will be passed to individual puller implementations for them to use. For example,
+in the case of docker, only DockerConfig type secrets are honored.
+More info: <a href="https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod">https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime</a>, <a href="#serving.kserve.io/v1alpha1.ServingRuntime">ServingRuntime</a>, <a href="#serving.kserve.io/v1alpha1.SupportedRuntime">SupportedRuntime</a>)
+</p>
+<div>
+<p>ServingRuntimeSpec defines the desired state of ServingRuntime. This spec is currently provisional
+and are subject to change as details regarding single-model serving and multi-model serving
+are hammered out.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>supportedModelFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedModelFormat">
+[]SupportedModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>Model formats and version supported by this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>multiModel</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Whether this ServingRuntime is intended for multi-model usage or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to disable use of this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersions</code><br/>
+<em>
+[]github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for internal model-management (implementing mmesh.ModelRuntime gRPC service)
+Assumed to be single-model runtime if omitted</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>httpDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the Deployment generated by this ServingRuntime
+If specified, this overrides the podsPerRuntime configuration value</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageHelper</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageHelper">
+StorageHelper
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configuration for this runtime’s use of the storage helper (model puller)
+It is enabled unless explicitly disabled</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>builtInAdapter</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">
+BuiltInAdapter
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Provide the details about built-in runtime adapter</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntimeStatus">ServingRuntimeStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime</a>, <a href="#serving.kserve.io/v1alpha1.ServingRuntime">ServingRuntime</a>)
+</p>
+<div>
+<p>ServingRuntimeStatus defines the observed state of ServingRuntime</p>
+</div>
+<h3 id="serving.kserve.io/v1alpha1.StorageContainerSpec">StorageContainerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterStorageContainer">ClusterStorageContainer</a>)
+</p>
+<div>
+<p>StorageContainerSpec defines the container spec for the storage initializer init container, and the protocols it supports.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>container</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>Container spec for the storage initializer init container</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>supportedUriFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedUriFormat">
+[]SupportedUriFormat
+</a>
+</em>
+</td>
+<td>
+<p>List of URI formats that this container supports</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.StorageHelper">StorageHelper
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.SupportedModelFormat">SupportedModelFormat
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name of the model format.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>version</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Version of the model format.
+Used in validating that a predictor is supported by a runtime.
+Can be “major”, “major.minor” or “major.minor.patch”.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>autoSelect</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to allow the ServingRuntime to be used for automatic model placement if
+this model format is specified with no explicit runtime.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>priority</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Priority of this serving runtime for auto selection.
+This is used to select the serving runtime if more than one serving runtime supports the same model format.
+The value should be greater than zero.  The higher the value, the higher the priority.
+Priority is not considered if AutoSelect is either false or not specified.
+Priority can be overridden by specifying the runtime in the InferenceService.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.SupportedRuntime">SupportedRuntime
+</h3>
+<div>
+<p>SupportedRuntime is the schema for supported runtime result of automatic selection</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>Spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">
+ServingRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.SupportedUriFormat">SupportedUriFormat
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.StorageContainerSpec">StorageContainerSpec</a>)
+</p>
+<div>
+<p>SupportedUriFormat can be either prefix or regex. Todo: Add validation that only one of them is set.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>prefix</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>regex</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModel">TrainedModel
+</h3>
+<div>
+<p>TrainedModel is the Schema for the TrainedModel API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.TrainedModelSpec">
+TrainedModelSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>inferenceService</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>parent inference service to deploy to</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>model</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ModelSpec">
+ModelSpec
+</a>
+</em>
+</td>
+<td>
+<p>Predictor model spec</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.TrainedModelStatus">
+TrainedModelStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModelSpec">TrainedModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.TrainedModel">TrainedModel</a>)
+</p>
+<div>
+<p>TrainedModelSpec defines the TrainedModel spec</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>inferenceService</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>parent inference service to deploy to</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>model</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ModelSpec">
+ModelSpec
+</a>
+</em>
+</td>
+<td>
+<p>Predictor model spec</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModelStatus">TrainedModelStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.TrainedModel">TrainedModel</a>)
+</p>
+<div>
+<p>TrainedModelStatus defines the observed state of TrainedModel</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Status</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Status">
+knative.dev/pkg/apis/duck/v1.Status
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Status</code> are embedded into this type.)
+</p>
+<p>Conditions for trained model</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<p>URL holds the url that will distribute traffic over the provided traffic targets.
+For v1: http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}/v1/models/<trainedmodel>:predict
+For v2: http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}/v2/models/<trainedmodel>/infer</trainedmodel></trainedmodel></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>address</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable">
+knative.dev/pkg/apis/duck/v1.Addressable
+</a>
+</em>
+</td>
+<td>
+<p>Addressable endpoint for the deployed trained model
+http://<inferenceservice.metadata.name>/v1/models/<trainedmodel>.metadata.name</trainedmodel></inferenceservice.metadata.name></p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>a73c949f2</code>.
+</em></p>
 <h2 id="serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</h2>
 <div>
 <p>Package v1beta1 contains API Schema definitions for the serving v1beta1 API group</p>
@@ -1589,7 +3492,7 @@ knative.dev/pkg/apis/duck/v1.Addressable
 <td>
 <code>PodSpec</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -1619,7 +3522,7 @@ Kubernetes core/v1.PodSpec
 <td>
 <code>PodSpec</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -1649,7 +3552,7 @@ Kubernetes core/v1.PodSpec
 <td>
 <code>PodSpec</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podspec-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podspec-v1-core">
 Kubernetes core/v1.PodSpec
 </a>
 </em>
@@ -1778,7 +3681,7 @@ map[string]string
 <td>
 <code>Container</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
 Kubernetes core/v1.Container
 </a>
 </em>
@@ -1999,7 +3902,7 @@ string
 <td>
 <code>time</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#time-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#time-v1-meta">
 Kubernetes meta/v1.Time
 </a>
 </em>
@@ -2075,7 +3978,7 @@ int32
 <td>
 <code>metadata</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#objectmeta-v1-meta">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
 Kubernetes meta/v1.ObjectMeta
 </a>
 </em>
@@ -2291,7 +4194,7 @@ It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-leve
 <code>components</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ComponentStatusSpec">
-map[kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentType]kserve.io/v1beta1/pkg/apis/serving/v1beta1.ComponentStatusSpec
+map[./pkg/apis/serving/v1beta1.ComponentType]./pkg/apis/serving/v1beta1.ComponentStatusSpec
 </a>
 </em>
 </td>
@@ -2968,7 +4871,7 @@ PredictorExtensionSpec
 <td>
 <code>volumes</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#volume-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#volume-v1-core">
 []Kubernetes core/v1.Volume
 </a>
 </em>
@@ -2983,7 +4886,7 @@ More info: <a href="https://kubernetes.io/docs/concepts/storage/volumes">https:/
 <td>
 <code>initContainers</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
 []Kubernetes core/v1.Container
 </a>
 </em>
@@ -3008,7 +4911,7 @@ More info: <a href="https://kubernetes.io/docs/concepts/workloads/pods/init-cont
 <td>
 <code>containers</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
 []Kubernetes core/v1.Container
 </a>
 </em>
@@ -3024,7 +4927,7 @@ Cannot be updated.</p>
 <td>
 <code>ephemeralContainers</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#ephemeralcontainer-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#ephemeralcontainer-v1-core">
 []Kubernetes core/v1.EphemeralContainer
 </a>
 </em>
@@ -3042,7 +4945,7 @@ This field is beta-level and available on clusters that haven’t disabled the E
 <td>
 <code>restartPolicy</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#restartpolicy-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#restartpolicy-v1-core">
 Kubernetes core/v1.RestartPolicy
 </a>
 </em>
@@ -3092,7 +4995,7 @@ Value must be a positive integer.</p>
 <td>
 <code>dnsPolicy</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#dnspolicy-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#dnspolicy-v1-core">
 Kubernetes core/v1.DNSPolicy
 </a>
 </em>
@@ -3233,7 +5136,7 @@ Optional: Default to false.</p>
 <td>
 <code>securityContext</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podsecuritycontext-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podsecuritycontext-v1-core">
 Kubernetes core/v1.PodSecurityContext
 </a>
 </em>
@@ -3248,7 +5151,7 @@ Optional: Defaults to empty.  See type description for default values of each fi
 <td>
 <code>imagePullSecrets</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#localobjectreference-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#localobjectreference-v1-core">
 []Kubernetes core/v1.LocalObjectReference
 </a>
 </em>
@@ -3291,7 +5194,7 @@ If not specified, the pod will not have a domainname at all.</cluster></pod></su
 <td>
 <code>affinity</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#affinity-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
 Kubernetes core/v1.Affinity
 </a>
 </em>
@@ -3318,7 +5221,7 @@ If not specified, the pod will be dispatched by default scheduler.</p>
 <td>
 <code>tolerations</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#toleration-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#toleration-v1-core">
 []Kubernetes core/v1.Toleration
 </a>
 </em>
@@ -3332,7 +5235,7 @@ If not specified, the pod will be dispatched by default scheduler.</p>
 <td>
 <code>hostAliases</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#hostalias-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#hostalias-v1-core">
 []Kubernetes core/v1.HostAlias
 </a>
 </em>
@@ -3380,7 +5283,7 @@ The higher the value, the higher the priority.</p>
 <td>
 <code>dnsConfig</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#poddnsconfig-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#poddnsconfig-v1-core">
 Kubernetes core/v1.PodDNSConfig
 </a>
 </em>
@@ -3396,7 +5299,7 @@ configuration based on DNSPolicy.</p>
 <td>
 <code>readinessGates</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podreadinessgate-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podreadinessgate-v1-core">
 []Kubernetes core/v1.PodReadinessGate
 </a>
 </em>
@@ -3444,7 +5347,7 @@ Optional: Defaults to true.</p>
 <td>
 <code>preemptionPolicy</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#preemptionpolicy-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#preemptionpolicy-v1-core">
 Kubernetes core/v1.PreemptionPolicy
 </a>
 </em>
@@ -3461,7 +5364,7 @@ This field is beta-level, gated by the NonPreemptingPriority feature-gate.</p>
 <td>
 <code>overhead</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#resourcelist-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcelist-v1-core">
 Kubernetes core/v1.ResourceList
 </a>
 </em>
@@ -3482,7 +5385,7 @@ This field is beta-level as of Kubernetes v1.18, and is only honored by servers 
 <td>
 <code>topologySpreadConstraints</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#topologyspreadconstraint-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#topologyspreadconstraint-v1-core">
 []Kubernetes core/v1.TopologySpreadConstraint
 </a>
 </em>
@@ -3514,7 +5417,7 @@ Default to false.</p>
 <td>
 <code>os</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podos-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podos-v1-core">
 Kubernetes core/v1.PodOS
 </a>
 </em>
@@ -3573,7 +5476,7 @@ This field is alpha-level and is only honored by servers that enable the UserNam
 <td>
 <code>schedulingGates</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podschedulinggate-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podschedulinggate-v1-core">
 []Kubernetes core/v1.PodSchedulingGate
 </a>
 </em>
@@ -3591,7 +5494,7 @@ scheduler will not attempt to schedule the pod.</p>
 <td>
 <code>resourceClaims</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#podresourceclaim-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podresourceclaim-v1-core">
 []Kubernetes core/v1.PodResourceClaim
 </a>
 </em>
@@ -3665,7 +5568,7 @@ github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
 <td>
 <code>Container</code><br/>
 <em>
-<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#container-v1-core">
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
 Kubernetes core/v1.Container
 </a>
 </em>
@@ -4232,7 +6135,7 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>d7bfd224</code>.
+on git commit <code>a73c949f2</code>.
 </em></p>
 </article>
 </div>

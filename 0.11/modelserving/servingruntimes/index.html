@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/0.11/modelserving/servingruntimes/" rel="canonical"/>
 <link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
 <title>Serving Runtimes - KServe Documentation Website</title>
 <link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -95,7 +95,7 @@
 </div>
 </div>
 <div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -166,7 +166,7 @@
     KServe Documentation Website
   </label>
 <div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -395,6 +395,15 @@
 <a class="md-nav__link" href="#implicit-automatic-selection">
     Implicit: Automatic selection
   </a>
+<nav aria-label="Implicit: Automatic selection" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#priority">
+    Priority
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#previous-schema">
@@ -1097,6 +1106,15 @@
 <a class="md-nav__link" href="#implicit-automatic-selection">
     Implicit: Automatic selection
   </a>
+<nav aria-label="Implicit: Automatic selection" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#priority">
+    Priority
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#previous-schema">
@@ -1113,7 +1131,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/servingruntimes.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/modelserving/servingruntimes.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="serving-runtimes">Serving Runtimes<a class="headerlink" href="#serving-runtimes" title="Permanent link">¶</a></h1>
@@ -1262,6 +1280,14 @@ This is demonstrated in the example for the <a href="./v1beta1/amd/">AMD Inferen
 <td>Version of the model format. Used in validating that a predictor is supported by a runtime. It is recommended to include only the major version here, for example "1" rather than "1.15.4"</td>
 </tr>
 <tr>
+<td><code>supportedModelFormats[ ].autoselect</code></td>
+<td>Set to true to allow the ServingRuntime to be used for automatic model placement if this model format is specified with no explicit runtime. The default value is false.</td>
+</tr>
+<tr>
+<td><code>supportedModelFormats[ ].priority</code></td>
+<td>Priority of this serving runtime for auto selection. This is used to select the serving runtime if more than one serving runtime supports the same model format. <br/>The value should be greater than zero. The higher the value, the higher the priority. Priority is not considered if AutoSelect is either false or not specified. Priority can be overridden by specifying the runtime in the InferenceService.</td>
+</tr>
+<tr>
 <td><code>storageHelper.disabled</code></td>
 <td>Disables the storage helper</td>
 </tr>
@@ -1307,7 +1333,7 @@ none exist, the controller will then search the list of ClusterServingRuntimes. 
 verify that the <code>modelFormat</code> provided in the predictor is in the list of <code>supportedModelFormats</code>. If it is, then the container and pod information provided
 by the runtime will be used for model deployment.</p>
 <h3 id="implicit-automatic-selection">Implicit: Automatic selection<a class="headerlink" href="#implicit-automatic-selection" title="Permanent link">¶</a></h3>
-<p>In each entry of the <code>supportedModelFormats</code> list, <code>autoSelect: true</code> can optionally be specified to indicate that that the given <code>ServingRuntime</code> can be
+<p>In each entry of the <code>supportedModelFormats</code> list, <code>autoSelect: true</code> can optionally be specified to indicate that the given <code>ServingRuntime</code> can be
 considered for automatic selection for predictors with the corresponding model format if no runtime is explicitly specified.
 For example, the <code>kserve-sklearnserver</code> ClusterServingRuntime supports SKLearn version 1 and has <code>autoSelect</code> enabled:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
@@ -1347,9 +1373,67 @@ will be used for model deployment.</p>
 </code></pre></div>
 Then, then the version of the <code>supportedModelFormat</code> must also match. In this example, <code>kserve-sklearnserver</code> would not be eligible for selection since
 it only lists support for <code>sklearn</code> version <code>1</code>.</p>
+<h4 id="priority">Priority<a class="headerlink" href="#priority" title="Permanent link">¶</a></h4>
+<p>If more than one serving runtime supports the same <code>model format</code> with same <code>version</code> and also supports the same <code>protocolVersion</code> then, we can optionally specify <code>priority</code> for the serving runtime. 
+Based on the <code>priority</code> the runtime is automatically selected if no runtime is explicitly specified. Note that, <code>priority</code> is valid only if <code>autoSelect</code> is <code>true</code>. Higher value means higher priority.</p>
+<p>For example, let's consider the serving runtimes <code>mlserver</code> and <code>kserve-sklearnserver</code>. Both the serving runtimes supports the <code>sklearn</code> model format with version <code>1</code> and both supports
+the <code>protocolVersion</code> v2. Also note that <code>autoSelect</code> is enabled in both the serving runtimes.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterServingRuntime</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-sklearnserver</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">protocolVersions</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">  </span><span class="nt">supportedModelFormats</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">      </span><span class="nt">autoSelect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nn">...</span>
+</code></pre></div>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterServingRuntime</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mlserver</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">protocolVersions</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">  </span><span class="nt">supportedModelFormats</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">      </span><span class="nt">autoSelect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="nn">...</span>
+</code></pre></div>
+When the following InferenceService is deployed with no runtime specified, the controller will look for a runtime that supports <code>sklearn</code>:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-sklearn-isvc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://bucket/sklearn/mnist.joblib</span>
+</code></pre></div>
+The controller will find the two runtimes <code>kserve-sklearnserver</code> and <code>mlserver</code> as both has an entry in its <code>supportedModelFormats</code> list with <code>sklearn</code> and <code>autoSelect: true</code>. 
+Now the runtime is sorted based on the priority by the controller as there are more than one supported runtime available. Since the <code>mlserver</code> has the higher <code>priority</code> value, this ClusterServingRuntime
+will be used for model deployment.</p>
+<p><strong>Constraints of priority</strong></p>
+<ul>
+<li>The higher priority value means higher precedence. The value must be greater than 0.</li>
+<li>The priority is valid only if auto select is enabled otherwise the priority is not considered.</li>
+<li>The serving runtime with priority takes precedence over the serving runtime with priority not specified.</li>
+<li>Two model formats with same name and same model version cannot have the same priority.</li>
+<li>If more than one serving runtime supports the model format and none of them specified the priority then, there is no guarantee <em>which</em> runtime will be selected.</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>If multiple runtimes list the same format and/or version as auto-selectable, then there is no guarantee <em>which</em> runtime will be selected.
+<p>If multiple runtimes list the same format and/or version as auto-selectable and the priority is not specified, the runtime is selected based on the <code>creationTimestamp</code> i.e. the most recently created runtime is selected. So there is no guarantee <em>which</em> runtime will be selected.
 So users and cluster-administrators should enable <code>autoSelect</code> with care.</p>
 </div>
 <h3 id="previous-schema">Previous schema<a class="headerlink" href="#previous-schema" title="Permanent link">¶</a></h3>

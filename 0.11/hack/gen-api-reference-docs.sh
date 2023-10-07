@@ -17,7 +17,7 @@ REFDOCS_REPO="https://${REFDOCS_PKG}.git"
 REFDOCS_VER="v0.3.0"
 
 KSERVE_REPO="github.com/kserve/kserve"
-KSERVE_IMPORT_PATH="kserve.io/v1beta1"
+KSERVE_IMPORT_PATH="kserve.io/serving"
 KSERVE_COMMIT="${KSERVE_COMMIT:?specify the \$KSERVE_COMMIT variable}"
 KSERVE_OUT_FILE="api.md"
 
@@ -130,7 +130,33 @@ main() {
     clone_at_commit "https://${KSERVE_REPO}.git" "${KSERVE_COMMIT}" \
         "${kserve_root}"
     gen_refdocs "${refdocs_bin}" "${template_dir}" \
-        "${out_dir}/${KSERVE_OUT_FILE}" "${kserve_root}" "./pkg/apis/serving/v1beta1"
+        "${out_dir}/v1alpha1.md" "${kserve_root}" "./pkg/apis/serving/v1alpha1"
+    gen_refdocs "${refdocs_bin}" "${template_dir}" \
+        "${out_dir}/v1beta1.md" "${kserve_root}" "./pkg/apis/serving/v1beta1"
+
+    v1alpha1_doc="${out_dir}/v1alpha1.md"
+    v1beta1_doc="${out_dir}/v1beta1.md"
+
+    # Remove first 6 lines which contains packages list
+    sed -i '1,6d' "$v1alpha1_doc"
+    sed -i '1,6d' "$v1beta1_doc"
+
+    # Add the modified packages list to output file
+    cat <<EOF > "${out_dir}/${KSERVE_OUT_FILE}"
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#serving.kserve.io/v1alpha1">serving.kserve.io/v1alpha1</a>
+</li>
+<li>
+<a href="#serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</a>
+</li>
+</ul>
+EOF
+
+    # Append the v1alpha and v1beta1 docs to the output file
+    cat "${v1alpha1_doc}" >> "${out_dir}/${KSERVE_OUT_FILE}"
+    cat "${v1beta1_doc}" >> "${out_dir}/${KSERVE_OUT_FILE}"
 
     cp "${out_dir}/${KSERVE_OUT_FILE}" "$SCRIPTDIR/../reference/${KSERVE_OUT_FILE}"
     go clean -modcache

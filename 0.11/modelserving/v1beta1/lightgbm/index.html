@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/0.11/modelserving/v1beta1/lightgbm/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
 <title>LightGBM - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -95,7 +95,7 @@
 </div>
 </div>
 <div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -166,7 +166,7 @@
     KServe Documentation Website
   </label>
 <div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -472,35 +472,57 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-the-model-with-v2-protocol">
-    Deploy the model with V2 protocol
+<a class="md-nav__link" href="#deploy-the-model-with-open-inference-protocol">
+    Deploy the model with Open Inference Protocol
   </a>
-<nav aria-label="Deploy the model with V2 protocol" class="md-nav">
+<nav aria-label="Deploy the model with Open Inference Protocol" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-model-locally_1">
     Test the model locally
   </a>
+<nav aria-label="Test the model locally" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pre-requisites">
+    Pre-requisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serving-model-locally">
+    Serving model locally
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#deploy-inferenceservice-with-rest-endpoint">
     Deploy InferenceService with REST endpoint
   </a>
-</li>
+<nav aria-label="Deploy InferenceService with REST endpoint" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-deployed-model-with-curl">
     Test the deployed model with curl
   </a>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-the-inferenceservice-with-grpc-endpoint">
     Create the InferenceService with gRPC endpoint
   </a>
-</li>
+<nav aria-label="Create the InferenceService with gRPC endpoint" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-deployed-model-with-grpcurl">
     Test the deployed model with grpcurl
   </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1141,35 +1163,57 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-the-model-with-v2-protocol">
-    Deploy the model with V2 protocol
+<a class="md-nav__link" href="#deploy-the-model-with-open-inference-protocol">
+    Deploy the model with Open Inference Protocol
   </a>
-<nav aria-label="Deploy the model with V2 protocol" class="md-nav">
+<nav aria-label="Deploy the model with Open Inference Protocol" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-model-locally_1">
     Test the model locally
   </a>
+<nav aria-label="Test the model locally" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pre-requisites">
+    Pre-requisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serving-model-locally">
+    Serving model locally
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#deploy-inferenceservice-with-rest-endpoint">
     Deploy InferenceService with REST endpoint
   </a>
-</li>
+<nav aria-label="Deploy InferenceService with REST endpoint" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-deployed-model-with-curl">
     Test the deployed model with curl
   </a>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-the-inferenceservice-with-grpc-endpoint">
     Create the InferenceService with gRPC endpoint
   </a>
-</li>
+<nav aria-label="Create the InferenceService with gRPC endpoint" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-deployed-model-with-grpcurl">
     Test the deployed model with grpcurl
   </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1181,7 +1225,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/lightgbm/README.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/modelserving/v1beta1/lightgbm/README.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="deploy-lightgbm-model-with-inferenceservice">Deploy LightGBM model with InferenceService<a class="headerlink" href="#deploy-lightgbm-model-with-inferenceservice" title="Permanent link">¶</a></h1>
@@ -1210,7 +1254,7 @@
 </code></pre></div>
 <h2 id="deploy-lightgbm-model-with-v1-protocol">Deploy LightGBM model with V1 protocol<a class="headerlink" href="#deploy-lightgbm-model-with-v1-protocol" title="Permanent link">¶</a></h2>
 <h3 id="test-the-model-locally">Test the model locally<a class="headerlink" href="#test-the-model-locally" title="Permanent link">¶</a></h3>
-<p>Install and run the <a href="https://github.com/kserve/kserve/python/lgbserver">LightGBM Server</a> using the trained model locally and test the prediction. </p>
+<p>Install and run the <a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">LightGBM Server</a> using the trained model locally and test the prediction. </p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>lgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>lgb
 </code></pre></div>
 <p>After the <code>LightGBM Server</code> is up locally we can then test the model by sending an inference request.</p>
@@ -1226,19 +1270,8 @@
 </code></pre></div>
 <h3 id="deploy-with-inferenceservice">Deploy with InferenceService<a class="headerlink" href="#deploy-with-inferenceservice" title="Permanent link">¶</a></h3>
 <p>To deploy the model on Kubernetes you can create the InferenceService by specifying the <code>modelFormat</code> with <code>lightgbm</code> and <code>storageUri</code>. </p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-iris"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/iris"</span>
-</code></pre></div>
-</div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
@@ -1249,6 +1282,17 @@
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/iris"</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-iris"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/iris"</span>
 </code></pre></div>
 </div>
@@ -1293,48 +1337,39 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <span class="o">{</span><span class="s2">"predictions"</span>:<span class="w"> </span><span class="o">[[</span><span class="m">0</span>.9,<span class="w"> </span><span class="m">0</span>.05,<span class="w"> </span><span class="m">0</span>.05<span class="o">]]}</span>
 </code></pre></div>
 </div>
-<h2 id="deploy-the-model-with-v2-protocol">Deploy the model with <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 protocol</a><a class="headerlink" href="#deploy-the-model-with-v2-protocol" title="Permanent link">¶</a></h2>
+<h2 id="deploy-the-model-with-open-inference-protocol">Deploy the model with <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">Open Inference Protocol</a><a class="headerlink" href="#deploy-the-model-with-open-inference-protocol" title="Permanent link">¶</a></h2>
 <h3 id="test-the-model-locally_1">Test the model locally<a class="headerlink" href="#test-the-model-locally_1" title="Permanent link">¶</a></h3>
-<p>Once you've got your model serialized <code>model.bst</code>, we can then use <a href="https://github.com/SeldonIO/MLServer">MLServer</a> which implements the KServe V2 inference protocol to spin up a local server. For more details on MLServer, please check the <a href="https://github.com/SeldonIO/MLServer/blob/master/docs/examples/lightgbm/README.md">LightGBM example doc</a>.</p>
-<p>To run MLServer locally, you first install the <code>mlserver</code> package in your local environment, as well as the LightGBM runtime.</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>mlserver<span class="w"> </span>mlserver-lightgbm
-</code></pre></div>
-<p>The next step is to provide the model settings so that MLServer knows:</p>
+<p>Once you've got your model serialized <code>model.bst</code>, we can then use <a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">KServe LightGBM Server</a> to create a local model server.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-with-inferenceservice">deploying with InferenceService</a>.</p>
+</div>
+<h4 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h4>
+<p>Firstly, to use kserve lightgbm server locally, you will first need to install the <code>lgbserver</code>
+runtime package in your local environment.</p>
+<ol>
+<li>Clone the KServe repository and navigate into the directory.
+    <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kserve/kserve
+</code></pre></div></li>
+<li>Install <code>lgbserver</code> runtime. KServe uses <a href="https://python-poetry.org/">Poetry</a> as the dependency management tool. Make sure you have already <a href="https://python-poetry.org/docs/#installation">installed poetry</a>.
+    <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>python/lgbserver
+poetry<span class="w"> </span>install<span class="w"> </span>
+</code></pre></div></li>
+</ol>
+<h4 id="serving-model-locally">Serving model locally<a class="headerlink" href="#serving-model-locally" title="Permanent link">¶</a></h4>
+<p>The <code>lgbserver</code> package takes three arguments.</p>
 <ul>
-<li>The inference runtime to serve your model (i.e. <code>mlserver_lightgbm.LightGBMModel</code>)</li>
-<li>The model's name and version</li>
+<li><code>--model_dir</code>: The model directory path where the model is stored.</li>
+<li><code>--model_name</code>: The name of the model deployed in the model server, the default value is <code>model</code>. This is optional. </li>
+<li><code>--nthread</code>: Number of threads to use by LightGBM. This is optional and the default value is 1.</li>
 </ul>
-<p>These can be specified through environment variables or by creating a local
-<code>model-settings.json</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lightgbm-iris"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1.0.0"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"implementation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mlserver_lightgbm.LightGBMModel"</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>With the <code>mlserver</code> package installed locally and a local <code>model-settings.json</code>
-file, you should now be ready to start our server as:</p>
-<div class="highlight"><pre><span></span><code>mlserver<span class="w"> </span>start<span class="w"> </span>.
+<p>With the <code>lgbserver</code> runtime package installed locally, you should now be ready to start our server as:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>lgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>lightgbm-iris
 </code></pre></div>
 <h3 id="deploy-inferenceservice-with-rest-endpoint">Deploy InferenceService with REST endpoint<a class="headerlink" href="#deploy-inferenceservice-with-rest-endpoint" title="Permanent link">¶</a></h3>
-<p>When you deploy your model with <code>InferenceService</code> KServe injects sensible defaults so that it runs out-of-the-box without any
-further configuration. However, you can still override these defaults by providing a <code>model-settings.json</code> file similar to your local one.
-You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms">set of <code>model-settings.json</code> files to load multiple models</a>.</p>
-<p>To deploy the LightGBM model with V2 inference protocol, you need to set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Old Schema</label><label for="__tabbed_2_2">New Schema</label></div>
+<p>To deploy the LightGBM model with Open Inference Protocol, you need to set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Schema</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-v2-iris"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/v2/iris"</span>
-</code></pre></div>
-</div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
@@ -1345,12 +1380,17 @@ You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-lgbserver</span>
 <span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/v2/iris"</span>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
+</input></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code>V2 protocol (open inference protocol)</code> if <code>runtime</code> field is not provided then, by default <code>mlserver</code> runtime is used.</p>
+</div>
 <p>Apply the InferenceService yaml to get the REST endpoint</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
 <div class="tabbed-content">
@@ -1364,7 +1404,7 @@ You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master
 <div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/lightgbm-v2-iris<span class="w"> </span>created
 </code></pre></div>
 </div>
-<h3 id="test-the-deployed-model-with-curl">Test the deployed model with curl<a class="headerlink" href="#test-the-deployed-model-with-curl" title="Permanent link">¶</a></h3>
+<h4 id="test-the-deployed-model-with-curl">Test the deployed model with curl<a class="headerlink" href="#test-the-deployed-model-with-curl" title="Permanent link">¶</a></h4>
 <p>You can now test your deployed model by sending a sample request.</p>
 <p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane protocol</a></strong>.
 You can see an example payload below:</p>
@@ -1416,24 +1456,8 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 </div>
 <h3 id="create-the-inferenceservice-with-grpc-endpoint">Create the InferenceService with gRPC endpoint<a class="headerlink" href="#create-the-inferenceservice-with-grpc-endpoint" title="Permanent link">¶</a></h3>
 <p>Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Old Schema</label><label for="__tabbed_4_2">New Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Yaml</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-v2-iris"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">lightgbm</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/v2/iris"</span>
-<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span>
-<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
-<span class="w">        </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
-</code></pre></div>
-</div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
@@ -1445,15 +1469,20 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span>
 <span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-lgbserver</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/v2/iris"</span>
 <span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span>
-<span class="w">        </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
-<span class="w">        </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span>
+<span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">          </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
+</input></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code>V2 protocol (open inference protocol)</code> if <code>runtime</code> field is not provided then, by default <code>mlserver</code> runtime is used.</p>
+</div>
 <p>Apply the InferenceService yaml to get the gRPC endpoint</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
 <div class="tabbed-content">
@@ -1462,7 +1491,7 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 </input></div>
 <div class="highlight"><pre><span></span><code>kubectl apply -f lightgbm-v2-grpc.yaml
 </code></pre></div>
-<h3 id="test-the-deployed-model-with-grpcurl">Test the deployed model with grpcurl<a class="headerlink" href="#test-the-deployed-model-with-grpcurl" title="Permanent link">¶</a></h3>
+<h4 id="test-the-deployed-model-with-grpcurl">Test the deployed model with grpcurl<a class="headerlink" href="#test-the-deployed-model-with-grpcurl" title="Permanent link">¶</a></h4>
 <p>After the gRPC <code>InferenceService</code> becomes ready, <a href="https://github.com/fullstorydev/grpcurl">grpcurl</a>, can be used to send gRPC requests to the <code>InferenceService</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># download the proto file</span>
 curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto

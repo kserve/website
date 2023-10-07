@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/0.11/help/contributor/mkdocs-contributor-guide/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
 <title>MkDocs Contributions - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -95,7 +95,7 @@
 </div>
 </div>
 <div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -166,7 +166,7 @@
     KServe Documentation Website
   </label>
 <div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -1046,6 +1046,11 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#install-dependencies-in-requirementstxt-file">
+    Install Dependencies in Requirements.txt file
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#setting-up-local-preview">
     Setting Up Local Preview
   </a>
@@ -1096,7 +1101,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/help/contributor/mkdocs-contributor-guide.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/help/contributor/mkdocs-contributor-guide.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="mkdocs-contributions">MkDocs Contributions<a class="headerlink" href="#mkdocs-contributions" title="Permanent link">¶</a></h1>
@@ -1133,11 +1138,25 @@ More detailed instructions can be found here: <a href="https://squidfunk.github.
 </div>
 </div>
 </input></input></div>
+<h2 id="install-dependencies-in-requirementstxt-file">Install Dependencies in Requirements.txt file<a class="headerlink" href="#install-dependencies-in-requirementstxt-file" title="Permanent link">¶</a></h2>
+<p>Navigate to root folder and run below command to install required packages and libraries specified in the requirements.txt file.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">pip</label><label for="__tabbed_3_2">pip3</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>pip install -r requirements.txt
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>pip3 install -r requirements.txt
+</code></pre></div>
+</div>
+</div>
+</input></input></div>
 <h2 id="setting-up-local-preview">Setting Up Local Preview<a class="headerlink" href="#setting-up-local-preview" title="Permanent link">¶</a></h2>
 <p>Once you have installed Material for MkDocs and all of the extensions, head over to
 and clone the repo.</p>
 <p>In your terminal, find your way over to the location of the cloned repo. Once you are in the main folder and run:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Local Preview</label><label for="__tabbed_3_2">Local Preview w/ Dirty Reload</label><label for="__tabbed_3_3">Local Preview including Blog and Community Site</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><input id="__tabbed_4_3" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Local Preview</label><label for="__tabbed_4_2">Local Preview w/ Dirty Reload</label><label for="__tabbed_4_3">Local Preview including Blog and Community Site</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code>mkdocs serve
@@ -1188,7 +1207,7 @@ and
 <a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/">https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/</a></p>
 <h3 id="content-tabs">Content Tabs<a class="headerlink" href="#content-tabs" title="Permanent link">¶</a></h3>
 <p>Content tabs are handy way to organize lots of information in a visually pleasing way. Some documentation from <a href="https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#usage">https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#usage</a> is reproduced here:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Grouping Code blocks</label><label for="__tabbed_4_2">Grouping other content</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">Grouping Code blocks</label><label for="__tabbed_5_2">Grouping other content</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Code blocks are one of the primary targets to be grouped, and can be considered a special case of content tabs, as tabs with a single code block are always rendered without horizontal spacing.
@@ -1216,7 +1235,7 @@ Example:
     ```
 </code></pre></div></p>
 <p>Result:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">C</label><label for="__tabbed_5_2">C++</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">C</label><label for="__tabbed_6_2">C++</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
@@ -1255,7 +1274,7 @@ Example:
     3. Nulla tempor lobortis orci
 </code></pre></div>
 <p>Result:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">Unordered list</label><label for="__tabbed_6_2">Ordered list</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio"><input id="__tabbed_7_2" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="__tabbed_7_1">Unordered list</label><label for="__tabbed_7_2">Ordered list</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <ul>
@@ -1284,7 +1303,7 @@ Example:
 <p>For more info, see: <a href="https://facelessuser.github.io/pymdown-extensions/extensions/snippets/">https://facelessuser.github.io/pymdown-extensions/extensions/snippets/</a></p>
 <h3 id="admonitions">Admonitions<a class="headerlink" href="#admonitions" title="Permanent link">¶</a></h3>
 <p>We use the following admonition boxes only. Use admonitions sparingly; too many admonitions can be distracting.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio"><input id="__tabbed_7_2" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="__tabbed_7_1">Admonitions</label><label for="__tabbed_7_2">Formatting</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio"><input id="__tabbed_8_2" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="__tabbed_8_1">Admonitions</label><label for="__tabbed_8_2">Formatting</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="admonition note">
@@ -1319,7 +1338,7 @@ If the information suggests an action to take, use a tip instead.</p>
 </input></input></div>
 <h3 id="icons-and-emojis">Icons and Emojis<a class="headerlink" href="#icons-and-emojis" title="Permanent link">¶</a></h3>
 <p>Material for MkDocs supports using Material Icons and Emojis using easy shortcodes.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio"><input id="__tabbed_8_2" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="__tabbed_8_1">Emojs</label><label for="__tabbed_8_2">Formatting</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio"><input id="__tabbed_9_2" name="__tabbed_9" type="radio"><div class="tabbed-labels"><label for="__tabbed_9_1">Emojs</label><label for="__tabbed_9_2">Formatting</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><img alt="🌮" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f32e.svg" title=":taco:"/></p>

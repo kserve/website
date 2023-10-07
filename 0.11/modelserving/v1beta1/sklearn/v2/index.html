@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/0.11/modelserving/v1beta1/sklearn/v2/" rel="canonical"/>
 <link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.2, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
 <title>Scikit-learn - KServe Documentation Website</title>
 <link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -95,7 +95,7 @@
 </div>
 </div>
 <div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -166,7 +166,7 @@
     KServe Documentation Website
   </label>
 <div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/website" title="Go to repository">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
 <div class="md-source__icon md-icon">
 <svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
 </div>
@@ -423,24 +423,25 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#training">
-    Training
+<a class="md-nav__link" href="#train-the-model">
+    Train the Model
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#testing-locally">
-    Testing locally
+<a class="md-nav__link" href="#test-the-model-locally">
+    Test the Model locally
   </a>
-<nav aria-label="Testing locally" class="md-nav">
+<nav aria-label="Test the Model locally" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-kserve-sklearnserver">
+    Using KServe SklearnServer
+  </a>
+<nav aria-label="Using KServe SklearnServer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#pre-requisites">
     Pre-requisites
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#model-settings">
-    Model settings
   </a>
 </li>
 <li class="md-nav__item">
@@ -451,14 +452,17 @@
 </ul>
 </nav>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-with-inferenceservice">
-    Deploy with InferenceService
+<a class="md-nav__link" href="#deploy-the-model-with-inferenceservice">
+    Deploy the Model with InferenceService
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#testing-deployed-model">
-    Testing deployed model
+<a class="md-nav__link" href="#test-the-deployed-model">
+    Test the Deployed Model
   </a>
 </li>
 </ul>
@@ -1088,24 +1092,25 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#training">
-    Training
+<a class="md-nav__link" href="#train-the-model">
+    Train the Model
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#testing-locally">
-    Testing locally
+<a class="md-nav__link" href="#test-the-model-locally">
+    Test the Model locally
   </a>
-<nav aria-label="Testing locally" class="md-nav">
+<nav aria-label="Test the Model locally" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-kserve-sklearnserver">
+    Using KServe SklearnServer
+  </a>
+<nav aria-label="Using KServe SklearnServer" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#pre-requisites">
     Pre-requisites
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#model-settings">
-    Model settings
   </a>
 </li>
 <li class="md-nav__item">
@@ -1116,14 +1121,17 @@
 </ul>
 </nav>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-with-inferenceservice">
-    Deploy with InferenceService
+<a class="md-nav__link" href="#deploy-the-model-with-inferenceservice">
+    Deploy the Model with InferenceService
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#testing-deployed-model">
-    Testing deployed model
+<a class="md-nav__link" href="#test-the-deployed-model">
+    Test the Deployed Model
   </a>
 </li>
 </ul>
@@ -1133,7 +1141,7 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/sklearn/v2/README.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/modelserving/v1beta1/sklearn/v2/README.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="deploy-scikit-learn-models-with-inferenceservice">Deploy Scikit-learn models with InferenceService<a class="headerlink" href="#deploy-scikit-learn-models-with-inferenceservice" title="Permanent link">¶</a></h1>
@@ -1141,9 +1149,8 @@
 the <code>v1beta1</code> version of the <code>InferenceService</code> CRD.
 Note that, by default the <code>v1beta1</code> version will expose your model through an
 API compatible with the existing V1 Dataplane.
-However, this example will show you how to serve a model through an API
-compatible with the new <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane</a>.</p>
-<h2 id="training">Training<a class="headerlink" href="#training" title="Permanent link">¶</a></h2>
+This example will show you how to serve a model through <a href="https://github.com/kserve/open-inference-protocol">Open Inference Protocol</a>.</p>
+<h2 id="train-the-model">Train the Model<a class="headerlink" href="#train-the-model" title="Permanent link">¶</a></h2>
 <p>The first step will be to train a sample <code>scikit-learn</code> model.
 Note that this model will be then saved as <code>model.joblib</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
@@ -1158,64 +1165,40 @@ Note that this model will be then saved as <code>model.joblib</code>.</p>
 
 <span class="n">dump</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="s1">'model.joblib'</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="testing-locally">Testing locally<a class="headerlink" href="#testing-locally" title="Permanent link">¶</a></h2>
-<p>Once you've got your model serialised <code>model.joblib</code>, we can then use
-<a href="https://github.com/SeldonIO/MLServer">MLServer</a> to spin up a local server.
-For more details on MLServer, feel free to check the <a href="https://github.com/SeldonIO/MLServer/blob/master/docs/examples/sklearn/README.md">SKLearn example doc</a>.</p>
+<h2 id="test-the-model-locally">Test the Model locally<a class="headerlink" href="#test-the-model-locally" title="Permanent link">¶</a></h2>
+<p>Once you've got your model serialised <code>model.joblib</code>, we can then use <a href="https://github.com/kserve/kserve/tree/master/python/sklearnserver">KServe Sklearn Server</a> to spin up a local server.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>this step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-with-inferenceservice">deploying with InferenceService</a>.</p>
+<p>This step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-with-inferenceservice">deploying with InferenceService</a>.</p>
 </div>
-<h3 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h3>
-<p>Firstly, to use MLServer locally, you will first need to install the <code>mlserver</code>
-package in your local environment, as well as the SKLearn runtime.</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>mlserver<span class="w"> </span>mlserver-sklearn
-</code></pre></div>
-<h3 id="model-settings">Model settings<a class="headerlink" href="#model-settings" title="Permanent link">¶</a></h3>
-<p>The next step will be providing some model settings so that
-MLServer knows:</p>
+<h3 id="using-kserve-sklearnserver">Using KServe SklearnServer<a class="headerlink" href="#using-kserve-sklearnserver" title="Permanent link">¶</a></h3>
+<h4 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h4>
+<p>Firstly, to use KServe sklearn server locally, you will first need to install the <code>sklearnserver</code>
+runtime package in your local environment.</p>
+<ol>
+<li>Clone the KServe repository and navigate into the directory.
+    <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/kserve/kserve
+</code></pre></div></li>
+<li>Install <code>sklearnserver</code> runtime. Kserve uses <a href="https://python-poetry.org/">Poetry</a> as the dependency management tool. Make sure you have already <a href="https://python-poetry.org/docs/#installation">installed poetry</a>.
+    <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>python/sklearnserver
+poetry<span class="w"> </span>install<span class="w"> </span>
+</code></pre></div></li>
+</ol>
+<h4 id="serving-model-locally">Serving model locally<a class="headerlink" href="#serving-model-locally" title="Permanent link">¶</a></h4>
+<p>The <code>sklearnserver</code> package takes two arguments.</p>
 <ul>
-<li>The inference runtime to serve your model (i.e. <code>mlserver_sklearn.SKLearnModel</code>)</li>
-<li>The model's name and version</li>
+<li><code>--model_dir</code>: The model directory path where the model is stored.</li>
+<li><code>--model_name</code>: The name of the model deployed in the model server, the default value is <code>model</code>. This is optional. </li>
 </ul>
-<p>These can be specified through environment variables or by creating a local
-<code>model-settings.json</code> file:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1.0.0"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"implementation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mlserver_sklearn.SKLearnModel"</span>
-<span class="p">}</span>
+<p>With the <code>sklearnserver</code> runtime package installed locally, you should now be ready to start our server as:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>sklearnserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>sklearn-irisv2
 </code></pre></div>
-<p>Note that, when you <a href="#deployment">deploy your model</a>, <strong>KServe will already
-inject some sensible defaults</strong> so that it runs out-of-the-box without any
-further configuration.
-However, you can still override these defaults by providing a
-<code>model-settings.json</code> file similar to your local one.
-You can even provide a <a href="https://github.com/SeldonIO/MLServer/tree/master/docs/examples/mms">set of <code>model-settings.json</code> files to load multiple
-models</a>.</p>
-<h3 id="serving-model-locally">Serving model locally<a class="headerlink" href="#serving-model-locally" title="Permanent link">¶</a></h3>
-<p>With the <code>mlserver</code> package installed locally and a local <code>model-settings.json</code>
-file, you should now be ready to start our server as:</p>
-<div class="highlight"><pre><span></span><code>mlserver<span class="w"> </span>start<span class="w"> </span>.
-</code></pre></div>
-<h2 id="deploy-with-inferenceservice">Deploy with InferenceService<a class="headerlink" href="#deploy-with-inferenceservice" title="Permanent link">¶</a></h2>
-<p>Lastly, you will use KServe to deploy the trained model.
+<h2 id="deploy-the-model-with-inferenceservice">Deploy the Model with InferenceService<a class="headerlink" href="#deploy-the-model-with-inferenceservice" title="Permanent link">¶</a></h2>
+<p>Lastly, you will use KServe to deploy the trained model onto Kubernetes.
 For this, you will just need to use <strong>version <code>v1beta1</code></strong> of the
 <code>InferenceService</code> CRD and set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Old Schema</label><label for="__tabbed_1_2">New Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-irisv2"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"v2"</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/mms/lr_model"</span>
-</code></pre></div>
-</div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
@@ -1226,20 +1209,17 @@ For this, you will just need to use <strong>version <code>v1beta1</code></strong
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
-<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-mlserver</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/mms/lr_model"</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-sklearnserver</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.0/model"</span>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
-<p>Note that this makes the following assumptions:</p>
-<ul>
-<li>Your model weights (i.e. your <code>model.joblib</code> file) have already been uploaded
-  to a "model repository" (GCS in this example) and can be accessed as
-  <code>gs://seldon-models/sklearn/mms/lr_model</code>.</li>
-<li>There is a K8s cluster available, accessible through <code>kubectl</code>.</li>
-<li>KServe has already been <a href="../../../../get_started/">installed in your cluster</a>.</li>
-</ul>
+</input></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code>V2 protocol (open inference protocol)</code> if <code>runtime</code> field is not provided then, by default <code>mlserver</code> runtime is used.</p>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1248,10 +1228,9 @@ For this, you will just need to use <strong>version <code>v1beta1</code></strong
 </div>
 </div>
 </input></div>
-<h2 id="testing-deployed-model">Testing deployed model<a class="headerlink" href="#testing-deployed-model" title="Permanent link">¶</a></h2>
+<h2 id="test-the-deployed-model">Test the Deployed Model<a class="headerlink" href="#test-the-deployed-model" title="Permanent link">¶</a></h2>
 <p>You can now test your deployed model by sending a sample request.</p>
-<p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane
-protocol</a></strong>.
+<p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/open-inference-protocol">Open Inference Protocol</a></strong>.
 You can see an example payload below:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
