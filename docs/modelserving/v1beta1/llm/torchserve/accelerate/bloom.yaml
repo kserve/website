@@ -6,7 +6,7 @@ spec:
   predictor:
     pytorch:
       image: 0.8.2
-      storageUri: gs://kfserving-samples/models/torchserve/Huggingface_accelerate/
+      storageUri: gs://kfserving-examples/models/torchserve/llm/Huggingface_accelerate/bloom
       resources:
         limits:
           cpu: "2"
