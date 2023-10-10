@@ -37,7 +37,8 @@ they can be installed via the [directions here](https://github.com/knative/docs/
 
 * If you already have `Istio` or `Knative` (e.g. from a Kubeflow install) then you don't need to install them explicitly, as long as version dependencies are satisfied.
   
-> **_NOTE:_**  Note: On a local environment, when using `minikube` or `kind` as Kubernetes cluster, there has been a reported issue that [knative quickstart](https://knative.dev/docs/install/quickstart-install/) bootstrap does not work as expected. It is recommended to follow the installation manual from knative using [yaml](https://knative.dev/docs/install/yaml-install/) or using [knative operator](https://knative.dev/docs/install/operator/knative-with-operators/) for a better result.
+!!! Note 
+    On a local environment, when using `minikube` or `kind` as Kubernetes cluster, there has been a reported issue that [knative quickstart](https://knative.dev/docs/install/quickstart-install/) bootstrap does not work as expected. It is recommended to follow the installation manual from knative using [yaml](https://knative.dev/docs/install/yaml-install/) or using [knative operator](https://knative.dev/docs/install/operator/knative-with-operators/) for a better result.
 
 ### Setup your environment
 
@@ -152,12 +153,12 @@ make deploy
      make deploy
      ```
 
-==**Expected Output**==
-```console
-$ kubectl get pods -n kserve -l control-plane=kserve-controller-manager
-NAME                             READY   STATUS    RESTARTS   AGE
-kserve-controller-manager-0      2/2     Running   0          13m
-```
+!!! success "Expected Output"
+    ```console
+    $ kubectl get pods -n kserve -l control-plane=kserve-controller-manager
+    NAME                             READY   STATUS    RESTARTS   AGE
+    kserve-controller-manager-0      2/2     Running   0          13m
+    ```
 !!! Note
     By default it installs to `kserve` namespace with the published controller manager image from master branch.
 
@@ -177,12 +178,12 @@ make deploy-dev-xgb
 ```
 
 Run the following command to deploy explainer with your local change.
-```
+```bash
 make deploy-dev-alibi
 ```
 
 Run the following command to deploy storage initializer with your local change.
-```
+```bash
 make deploy-dev-storageInitializer
 ```
 
@@ -204,11 +205,12 @@ You should see model serving deployment running under default or your specified 
 $ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
 ```
 
-==**Expected Output**==    
-```
-NAME                                                      READY   STATUS    RESTARTS   AGE
-flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
-```
+!!! success "Expected Output" 
+    ```
+    NAME                                                      READY   STATUS    RESTARTS   AGE
+    flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
+    ```
+
 ## Running unit/integration tests
 `kserver-controller-manager` has a few integration tests which requires mock apiserver
 and etcd, they get installed along with [`kubebuilder`](https://book.kubebuilder.io/quick-start.html#installation).
@@ -227,7 +229,7 @@ To setup from local code, do:
  3. `make deploy-dev`
 
 Go to `python/kserve` and install kserve python sdk deps 
-```
+```bash
 pip3 install -e .[test]
 ```
 Then go to `test/e2e`. 
