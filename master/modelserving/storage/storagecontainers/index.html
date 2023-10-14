@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/modelserving/observability/prometheus_metrics/" rel="canonical"/>
+<link href="https://kserve.io/website/master/modelserving/storage/storagecontainers/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
-<title>Prometheus Metrics - KServe Documentation Website</title>
+<title>Storage Containers - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -23,7 +23,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#prometheus-metrics">
+<a class="md-skip" href="#storage-containers">
           Skip to content
         </a>
 </div>
@@ -58,7 +58,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Prometheus Metrics
+              Storage Containers
             
           </span>
 </div>
@@ -593,8 +593,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_6">
           Model Storage
           <span class="md-nav__icon md-icon"></span>
@@ -605,28 +605,46 @@
           Model Storage
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/storagecontainers/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Storage Containers
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Storage Containers
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#spec-attributes">
+    Spec Attributes
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/azure/azure/">
+<a class="md-nav__link" href="../azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/pvc/pvc/">
+<a class="md-nav__link" href="../pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/s3/s3/">
+<a class="md-nav__link" href="../s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/uri/uri/">
+<a class="md-nav__link" href="../uri/uri/">
         URI
       </a>
 </li>
@@ -848,8 +866,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" id="__nav_4_15" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" id="__nav_4_15" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_15">
           Inference Observability
           <span class="md-nav__icon md-icon"></span>
@@ -860,51 +878,13 @@
           Inference Observability
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Prometheus Metrics
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../observability/prometheus_metrics/">
         Prometheus Metrics
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exposing-a-prometheus-metrics-port">
-    Exposing a Prometheus metrics port
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#metrics-for-lgbserver-paddleserver-pmmlserver-sklearnserver-xgbserver-custom-transformerpredictor">
-    Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#other-serving-runtime-metrics">
-    Other serving runtime metrics
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exporting-metrics">
-    Exporting metrics
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#knativequeue-proxy-metrics">
-    Knative/Queue-Proxy metrics
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../grafana_dashboards/">
+<a class="md-nav__link" href="../../observability/grafana_dashboards/">
         Grafana Dashboards
       </a>
 </li>
@@ -1079,28 +1059,8 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#exposing-a-prometheus-metrics-port">
-    Exposing a Prometheus metrics port
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#metrics-for-lgbserver-paddleserver-pmmlserver-sklearnserver-xgbserver-custom-transformerpredictor">
-    Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#other-serving-runtime-metrics">
-    Other serving runtime metrics
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#exporting-metrics">
-    Exporting metrics
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#knativequeue-proxy-metrics">
-    Knative/Queue-Proxy metrics
+<a class="md-nav__link" href="#spec-attributes">
+    Spec Attributes
   </a>
 </li>
 </ul>
@@ -1110,82 +1070,62 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/modelserving/observability/prometheus_metrics.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/kserve/edit/main/docs/modelserving/storage/storagecontainers.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="prometheus-metrics">Prometheus Metrics<a class="headerlink" href="#prometheus-metrics" title="Permanent link">¶</a></h1>
-<h2 id="exposing-a-prometheus-metrics-port">Exposing a Prometheus metrics port<a class="headerlink" href="#exposing-a-prometheus-metrics-port" title="Permanent link">¶</a></h2>
-<p>All supported serving runtimes support exporting prometheus metrics on a specified port in the inference service's pod. The appropriate port for the model server is defined in the <a href="https://github.com/kserve/kserve/tree/master/config/runtimes">kserve/config/runtimes</a> YAML files. For example, torchserve defines its prometheus port as <code>8082</code> in <code>kserve-torchserve.yaml</code>. </p>
-<div class="highlight"><pre><span></span><code><span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-torchserve</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">prometheus.kserve.io/port</span><span class="p">:</span><span class="w"> </span><span class="s">'8082'</span>
-<span class="w">    </span><span class="nt">prometheus.kserve.io/path</span><span class="p">:</span><span class="w"> </span><span class="s">"/metrics"</span>
-</code></pre></div>
-<p>If needed, this value can be overridden in the InferenceService YAML. </p>
-<p>To enable prometheus metrics, add the annotation <code>serving.kserve.io/enable-prometheus-scraping</code> to the InferenceService YAML. </p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<h1 id="storage-containers">Storage Containers<a class="headerlink" href="#storage-containers" title="Permanent link">¶</a></h1>
+<p>KServe downloads models using a storage initializer (initContainer). For example, this is <a href="https://github.com/kserve/kserve/blob/79f2a48d0c9c72b034127170e38d6b29b927f03a/python/kserve/kserve/storage/storage.py">the default storage initializer implementation</a>. KServe introduced <strong>ClusterStorageContainer</strong> CRD in 0.11 which allows users to specify a custom container spec for a list of supported URI formats. </p>
+<p>A <em>ClusterStorageContainer</em> defines the container spec for one or more storage URI formats. Here is an example of a ClusterStorageContainer that corresponds to the default storage initializer. Note that this is incluced in the <a href="https://github.com/kserve/kserve/blob/79f2a48d0c9c72b034127170e38d6b29b927f03a/charts/kserve-resources/templates/clusterstoragecontainer.yaml">helm chart</a>. </p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1alpha1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterStorageContainer</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-irisv2"</span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">serving.kserve.io/enable-prometheus-scraping</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/mms/lr_model"</span>
+<span class="w">  </span><span class="nt">container</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-initializer</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/storage-initializer:latest</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100Mi</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">  </span><span class="nt">supportedUriFormats</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hdfs://</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">webhdfs://</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="s">"https://(.+?).blob.core.windows.net/(.+)"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="s">"https://(.+?).file.core.windows.net/(.+)"</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="s">"https?://(.+)/(.+)"</span>
 </code></pre></div>
-<p>The default values for <code>serving.kserve.io/enable-prometheus-scraping</code> can be set in the <code>inferenceservice-config</code> configmap. See <a href="https://github.com/kserve/kserve/blob/master/qpext/README.md#configs">the docs</a> for more info.</p>
-<p>There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. </p>
-<h2 id="metrics-for-lgbserver-paddleserver-pmmlserver-sklearnserver-xgbserver-custom-transformerpredictor">Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor<a class="headerlink" href="#metrics-for-lgbserver-paddleserver-pmmlserver-sklearnserver-xgbserver-custom-transformerpredictor" title="Permanent link">¶</a></h2>
-<p>Prometheus latency histograms are emitted for each of the steps (pre/postprocessing, explain, predict).
-Additionally, the latencies of each step are logged per request. See also <a href="https://github.com/kserve/kserve/blob/master/python/kserve/kserve/metrics.py">modelserver prometheus label definitions</a> and <a href="https://github.com/kserve/kserve/blob/master/python/kserve/kserve/model.py#L94-L130">metric implementation</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Metric Name</th>
-<th>Description</th>
-<th>Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>request_preprocess_seconds</td>
-<td>pre-processing request latency</td>
-<td>Histogram</td>
-</tr>
-<tr>
-<td>request_explain_seconds</td>
-<td>explain request latency</td>
-<td>Histogram</td>
-</tr>
-<tr>
-<td>request_predict_seconds</td>
-<td>prediction request latency</td>
-<td>Histogram</td>
-</tr>
-<tr>
-<td>request_postprocess_seconds</td>
-<td>pre-processing request latency</td>
-<td>Histogram</td>
-</tr>
-</tbody>
-</table>
-<h2 id="other-serving-runtime-metrics">Other serving runtime metrics<a class="headerlink" href="#other-serving-runtime-metrics" title="Permanent link">¶</a></h2>
-<p>Some model servers define their own metrics. </p>
-<ul>
-<li><a href="https://docs.seldon.io/projects/seldon-core/en/latest/analytics/analytics.html">mlserver</a></li>
-<li><a href="https://pytorch.org/serve/metrics_api.html">torchserve</a></li>
-<li><a href="https://github.com/triton-inference-server/server/blob/main/docs/user_guide/metrics.md">triton</a></li>
-<li><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/core/framework/metrics.cc">tensorflow</a> (Please see <a href="https://github.com/kserve/kserve/issues/2462">Github Issue #2462</a>)</li>
-</ul>
-<h2 id="exporting-metrics">Exporting metrics<a class="headerlink" href="#exporting-metrics" title="Permanent link">¶</a></h2>
-<p>Exporting metrics in serverless mode requires that the queue-proxy extension image is used. </p>
-<p>For more information on how to export metrics, see <a href="https://github.com/kserve/kserve/blob/master/qpext/README.md">Queue Proxy Extension</a> documentation.</p>
-<h2 id="knativequeue-proxy-metrics">Knative/Queue-Proxy metrics<a class="headerlink" href="#knativequeue-proxy-metrics" title="Permanent link">¶</a></h2>
-<p>Queue proxy emits metrics be default on port 9091. If aggregation metrics are set up with the queue proxy extension, the default port for the aggregated metrics will be 9088. See the <a href="https://knative.dev/development/serving/services/service-metrics/">Knative documentation</a> (and <a href="https://github.com/vagababov/serving/blob/master/pkg/queue/prometheus_stats_reporter.go#L118">additional metrics defined in the code</a>) for more information about the metrics queue-proxy exposes. </p>
+<p>In a <em>ClusterStorageContainer</em> spec, you can specify container resource requests and limits, and a list of supported URI formats that this image supports. KServe can match the URI either with <code>prefix</code> or <code>regex</code> .</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If a storage URI is supported by two or more <em>ClusterStorageContainer</em> CRs, there is no guarantee which one will be used. <strong>Please make sure that the URI format is only supported by one ClusterStorageContainer CR</strong>.</p>
+</div>
+<p>If you would like to use a custom protocol <code>model-registry://</code>, for example, you can create a custom image and add a new ClusterStorageContainer CR like this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1alpha1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterStorageContainer</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">container</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-initializer</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abc/custom-storage-initializer:latest</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100Mi</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
+<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">  </span><span class="nt">supportedUriFormats</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model-registry://</span>
+</code></pre></div>
+<h2 id="spec-attributes">Spec Attributes<a class="headerlink" href="#spec-attributes" title="Permanent link">¶</a></h2>
+<p>Spec attributes are in <a href="/website/reference/api/#serving.kserve.io/v1alpha1.ClusterStorageContainer">API Reference</a> doc.</p>
 </article>
 </div>
 </div>
@@ -1196,7 +1136,7 @@ Additionally, the latencies of each step are logged per request. See also <a hre
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Canary Example" class="md-footer__link md-footer__link--prev" href="../../v1beta1/rollout/canary-example/" rel="prev">
+<a aria-label="Previous: Image classification inference graph" class="md-footer__link md-footer__link--prev" href="../../inference_graph/image_pipeline/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1205,17 +1145,17 @@ Additionally, the latencies of each step are logged per request. See also <a hre
 <span class="md-footer__direction">
                 Previous
               </span>
-              Canary Example
+              Image classification inference graph
             </div>
 </div>
 </a>
-<a aria-label="Next: Grafana Dashboards" class="md-footer__link md-footer__link--next" href="../grafana_dashboards/" rel="next">
+<a aria-label="Next: Azure" class="md-footer__link md-footer__link--next" href="../azure/azure/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Grafana Dashboards
+              Azure
             </div>
 </div>
 <div class="md-footer__button md-icon">
