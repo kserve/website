@@ -52,6 +52,7 @@ nav:
                 - Concept: modelserving/inference_graph/README.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
           - Model Storage:
+                - Storage Containers: modelserving/storage/storagecontainers.md
                 - Azure: modelserving/storage/azure/azure.md
                 - PVC: modelserving/storage/pvc/pvc.md
                 - S3: modelserving/storage/s3/s3.md
