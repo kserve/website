@@ -1265,9 +1265,10 @@ they can be installed via the <a href="https://github.com/knative/docs/blob/rele
 <p>If you already have <code>Istio</code> or <code>Knative</code> (e.g. from a Kubeflow install) then you don't need to install them explicitly, as long as version dependencies are satisfied.</p>
 </li>
 </ul>
-<blockquote>
-<p><strong><em>NOTE:</em></strong>  Note: On a local environment, when using <code>minikube</code> or <code>kind</code> as Kubernetes cluster, there has been a reported issue that <a href="https://knative.dev/docs/install/quickstart-install/">knative quickstart</a> bootstrap does not work as expected. It is recommended to follow the installation manual from knative using <a href="https://knative.dev/docs/install/yaml-install/">yaml</a> or using <a href="https://knative.dev/docs/install/operator/knative-with-operators/">knative operator</a> for a better result.</p>
-</blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On a local environment, when using <code>minikube</code> or <code>kind</code> as Kubernetes cluster, there has been a reported issue that <a href="https://knative.dev/docs/install/quickstart-install/">knative quickstart</a> bootstrap does not work as expected. It is recommended to follow the installation manual from knative using <a href="https://knative.dev/docs/install/yaml-install/">yaml</a> or using <a href="https://knative.dev/docs/install/operator/knative-with-operators/">knative operator</a> for a better result.</p>
+</div>
 <h3 id="setup-your-environment">Setup your environment<a class="headerlink" href="#setup-your-environment" title="Permanent link">¶</a></h3>
 <p>To start your environment you'll need to set these environment variables (we
 recommend adding them to your <code>.bashrc</code>):</p>
@@ -1366,11 +1367,13 @@ to install it.</p>
 make<span class="w"> </span>deploy
 </code></pre></div></p>
 </div>
-<p><mark><strong>Expected Output</strong></mark>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>-l<span class="w"> </span>control-plane<span class="o">=</span>kserve-controller-manager
 <span class="go">NAME                             READY   STATUS    RESTARTS   AGE</span>
 <span class="go">kserve-controller-manager-0      2/2     Running   0          13m</span>
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>By default it installs to <code>kserve</code> namespace with the published controller manager image from master branch.</p>
@@ -1389,10 +1392,10 @@ Please also ensure you are logged in to <code>KO_DOCKER_REPO</code> from your cl
 make<span class="w"> </span>deploy-dev-xgb
 </code></pre></div></p>
 <p>Run the following command to deploy explainer with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev-alibi
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy-dev-alibi
 </code></pre></div></p>
 <p>Run the following command to deploy storage initializer with your local change.
-<div class="highlight"><pre><span></span><code>make deploy-dev-storageInitializer
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>deploy-dev-storageInitializer
 </code></pre></div></p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1407,10 +1410,12 @@ The built image is only for development and testing purpose, the current limitat
 <p>You should see model serving deployment running under default or your specified namespace.</p>
 <div class="highlight"><pre><span></span><code>$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
 </code></pre></div>
-<p><mark><strong>Expected Output</strong></mark> <br/>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
 <div class="highlight"><pre><span></span><code>NAME                                                      READY   STATUS    RESTARTS   AGE
 flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0          10s
-</code></pre></div></p>
+</code></pre></div>
+</div>
 <h2 id="running-unitintegration-tests">Running unit/integration tests<a class="headerlink" href="#running-unitintegration-tests" title="Permanent link">¶</a></h2>
 <p><code>kserver-controller-manager</code> has a few integration tests which requires mock apiserver
 and etcd, they get installed along with <a href="https://book.kubebuilder.io/quick-start.html#installation"><code>kubebuilder</code></a>.</p>
@@ -1425,7 +1430,7 @@ and etcd, they get installed along with <a href="https://book.kubebuilder.io/qui
 <li><code>make deploy-dev</code></li>
 </ol>
 <p>Go to <code>python/kserve</code> and install kserve python sdk deps 
-<div class="highlight"><pre><span></span><code>pip3 install -e .[test]
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>test<span class="o">]</span>
 </code></pre></div>
 Then go to <code>test/e2e</code>. </p>
 <p>Run <code>kubectl create namespace kserve-ci-e2e-test</code></p>

@@ -1,5 +1,5 @@
 {
-  "model_name": "lightgbm-v2-iris",
+  "model_name": "lightgbm-v2-iris-grpc",
   "inputs": [
     {
       "name": "input-0",

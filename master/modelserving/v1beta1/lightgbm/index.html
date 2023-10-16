@@ -1342,12 +1342,12 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <span class="o">{</span><span class="s2">"predictions"</span>:<span class="w"> </span><span class="o">[[</span><span class="m">0</span>.9,<span class="w"> </span><span class="m">0</span>.05,<span class="w"> </span><span class="m">0</span>.05<span class="o">]]}</span>
 </code></pre></div>
 </div>
-<h2 id="deploy-the-model-with-open-inference-protocol">Deploy the model with <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">Open Inference Protocol</a><a class="headerlink" href="#deploy-the-model-with-open-inference-protocol" title="Permanent link">¶</a></h2>
+<h2 id="deploy-the-model-with-open-inference-protocol">Deploy the model with <a href="https://github.com/kserve/open-inference-protocol/">Open Inference Protocol</a><a class="headerlink" href="#deploy-the-model-with-open-inference-protocol" title="Permanent link">¶</a></h2>
 <h3 id="test-the-model-locally_1">Test the model locally<a class="headerlink" href="#test-the-model-locally_1" title="Permanent link">¶</a></h3>
 <p>Once you've got your model serialized <code>model.bst</code>, we can then use <a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">KServe LightGBM Server</a> to create a local model server.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-with-inferenceservice">deploying with InferenceService</a>.</p>
+<p>This step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-inferenceservice-with-rest-endpoint">deploying with InferenceService</a>.</p>
 </div>
 <h4 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h4>
 <p>Firstly, to use kserve lightgbm server locally, you will first need to install the <code>lgbserver</code>
@@ -1369,7 +1369,7 @@ poetry<span class="w"> </span>install<span class="w"> </span>
 <li><code>--nthread</code>: Number of threads to use by LightGBM. This is optional and the default value is 1.</li>
 </ul>
 <p>With the <code>lgbserver</code> runtime package installed locally, you should now be ready to start our server as:</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>lgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>lightgbm-iris
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>lgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>lightgbm-v2-iris
 </code></pre></div>
 <h3 id="deploy-inferenceservice-with-rest-endpoint">Deploy InferenceService with REST endpoint<a class="headerlink" href="#deploy-inferenceservice-with-rest-endpoint" title="Permanent link">¶</a></h3>
 <p>To deploy the LightGBM model with Open Inference Protocol, you need to set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
@@ -1412,7 +1412,7 @@ poetry<span class="w"> </span>install<span class="w"> </span>
 <h4 id="test-the-deployed-model-with-curl">Test the deployed model with curl<a class="headerlink" href="#test-the-deployed-model-with-curl" title="Permanent link">¶</a></h4>
 <p>You can now test your deployed model by sending a sample request.</p>
 <p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">V2 Dataplane protocol</a></strong>.
-You can see an example payload below:</p>
+You can see an example payload below. Create a file named <code>iris-input-v2.json</code> with the sample input.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
@@ -1461,13 +1461,17 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 </div>
 <h3 id="create-the-inferenceservice-with-grpc-endpoint">Create the InferenceService with gRPC endpoint<a class="headerlink" href="#create-the-inferenceservice-with-grpc-endpoint" title="Permanent link">¶</a></h3>
 <p>Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Yaml</label></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, KServe only supports exposing either HTTP or gRPC port. By default, HTTP port is exposed.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Serverless</label><label for="__tabbed_4_2">RawDeployment</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-v2-iris"</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-v2-iris-grpc"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
@@ -1477,13 +1481,32 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-lgbserver</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/v2/iris"</span>
 <span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span><span class="w">          </span><span class="c1"># knative expects grpc port name to be 'h2c'</span>
+<span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">          </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"lightgbm-v2-iris-grpc"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-lgbserver</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/lightgbm/v2/iris"</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grpc-port</span><span class="w">      </span><span class="c1"># Istio requires the port name to be in the format &lt;protocol&gt;[-&lt;suffix&gt;]</span>
 <span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
 <span class="w">          </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
 </code></pre></div>
 </div>
 </div>
-</input></div>
+</input></input></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For <code>V2 protocol (open inference protocol)</code> if <code>runtime</code> field is not provided then, by default <code>mlserver</code> runtime is used.</p>
@@ -1499,20 +1522,21 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <h4 id="test-the-deployed-model-with-grpcurl">Test the deployed model with grpcurl<a class="headerlink" href="#test-the-deployed-model-with-grpcurl" title="Permanent link">¶</a></h4>
 <p>After the gRPC <code>InferenceService</code> becomes ready, <a href="https://github.com/fullstorydev/grpcurl">grpcurl</a>, can be used to send gRPC requests to the <code>InferenceService</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># download the proto file</span>
-curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/open-inference-protocol/main/specification/protocol/open_inference_grpc.proto
 
 <span class="nv">INPUT_PATH</span><span class="o">=</span>iris-input-v2-grpc.json
-<span class="nv">PROTO_FILE</span><span class="o">=</span>grpc_predict_v2.proto
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>lightgbm-v2-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+<span class="nv">PROTO_FILE</span><span class="o">=</span>open_inference_grpc.proto
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>lightgbm-v2-iris-grpc<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
-<p>The gRPC APIs follow the KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol</a>.</p>
-<p>For example, <code>ServerReady</code> API can be used to check if the server is ready:</p>
+<p><a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">Determine the ingress IP and port</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>. Now, you can use <code>curl</code> to send the inference requests.
+The gRPC APIs follow the KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol / Open Inference Protocol</a>.
+For example, <code>ServerReady</code> API can be used to check if the server is ready:</p>
 <div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-plaintext<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-proto<span class="w"> </span><span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-authority<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">" \</span>
-<span class="s2">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2"> \</span>
-<span class="s2">  inference.GRPCInferenceService.ServerReady</span>
+<span class="w">  </span>-authority<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>inference.GRPCInferenceService.ServerReady
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
@@ -1521,6 +1545,23 @@ curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercont
 <span class="p">}</span>
 </code></pre></div>
 </div>
+<p>You can test the deployed model by sending a sample request with the below payload.
+Notice that the input format differs from the in the previous <code>REST endpoint</code> example.
+Prepare the inference input inside the file named <code>iris-input-v2-grpc.json</code>.
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lightgbm-v2-iris-grpc"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-0"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"shape"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"datatype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"contents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"fp32_contents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w"> </span><span class="mf">2.8</span><span class="p">,</span><span class="w"> </span><span class="mf">4.8</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.4</span><span class="p">,</span><span class="w"> </span><span class="mf">4.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.6</span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
 <p><code>ModelInfer</code> API takes input following the <code>ModelInferRequest</code> schema defined in the <code>grpc_predict_v2.proto</code> file. Notice that the input file differs from that used in the previous <code>curl</code> example.</p>
 <div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-vv<span class="w"> </span><span class="se">\</span>
@@ -1555,7 +1596,7 @@ Estimated<span class="w"> </span>response<span class="w"> </span>size:<span clas
 
 Response<span class="w"> </span>contents:
 <span class="o">{</span>
-<span class="w">  </span><span class="s2">"modelName"</span>:<span class="w"> </span><span class="s2">"lightgbm-v2-iris"</span>,
+<span class="w">  </span><span class="s2">"modelName"</span>:<span class="w"> </span><span class="s2">"lightgbm-v2-iris-grpc"</span>,
 <span class="w">  </span><span class="s2">"outputs"</span>:<span class="w"> </span><span class="o">[</span>
 <span class="w">    </span><span class="o">{</span>
 <span class="w">      </span><span class="s2">"name"</span>:<span class="w"> </span><span class="s2">"predict"</span>,
