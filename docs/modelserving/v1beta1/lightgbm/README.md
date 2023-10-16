@@ -129,13 +129,13 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
     {"predictions": [[0.9, 0.05, 0.05]]}
     ```
 
-## Deploy the model with [Open Inference Protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)
+## Deploy the model with [Open Inference Protocol](https://github.com/kserve/open-inference-protocol/)
 
 ### Test the model locally
 Once you've got your model serialized `model.bst`, we can then use [KServe LightGBM Server](https://github.com/kserve/kserve/tree/master/python/lgbserver) to create a local model server.
 
 !!! Note
-    This step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-with-inferenceservice).
+    This step is optional and just meant for testing, feel free to jump straight to [deploying with InferenceService](#deploy-inferenceservice-with-rest-endpoint).
 
 #### Pre-requisites
 
@@ -162,7 +162,7 @@ The `lgbserver` package takes three arguments.
 With the `lgbserver` runtime package installed locally, you should now be ready to start our server as:
 
 ```bash
-python3 lgbserver --model_dir /path/to/model_dir --model_name lightgbm-iris
+python3 lgbserver --model_dir /path/to/model_dir --model_name lightgbm-v2-iris
 ```
 
 ### Deploy InferenceService with REST endpoint
@@ -205,7 +205,7 @@ kubectl apply -f lightgbm-v2.yaml
 You can now test your deployed model by sending a sample request.
 
 Note that this request **needs to follow the [V2 Dataplane protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2)**.
-You can see an example payload below:
+You can see an example payload below. Create a file named `iris-input-v2.json` with the sample input.
 
 ```json
 {
@@ -263,13 +263,15 @@ curl -v \
 ### Create the InferenceService with gRPC endpoint
 Create the inference service yaml and expose the gRPC port, currently only one port is allowed to expose either HTTP or gRPC port and by default HTTP port is exposed.
 
-=== "Yaml"
+!!! Note
+    Currently, KServe only supports exposing either HTTP or gRPC port. By default, HTTP port is exposed.
 
+=== "Serverless"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
     metadata:
-      name: "lightgbm-v2-iris"
+      name: "lightgbm-v2-iris-grpc"
     spec:
       predictor:
         model:
@@ -279,7 +281,27 @@ Create the inference service yaml and expose the gRPC port, currently only one p
           runtime: kserve-lgbserver
           storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
           ports:
-            - name: h2c
+            - name: h2c          # knative expects grpc port name to be 'h2c'
+              protocol: TCP
+              containerPort: 8081
+    ```
+
+=== "RawDeployment"
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "lightgbm-v2-iris-grpc"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: lightgbm
+          protocolVersion: v2
+          runtime: kserve-lgbserver
+          storageUri: "gs://kfserving-examples/models/lightgbm/v2/iris"
+          ports:
+            - name: grpc-port      # Istio requires the port name to be in the format <protocol>[-<suffix>]
               protocol: TCP
               containerPort: 8081
     ```
@@ -299,22 +321,22 @@ After the gRPC `InferenceService` becomes ready, [grpcurl](https://github.com/fu
 
 ```bash
 # download the proto file
-curl -O https://raw.githubusercontent.com/kserve/kserve/master/docs/predict-api/v2/grpc_predict_v2.proto
+curl -O https://raw.githubusercontent.com/kserve/open-inference-protocol/main/specification/protocol/open_inference_grpc.proto
 
 INPUT_PATH=iris-input-v2-grpc.json
-PROTO_FILE=grpc_predict_v2.proto
-SERVICE_HOSTNAME=$(kubectl get inferenceservice lightgbm-v2-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+PROTO_FILE=open_inference_grpc.proto
+SERVICE_HOSTNAME=$(kubectl get inferenceservice lightgbm-v2-iris-grpc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-The gRPC APIs follow the KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
-
+[Determine the ingress IP and port](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`. Now, you can use `curl` to send the inference requests.
+The gRPC APIs follow the KServe [prediction V2 protocol / Open Inference Protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2).
 For example, `ServerReady` API can be used to check if the server is ready:
 
 ```bash
 grpcurl \
   -plaintext \
   -proto ${PROTO_FILE} \
-  -authority ${SERVICE_HOSTNAME}" \
+  -authority ${SERVICE_HOSTNAME} \
   ${INGRESS_HOST}:${INGRESS_PORT} \
   inference.GRPCInferenceService.ServerReady
 ```
@@ -325,6 +347,25 @@ grpcurl \
       "ready": true
     }
     ```
+
+You can test the deployed model by sending a sample request with the below payload.
+Notice that the input format differs from the in the previous `REST endpoint` example.
+Prepare the inference input inside the file named `iris-input-v2-grpc.json`.
+```json
+{
+  "model_name": "lightgbm-v2-iris-grpc",
+  "inputs": [
+    {
+      "name": "input-0",
+      "shape": [2, 4],
+      "datatype": "FP32",
+      "contents": {
+        "fp32_contents": [6.8, 2.8, 4.8, 1.4, 6.0, 3.4, 4.5, 1.6]
+      }
+    }
+  ]
+}
+```
 
 `ModelInfer` API takes input following the `ModelInferRequest` schema defined in the `grpc_predict_v2.proto` file. Notice that the input file differs from that used in the previous `curl` example.
 
@@ -364,7 +405,7 @@ grpcurl \
     
     Response contents:
     {
-      "modelName": "lightgbm-v2-iris",
+      "modelName": "lightgbm-v2-iris-grpc",
       "outputs": [
         {
           "name": "predict",

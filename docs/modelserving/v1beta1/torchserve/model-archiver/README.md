@@ -2,7 +2,7 @@
 
 ## Setup
 
-1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#4-Install-kserve).
+1. Your ~/.kube/config should point to a cluster with [KServe installed](../../../../get_started/README.md#install-the-kserve-quickstart-environment).
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## 1. Create PV and PVC
