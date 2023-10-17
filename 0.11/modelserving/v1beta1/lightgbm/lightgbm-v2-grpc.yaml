@@ -1,7 +1,7 @@
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "lightgbm-v2-iris"
+  name: "lightgbm-v2-iris-grpc"
 spec:
   predictor:
     model:
@@ -12,4 +12,4 @@ spec:
       ports:
         - name: h2c
           protocol: TCP
-          containerPort: 9000
+          containerPort: 8081

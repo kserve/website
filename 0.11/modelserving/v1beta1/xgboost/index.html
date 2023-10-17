@@ -456,14 +456,28 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-the-model-with-inferenceservice">
-    Deploy the Model with InferenceService
+<a class="md-nav__link" href="#deploy-the-model-with-rest-endpoint-through-inferenceservice">
+    Deploy the Model with REST endpoint through InferenceService
   </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-deployed-model">
     Test the Deployed Model
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-model-with-grpc-endpoint-through-inferenceservice">
+    Deploy the Model with GRPC endpoint through InferenceService
+  </a>
+<nav aria-label="Deploy the Model with GRPC endpoint through InferenceService" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-the-deployed-model-with-grpcurl">
+    Test the deployed model with grpcurl
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -656,6 +670,11 @@
           Model Storage
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/storagecontainers/">
+        Storage Containers
+      </a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../storage/azure/azure/">
         Azure
@@ -1115,14 +1134,28 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-the-model-with-inferenceservice">
-    Deploy the Model with InferenceService
+<a class="md-nav__link" href="#deploy-the-model-with-rest-endpoint-through-inferenceservice">
+    Deploy the Model with REST endpoint through InferenceService
   </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#test-the-deployed-model">
     Test the Deployed Model
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-model-with-grpc-endpoint-through-inferenceservice">
+    Deploy the Model with GRPC endpoint through InferenceService
+  </a>
+<nav aria-label="Deploy the Model with GRPC endpoint through InferenceService" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-the-deployed-model-with-grpcurl">
+    Test the deployed model with grpcurl
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1167,7 +1200,7 @@ We will save this model as <code>model.bst</code>.</p>
 <p>Once you've got your model serialized <code>model.bst</code>, we can then use <a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">KServe XGBoost Server</a> to spin up a local server.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-with-inferenceservice">deploying with InferenceService</a>.</p>
+<p>This step is optional and just meant for testing, feel free to jump straight to <a href="#deploy-the-model-with-rest-endpoint-through-inferenceservice">deploying with InferenceService</a>.</p>
 </div>
 <h4 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">¶</a></h4>
 <p>Firstly, to use kserve xgboost server locally, you will first need to install the <code>xgbserver</code> runtime package in your local environment.</p>
@@ -1188,9 +1221,9 @@ poetry<span class="w"> </span>install<span class="w"> </span>
 <li><code>--nthread</code>: Number of threads to use by LightGBM. This is optional and the default value is 1.</li>
 </ul>
 <p>With the <code>xgbserver</code> runtime package installed locally, you should now be ready to start our server as:</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>xgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>xgboost-iris
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>xgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>xgboost-v2-iris
 </code></pre></div>
-<h2 id="deploy-the-model-with-inferenceservice">Deploy the Model with InferenceService<a class="headerlink" href="#deploy-the-model-with-inferenceservice" title="Permanent link">¶</a></h2>
+<h2 id="deploy-the-model-with-rest-endpoint-through-inferenceservice">Deploy the Model with REST endpoint through InferenceService<a class="headerlink" href="#deploy-the-model-with-rest-endpoint-through-inferenceservice" title="Permanent link">¶</a></h2>
 <p>Lastly, we use KServe to deploy our trained model on Kubernetes.
 For this, we use the <code>InferenceService</code> CRD and set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
@@ -1199,7 +1232,7 @@ For this, we use the <code>InferenceService</code> CRD and set the <strong><code
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"xgboost-iris"</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"xgboost-v2-iris"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
@@ -1222,7 +1255,7 @@ For this, we use the <code>InferenceService</code> CRD and set the <strong><code
 <h2 id="test-the-deployed-model">Test the Deployed Model<a class="headerlink" href="#test-the-deployed-model" title="Permanent link">¶</a></h2>
 <p>We can now test our deployed model by sending a sample request.</p>
 <p>Note that this request <strong>needs to follow the <a href="https://github.com/kserve/open-inference-protocol">Open Inference Protocol</a></strong>.
-You can see an example payload below:</p>
+You can see an example payload below. Create a file named <code>iris-input-v2.json</code> with the sample input.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
@@ -1237,27 +1270,22 @@ You can see an example payload below:</p>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>Now, assuming that our ingress can be accessed at
-<code>${INGRESS_HOST}:${INGRESS_PORT}</code>, we can use <code>curl</code> to send our inference
-request as:</p>
-<blockquote>
-<p>You can follow <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">these instructions</a> to find
-out your ingress IP and port.</p>
-</blockquote>
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>xgboost-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+<p><a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">Determine the ingress IP and port</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.
+Now, you can use <code>curl</code> to send the inference request as:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>xgboost-v2-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
 curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span>@./iris-input.json<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/xgboost-iris/infer
+<span class="w">  </span>-d<span class="w"> </span>@./iris-input-v2.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/xgboost-v2-iris/infer
 </code></pre></div>
 <p>The output will be something similar to:</p>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4e546709-0887-490a-abd6-00cbc4c26cf4"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xgboost-iris"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xgboost-v2-iris"</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">"model_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"v1.0.0"</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
@@ -1269,6 +1297,166 @@ curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
+</code></pre></div>
+</div>
+<h2 id="deploy-the-model-with-grpc-endpoint-through-inferenceservice">Deploy the Model with GRPC endpoint through InferenceService<a class="headerlink" href="#deploy-the-model-with-grpc-endpoint-through-inferenceservice" title="Permanent link">¶</a></h2>
+<p>Create the inference service resource and expose the gRPC port using the below yaml.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, KServe only supports exposing either HTTP or gRPC port. By default, HTTP port is exposed.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Serverless</label><label for="__tabbed_2_2">RawDeployment</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"xgboost-v2-iris-grpc"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xgboost</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-xgbserver</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/xgboost/iris"</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">h2c</span><span class="w">     </span><span class="c1"># knative expects grpc port name to be 'h2c'</span>
+<span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">          </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"xgboost-v2-iris-grpc"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xgboost</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-xgbserver</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/xgboost/iris"</span>
+<span class="w">      </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">grpc-port</span><span class="w">  </span><span class="c1"># Istio requires the port name to be in the format &lt;protocol&gt;[-&lt;suffix&gt;]</span>
+<span class="w">          </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TCP</span>
+<span class="w">          </span><span class="nt">containerPort</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8081</span>
+</code></pre></div>
+</div>
+</div>
+</input></input></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code>V2 protocol (open inference protocol)</code> if <code>runtime</code> field is not provided then, by default <code>mlserver</code> runtime is used.</p>
+</div>
+<p>Apply the InferenceService yaml to get the gRPC endpoint</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl apply -f xgboost-v2-grpc.yaml
+</code></pre></div>
+<h4 id="test-the-deployed-model-with-grpcurl">Test the deployed model with grpcurl<a class="headerlink" href="#test-the-deployed-model-with-grpcurl" title="Permanent link">¶</a></h4>
+<p>After the gRPC <code>InferenceService</code> becomes ready, <a href="https://github.com/fullstorydev/grpcurl">grpcurl</a>, can be used to send gRPC requests to the <code>InferenceService</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># download the proto file</span>
+curl<span class="w"> </span>-O<span class="w"> </span>https://raw.githubusercontent.com/kserve/open-inference-protocol/main/specification/protocol/open_inference_grpc.proto
+
+<span class="nv">INPUT_PATH</span><span class="o">=</span>iris-input-v2-grpc.json
+<span class="nv">PROTO_FILE</span><span class="o">=</span>open_inference_grpc.proto
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>xgboost-iris-v2<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+</code></pre></div>
+<p><a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">Determine the ingress IP and port</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>. Now, you can use <code>curl</code> to send the inference requests.
+The gRPC APIs follows the KServe <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction V2 protocol / Open Inference Protocol</a>.
+For example, <code>ServerReady</code> API can be used to check if the server is ready:</p>
+<div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-plaintext<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-proto<span class="w"> </span><span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-authority<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>inference.GRPCInferenceService.ServerReady
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"ready"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+<p>You can test the deployed model by sending a sample request with the below payload.
+Notice that the input format differs from the in the previous <code>REST endpoint</code> example.
+Prepare the inference input inside the file named <code>iris-input-v2-grpc.json</code>.
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xgboost-v2-iris-grpc"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-0"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"shape"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"datatype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"contents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"fp32_contents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w"> </span><span class="mf">2.8</span><span class="p">,</span><span class="w"> </span><span class="mf">4.8</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">,</span><span class="w"> </span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.4</span><span class="p">,</span><span class="w"> </span><span class="mf">4.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.6</span><span class="p">]</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><code>ModelInfer</code> API takes input following the <code>ModelInferRequest</code> schema defined in the <code>grpc_predict_v2.proto</code> file.
+<div class="highlight"><pre><span></span><code>grpcurl<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-vv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-plaintext<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-proto<span class="w"> </span><span class="si">${</span><span class="nv">PROTO_FILE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-authority<span class="w"> </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span>@<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>inference.GRPCInferenceService.ModelInfer<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span><span class="s2">"</span><span class="nv">$INPUT_PATH</span><span class="s2">"</span><span class="k">)</span>
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Resolved<span class="w"> </span>method<span class="w"> </span>descriptor:
+//<span class="w"> </span>The<span class="w"> </span>ModelInfer<span class="w"> </span>API<span class="w"> </span>performs<span class="w"> </span>inference<span class="w"> </span>using<span class="w"> </span>the<span class="w"> </span>specified<span class="w"> </span>model.<span class="w"> </span>Errors<span class="w"> </span>are
+//<span class="w"> </span>indicated<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>google.rpc.Status<span class="w"> </span>returned<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>request.<span class="w"> </span>The<span class="w"> </span>OK<span class="w"> </span>code
+//<span class="w"> </span>indicates<span class="w"> </span>success<span class="w"> </span>and<span class="w"> </span>other<span class="w"> </span>codes<span class="w"> </span>indicate<span class="w"> </span>failure.
+rpc<span class="w"> </span>ModelInfer<span class="w"> </span><span class="o">(</span><span class="w"> </span>.inference.ModelInferRequest<span class="w"> </span><span class="o">)</span><span class="w"> </span>returns<span class="w"> </span><span class="o">(</span><span class="w"> </span>.inference.ModelInferResponse<span class="w"> </span><span class="o">)</span><span class="p">;</span>
+
+Request<span class="w"> </span>metadata<span class="w"> </span>to<span class="w"> </span>send:
+<span class="o">(</span>empty<span class="o">)</span>
+
+Response<span class="w"> </span>headers<span class="w"> </span>received:
+content-type:<span class="w"> </span>application/grpc
+date:<span class="w"> </span>Mon,<span class="w"> </span><span class="m">09</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">11</span>:07:26<span class="w"> </span>GMT
+grpc-accept-encoding:<span class="w"> </span>identity,<span class="w"> </span>deflate,<span class="w"> </span>gzip
+server:<span class="w"> </span>istio-envoy
+x-envoy-upstream-service-time:<span class="w"> </span><span class="m">16</span>
+
+Estimated<span class="w"> </span>response<span class="w"> </span>size:<span class="w"> </span><span class="m">83</span><span class="w"> </span>bytes
+
+Response<span class="w"> </span>contents:
+<span class="o">{</span>
+<span class="s2">"modelName"</span>:<span class="w"> </span><span class="s2">"xgboost-v2-iris-grpc"</span>,
+<span class="s2">"id"</span>:<span class="w"> </span><span class="s2">"41738561-7219-4e4a-984d-5fe19bed6298"</span>,
+<span class="s2">"outputs"</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">    </span><span class="o">{</span>
+<span class="w">    </span><span class="s2">"name"</span>:<span class="w"> </span><span class="s2">"output-0"</span>,
+<span class="w">    </span><span class="s2">"datatype"</span>:<span class="w"> </span><span class="s2">"INT32"</span>,
+<span class="w">    </span><span class="s2">"shape"</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">     </span><span class="s2">"2"</span>
+<span class="w">    </span><span class="o">]</span>,
+<span class="w">    </span><span class="s2">"contents"</span>:<span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="s2">"intContents"</span>:<span class="w"> </span><span class="o">[</span>
+<span class="w">        </span><span class="m">1</span>,
+<span class="w">        </span><span class="m">1</span>
+<span class="w">        </span><span class="o">]</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">]</span>
+<span class="o">}</span>
+
+Response<span class="w"> </span>trailers<span class="w"> </span>received:
+<span class="o">(</span>empty<span class="o">)</span>
+Sent<span class="w"> </span><span class="m">1</span><span class="w"> </span>request<span class="w"> </span>and<span class="w"> </span>received<span class="w"> </span><span class="m">1</span><span class="w"> </span>response
 </code></pre></div>
 </div>
 </article>
