@@ -222,6 +222,25 @@ Expected Output
 $inferenceservice.serving.kserve.io/torchserve-grpc created
 ```
 
+=== "New Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: "torchserve-grpc"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+          ports:
+            - containerPort: 7070
+              name: h2c
+              protocol: TCP
+    ```
+
 === "Old Schema"
 
     ```yaml
@@ -232,25 +251,6 @@ $inferenceservice.serving.kserve.io/torchserve-grpc created
     spec:
       predictor:
         pytorch:
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
-          ports:
-            - containerPort: 7070
-              name: h2c
-              protocol: TCP
-    ```
-
-=== "New Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "torchserve-grpc"
-    spec:
-      predictor:
-        model:
-          modelFormat:
-            name: pytorch
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
           ports:
             - containerPort: 7070
@@ -424,24 +424,6 @@ Expected Output
 $inferenceservice.serving.kserve.io/torchserve-grpc-v2 created
 ```
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: "torchserve-grpc-v2"
-    spec:
-      predictor:
-        pytorch:
-          protocolVersion: v2
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
-          ports:
-            - containerPort: 8081
-              name: h2c
-              protocol: TCP
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -454,6 +436,24 @@ $inferenceservice.serving.kserve.io/torchserve-grpc-v2 created
         model:
           modelFormat:
             name: pytorch
+          protocolVersion: v2
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
+          ports:
+            - containerPort: 8081
+              name: h2c
+              protocol: TCP
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: "torchserve-grpc-v2"
+    spec:
+      predictor:
+        pytorch:
           protocolVersion: v2
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
           ports:
@@ -481,14 +481,8 @@ The first step is to [determine the ingress IP and ports](../../../get_started/f
 INPUT_PATH=./mnist_v2_grpc_tensor.json
 PROTO_FILE=proto/v2/grpc_predict_v2.proto
 SERVICE_HOSTNAME=$(kubectl get inferenceservice torchserve-grpc-v2 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-```
-
-### Make grpc call
-
-```bash
 grpcurl -v -plaintext -proto ${PROTO_FILE} -authority ${SERVICE_HOSTNAME} -d @ ${INGRESS_HOST}:${INGRESS_PORT} inference.GRPCInferenceService.ModelInfer <<< $(cat "$INPUT_PATH")
 ```
-
 
 !!! success "Expected Output"
 
