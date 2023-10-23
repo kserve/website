@@ -9,21 +9,6 @@ Apply the tensorflow example CR with scaling target set to 1. Annotation `autosc
 The `scaleTarget` and `scaleMetric` are introduced in version 0.9 of kserve and should be available in both new and old schema.
 This is the preferred way of defining autoscaling options.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flowers-sample"
-      annotations:
-        autoscaling.knative.dev/target: "1"
-    spec:
-      predictor:
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -38,6 +23,21 @@ This is the preferred way of defining autoscaling options.
         model:
           modelFormat:
             name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+      annotations:
+        autoscaling.knative.dev/target: "1"
+    spec:
+      predictor:
+        tensorflow:
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
@@ -238,22 +238,6 @@ Autoscaling on GPU is hard with GPU metrics, however thanks to Knative's concurr
 ### Create the InferenceService with GPU resource
 
 Apply the tensorflow gpu example CR
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flowers-sample-gpu"
-    spec:
-      predictor:
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
-          runtimeVersion: "2.6.2-gpu"
-          resources:
-            limits:
-              nvidia.com/gpu: 1
-    ```
 
 === "New Schema"
 
@@ -264,9 +248,30 @@ Apply the tensorflow gpu example CR
       name: "flowers-sample-gpu"
     spec:
       predictor:
+        scaleTarget: 1
+        scaleMetric: concurrency
         model:
           modelFormat:
             name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+          runtimeVersion: "2.6.2-gpu"
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample-gpu"
+      annotations:
+        autoscaling.knative.dev/target: "1"
+    spec:
+      predictor:
+        tensorflow:
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
           runtimeVersion: "2.6.2-gpu"
           resources:
@@ -350,20 +355,6 @@ hey -z 30s -c 5 -m POST -host ${SERVICE_HOSTNAME} -D $INPUT_PATH http://${INGRES
 at any given time, it is a hard limit and if the concurrency reaches the hard limit surplus requests will be buffered and must wait until
 enough capacity is free to execute the requests.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flowers-sample"
-    spec:
-      predictor:
-        containerConcurrency: 10
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -377,6 +368,20 @@ enough capacity is free to execute the requests.
         model:
           modelFormat:
             name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+    spec:
+      predictor:
+        containerConcurrency: 10
+        tensorflow:
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
@@ -392,20 +397,6 @@ kubectl apply -f autoscale-custom.yaml
 KServe by default sets `minReplicas` to 1, if you want to enable scaling down to zero especially for use cases like serving on GPUs you can
 set `minReplicas` to 0 so that the pods automatically scale down to zero when no traffic is received.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flowers-sample"
-    spec:
-      predictor:
-        minReplicas: 0
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -422,6 +413,20 @@ set `minReplicas` to 0 so that the pods automatically scale down to zero when no
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flowers-sample"
+    spec:
+      predictor:
+        minReplicas: 0
+        tensorflow:
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+    ```
+
 Apply the `scale-down-to-zero.yaml`.
 
 === "kubectl"
@@ -433,34 +438,6 @@ kubectl apply -f scale-down-to-zero.yaml
 
 Autoscaling options can also be configured at the component level.
 This allows more flexibility in terms of the autoscaling configuration. In a typical deployment, transformers may require a different autoscaling configuration than a predictor. This feature allows the user to scale individual components as required.
-
-=== "Old Schema"
-
-    ```yaml
-      apiVersion: serving.kserve.io/v1beta1
-      kind: InferenceService
-      metadata:
-        name: torch-transformer  
-      spec:
-        predictor:
-          scaleTarget: 2
-          scaleMetric: concurrency
-          pytorch:
-            storageUri: gs://kfserving-examples/models/torchserve/image_classifier
-        transformer:
-          scaleTarget: 8
-          scaleMetric: rps
-          containers:
-            - image: kserve/image-transformer:latest
-              name: kserve-container
-              command:
-                - "python"
-                - "-m"
-                - "model"
-              args:
-                - --model_name
-                - mnist
-    ```
 
 === "New Schema"
 
@@ -476,6 +453,34 @@ This allows more flexibility in terms of the autoscaling configuration. In a typ
         model:
           modelFormat:
             name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier
+      transformer:
+        scaleTarget: 8
+        scaleMetric: rps
+        containers:
+          - image: kserve/image-transformer:latest
+            name: kserve-container
+            command:
+              - "python"
+              - "-m"
+              - "model"
+            args:
+              - --model_name
+              - mnist
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: torch-transformer  
+    spec:
+      predictor:
+        scaleTarget: 2
+        scaleMetric: concurrency
+        pytorch:
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier
       transformer:
         scaleTarget: 8

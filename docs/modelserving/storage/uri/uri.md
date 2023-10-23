@@ -83,19 +83,6 @@ Now, the frozen model object can be put it somewhere on the web to expose it. Fo
 
 ### Specify and create the `InferenceService`
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: sklearn-from-uri
-    spec:
-      predictor:
-        sklearn:
-          storageUri: https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -108,6 +95,19 @@ Now, the frozen model object can be put it somewhere on the web to expose it. Fo
         model:
           modelFormat:
             name: sklearn
+          storageUri: https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-from-uri
+    spec:
+      predictor:
+        sklearn:
           storageUri: https://github.com/tduffy000/kfserving-uri-examples/blob/master/sklearn/frozen/model.joblib?raw=true
     ```
 
@@ -137,7 +137,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-from-uri -o jsonpath='{.
 
 MODEL_NAME=sklearn-from-uri
 INPUT_PATH=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"
@@ -265,7 +265,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice tensorflow-from-uri-gzip -o json
 
 MODEL_NAME=tensorflow-from-uri-gzip
 INPUT_PATH=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"

@@ -34,11 +34,18 @@ nav:
                 - LightGBM: modelserving/v1beta1/lightgbm/README.md
                 - Paddle: modelserving/v1beta1/paddle/README.md
                 - MLFlow: modelserving/v1beta1/mlflow/v2/README.md
+                - ONNX: modelserving/v1beta1/onnx/README.md
               - Multi-Framework Serving Runtimes:
                 - Nvidia Triton:
                   - Torchscript: modelserving/v1beta1/triton/torchscript/README.md
                   - Tensorflow: modelserving/v1beta1/triton/bert/README.md
+                  - Hugging Face: modelserving/v1beta1/triton/huggingface/README.md
                 - AMD: modelserving/v1beta1/amd/README.md
+              - LLM Runtime:
+                - TorchServe LLM:
+                  - Bloom7b1: modelserving/v1beta1/llm/torchserve/accelerate/README.md
+                - Hugging Face LLM:
+                  - Llama2: modelserving/v1beta1/llm/huggingface/README.md
               - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
           - Multi Model Serving:
                 - Overview:
@@ -56,7 +63,10 @@ nav:
                 - Azure: modelserving/storage/azure/azure.md
                 - PVC: modelserving/storage/pvc/pvc.md
                 - S3: modelserving/storage/s3/s3.md
+                - OCI: modelserving/storage/oci.md
                 - URI: modelserving/storage/uri/uri.md
+                - CA Certificate: modelserving/certificate/kserve.md
+                - GCS: modelserving/storage/gcs/gcs.md
           - Model Explainability:
                 - Concept: modelserving/explainer/explainer.md
                 - Alibi Explainer:
@@ -89,11 +99,13 @@ nav:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
           - Python Client SDK: sdk_docs/sdk_doc.md
+          - Python Runtime Server SDK: python_runtime_api/docs/index.md
     - Developer Guide:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
     - Blog:
           - Releases:
+            - KServe 0.11 Release: blog/articles/2023-10-08-KServe-0.11-release.md
             - KServe 0.10 Release: blog/articles/2023-02-05-KServe-0.10-release.md
             - KServe 0.9 Release: blog/articles/2022-07-21-KServe-0.9-release.md
             - KServe 0.8 Release: blog/articles/2022-02-18-KServe-0.8-release.md
@@ -111,7 +123,7 @@ extra_css:
   - stylesheets/extra.css
 
 repo_url: https://github.com/kserve/kserve
-edit_uri: edit/main/docs
+edit_uri: https://github.com/kserve/website/edit/main/docs
 
 theme:
   name: material
@@ -130,8 +142,8 @@ markdown_extensions:
   # - mdx_include:
   #     base_path: docs
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - attr_list
   - meta
   - pymdownx.superfences
@@ -156,6 +168,11 @@ copyright: "Copyright © 2021 The KServe Authors"
 
 plugins:
   - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          load_external_modules: true
   - mike:
      version_selector: true
      css_dir: css
@@ -173,8 +190,8 @@ extra:
       link: https://github.com/kserve
       name: KServe Community on Github
     - icon: fontawesome/brands/slack
-      link: https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#
-      name: Slack
+      link: https://github.com/kserve/community/blob/main/README.md#questions-and-issues
+      name: Join Slack
   version_warning: !ENV VERSION_WARNING
   kserve_version: !ENV KSERVE_VERSION
   branch: !ENV ["SAMPLES_BRANCH", "mkdocs"]

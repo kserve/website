@@ -16,24 +16,32 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
 
 ## Install the KServe "Quickstart" environment
 1. After having kind installed, create a `kind` cluster with:
-
     ```bash
     kind create cluster
     ```
+
 2. Then run:
 
-   ```bash
-   kubectl config get-contexts
-   ```
-   It should list out a list of contexts you have, one of them should be `kind-kind`. Then run:
+    ```bash
+    kubectl config get-contexts
+    ```
 
-   ```bash
-   kubectl config use-context kind-kind
-   ```
-   to use this context
+    It should list out a list of contexts you have, one of them should be `kind-kind`. Then run:
+
+    ```bash
+    kubectl config use-context kind-kind
+    ```
+
+    to use this context.
+
 3. You can then get started with a local deployment of KServe by using _KServe Quick installation script on Kind_:
 
     ```bash
-    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.11/hack/quick_install.sh" | bash
+    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.12/hack/quick_install.sh" | bash
     ```
 
+    or install via our published Helm Charts:
+   ```bash
+   helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.12.0
+   helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.12.0
+   ```

@@ -28,22 +28,6 @@ kubectl create -f message-dumper.yaml
 
 Create a sklearn predictor with the logger which points at the message dumper url.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: sklearn-iris
-    spec:
-      predictor:
-        logger:
-          mode: all
-          url: http://message-dumper.default/
-        sklearn:
-          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -62,6 +46,22 @@ Create a sklearn predictor with the logger which points at the message dumper ur
           storageUri: gs://kfserving-examples/models/sklearn/1.0/model
     ```
 
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        logger:
+          mode: all
+          url: http://message-dumper.default/
+        sklearn:
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
 !!! Note
     Here we set the url explicitly, otherwise it defaults to the namespace knative broker or the value of `DefaultUrl` in the logger section of the inference service configmap.
 
@@ -77,7 +77,7 @@ MODEL_NAME=sklearn-iris
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"
@@ -233,23 +233,6 @@ kubectl create -f trigger.yaml
 
 Create a sklearn predictor with the `logger url` pointing to the Knative eventing multi-tenant broker in `knative-eventing` namespace.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: sklearn-iris
-    spec:
-      predictor:
-        minReplicas: 1
-        logger:
-          mode: all
-          url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
-        sklearn:
-          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -269,6 +252,23 @@ Create a sklearn predictor with the `logger url` pointing to the Knative eventin
           storageUri: gs://kfserving-examples/models/sklearn/1.0/model
     ```
 
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        minReplicas: 1
+        logger:
+          mode: all
+          url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
+        sklearn:
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
 Apply the `sklearn-knative-eventing.yaml`.
 
 === "kubectl"
@@ -283,7 +283,7 @@ MODEL_NAME=sklearn-iris
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"

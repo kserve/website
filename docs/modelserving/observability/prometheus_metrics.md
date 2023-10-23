@@ -28,12 +28,15 @@ spec:
   predictor:
     sklearn:
       protocolVersion: v2
-      storageUri: "gs://seldon-models/sklearn/mms/lr_model"
+      storageUri: "gs://seldon-models/sklearn/iris"
 ```
 
 The default values for `serving.kserve.io/enable-prometheus-scraping` can be set in the `inferenceservice-config` configmap. See [the docs](https://github.com/kserve/kserve/blob/master/qpext/README.md#configs) for more info.
 
 There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. 
+
+!!! note
+    This annotation defines the prometheus port and path, but it does not trigger the prometheus to scrape. Users must configure prometheus to scrape data from inference service's pod according to the prometheus settings.
 
 ## Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor
 

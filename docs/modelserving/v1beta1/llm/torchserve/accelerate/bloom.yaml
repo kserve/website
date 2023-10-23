@@ -1,0 +1,18 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: "bloom-7b1"
+spec:
+  predictor:
+    pytorch:
+      image: 0.8.2
+      storageUri: gs://kfserving-examples/models/torchserve/llm/Huggingface_accelerate/bloom
+      resources:
+        limits:
+          cpu: "2"
+          memory: 32Gi
+          nvidia.com/gpu: "2"
+        requests:
+          cpu: "2"
+          memory: 32Gi
+          nvidia.com/gpu: "2"

@@ -61,20 +61,6 @@ kubectl apply -f create-azure-secret.yaml
 
 Create the InferenceService with the azure `storageUri` and the service account with azure credential attached.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "sklearn-azure"
-    spec:
-      predictor:
-        serviceAccountName: sa
-        sklearn:
-          storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -88,6 +74,20 @@ Create the InferenceService with the azure `storageUri` and the service account 
         model:
           modelFormat:
             name: sklearn
+          storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-azure"
+    spec:
+      predictor:
+        serviceAccountName: sa
+        sklearn:
           storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"
     ```
 
@@ -108,7 +108,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-azure -o jsonpath='{.sta
 
 MODEL_NAME=sklearn-azure
 INPUT_PATH=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"

@@ -416,7 +416,7 @@ InferenceGraphSpec
 <code>nodes</code><br/>
 <em>
 <a href="#serving.kserve.io/v1alpha1.InferenceRouter">
-map[string]./pkg/apis/serving/v1alpha1.InferenceRouter
+map[string]kserve.io/serving/pkg/apis/serving/v1alpha1.InferenceRouter
 </a>
 </em>
 </td>
@@ -449,6 +449,72 @@ Kubernetes core/v1.Affinity
 </td>
 <td>
 <em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>timeout</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TimeoutSeconds specifies the number of seconds to wait before timing out a request to the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>minReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Minimum number of replicas, defaults to 1 but can be set to 0 to enable scale-to-zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Maximum number of replicas for autoscaling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
 </td>
 </tr>
 </table>
@@ -489,7 +555,7 @@ InferenceGraphStatus
 <code>nodes</code><br/>
 <em>
 <a href="#serving.kserve.io/v1alpha1.InferenceRouter">
-map[string]./pkg/apis/serving/v1alpha1.InferenceRouter
+map[string]kserve.io/serving/pkg/apis/serving/v1alpha1.InferenceRouter
 </a>
 </em>
 </td>
@@ -522,6 +588,72 @@ Kubernetes core/v1.Affinity
 </td>
 <td>
 <em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>timeout</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TimeoutSeconds specifies the number of seconds to wait before timing out a request to the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>minReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Minimum number of replicas, defaults to 1 but can be set to 0 to enable scale-to-zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Maximum number of replicas for autoscaling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
 </td>
 </tr>
 </tbody>
@@ -968,6 +1100,14 @@ k8s.io/apimachinery/pkg/api/resource.Quantity
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1alpha1.ScaleMetric">ScaleMetric
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraphSpec">InferenceGraphSpec</a>)
+</p>
+<div>
+<p>ScaleMetric enum</p>
+</div>
 <h3 id="serving.kserve.io/v1alpha1.ServerType">ServerType
 (<code>string</code> alias)</h3>
 <p>
@@ -1905,7 +2045,7 @@ http://<inferenceservice.metadata.name>/v1/models/<trainedmodel>.metadata.name</
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>a73c949f2</code>.
+on git commit <code>426fe21d</code>.
 </em></p>
 <h2 id="serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</h2>
 <div>
@@ -2929,6 +3069,40 @@ int32
 </td>
 </tr></tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.HuggingFaceRuntimeSpec">HuggingFaceRuntimeSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>HuggingFaceRuntimeSpec defines arguments for configuring HuggingFace model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.InferenceService">InferenceService
 </h3>
 <div>
@@ -3162,7 +3336,7 @@ It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-leve
 <code>components</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ComponentStatusSpec">
-map[./pkg/apis/serving/v1beta1.ComponentType]./pkg/apis/serving/v1beta1.ComponentStatusSpec
+map[kserve.io/serving/pkg/apis/serving/v1beta1.ComponentType]kserve.io/serving/pkg/apis/serving/v1beta1.ComponentStatusSpec
 </a>
 </em>
 </td>
@@ -3319,6 +3493,16 @@ bool
 <code>pathTemplate</code><br/>
 <em>
 string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>disableIngressCreation</code><br/>
+<em>
+bool
 </em>
 </td>
 <td>
@@ -4483,7 +4667,7 @@ DynamicResourceAllocation feature gate.</p>
 <h3 id="serving.kserve.io/v1beta1.PredictorExtensionSpec">PredictorExtensionSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec</a>, <a href="#serving.kserve.io/v1beta1.ModelSpec">ModelSpec</a>, <a href="#serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.PMMLSpec">PMMLSpec</a>, <a href="#serving.kserve.io/v1beta1.PaddleServerSpec">PaddleServerSpec</a>, <a href="#serving.kserve.io/v1beta1.SKLearnSpec">SKLearnSpec</a>, <a href="#serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec</a>, <a href="#serving.kserve.io/v1beta1.TorchServeSpec">TorchServeSpec</a>, <a href="#serving.kserve.io/v1beta1.TritonSpec">TritonSpec</a>, <a href="#serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec</a>)
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.HuggingFaceRuntimeSpec">HuggingFaceRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec</a>, <a href="#serving.kserve.io/v1beta1.ModelSpec">ModelSpec</a>, <a href="#serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.PMMLSpec">PMMLSpec</a>, <a href="#serving.kserve.io/v1beta1.PaddleServerSpec">PaddleServerSpec</a>, <a href="#serving.kserve.io/v1beta1.SKLearnSpec">SKLearnSpec</a>, <a href="#serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec</a>, <a href="#serving.kserve.io/v1beta1.TorchServeSpec">TorchServeSpec</a>, <a href="#serving.kserve.io/v1beta1.TritonSpec">TritonSpec</a>, <a href="#serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec</a>)
 </p>
 <div>
 <p>PredictorExtensionSpec defines configuration shared across all predictor frameworks</p>
@@ -4664,6 +4848,19 @@ ONNXRuntimeSpec
 </td>
 <td>
 <p>Spec for ONNX runtime (<a href="https://github.com/microsoft/onnxruntime">https://github.com/microsoft/onnxruntime</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>huggingface</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.HuggingFaceRuntimeSpec">
+HuggingFaceRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for HuggingFace runtime (<a href="https://github.com/huggingface">https://github.com/huggingface</a>)</p>
 </td>
 </tr>
 <tr>
@@ -5103,5 +5300,5 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>a73c949f2</code>.
+on git commit <code>426fe21d</code>.
 </em></p>

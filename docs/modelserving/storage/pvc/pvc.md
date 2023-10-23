@@ -78,29 +78,18 @@ kubectl apply -f pv-model-store.yaml
 kubectl exec -it model-store-pod -- bash
 ```
 
-In different terminal, copy the model from local into PV.
+In different terminal, copy the model from local into PV, then delete `model-store-pod`.
 
 === "kubectl"
 ```bash
 kubectl cp model.joblib model-store-pod:/pv/model.joblib -c model-store
+
+kubectl delete pod model-store-pod
 ```
 
 ## Deploy `InferenceService` with models on PVC
 
 Update the ${PVC_NAME} to the created PVC name and create the InferenceService with the PVC `storageUri`.
-
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "sklearn-pvc"
-    spec:
-      predictor:
-        sklearn:
-          storageUri: "pvc://${PVC_NAME}/model.joblib"
-    ```
 
 === "New Schema"
 
@@ -114,6 +103,19 @@ Update the ${PVC_NAME} to the created PVC name and create the InferenceService w
         model:
           modelFormat:
             name: sklearn
+          storageUri: "pvc://${PVC_NAME}/model.joblib"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-pvc"
+    spec:
+      predictor:
+        sklearn:
           storageUri: "pvc://${PVC_NAME}/model.joblib"
     ```
 
@@ -134,7 +136,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-pvc -o jsonpath='{.statu
 
 MODEL_NAME=sklearn-pvc
 INPUT_PATH=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"

@@ -55,6 +55,10 @@ is provided as reference.
           storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
     EOF
     ```
+!!! Warning
+    Do not deploy `InferenceServices` in control plane namespaces (i.e. namespaces with `control-plane` label). The webhook is configured
+    in a way to skip these namespaces to avoid any privillage escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being 
+    injected into the pod, causing the pod to fail with the error `No such file or directory: '/mnt/models'`.
 
 ### 3. Check `InferenceService` status.
 

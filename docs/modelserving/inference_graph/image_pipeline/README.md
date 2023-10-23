@@ -123,8 +123,19 @@ spec:
         name: dog_breed_classifier
         data: $request
         condition: "[@this].#(predictions.0==\"dog\")"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
 EOF
 ```
+
+!!! Note
+    For more information on InferenceGraph Spec, See the [reference docs](https://kserve.github.io/website/latest/reference/api/#serving.kserve.io/v1alpha1.InferenceGraph).
 
 The `InferenceGraph` defines the two steps and each step targets the `InferenceServices` deployed above. The steps
 are executed in sequence: it first sends the image as request to `cat-dog-classifier` model and then send to the
@@ -146,7 +157,7 @@ The first step is to [determine the ingress IP and ports](../../../get_started/f
 Now, you can test the inference graph by sending the [cat](cat.json) and [dog image data](dog.json).
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferencegraph dog-breed-pipeline -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
 ```
 !!! success "Expected Output"
     ```{ .json .no-copy }

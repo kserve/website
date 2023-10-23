@@ -10,6 +10,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [Cars24](https://www.cars24.com/)                                            | [Swapnesh Khare](https://github.com/swapkh91)      |
 | [Chamred Kubeflow from Canonical](https://charmed-kubeflow.io/)              | [Daniela Plasencia](https://github.com/dnplas)     |
 | [Cisco](https://www.cisco.com/)                                              | [Krishna Durai](https://github.com/krishnadurai)   |
+| [Cloudera](https://www.cloudera.com/)                                        | [Zoram Thanga](https://github.com/zoramt)          |
 | [CoreWeave](https://coreweave.com/)                                          | [Peter Salanki](https://github.com/salanki)        |
 | [Gojek](https://www.gojek.com/)                                              | [Willem Pienaar](https://github.com/woop)          |
 | [Deeploy](https://deeploy.ml)                                                | [Tim Kleinloog](https://github.com/TimKleinloog)   |
