@@ -16,7 +16,7 @@ spec:
           - vllm.entrypoints.api_server
         env:
           - name: STORAGE_URI
-            value: gcs://kfserving-examples/huggingface/
+            value: gs://kfserving-examples/models/huggingface/llama # Upload the llama model on your cloud storage
         image: kserve/vllmserver:latest
         name: kserve-container
         resources:
