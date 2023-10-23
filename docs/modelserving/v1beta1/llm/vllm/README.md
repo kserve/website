@@ -43,8 +43,7 @@ The LLaMA model can be downloaded from [huggingface](https://huggingface.co/meta
               nvidia.com/gpu: "1"
     ```
 
-!!! Warning!
-
+!!! Warning
     vLLM runtime is still experimental, please expect API changes and further integration in the next KServe release.
 
 === "kubectl"
