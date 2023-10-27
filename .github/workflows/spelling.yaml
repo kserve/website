@@ -92,7 +92,7 @@ jobs:
       cancel-in-progress: true
     steps:
     - name: checkout
-      uses: check-spelling/check-spelling@main
+      uses: actions/checkout@v4
       with:
         fetch-depth: ${{ !contains(env.workflow_check_commit_messages, 'commits') && '1' || '0' }}
     # - name: test-clean
@@ -113,7 +113,7 @@ jobs:
         suppress_push_for_open_pull_request: 1
         check_file_names: 1
         experimental_path: introspected
-        spell_check_this: check-spelling/spell-check-this@prerelease
+        spell_check_this: kserve/website@prerelease
         checkout: false
         post_comment: 0
         use_magic_file: 1
@@ -150,7 +150,7 @@ jobs:
       uses: ./
       with:
         checkout: false
-        spell_check_this: check-spelling/spell-check-this@prerelease
+        spell_check_this: kserve/website@prerelease
         task: ${{ needs.spelling.outputs.followup }}
         internal_state_directory: ${{ needs.spelling.outputs.docker_container && needs.spelling.outputs.internal_state_directory }}
         caller_container: ${{ needs.spelling.outputs.docker_container }}
@@ -171,7 +171,7 @@ jobs:
       uses: ./
       with:
         checkout: false
-        spell_check_this: check-spelling/spell-check-this@prerelease
+        spell_check_this: kserve/website@prerelease
         task: ${{ needs.spelling.outputs.followup }}
         internal_state_directory: ${{ needs.spelling.outputs.docker_container && needs.spelling.outputs.internal_state_directory }}
         caller_container: ${{ needs.spelling.outputs.docker_container }}
@@ -194,7 +194,7 @@ jobs:
       cancel-in-progress: false
     steps:
     - name: checkout
-      uses: check-spelling/check-spelling@main
+      uses: actions/checkout@v4
     - name: apply spelling updates
       uses: ./
       with:
