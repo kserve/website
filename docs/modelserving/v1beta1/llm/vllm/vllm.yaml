@@ -30,3 +30,4 @@ spec:
             nvidia.com/gpu: "1"
     maxReplicas: 1
     minReplicas: 1
+
