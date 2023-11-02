@@ -436,7 +436,7 @@ $inferenceservice.serving.kserve.io/torchserve-grpc-v2 created
         model:
           modelFormat:
             name: pytorch
-          protocolVersion: v2
+          protocolVersion: grpc-v2
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
           ports:
             - containerPort: 8081
@@ -454,7 +454,7 @@ $inferenceservice.serving.kserve.io/torchserve-grpc-v2 created
     spec:
       predictor:
         pytorch:
-          protocolVersion: v2
+          protocolVersion: grpc-v2
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
           ports:
             - containerPort: 8081
