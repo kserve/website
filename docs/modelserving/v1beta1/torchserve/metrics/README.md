@@ -19,20 +19,6 @@ istioctl dashboard prometheus
 ## Create the InferenceService
 Enable prometheus scraping by adding annotations to deployment yaml, by default the torchserve's metrics port is 8082.
 
-=== "Old Schema"
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: "torch-metrics"
-      annotations:
-        prometheus.io/scrape: 'true'
-        prometheus.io/port: '8082'
-    spec:
-      predictor:
-        pytorch:
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
-    ```
 === "New Schema"
     ```yaml
     apiVersion: serving.kserve.io/v1beta1
@@ -47,6 +33,21 @@ Enable prometheus scraping by adding annotations to deployment yaml, by default 
         model:
           modelFormat:
             name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+    ```
+
+=== "Old Schema"
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: "torch-metrics"
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8082'
+    spec:
+      predictor:
+        pytorch:
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
     ```
 

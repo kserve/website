@@ -28,22 +28,6 @@ kubectl create -f message-dumper.yaml
 
 Create a sklearn predictor with the logger which points at the message dumper url.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: sklearn-iris
-    spec:
-      predictor:
-        logger:
-          mode: all
-          url: http://message-dumper.default/
-        sklearn:
-          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -59,6 +43,22 @@ Create a sklearn predictor with the logger which points at the message dumper ur
         model:
           modelFormat:
             name: sklearn
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        logger:
+          mode: all
+          url: http://message-dumper.default/
+        sklearn:
           storageUri: gs://kfserving-examples/models/sklearn/1.0/model
     ```
 
@@ -233,23 +233,6 @@ kubectl create -f trigger.yaml
 
 Create a sklearn predictor with the `logger url` pointing to the Knative eventing multi-tenant broker in `knative-eventing` namespace.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: sklearn-iris
-    spec:
-      predictor:
-        minReplicas: 1
-        logger:
-          mode: all
-          url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
-        sklearn:
-          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -266,6 +249,23 @@ Create a sklearn predictor with the `logger url` pointing to the Knative eventin
         model:
           modelFormat:
             name: sklearn
+          storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: sklearn-iris
+    spec:
+      predictor:
+        minReplicas: 1
+        logger:
+          mode: all
+          url: http://broker-ingress.knative-eventing.svc.cluster.local/default/default
+        sklearn:
           storageUri: gs://kfserving-examples/models/sklearn/1.0/model
     ```
 
