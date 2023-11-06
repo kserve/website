@@ -35,6 +35,9 @@ The default values for `serving.kserve.io/enable-prometheus-scraping` can be set
 
 There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. 
 
+!!! note
+    This annotation defines the prometheus port and path, but it does not trigger the prometheus to scrape. Users must configure prometheus to scrape data from inference service's pod according to the prometheus settings.
+
 ## Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor
 
 Prometheus latency histograms are emitted for each of the steps (pre/postprocessing, explain, predict).
