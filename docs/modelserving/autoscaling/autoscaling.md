@@ -510,24 +510,6 @@ KServe supports `RawDeployment` mode to enable `InferenceService` deployment wit
 When using Kserve with the `RawDeployment` mode, Knative is not installed. In this mode, if you deploy an `InferenceService`, Kserve uses **Kubernetes’ Horizontal Pod Autoscaler (HPA)** for autoscaling instead of **Knative Pod Autoscaler (KPA)**. For more information about Kserve's autoscaler, you can refer [`this`](https://kserve.github.io/website/master/modelserving/v1beta1/torchserve/#knative-autoscaler)
 
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "sklearn-iris-hpa"
-      annotations:
-        serving.kserve.io/deploymentMode: RawDeployment
-        serving.kserve.io/autoscalerClass: hpa
-        serving.kserve.io/metric: cpu
-        serving.kserve.io/targetUtilizationPercentage: "80"
-    spec:
-      predictor:
-        sklearn:
-          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -545,6 +527,24 @@ When using Kserve with the `RawDeployment` mode, Knative is not installed. In th
         model:
           modelFormat:
             name: sklearn
+          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "sklearn-iris-hpa"
+      annotations:
+        serving.kserve.io/deploymentMode: RawDeployment
+        serving.kserve.io/autoscalerClass: hpa
+        serving.kserve.io/metric: cpu
+        serving.kserve.io/targetUtilizationPercentage: "80"
+    spec:
+      predictor:
+        sklearn:
           storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
     ```
 
@@ -552,22 +552,6 @@ When using Kserve with the `RawDeployment` mode, Knative is not installed. In th
 
 If you want to control the scaling of the deployment created by KServe inference service with an external tool like [`KEDA`](https://keda.sh/). You can disable KServe's creation of the **HPA** by replacing **external** value with autoscaler class annotaion that should be disable the creation of HPA
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      annotations:
-        serving.kserve.io/deploymentMode: RawDeployment
-        serving.kserve.io/autoscalerClass: external
-      name: "sklearn-iris"
-    spec:
-      predictor:
-        sklearn:
-          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -583,5 +567,21 @@ If you want to control the scaling of the deployment created by KServe inference
         model:
           modelFormat:
             name: sklearn
+          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      annotations:
+        serving.kserve.io/deploymentMode: RawDeployment
+        serving.kserve.io/autoscalerClass: external
+      name: "sklearn-iris"
+    spec:
+      predictor:
+        sklearn:
           storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
     ```
