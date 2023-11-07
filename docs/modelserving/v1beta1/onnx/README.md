@@ -5,23 +5,37 @@
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
 ## Create the InferenceService
-Apply the CRD
 
-```shell
-    kubectl apply -f - <<EOF
+=== "New Schema"
+
+    ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
     metadata:
-    name: "style-sample"
+      name: "style-sample"
     spec:
-    predictor:
+      predictor:
         model:
-        modelFormat:
+          protocolVersion: v2
+          modelFormat:
             name: onnx
-        storageUri: "gs://kfserving-examples/models/onnx"
-    EOF
-```
+          storageUri: "gs://kfserving-examples/models/onnx"
+    ```
 
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "style-sample"
+    spec:
+      predictor:
+        onnx:
+          storageUri: "gs://kfserving-examples/models/onnx"
+    ```
+!!! Note
+    For the default kserve installation, While using new schema, you must specify **protocolVersion** as v2 for onnx. Otherwise, you will get a no runtime found error.
 Expected Output
 ```
 $ inferenceservice.serving.kserve.io/style-sample configured
@@ -33,7 +47,6 @@ $ inferenceservice.serving.kserve.io/style-sample configured
 The first step is to [determine the ingress IP and ports](https://kserve.github.io/website/master/get_started/first_isvc/#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```
-export MODEL_NAME=onnx-model
 export ISVC_NAME=style-sample
 export SERVICE_HOSTNAME=$(kubectl get inferenceservice ${ISVC_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```

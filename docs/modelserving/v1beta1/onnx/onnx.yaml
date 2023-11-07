@@ -5,6 +5,7 @@ metadata:
 spec:
   predictor:
     model:
+      protocolVersion: v2
       modelFormat:
         name: onnx
       storageUri: "gs://kfserving-examples/models/onnx"
