@@ -158,7 +158,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice torchserve -o jsonpath='{.status
 You can use [image converter](https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/torchserve/v1/imgconv) to convert the images to base64 byte array, for other models please refer to [input request](https://github.com/pytorch/serve/tree/master/kubernetes/kserve/kf_request_json).
 
 ```bash
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
 ```
 
 !!! success "Expected Output"
@@ -194,7 +194,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1
 To get model explanation:
 
 ```bash
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/mnist:explain -d @./mnist.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/mnist:explain -d @./mnist.json
 ```
 
 !!! success "Expected Output"
@@ -261,7 +261,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice torchserve-mnist-v2 -o jsonpath=
 You can send both **byte array** and **tensor** with v2 protocol, for byte array use [image converter](https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/torchserve/v2/bytes_conv) to convert the image to byte array input. Here we use the [mnist_v2_bytes.json](./mnist_v2_bytes.json) file to run an example inference.
 
 ```bash
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d @./mnist_v2_bytes.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d @./mnist_v2_bytes.json
 ```
 
 !!! success "Expected Output"
@@ -273,7 +273,7 @@ For tensor input use the [tensor image converter](https://github.com/kserve/kser
 tensor input and here we use the [mnist_v2.json](./mnist_v2.json) file to run an example inference.
 
 ```bash
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d @./mnist_v2.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d @./mnist_v2.json
 ```
 
 !!! success "Expected Output"
@@ -287,7 +287,7 @@ To get the model explanation with v2 explain endpoint:
 
 ```bash
 MODEL_NAME=mnist
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/mnist/explain -d @./mnist_v2.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/mnist/explain -d @./mnist_v2.json
 ```
 
 !!! success "Expected Output"
@@ -564,7 +564,7 @@ kubectl patch isvc torchserve --type='json' -p '[{"op": "replace", "path": "/spe
 ```
 
 ```bash
-curl -v -H "Host: latest-torchserve-predictor-default.default.example.com" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
+curl -v -H "Host: latest-torchserve-predictor-default.default.example.com" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @./mnist.json
 ```
 
 !!! success "Expected Output"

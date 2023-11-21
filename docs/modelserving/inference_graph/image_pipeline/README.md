@@ -146,7 +146,7 @@ The first step is to [determine the ingress IP and ports](../../../get_started/f
 Now, you can test the inference graph by sending the [cat](cat.json) and [dog image data](dog.json).
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferencegraph dog-breed-pipeline -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT} -d @./cat.json
 ```
 !!! success "Expected Output"
     ```{ .json .no-copy }
