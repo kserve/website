@@ -123,8 +123,19 @@ spec:
         name: dog_breed_classifier
         data: $request
         condition: "[@this].#(predictions.0==\"dog\")"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
 EOF
 ```
+
+!!! Note
+    For more information on InferenceGraph Spec, See the [reference docs](https://kserve.github.io/website/latest/reference/api/#serving.kserve.io/v1alpha1.InferenceGraph).
 
 The `InferenceGraph` defines the two steps and each step targets the `InferenceServices` deployed above. The steps
 are executed in sequence: it first sends the image as request to `cat-dog-classifier` model and then send to the
