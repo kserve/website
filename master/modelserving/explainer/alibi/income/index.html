@@ -1191,7 +1191,7 @@ The black box explainer algorithm we will use is the Tabular version of Anchors 
 </code></pre></div></p>
 <h3 id="run-the-inference">Run the inference<a class="headerlink" href="#run-the-inference" title="Permanent link">¶</a></h3>
 <p>Test the predictor:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="nv">$SERVICE_HOSTNAME</span><span class="s2">"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="nv">$SERVICE_HOSTNAME</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'</span>
 </code></pre></div>
 <p>You should receive the response showing the prediction is for low salary:</p>
 <div class="admonition success">
@@ -1201,7 +1201,7 @@ The black box explainer algorithm we will use is the Tabular version of Anchors 
 </div>
 <h3 id="run-the-explanation">Run the explanation<a class="headerlink" href="#run-the-explanation" title="Permanent link">¶</a></h3>
 <p>Now lets get an explanation for this:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="nv">$SERVICE_HOSTNAME</span><span class="s2">"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="nv">$SERVICE_HOSTNAME</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:explain<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'</span>
 </code></pre></div>
 <p>The returned explanation will be like:</p>
 <div class="admonition success">

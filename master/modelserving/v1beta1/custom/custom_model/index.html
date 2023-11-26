@@ -1388,7 +1388,7 @@ docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</s
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div></p>
 <p>Send a test inference request locally with <a href="input.json">input.json</a>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
 </code></pre></div></p>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
@@ -1448,7 +1448,7 @@ In this case you may want to set the KServe <code>ModelServer</code>'s <code>log
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
