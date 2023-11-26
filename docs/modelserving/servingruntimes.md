@@ -230,7 +230,7 @@ will be used for model deployment.
 - The serving runtime with priority takes precedence over the serving runtime with priority not specified.
 - Two model formats with same name and same model version cannot have the same priority.
 - If more than one serving runtime supports the model format and none of them specified the priority then, there is no guarantee _which_ runtime will be selected.
-- If multiple versions of a modelFormat is supported by a serving runtime, then it should have the same priority.
+- If multiple versions of a modelFormat are supported by a serving runtime, then it should have the same priority.
   For example, Below shown serving runtime supports two versions of sklearn. It should have the same priority.
   ```yaml
     apiVersion: serving.kserve.io/v1alpha1
