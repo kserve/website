@@ -1166,22 +1166,24 @@
 <ol>
 <li>
 <p>After having kind installed, create a <code>kind</code> cluster with:</p>
-<p><div class="highlight"><pre><span></span><code>kind<span class="w"> </span>create<span class="w"> </span>cluster
+<div class="highlight"><pre><span></span><code>kind<span class="w"> </span>create<span class="w"> </span>cluster
 </code></pre></div>
-2. Then run:</p>
+</li>
+<li>
+<p>Then run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
+</code></pre></div>
+<p>It should list out a list of contexts you have, one of them should be <code>kind-kind</code>. Then run:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>kind-kind
+</code></pre></div>
+<p>to use this context.</p>
+</li>
+<li>
+<p>You can then get started with a local deployment of KServe by using <em>KServe Quick installation script on Kind</em>:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/kserve/kserve/release-0.11/hack/quick_install.sh"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
 </li>
 </ol>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
-</code></pre></div>
-   It should list out a list of contexts you have, one of them should be <code>kind-kind</code>. Then run:</p>
-<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>kind-kind
-</code></pre></div>
-   to use this context
-3. You can then get started with a local deployment of KServe by using <em>KServe Quick installation script on Kind</em>:</p>
-<pre><code>```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.11/hack/quick_install.sh" | bash
-```
-</code></pre>
 </article>
 </div>
 </div>
