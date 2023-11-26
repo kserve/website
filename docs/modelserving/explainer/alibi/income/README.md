@@ -57,7 +57,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice income -o jsonpath='{.status.url
 Test the predictor:
 
 ```bash
-curl -H "Host: $SERVICE_HOSTNAME" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
+curl -H "Host: $SERVICE_HOSTNAME" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
 ```
 
 You should receive the response showing the prediction is for low salary:
@@ -71,7 +71,7 @@ You should receive the response showing the prediction is for low salary:
 Now lets get an explanation for this:
 
 ```bash
-curl -H "Host: $SERVICE_HOSTNAME" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
+curl -H "Host: $SERVICE_HOSTNAME" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:explain -d '{"instances":[[39, 7, 1, 1, 1, 1, 4, 1, 2174, 0, 40, 9]]}'
 ```
 
 The returned explanation will be like:
