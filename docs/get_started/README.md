@@ -20,17 +20,21 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
     ```bash
     kind create cluster
     ```
+
 2. Then run:
 
-   ```bash
-   kubectl config get-contexts
-   ```
-   It should list out a list of contexts you have, one of them should be `kind-kind`. Then run:
+    ```bash
+    kubectl config get-contexts
+    ```
 
-   ```bash
-   kubectl config use-context kind-kind
-   ```
-   to use this context
+    It should list out a list of contexts you have, one of them should be `kind-kind`. Then run:
+
+    ```bash
+    kubectl config use-context kind-kind
+    ```
+
+    to use this context.
+
 3. You can then get started with a local deployment of KServe by using _KServe Quick installation script on Kind_:
 
     ```bash
