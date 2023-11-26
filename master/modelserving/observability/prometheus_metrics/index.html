@@ -1179,6 +1179,10 @@
 </code></pre></div>
 <p>The default values for <code>serving.kserve.io/enable-prometheus-scraping</code> can be set in the <code>inferenceservice-config</code> configmap. See <a href="https://github.com/kserve/kserve/blob/master/qpext/README.md#configs">the docs</a> for more info.</p>
 <p>There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This annotation defines the prometheus port and path, but it does not trigger the prometheus to scrape. Users must configure prometheus to scrape data from inference service's pod according to the prometheus settings.</p>
+</div>
 <h2 id="metrics-for-lgbserver-paddleserver-pmmlserver-sklearnserver-xgbserver-custom-transformerpredictor">Metrics for lgbserver, paddleserver, pmmlserver, sklearnserver, xgbserver, custom transformer/predictor<a class="headerlink" href="#metrics-for-lgbserver-paddleserver-pmmlserver-sklearnserver-xgbserver-custom-transformerpredictor" title="Permanent link">¶</a></h2>
 <p>Prometheus latency histograms are emitted for each of the steps (pre/postprocessing, explain, predict).
 Additionally, the latencies of each step are logged per request. See also <a href="https://github.com/kserve/kserve/blob/master/python/kserve/kserve/metrics.py">modelserver prometheus label definitions</a> and <a href="https://github.com/kserve/kserve/blob/master/python/kserve/kserve/model.py#L94-L130">metric implementation</a>.</p>
