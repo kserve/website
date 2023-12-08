@@ -88,6 +88,8 @@ nav:
           - Inference Observability:
                 - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
                 - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
+          -  Certiricate:
+                - KServe: modelserving/certificate/kserve.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
