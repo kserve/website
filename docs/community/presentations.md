@@ -4,7 +4,9 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 
 | Presentation/Demo | Presenters |
 | ------------ | ------- |
-| [Distributed Machine Learning Patterns](https://github.com/terrytangyuan/distributed-ml-patterns) | Yuan Tang |
+| [What to choose? ModelMesh vs Model Serving?](https://youtu.be/Yi8Udjr9nkk?si=WEOCKlfxXNy0H1jZ) | Vaibhav Jain |
+| [Scale your Models to Zero with Knative and KServe](https://youtu.be/j039MuKMmMQ?si=NVW5ZnmGRCwjZNU7) | Jooho Lee |
+| [Distributed Machine Learning Patterns from Manning Publications](https://github.com/terrytangyuan/distributed-ml-patterns) | Yuan Tang |
 | [KubeCon 2019: Introducing KFServing: Serverless Model Serving on Kubernetes](https://www.youtube.com/watch?v=saMkA4fIOH8) |Dan Sun, Ellis Tarn|
 | [KubeCon 2019: Advanced Model Inferencing Leveraging KNative, Istio & Kubeflow Serving](https://www.youtube.com/watch?v=YaGASyU88dQ) | Animesh Singh, Clive Cox|
 | [KubeflowDojo: KFServing - Production Model Serving Platform](https://www.youtube.com/watch?v=VN2htoRSUzY) |Animesh Singh, Tommy Li|
