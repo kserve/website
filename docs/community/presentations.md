@@ -4,8 +4,6 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 
 | Presentation/Demo | Presenters |
 | ------------ | ------- |
-| [What to choose? ModelMesh vs Model Serving?](https://youtu.be/Yi8Udjr9nkk?si=WEOCKlfxXNy0H1jZ) | Vaibhav Jain |
-| [Scale your Models to Zero with Knative and KServe](https://youtu.be/j039MuKMmMQ?si=NVW5ZnmGRCwjZNU7) | Jooho Lee |
 | [Distributed Machine Learning Patterns from Manning Publications](https://github.com/terrytangyuan/distributed-ml-patterns) | Yuan Tang |
 | [KubeCon 2019: Introducing KFServing: Serverless Model Serving on Kubernetes](https://www.youtube.com/watch?v=saMkA4fIOH8) |Dan Sun, Ellis Tarn|
 | [KubeCon 2019: Advanced Model Inferencing Leveraging KNative, Istio & Kubeflow Serving](https://www.youtube.com/watch?v=YaGASyU88dQ) | Animesh Singh, Clive Cox|
@@ -27,4 +25,5 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 | [KubeCon Edge Days 2022: Model Serving at the Edge Made Easier](https://www.youtube.com/watch?v=0BlK7PaLCFM) | Paul Van Eck |
 | [KnativeCon 2022: How We Built an ML inference Platform with Knative](https://www.youtube.com/watch?v=yuxC1UVU_ec) | Dan Sun |
 | [KubeCon EU 2023: The state and future of cloud native model serving](https://youtu.be/786VaGAfm6I) | Dan Sun, Theofilos Papapanagiotou |
-| [Kubeflow Summit 2023: Scale your Models to Zero with Knative and Kserve](https://youtu.be/j039MuKMmMQ?si=LsJsau0ijBLqj2Vc) | Jooho Lee |
+| [Kubeflow Summit 2023: Scale your Models to Zero with Knative and KServe](https://youtu.be/j039MuKMmMQ?si=LsJsau0ijBLqj2Vc) | Jooho Lee |
+| [Kubeflow Summit 2023: What to choose? ModelMesh vs Model Serving?](https://youtu.be/Yi8Udjr9nkk?si=WEOCKlfxXNy0H1jZ) | Vaibhav Jain |
