@@ -3,6 +3,7 @@
 
 # python
 .venv
+*.pyc
 
 # editor
 .vscode
