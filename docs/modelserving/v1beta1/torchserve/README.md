@@ -260,14 +260,13 @@ $inferenceservice.serving.kserve.io/torchserve-grpc created
 
 ### Run Inference with TorchServe gRPC protocol
 
-#### Install gRPC python dependencies
+Install gRPC python dependencies
 
 ```bash
 pip install -U grpcio protobuf grpcio-tools
 ```
 
-#### Download TorchServe's inference and management proto
-
+Download TorchServe's inference and management proto
 
 ```bash
 mkdir -p proto/v1
@@ -279,11 +278,12 @@ curl -s -L ${INFERENCE_PROTO_FILE_PATH} > ./proto/v1/inference.proto
 curl -s -L ${MANAGEMENT_PROTO_FILE_PATH} > ./proto/v1/management.proto
 ```
 
-#### Generate python gRPC client stub using the proto files
+Generate python gRPC client stub using the proto files
 
 ```bash
 python -m grpc_tools.protoc --proto_path=proto/v1/ --python_out=. --grpc_python_out=. proto/v1/inference.proto proto/v1/management.proto
 ```
+
 #### Run gRPC Inference
 
 You can use [image converter](https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/torchserve/v1/imgconv) to convert the images to base64 byte array, for other models please refer to [input request](https://github.com/pytorch/serve/tree/master/kubernetes/kserve/kf_request_json).
@@ -463,8 +463,11 @@ $inferenceservice.serving.kserve.io/torchserve-grpc-v2 created
     ```
 
 
-### Download Open Inference gGRPC proto file
+### Run gRPC Inference
 
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+
+Then download Open Inference gRPC proto file:
 ```bash
 mkdir -p proto/v2
 
@@ -473,10 +476,7 @@ PROTO_FILE_PATH=https://raw.githubusercontent.com/kserve/kserve/master/python/ks
 curl -s -L ${PROTO_FILE_PATH} > ./proto/v2/grpc_predict_v2.proto
 ```
 
-### Run Model Inference
-
-The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
-
+Run the inference test with grpcurl:
 ```bash
 INPUT_PATH=./mnist_v2_grpc_tensor.json
 PROTO_FILE=proto/v2/grpc_predict_v2.proto
