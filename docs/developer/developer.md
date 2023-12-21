@@ -279,6 +279,10 @@ See the guidelines for
 
 - [contributing to an existing issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#pull-requests)
 
+## Releases
+
+Please check out the documentation [here](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS_v2.md) to understand the release schedule and process.
+
 ## Feedback 
 
 The best place to provide feedback about the KServe code is via a Github issue. See [creating a Github issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#issues) for guidelines on submitting bugs and feature requests.
