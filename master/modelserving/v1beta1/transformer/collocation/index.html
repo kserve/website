@@ -1158,8 +1158,8 @@
 <li>You can find the <a href="https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/transformer/collocation">code samples</a> on kserve repository.</li>
 </ol>
 <h2 id="deploy-the-inferenceservice">Deploy the InferenceService<a class="headerlink" href="#deploy-the-inferenceservice" title="Permanent link">¶</a></h2>
-<p>Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. <code>Transformer</code> is configured to listen on port 8000 and 8081 
-while, <code>Predictor</code> listens on port 8080 and 8082. <code>Transformer</code> calls <code>Predictor</code> on port 8082 via local socket. 
+<p>Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. <code>Transformer</code> is configured to listen on port 8080 (REST) and 8081 (GRPC) 
+while, <code>Predictor</code> listens on port 8085 (REST). <code>Transformer</code> calls <code>Predictor</code> on port 8085 via local socket. 
 Deploy the <code>Inferenceservice</code> using the below command.</p>
 <div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF | kubectl apply -f -</span>
 <span class="s">apiVersion: serving.kserve.io/v1beta1</span>
@@ -1169,24 +1169,44 @@ Deploy the <code>Inferenceservice</code> using the below command.</p>
 <span class="s">spec:</span>
 <span class="s">  predictor:</span>
 <span class="s">    containers:</span>
-<span class="s">      - name: kserve-container</span>
-<span class="s">        image: kserve/custom-model-grpc:latest</span>
+<span class="s">      - name: kserve-container        # Do not change the name; This should be the predictor container</span>
+<span class="s">        image: "pytorch/torchserve:0.9.0-cpu"</span>
 <span class="s">        args:</span>
-<span class="s">          - --model_name=custom-model</span>
-<span class="s">          - --grpc_port=8082</span>
-<span class="s">          - --http_port=8080</span>
+<span class="s">          - "torchserve"</span>
+<span class="s">          - "--start"</span>
+<span class="s">          - "--model-store=/mnt/models/model-store"</span>
+<span class="s">          - "--ts-config=/mnt/models/config/config.properties"</span>
+<span class="s">        env:</span>
+<span class="s">          - name: TS_SERVICE_ENVELOPE</span>
+<span class="s">            value: kserve</span>
+<span class="s">          - name: STORAGE_URI    # This will trigger storage initializer; Should be only present in predictor container</span>
+<span class="s">            value: "gs://kfserving-examples/models/torchserve/image_classifier/v1"</span>
+<span class="s">        resources:</span>
+<span class="s">          requests:</span>
+<span class="s">            cpu: 100m</span>
+<span class="s">            memory: 256Mi</span>
+<span class="s">          limits:</span>
+<span class="s">            cpu: 1</span>
+<span class="s">            memory: 1Gi</span>
 
-<span class="s">      - image: kserve/image-transformer:latest</span>
-<span class="s">        name: transformer-container    # Do not change the container name</span>
+<span class="s">      - name: transformer-container    # Do not change the container name</span>
+<span class="s">        image: kserve/image-transformer:latest</span>
 <span class="s">        args:</span>
-<span class="s">          - --model_name=custom-model</span>
-<span class="s">          - --protocol=grpc-v2</span>
-<span class="s">          - --http_port=8000</span>
+<span class="s">          - --model_name=mnist</span>
+<span class="s">          - --protocol=v1    # protocol of the predictor; used for converting the input to specific protocol supported by the predictor</span>
+<span class="s">          - --http_port=8080</span>
 <span class="s">          - --grpc_port=8081</span>
-<span class="s">          - --predictor_host=localhost:8082</span>
+<span class="s">          - --predictor_host=localhost:8085      # predictor listening port</span>
 <span class="s">        ports:</span>
-<span class="s">          - containerPort: 8000</span>
+<span class="s">          - containerPort: 8080</span>
 <span class="s">            protocol: TCP</span>
+<span class="s">        resources:</span>
+<span class="s">          requests:</span>
+<span class="s">            cpu: 100m</span>
+<span class="s">            memory: 256Mi</span>
+<span class="s">          limits:</span>
+<span class="s">            cpu: 1</span>
+<span class="s">            memory: 1Gi</span>
 <span class="s">EOF</span>
 </code></pre></div>
 <div class="admonition success">
@@ -1199,9 +1219,21 @@ Deploy the <code>Inferenceservice</code> using the below command.</p>
 <p>Always use the transformer container name as <code>transformer-container</code>. Otherwise, the model volume is not mounted to the transformer 
 container which may result in an error.</p>
 </div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Always use the predictor container name as <code>kserve-container</code>. Kserve internally uses this name to find out the
+predictor. The storage uri should be only present in this container. If it is specified in the transformer 
+container the isvc creation will fail.</p>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Currently, The collocation support is limited to the custom container spec for kserve model container.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Serverless mode, Specifying ports for predictor will result in isvc creation failure as specifying multiple ports 
+is not supported by knative. Due to this limitation predictor cannot be exposed to the outside cluster. 
+For more info see, <a href="https://github.com/knative/serving/issues/8471">knative discussion on multiple ports</a>.</p>
 </div>
 <h2 id="check-inferenceservice-status">Check InferenceService status<a class="headerlink" href="#check-inferenceservice-status" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>custom-transformer-collocation
@@ -1221,35 +1253,34 @@ or <a href="https://knative.dev/docs/serving/using-a-custom-domain/">use a custo
 <p>Prepare the <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/collocation/input.json">inputs</a> for the inference request. Copy the following Json into a file named <code>input.json</code>.</p>
 <p>Now, <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p><div class="highlight"><pre><span></span><code><span class="nv">SERVICE_NAME</span><span class="o">=</span>custom-transformer-collocation
-<span class="nv">MODEL_NAME</span><span class="o">=</span>custom-model
+<span class="nv">MODEL_NAME</span><span class="o">=</span>mnist
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span><span class="nv">$SERVICE_NAME</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 You can use <code>curl</code> to send the inference request as:
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="nv">$MODEL_NAME</span>/infer
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict
 </code></pre></div></p>
 <div class="admonition success">
 <p class="admonition-title">Expected output</p>
 <div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1:8080...
 *<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
-&gt;<span class="w"> </span>POST<span class="w"> </span>/v2/models/custom-model/infer<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/mnist:predict<span class="w"> </span>HTTP/1.1
 &gt;<span class="w"> </span>Host:<span class="w"> </span>custom-transformer-collocation.default.example.com
 &gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.85.0
 &gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/json
-&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">105396</span>
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">427</span>
 &gt;<span class="w"> </span>
-*<span class="w"> </span>We<span class="w"> </span>are<span class="w"> </span>completely<span class="w"> </span>uploaded<span class="w"> </span>and<span class="w"> </span>fine
 *<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
 &lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
-&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">298</span>
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">19</span>
 &lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json
-&lt;<span class="w"> </span>date:<span class="w"> </span>Thu,<span class="w"> </span><span class="m">04</span><span class="w"> </span>May<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">10</span>:35:30<span class="w"> </span>GMT
+&lt;<span class="w"> </span>date:<span class="w"> </span>Sat,<span class="w"> </span><span class="m">02</span><span class="w"> </span>Dec<span class="w"> </span><span class="m">2023</span><span class="w"> </span><span class="m">09</span>:13:16<span class="w"> </span>GMT
 &lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
-&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">1273</span>
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">315</span>
 &lt;<span class="w"> </span>
 *<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
-<span class="o">{</span><span class="s2">"model_name"</span>:<span class="s2">"custom-model"</span>,<span class="s2">"model_version"</span>:null,<span class="s2">"id"</span>:<span class="s2">"d685805f-a310-4690-9c71-a2dc38085d6f"</span>,<span class="s2">"parameters"</span>:null,<span class="s2">"outputs"</span>:<span class="o">[{</span><span class="s2">"name"</span>:<span class="s2">"output-0"</span>,<span class="s2">"shape"</span>:<span class="o">[</span><span class="m">1</span>,5<span class="o">]</span>,<span class="s2">"datatype"</span>:<span class="s2">"FP32"</span>,<span class="s2">"parameters"</span>:null,<span class="s2">"data"</span>:<span class="o">[</span><span class="m">14</span>.975618362426758,14.036808967590332,13.966032028198242,12.252279281616211,12.086268424987793<span class="o">]}]}</span>
+<span class="o">{</span><span class="s2">"predictions"</span>:<span class="o">[</span><span class="m">2</span><span class="o">]}</span>
 </code></pre></div>
 </div>
 </article>
