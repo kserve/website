@@ -1290,8 +1290,20 @@ with <code>InferenceService</code>.</p>
 <span class="s">        name: dog_breed_classifier</span>
 <span class="s">        data: $request</span>
 <span class="s">        condition: "[@this].#(predictions.0==\"dog\")"</span>
+<span class="s">  resources:</span>
+<span class="s">    requests:</span>
+<span class="s">      cpu: 100m</span>
+<span class="s">      memory: 256Mi</span>
+<span class="s">    limits:</span>
+<span class="s">      cpu: 1</span>
+<span class="s">      memory: 1Gi</span>
+
 <span class="s">EOF</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information on InferenceGraph Spec, See the <a href="https://kserve.github.io/website/latest/reference/api/#serving.kserve.io/v1alpha1.InferenceGraph">reference docs</a>.</p>
+</div>
 <p>The <code>InferenceGraph</code> defines the two steps and each step targets the <code>InferenceServices</code> deployed above. The steps
 are executed in sequence: it first sends the image as request to <code>cat-dog-classifier</code> model and then send to the
 <code>dog-breed-classifier</code> if it is classified as a dog from the first model.</p>
