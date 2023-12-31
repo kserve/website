@@ -4,7 +4,7 @@ It encapsulates data plane API definitions and storage retrieval for models.
 
 It provides many functionalities, including among others:
 
-* Implements data plane API following open inference protocol.
+* Implements the data plane API following open inference protocol.
 * Provide extensible model server and model API.
 * Allow customizing pre-processing, prediction and post-processing handlers.
 * Readiness and liveness Handlers.
@@ -33,7 +33,7 @@ peotry install
 ::: kserve.model
 
 ## Storage API
-The storage API is used by KServe `storage initializer` which supports the following cloud storage providers.
+The storage API is used by KServe `Storage Initializer` which supports the following cloud storage providers.
 
 The storage package is optional and can be installed via
 ```sh
