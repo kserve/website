@@ -92,6 +92,7 @@ nav:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
           - Python Client SDK: sdk_docs/sdk_doc.md
+          - Python Runtime Server SDK: python_runtime_api/docs/index.md
     - Developer Guide:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
@@ -160,6 +161,11 @@ copyright: "Copyright © 2021 The KServe Authors"
 
 plugins:
   - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          load_external_modules: true
   - mike:
      version_selector: true
      css_dir: css
