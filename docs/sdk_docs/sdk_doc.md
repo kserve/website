@@ -1,9 +1,9 @@
 # KServe Python SDK
-Python SDK for KServe Server and Client.
+Python SDK for KServe controller plane client and data plane serving runtime API.
 
 ## Installation
 
-KServe Python SDK can be installed by `pip` or `Setuptools`.
+KServe Python SDK can be installed by `pip` or `poetry`.
 
 ### pip install
 
@@ -11,69 +11,41 @@ KServe Python SDK can be installed by `pip` or `Setuptools`.
 pip install kserve
 ```
 
-### Setuptools
+### Poetry
 
-Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
+Checkout KServe GitHub repository and Install via [poetry](https://python-poetry.org/).
 
 ```sh
-python setup.py install --user
+cd kserve/python/kserve
+peotry install
 ```
-(or `sudo python setup.py install` to install the package for all users)
 
+## KServe Serving Runtime API
+KServe's python serving runtime API implements the [open inference protocol](https://github.com/kserve/open-inference-protocol) 
+using `FastAPI`, see [Serving Runtime API docs](../python_runtime_api/docs/index.md) for more details.
 
-## KServe Python Server
-KServe's python server libraries implement a standardized library that is extended by model serving frameworks such as Scikit Learn, XGBoost and PyTorch. It encapsulates data plane API definitions and storage retrieval for models.
-
-It provides many functionalities, including among others:
-
-* Registering a model and starting the server
-* Prediction Handler
-* Pre/Post Processing Handler
-* Liveness Handler
-* Readiness Handlers
-
-It supports the following storage providers:
-
-* Google Cloud Storage with a prefix: "gs://"
-    * By default, it uses `GOOGLE_APPLICATION_CREDENTIALS` environment variable for user authentication.
-    * If `GOOGLE_APPLICATION_CREDENTIALS` is not provided, anonymous client will be used to download the artifacts.
-* S3 Compatible Object Storage with a prefix "s3://"
-    * By default, it uses `S3_ENDPOINT`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY` environment variables for user authentication.
-* Azure Blob Storage with the format: "https://{$STORAGE_ACCOUNT_NAME}.blob.core.windows.net/{$CONTAINER}/{$PATH}"
-    * By default, it uses anonymous client to download the artifacts.
-    * For e.g. https://kfserving.blob.core.windows.net/triton/simple_string/
-* Local filesystem either without any prefix or with a prefix "file://". For example:
-    * Absolute path: `/absolute/path` or `file:///absolute/path`
-    * Relative path: `relative/path` or `file://relative/path`
-    * For local filesystem, we recommended to use relative path without any prefix.
-* Persistent Volume Claim (PVC) with the format "pvc://{$pvcname}/[path]".
-    * The `pvcname` is the name of the PVC that contains the model.
-    * The `[path]` is the relative path to the model on the PVC.
-    * For e.g. `pvc://mypvcname/model/path/on/pvc`
-* Generic URI, over either `HTTP`, prefixed with `http://` or `HTTPS`, prefixed with `https://`. For example:
-    * `https://<some_url>.com/model.joblib`
-    * `http://<some_url>.com/model.joblib`
-
-## KServe Client
+## KServe Client API
+KServe's python client interacts with KServe control plane APIs for executing operations on a remote KServe cluster,
+such as creating, patching and deleting of a InferenceService instance.
 
 ### Getting Started
 
-KServe's python client interacts with KServe control plane APIs for executing operations on a remote KServe cluster, such as creating, patching and deleting of a InferenceService instance. See the [Sample for Python SDK Client](./samples/kserve_sdk_v1beta1_sample.ipynb) to get started.
+Please see the [Sample for Python SDK Client](./samples/kserve_sdk_v1beta1_sample.ipynb) to get started.
 
-### Documentation for Client API
+### KServe Client API Reference
 
-Class | Method |  Description
------------- | ------------- | -------------
-[KServeClient](docs/KServeClient.md) | [set_credentials](docs/KServeClient.md#set_credentials) | Set Credentials|
-[KServeClient](docs/KServeClient.md) | [create](docs/KServeClient.md#create) | Create InferenceService|
-[KServeClient](docs/KServeClient.md) | [get](docs/KServeClient.md#get)    | Get or watch the specified InferenceService or all InferenceServices in the namespace |
-[KServeClient](docs/KServeClient.md) | [patch](docs/KServeClient.md#patch)  | Patch the specified InferenceService|
-[KServeClient](docs/KServeClient.md) | [replace](docs/KServeClient.md#replace) | Replace the specified InferenceService|
-[KServeClient](docs/KServeClient.md) | [delete](docs/KServeClient.md#delete) | Delete the specified InferenceService |
-[KServeClient](docs/KServeClient.md) | [wait_isvc_ready](docs/KServeClient.md#wait_isvc_ready) | Wait for the InferenceService to be ready |
-[KServeClient](docs/KServeClient.md) | [is_isvc_ready](docs/KServeClient.md#is_isvc_ready) | Check if the InferenceService is ready |
+| Class                                | Method                                                  | Description                                                                           |
+|--------------------------------------|---------------------------------------------------------|---------------------------------------------------------------------------------------|
+| [KServeClient](docs/KServeClient.md) | [set_credentials](docs/KServeClient.md#set_credentials) | Set Credentials                                                                       |
+| [KServeClient](docs/KServeClient.md) | [create](docs/KServeClient.md#create)                   | Create InferenceService                                                               |
+| [KServeClient](docs/KServeClient.md) | [get](docs/KServeClient.md#get)                         | Get or watch the specified InferenceService or all InferenceServices in the namespace |
+| [KServeClient](docs/KServeClient.md) | [patch](docs/KServeClient.md#patch)                     | Patch the specified InferenceService                                                  |
+| [KServeClient](docs/KServeClient.md) | [replace](docs/KServeClient.md#replace)                 | Replace the specified InferenceService                                                |
+| [KServeClient](docs/KServeClient.md) | [delete](docs/KServeClient.md#delete)                   | Delete the specified InferenceService                                                 |
+| [KServeClient](docs/KServeClient.md) | [wait_isvc_ready](docs/KServeClient.md#wait_isvc_ready) | Wait for the InferenceService to be ready                                             |
+| [KServeClient](docs/KServeClient.md) | [is_isvc_ready](docs/KServeClient.md#is_isvc_ready)     | Check if the InferenceService is ready                                                |
 
-## Documentation For Models
+### Reference for Generated Data Models
 
  - [KnativeAddressable](docs/KnativeAddressable.md)
  - [KnativeCondition](docs/KnativeCondition.md)
