@@ -48,7 +48,7 @@ Several out-of-the-box _ClusterServingRuntimes_ are provided with KServe so that
 | kserve-xgbserver          | XGBoost                             |
 
 In addition to these included runtimes, you can extend your KServe installation by adding custom runtimes.
-This is demonstrated in the example for the [AMD Inference Server](./v1beta1/amd/).
+This is demonstrated in the example for the [AMD Inference Server](./v1beta1/amd/README.md).
 
 ## Spec Attributes
 
