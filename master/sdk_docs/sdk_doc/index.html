@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
 <link href="../../stylesheets/extra.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
@@ -960,23 +961,23 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setuptools">
-    Setuptools
+<a class="md-nav__link" href="#poetry">
+    Poetry
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kserve-python-server">
-    KServe Python Server
+<a class="md-nav__link" href="#kserve-serving-runtime-api">
+    KServe Serving Runtime API
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kserve-client">
-    KServe Client
+<a class="md-nav__link" href="#kserve-client-api">
+    KServe Client API
   </a>
-<nav aria-label="KServe Client" class="md-nav">
+<nav aria-label="KServe Client API" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#getting-started">
@@ -984,20 +985,25 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#documentation-for-client-api">
-    Documentation for Client API
+<a class="md-nav__link" href="#kserve-client-api-reference">
+    KServe Client API Reference
   </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reference-for-generated-data-models">
+    Reference for Generated Data Models
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#documentation-for-models">
-    Documentation For Models
-  </a>
-</li>
-</ul>
-</nav>
+<a class="md-nav__link" href="../../python_runtime_api/docs/">
+        Python Runtime Server SDK
+      </a>
 </li>
 </ul>
 </nav>
@@ -1153,23 +1159,23 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setuptools">
-    Setuptools
+<a class="md-nav__link" href="#poetry">
+    Poetry
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kserve-python-server">
-    KServe Python Server
+<a class="md-nav__link" href="#kserve-serving-runtime-api">
+    KServe Serving Runtime API
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kserve-client">
-    KServe Client
+<a class="md-nav__link" href="#kserve-client-api">
+    KServe Client API
   </a>
-<nav aria-label="KServe Client" class="md-nav">
+<nav aria-label="KServe Client API" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#getting-started">
@@ -1177,17 +1183,17 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#documentation-for-client-api">
-    Documentation for Client API
+<a class="md-nav__link" href="#kserve-client-api-reference">
+    KServe Client API Reference
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reference-for-generated-data-models">
+    Reference for Generated Data Models
   </a>
 </li>
 </ul>
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#documentation-for-models">
-    Documentation For Models
-  </a>
 </li>
 </ul>
 </nav>
@@ -1200,65 +1206,26 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="kserve-python-sdk">KServe Python SDK<a class="headerlink" href="#kserve-python-sdk" title="Permanent link">¶</a></h1>
-<p>Python SDK for KServe Server and Client.</p>
+<p>Python SDK for KServe controller plane client and data plane serving runtime API.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">¶</a></h2>
-<p>KServe Python SDK can be installed by <code>pip</code> or <code>Setuptools</code>.</p>
+<p>KServe Python SDK can be installed by <code>pip</code> or <code>poetry</code>.</p>
 <h3 id="pip-install">pip install<a class="headerlink" href="#pip-install" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>kserve
 </code></pre></div>
-<h3 id="setuptools">Setuptools<a class="headerlink" href="#setuptools" title="Permanent link">¶</a></h3>
-<p>Install via <a href="http://pypi.python.org/pypi/setuptools">Setuptools</a>.</p>
-<p><div class="highlight"><pre><span></span><code>python<span class="w"> </span>setup.py<span class="w"> </span>install<span class="w"> </span>--user
+<h3 id="poetry">Poetry<a class="headerlink" href="#poetry" title="Permanent link">¶</a></h3>
+<p>Checkout KServe GitHub repository and Install via <a href="https://python-poetry.org/">poetry</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>kserve/python/kserve
+peotry<span class="w"> </span>install
 </code></pre></div>
-(or <code>sudo python setup.py install</code> to install the package for all users)</p>
-<h2 id="kserve-python-server">KServe Python Server<a class="headerlink" href="#kserve-python-server" title="Permanent link">¶</a></h2>
-<p>KServe's python server libraries implement a standardized library that is extended by model serving frameworks such as Scikit Learn, XGBoost and PyTorch. It encapsulates data plane API definitions and storage retrieval for models.</p>
-<p>It provides many functionalities, including among others:</p>
-<ul>
-<li>Registering a model and starting the server</li>
-<li>Prediction Handler</li>
-<li>Pre/Post Processing Handler</li>
-<li>Liveness Handler</li>
-<li>Readiness Handlers</li>
-</ul>
-<p>It supports the following storage providers:</p>
-<ul>
-<li>Google Cloud Storage with a prefix: "gs://"<ul>
-<li>By default, it uses <code>GOOGLE_APPLICATION_CREDENTIALS</code> environment variable for user authentication.</li>
-<li>If <code>GOOGLE_APPLICATION_CREDENTIALS</code> is not provided, anonymous client will be used to download the artifacts.</li>
-</ul>
-</li>
-<li>S3 Compatible Object Storage with a prefix "s3://"<ul>
-<li>By default, it uses <code>S3_ENDPOINT</code>, <code>AWS_ACCESS_KEY_ID</code>, and <code>AWS_SECRET_ACCESS_KEY</code> environment variables for user authentication.</li>
-</ul>
-</li>
-<li>Azure Blob Storage with the format: "https://{$STORAGE_ACCOUNT_NAME}.blob.core.windows.net/{$CONTAINER}/{$PATH}"<ul>
-<li>By default, it uses anonymous client to download the artifacts.</li>
-<li>For e.g. https://kfserving.blob.core.windows.net/triton/simple_string/</li>
-</ul>
-</li>
-<li>Local filesystem either without any prefix or with a prefix "file://". For example:<ul>
-<li>Absolute path: <code>/absolute/path</code> or <code>file:///absolute/path</code></li>
-<li>Relative path: <code>relative/path</code> or <code>file://relative/path</code></li>
-<li>For local filesystem, we recommended to use relative path without any prefix.</li>
-</ul>
-</li>
-<li>Persistent Volume Claim (PVC) with the format "pvc://{$pvcname}/[path]".<ul>
-<li>The <code>pvcname</code> is the name of the PVC that contains the model.</li>
-<li>The <code>[path]</code> is the relative path to the model on the PVC.</li>
-<li>For e.g. <code>pvc://mypvcname/model/path/on/pvc</code></li>
-</ul>
-</li>
-<li>Generic URI, over either <code>HTTP</code>, prefixed with <code>http://</code> or <code>HTTPS</code>, prefixed with <code>https://</code>. For example:<ul>
-<li><code>https://&lt;some_url&gt;.com/model.joblib</code></li>
-<li><code>http://&lt;some_url&gt;.com/model.joblib</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="kserve-client">KServe Client<a class="headerlink" href="#kserve-client" title="Permanent link">¶</a></h2>
+<h2 id="kserve-serving-runtime-api">KServe Serving Runtime API<a class="headerlink" href="#kserve-serving-runtime-api" title="Permanent link">¶</a></h2>
+<p>KServe's python serving runtime API implements the <a href="https://github.com/kserve/open-inference-protocol">open inference protocol</a> 
+using <code>FastAPI</code>, see <a href="../../python_runtime_api/docs/">Serving Runtime API docs</a> for more details.</p>
+<h2 id="kserve-client-api">KServe Client API<a class="headerlink" href="#kserve-client-api" title="Permanent link">¶</a></h2>
+<p>KServe's python client interacts with KServe control plane APIs for executing operations on a remote KServe cluster,
+such as creating, patching and deleting of a InferenceService instance.</p>
 <h3 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h3>
-<p>KServe's python client interacts with KServe control plane APIs for executing operations on a remote KServe cluster, such as creating, patching and deleting of a InferenceService instance. See the <a href="../samples/kserve_sdk_v1beta1_sample.ipynb">Sample for Python SDK Client</a> to get started.</p>
-<h3 id="documentation-for-client-api">Documentation for Client API<a class="headerlink" href="#documentation-for-client-api" title="Permanent link">¶</a></h3>
+<p>Please see the <a href="../samples/kserve_sdk_v1beta1_sample.ipynb">Sample for Python SDK Client</a> to get started.</p>
+<h3 id="kserve-client-api-reference">KServe Client API Reference<a class="headerlink" href="#kserve-client-api-reference" title="Permanent link">¶</a></h3>
 <table>
 <thead>
 <tr>
@@ -1310,7 +1277,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="documentation-for-models">Documentation For Models<a class="headerlink" href="#documentation-for-models" title="Permanent link">¶</a></h2>
+<h3 id="reference-for-generated-data-models">Reference for Generated Data Models<a class="headerlink" href="#reference-for-generated-data-models" title="Permanent link">¶</a></h3>
 <ul>
 <li><a href="../docs/KnativeAddressable/">KnativeAddressable</a></li>
 <li><a href="../docs/KnativeCondition/">KnativeCondition</a></li>
@@ -1374,13 +1341,13 @@
             </div>
 </div>
 </a>
-<a aria-label="Next: How to contribute" class="md-footer__link md-footer__link--next" href="../../developer/developer/" rel="next">
+<a aria-label="Next: Python Runtime Server SDK" class="md-footer__link md-footer__link--next" href="../../python_runtime_api/docs/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              How to contribute
+              Python Runtime Server SDK
             </div>
 </div>
 <div class="md-footer__button md-icon">

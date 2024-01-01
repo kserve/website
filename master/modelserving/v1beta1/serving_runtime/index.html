@@ -15,6 +15,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../assets/_mkdocstrings.css" rel="stylesheet"/>
 <link href="../../../stylesheets/extra.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
@@ -939,6 +940,11 @@
         Python Client SDK
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../python_runtime_api/docs/">
+        Python Runtime Server SDK
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1135,7 +1141,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>--</td>
 <td>--</td>
-<td><a href="custom/custom_model">Custom Model</a></td>
+<td><a href="../custom/custom_model/">Custom Model</a></td>
 </tr>
 <tr>
 <td><a href="https://mlserver.readthedocs.io/en/latest/runtimes/lightgbm.html">LightGBM MLServer</a></td>
@@ -1144,7 +1150,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v1.3.2 (MLServer)</td>
 <td>3</td>
-<td><a href="./lightgbm">LightGBM Iris V2</a></td>
+<td><a href="../lightgbm/">LightGBM Iris V2</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">LightGBM ModelServer</a></td>
@@ -1153,7 +1159,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v0.11 (KServe)</td>
 <td>3</td>
-<td><a href="./lightgbm">LightGBM Iris</a></td>
+<td><a href="../lightgbm/">LightGBM Iris</a></td>
 </tr>
 <tr>
 <td><a href="https://docs.seldon.io/projects/seldon-core/en/latest/servers/mlflow.html">MLFlow ModelServer</a></td>
@@ -1162,7 +1168,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v1.3.2 (MLServer)</td>
 <td>1</td>
-<td><a href="./mlflow">MLFLow wine-classifier</a></td>
+<td><a href="../mlflow/v2/">MLFLow wine-classifier</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/pmmlserver">PMML ModelServer</a></td>
@@ -1171,7 +1177,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v0.11 (KServe)</td>
 <td>3, 4 (<a href="https://github.com/autodeployai/pypmml">PMML4.4.1</a>)</td>
-<td><a href="./pmml">SKLearn PMML</a></td>
+<td><a href="../pmml/">SKLearn PMML</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/SeldonIO/MLServer">SKLearn MLServer</a></td>
@@ -1180,7 +1186,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v1.3.2 (MLServer)</td>
 <td>1</td>
-<td><a href="./sklearn/v2">SKLearn Iris V2</a></td>
+<td><a href="../sklearn/v2/">SKLearn Iris V2</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/sklearnserver">SKLearn ModelServer</a></td>
@@ -1189,7 +1195,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v0.11 (KServe)</td>
 <td>1.3</td>
-<td><a href="./sklearn/v2">SKLearn Iris</a></td>
+<td><a href="../sklearn/v2/">SKLearn Iris</a></td>
 </tr>
 <tr>
 <td><a href="https://www.tensorflow.org/tfx/guide/serving">TFServing</a></td>
@@ -1198,7 +1204,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>*tensorflow</td>
 <td>2.6.2 (<a href="https://github.com/tensorflow/serving/releases">TFServing Versions</a>)</td>
 <td>2</td>
-<td><a href="./tensorflow">TensorFlow flower</a></td>
+<td><a href="../tensorflow/">TensorFlow flower</a></td>
 </tr>
 <tr>
 <td><a href="https://pytorch.org/serve/server.html">TorchServe</a></td>
@@ -1207,7 +1213,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>*torchserve</td>
 <td>0.8.0 (TorchServe)</td>
 <td>2</td>
-<td><a href="./torchserve">TorchServe mnist</a></td>
+<td><a href="../torchserve/">TorchServe mnist</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/triton-inference-server/server">Triton Inference Server</a></td>
@@ -1216,7 +1222,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>23.05-py3 (Triton)</td>
 <td>8 (TensoRT), 1, 2 (TensorFlow), 2 (PyTorch), 2 (Triton) <a href="https://docs.nvidia.com/deeplearning/frameworks/support-matrix/index.html">Compatibility Matrix</a></td>
-<td><a href="triton/torchscript">Torchscript cifar</a></td>
+<td><a href="../triton/torchscript/">Torchscript cifar</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/SeldonIO/MLServer">XGBoost MLServer</a></td>
@@ -1225,7 +1231,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v1.3.2 (MLServer)</td>
 <td>1</td>
-<td><a href="./xgboost">XGBoost Iris V2</a></td>
+<td><a href="../xgboost/">XGBoost Iris V2</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">XGBoost ModelServer</a></td>
@@ -1234,7 +1240,7 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td>v2</td>
 <td>v0.11 (KServe)</td>
 <td>1</td>
-<td><a href="./xgboost">XGBoost Iris</a></td>
+<td><a href="../xgboost/">XGBoost Iris</a></td>
 </tr>
 </tbody>
 </table>
