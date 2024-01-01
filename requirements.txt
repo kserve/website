@@ -7,3 +7,4 @@ mike>=1.1.2
 mkdocs-swagger-ui-tag
 markdown-include
 mkdocstrings-python
+kserve>=0.12.0rc0

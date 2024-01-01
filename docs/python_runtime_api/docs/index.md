@@ -29,8 +29,8 @@ peotry install
 ```
 
 ## API Reference
-::: kserve.model_server
-::: kserve.model
+
+Please refer to [API docs](./api.md).
 
 ## Storage API
 The storage API is used by KServe `Storage Initializer` which supports the following cloud storage providers.
