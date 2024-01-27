@@ -5,19 +5,6 @@
 Create an `InferenceService` yaml which specifies the framework `tensorflow` and `storageUri` that is pointed to a
 [saved tensorflow model](https://www.tensorflow.org/guide/saved_model), and name it as `tensorflow.yaml`.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flower-sample"
-    spec:
-      predictor:
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -30,6 +17,19 @@ Create an `InferenceService` yaml which specifies the framework `tensorflow` and
         model:
           modelFormat:
             name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-sample"
+    spec:
+      predictor:
+        tensorflow:
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
     ```
 
@@ -98,20 +98,6 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http:
 Canary rollout is a great way to control the risk of rolling out a new model by first moving a small percent of the traffic to it and then gradually increase the percentage. 
 To run a canary rollout, you can apply the `canary.yaml` with the `canaryTrafficPercent` field specified.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flower-sample"
-    spec:
-      predictor:
-        canaryTrafficPercent: 20
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -125,6 +111,20 @@ To run a canary rollout, you can apply the `canary.yaml` with the `canaryTraffic
         model:
           modelFormat:
             name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-sample"
+    spec:
+      predictor:
+        canaryTrafficPercent: 20
+        tensorflow:
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
     ```
 
@@ -151,23 +151,6 @@ do not need to maintain both default and canary on the `InferenceService` as in 
 ## Create the gRPC InferenceService 
 Create `InferenceService` which exposes the gRPC port and by default it listens on port 9000.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "flower-grpc"
-    spec:
-      predictor:
-        tensorflow:
-          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
-          ports:
-            - containerPort: 9000
-              name: h2c
-              protocol: TCP
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -180,6 +163,23 @@ Create `InferenceService` which exposes the gRPC port and by default it listens 
         model:
           modelFormat:
             name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+          ports:
+            - containerPort: 9000
+              name: h2c
+              protocol: TCP
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-grpc"
+    spec:
+      predictor:
+        tensorflow:
           storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
           ports:
             - containerPort: 9000

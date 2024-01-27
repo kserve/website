@@ -78,7 +78,7 @@ KServe by default selects the `TorchServe` runtime when you specify the model fo
             name: pytorch
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
     ```
-    
+
 === "Old Schema"
 
     ```yaml
@@ -323,10 +323,10 @@ To enable v2 open inference protocol, specify the `protocolVersion` field with t
     spec:
       predictor:
         model:
-          modelFormat:
-            name: pytorch
-          protocolVersion: v2  
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
+           modelFormat:
+             name: pytorch
+        protocolVersion: v2
+        storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
     ```
     
 === "Old Schema"
@@ -554,21 +554,6 @@ Horizontal Pod Autoscaler (HPA)
 You can configure InferenceService with annotation `autoscaling.knative.dev/target` for a soft limit. The soft limit is a targeted limit rather than
 a strictly enforced bound, particularly if there is a sudden burst of requests, this value can be exceeded.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "torchserve"
-      annotations:
-        autoscaling.knative.dev/target: "10"
-    spec:
-      predictor:
-        pytorch:
-          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -583,26 +568,27 @@ a strictly enforced bound, particularly if there is a sudden burst of requests, 
         model:
           modelFormat:
             name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+      annotations:
+        autoscaling.knative.dev/target: "10"
+    spec:
+      predictor:
+        pytorch:
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
     ```
 
 You can also configure InferenceService with field `containerConcurrency` with a hard limit. The hard limit is an enforced upper bound. 
 If concurrency reaches the hard limit, surplus requests will be buffered and must wait until enough capacity is free to execute the requests.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "torchserve"
-    spec:
-      predictor:
-        containerConcurrency: 10
-        pytorch:
-          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -616,6 +602,20 @@ If concurrency reaches the hard limit, surplus requests will be buffered and mus
         model:
           modelFormat:
             name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        containerConcurrency: 10
+        pytorch:
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
     ```
 
@@ -669,21 +669,6 @@ Canary rollout is a deployment strategy when you release a new version of model 
 
 After the above experiments, now let's see how you can rollout a new model without moving full traffic to the new model by default.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "torchserve"
-      annotations:
-        serving.kserve.io/enable-tag-routing: "true"
-    spec:
-      predictor:
-        canaryTrafficPercent: 20
-        pytorch:
-          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
-    ```
 === "New Schema"
 
     ```yaml
@@ -699,6 +684,22 @@ After the above experiments, now let's see how you can rollout a new model witho
         model:
           modelFormat:
             name: pytorch
+          storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchserve"
+      annotations:
+        serving.kserve.io/enable-tag-routing: "true"
+    spec:
+      predictor:
+        canaryTrafficPercent: 20
+        pytorch:
           storageUri: "gs://kfserving-examples/models/torchserve/image_classifier/v2"
     ```
 

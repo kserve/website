@@ -19,24 +19,6 @@ This batcher is implemented in the KServe model agent sidecar, so the requests f
 
 We first create a pytorch predictor with a batcher. The `maxLatency` is set to a big value (500 milliseconds) to make us be able to observe the batching process.
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-      name: "torchserve"
-    spec:
-      predictor:
-        minReplicas: 1
-        timeout: 60
-        batcher:
-          maxBatchSize: 32
-          maxLatency: 500
-        pytorch:
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
-    ```
-
 === "New Schema"
 
     ```yaml
@@ -54,6 +36,24 @@ We first create a pytorch predictor with a batcher. The `maxLatency` is set to a
         model:
           modelFormat:
             name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: "torchserve"
+    spec:
+      predictor:
+        minReplicas: 1
+        timeout: 60
+        batcher:
+          maxBatchSize: 32
+          maxLatency: 500
+        pytorch:
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
     ```
 

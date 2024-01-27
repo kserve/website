@@ -63,18 +63,6 @@ Please refer to the [Serverless Installation Guide](../serverless.md) and change
 
 ### Create the InferenceService
 
-=== "Old Schema"
-
-    ```yaml
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      name: "pmml-demo"
-    spec:
-      predictor:
-        pmml:
-          storageUri: gs://kfserving-examples/models/pmml
-    ```
 === "New Schema"
 
     ```yaml
@@ -88,6 +76,18 @@ Please refer to the [Serverless Installation Guide](../serverless.md) and change
           modelFormat:
             name: pmml
           storageUri: "gs://kfserving-examples/models/pmml"
+    ```
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "pmml-demo"
+    spec:
+      predictor:
+        pmml:
+          storageUri: gs://kfserving-examples/models/pmml
     ```
 
 ```bash
