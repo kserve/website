@@ -513,6 +513,11 @@
         MLFlow
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../onnx/">
+        ONNX
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1299,6 +1304,14 @@ For this, you will just need to use <strong>version <code>v1beta1</code></strong
 <p class="admonition-title">Note</p>
 <p>For <code>V2 protocol (open inference protocol)</code> if <code>runtime</code> field is not provided then, by default <code>mlserver</code> runtime is used.</p>
 </div>
+<p>Note that this makes the following assumptions:</p>
+<ul>
+<li>Your model weights (i.e. your <code>model.joblib</code> file) have already been uploaded
+  to a "model repository" (GCS in this example) and can be accessed as
+  <code>gs://seldon-models/sklearn/iris</code>.</li>
+<li>There is a K8s cluster available, accessible through <code>kubectl</code>.</li>
+<li>KServe has already been <a href="../../../../get_started/">installed in your cluster</a>.</li>
+</ul>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">

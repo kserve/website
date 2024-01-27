@@ -443,6 +443,11 @@
         MLFlow
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../v1beta1/onnx/">
+        ONNX
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1181,7 +1186,7 @@
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/mms/lr_model"</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://seldon-models/sklearn/iris"</span>
 </code></pre></div>
 <p>The default values for <code>serving.kserve.io/enable-prometheus-scraping</code> can be set in the <code>inferenceservice-config</code> configmap. See <a href="https://github.com/kserve/kserve/blob/master/qpext/README.md#configs">the docs</a> for more info.</p>
 <p>There is not currently a unified set of metrics exported by the model servers. Each model server may implement its own set of metrics to export. </p>
