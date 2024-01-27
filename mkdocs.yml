@@ -34,6 +34,7 @@ nav:
                 - LightGBM: modelserving/v1beta1/lightgbm/README.md
                 - Paddle: modelserving/v1beta1/paddle/README.md
                 - MLFlow: modelserving/v1beta1/mlflow/v2/README.md
+                - ONNX: modelserving/v1beta1/onnx/README.md
               - Multi-Framework Serving Runtimes:
                 - Nvidia Triton:
                   - Torchscript: modelserving/v1beta1/triton/torchscript/README.md
