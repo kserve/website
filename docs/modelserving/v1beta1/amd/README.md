@@ -100,7 +100,7 @@ Assuming that `INGRESS_HOST`, `INGRESS_PORT`, and `SERVICE_HOSTNAME` have been d
 ```bash
 export MODEL_NAME=mnist
 export INPUT_DATA=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d ${INPUT_DATA}
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/infer -d ${INPUT_DATA}
 ```
 
 This shows the response from the server in KServe's v2 API format.

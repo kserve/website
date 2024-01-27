@@ -34,6 +34,7 @@ nav:
                 - LightGBM: modelserving/v1beta1/lightgbm/README.md
                 - Paddle: modelserving/v1beta1/paddle/README.md
                 - MLFlow: modelserving/v1beta1/mlflow/v2/README.md
+                - ONNX: modelserving/v1beta1/onnx/README.md
               - Multi-Framework Serving Runtimes:
                 - Nvidia Triton:
                   - Torchscript: modelserving/v1beta1/triton/torchscript/README.md
@@ -92,6 +93,7 @@ nav:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
           - Python Client SDK: sdk_docs/sdk_doc.md
+          - Python Runtime Server SDK: python_runtime_api/docs/index.md
     - Developer Guide:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
@@ -115,7 +117,7 @@ extra_css:
   - stylesheets/extra.css
 
 repo_url: https://github.com/kserve/kserve
-edit_uri: edit/main/docs
+edit_uri: https://github.com/kserve/website/edit/main/docs
 
 theme:
   name: material
@@ -160,6 +162,11 @@ copyright: "Copyright © 2021 The KServe Authors"
 
 plugins:
   - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          load_external_modules: true
   - mike:
      version_selector: true
      css_dir: css

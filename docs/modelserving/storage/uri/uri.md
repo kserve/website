@@ -137,7 +137,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-from-uri -o jsonpath='{.
 
 MODEL_NAME=sklearn-from-uri
 INPUT_PATH=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"
@@ -265,7 +265,7 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice tensorflow-from-uri-gzip -o json
 
 MODEL_NAME=tensorflow-from-uri-gzip
 INPUT_PATH=@./input.json
-curl -v -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
 !!! success "Expected Output"

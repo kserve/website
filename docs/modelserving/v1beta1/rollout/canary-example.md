@@ -249,13 +249,13 @@ MODEL_NAME=sklearn-iris
 curl the latest revision
 
 ```bash
-curl -v -H "Host: latest-${MODEL_NAME}-predictor-default.kserve-test.example.com" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d @./iris-input.json
+curl -v -H "Host: latest-${MODEL_NAME}-predictor-default.kserve-test.example.com" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d @./iris-input.json
 
 ```
 
 or curl the previous revision
 
 ```bash
-curl -v -H "Host: prev-${MODEL_NAME}-predictor-default.kserve-test.example.com" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d @./iris-input.json
+curl -v -H "Host: prev-${MODEL_NAME}-predictor-default.kserve-test.example.com" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d @./iris-input.json
 
 ```

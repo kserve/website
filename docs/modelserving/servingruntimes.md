@@ -48,7 +48,7 @@ Several out-of-the-box _ClusterServingRuntimes_ are provided with KServe so that
 | kserve-xgbserver          | XGBoost                             |
 
 In addition to these included runtimes, you can extend your KServe installation by adding custom runtimes.
-This is demonstrated in the example for the [AMD Inference Server](./v1beta1/amd/).
+This is demonstrated in the example for the [AMD Inference Server](./v1beta1/amd/README.md).
 
 ## Spec Attributes
 
@@ -230,6 +230,27 @@ will be used for model deployment.
 - The serving runtime with priority takes precedence over the serving runtime with priority not specified.
 - Two model formats with same name and same model version cannot have the same priority.
 - If more than one serving runtime supports the model format and none of them specified the priority then, there is no guarantee _which_ runtime will be selected.
+- If multiple versions of a modelFormat are supported by a serving runtime, then it should have the same priority.
+  For example, Below shown serving runtime supports two versions of sklearn. It should have the same priority.
+  ```yaml
+    apiVersion: serving.kserve.io/v1alpha1
+    kind: ClusterServingRuntime
+    metadata:
+      name: mlserver
+    spec:
+        protocolVersions:
+          - v2
+        supportedModelFormats:
+          - name: sklearn
+            version: "0"
+            autoSelect: true
+            priority: 2
+          - name: sklearn
+            version: "1"
+            autoSelect: true
+            priority: 2
+  ...
+  ```
 
 !!! warning
     If multiple runtimes list the same format and/or version as auto-selectable and the priority is not specified, the runtime is selected based on the `creationTimestamp` i.e. the most recently created runtime is selected. So there is no guarantee _which_ runtime will be selected.
