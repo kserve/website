@@ -322,9 +322,11 @@ To enable v2 open inference protocol, specify the `protocolVersion` field with t
       name: "torchserve-mnist-v2"
     spec:
       predictor:
-        pytorch:
-          protocolVersion: v2
-          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
+        model:
+           modelFormat:
+             name: pytorch
+        protocolVersion: v2
+        storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v2
     ```
     
 === "Old Schema"
