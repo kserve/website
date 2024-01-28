@@ -60,6 +60,7 @@ nav:
                 - Azure: modelserving/storage/azure/azure.md
                 - PVC: modelserving/storage/pvc/pvc.md
                 - S3: modelserving/storage/s3/s3.md
+                - OCI: modelserving/storage/oci.md
                 - URI: modelserving/storage/uri/uri.md
           - Model Explainability:
                 - Concept: modelserving/explainer/explainer.md
