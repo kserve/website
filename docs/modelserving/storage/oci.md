@@ -192,7 +192,9 @@ The output is a JSON string representing the configuration. For Modelcars, sever
 | `memoryModelcar` | Memory request and limit for the modelcar container. | `15Mi`   |
 | `uidModelcar`    | UID under which the modelcar process and the main container run. Set to `0` for root if needed. If not set, the UID of the containers is used.     | `1042`     |
 
+## References
 
-
-These settings allow for precise control over how Modelcars operates within the KServe environment, ensuring optimal performance and compatibility with your Kubernetes setup.
-
+* [Modelcar Design document](https://docs.google.com/document/d/1Bs4fnP8rhPMaoPoLSYVvuRq-z9vkGPQ0rKbmfH4I7js/edit#heading=h.xw1gqgyqs5b)
+* [Original GitHub issue](https://github.com/kserve/kserve/issues/3043) (discusses also some alternative solutions)
+* [12-minute demo](https://www.youtube.com/watch?v=KzWH8v6CcR0)
+* [Code walkthrough](https://www.youtube.com/watch?v=axegGpQ6nHs) showing the implementation of Modelcars in KServe (for background information)
