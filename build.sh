@@ -20,3 +20,5 @@ git branch
 mike deploy $currentVersion
 
 git checkout gh-pages
+
+ls -al
