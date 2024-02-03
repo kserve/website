@@ -524,6 +524,63 @@ Kubernetes core/v1.Affinity
 <em>(Optional)</em>
 </td>
 </tr>
+
+<tr>
+<td>
+<code>minReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Minimum number of replicas, defaults to 1 but can be set to 0 to enable scale-to-zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Maximum number of replicas for autoscaling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
+</td>
+</tr>
+
+
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1alpha1.InferenceGraphStatus">InferenceGraphStatus
