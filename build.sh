@@ -17,6 +17,8 @@ git branch gh-pages origin/gh-pages
 echo "Listing branches"
 git branch
 
-mike deploy $currentVersion
+mike deploy --push --alias-type redirect --update-aliases 0.11 latest
 
 git checkout gh-pages
+
+ls -al latest
