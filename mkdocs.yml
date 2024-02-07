@@ -184,8 +184,8 @@ extra:
       link: https://github.com/kserve
       name: KServe Community on Github
     - icon: fontawesome/brands/slack
-      link: https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#
-      name: Slack
+      link: https://github.com/kserve/community/blob/main/README.md#questions-and-issues
+      name: Join Slack
   version_warning: !ENV VERSION_WARNING
   kserve_version: !ENV KSERVE_VERSION
   branch: !ENV ["SAMPLES_BRANCH", "mkdocs"]
