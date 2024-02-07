@@ -29,7 +29,7 @@ The LLaMA model can be downloaded from [huggingface](https://huggingface.co/meta
             - vllm.entrypoints.api_server
           env:
             - name: STORAGE_URI
-              value: gcs://kfserving-examples/llm/huggingface/llama
+              value: gs://kfserving-examples/llm/huggingface/llama
           image: kserve/vllmserver:latest
           name: kserve-container
           resources:
