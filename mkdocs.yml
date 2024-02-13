@@ -43,6 +43,8 @@ nav:
               - LLM Runtime:
                 - TorchServe LLM:
                   - Bloom7b1: modelserving/v1beta1/llm/torchserve/accelerate/README.md
+                - Huggingface:
+                  - LLaMa: modelserving/v1beta1/llm/huggingface/README.md
               - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
           - Multi Model Serving:
                 - Overview:
