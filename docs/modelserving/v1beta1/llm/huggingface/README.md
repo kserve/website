@@ -149,7 +149,7 @@ curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http:/
 vLLM runtime only supports the [/generate](https://github.com/kserve/open-inference-protocol/blob/main/specification/protocol/generate_rest.yaml) endpoint schema for inference.
 
 ```bash
-curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}/generate -d '{"text_input": "The capital of france is [MASK]." }'
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/generate -d '{"text_input": "The capital of france is [MASK]." }'
 
 ```
 !!! success "Expected Output"
