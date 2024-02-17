@@ -78,11 +78,13 @@ kubectl apply -f pv-model-store.yaml
 kubectl exec -it model-store-pod -- bash
 ```
 
-In different terminal, copy the model from local into PV.
+In different terminal, copy the model from local into PV, then delete `model-store-pod`.
 
 === "kubectl"
 ```bash
 kubectl cp model.joblib model-store-pod:/pv/model.joblib -c model-store
+
+kubectl delete pod model-store-pod
 ```
 
 ## Deploy `InferenceService` with models on PVC
