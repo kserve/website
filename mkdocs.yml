@@ -60,6 +60,7 @@ nav:
                 - PVC: modelserving/storage/pvc/pvc.md
                 - S3: modelserving/storage/s3/s3.md
                 - URI: modelserving/storage/uri/uri.md
+                - CA Certificate: modelserving/certificate/kserve.md
           - Model Explainability:
                 - Concept: modelserving/explainer/explainer.md
                 - Alibi Explainer:
@@ -88,8 +89,6 @@ nav:
           - Inference Observability:
                 - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
                 - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
-          -  Certiricate:
-                - KServe: modelserving/certificate/kserve.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
