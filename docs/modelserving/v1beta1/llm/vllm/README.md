@@ -9,6 +9,7 @@ We have work in progress integrating `vLLM` with `Open Inference Protocol` and K
 The LLaMA model can be downloaded from [huggingface](https://huggingface.co/meta-llama/Llama-2-7b) and upload to your cloud storage.
 
 === "Yaml"
+
     ```yaml
     kubectl apply -n kserve-test -f - <<EOF
     apiVersion: serving.kserve.io/v1beta1
@@ -18,7 +19,7 @@ The LLaMA model can be downloaded from [huggingface](https://huggingface.co/meta
     spec:
       predictor:
         containers:
-          - args:
+        - args:
             - --port
             - "8080"
             - --model
