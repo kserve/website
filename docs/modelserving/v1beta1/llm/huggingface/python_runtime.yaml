@@ -1,17 +1,17 @@
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: huggingface
+  name: huggingface-llama2
 spec:
   predictor:
-    containers:
-    - args:
+    model:
+      modelFormat:
+        name: huggingface
+      args:
       - --model_name=llama2
       - --model_id=meta-llama/Llama-2-7b-chat-hf
       - --tensor_input_names=input_ids
       - --disable_vllm
-      image: kserve/huggingfaceserver:latest
-      name: kserve-container
       resources:
         limits:
           cpu: "6"

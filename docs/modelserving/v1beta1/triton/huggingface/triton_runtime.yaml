@@ -1,7 +1,7 @@
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: huggingface
+  name: huggingface-triton
 spec:
   predictor:
     model:
@@ -12,23 +12,21 @@ spec:
       protocolVersion: v2
       resources:
         limits:
-          cpu: "6"
-          memory: 24Gi
+          cpu: "1"
+          memory: 8Gi
           nvidia.com/gpu: "1"
         requests:
-          cpu: "6"
-          memory: 24Gi
-          nvidia.com/gpu: "1"
+          cpu: "1"
+          memory: 8Gi
       runtimeVersion: 23.10-py3
-      storageUri: <storageUri in triton prescribed format>
+      storageUri: gs://kfserving-examples/models/triton/huggingface/model_repository
   transformer:
     containers:
     - args:
-      - --model_name=llama2
-      - --model_id=meta-llama/Llama-2-7b-chat-hf
+      - --model_name=bert
+      - --model_id=bert-base-uncased
       - --predictor_protocol=v2
       - --tensor_input_names=input_ids
-      - --disable_vllm
       image: kserve/huggingfaceserver:latest
       name: kserve-container
       resources:
