@@ -39,6 +39,7 @@ nav:
                 - Nvidia Triton:
                   - Torchscript: modelserving/v1beta1/triton/torchscript/README.md
                   - Tensorflow: modelserving/v1beta1/triton/bert/README.md
+                  - Huggingface: modelserving/v1beta1/triton/huggingface/README.md
                 - AMD: modelserving/v1beta1/amd/README.md
               - LLM Runtime:
                 - TorchServe LLM:
