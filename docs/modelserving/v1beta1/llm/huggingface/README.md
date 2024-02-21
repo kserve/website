@@ -105,5 +105,5 @@ curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http:/
 !!! success "Expected Output"
 
   ```{ .bash .no-copy }
-    {"text_output":"Where is Eiffel Tower?\n2022.01.22 17:56 Where is Eiffel Tower?\nThe Eiffel Tower is located in the 7th arrondissement of Paris, France. It stands on the Champ de Mars, a large public park next to the Seine River. The tower's exact address is:\n\n2 Rue du Champ de Mars, 75007 Paris, France.","model_name":"llama2","model_version":null,"details":null}
+    {"text_output":"Where is Eiffel Tower?\nThe Eiffel Tower is located in the 7th arrondissement of Paris, France. It stands on the Champ de Mars, a large public park next to the Seine River. The tower's exact address is:\n\n2 Rue du Champ de Mars, 75007 Paris, France.","model_name":"llama2","model_version":null,"details":null}
   ```
