@@ -1,4 +1,11 @@
+
 # Serverless Installation Guide
+## Serverless Installation Guide
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
 KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
@@ -15,12 +22,13 @@ Kubernetes version.
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
 
-!!! note
+:::note
     If you are looking to use PodSpec fields such as nodeSelector, affinity or tolerations which are now supported in the v1beta1 API spec, 
     you need to turn on the corresponding [feature flags](https://knative.dev/docs/admin/serving/feature-flags) in your Knative configuration.
-    
-!!! warning
+:::
+:::warning
     In Knative 1.8, The cluster domain suffix is changed to `svc.cluster.local` as the default domain. As routes using the cluster domain suffix are not exposed through Ingress, you will need to [configure DNS](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns) in order to expose their services (most users probably already are).
+:::
 
 ## 2. Install Networking Layer
 The recommended networking layer for KServe is [Istio](https://istio.io/) as currently it works best with KServe, please refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
@@ -29,21 +37,35 @@ Alternatively you can also choose other networking layers like [Kourier](https:/
 ## 3. Install Cert Manager
 The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert Manager](https://cert-manager.io/docs/installation/).
 
-!!! note
+:::note
     Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.
-    
+:::   
 ## 4. Install KServe
-=== "kubectl"
+
+<Tabs>
+  <TabItem value="kubectl" label="kubectl" default>
+
     ```bash
     kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.0/kserve.yaml
     ```
+ </TabItem>
+</Tabs>
+
+    
 
 ## 5. Install KServe Built-in ClusterServingRuntimes
+<Tabs>
+  <TabItem value="kubectl" label="kubectl" default>
 
-=== "kubectl"
     ```bash
     kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.0/kserve-runtimes.yaml
     ```
+ </TabItem>
+</Tabs>
 
-!!! note
+
+:::note
     **ClusterServingRuntimes** are required to create InferenceService for built-in model serving runtimes with KServe v0.8.0 or higher.
+:::
+
+
