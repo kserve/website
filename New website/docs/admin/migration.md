@@ -2,10 +2,10 @@
 
 This doc explains how to migrate existing inference services from KFServing to KServe without downtime.
 
-!!! note 
+:::note 
     The migration job will by default delete the leftover KFServing installation after migrating the inference services from
     `serving.kubeflow.org` to `serving.kserve.io`.
-
+:::
 
 ### Migrating from standalone KFServing
 

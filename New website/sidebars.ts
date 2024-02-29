@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
 
   // But you can create a sidebar manually
 
-  tutorialSidebar: [
+  GettingStartedSidebar: [
 
     {
       type: 'category',
@@ -29,7 +29,25 @@ const sidebars: SidebarsConfig = {
     },
     
   ],
-
+  adminSidebar: [
+    {
+      type: 'category',
+      label: 'Administration Guide',
+      items: [
+        {
+          type: 'category',
+          label: 'Serverless',
+          items: [
+            'admin/serverless/serverlesss',
+            'admin/serverless/servicemesh/README',
+            'admin/serverless/kourier_networking/README',
+          ],
+        },
+        'admin/modelmesh',
+        'admin/kubernetes_deployment',
+        'admin/migration',
+      ],
+    },
+  ],
 };
-
 export default sidebars;

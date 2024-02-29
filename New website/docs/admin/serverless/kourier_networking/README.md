@@ -1,19 +1,12 @@
-Certainly! Below is the Markdown content reformatted for Docusaurus:
-
-```markdown
----
-id: deploy-inference-service-kourier
-title: Deploy InferenceService with Kourier
-sidebar_label: Deploy InferenceService with Kourier
----
-
-KServe creates the top-level `Istio Virtual Service` for routing to `InferenceService` components based on the virtual host or path-based routing.
-Now KServe provides an option for disabling the top-level virtual service to allow configuring other networking layers Knative supports.
-For example, [Kourier](https://developers.redhat.com/blog/2020/06/30/kourier-a-lightweight-knative-serving-ingress) is an alternative networking layer, and the following steps show how you can deploy KServe with `Kourier`.
+# Kourier Networking Layer
+## Deploy InferenceService with Alternative Networking Layer
+KServe creates the top level `Istio Virtual Service` for routing to `InferenceService` components based on the virtual host or path based routing.
+Now KServe provides an option for disabling the top level virtual service to allow configuring other networking layers Knative supports.
+For example, [Kourier](https://developers.redhat.com/blog/2020/06/30/kourier-a-lightweight-knative-serving-ingress) is an alternative networking layer and
+the following steps show how you can deploy KServe with `Kourier`.
 
 ## Install Kourier Networking Layer
-
-Please refer to the [Serverless Installation Guide](../serverless.md) and change the second step to install `Kourier` instead of `Istio`.
+Please refer to the [Serverless Installation Guide](../../serverless/serverlesss) and change the second step to install `Kourier` instead of `Istio`.
 
 1. Install the Kourier networking layer:
 
@@ -51,7 +44,7 @@ Please refer to the [Serverless Installation Guide](../serverless.md) and change
         3scale-kourier-gateway-54c49c8ff5-x8tgn   1/1     Running   0          10m
         ```
 
-4. Edit `inferenceservice-config` configmap to disable Istio top-level virtual host:
+4. Edit `inferenceservice-config` configmap to disable Istio top level virtual host:
 
     ```bash
     kubectl edit configmap/inferenceservice-config --namespace kserve
@@ -110,10 +103,10 @@ kubectl apply -f pmml.yaml
 
 ### Run a Prediction
 
-Note that when setting `INGRESS_HOST` and `INGRESS_PORT` following the [determining the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) guide you
+Note that when setting `INGRESS_HOST` and `INGRESS_PORT` following the [determining the ingress IP and ports](../../../Getting_Started/first_isvc.mdx#4-determine-the-ingress-ip-and-ports) guide you
 need to replace `istio-ingressgateway` with `kourier-gateway`.
 
-For example, if you choose to do `Port Forward` for testing, you need to select the `kourier-gateway` pod as following.
+For example if you choose to do `Port Forward` for testing you need to select the `kourier-gateway` pod as following.
 
 ```bash
 kubectl port-forward --namespace kourier-system \
@@ -162,10 +155,6 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http:
     < server: envoy
     < x-envoy-upstream-service-time: 58
     <
-    * Connection #0
-
- to host localhost left intact
+    * Connection #0 to host localhost left intact
     {"predictions": [{"Species": "setosa", "Probability_setosa": 1.0, "Probability_versicolor": 0.0, "Probability_virginica": 0.0, "Node_Id": "2"}]}
     ```
-
-This documentation provides steps to deploy KServe with Kourier as the networking layer and test the InferenceService with a PMML model.
