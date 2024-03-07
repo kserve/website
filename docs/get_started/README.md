@@ -16,7 +16,6 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
 
 ## Install the KServe "Quickstart" environment
 1. After having kind installed, create a `kind` cluster with:
-
     ```bash
     kind create cluster
     ```
@@ -41,3 +40,9 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
     curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.11/hack/quick_install.sh" | bash
     ```
 
+!!! Note
+    If you encounter the following error when installing, Please re-run the script.
+    ```
+    Error from server (InternalError): error when creating "https://github.com/kserve/kserve/releases/download/v0.12.0/kserve.yaml": Internal error occurred: failed calling webhook "webhook.cert-manager.io": failed to call webhook: Post "https://cert-manager-webhook.cert-manager.svc:443/mutate?timeout=10s": tls: failed to verify certificate: x509: certificate signed by unknown authority
+    Error from server (InternalError): error when creating "https://github.com/kserve/kserve/releases/download/v0.12.0/kserve.yaml": Internal error occurred: failed calling webhook "webhook.cert-manager.io": failed to call webhook: Post "https://cert-manager-webhook.cert-manager.svc:443/mutate?timeout=10s": tls: failed to verify certificate: x509: certificate signed by unknown authority
+    ```
