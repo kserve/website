@@ -852,6 +852,11 @@
         URI
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../certificate/kserve/">
+        CA Certificate
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1629,7 +1634,7 @@ via local socket.</p>
 <p><em><strong>Note</strong></em>: Since kserve has no grpc client methods for v1, we are using torchserve's grpc v1 client </p>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">¶</a></h3>
 <p>For deploying the <code>InferenceService</code> with gRPC protocol you need to expose the gRPC port on InferenceService. Here <strong>7070</strong> is torchserve gRPC port.</p>
-<p>Apply the following <a href="./mnist.yaml">mnist_grpc.yaml</a> to create the <code>InferenceService</code>.</p>
+<p>Apply the following <a href="mnist_grpc.yaml">mnist_grpc.yaml</a> to create the <code>InferenceService</code>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -1638,7 +1643,7 @@ via local socket.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>mnist_grpc.yaml
 </code></pre></div>
 <p>Expected Output</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$inferenceservice</span>.serving.kserve.io/torchserve-grpc<span class="w"> </span>created
+<div class="highlight"><pre><span></span><code>inferenceservice.serving.kserve.io/torchserve-grpc<span class="w"> </span>created
 </code></pre></div>
 <div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><input id="__tabbed_6_2" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">New Schema</label><label for="__tabbed_6_2">Old Schema</label></div>
 <div class="tabbed-content">
