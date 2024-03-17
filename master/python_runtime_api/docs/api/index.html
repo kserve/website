@@ -667,6 +667,11 @@
       </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../../modelserving/storage/oci/">
+        OCI
+      </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../../modelserving/storage/uri/uri/">
         URI
       </a>
@@ -1105,6 +1110,16 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#kserve.model_server.ModelServer.__init__">
     __init__
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve.model_server.ModelServer.default_exception_handler">
+    default_exception_handler
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve.model_server.ModelServer.register_exception_handler">
+    register_exception_handler
   </a>
 </li>
 <li class="md-nav__item">
@@ -1563,7 +1578,37 @@
 <span class="normal">240</span>
 <span class="normal">241</span>
 <span class="normal">242</span>
-<span class="normal">243</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ModelServer</span><span class="p">:</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ModelServer</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
                  <span class="n">grpc_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span>
                  <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span>
@@ -1620,6 +1665,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">log_config</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span> <span class="o">=</span> <span class="n">access_log_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Model</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Deployment</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">""" Start the model server with a set of registered models.</span>
@@ -1667,6 +1713,10 @@
                 <span class="n">loop</span><span class="o">.</span><span class="n">add_signal_handler</span><span class="p">(</span>
                     <span class="n">sig</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">s</span><span class="o">=</span><span class="n">sig</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sig</span><span class="o">=</span><span class="n">s</span><span class="p">))</span>
                 <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">loop</span><span class="o">.</span><span class="n">set_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_exception_handler</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loop</span><span class="o">.</span><span class="n">set_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span> <span class="o">=</span> <span class="n">UvicornServer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span> <span class="p">[],</span>
                                                   <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span><span class="p">,</span>
@@ -1710,6 +1760,31 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grpc_server</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Stopping the grpc server"</span><span class="p">)</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grpc_server</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Add a custom handler as the event loop exception handler.</span>
+
+<span class="sd">        If a handler is not provided, the default exception handler will be set.</span>
+
+<span class="sd">        handler should be a callable object, it should have a signature matching '(loop, context)', where 'loop'</span>
+<span class="sd">        will be a reference to the active event loop, 'context' will be a dict object (see `call_exception_handler()`</span>
+<span class="sd">        documentation for details about context).</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="n">handler</span>
+
+    <span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Default exception handler for event loop.</span>
+
+<span class="sd">        This is called when an exception occurs and no exception handler is set.</span>
+<span class="sd">        By default, this will shut down the server gracefully.</span>
+
+<span class="sd">        This can be called by a custom exception handler that wants to defer to the default handler behavior.</span>
+<span class="sd">        """</span>
+        <span class="c1"># gracefully shutdown the server</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">default_exception_handler</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">register_model_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">:</span> <span class="n">RayServeHandle</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update_handle</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">)</span>
@@ -1968,7 +2043,8 @@
 <span class="normal">139</span>
 <span class="normal">140</span>
 <span class="normal">141</span>
-<span class="normal">142</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
+<span class="normal">142</span>
+<span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
              <span class="n">grpc_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span>
              <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span>
              <span class="n">max_threads</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">max_threads</span><span class="p">,</span>
@@ -2024,6 +2100,82 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">log_config</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span> <span class="o">=</span> <span class="n">access_log_format</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="kserve.model_server.ModelServer.default_exception_handler">
+<code class="highlight language-python"><span class="n">default_exception_handler</span><span class="p">(</span><span class="n">loop</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span></code>
+<a class="headerlink" href="#kserve.model_server.ModelServer.default_exception_handler" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Default exception handler for event loop.</p>
+<p>This is called when an exception occurs and no exception handler is set.
+By default, this will shut down the server gracefully.</p>
+<p>This can be called by a custom exception handler that wants to defer to the default handler behavior.</p>
+<details class="quote">
+<summary>Source code in <code>kserve/model_server.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Default exception handler for event loop.</span>
+
+<span class="sd">    This is called when an exception occurs and no exception handler is set.</span>
+<span class="sd">    By default, this will shut down the server gracefully.</span>
+
+<span class="sd">    This can be called by a custom exception handler that wants to defer to the default handler behavior.</span>
+<span class="sd">    """</span>
+    <span class="c1"># gracefully shutdown the server</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
+    <span class="n">loop</span><span class="o">.</span><span class="n">default_exception_handler</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="kserve.model_server.ModelServer.register_exception_handler">
+<code class="highlight language-python"><span class="n">register_exception_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></code>
+<a class="headerlink" href="#kserve.model_server.ModelServer.register_exception_handler" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Add a custom handler as the event loop exception handler.</p>
+<p>If a handler is not provided, the default exception handler will be set.</p>
+<p>handler should be a callable object, it should have a signature matching '(loop, context)', where 'loop'
+will be a reference to the active event loop, 'context' will be a dict object (see <code>call_exception_handler()</code>
+documentation for details about context).</p>
+<details class="quote">
+<summary>Source code in <code>kserve/model_server.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Add a custom handler as the event loop exception handler.</span>
+
+<span class="sd">    If a handler is not provided, the default exception handler will be set.</span>
+
+<span class="sd">    handler should be a callable object, it should have a signature matching '(loop, context)', where 'loop'</span>
+<span class="sd">    will be a reference to the active event loop, 'context' will be a dict object (see `call_exception_handler()`</span>
+<span class="sd">    documentation for details about context).</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="n">handler</span>
 </code></pre></div></td></tr></table></div>
 </details>
 </div>
@@ -2063,8 +2215,7 @@
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">144</span>
-<span class="normal">145</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
 <span class="normal">148</span>
@@ -2140,7 +2291,12 @@
 <span class="normal">218</span>
 <span class="normal">219</span>
 <span class="normal">220</span>
-<span class="normal">221</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Model</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Deployment</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Model</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Deployment</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Start the model server with a set of registered models.</span>
 
 <span class="sd">    Args:</span>
@@ -2186,6 +2342,10 @@
             <span class="n">loop</span><span class="o">.</span><span class="n">add_signal_handler</span><span class="p">(</span>
                 <span class="n">sig</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">s</span><span class="o">=</span><span class="n">sig</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sig</span><span class="o">=</span><span class="n">s</span><span class="p">))</span>
             <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">loop</span><span class="o">.</span><span class="n">set_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_exception_handler</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loop</span><span class="o">.</span><span class="n">set_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">workers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span> <span class="o">=</span> <span class="n">UvicornServer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span> <span class="p">[],</span>
                                               <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span><span class="p">,</span>
@@ -2233,16 +2393,16 @@
 <p>Stop the instances of REST and gRPC model servers.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span>
-<span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">228</span>
 <span class="normal">229</span>
 <span class="normal">230</span>
 <span class="normal">231</span>
-<span class="normal">232</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">""" Stop the instances of REST and gRPC model servers.</span>
 <span class="sd">    """</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Stopping the model server"</span><span class="p">)</span>
@@ -3864,8 +4024,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <div class="doc doc-contents">
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 69</span>
-<span class="normal"> 70</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 70</span>
 <span class="normal"> 71</span>
 <span class="normal"> 72</span>
 <span class="normal"> 73</span>
@@ -4057,7 +4216,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">259</span>
 <span class="normal">260</span>
 <span class="normal">261</span>
-<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferInput</span><span class="p">:</span>
+<span class="normal">262</span>
+<span class="normal">263</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferInput</span><span class="p">:</span>
     <span class="n">_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">_shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
     <span class="n">_datatype</span><span class="p">:</span> <span class="nb">str</span>
@@ -4080,7 +4240,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="n">shape</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raw_data</span> <span class="o">=</span> <span class="kc">None</span>
@@ -4174,11 +4334,11 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">            InferenceError if failed to set data for the tensor.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,)):</span>
-            <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
 
         <span class="n">dtype</span> <span class="o">=</span> <span class="n">from_np_dtype</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">!=</span> <span class="n">dtype</span><span class="p">:</span>
-            <span class="n">InferenceError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                 <span class="s2">"got unexpected datatype </span><span class="si">{}</span><span class="s2"> from numpy array, expected </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span><span class="p">))</span>
         <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
@@ -4188,7 +4348,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                     <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_shape</span><span class="p">:</span>
-            <span class="n">InferenceError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                 <span class="s2">"got unexpected numpy array shape [</span><span class="si">{}</span><span class="s2">], expected [</span><span class="si">{}</span><span class="s2">]"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="nb">str</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                     <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
@@ -4217,7 +4377,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                     <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">))</span>
                 <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                    <span class="n">InferenceError</span><span class="p">(</span>
+                    <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s1">'Failed to encode "</span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">" using UTF-8. Please use binary_data=True, if'</span>
                         <span class="s1">' you want to pass a byte array.'</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -4503,8 +4663,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">75</span>
-<span class="normal">76</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">76</span>
 <span class="normal">77</span>
 <span class="normal">78</span>
 <span class="normal">79</span>
@@ -4523,7 +4682,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">92</span>
 <span class="normal">93</span>
 <span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="normal">95</span>
+<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
              <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">InferTensorContents</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""An object of InferInput class is used to describe the input tensor of an inference request.</span>
@@ -4540,7 +4700,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 
     <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="n">shape</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_raw_data</span> <span class="o">=</span> <span class="kc">None</span>
@@ -4577,8 +4737,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
-<span class="normal">157</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
 <span class="normal">158</span>
 <span class="normal">159</span>
 <span class="normal">160</span>
@@ -4591,7 +4750,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">167</span>
 <span class="normal">168</span>
 <span class="normal">169</span>
-<span class="normal">170</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="normal">170</span>
+<span class="normal">171</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Decode the inference input data as numpy array.</span>
 
 <span class="sd">    Returns:</span>
@@ -4660,8 +4820,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">172</span>
-<span class="normal">173</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">173</span>
 <span class="normal">174</span>
 <span class="normal">175</span>
 <span class="normal">176</span>
@@ -4735,7 +4894,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">244</span>
 <span class="normal">245</span>
 <span class="normal">246</span>
-<span class="normal">247</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_data_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binary_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="normal">247</span>
+<span class="normal">248</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_data_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_tensor</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binary_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Set the tensor data from the specified numpy array for input associated with this object.</span>
 
 <span class="sd">    Args:</span>
@@ -4749,11 +4909,11 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">        InferenceError if failed to set data for the tensor.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,)):</span>
-        <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
 
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">from_np_dtype</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">!=</span> <span class="n">dtype</span><span class="p">:</span>
-        <span class="n">InferenceError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
             <span class="s2">"got unexpected datatype </span><span class="si">{}</span><span class="s2"> from numpy array, expected </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span><span class="p">))</span>
     <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
@@ -4763,7 +4923,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                 <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_shape</span><span class="p">:</span>
-        <span class="n">InferenceError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
             <span class="s2">"got unexpected numpy array shape [</span><span class="si">{}</span><span class="s2">], expected [</span><span class="si">{}</span><span class="s2">]"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="nb">str</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                 <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
@@ -4792,7 +4952,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                <span class="n">InferenceError</span><span class="p">(</span>
+                <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s1">'Failed to encode "</span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">" using UTF-8. Please use binary_data=True, if'</span>
                     <span class="s1">' you want to pass a byte array.'</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -4849,13 +5009,13 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">142</span>
-<span class="normal">143</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">143</span>
 <span class="normal">144</span>
 <span class="normal">145</span>
 <span class="normal">146</span>
 <span class="normal">147</span>
-<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="normal">148</span>
+<span class="normal">149</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">"""Set the shape of inference input.</span>
 
 <span class="sd">    Args:</span>
@@ -4876,8 +5036,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <div class="doc doc-contents">
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">432</span>
-<span class="normal">433</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">433</span>
 <span class="normal">434</span>
 <span class="normal">435</span>
 <span class="normal">436</span>
@@ -5057,7 +5216,12 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">610</span>
 <span class="normal">611</span>
 <span class="normal">612</span>
-<span class="normal">613</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferOutput</span><span class="p">:</span>
+<span class="normal">613</span>
+<span class="normal">614</span>
+<span class="normal">615</span>
+<span class="normal">616</span>
+<span class="normal">617</span>
+<span class="normal">618</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferOutput</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">InferTensorContents</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -5074,7 +5238,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="n">shape</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raw_data</span> <span class="o">=</span> <span class="kc">None</span>
@@ -5124,6 +5288,10 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
 
+    <span class="nd">@parameters</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">params</span>
+
     <span class="k">def</span> <span class="nf">set_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">"""Set the shape of inference output.</span>
 
@@ -5162,11 +5330,11 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">            InferenceError if failed to set data for the output tensor.</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_tensor</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,)):</span>
-            <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
 
         <span class="n">dtype</span> <span class="o">=</span> <span class="n">from_np_dtype</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">!=</span> <span class="n">dtype</span><span class="p">:</span>
-            <span class="n">InferenceError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                 <span class="s2">"got unexpected datatype </span><span class="si">{}</span><span class="s2"> from numpy array, expected </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span><span class="p">))</span>
         <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
@@ -5176,7 +5344,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">output_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                     <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_shape</span><span class="p">:</span>
-            <span class="n">InferenceError</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                 <span class="s2">"got unexpected numpy array shape [</span><span class="si">{}</span><span class="s2">], expected [</span><span class="si">{}</span><span class="s2">]"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="nb">str</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                     <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
@@ -5205,7 +5373,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                     <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">))</span>
                 <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                    <span class="n">InferenceError</span><span class="p">(</span>
+                    <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                         <span class="sa">f</span><span class="s1">'Failed to encode "</span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">" using UTF-8. Please use binary_data=True, if'</span>
                         <span class="s1">' you want to pass a byte array.'</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -5343,6 +5511,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code class="highlight language-python"><span class="n">parameters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span></code>
 <span class="doc doc-labels">
 <small class="doc doc-label doc-label-property"><code>property</code></small>
+<small class="doc doc-label doc-label-writable"><code>writable</code></small>
 </span>
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.parameters" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
@@ -5489,8 +5658,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">433</span>
-<span class="normal">434</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">434</span>
 <span class="normal">435</span>
 <span class="normal">436</span>
 <span class="normal">437</span>
@@ -5508,7 +5676,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">449</span>
 <span class="normal">450</span>
 <span class="normal">451</span>
-<span class="normal">452</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="normal">452</span>
+<span class="normal">453</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">datatype</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
              <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">InferTensorContents</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""An object of InferOutput class is used to describe the output tensor for an inference response.</span>
@@ -5524,7 +5693,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 
     <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span> <span class="o">=</span> <span class="n">shape</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">=</span> <span class="n">datatype</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_raw_data</span> <span class="o">=</span> <span class="kc">None</span>
@@ -5561,12 +5730,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">507</span>
-<span class="normal">508</span>
-<span class="normal">509</span>
-<span class="normal">510</span>
-<span class="normal">511</span>
-<span class="normal">512</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">512</span>
 <span class="normal">513</span>
 <span class="normal">514</span>
 <span class="normal">515</span>
@@ -5575,7 +5739,12 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">518</span>
 <span class="normal">519</span>
 <span class="normal">520</span>
-<span class="normal">521</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Decode the tensor output data as numpy array.</span>
 
 <span class="sd">    Returns:</span>
@@ -5644,12 +5813,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">523</span>
-<span class="normal">524</span>
-<span class="normal">525</span>
-<span class="normal">526</span>
-<span class="normal">527</span>
-<span class="normal">528</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">528</span>
 <span class="normal">529</span>
 <span class="normal">530</span>
 <span class="normal">531</span>
@@ -5719,7 +5883,12 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">595</span>
 <span class="normal">596</span>
 <span class="normal">597</span>
-<span class="normal">598</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_data_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_tensor</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binary_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span>
+<span class="normal">603</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_data_from_numpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_tensor</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">binary_data</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Set the tensor data from the specified numpy array for the inference output associated with this object.</span>
 
 <span class="sd">    Args:</span>
@@ -5733,11 +5902,11 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">        InferenceError if failed to set data for the output tensor.</span>
 <span class="sd">    """</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_tensor</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,)):</span>
-        <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span><span class="s2">"input_tensor must be a numpy array"</span><span class="p">)</span>
 
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">from_np_dtype</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span> <span class="o">!=</span> <span class="n">dtype</span><span class="p">:</span>
-        <span class="n">InferenceError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
             <span class="s2">"got unexpected datatype </span><span class="si">{}</span><span class="s2"> from numpy array, expected </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_datatype</span><span class="p">))</span>
     <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
@@ -5747,7 +5916,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">output_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
                 <span class="n">valid_shape</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">valid_shape</span><span class="p">:</span>
-        <span class="n">InferenceError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
             <span class="s2">"got unexpected numpy array shape [</span><span class="si">{}</span><span class="s2">], expected [</span><span class="si">{}</span><span class="s2">]"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="nb">str</span><span class="p">(</span><span class="n">output_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                 <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_shape</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
@@ -5776,7 +5945,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                 <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                <span class="n">InferenceError</span><span class="p">(</span>
+                <span class="k">raise</span> <span class="n">InferenceError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s1">'Failed to encode "</span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">" using UTF-8. Please use binary_data=True, if'</span>
                     <span class="s1">' you want to pass a byte array.'</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -5834,13 +6003,13 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">499</span>
-<span class="normal">500</span>
-<span class="normal">501</span>
-<span class="normal">502</span>
-<span class="normal">503</span>
-<span class="normal">504</span>
-<span class="normal">505</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">set_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">"""Set the shape of inference output.</span>
 
 <span class="sd">    Args:</span>
@@ -5861,8 +6030,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <div class="doc doc-contents">
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">286</span>
-<span class="normal">287</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">287</span>
 <span class="normal">288</span>
 <span class="normal">289</span>
 <span class="normal">290</span>
@@ -6004,7 +6172,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">426</span>
 <span class="normal">427</span>
 <span class="normal">428</span>
-<span class="normal">429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferRequest</span><span class="p">:</span>
+<span class="normal">429</span>
+<span class="normal">430</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferRequest</span><span class="p">:</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
@@ -6255,8 +6424,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">293</span>
-<span class="normal">294</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">294</span>
 <span class="normal">295</span>
 <span class="normal">296</span>
 <span class="normal">297</span>
@@ -6278,7 +6446,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">313</span>
 <span class="normal">314</span>
 <span class="normal">315</span>
-<span class="normal">316</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">infer_inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InferInput</span><span class="p">],</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">infer_inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InferInput</span><span class="p">],</span>
              <span class="n">request_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
              <span class="n">raw_inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">from_grpc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -6335,8 +6504,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">401</span>
-<span class="normal">402</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">402</span>
 <span class="normal">403</span>
 <span class="normal">404</span>
 <span class="normal">405</span>
@@ -6348,7 +6516,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">411</span>
 <span class="normal">412</span>
 <span class="normal">413</span>
-<span class="normal">414</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="normal">414</span>
+<span class="normal">415</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">as_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Decode the tensor inputs as pandas dataframe.</span>
 
 <span class="sd">    Returns:</span>
@@ -6377,8 +6546,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <p>The class method to construct the InferRequest from a ModelInferRequest</p>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">318</span>
-<span class="normal">319</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">319</span>
 <span class="normal">320</span>
 <span class="normal">321</span>
 <span class="normal">322</span>
@@ -6388,7 +6556,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">326</span>
 <span class="normal">327</span>
 <span class="normal">328</span>
-<span class="normal">329</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">329</span>
+<span class="normal">330</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">from_grpc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">ModelInferRequest</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">""" The class method to construct the InferRequest from a ModelInferRequest</span>
 
@@ -6433,8 +6602,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">363</span>
-<span class="normal">364</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">364</span>
 <span class="normal">365</span>
 <span class="normal">366</span>
 <span class="normal">367</span>
@@ -6469,7 +6637,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">396</span>
 <span class="normal">397</span>
 <span class="normal">398</span>
-<span class="normal">399</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_grpc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelInferRequest</span><span class="p">:</span>
+<span class="normal">399</span>
+<span class="normal">400</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_grpc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelInferRequest</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Converts the InferRequest object to gRPC ModelInferRequest type.</span>
 
 <span class="sd">    Returns:</span>
@@ -6539,8 +6708,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">331</span>
-<span class="normal">332</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">332</span>
 <span class="normal">333</span>
 <span class="normal">334</span>
 <span class="normal">335</span>
@@ -6569,7 +6737,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">358</span>
 <span class="normal">359</span>
 <span class="normal">360</span>
-<span class="normal">361</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_rest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="normal">361</span>
+<span class="normal">362</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_rest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Converts the InferRequest object to v2 REST InferRequest Dict.</span>
 
 <span class="sd">    Returns:</span>
@@ -6614,12 +6783,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <div class="doc doc-contents">
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">616</span>
-<span class="normal">617</span>
-<span class="normal">618</span>
-<span class="normal">619</span>
-<span class="normal">620</span>
-<span class="normal">621</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">621</span>
 <span class="normal">622</span>
 <span class="normal">623</span>
 <span class="normal">624</span>
@@ -6755,15 +6919,29 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">754</span>
 <span class="normal">755</span>
 <span class="normal">756</span>
-<span class="normal">757</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferResponse</span><span class="p">:</span>
+<span class="normal">757</span>
+<span class="normal">758</span>
+<span class="normal">759</span>
+<span class="normal">760</span>
+<span class="normal">761</span>
+<span class="normal">762</span>
+<span class="normal">763</span>
+<span class="normal">764</span>
+<span class="normal">765</span>
+<span class="normal">766</span>
+<span class="normal">767</span>
+<span class="normal">768</span>
+<span class="normal">769</span>
+<span class="normal">770</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">InferResponse</span><span class="p">:</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">]</span>
     <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InferOutput</span><span class="p">]</span>
     <span class="n">from_grpc</span><span class="p">:</span> <span class="nb">bool</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InferOutput</span><span class="p">],</span>
-                 <span class="n">raw_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_grpc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">model_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raw_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_grpc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                  <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""The InferResponse Data Model</span>
 
@@ -6771,6 +6949,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">            response_id: The id of the inference response.</span>
 <span class="sd">            model_name: The name of the model.</span>
 <span class="sd">            infer_outputs: The inference outputs of the inference response.</span>
+<span class="sd">            model_version: The version of the model.</span>
 <span class="sd">            raw_outputs: The raw binary data of the inference outputs.</span>
 <span class="sd">            from_grpc: Indicate if the InferResponse is constructed from a gRPC response.</span>
 <span class="sd">            parameters: The additional inference parameters.</span>
@@ -6778,6 +6957,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">response_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_version</span> <span class="o">=</span> <span class="n">model_version</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">infer_outputs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">from_grpc</span> <span class="o">=</span> <span class="n">from_grpc</span>
@@ -6794,8 +6974,9 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                                      <span class="n">data</span><span class="o">=</span><span class="n">get_content</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">datatype</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">contents</span><span class="p">),</span>
                                      <span class="n">parameters</span><span class="o">=</span><span class="n">output</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
                          <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">response_id</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span>
-                   <span class="n">infer_outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span> <span class="n">raw_outputs</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">raw_output_contents</span><span class="p">,</span> <span class="n">from_grpc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span> <span class="n">response_id</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                   <span class="n">parameters</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span>
+                   <span class="n">raw_outputs</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">raw_output_contents</span><span class="p">,</span> <span class="n">from_grpc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_rest</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'InferResponse'</span><span class="p">:</span>
@@ -6809,6 +6990,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                                      <span class="n">parameters</span><span class="o">=</span><span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'parameters'</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
                          <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">'outputs'</span><span class="p">]]</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+                   <span class="n">model_version</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'model_version'</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                    <span class="n">response_id</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                    <span class="n">parameters</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'parameters'</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                    <span class="n">infer_outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">)</span>
@@ -6839,6 +7021,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
         <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">'id'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="s1">'model_name'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+            <span class="s1">'model_version'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
             <span class="s1">'outputs'</span><span class="p">:</span> <span class="n">infer_outputs</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
@@ -6879,14 +7062,16 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                     <span class="k">raise</span> <span class="n">InvalidInput</span><span class="p">(</span><span class="s2">"to_grpc: invalid output datatype"</span><span class="p">)</span>
             <span class="n">infer_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">infer_output_dict</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ModelInferResponse</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span>
-                                  <span class="n">raw_output_contents</span><span class="o">=</span><span class="n">raw_output_contents</span><span class="p">,</span>
+        <span class="k">return</span> <span class="n">ModelInferResponse</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                                  <span class="n">outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span> <span class="n">raw_output_contents</span><span class="o">=</span><span class="n">raw_output_contents</span><span class="p">,</span>
                                   <span class="n">parameters</span><span class="o">=</span><span class="n">to_grpc_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">InferResponse</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">model_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_version</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">model_version</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -6902,7 +7087,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="kserve.protocol.infer_type.InferResponse.__init__">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">response_id</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="p">,</span> <span class="n">raw_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_grpc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">response_id</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">raw_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_grpc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 <a class="headerlink" href="#kserve.protocol.infer_type.InferResponse.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>The InferResponse Data Model</p>
@@ -6960,6 +7145,20 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </td>
 </tr>
 <tr>
+<td><code>model_version</code></td>
+<td>
+<code><span title="typing.Optional">Optional</span>[str]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>The version of the model.</p>
+</div>
+</td>
+<td>
+<code>None</code>
+</td>
+</tr>
+<tr>
 <td><code>raw_outputs</code></td>
 <td>
 </td>
@@ -7004,13 +7203,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">623</span>
-<span class="normal">624</span>
-<span class="normal">625</span>
-<span class="normal">626</span>
-<span class="normal">627</span>
-<span class="normal">628</span>
-<span class="normal">629</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">629</span>
 <span class="normal">630</span>
 <span class="normal">631</span>
 <span class="normal">632</span>
@@ -7025,8 +7218,16 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">641</span>
 <span class="normal">642</span>
 <span class="normal">643</span>
-<span class="normal">644</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InferOutput</span><span class="p">],</span>
-             <span class="n">raw_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_grpc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="normal">644</span>
+<span class="normal">645</span>
+<span class="normal">646</span>
+<span class="normal">647</span>
+<span class="normal">648</span>
+<span class="normal">649</span>
+<span class="normal">650</span>
+<span class="normal">651</span>
+<span class="normal">652</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">InferOutput</span><span class="p">],</span>
+             <span class="n">model_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">raw_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_grpc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
              <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""The InferResponse Data Model</span>
 
@@ -7034,6 +7235,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="sd">        response_id: The id of the inference response.</span>
 <span class="sd">        model_name: The name of the model.</span>
 <span class="sd">        infer_outputs: The inference outputs of the inference response.</span>
+<span class="sd">        model_version: The version of the model.</span>
 <span class="sd">        raw_outputs: The raw binary data of the inference outputs.</span>
 <span class="sd">        from_grpc: Indicate if the InferResponse is constructed from a gRPC response.</span>
 <span class="sd">        parameters: The additional inference parameters.</span>
@@ -7041,6 +7243,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 
     <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">response_id</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model_version</span> <span class="o">=</span> <span class="n">model_version</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">infer_outputs</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">from_grpc</span> <span class="o">=</span> <span class="n">from_grpc</span>
@@ -7062,17 +7265,18 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <p>The class method to construct the InferResponse object from gRPC message type.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">646</span>
-<span class="normal">647</span>
-<span class="normal">648</span>
-<span class="normal">649</span>
-<span class="normal">650</span>
-<span class="normal">651</span>
-<span class="normal">652</span>
-<span class="normal">653</span>
-<span class="normal">654</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">654</span>
 <span class="normal">655</span>
-<span class="normal">656</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">656</span>
+<span class="normal">657</span>
+<span class="normal">658</span>
+<span class="normal">659</span>
+<span class="normal">660</span>
+<span class="normal">661</span>
+<span class="normal">662</span>
+<span class="normal">663</span>
+<span class="normal">664</span>
+<span class="normal">665</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">from_grpc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">ModelInferResponse</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'InferResponse'</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" The class method to construct the InferResponse object from gRPC message type.</span>
 <span class="sd">    """</span>
@@ -7081,8 +7285,9 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                                  <span class="n">data</span><span class="o">=</span><span class="n">get_content</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">datatype</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">contents</span><span class="p">),</span>
                                  <span class="n">parameters</span><span class="o">=</span><span class="n">output</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
                      <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
-    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">response_id</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span>
-               <span class="n">infer_outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span> <span class="n">raw_outputs</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">raw_output_contents</span><span class="p">,</span> <span class="n">from_grpc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span> <span class="n">response_id</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+               <span class="n">parameters</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span>
+               <span class="n">raw_outputs</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">raw_output_contents</span><span class="p">,</span> <span class="n">from_grpc</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
 </div>
@@ -7098,21 +7303,22 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <p>The class method to construct the InferResponse object from REST message type.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">658</span>
-<span class="normal">659</span>
-<span class="normal">660</span>
-<span class="normal">661</span>
-<span class="normal">662</span>
-<span class="normal">663</span>
-<span class="normal">664</span>
-<span class="normal">665</span>
-<span class="normal">666</span>
-<span class="normal">667</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">667</span>
 <span class="normal">668</span>
 <span class="normal">669</span>
 <span class="normal">670</span>
 <span class="normal">671</span>
-<span class="normal">672</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
+<span class="normal">672</span>
+<span class="normal">673</span>
+<span class="normal">674</span>
+<span class="normal">675</span>
+<span class="normal">676</span>
+<span class="normal">677</span>
+<span class="normal">678</span>
+<span class="normal">679</span>
+<span class="normal">680</span>
+<span class="normal">681</span>
+<span class="normal">682</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
 <span class="k">def</span> <span class="nf">from_rest</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'InferResponse'</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" The class method to construct the InferResponse object from REST message type.</span>
 
@@ -7124,6 +7330,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                                  <span class="n">parameters</span><span class="o">=</span><span class="n">output</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'parameters'</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
                      <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s1">'outputs'</span><span class="p">]]</span>
     <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">,</span>
+               <span class="n">model_version</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'model_version'</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                <span class="n">response_id</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'id'</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                <span class="n">parameters</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'parameters'</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                <span class="n">infer_outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">)</span>
@@ -7160,18 +7367,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">706</span>
-<span class="normal">707</span>
-<span class="normal">708</span>
-<span class="normal">709</span>
-<span class="normal">710</span>
-<span class="normal">711</span>
-<span class="normal">712</span>
-<span class="normal">713</span>
-<span class="normal">714</span>
-<span class="normal">715</span>
-<span class="normal">716</span>
-<span class="normal">717</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">717</span>
 <span class="normal">718</span>
 <span class="normal">719</span>
 <span class="normal">720</span>
@@ -7196,7 +7392,18 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">739</span>
 <span class="normal">740</span>
 <span class="normal">741</span>
-<span class="normal">742</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_grpc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelInferResponse</span><span class="p">:</span>
+<span class="normal">742</span>
+<span class="normal">743</span>
+<span class="normal">744</span>
+<span class="normal">745</span>
+<span class="normal">746</span>
+<span class="normal">747</span>
+<span class="normal">748</span>
+<span class="normal">749</span>
+<span class="normal">750</span>
+<span class="normal">751</span>
+<span class="normal">752</span>
+<span class="normal">753</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_grpc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelInferResponse</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Converts the InferResponse object to gRPC ModelInferResponse type.</span>
 
 <span class="sd">    Returns:</span>
@@ -7230,8 +7437,8 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
                 <span class="k">raise</span> <span class="n">InvalidInput</span><span class="p">(</span><span class="s2">"to_grpc: invalid output datatype"</span><span class="p">)</span>
         <span class="n">infer_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">infer_output_dict</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">ModelInferResponse</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span>
-                              <span class="n">raw_output_contents</span><span class="o">=</span><span class="n">raw_output_contents</span><span class="p">,</span>
+    <span class="k">return</span> <span class="n">ModelInferResponse</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">model_version</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
+                              <span class="n">outputs</span><span class="o">=</span><span class="n">infer_outputs</span><span class="p">,</span> <span class="n">raw_output_contents</span><span class="o">=</span><span class="n">raw_output_contents</span><span class="p">,</span>
                               <span class="n">parameters</span><span class="o">=</span><span class="n">to_grpc_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 </details>
@@ -7266,17 +7473,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">674</span>
-<span class="normal">675</span>
-<span class="normal">676</span>
-<span class="normal">677</span>
-<span class="normal">678</span>
-<span class="normal">679</span>
-<span class="normal">680</span>
-<span class="normal">681</span>
-<span class="normal">682</span>
-<span class="normal">683</span>
-<span class="normal">684</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">684</span>
 <span class="normal">685</span>
 <span class="normal">686</span>
 <span class="normal">687</span>
@@ -7296,7 +7493,18 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">701</span>
 <span class="normal">702</span>
 <span class="normal">703</span>
-<span class="normal">704</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_rest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="normal">704</span>
+<span class="normal">705</span>
+<span class="normal">706</span>
+<span class="normal">707</span>
+<span class="normal">708</span>
+<span class="normal">709</span>
+<span class="normal">710</span>
+<span class="normal">711</span>
+<span class="normal">712</span>
+<span class="normal">713</span>
+<span class="normal">714</span>
+<span class="normal">715</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_rest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">""" Converts the InferResponse object to v2 REST InferResponse dict.</span>
 
 <span class="sd">    Returns:</span>
@@ -7322,6 +7530,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
     <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">'id'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
         <span class="s1">'model_name'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+        <span class="s1">'model_version'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_version</span><span class="p">,</span>
         <span class="s1">'outputs'</span><span class="p">:</span> <span class="n">infer_outputs</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
@@ -7349,8 +7558,7 @@ Returns:
     serialized_bytes_tensor : The 1-D numpy array of type uint8 containing the serialized bytes in 'C' order.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
-<span class="normal">32</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
@@ -7384,7 +7592,8 @@ Returns:
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
-<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">serialize_byte_tensor</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="normal">66</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">serialize_byte_tensor</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Serializes a bytes tensor into a flat numpy array of length prepended</span>
 <span class="sd">    bytes. The numpy array should use dtype of np.object_. For np.bytes_,</span>
@@ -7435,20 +7644,7 @@ Returns:
 :raises InvalidInput: if the parameter type is not supported.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">760</span>
-<span class="normal">761</span>
-<span class="normal">762</span>
-<span class="normal">763</span>
-<span class="normal">764</span>
-<span class="normal">765</span>
-<span class="normal">766</span>
-<span class="normal">767</span>
-<span class="normal">768</span>
-<span class="normal">769</span>
-<span class="normal">770</span>
-<span class="normal">771</span>
-<span class="normal">772</span>
-<span class="normal">773</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">773</span>
 <span class="normal">774</span>
 <span class="normal">775</span>
 <span class="normal">776</span>
@@ -7456,7 +7652,20 @@ Returns:
 <span class="normal">778</span>
 <span class="normal">779</span>
 <span class="normal">780</span>
-<span class="normal">781</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_grpc_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]])</span> \
+<span class="normal">781</span>
+<span class="normal">782</span>
+<span class="normal">783</span>
+<span class="normal">784</span>
+<span class="normal">785</span>
+<span class="normal">786</span>
+<span class="normal">787</span>
+<span class="normal">788</span>
+<span class="normal">789</span>
+<span class="normal">790</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
+<span class="normal">793</span>
+<span class="normal">794</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_grpc_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]])</span> \
         <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Converts REST parameters to GRPC InferParameter objects</span>
@@ -7492,25 +7701,25 @@ Returns:
 :return: converted parameters as Dict[str, Union[str, bool, int]]</p>
 <details class="quote">
 <summary>Source code in <code>kserve/protocol/infer_type.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">784</span>
-<span class="normal">785</span>
-<span class="normal">786</span>
-<span class="normal">787</span>
-<span class="normal">788</span>
-<span class="normal">789</span>
-<span class="normal">790</span>
-<span class="normal">791</span>
-<span class="normal">792</span>
-<span class="normal">793</span>
-<span class="normal">794</span>
-<span class="normal">795</span>
-<span class="normal">796</span>
-<span class="normal">797</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">797</span>
 <span class="normal">798</span>
 <span class="normal">799</span>
 <span class="normal">800</span>
 <span class="normal">801</span>
-<span class="normal">802</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_http_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="normal">802</span>
+<span class="normal">803</span>
+<span class="normal">804</span>
+<span class="normal">805</span>
+<span class="normal">806</span>
+<span class="normal">807</span>
+<span class="normal">808</span>
+<span class="normal">809</span>
+<span class="normal">810</span>
+<span class="normal">811</span>
+<span class="normal">812</span>
+<span class="normal">813</span>
+<span class="normal">814</span>
+<span class="normal">815</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">to_http_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">MessageMap</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">InferParameter</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">        Converts GRPC InferParameter parameters to REST parameters</span>
 

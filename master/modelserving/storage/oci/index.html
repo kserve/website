@@ -6,25 +6,25 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/modelserving/v1beta1/rollout/canary-example/" rel="canonical"/>
-<link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
+<link href="https://kserve.io/website/master/modelserving/storage/oci/" rel="canonical"/>
+<link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
-<title>Canary Example - KServe Documentation Website</title>
-<link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
-<link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<title>OCI - KServe Documentation Website</title>
+<link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../../../assets/_mkdocstrings.css" rel="stylesheet"/>
-<link href="../../../../stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#canary-rollout-example">
+<a class="md-skip" href="#serving-models-with-oci-images">
           Skip to content
         </a>
 </div>
@@ -43,8 +43,8 @@
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../images/logo/kserve.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Canary Example
+              OCI
             
           </span>
 </div>
@@ -110,42 +110,42 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../..">
+<a class="md-tabs__link" href="../../..">
       Home
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../get_started/">
+<a class="md-tabs__link" href="../../../get_started/">
         Getting started
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../admin/serverless/serverless/">
+<a class="md-tabs__link" href="../../../admin/serverless/serverless/">
         Administration Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="../../../control_plane/">
+<a class="md-tabs__link md-tabs__link--active" href="../../control_plane/">
         User Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../reference/api/">
+<a class="md-tabs__link" href="../../../reference/api/">
         API Reference
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../developer/developer/">
+<a class="md-tabs__link" href="../../../developer/developer/">
         Developer Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-tabs__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
         Blog
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../community/adopters/">
+<a class="md-tabs__link" href="../../../community/adopters/">
         Community
       </a>
 </li>
@@ -161,8 +161,8 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../images/logo/kserve.png"/>
 </a>
     KServe Documentation Website
   </label>
@@ -178,7 +178,7 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../..">
+<a class="md-nav__link" href="../../..">
         Home
       </a>
 </li>
@@ -195,17 +195,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../get_started/">
+<a class="md-nav__link" href="../../../get_started/">
         KServe Quickstart
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../get_started/first_isvc/">
+<a class="md-nav__link" href="../../../get_started/first_isvc/">
         First InferenceService
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../get_started/swagger_ui/">
+<a class="md-nav__link" href="../../../get_started/swagger_ui/">
         Interact with InferenceService Swagger UI
       </a>
 </li>
@@ -249,17 +249,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/serverless/serverless/">
+<a class="md-nav__link" href="../../../admin/serverless/serverless/">
         Serverless installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/serverless/servicemesh/">
+<a class="md-nav__link" href="../../../admin/serverless/servicemesh/">
         Istio Service Mesh
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/serverless/kourier_networking/">
+<a class="md-nav__link" href="../../../admin/serverless/kourier_networking/">
         Kourier Networking Layer
       </a>
 </li>
@@ -267,17 +267,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/modelmesh/">
+<a class="md-nav__link" href="../../../admin/modelmesh/">
         ModelMesh installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/kubernetes_deployment/">
+<a class="md-nav__link" href="../../../admin/kubernetes_deployment/">
         Kubernetes deployment installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/migration/">
+<a class="md-nav__link" href="../../../admin/migration/">
         Migrating from KFServing
       </a>
 </li>
@@ -324,7 +324,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../control_plane/">
+<a class="md-nav__link" href="../../control_plane/">
         Model Serving Control Plane
       </a>
 </li>
@@ -344,17 +344,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../data_plane/data_plane/">
+<a class="md-nav__link" href="../../data_plane/data_plane/">
         Model Serving Data Plane
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../data_plane/v1_protocol/">
+<a class="md-nav__link" href="../../data_plane/v1_protocol/">
         V1 Inference Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../data_plane/v2_protocol/">
+<a class="md-nav__link" href="../../data_plane/v2_protocol/">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
 </li>
@@ -362,7 +362,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../servingruntimes/">
+<a class="md-nav__link" href="../../servingruntimes/">
         Serving Runtimes
       </a>
 </li>
@@ -394,57 +394,57 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../serving_runtime/">
+<a class="md-nav__link" href="../../v1beta1/serving_runtime/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../tensorflow/">
+<a class="md-nav__link" href="../../v1beta1/tensorflow/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../torchserve/">
+<a class="md-nav__link" href="../../v1beta1/torchserve/">
         PyTorch
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sklearn/v2/">
+<a class="md-nav__link" href="../../v1beta1/sklearn/v2/">
         Scikit-learn
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xgboost/">
+<a class="md-nav__link" href="../../v1beta1/xgboost/">
         XGBoost
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../pmml/">
+<a class="md-nav__link" href="../../v1beta1/pmml/">
         PMML
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../spark/">
+<a class="md-nav__link" href="../../v1beta1/spark/">
         Spark MLlib
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../lightgbm/">
+<a class="md-nav__link" href="../../v1beta1/lightgbm/">
         LightGBM
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../paddle/">
+<a class="md-nav__link" href="../../v1beta1/paddle/">
         Paddle
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../mlflow/v2/">
+<a class="md-nav__link" href="../../v1beta1/mlflow/v2/">
         MLFlow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../onnx/">
+<a class="md-nav__link" href="../../v1beta1/onnx/">
         ONNX
       </a>
 </li>
@@ -476,12 +476,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../triton/torchscript/">
+<a class="md-nav__link" href="../../v1beta1/triton/torchscript/">
         Torchscript
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../triton/bert/">
+<a class="md-nav__link" href="../../v1beta1/triton/bert/">
         Tensorflow
       </a>
 </li>
@@ -489,7 +489,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../amd/">
+<a class="md-nav__link" href="../../v1beta1/amd/">
         AMD
       </a>
 </li>
@@ -521,7 +521,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../llm/torchserve/accelerate/">
+<a class="md-nav__link" href="../../v1beta1/llm/torchserve/accelerate/">
         Bloom7b1
       </a>
 </li>
@@ -532,7 +532,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../custom/custom_model/">
+<a class="md-nav__link" href="../../v1beta1/custom/custom_model/">
         How to write a custom predictor
       </a>
 </li>
@@ -564,12 +564,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../mms/multi-model-serving/">
+<a class="md-nav__link" href="../../mms/multi-model-serving/">
         The Scalability Problem
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../mms/modelmesh/overview/">
+<a class="md-nav__link" href="../../mms/modelmesh/overview/">
         ModelMesh Overview
       </a>
 </li>
@@ -592,17 +592,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../transformer/feast/">
+<a class="md-nav__link" href="../../v1beta1/transformer/feast/">
         Feast
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../transformer/torchserve_image_transformer/">
+<a class="md-nav__link" href="../../v1beta1/transformer/torchserve_image_transformer/">
         How to write a custom transformer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../transformer/collocation/">
+<a class="md-nav__link" href="../../v1beta1/transformer/collocation/">
         Collocate transformer and predictor
       </a>
 </li>
@@ -622,20 +622,20 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../inference_graph/">
+<a class="md-nav__link" href="../../inference_graph/">
         Concept
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../inference_graph/image_pipeline/">
+<a class="md-nav__link" href="../../inference_graph/image_pipeline/">
         Image classification inference graph
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_6">
           Model Storage
           <span class="md-nav__icon md-icon"></span>
@@ -647,32 +647,75 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/storagecontainers/">
+<a class="md-nav__link" href="../storagecontainers/">
         Storage Containers
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/azure/azure/">
+<a class="md-nav__link" href="../azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/pvc/pvc/">
+<a class="md-nav__link" href="../pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/s3/s3/">
+<a class="md-nav__link" href="../s3/s3/">
         S3
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/oci/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          OCI
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         OCI
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enabling-modelcars">
+    Enabling Modelcars
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/uri/uri/">
+<a class="md-nav__link" href="#prepare-an-oci-image-with-model-data">
+    Prepare an OCI Image with Model Data
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-modelcars">
+    Using Modelcars
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example">
+    Example
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration">
+    Configuration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+    References
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../uri/uri/">
         URI
       </a>
 </li>
@@ -692,7 +735,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../explainer/explainer/">
+<a class="md-nav__link" href="../../explainer/explainer/">
         Concept
       </a>
 </li>
@@ -709,17 +752,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../explainer/alibi/cifar10/">
+<a class="md-nav__link" href="../../explainer/alibi/cifar10/">
         Image Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../explainer/alibi/income/">
+<a class="md-nav__link" href="../../explainer/alibi/income/">
         Income Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../explainer/alibi/moviesentiment/">
+<a class="md-nav__link" href="../../explainer/alibi/moviesentiment/">
         Text Explainer
       </a>
 </li>
@@ -727,7 +770,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../explainer/aix/mnist/aix/">
+<a class="md-nav__link" href="../../explainer/aix/mnist/aix/">
         AIX Explainer
       </a>
 </li>
@@ -747,17 +790,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../detect/alibi_detect/alibi_detect/">
+<a class="md-nav__link" href="../../detect/alibi_detect/alibi_detect/">
         Alibi Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../detect/aif/germancredit/">
+<a class="md-nav__link" href="../../detect/aif/germancredit/">
         AIF Bias Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../detect/art/mnist/">
+<a class="md-nav__link" href="../../detect/art/mnist/">
         ART Adversarial Detector
       </a>
 </li>
@@ -777,7 +820,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../batcher/batcher/">
+<a class="md-nav__link" href="../../batcher/batcher/">
         Inference Batcher
       </a>
 </li>
@@ -797,7 +840,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../logger/logger/">
+<a class="md-nav__link" href="../../logger/logger/">
         Inference Logger
       </a>
 </li>
@@ -817,7 +860,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../autoscaling/autoscaling/">
+<a class="md-nav__link" href="../../autoscaling/autoscaling/">
         Inference Autoscaling
       </a>
 </li>
@@ -837,12 +880,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../nodescheduling/overview/">
+<a class="md-nav__link" href="../../nodescheduling/overview/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../nodescheduling/inferenceservicenodescheduling/">
+<a class="md-nav__link" href="../../nodescheduling/inferenceservicenodescheduling/">
         InferenceService Node Scheduling
       </a>
 </li>
@@ -862,15 +905,15 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../kafka/kafka/">
+<a class="md-nav__link" href="../../kafka/kafka/">
         Inference with Kafka event source
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" id="__nav_4_14" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" id="__nav_4_14" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_14">
           Rollout Strategies
           <span class="md-nav__icon md-icon"></span>
@@ -882,62 +925,14 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../canary/">
+<a class="md-nav__link" href="../../v1beta1/rollout/canary/">
         Canary
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Canary Example
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../v1beta1/rollout/canary-example/">
         Canary Example
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#create-the-inferenceservice">
-    Create the InferenceService
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#update-the-inferenceservice-with-the-canary-rollout-strategy">
-    Update the InferenceService with the canary rollout strategy
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#run-a-prediction">
-    Run a prediction
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#promote-the-canary-model">
-    Promote the canary model
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#rollback-and-pin-the-previous-model">
-    Rollback and pin the previous model
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#route-traffic-using-a-tag">
-    Route traffic using a tag
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -955,12 +950,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../observability/prometheus_metrics/">
+<a class="md-nav__link" href="../../observability/prometheus_metrics/">
         Prometheus Metrics
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../observability/grafana_dashboards/">
+<a class="md-nav__link" href="../../observability/grafana_dashboards/">
         Grafana Dashboards
       </a>
 </li>
@@ -983,22 +978,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../reference/api/">
+<a class="md-nav__link" href="../../../reference/api/">
         Control Plane API
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../reference/swagger-ui/">
+<a class="md-nav__link" href="../../../reference/swagger-ui/">
         Open Inference Protocol API Spec
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../sdk_docs/sdk_doc/">
+<a class="md-nav__link" href="../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../python_runtime_api/docs/">
+<a class="md-nav__link" href="../../../python_runtime_api/docs/">
         Python Runtime Server SDK
       </a>
 </li>
@@ -1018,12 +1013,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../developer/developer/">
+<a class="md-nav__link" href="../../../developer/developer/">
         How to contribute
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../developer/debug/">
+<a class="md-nav__link" href="../../../developer/debug/">
         Debugging guide
       </a>
 </li>
@@ -1055,27 +1050,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-nav__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
         KServe 0.11 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-nav__link" href="../../../blog/articles/2023-02-05-KServe-0.10-release/">
         KServe 0.10 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2022-07-21-KServe-0.9-release/">
+<a class="md-nav__link" href="../../../blog/articles/2022-07-21-KServe-0.9-release/">
         KServe 0.9 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2022-02-18-KServe-0.8-release/">
+<a class="md-nav__link" href="../../../blog/articles/2022-02-18-KServe-0.8-release/">
         KServe 0.8 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2021-10-11-KServe-0.7-release/">
+<a class="md-nav__link" href="../../../blog/articles/2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
       </a>
 </li>
@@ -1095,7 +1090,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2021-09-27-kfserving-transition/">
+<a class="md-nav__link" href="../../../blog/articles/2021-09-27-kfserving-transition/">
         KFserving Transition
       </a>
 </li>
@@ -1118,12 +1113,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../community/adopters/">
+<a class="md-nav__link" href="../../../community/adopters/">
         Adopters
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../community/presentations/">
+<a class="md-nav__link" href="../../../community/presentations/">
         Demos and Presentations
       </a>
 </li>
@@ -1145,38 +1140,33 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
+<a class="md-nav__link" href="#enabling-modelcars">
+    Enabling Modelcars
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-the-inferenceservice">
-    Create the InferenceService
+<a class="md-nav__link" href="#prepare-an-oci-image-with-model-data">
+    Prepare an OCI Image with Model Data
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#update-the-inferenceservice-with-the-canary-rollout-strategy">
-    Update the InferenceService with the canary rollout strategy
+<a class="md-nav__link" href="#using-modelcars">
+    Using Modelcars
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#run-a-prediction">
-    Run a prediction
+<a class="md-nav__link" href="#example">
+    Example
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#promote-the-canary-model">
-    Promote the canary model
+<a class="md-nav__link" href="#configuration">
+    Configuration
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#rollback-and-pin-the-previous-model">
-    Rollback and pin the previous model
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#route-traffic-using-a-tag">
-    Route traffic using a tag
+<a class="md-nav__link" href="#references">
+    References
   </a>
 </li>
 </ul>
@@ -1186,210 +1176,195 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/rollout/canary-example.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/storage/oci.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="canary-rollout-example">Canary Rollout Example<a class="headerlink" href="#canary-rollout-example" title="Permanent link">¶</a></h1>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
+<h1 id="serving-models-with-oci-images">Serving models with OCI images<a class="headerlink" href="#serving-models-with-oci-images" title="Permanent link">¶</a></h1>
+<p>KServe's traditional approach for model initialization involves fetching models from sources like <a href="../s3/s3.md">S3 buckets</a> or <a href="../uri/uri.md">URIs</a>. This process is adequate for small models but becomes a bottleneck for larger ones like used for large language models, significantly delaying startup times in auto-scaling scenarios.</p>
+<p>"Modelcars" is a KServe feature designed to address these challenges. It streamlines model fetching using OCI images, offering several advantages:</p>
+<ul>
+<li><strong>Reduced Startup Times:</strong> By avoiding repetitive downloads of large models, startup delays are significantly minimized.</li>
+<li><strong>Lower Disk Space Usage:</strong> The feature decreases the need for duplicated local storage, conserving disk space.</li>
+<li><strong>Enhanced Performance:</strong> Modelcars allows for advanced techniques like pre-fetching images and lazy-loading, improving efficiency.</li>
+<li><strong>Compatibility and Integration:</strong> It seamlessly integrates with existing KServe infrastructure, ensuring ease of adoption.</li>
+</ul>
+<p>Modelcars represents a step forward in efficient model serving, particularly beneficial for handling large models and dynamic serving environments.</p>
+<h2 id="enabling-modelcars">Enabling Modelcars<a class="headerlink" href="#enabling-modelcars" title="Permanent link">¶</a></h2>
+<p>Modelcars is an experimental feature in KServe and is not enabled by default. 
+To take advantage of this new model serving method, it needs to be activated in the KServe configuration. 
+Follow the steps below to enable Modelcars in your environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Modelcars are currently in an experimental phase. Enable this feature in a test environment first to ensure it meets your requirements before using it in a production setting.</p>
+</div>
+<p>Modelcars can be enabled by modifying the <code>storageInitializer</code> configuration in the <code>inferenceservice-config</code> ConfigMap. 
+This can be done manually using <code>kubectl edit</code> or by executing the script provided below, with the current namespace set to the namespace where the <code>kserve-controller-manager</code> is installed (depends on the way how KServer is installed.)</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Script to enable Modelcars</span>
+<span class="c1"># Fetch the current storageInitializer configuration</span>
+<span class="nv">config</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>configmap<span class="w"> </span>inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.data.storageInitializer}'</span><span class="k">)</span>
+<span class="c1"># Enable modelcars and set the UID for the containers to run (required for minikube)</span>
+<span class="nv">newValue</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$config</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">'. + {"enableModelcar": true, "uidModelcar": 1010}'</span><span class="k">)</span>
+
+<span class="c1"># Create a temporary directory for the patch file</span>
+<span class="nv">tmpdir</span><span class="o">=</span><span class="k">$(</span>mktemp<span class="w"> </span>-d<span class="k">)</span>
+cat<span class="w"> </span><span class="s">&lt;&lt;EOT &gt; $tmpdir/patch.txt</span>
+<span class="s">[{</span>
+<span class="s">  "op": "replace",</span>
+<span class="s">  "path": "/data/storageInitializer",</span>
+<span class="s">  "value": '$newValue'</span>
+<span class="s">}]</span>
+<span class="s">EOT</span>
+
+<span class="c1"># Apply the patch to the ConfigMap</span>
+kubectl<span class="w"> </span>patch<span class="w"> </span>configmap<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>inferenceservice-config<span class="w"> </span>--type<span class="o">=</span>json<span class="w"> </span>--patch-file<span class="o">=</span><span class="nv">$tmpdir</span>/patch.txt
+
+<span class="c1"># Restart the KServe controller to apply changes</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>-l<span class="w"> </span>control-plane<span class="o">=</span>kserve-controller-manager
+</code></pre></div>
+<h2 id="prepare-an-oci-image-with-model-data">Prepare an OCI Image with Model Data<a class="headerlink" href="#prepare-an-oci-image-with-model-data" title="Permanent link">¶</a></h2>
+<p>To utilize Modelcars for serving models, you need to prepare an OCI (Open Container Initiative) image containing your model data. This process involves creating a Dockerfile and building an OCI image that houses your model in a specific directory. Below are the steps and an example to guide you through this process.</p>
 <ol>
-<li>Your ~/.kube/config should point to a cluster with <a href="https://kserve.github.io/website/master/admin/serverless/serverless">KServe installed</a>.</li>
-<li>Your cluster's Istio Ingress gateway must
-   be <a href="https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/">network accessible</a>.</li>
+<li><strong>Create a Dockerfile:</strong> 
+   Start by creating a Dockerfile that uses a base image containing the necessary commands like <code>ln</code> (for creating symbolic links) and <code>sleep</code> (for keeping the container running). The Dockerfile should also include steps to create a directory <code>/model</code> for your model data and copy the data into this directory.
+   Here's an example Dockerfile where the <code>data/</code> directory contains your model data. This data will later be mounted in <code>/mnt/models</code> by the runtime:
+   <div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">busybox</span>
+<span class="k">RUN</span><span class="w"> </span>mkdir<span class="w"> </span>/models<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span><span class="m">775</span><span class="w"> </span>/models
+<span class="k">COPY</span><span class="w"> </span>data/<span class="w"> </span>/models/
+</code></pre></div></li>
+<li><strong>Build and Push the Image to a Registry</strong>: Once your Dockerfile is ready, use either docker or podman to build and push the image to a container registry like Docker Hub or quay.io
+   <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myuser/mymodel:1.0<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>myuser/mymodel:1.0
+</code></pre></div></li>
 </ol>
-<h2 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">¶</a></h2>
-<p>Complete steps 1-3 in the <a href="https://kserve.github.io/website/master/get_started/first_isvc/">First Inference Service</a>
-tutorial. Set up a namespace (if not already created), and create an InferenceService.</p>
-<p>After rolling out the first model, 100% traffic goes to the initial model with service revision 1.</p>
-<p>Run <code>kubectl get isvc sklearn-iris</code> in the command line to see the amount of traffic routing to the InferenceService
-under the <code>LATEST</code> column.</p>
-<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">       </span>URL<span class="w">                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                </span>AGE
-sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">   </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-00001<span class="w">   </span>46s<span class="w">                               </span>2m39s<span class="w">                             </span>70s
+<p>By completing these steps, you'll have an OCI image ready with your model data, which can then be used with the Modelcars feature in KServe for efficient model serving.</p>
+<h2 id="using-modelcars">Using Modelcars<a class="headerlink" href="#using-modelcars" title="Permanent link">¶</a></h2>
+<p>With Modelcars enabled and your OCI image containing the model data prepared, integrating this setup into your <code>InferenceService</code> is straightforward. The key step involves specifying the <code>storageURI</code> with the <code>oci://</code> schema in your <code>InferenceService</code> configuration to point to your OCI image.</p>
+<p>Here’s an example of how an <code>InferenceService</code> configuration would look when using the Modelcars feature:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-infeference-service</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oci://myuser/mymodel:1.0</span>
 </code></pre></div>
-<h2 id="update-the-inferenceservice-with-the-canary-rollout-strategy">Update the InferenceService with the canary rollout strategy<a class="headerlink" href="#update-the-inferenceservice-with-the-canary-rollout-strategy" title="Permanent link">¶</a></h2>
-<p>Add the <code>canaryTrafficPercent</code> field to the predictor component and update the <code>storageUri</code> to use a new/updated model.</p>
-<blockquote>
-<p><strong><em>NOTE:</em></strong> A new predictor schema was introduced in <code>v0.8.0</code>. New <code>InferenceServices</code> should be deployed using the new schema. The old schema is provided as reference.</p>
-</blockquote>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<p>In order to fully leverage the local caching capabilities of OCI images in the Modelcars setup, it is crucial to use a specific tag for your model image, rather than relying on the default <code>latest</code> tag. 
+For instance, in the provided example, the tag <code>1.0</code> is utilized. 
+This approach ensures that the modelcar image is pulled with a <code>IfNotPresent</code> policy, allowing for efficient use of local cache. 
+On the other hand, using the <code>latest</code> tag, or omitting a tag altogether, defaults to a <code>Always</code> pull policy. 
+This means the image would be re-downloaded every time a Pod restarts or scales up, negating the benefits of local caching and potentially leading to increased startup times.</p>
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h2>
+<p>Let's see how modecars work by deploying the <a href="../../../../get_started/first_isvc/">getting started example</a> by using an OCI image and check how it is different to the startup with a storage-initalizer init-container. </p>
+<p>Asuming you have setup a namespace <code>kserve-test</code> that is KServe enabled, create an <code>InferenceService</code> that uses an <code>oci://</code> storage URL:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
 <span class="s">kind: "InferenceService"</span>
 <span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
-<span class="s">spec:</span>
-<span class="s">  predictor:</span>
-<span class="s">    canaryTrafficPercent: 10</span>
-<span class="s">    model:</span>
-<span class="s">      modelFormat:</span>
-<span class="s">        name: sklearn</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model-2"</span>
-<span class="s">EOF</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
-<span class="s">kind: "InferenceService"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
-<span class="s">spec:</span>
-<span class="s">  predictor:</span>
-<span class="s">    canaryTrafficPercent: 10</span>
-<span class="s">    sklearn:</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model-2"</span>
-<span class="s">EOF</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<p>After rolling out the canary model, traffic is split between the latest ready revision 2 and the previously rolled out
-revision 1.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>sklearn-iris
-
-NAME<span class="w">       </span>URL<span class="w">                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">              </span>LATESTREADYREVISION<span class="w">                </span>AGE
-sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">   </span>True<span class="w">    </span><span class="m">90</span><span class="w">     </span><span class="m">10</span><span class="w">       </span>sklearn-iris-predictor-default-00001<span class="w">   </span>sklearn-iris-predictor-default-00002<span class="w">   </span>9m19s
-</code></pre></div>
-<p>Check the running pods, you should now see port two pods running for the old and new model and 10% traffic is routed to
-the new model. Notice revision 1 contains <code>default-0001</code> in its name, while revision 2 contains <code>default-0002</code>.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>
-
-NAME<span class="w">                                                              </span>READY<span class="w">   </span>STATUS<span class="w">      </span>RESTARTS<span class="w">   </span>AGE
-sklearn-iris-predictor-default-00001-deployment-66c5f5b8d5-gmfvj<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>11m
-sklearn-iris-predictor-default-00002-deployment-5bd9ff46f8-shtzd<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">     </span><span class="m">0</span><span class="w">          </span>12m
-</code></pre></div>
-<h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">¶</a></h2>
-<p>Follow the next two
-steps (<a href="https://kserve.github.io/website/0.8/get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">Determine the ingress IP and ports</a> and <a href="https://kserve.github.io/website/master/get_started/first_isvc/#5-perform-inference">Perform inference</a>) in
-the <a href="https://kserve.github.io/website/0.8/get_started/first_isvc/">First Inference Service</a> tutorial.</p>
-<p>Send more requests to the <code>InferenceService</code> to observe the 10% of traffic that routes to the new revision.</p>
-<h2 id="promote-the-canary-model">Promote the canary model<a class="headerlink" href="#promote-the-canary-model" title="Permanent link">¶</a></h2>
-<p>If the canary model is healthy/passes your tests, you can promote it by removing the <code>canaryTrafficPercent</code> field and
-re-applying the <code>InferenceService</code> custom resource.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
-<span class="s">kind: "InferenceService"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
+<span class="s">  name: "sklearn-iris-oci"</span>
 <span class="s">spec:</span>
 <span class="s">  predictor:</span>
 <span class="s">    model:</span>
 <span class="s">      modelFormat:</span>
 <span class="s">        name: sklearn</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model-2"</span>
+<span class="s">      storageUri: "oci://rhuss/kserving-example-sklearn:1.0"</span>
 <span class="s">EOF</span>
 </code></pre></div>
-<p>Now all traffic goes to the revision 2 for the new model.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>sklearn-iris
-NAME<span class="w">       </span>URL<span class="w">                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                </span>AGE
-sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">   </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-00002<span class="w">   </span>17m
+<p>After the <code>InferenceService</code> has been deployed successfully, you can follow the <a href="../../../../get_started/first_isvc/">steps of the getting started example</a> to verify the installation.</p>
+<p>Finally, let's have a brief look under the covers for how this feature works.
+Let's first check the runtime pod:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods
 </code></pre></div>
-<p>The pods for revision generation 1 automatically scales down to 0 as it is no longer getting the traffic.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>sklearn-iris
-NAME<span class="w">                                                           </span>READY<span class="w">   </span>STATUS<span class="w">        </span>RESTARTS<span class="w">   </span>AGE
-sklearn-iris-predictor-default-00001-deployment-66c5f5b8d5-gmfvj<span class="w">   </span><span class="m">1</span>/2<span class="w">     </span>Terminating<span class="w">   </span><span class="m">0</span><span class="w">          </span>17m
-sklearn-iris-predictor-default-00002-deployment-5bd9ff46f8-shtzd<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>15m
-</code></pre></div>
-<h2 id="rollback-and-pin-the-previous-model">Rollback and pin the previous model<a class="headerlink" href="#rollback-and-pin-the-previous-model" title="Permanent link">¶</a></h2>
-<p>You can pin the previous model (model v1, for example) by setting the <code>canaryTrafficPercent</code> to 0 for the current
-model (model v2, for example). This rolls back from model v2 to model v1 and decreases model v2's traffic to zero.</p>
-<p>Apply the custom resource to set model v2's traffic to 0%.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
-<span class="s">kind: "InferenceService"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
-<span class="s">spec:</span>
-<span class="s">  predictor:</span>
-<span class="s">    canaryTrafficPercent: 0</span>
-<span class="s">    model:</span>
-<span class="s">      modelFormat:</span>
-<span class="s">        name: sklearn</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model-2"</span>
-<span class="s">EOF</span>
-</code></pre></div>
-<p>Check the traffic split, now 100% traffic goes to the previous good model (model v1) for revision generation 1.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>sklearn-iris
-NAME<span class="w">       </span>URL<span class="w">                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">              </span>LATESTREADYREVISION<span class="w">                </span>AGE
-sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">   </span>True<span class="w">    </span><span class="m">100</span><span class="w">    </span><span class="m">0</span><span class="w">        </span>sklearn-iris-predictor-default-00001<span class="w">   </span>sklearn-iris-predictor-default-00002<span class="w">   </span>18m
-</code></pre></div>
-<p>The pods for previous revision (model v1) now routes 100% of the traffic to its pods while the new
-model (model v2) routes 0% traffic to its pods.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>sklearn-iris
-
-NAME<span class="w">                                                           </span>READY<span class="w">   </span>STATUS<span class="w">            </span>RESTARTS<span class="w">   </span>AGE
-sklearn-iris-predictor-default-00001-deployment-66c5f5b8d5-gmfvj<span class="w">   </span><span class="m">1</span>/2<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>35s
-sklearn-iris-predictor-default-00002-deployment-5bd9ff46f8-shtzd<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>16m
-</code></pre></div>
-<h2 id="route-traffic-using-a-tag">Route traffic using a tag<a class="headerlink" href="#route-traffic-using-a-tag" title="Permanent link">¶</a></h2>
-<p>You can enable tag based routing by adding the annotation <code>serving.kserve.io/enable-tag-routing</code>, so traffic can be
-explicitly routed to the canary model (model v2) or the old model (model v1) via a tag in the request URL.</p>
-<p>Apply model v2 with <code>canaryTrafficPercent: 10</code> and <code>serving.kserve.io/enable-tag-routing: "true"</code>.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
-<span class="s">kind: "InferenceService"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
-<span class="s">  annotations:</span>
-<span class="s">    serving.kserve.io/enable-tag-routing: "true"</span>
-<span class="s">spec:</span>
-<span class="s">  predictor:</span>
-<span class="s">    canaryTrafficPercent: 10</span>
-<span class="s">    model:</span>
-<span class="s">      modelFormat:</span>
-<span class="s">        name: sklearn</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model-2"</span>
-<span class="s">EOF</span>
-</code></pre></div>
-<p>Check the InferenceService status to get the canary and previous model URL.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>isvc<span class="w"> </span>sklearn-iris<span class="w"> </span>-ojsonpath<span class="o">=</span><span class="s2">"{.status.components.predictor}"</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq
-</code></pre></div>
-<p>The output should look like</p>
 <div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sklearn-iris-predictor-default.kserve-test.svc.cluster.local"</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"latestCreatedRevision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris-predictor-default-00003"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"latestReadyRevision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris-predictor-default-00003"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"latestRolledoutRevision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris-predictor-default-00001"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"previousRolledoutRevision"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris-predictor-default-00001"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"traffic"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"latestRevision"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"revisionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris-predictor-default-00003"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"latest"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://latest-sklearn-iris-predictor-default.kserve-test.example.com"</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"latestRevision"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"percent"</span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"revisionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-iris-predictor-default-00001"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prev"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://prev-sklearn-iris-predictor-default.kserve-test.example.com"</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">],</span>
-<span class="w">  </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://sklearn-iris-predictor-default.kserve-test.example.com"</span>
+<p class="admonition-title">Sample Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                                                     </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">      </span>AGE
+sklearn-iris-oci-predictor-00001-deployment-58fc6564d7<span class="w">   </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">   </span><span class="m">1</span><span class="w"> </span><span class="o">(</span>39m<span class="w"> </span>ago<span class="o">)</span><span class="w">   </span>40m
+</code></pre></div>
+</div>
+<p>As you can see, the Pod has now one additional container. This container is running the modelcar image and runs a <code>ln -s /proc/$$/root/models /mnt/</code> command to create a symbolic link on a shared empty volume that is mounted on <code>/mnt</code> in the modelcar container and the serving runtime container. The magic here is the symbolic link over proc filesystem, which is shared among all containers. This is possible on Kubernetes for the container's of a Pod if the field <code>.spec.shareProcessNamespace</code> is set to <code>true</code>, which is the case for all storageUri that leverages the <code>oci://</code> schema.</p>
+<p>Let's jump into the runtime container and examine the mounted <code>/mnt</code> filesystem:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># InferenceService Pod</span>
+<span class="nv">pod</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>sklearn-iris-oci<span class="w"> </span>-o<span class="w"> </span>name<span class="k">)</span>
+<span class="c1"># Verify that shareProcessNamespace is enabled</span>
+kubectl<span class="w"> </span>get<span class="w"> </span><span class="nv">$pod</span><span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.spec.shareProcessNamespace}"</span>
+
+<span class="c1"># Jump into pod and check the model location</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span><span class="nv">$pod</span><span class="w"> </span>-c<span class="w"> </span>kserve-container<span class="w"> </span>--<span class="w"> </span>bash
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Sample in-container session</p>
+<div class="no-copy highlight"><pre><span></span><code>sklearn-iris-oci-predictor:/$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/mnt
+sklearn-iris-oci-predictor:/mnt$<span class="w"> </span>ls<span class="w"> </span>-l
+total<span class="w"> </span><span class="m">0</span>
+lrwxrwxrwx<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1010</span><span class="w"> </span>root<span class="w"> </span><span class="m">20</span><span class="w"> </span>Jan<span class="w"> </span><span class="m">27</span><span class="w"> </span><span class="m">10</span>:35<span class="w"> </span>models<span class="w"> </span>-&gt;<span class="w"> </span>/proc/38/root/models
+
+sklearn-iris-oci-predictor:/mnt$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/mnt/models<span class="w"> </span>
+sklearn-iris-oci-predictor:/mnt/models$<span class="w"> </span>ls<span class="w"> </span>-l
+total<span class="w"> </span><span class="m">8</span>
+-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">5408</span><span class="w"> </span>Jan<span class="w"> </span><span class="m">26</span><span class="w"> </span><span class="m">15</span>:58<span class="w"> </span>model.joblib
+</code></pre></div>
+</div>
+<p>As you can see, the runtime can directly access the data coming from the modelcar image, without prior copying it over in another volume.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
+<p>Fine-tuning the behavior of Modelcars in KServe is possible through global configuration settings for inference services. These settings are located in the <code>inferenceservice-config</code> ConfigMap, which resides in the <code>kserve</code> namespace or the namespace where the KServe controller operates. This ConfigMap includes various subconfigurations, with the Modelcars configuration located under the <code>storageInitializer</code> entry.</p>
+<p>To view the current configuration, use the following command:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>cm<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>inferenceservice-config<span class="w"> </span>--jsonpath<span class="w"> </span><span class="s2">"{.data.storageInitializer}"</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Sample Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="w"> </span>
+<span class="w">   </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kserve/storage-initializer:v0.11.2"</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"memoryRequest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100Mi"</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"memoryLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1Gi"</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"cpuRequest"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100m"</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"cpuLimit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"enableDirectPvcVolumeMount"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"enableModelcar"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">   </span><span class="nt">"uidModelcar"</span><span class="p">:</span><span class="w"> </span><span class="mi">1010</span>
 <span class="p">}</span>
 </code></pre></div>
 </div>
-<p>Since we updated the annotation on the <code>InferenceService</code>, model v2 now corresponds to <code>sklearn-iris-predictor-default-00003</code>.</p>
-<p>You can now send the request explicitly to the new model or the previous model by using the tag in the request URL. Use
-the curl command
-from <a href="https://kserve.github.io/website/master/get_started/first_isvc/#5-perform-inference">Perform inference</a> and
-add <code>latest-</code> or <code>prev-</code> to the model name to send a tag based request.</p>
-<p>For example, set the model name and use the following commands to send traffic to each service based on the <code>latest</code> or <code>prev</code> tag.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>sklearn-iris
-</code></pre></div>
-<p>curl the latest revision</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: latest-</span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="s2">-predictor-default.kserve-test.example.com"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
-</code></pre></div>
-<p>or curl the previous revision</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: prev-</span><span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span><span class="s2">-predictor-default.kserve-test.example.com"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
-</code></pre></div>
+<p>The output is a JSON string representing the configuration. For Modelcars, several keys are available for customization:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enableModelcar</code></td>
+<td>Enables direct access to an OCI container image using a source URL with an "oci://" schema.</td>
+<td><code>true</code></td>
+</tr>
+<tr>
+<td><code>cpuModelcar</code></td>
+<td>CPU request and limit for the modelcar container.</td>
+<td><code>10m</code></td>
+</tr>
+<tr>
+<td><code>memoryModelcar</code></td>
+<td>Memory request and limit for the modelcar container.</td>
+<td><code>15Mi</code></td>
+</tr>
+<tr>
+<td><code>uidModelcar</code></td>
+<td>UID under which the modelcar process and the main container run. Set to <code>0</code> for root if needed. If not set, the UID of the containers is used.</td>
+<td><code>1042</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://docs.google.com/document/d/1Bs4fnP8rhPMaoPoLSYVvuRq-z9vkGPQ0rKbmfH4I7js/edit#heading=h.xw1gqgyqs5b">Modelcar Design document</a></li>
+<li><a href="https://github.com/kserve/kserve/issues/3043">Original GitHub issue</a> (discusses also some alternative solutions)</li>
+<li><a href="https://www.youtube.com/watch?v=KzWH8v6CcR0">12-minute demo</a></li>
+<li><a href="https://www.youtube.com/watch?v=axegGpQ6nHs">Code walkthrough</a> showing the implementation of Modelcars in KServe (for background information)</li>
+</ul>
 </article>
 </div>
 </div>
@@ -1400,7 +1375,7 @@ add <code>latest-</code> or <code>prev-</code> to the model name to send a tag b
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Canary" class="md-footer__link md-footer__link--prev" href="../canary/" rel="prev">
+<a aria-label="Previous: S3" class="md-footer__link md-footer__link--prev" href="../s3/s3/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1409,17 +1384,17 @@ add <code>latest-</code> or <code>prev-</code> to the model name to send a tag b
 <span class="md-footer__direction">
                 Previous
               </span>
-              Canary
+              S3
             </div>
 </div>
 </a>
-<a aria-label="Next: Prometheus Metrics" class="md-footer__link md-footer__link--next" href="../../../observability/prometheus_metrics/" rel="next">
+<a aria-label="Next: URI" class="md-footer__link md-footer__link--next" href="../uri/uri/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Prometheus Metrics
+              URI
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -1455,8 +1430,8 @@ add <code>latest-</code> or <code>prev-</code> to the model name to send a tag b
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
 <script>document$.subscribe(() => {
             window.update_swagger_ui_iframe_height = function (id) {
                 var iFrameID = document.getElementById(id);
