@@ -46,7 +46,7 @@ The first step is to create a custom container image that will be injected into 
 
 The only requirement is that the `Entrypoint` of this container image should take (and properly manage) 2 positional arguments:
 1. __Source URI__: identifies the `storageUri` set in the `InferenceService`
-2. __Deestination Path__: the location where the model should be stored, e.g., `/mnt/models`
+2. __Destination Path__: the location where the model should be stored, e.g., `/mnt/models`
 
 !!! note
     KServe controller will take care of properly injecting your container image and invoking it with those proper arguments.
