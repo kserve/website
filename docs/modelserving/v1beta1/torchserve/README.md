@@ -209,7 +209,7 @@ _**Note**_: Since kserve has no grpc client methods for v1, we are using torchse
 
 For deploying the `InferenceService` with gRPC protocol you need to expose the gRPC port on InferenceService. Here **7070** is torchserve gRPC port.
 
-Apply the following [mnist_grpc.yaml](./mnist.yaml) to create the `InferenceService`.
+Apply the following [mnist_grpc.yaml](./mnist_grpc.yaml) to create the `InferenceService`.
 
 === "kubectl"
 ```bash
@@ -219,7 +219,7 @@ kubectl apply -f mnist_grpc.yaml
 Expected Output
 
 ```bash
-$inferenceservice.serving.kserve.io/torchserve-grpc created
+inferenceservice.serving.kserve.io/torchserve-grpc created
 ```
 
 === "New Schema"
