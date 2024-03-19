@@ -50,23 +50,21 @@ kubectl apply -f create-gcs-secret.yaml
 ## Deploy the model on GCS with `InferenceService`
 
 Create the InferenceService with the Google service account credential
-
 === "yaml"
-
-    ```yaml
-    apiVersion: serving.kserve.io/v1beta1
-    kind: InferenceService
-    metadata:
-        name: sklearn-gcs
-    spec:
-    predictor:
-        sklearn:
-            storage:
-                key: gcs
-                path: models/tensorflow/flowers
-                parameters: # Parameters to override the default values
-                    bucket: kfserving-examples
-    ```
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+    name: sklearn-gcs
+spec:
+  predictor:
+      sklearn:
+        storage:
+          key: gcs
+          path: models/tensorflow/flowers
+          parameters: # Parameters to override the default values
+            bucket: kfserving-examples
+```
 
 Apply the `sklearn-gcs.yaml`.
 
