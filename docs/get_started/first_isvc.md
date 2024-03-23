@@ -197,7 +197,7 @@ kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-0.11/d
 Execute the following command to view output:
 
 ```bash
-kubectl logs load-test8b58n-rgfxr -n kserve-test
+kubectl logs -n kserve-test $(kubectl get job -n kserve-test --output=name)
 ```
 
 !!! success "Expected Output"
