@@ -6,25 +6,25 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/sdk_docs/docs/V1alpha1InferenceGraphSpec/" rel="canonical"/>
-<link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
+<link href="https://kserve.io/website/master/modelserving/storage/gcs/gcs/" rel="canonical"/>
+<link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
-<title>V1alpha1InferenceGraphSpec - KServe Documentation Website</title>
-<link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<title>GCS - KServe Documentation Website</title>
+<link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../../assets/_mkdocstrings.css" rel="stylesheet"/>
-<link href="../../../stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#v1alpha1inferencegraphspec">
+<a class="md-skip" href="#deploy-inferenceservice-with-a-saved-model-on-google-cloud-storage-gcs">
           Skip to content
         </a>
 </div>
@@ -43,8 +43,8 @@
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../../images/logo/kserve.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              V1alpha1InferenceGraphSpec
+              GCS
             
           </span>
 </div>
@@ -110,42 +110,42 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../..">
+<a class="md-tabs__link" href="../../../..">
       Home
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../get_started/">
+<a class="md-tabs__link" href="../../../../get_started/">
         Getting started
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../admin/serverless/serverless/">
+<a class="md-tabs__link" href="../../../../admin/serverless/serverless/">
         Administration Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../modelserving/control_plane/">
+<a class="md-tabs__link md-tabs__link--active" href="../../../control_plane/">
         User Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../reference/api/">
+<a class="md-tabs__link" href="../../../../reference/api/">
         API Reference
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../developer/developer/">
+<a class="md-tabs__link" href="../../../../developer/developer/">
         Developer Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-tabs__link" href="../../../../blog/articles/2023-10-08-KServe-0.11-release/">
         Blog
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../community/adopters/">
+<a class="md-tabs__link" href="../../../../community/adopters/">
         Community
       </a>
 </li>
@@ -161,8 +161,8 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../../images/logo/kserve.png"/>
 </a>
     KServe Documentation Website
   </label>
@@ -178,7 +178,7 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../..">
+<a class="md-nav__link" href="../../../..">
         Home
       </a>
 </li>
@@ -195,17 +195,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/">
+<a class="md-nav__link" href="../../../../get_started/">
         KServe Quickstart
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/first_isvc/">
+<a class="md-nav__link" href="../../../../get_started/first_isvc/">
         First InferenceService
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/swagger_ui/">
+<a class="md-nav__link" href="../../../../get_started/swagger_ui/">
         Interact with InferenceService Swagger UI
       </a>
 </li>
@@ -249,17 +249,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/serverless/">
+<a class="md-nav__link" href="../../../../admin/serverless/serverless/">
         Serverless installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/servicemesh/">
+<a class="md-nav__link" href="../../../../admin/serverless/servicemesh/">
         Istio Service Mesh
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/kourier_networking/">
+<a class="md-nav__link" href="../../../../admin/serverless/kourier_networking/">
         Kourier Networking Layer
       </a>
 </li>
@@ -267,17 +267,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/modelmesh/">
+<a class="md-nav__link" href="../../../../admin/modelmesh/">
         ModelMesh installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/kubernetes_deployment/">
+<a class="md-nav__link" href="../../../../admin/kubernetes_deployment/">
         Kubernetes deployment installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/migration/">
+<a class="md-nav__link" href="../../../../admin/migration/">
         Migrating from KFServing
       </a>
 </li>
@@ -287,8 +287,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
@@ -324,7 +324,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/control_plane/">
+<a class="md-nav__link" href="../../../control_plane/">
         Model Serving Control Plane
       </a>
 </li>
@@ -344,17 +344,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/data_plane/">
+<a class="md-nav__link" href="../../../data_plane/data_plane/">
         Model Serving Data Plane
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v1_protocol/">
+<a class="md-nav__link" href="../../../data_plane/v1_protocol/">
         V1 Inference Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v2_protocol/">
+<a class="md-nav__link" href="../../../data_plane/v2_protocol/">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
 </li>
@@ -362,7 +362,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/servingruntimes/">
+<a class="md-nav__link" href="../../../servingruntimes/">
         Serving Runtimes
       </a>
 </li>
@@ -394,57 +394,57 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/serving_runtime/">
+<a class="md-nav__link" href="../../../v1beta1/serving_runtime/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/tensorflow/">
+<a class="md-nav__link" href="../../../v1beta1/tensorflow/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/torchserve/">
+<a class="md-nav__link" href="../../../v1beta1/torchserve/">
         PyTorch
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/sklearn/v2/">
+<a class="md-nav__link" href="../../../v1beta1/sklearn/v2/">
         Scikit-learn
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/xgboost/">
+<a class="md-nav__link" href="../../../v1beta1/xgboost/">
         XGBoost
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/pmml/">
+<a class="md-nav__link" href="../../../v1beta1/pmml/">
         PMML
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/spark/">
+<a class="md-nav__link" href="../../../v1beta1/spark/">
         Spark MLlib
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/lightgbm/">
+<a class="md-nav__link" href="../../../v1beta1/lightgbm/">
         LightGBM
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/paddle/">
+<a class="md-nav__link" href="../../../v1beta1/paddle/">
         Paddle
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/mlflow/v2/">
+<a class="md-nav__link" href="../../../v1beta1/mlflow/v2/">
         MLFlow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/onnx/">
+<a class="md-nav__link" href="../../../v1beta1/onnx/">
         ONNX
       </a>
 </li>
@@ -476,12 +476,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/torchscript/">
+<a class="md-nav__link" href="../../../v1beta1/triton/torchscript/">
         Torchscript
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/bert/">
+<a class="md-nav__link" href="../../../v1beta1/triton/bert/">
         Tensorflow
       </a>
 </li>
@@ -489,7 +489,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/amd/">
+<a class="md-nav__link" href="../../../v1beta1/amd/">
         AMD
       </a>
 </li>
@@ -521,7 +521,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/torchserve/accelerate/">
+<a class="md-nav__link" href="../../../v1beta1/llm/torchserve/accelerate/">
         Bloom7b1
       </a>
 </li>
@@ -532,7 +532,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/custom/custom_model/">
+<a class="md-nav__link" href="../../../v1beta1/custom/custom_model/">
         How to write a custom predictor
       </a>
 </li>
@@ -564,12 +564,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/multi-model-serving/">
+<a class="md-nav__link" href="../../../mms/multi-model-serving/">
         The Scalability Problem
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/modelmesh/overview/">
+<a class="md-nav__link" href="../../../mms/modelmesh/overview/">
         ModelMesh Overview
       </a>
 </li>
@@ -592,17 +592,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/feast/">
+<a class="md-nav__link" href="../../../v1beta1/transformer/feast/">
         Feast
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+<a class="md-nav__link" href="../../../v1beta1/transformer/torchserve_image_transformer/">
         How to write a custom transformer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/collocation/">
+<a class="md-nav__link" href="../../../v1beta1/transformer/collocation/">
         Collocate transformer and predictor
       </a>
 </li>
@@ -622,20 +622,20 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/">
+<a class="md-nav__link" href="../../../inference_graph/">
         Concept
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/image_pipeline/">
+<a class="md-nav__link" href="../../../inference_graph/image_pipeline/">
         Image classification inference graph
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_6">
           Model Storage
           <span class="md-nav__icon md-icon"></span>
@@ -647,44 +647,100 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/storagecontainers/">
+<a class="md-nav__link" href="../../storagecontainers/">
         Storage Containers
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/azure/azure/">
+<a class="md-nav__link" href="../../azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/pvc/pvc/">
+<a class="md-nav__link" href="../../pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/s3/s3/">
+<a class="md-nav__link" href="../../s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/oci/">
+<a class="md-nav__link" href="../../oci/">
         OCI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/uri/uri/">
+<a class="md-nav__link" href="../../uri/uri/">
         URI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/certificate/kserve/">
+<a class="md-nav__link" href="../../../certificate/kserve/">
         CA Certificate
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/gcs/gcs/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          GCS
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         GCS
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-public-gcs-bucket">
+    Using Public GCS Bucket
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-private-gcs-bucket">
+    Using Private GCS bucket
+  </a>
+<nav aria-label="Using Private GCS bucket" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-service-account-key">
+    Create a Service Account Key
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-google-secret">
+    Create Google Secret
+  </a>
+<nav aria-label="Create Google Secret" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-secret">
+    Create secret
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-model-on-gcs-with-inferenceservice">
+    Deploy the model on GCS with InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-a-prediction">
+    Run a prediction
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -702,7 +758,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/explainer/">
+<a class="md-nav__link" href="../../../explainer/explainer/">
         Concept
       </a>
 </li>
@@ -719,17 +775,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/cifar10/">
+<a class="md-nav__link" href="../../../explainer/alibi/cifar10/">
         Image Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/income/">
+<a class="md-nav__link" href="../../../explainer/alibi/income/">
         Income Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/moviesentiment/">
+<a class="md-nav__link" href="../../../explainer/alibi/moviesentiment/">
         Text Explainer
       </a>
 </li>
@@ -737,7 +793,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/aix/mnist/aix/">
+<a class="md-nav__link" href="../../../explainer/aix/mnist/aix/">
         AIX Explainer
       </a>
 </li>
@@ -757,17 +813,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/alibi_detect/alibi_detect/">
+<a class="md-nav__link" href="../../../detect/alibi_detect/alibi_detect/">
         Alibi Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/aif/germancredit/">
+<a class="md-nav__link" href="../../../detect/aif/germancredit/">
         AIF Bias Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/art/mnist/">
+<a class="md-nav__link" href="../../../detect/art/mnist/">
         ART Adversarial Detector
       </a>
 </li>
@@ -787,7 +843,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/batcher/batcher/">
+<a class="md-nav__link" href="../../../batcher/batcher/">
         Inference Batcher
       </a>
 </li>
@@ -807,7 +863,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/logger/logger/">
+<a class="md-nav__link" href="../../../logger/logger/">
         Inference Logger
       </a>
 </li>
@@ -827,7 +883,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/autoscaling/">
+<a class="md-nav__link" href="../../../autoscaling/autoscaling/">
         Inference Autoscaling
       </a>
 </li>
@@ -847,12 +903,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/overview/">
+<a class="md-nav__link" href="../../../nodescheduling/overview/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+<a class="md-nav__link" href="../../../nodescheduling/inferenceservicenodescheduling/">
         InferenceService Node Scheduling
       </a>
 </li>
@@ -872,7 +928,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/kafka/kafka/">
+<a class="md-nav__link" href="../../../kafka/kafka/">
         Inference with Kafka event source
       </a>
 </li>
@@ -892,12 +948,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary/">
+<a class="md-nav__link" href="../../../v1beta1/rollout/canary/">
         Canary
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary-example/">
+<a class="md-nav__link" href="../../../v1beta1/rollout/canary-example/">
         Canary Example
       </a>
 </li>
@@ -917,12 +973,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/prometheus_metrics/">
+<a class="md-nav__link" href="../../../observability/prometheus_metrics/">
         Prometheus Metrics
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/grafana_dashboards/">
+<a class="md-nav__link" href="../../../observability/grafana_dashboards/">
         Grafana Dashboards
       </a>
 </li>
@@ -945,22 +1001,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../reference/api/">
+<a class="md-nav__link" href="../../../../reference/api/">
         Control Plane API
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../reference/swagger-ui/">
+<a class="md-nav__link" href="../../../../reference/swagger-ui/">
         Open Inference Protocol API Spec
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sdk_doc/">
+<a class="md-nav__link" href="../../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../python_runtime_api/docs/">
+<a class="md-nav__link" href="../../../../python_runtime_api/docs/">
         Python Runtime Server SDK
       </a>
 </li>
@@ -980,12 +1036,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../developer/developer/">
+<a class="md-nav__link" href="../../../../developer/developer/">
         How to contribute
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../developer/debug/">
+<a class="md-nav__link" href="../../../../developer/debug/">
         Debugging guide
       </a>
 </li>
@@ -1017,27 +1073,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2023-10-08-KServe-0.11-release/">
         KServe 0.11 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2023-02-05-KServe-0.10-release/">
         KServe 0.10 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-07-21-KServe-0.9-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2022-07-21-KServe-0.9-release/">
         KServe 0.9 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-02-18-KServe-0.8-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2022-02-18-KServe-0.8-release/">
         KServe 0.8 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-10-11-KServe-0.7-release/">
+<a class="md-nav__link" href="../../../../blog/articles/2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
       </a>
 </li>
@@ -1057,7 +1113,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-09-27-kfserving-transition/">
+<a class="md-nav__link" href="../../../../blog/articles/2021-09-27-kfserving-transition/">
         KFserving Transition
       </a>
 </li>
@@ -1080,12 +1136,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/adopters/">
+<a class="md-nav__link" href="../../../../community/adopters/">
         Adopters
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/presentations/">
+<a class="md-nav__link" href="../../../../community/presentations/">
         Demos and Presentations
       </a>
 </li>
@@ -1107,8 +1163,46 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#properties">
-    Properties
+<a class="md-nav__link" href="#using-public-gcs-bucket">
+    Using Public GCS Bucket
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-private-gcs-bucket">
+    Using Private GCS bucket
+  </a>
+<nav aria-label="Using Private GCS bucket" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-a-service-account-key">
+    Create a Service Account Key
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-google-secret">
+    Create Google Secret
+  </a>
+<nav aria-label="Create Google Secret" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-secret">
+    Create secret
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-model-on-gcs-with-inferenceservice">
+    Deploy the model on GCS with InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-a-prediction">
+    Run a prediction
   </a>
 </li>
 </ul>
@@ -1118,31 +1212,112 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/sdk_docs/docs/V1alpha1InferenceGraphSpec.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/storage/gcs/gcs.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="v1alpha1inferencegraphspec">V1alpha1InferenceGraphSpec<a class="headerlink" href="#v1alpha1inferencegraphspec" title="Permanent link">¶</a></h1>
-<p>InferenceGraphSpec defines the InferenceGraph spec</p>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>nodes</strong></td>
-<td><a href="../V1alpha1InferenceRouter/"><strong>dict(str, V1alpha1InferenceRouter)</strong></a></td>
-<td>Map of InferenceGraph router nodes Each node defines the router which can be different routing types</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><a href="../../sdk_doc/#documentation-for-models">[Back to Model list]</a> <a href="../../sdk_doc/#documentation-for-api-endpoints">[Back to API list]</a> <a href="../../sdk_doc/">[Back to README]</a></p>
+<h1 id="deploy-inferenceservice-with-a-saved-model-on-google-cloud-storage-gcs">Deploy InferenceService with a saved model on Google Cloud Storage (GCS)<a class="headerlink" href="#deploy-inferenceservice-with-a-saved-model-on-google-cloud-storage-gcs" title="Permanent link">¶</a></h1>
+<h2 id="using-public-gcs-bucket">Using Public GCS Bucket<a class="headerlink" href="#using-public-gcs-bucket" title="Permanent link">¶</a></h2>
+<p>If no credential is provided, anonymous client will be used to download the artifact from GCS bucket.
+The uri is in the following format:</p>
+<div class="highlight"><pre><span></span><code>gs://${BUCKET_ NAME}/${PATH}
+</code></pre></div>
+<p>e.g. <code>gs://kfserving-examples/models/tensorflow/flowers</code></p>
+<h2 id="using-private-gcs-bucket">Using Private GCS bucket<a class="headerlink" href="#using-private-gcs-bucket" title="Permanent link">¶</a></h2>
+<p>KServe supports authenticating using Google Service Account Key</p>
+<h3 id="create-a-service-account-key">Create a Service Account Key<a class="headerlink" href="#create-a-service-account-key" title="Permanent link">¶</a></h3>
+<ul>
+<li>To create a Service Account Key follow the steps <a href="https://cloud.google.com/iam/docs/keys-create-delete#iam-service-account-keys-create-console">here</a>.</li>
+<li>Base64 encode the generated Service Account Key file</li>
+</ul>
+<h2 id="create-google-secret">Create Google Secret<a class="headerlink" href="#create-google-secret" title="Permanent link">¶</a></h2>
+<h3 id="create-secret">Create secret<a class="headerlink" href="#create-secret" title="Permanent link">¶</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-config</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="nt">stringData</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gcs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">{</span>
+<span class="w">      </span><span class="no">"type": "gs",</span>
+<span class="w">      </span><span class="no">"bucket": "mlpipeline",</span>
+<span class="w">      </span><span class="no">"base64_service_account": "c2VydmljZWFjY291bnQ=" # base64 encoded value of the credential file</span>
+<span class="w">    </span><span class="no">}</span>
+</code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>create-gcs-secret.yaml
+</code></pre></div>
+<h2 id="deploy-the-model-on-gcs-with-inferenceservice">Deploy the model on GCS with <code>InferenceService</code><a class="headerlink" href="#deploy-the-model-on-gcs-with-inferenceservice" title="Permanent link">¶</a></h2>
+<p>Create the InferenceService with the Google service account credential</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-gcs</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">sklearn</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcs</span>
+<span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models/tensorflow/flowers</span>
+<span class="w">          </span><span class="nt">parameters</span><span class="p">:</span><span class="w"> </span><span class="c1"># Parameters to override the default values</span>
+<span class="w">            </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving-examples</span>
+</code></pre></div>
+<p>Apply the <code>sklearn-gcs.yaml</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>sklearn-gcs.yaml
+</code></pre></div>
+<h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">¶</a></h2>
+<p>Now, the ingress can be accessed at <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or follow <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">this instruction</a>
+to find out the ingress IP and port.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-gcs<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+
+<span class="nv">MODEL_NAME</span><span class="o">=</span>sklearn-gcs
+<span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1:8080...
+*<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
+*<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/sklearn-gcs:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-gcs.default.example.com
+&gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.68.0
+&gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
+&gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">84</span>
+&gt;<span class="w"> </span>Content-Type:<span class="w"> </span>application/x-www-form-urlencoded
+&gt;
+*<span class="w"> </span>upload<span class="w"> </span>completely<span class="w"> </span>sent<span class="w"> </span>off:<span class="w"> </span><span class="m">84</span><span class="w"> </span>out<span class="w"> </span>of<span class="w"> </span><span class="m">84</span><span class="w"> </span>bytes
+*<span class="w"> </span>Mark<span class="w"> </span>bundle<span class="w"> </span>as<span class="w"> </span>not<span class="w"> </span>supporting<span class="w"> </span>multiuse
+&lt;<span class="w"> </span>HTTP/1.1<span class="w"> </span><span class="m">200</span><span class="w"> </span>OK
+&lt;<span class="w"> </span>content-length:<span class="w"> </span><span class="m">23</span>
+&lt;<span class="w"> </span>content-type:<span class="w"> </span>application/json<span class="p">;</span><span class="w"> </span><span class="nv">charset</span><span class="o">=</span>UTF-8
+&lt;<span class="w"> </span>date:<span class="w"> </span>Mon,<span class="w"> </span><span class="m">20</span><span class="w"> </span>Sep<span class="w"> </span><span class="m">2021</span><span class="w"> </span><span class="m">04</span>:55:50<span class="w"> </span>GMT
+&lt;<span class="w"> </span>server:<span class="w"> </span>istio-envoy
+&lt;<span class="w"> </span>x-envoy-upstream-service-time:<span class="w"> </span><span class="m">6</span>
+&lt;
+*<span class="w"> </span>Connection<span class="w"> </span><span class="c1">#0 to host localhost left intact</span>
+<span class="o">{</span><span class="s2">"predictions"</span>:<span class="w"> </span><span class="o">[</span><span class="m">1</span>,<span class="w"> </span><span class="m">1</span><span class="o">]}</span>
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>
@@ -1152,6 +1327,34 @@
           </a>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: CA Certificate" class="md-footer__link md-footer__link--prev" href="../../../certificate/kserve/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              CA Certificate
+            </div>
+</div>
+</a>
+<a aria-label="Next: Concept" class="md-footer__link md-footer__link--next" href="../../../explainer/explainer/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Concept
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1180,8 +1383,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
 <script>document$.subscribe(() => {
             window.update_swagger_ui_iframe_height = function (id) {
                 var iFrameID = document.getElementById(id);
