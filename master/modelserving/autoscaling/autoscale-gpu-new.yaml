@@ -4,6 +4,8 @@ metadata:
   name: "flowers-sample-gpu"
 spec:
   predictor:
+    scaleTarget: 1
+    scaleMetric: concurrency
     model:
       modelFormat:
         name: tensorflow

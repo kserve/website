@@ -662,6 +662,30 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#custom-protocol-example">
+    Custom Protocol Example
+  </a>
+<nav aria-label="Custom Protocol Example" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-custom-storage-initializer-image">
+    Create the Custom Storage Initializer Image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-clusterstoragecontainer-cr">
+    Create the ClusterStorageContainer CR
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-model-with-inferenceservice">
+    Deploy the Model with InferenceService
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#spec-attributes">
     Spec Attributes
   </a>
@@ -1125,6 +1149,30 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#custom-protocol-example">
+    Custom Protocol Example
+  </a>
+<nav aria-label="Custom Protocol Example" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-custom-storage-initializer-image">
+    Create the Custom Storage Initializer Image
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-the-clusterstoragecontainer-cr">
+    Create the ClusterStorageContainer CR
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-the-model-with-inferenceservice">
+    Deploy the Model with InferenceService
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#spec-attributes">
     Spec Attributes
   </a>
@@ -1171,25 +1219,78 @@
 <p class="admonition-title">Warning</p>
 <p>If a storage URI is supported by two or more <em>ClusterStorageContainer</em> CRs, there is no guarantee which one will be used. <strong>Please make sure that the URI format is only supported by one ClusterStorageContainer CR</strong>.</p>
 </div>
-<p>If you would like to use a custom protocol <code>model-registry://</code>, for example, you can create a custom image and add a new ClusterStorageContainer CR like this:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1alpha1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterStorageContainer</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abc</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">container</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-initializer</span>
-<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">abc/custom-storage-initializer:latest</span>
-<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100Mi</span>
-<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
-<span class="w">      </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-<span class="w">        </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">  </span><span class="nt">supportedUriFormats</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model-registry://</span>
+<h2 id="custom-protocol-example">Custom Protocol Example<a class="headerlink" href="#custom-protocol-example" title="Permanent link">¶</a></h2>
+<p>If you would like to use a custom protocol <code>model-registry://</code>, for example, you can create a custom image and add a new <code>ClusterStorageContainer</code> CR to make it available to KServe.</p>
+<h3 id="create-the-custom-storage-initializer-image">Create the <code>Custom Storage Initializer</code> Image<a class="headerlink" href="#create-the-custom-storage-initializer-image" title="Permanent link">¶</a></h3>
+<p>The first step is to create a custom container image that will be injected into the KServe deployment, as init container, and that will be in charge to download the model.</p>
+<p>The only requirement is that the <code>Entrypoint</code> of this container image should take (and properly manage) 2 positional arguments:
+1. <strong>Source URI</strong>: identifies the <code>storageUri</code> set in the <code>InferenceService</code>
+2. <strong>Destination Path</strong>: the location where the model should be stored, e.g., <code>/mnt/models</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>KServe controller will take care of properly injecting your container image and invoking it with those proper arguments.</p>
+</div>
+<p>A more concrete example can be found <a href="https://github.com/lampajr/model-registry-storage-initializer">here</a>, where the storage initializer query an existing <code>model registry</code> service in order to retrieve the original location of the model that the user requested to deploy. </p>
+<h3 id="create-the-clusterstoragecontainer-cr">Create the <code>ClusterStorageContainer</code> CR<a class="headerlink" href="#create-the-clusterstoragecontainer-cr" title="Permanent link">¶</a></h3>
+<p>Once the Custom Storage Initializer image is ready, you just need to create a new <code>ClusterStorageContainer</code> CR to make it available in the cluster. You just need to provide 2 essential information:
+1. The <em>container spec definition</em>, this is strictly dependent on your own custom storage initializer image.
+2. The <em>supported uri formats</em> for which your custom storage initializer should be injected, in this case just <code>model-registry://</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: "serving.kserve.io/v1alpha1"</span>
+<span class="s">kind: ClusterStorageContainer</span>
+<span class="s">metadata:</span>
+<span class="s">  name: abc</span>
+<span class="s">spec:</span>
+<span class="s">  container:</span>
+<span class="s">    name: storage-initializer</span>
+<span class="s">    image: abc/model-registry-storage-initializer:latest</span>
+<span class="s">    env:</span>
+<span class="s">    - name: MODEL_REGISTRY_BASE_URL</span>
+<span class="s">      value: "$MODEL_REGISTRY_SERVICE.model-registry.svc.cluster.local:$MODEL_REGISTRY_REST_PORT"</span>
+<span class="s">    - name: MODEL_REGISTRY_SCHEME</span>
+<span class="s">      value: "http"</span>
+<span class="s">    resources:</span>
+<span class="s">      requests:</span>
+<span class="s">        memory: 100Mi</span>
+<span class="s">        cpu: 100m</span>
+<span class="s">      limits:</span>
+<span class="s">        memory: 1Gi</span>
+<span class="s">        cpu: "1"</span>
+<span class="s">  supportedUriFormats:</span>
+<span class="s">    - prefix: model-registry://</span>
+
+<span class="s">EOF</span>
 </code></pre></div>
+<h3 id="deploy-the-model-with-inferenceservice">Deploy the Model with <code>InferenceService</code><a class="headerlink" href="#deploy-the-model-with-inferenceservice" title="Permanent link">¶</a></h3>
+<p>Create the <code>InferenceService</code> with the <code>model-registry</code> specific URI format.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "iris-model"</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: sklearn</span>
+<span class="s">      storageUri: "model-registry://iris/v1"</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The only assumption here is that the ML model you are going to deploy has been already registered in the Model Registry, more information can be found in the <a href="https://github.com/kubeflow/model-registry">kubeflow/model-registry</a> repository.</p>
+</div>
+<p>In this specific example the <code>model-registry://iris/v1</code> model is referring to a registered model pointing to <code>gs://kfserving-examples/models/sklearn/1.0/model</code>. The crucial point here is that this information needs to be provided just during the registration process, whereas during every deployment action you just need to provide the <code>model-registry</code> specific URI that identifies that model (in this case <code>model-registry://${MODEL_NAME}/${MODEL_VERSION}</code>).</p>
 <h2 id="spec-attributes">Spec Attributes<a class="headerlink" href="#spec-attributes" title="Permanent link">¶</a></h2>
 <p>Spec attributes are in <a href="/website/reference/api/#serving.kserve.io/v1alpha1.ClusterStorageContainer">API Reference</a> doc.</p>
 </article>
