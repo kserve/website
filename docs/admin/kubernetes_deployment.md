@@ -46,14 +46,14 @@ The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert 
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.0/kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve.yaml
     ```
 
 Install KServe default serving runtimes:
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.11.0/kserve-runtimes.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-runtimes.yaml
     ```
 
 **ii. Change default deployment mode and ingress option**
