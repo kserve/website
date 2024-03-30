@@ -8,10 +8,9 @@ Kubernetes version.
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
 |:-------------------|:--------------------------|:----------------------------|
-| 1.27               | 1.17,1.18                 | 1.10,1.11                   |
+| 1.27               | 1.18,1.19                 | 1.10,1.11                   |
 | 1.28               | 1.19,1.20                 | 1.11,1.12.4                 |
-| 1.29               | 1.20,1.21                 | 1.12.4,1.13.3               |
-
+| 1.29               | 1.20,1.21                 | 1.12.4,1.13.1               |
 
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
@@ -21,7 +20,7 @@ Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/i
     you need to turn on the corresponding [feature flags](https://knative.dev/docs/admin/serving/feature-flags) in your Knative configuration.
     
 !!! warning
-    In Knative 1.8, The cluster domain suffix is changed to `svc.cluster.local` as the default domain. As routes using the cluster domain suffix are not exposed through Ingress, you will need to [configure DNS](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns) in order to expose their services (most users probably already are).
+    Knative 1.13.1 requires Istio 1.20+, gRPC routing does not work with previous Istio releases, see [release notes](https://github.com/knative/serving/releases/tag/knative-v1.13.1).
 
 ## 2. Install Networking Layer
 The recommended networking layer for KServe is [Istio](https://istio.io/) as currently it works best with KServe, please refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
