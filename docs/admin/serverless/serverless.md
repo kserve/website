@@ -8,9 +8,10 @@ Kubernetes version.
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
 |:-------------------|:--------------------------|:----------------------------|
-| 1.25               | 1.15, 1.16                | 1.4-1.9                     |
-| 1.26               | 1.17                      | 1.7-1.11                    |
-| 1.27               | 1.17,1.18                 | 1.9-1.11                    |
+| 1.27               | 1.17,1.18                 | 1.10,1.11                   |
+| 1.28               | 1.19,1.20                 | 1.11,1.12.4                 |
+| 1.29               | 1.20,1.21                 | 1.12.4,1.13.3               |
+
 
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
