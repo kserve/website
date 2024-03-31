@@ -1205,19 +1205,19 @@ Kubernetes version.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">1.25</td>
-<td style="text-align: left;">1.15, 1.16</td>
-<td style="text-align: left;">1.4-1.9</td>
-</tr>
-<tr>
-<td style="text-align: left;">1.26</td>
-<td style="text-align: left;">1.17</td>
-<td style="text-align: left;">1.7-1.11</td>
-</tr>
-<tr>
 <td style="text-align: left;">1.27</td>
-<td style="text-align: left;">1.17,1.18</td>
-<td style="text-align: left;">1.9-1.11</td>
+<td style="text-align: left;">1.18,1.19</td>
+<td style="text-align: left;">1.10,1.11</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.28</td>
+<td style="text-align: left;">1.19,1.20</td>
+<td style="text-align: left;">1.11,1.12.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.29</td>
+<td style="text-align: left;">1.20,1.21</td>
+<td style="text-align: left;">1.12.4,1.13.1</td>
 </tr>
 </tbody>
 </table>
@@ -1230,7 +1230,7 @@ you need to turn on the corresponding <a href="https://knative.dev/docs/admin/se
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In Knative 1.8, The cluster domain suffix is changed to <code>svc.cluster.local</code> as the default domain. As routes using the cluster domain suffix are not exposed through Ingress, you will need to <a href="https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns">configure DNS</a> in order to expose their services (most users probably already are).</p>
+<p>Knative 1.13.1 requires Istio 1.20+, gRPC routing does not work with previous Istio releases, see <a href="https://github.com/knative/serving/releases/tag/knative-v1.13.1">release notes</a>.</p>
 </div>
 <h2 id="2-install-networking-layer">2. Install Networking Layer<a class="headerlink" href="#2-install-networking-layer" title="Permanent link">¶</a></h2>
 <p>The recommended networking layer for KServe is <a href="https://istio.io/">Istio</a> as currently it works best with KServe, please refer to the <a href="https://knative.dev/docs/admin/install/installing-istio">Istio install guide</a>.
@@ -1245,7 +1245,7 @@ Alternatively you can also choose other networking layers like <a href="https://
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.11.0/kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.12.0/kserve.yaml
 </code></pre></div>
 </div>
 </div>
@@ -1254,7 +1254,7 @@ Alternatively you can also choose other networking layers like <a href="https://
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.11.0/kserve-runtimes.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-runtimes.yaml
 </code></pre></div>
 </div>
 </div>
