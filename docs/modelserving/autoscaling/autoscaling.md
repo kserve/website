@@ -248,6 +248,8 @@ Apply the tensorflow gpu example CR
       name: "flowers-sample-gpu"
     spec:
       predictor:
+        scaleTarget: 1
+        scaleMetric: concurrency
         model:
           modelFormat:
             name: tensorflow
@@ -265,6 +267,8 @@ Apply the tensorflow gpu example CR
     kind: "InferenceService"
     metadata:
       name: "flowers-sample-gpu"
+      annotations:
+        autoscaling.knative.dev/target: "1"
     spec:
       predictor:
         tensorflow:
