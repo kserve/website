@@ -42,7 +42,7 @@ The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert 
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-runtimes.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-cluster-resources.yaml
     ```
 
 !!! note
