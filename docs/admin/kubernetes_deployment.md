@@ -53,7 +53,7 @@ Install KServe default serving runtimes:
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-runtimes.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-cluster-resources.yaml
     ```
 
 **ii. Change default deployment mode and ingress option**
