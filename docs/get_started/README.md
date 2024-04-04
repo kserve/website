@@ -16,7 +16,6 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
 
 ## Install the KServe "Quickstart" environment
 1. After having kind installed, create a `kind` cluster with:
-
     ```bash
     kind create cluster
     ```
@@ -38,6 +37,5 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
 3. You can then get started with a local deployment of KServe by using _KServe Quick installation script on Kind_:
 
     ```bash
-    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.11/hack/quick_install.sh" | bash
+    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.12/hack/quick_install.sh" | bash
     ```
-

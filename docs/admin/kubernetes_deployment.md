@@ -65,8 +65,7 @@ First in ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` 
     kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'
     ```
 
-then modify the `ingressClassName` in `ingress` section to point to `IngressClass` name created in step 1.
-
+then modify the `ingressClassName` in `ingress` section to point to `IngressClass` name created in [step 1](#1-install-istio).
     ```yaml
     ingress: |-
     {
