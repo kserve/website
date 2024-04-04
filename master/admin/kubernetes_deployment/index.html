@@ -1249,14 +1249,12 @@ Kubernetes version.</p>
 </div>
 </div>
 </input></div>
-<p>then modify the <code>ingressClassName</code> in <code>ingress</code> section to point to <code>IngressClass</code> name created in step 1.</p>
-<pre><code>```yaml
-ingress: |-
-{
-    "ingressClassName" : "your-ingress-class",
-}
-```
-</code></pre>
+<p>then modify the <code>ingressClassName</code> in <code>ingress</code> section to point to <code>IngressClass</code> name created in <a href="#1-install-istio">step 1</a>.
+    <div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="p p-Indicator">{</span>
+<span class="w">    </span><span class="s">"ingressClassName"</span><span class="nt"> </span><span class="p">:</span><span class="w"> </span><span class="s">"your-ingress-class"</span><span class="p p-Indicator">,</span>
+<span class="p p-Indicator">}</span>
+</code></pre></div></p>
 </article>
 </div>
 </div>
