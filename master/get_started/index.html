@@ -1208,6 +1208,10 @@
 <p>You can then get started with a local deployment of KServe by using <em>KServe Quick installation script on Kind</em>:</p>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/kserve/kserve/release-0.12/hack/quick_install.sh"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
+<p>or install via our published Helm Charts:
+   <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.12.0
+helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.12.0
+</code></pre></div></p>
 </li>
 </ol>
 </article>
