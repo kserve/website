@@ -1254,6 +1254,12 @@ is provided as reference.</p>
 </div>
 </div>
 </input></input></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not deploy <code>InferenceServices</code> in control plane namespaces (i.e. namespaces with <code>control-plane</code> label). The webhook is configured
+in a way to skip these namespaces to avoid any privillage escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being 
+injected into the pod, causing the pod to fail with the error <code>No such file or directory: '/mnt/models'</code>.</p>
+</div>
 <h3 id="3-check-inferenceservice-status">3. Check <code>InferenceService</code> status.<a class="headerlink" href="#3-check-inferenceservice-status" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test
 </code></pre></div>

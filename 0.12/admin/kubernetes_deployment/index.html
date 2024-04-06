@@ -1234,7 +1234,7 @@ Kubernetes version.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-runtimes.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-cluster-resources.yaml
 </code></pre></div>
 </div>
 </div>
@@ -1249,14 +1249,12 @@ Kubernetes version.</p>
 </div>
 </div>
 </input></div>
-<p>then modify the <code>ingressClassName</code> in <code>ingress</code> section to point to <code>IngressClass</code> name created in step 1.</p>
-<pre><code>```yaml
-ingress: |-
-{
-    "ingressClassName" : "your-ingress-class",
-}
-```
-</code></pre>
+<p>then modify the <code>ingressClassName</code> in <code>ingress</code> section to point to <code>IngressClass</code> name created in <a href="#1-install-istio">step 1</a>.
+    <div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="p p-Indicator">{</span>
+<span class="w">    </span><span class="s">"ingressClassName"</span><span class="nt"> </span><span class="p">:</span><span class="w"> </span><span class="s">"your-ingress-class"</span><span class="p p-Indicator">,</span>
+<span class="p p-Indicator">}</span>
+</code></pre></div></p>
 </article>
 </div>
 </div>
