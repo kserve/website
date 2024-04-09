@@ -452,7 +452,7 @@ if __name__ == "__main__":
     ray.init(num_cpus=2, num_gpus=1)
     kserve.ModelServer().start({"custom-model": AlexNetModel})
 ```
-The more details for ray fractional cpu and gpu can be found [here](https://docs.ray.io/en/latest/serve/scaling-and-resource-allocation.html#fractional-cpus-and-fractional-gpus).
+The more details for ray fractional cpu and gpu can be found [here](https://docs.ray.io/en/latest/serve/resource-allocation.html#fractional-cpus-and-fractional-gpus).
 
 The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.11/python/custom_model/model_remote.py).
 
