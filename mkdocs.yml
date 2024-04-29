@@ -39,10 +39,13 @@ nav:
                 - Nvidia Triton:
                   - Torchscript: modelserving/v1beta1/triton/torchscript/README.md
                   - Tensorflow: modelserving/v1beta1/triton/bert/README.md
+                  - Hugging Face: modelserving/v1beta1/triton/huggingface/README.md
                 - AMD: modelserving/v1beta1/amd/README.md
               - LLM Runtime:
                 - TorchServe LLM:
                   - Bloom7b1: modelserving/v1beta1/llm/torchserve/accelerate/README.md
+                - Hugging Face LLM:
+                  - Llama2: modelserving/v1beta1/llm/huggingface/README.md
               - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
           - Multi Model Serving:
                 - Overview:
