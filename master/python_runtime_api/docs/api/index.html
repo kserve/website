@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/master/python_runtime_api/docs/api/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.6.0, mkdocs-material-8.0.5" name="generator"/>
 <title>KServe Python Serving Runtime API - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -485,6 +485,11 @@
         Tensorflow
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/huggingface/">
+        Hugging Face
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -523,6 +528,26 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../modelserving/v1beta1/llm/torchserve/accelerate/">
         Bloom7b1
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_2" id="__nav_4_2_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_3_2">
+          Hugging Face LLM
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Hugging Face LLM" class="md-nav" data-md-level="4">
+<label class="md-nav__title" for="__nav_4_2_3_2">
+<span class="md-nav__icon md-icon"></span>
+          Hugging Face LLM
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/">
+        Llama2
       </a>
 </li>
 </ul>
@@ -1133,6 +1158,16 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#kserve.model_server.ModelServer.register_model">
+    register_model
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kserve.model_server.ModelServer.register_model_handle">
+    register_model_handle
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#kserve.model_server.ModelServer.start">
     start
   </a>
@@ -1618,7 +1653,19 @@
 <span class="normal">270</span>
 <span class="normal">271</span>
 <span class="normal">272</span>
-<span class="normal">273</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ModelServer</span><span class="p">:</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ModelServer</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
                  <span class="n">grpc_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span>
                  <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span>
@@ -1762,6 +1809,9 @@
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">""" Stop the instances of REST and gRPC model servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sig: The signal to stop the server. Default: ``None``.</span>
 <span class="sd">        """</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Stopping the model server"</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span><span class="p">:</span>
@@ -1772,8 +1822,7 @@
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grpc_server</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">sig</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Add a custom handler as the event loop exception handler.</span>
+<span class="w">        </span><span class="sd">"""Add a custom handler as the event loop exception handler.</span>
 
 <span class="sd">        If a handler is not provided, the default exception handler will be set.</span>
 
@@ -1784,8 +1833,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="n">handler</span>
 
     <span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Default exception handler for event loop.</span>
+<span class="w">        </span><span class="sd">"""Default exception handler for event loop.</span>
 
 <span class="sd">        This is called when an exception occurs and no exception handler is set.</span>
 <span class="sd">        By default, this will shut down the server gracefully.</span>
@@ -1796,11 +1844,22 @@
         <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">default_exception_handler</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">register_model_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">:</span> <span class="n">RayServeHandle</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">register_model_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">:</span> <span class="n">DeploymentHandle</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Register a model handle to the model server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: The name of the model handle.</span>
+<span class="sd">            model_handle: The model handle object.</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update_handle</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Registering model handle: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Register a model to the model server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model: The model object.</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="s2">"Failed to register model, model.name must be provided."</span><span class="p">)</span>
@@ -1815,7 +1874,7 @@
 <a class="headerlink" href="#kserve.model_server.ModelServer.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>KServe ModelServer Constructor</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -1826,7 +1885,7 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>http_port</code></td>
 <td>
 <code>int</code>
@@ -1840,7 +1899,7 @@
 <code><span title="args.http_port">http_port</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>grpc_port</code></td>
 <td>
 <code>int</code>
@@ -1854,7 +1913,7 @@
 <code><span title="args.grpc_port">grpc_port</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>workers</code></td>
 <td>
 <code>int</code>
@@ -1868,7 +1927,7 @@
 <code><span title="args.workers">workers</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>max_threads</code></td>
 <td>
 <code>int</code>
@@ -1882,7 +1941,7 @@
 <code><span title="args.max_threads">max_threads</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>max_asyncio_workers</code></td>
 <td>
 <code>int</code>
@@ -1896,7 +1955,7 @@
 <code><span title="args.max_asyncio_workers">max_asyncio_workers</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>registered_models</code></td>
 <td>
 <code><span title="kserve.model_repository.ModelRepository">ModelRepository</span></code>
@@ -1910,7 +1969,7 @@
 <code><span title="kserve.model_repository.ModelRepository">ModelRepository</span>()</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>enable_grpc</code></td>
 <td>
 <code>bool</code>
@@ -1924,7 +1983,7 @@
 <code><span title="args.enable_grpc">enable_grpc</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>enable_docs_url</code></td>
 <td>
 <code>bool</code>
@@ -1938,7 +1997,7 @@
 <code><span title="args.enable_docs_url">enable_docs_url</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>enable_latency_logging</code></td>
 <td>
 <code>bool</code>
@@ -1952,7 +2011,7 @@
 <code><span title="args.enable_latency_logging">enable_latency_logging</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>configure_logging</code></td>
 <td>
 <code>bool</code>
@@ -1966,7 +2025,7 @@
 <code><span title="args.configure_logging">configure_logging</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>log_config</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, str]]</code>
@@ -1980,7 +2039,7 @@
 <code><span title="args.log_config_file">log_config_file</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>access_log_format</code></td>
 <td>
 <code>str</code>
@@ -2126,9 +2185,7 @@ By default, this will shut down the server gracefully.</p>
 <p>This can be called by a custom exception handler that wants to defer to the default handler behavior.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">251</span>
-<span class="normal">252</span>
-<span class="normal">253</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">253</span>
 <span class="normal">254</span>
 <span class="normal">255</span>
 <span class="normal">256</span>
@@ -2137,9 +2194,9 @@ By default, this will shut down the server gracefully.</p>
 <span class="normal">259</span>
 <span class="normal">260</span>
 <span class="normal">261</span>
-<span class="normal">262</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Default exception handler for event loop.</span>
+<span class="normal">262</span>
+<span class="normal">263</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">"""Default exception handler for event loop.</span>
 
 <span class="sd">    This is called when an exception occurs and no exception handler is set.</span>
 <span class="sd">    By default, this will shut down the server gracefully.</span>
@@ -2165,19 +2222,17 @@ will be a reference to the active event loop, 'context' will be a dict object (s
 documentation for details about context).</p>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">239</span>
-<span class="normal">240</span>
-<span class="normal">241</span>
-<span class="normal">242</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">242</span>
 <span class="normal">243</span>
 <span class="normal">244</span>
 <span class="normal">245</span>
 <span class="normal">246</span>
 <span class="normal">247</span>
 <span class="normal">248</span>
-<span class="normal">249</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Add a custom handler as the event loop exception handler.</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">"""Add a custom handler as the event loop exception handler.</span>
 
 <span class="sd">    If a handler is not provided, the default exception handler will be set.</span>
 
@@ -2191,12 +2246,12 @@ documentation for details about context).</p>
 </div>
 </div>
 <div class="doc doc-object doc-function">
-<h3 class="doc doc-heading" id="kserve.model_server.ModelServer.start">
-<code class="highlight language-python"><span class="n">start</span><span class="p">(</span><span class="n">models</span><span class="p">)</span></code>
-<a class="headerlink" href="#kserve.model_server.ModelServer.start" title="Permanent link">¶</a></h3>
+<h3 class="doc doc-heading" id="kserve.model_server.ModelServer.register_model">
+<code class="highlight language-python"><span class="n">register_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></code>
+<a class="headerlink" href="#kserve.model_server.ModelServer.register_model" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
-<p>Start the model server with a set of registered models.</p>
-<p><strong>Parameters:</strong></p>
+<p>Register a model to the model server.</p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -2207,7 +2262,137 @@ documentation for details about context).</p>
 </tr>
 </thead>
 <tbody>
+<tr class="doc-section-item">
+<td><code>model</code></td>
+<td>
+<code><a class="autorefs autorefs-internal" title="kserve.model.Model" href="#kserve.model.Model">Model</a></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>The model object.</p>
+</div>
+</td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>kserve/model_server.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Register a model to the model server.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model: The model object.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s2">"Failed to register model, model.name must be provided."</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Registering model: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="kserve.model_server.ModelServer.register_model_handle">
+<code class="highlight language-python"><span class="n">register_model_handle</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">)</span></code>
+<a class="headerlink" href="#kserve.model_server.ModelServer.register_model_handle" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Register a model handle to the model server.</p>
+<p><span class="doc-section-title">Parameters:</span></p>
+<table>
+<thead>
 <tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td><code>name</code></td>
+<td>
+<code>str</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>The name of the model handle.</p>
+</div>
+</td>
+<td>
+<em>required</em>
+</td>
+</tr>
+<tr class="doc-section-item">
+<td><code>model_handle</code></td>
+<td>
+<code><span title="ray.serve.handle.DeploymentHandle">DeploymentHandle</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>The model handle object.</p>
+</div>
+</td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>kserve/model_server.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_model_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">:</span> <span class="n">DeploymentHandle</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Register a model handle to the model server.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: The name of the model handle.</span>
+<span class="sd">        model_handle: The model handle object.</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update_handle</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Registering model handle: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="kserve.model_server.ModelServer.start">
+<code class="highlight language-python"><span class="n">start</span><span class="p">(</span><span class="n">models</span><span class="p">)</span></code>
+<a class="headerlink" href="#kserve.model_server.ModelServer.start" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Start the model server with a set of registered models.</p>
+<p><span class="doc-section-title">Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
 <td><code>models</code></td>
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="kserve.model.Model" href="#kserve.model.Model">Model</a>], <span title="typing.Dict">Dict</span>[str, <span title="ray.serve.api.Deployment">Deployment</span>]]</code>
@@ -2401,6 +2586,33 @@ documentation for details about context).</p>
 <a class="headerlink" href="#kserve.model_server.ModelServer.stop" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Stop the instances of REST and gRPC model servers.</p>
+<p><span class="doc-section-title">Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td><code>sig</code></td>
+<td>
+<code><span title="typing.Optional">Optional</span>[int]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>The signal to stop the server. Default: <code>None</code>.</p>
+</div>
+</td>
+<td>
+<code>None</code>
+</td>
+</tr>
+</tbody>
+</table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">228</span>
@@ -2412,8 +2624,14 @@ documentation for details about context).</p>
 <span class="normal">234</span>
 <span class="normal">235</span>
 <span class="normal">236</span>
-<span class="normal">237</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">""" Stop the instances of REST and gRPC model servers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sig: The signal to stop the server. Default: ``None``.</span>
 <span class="sd">    """</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Stopping the model server"</span><span class="p">)</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span><span class="p">:</span>
@@ -3014,7 +3232,7 @@ documentation for details about context).</p>
 <a class="headerlink" href="#kserve.model.Model.__call__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Method to call predictor or explainer with the given input.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3025,7 +3243,7 @@ documentation for details about context).</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>body</code></td>
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <span title="cloudevents.http.CloudEvent">CloudEvent</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferRequest" href="#kserve.protocol.infer_type.InferRequest">InferRequest</a>]</code>
@@ -3039,7 +3257,7 @@ documentation for details about context).</p>
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>verb</code></td>
 <td>
 <code><span title="kserve.model.InferenceVerb">InferenceVerb</span></code>
@@ -3053,7 +3271,7 @@ documentation for details about context).</p>
 <code><span title="kserve.model.InferenceVerb.PREDICT">PREDICT</span></code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>headers</code></td>
 <td>
 <code><span title="typing.Dict">Dict</span>[str, str]</code>
@@ -3069,7 +3287,7 @@ documentation for details about context).</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -3078,7 +3296,7 @@ documentation for details about context).</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferResponse" href="#kserve.protocol.infer_type.InferResponse">InferResponse</a>, <span title="typing.List">List</span>[str]]</code>
 </td>
@@ -3212,7 +3430,7 @@ documentation for details about context).</p>
 <div class="doc doc-contents">
 <p>KServe Model Public Interface</p>
 <p>Model is intended to be subclassed to implement the model handlers.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3223,7 +3441,7 @@ documentation for details about context).</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>name</code></td>
 <td>
 <code>str</code>
@@ -3237,7 +3455,7 @@ documentation for details about context).</p>
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>predictor_config</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="kserve.model.PredictorConfig" href="#kserve.model.PredictorConfig">PredictorConfig</a>]</code>
@@ -3314,7 +3532,7 @@ documentation for details about context).</p>
 <div class="doc doc-contents">
 <p><code>explain</code> handler can be overridden to implement the model explanation.
 The default implementation makes call to the explainer if <code>explainer_host</code> is specified.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3325,7 +3543,7 @@ The default implementation makes call to the explainer if <code>explainer_host</
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>payload</code></td>
 <td>
 <code><span title="typing.Dict">Dict</span></code>
@@ -3339,7 +3557,7 @@ The default implementation makes call to the explainer if <code>explainer_host</
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>headers</code></td>
 <td>
 <code><span title="typing.Dict">Dict</span>[str, str]</code>
@@ -3355,7 +3573,7 @@ The default implementation makes call to the explainer if <code>explainer_host</
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -3364,7 +3582,7 @@ The default implementation makes call to the explainer if <code>explainer_host</
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Dict">Dict</span></code>
 </td>
@@ -3470,7 +3688,7 @@ The default implementation makes call to the explainer if <code>explainer_host</
 <div class="doc doc-contents">
 <p>Load handler can be overridden to load the model from storage.
 The <code>self.ready</code> should be set to True after the model is loaded. The flag is used for model health check.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -3479,7 +3697,7 @@ The <code>self.ready</code> should be set to True after the model is loaded. The
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>bool</code></td> <td>
 <code>bool</code>
 </td>
@@ -3524,7 +3742,7 @@ The <code>self.ready</code> should be set to True after the model is loaded. The
 <div class="doc doc-contents">
 <p>The <code>postprocess</code> handler can be overridden for inference result or response transformation.
 The predictor sends back the inference result in <code>Dict</code> for v1 endpoints and <code>InferResponse</code> for v2 endpoints.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3535,7 +3753,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>result</code></td>
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferResponse" href="#kserve.protocol.infer_type.InferResponse">InferResponse</a>]</code>
@@ -3549,7 +3767,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>headers</code></td>
 <td>
 <code><span title="typing.Dict">Dict</span>[str, str]</code>
@@ -3565,7 +3783,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -3574,7 +3792,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferResponse" href="#kserve.protocol.infer_type.InferResponse">InferResponse</a>]</code>
 </td>
@@ -3627,7 +3845,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 <div class="doc doc-contents">
 <p>The <code>predict</code> handler can be overridden for performing the inference.
     By default, the predict handler makes call to predictor for the inference step.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3638,7 +3856,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>payload</code></td>
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferRequest" href="#kserve.protocol.infer_type.InferRequest">InferRequest</a>, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.ModelInferRequest">ModelInferRequest</span>]</code>
@@ -3652,7 +3870,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>headers</code></td>
 <td>
 <code><span title="typing.Dict">Dict</span>[str, str]</code>
@@ -3668,7 +3886,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -3677,7 +3895,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferResponse" href="#kserve.protocol.infer_type.InferResponse">InferResponse</a>]</code>
 </td>
@@ -3752,7 +3970,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 <div class="doc doc-contents">
 <p><code>preprocess</code> handler can be overridden for data or feature transformation.
 The model decodes the request body to <code>Dict</code> for v1 endpoints and <code>InferRequest</code> for v2 endpoints.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3763,7 +3981,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>payload</code></td>
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferRequest" href="#kserve.protocol.infer_type.InferRequest">InferRequest</a>]</code>
@@ -3777,7 +3995,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>headers</code></td>
 <td>
 <code><span title="typing.Dict">Dict</span>[str, str]</code>
@@ -3793,7 +4011,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </tbody>
 </table>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -3802,7 +4020,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferRequest" href="#kserve.protocol.infer_type.InferRequest">InferRequest</a>]</code>
 </td>
@@ -3812,7 +4030,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </div>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferRequest" href="#kserve.protocol.infer_type.InferRequest">InferRequest</a>]</code>
 </td>
@@ -3911,7 +4129,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.model.PredictorConfig.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>The configuration for the http call to the predictor</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -3922,7 +4140,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>predictor_host</code></td>
 <td>
 <code>str</code>
@@ -3936,7 +4154,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>predictor_protocol</code></td>
 <td>
 <code>str</code>
@@ -3947,10 +4165,10 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </div>
 </td>
 <td>
-<code><span title="kserve.model.PredictorProtocol.REST_V1.value">value</span></code>
+<code><span title="kserve.model.PredictorProtocol.REST_V1">REST_V1</span>.value</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>predictor_use_ssl</code></td>
 <td>
 <code>bool</code>
@@ -3964,7 +4182,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>False</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>predictor_request_timeout_seconds</code></td>
 <td>
 <code>int</code>
@@ -4433,7 +4651,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.data" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the data of the inference input associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -4442,7 +4660,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.List">List</span>, <span title="numpy.ndarray">ndarray</span>, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.InferTensorContents">InferTensorContents</span>]</code>
 </td>
@@ -4465,7 +4683,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.datatype" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the datatype of inference input associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -4474,7 +4692,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code>str</code>
 </td>
@@ -4497,7 +4715,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.name" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the name of inference input associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -4506,7 +4724,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code>str</code>
 </td>
@@ -4529,7 +4747,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.parameters" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the parameters of the inference input associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -4538,7 +4756,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <span title="google.protobuf.internal.containers.MessageMap">MessageMap</span>[str, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.InferParameter">InferParameter</span>], None]</code>
 </td>
@@ -4561,7 +4779,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.shape" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the shape of inference input associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -4570,7 +4788,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.List">List</span>[int]</code>
 </td>
@@ -4590,7 +4808,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>An object of InferInput class is used to describe the input tensor of an inference request.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -4601,7 +4819,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>name</code></td>
 <td>
 <code>str</code>
@@ -4615,7 +4833,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>shape</code></td>
 <td>
 </td>
@@ -4628,7 +4846,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>datatype</code></td>
 <td>
 </td>
@@ -4641,7 +4859,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>data</code></td>
 <td>
 </td>
@@ -4656,7 +4874,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>None</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>parameters</code></td>
 <td>
 </td>
@@ -4724,7 +4942,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.as_numpy" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Decode the inference input data as numpy array.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -4733,7 +4951,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="numpy.ndarray">ndarray</span></code>
 </td>
@@ -4786,7 +5004,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.set_data_from_numpy" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Set the tensor data from the specified numpy array for input associated with this object.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -4797,7 +5015,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>input_tensor</code></td>
 <td>
 </td>
@@ -4810,7 +5028,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>binary_data</code></td>
 <td>
 </td>
@@ -4991,7 +5209,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferInput.set_shape" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Set the shape of inference input.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -5002,7 +5220,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>shape</code></td>
 <td>
 </td>
@@ -5429,7 +5647,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.data" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the data of inference output associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -5438,7 +5656,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.List">List</span>, <span title="numpy.ndarray">ndarray</span>, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.InferTensorContents">InferTensorContents</span>]</code>
 </td>
@@ -5461,7 +5679,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.datatype" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the data type of inference output associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -5470,7 +5688,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code>str</code>
 </td>
@@ -5493,7 +5711,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.name" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the name of inference output associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -5502,7 +5720,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code>str</code>
 </td>
@@ -5526,7 +5744,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.parameters" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the parameters of inference output associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -5535,7 +5753,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <span title="google.protobuf.internal.containers.MessageMap">MessageMap</span>[str, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.InferParameter">InferParameter</span>], None]</code>
 </td>
@@ -5558,7 +5776,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.shape" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Get the shape of inference output associated with this object.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -5567,7 +5785,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.List">List</span>[int]</code>
 </td>
@@ -5587,7 +5805,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>An object of InferOutput class is used to describe the output tensor for an inference response.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -5598,7 +5816,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>name</code></td>
 <td>
 </td>
@@ -5611,7 +5829,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>shape</code></td>
 <td>
 </td>
@@ -5624,7 +5842,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>datatype</code></td>
 <td>
 </td>
@@ -5637,7 +5855,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>data</code></td>
 <td>
 </td>
@@ -5651,7 +5869,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>None</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>parameters</code></td>
 <td>
 </td>
@@ -5717,7 +5935,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.as_numpy" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Decode the tensor output data as numpy array.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -5726,7 +5944,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="numpy.ndarray">ndarray</span></code>
 </td>
@@ -5779,7 +5997,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.set_data_from_numpy" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Set the tensor data from the specified numpy array for the inference output associated with this object.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -5790,7 +6008,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>output_tensor</code></td>
 <td>
 </td>
@@ -5803,7 +6021,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>binary_data</code></td>
 <td>
 </td>
@@ -5984,7 +6202,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferOutput.set_shape" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Set the shape of inference output.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -5995,7 +6213,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>shape</code></td>
 <td>
 <code><span title="typing.List">List</span>[int]</code>
@@ -6336,7 +6554,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferRequest.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>InferRequest Data Model.</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -6347,7 +6565,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>model_name</code></td>
 <td>
 <code>str</code>
@@ -6361,7 +6579,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>infer_inputs</code></td>
 <td>
 <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferInput" href="#kserve.protocol.infer_type.InferInput">InferInput</a>]</code>
@@ -6375,7 +6593,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>request_id</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[str]</code>
@@ -6389,7 +6607,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>None</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>raw_inputs</code></td>
 <td>
 </td>
@@ -6402,7 +6620,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>None</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>from_grpc</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[bool]</code>
@@ -6416,7 +6634,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>False</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>parameters</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <span title="google.protobuf.internal.containers.MessageMap">MessageMap</span>[str, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.InferParameter">InferParameter</span>]]]</code>
@@ -6491,7 +6709,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferRequest.as_dataframe" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Decode the tensor inputs as pandas dataframe.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -6500,7 +6718,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="pandas.DataFrame">DataFrame</span></code>
 </td>
@@ -6589,7 +6807,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferRequest.to_grpc" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Converts the InferRequest object to gRPC ModelInferRequest type.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -6598,7 +6816,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="kserve.protocol.grpc.grpc_predict_v2_pb2.ModelInferRequest">ModelInferRequest</span></code>
 </td>
@@ -6695,7 +6913,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferRequest.to_rest" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Converts the InferRequest object to v2 REST InferRequest Dict.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -6704,7 +6922,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Dict">Dict</span></code>
 </td>
@@ -7101,7 +7319,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferResponse.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>The InferResponse Data Model</p>
-<p><strong>Parameters:</strong></p>
+<p><span class="doc-section-title">Parameters:</span></p>
 <table>
 <thead>
 <tr>
@@ -7112,7 +7330,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td><code>response_id</code></td>
 <td>
 <code>str</code>
@@ -7126,7 +7344,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>model_name</code></td>
 <td>
 <code>str</code>
@@ -7140,7 +7358,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>infer_outputs</code></td>
 <td>
 <code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" title="kserve.protocol.infer_type.InferOutput" href="#kserve.protocol.infer_type.InferOutput">InferOutput</a>]</code>
@@ -7154,7 +7372,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <em>required</em>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>model_version</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[str]</code>
@@ -7168,7 +7386,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>None</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>raw_outputs</code></td>
 <td>
 </td>
@@ -7181,7 +7399,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>None</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>from_grpc</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[bool]</code>
@@ -7195,7 +7413,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <code>False</code>
 </td>
 </tr>
-<tr>
+<tr class="doc-section-item">
 <td><code>parameters</code></td>
 <td>
 <code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, <span title="google.protobuf.internal.containers.MessageMap">MessageMap</span>[str, <span title="kserve.protocol.grpc.grpc_predict_v2_pb2.InferParameter">InferParameter</span>]]]</code>
@@ -7354,7 +7572,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferResponse.to_grpc" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Converts the InferResponse object to gRPC ModelInferResponse type.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -7363,7 +7581,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="kserve.protocol.grpc.grpc_predict_v2_pb2.ModelInferResponse">ModelInferResponse</span></code>
 </td>
@@ -7460,7 +7678,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <a class="headerlink" href="#kserve.protocol.infer_type.InferResponse.to_rest" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Converts the InferResponse object to v2 REST InferResponse dict.</p>
-<p><strong>Returns:</strong></p>
+<p><span class="doc-section-title">Returns:</span></p>
 <table>
 <thead>
 <tr>
@@ -7469,7 +7687,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="doc-section-item">
 <td>
 <code><span title="typing.Dict">Dict</span></code>
 </td>
