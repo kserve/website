@@ -21,7 +21,9 @@ from torchvision import models
 from typing import Dict, Union
 import torch
 import numpy as np
+import kserve
 from kserve import Model, ModelServer
+from kserve import logging
 
 class AlexNetModel(Model):
     def __init__(self, name: str):
@@ -53,10 +55,255 @@ class AlexNetModel(Model):
         response_id = generate_uuid()
         return {"predictions": result}
 
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()
+    
 if __name__ == "__main__":
-    model = AlexNetModel("custom-model")
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)  # Configure kserve and uvicorn logger
+    model = AlexNetModel(args.model_name)
     ModelServer().start([model])
 ```
+
+### Configuring Logger for Serving Runtime
+Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
+The logger configuration can be modified in one of the following ways:
+
+#### 1. Providing [logger configuration as a Dict](https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema):
+
+If you are building a custom serving runtime and want to modify the logger configuration, this method offers the easiest solution.
+You can supply the logging configuration as a Python Dictionary to the `kserve.logging.configure_logging()` method.
+```python
+import argparse
+import kserve
+from kserve import logging
+
+#################################
+#       Source code             #
+################################
+
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()
+if __name__ == "__main__":
+    # Example Dict config
+    dictConfig = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "kserve": {
+                "()": "logging.Formatter",
+                "fmt": "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
+            "kserve_trace": {
+                "()": "logging.Formatter",
+                "fmt": "%(asctime)s.%(msecs)03d %(name)s %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
+            "uvicorn": {
+                "()": "uvicorn.logging.DefaultFormatter",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+                "fmt": "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s",
+                "use_colors": None,
+            },
+        },
+        "handlers": {
+            "kserve": {
+                "formatter": "kserve",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stderr",
+            },
+            "kserve_trace": {
+                "formatter": "kserve_trace",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stderr",
+            },
+            "uvicorn": {
+                "formatter": "uvicorn",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stderr",
+            },
+        },
+        "loggers": {
+            "kserve": {
+                "handlers": ["kserve"],
+                "level": "INFO",
+                "propagate": False,
+            },
+            "kserve.trace": {
+                "handlers": ["kserve_trace"],
+                "level": "INFO",
+                "propagate": False,
+            },
+            "uvicorn": {"handlers": ["uvicorn"], "level": "INFO", "propagate": False},
+        },
+    }
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
+```
+!!! note
+    The logger should be configured before doing any actual work. A recommended best practice is to configure the logger
+    in the main, preferably as the first line of code. If the logger is configured later on in the source code, it may lead to
+    inconsistent logger formats.
+
+#### 2. Providing logger configuration as a file:
+The logger configuration can be provided as a file. If the filename ends with `.json`, KServe will treat the file as JSON Configuration.
+If the filename ends with `.yaml` or `.yml`, KServe will treat the file as YAML Configuration. Otherwise, The file will be treated 
+as a configuration file in the format specified in the [Python logging module documentation](https://docs.python.org/3/library/logging.config.html#configuration-file-format).
+This offers a more flexible way of configuring the logger for pre-built serving runtimes.
+
+The model server offers a command line argument which accepts a file path pointing to the configuration. For example,
+```bash
+sklearnserver --log_config_file=/path/to/config.yaml
+```
+For, Custom serving runtimes, they should accept the file path in their source code.
+```python
+import argparse
+
+from kserve import logging
+import kserve
+
+#################################
+#       Source code             #
+################################
+
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()
+if __name__ == "__main__":
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
+           
+```
+Here is an example logging config in `JSON` format.
+```json
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "kserve": {
+      "()": "logging.Formatter",
+      "fmt": "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    },
+    "kserve_trace": {
+      "()": "logging.Formatter",
+      "fmt": "%(asctime)s.%(msecs)03d %(name)s %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    },
+    "uvicorn": {
+      "()": "uvicorn.logging.DefaultFormatter",
+      "datefmt": "%Y-%m-%d %H:%M:%S",
+      "fmt": "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s",
+      "use_colors": null
+    }
+  },
+  "handlers": {
+    "kserve": {
+      "formatter": "kserve",
+      "class": "logging.StreamHandler",
+      "stream": "ext://sys.stderr"
+    },
+    "kserve_trace": {
+      "formatter": "kserve_trace",
+      "class": "logging.StreamHandler",
+      "stream": "ext://sys.stderr"
+    },
+    "uvicorn": {
+      "formatter": "uvicorn",
+      "class": "logging.StreamHandler",
+      "stream": "ext://sys.stderr"
+    }
+  },
+  "loggers": {
+    "kserve": {
+      "handlers": [
+        "kserve"
+      ],
+      "level": "INFO",
+      "propagate": false
+    },
+    "kserve.trace": {
+      "handlers": [
+        "kserve_trace"
+      ],
+      "level": "INFO",
+      "propagate": false
+    },
+    "uvicorn": {
+      "handlers": [
+        "uvicorn"
+      ],
+      "level": "INFO",
+      "propagate": false
+    }
+  }
+}
+```
+Here is an example using `YAML` format for configuring logger.
+```yaml
+version: 1
+disable_existing_loggers: false
+formatters:
+  kserve:
+    "()": logging.Formatter
+    fmt: "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+  kserve_trace:
+    "()": logging.Formatter
+    fmt: "%(asctime)s.%(msecs)03d %(name)s %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+  uvicorn:
+    "()": uvicorn.logging.DefaultFormatter
+    datefmt: "%Y-%m-%d %H:%M:%S"
+    fmt: "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s"
+    use_colors: null
+handlers:
+  kserve:
+    formatter: kserve
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+  kserve_trace:
+    formatter: kserve_trace
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+  uvicorn:
+    formatter: uvicorn
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+loggers:
+  kserve:
+    handlers:
+      - kserve
+    level: INFO
+    propagate: false
+  kserve.trace:
+    handlers:
+      - kserve_trace
+    level: INFO
+    propagate: false
+  uvicorn:
+    handlers:
+      - uvicorn
+    level: INFO
+    propagate: false
+
+```
+For other file formats, Please refer [Python docs](https://docs.python.org/3/library/logging.config.html#configuration-file-format).
+#### 3. Disabling logger Configuration:
+If you don't want Kserve to configure the logger then, You can disable it by passing the commandline argument `--configure_logging=False` 
+to the model server. The command line argument `--log_config_file` will be ignored, if the logger configuration is disabled.
+In this case, the logger will inherit the root logger's configuration.
+
+```bash
+sklearnserver --configure_logging=False
+```
+
+!!! note
+    If the logger is not configured at the entrypoint in the serving runtime (i.e. logging.configure_logger() is not invoked),
+    The model server will configure the logger using default configuration. But note that the logger is configured at 
+    model server initialization. So any logs before the initialization will use the root logger's configuration.
+ 
+
 
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
@@ -76,7 +323,7 @@ Note: If your buildpack command fails, make sure you have a `runtimes.txt` file 
 ### Deploy Locally and Test
 Launch the docker image built from last step with `buildpack`.
 ```bash
-docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model:v1
+docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model:v1 --model_name="custom-model"
 ```
 
 Send a test inference request locally with [input.json](./input.json)
@@ -113,9 +360,10 @@ You can supply additional command arguments on the container spec to configure t
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
 - `--enable_latency_logging`: Whether to log latency metrics per request, the default is True.
 - `--configure_logging`: Whether to configure KServe and Uvicorn logging, the default is True.
-In this case you may want to set the KServe `ModelServer`'s `log_config` parameter to pass a dictionary containing all the logging directives and configurations (see [the Python upstream docs](https://docs.python.org/3/library/logging.config.html#dictionary-schema-details) for more info). The alternative is to use the `--log_config_file` argument described below.
-- `--log_config_file`: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
+- `--log_config_file`: The path of the Python config file configuration to use (can be a json, a yaml file or any other supported file format by 
+python logging module). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
 - `--access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
+- `enable_latency_logging`: whether to log latency metrics per request, the default is True.
 
 #### Environment Variables
 
@@ -195,10 +443,13 @@ For `Open(v2) Inference Protocol`, KServe provides `InferRequest` and `InferResp
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
 
 ```python title="model_grpc.py"
+import argparse
 import io
 from typing import Dict
 
 import torch
+import kserve
+from kserve import logging
 from kserve import InferRequest, InferResponse, InferOutput, Model, ModelServer
 from kserve.utils.utils import generate_uuid
 from PIL import Image
@@ -243,9 +494,12 @@ class AlexNetModel(Model):
         infer_response = InferResponse(model_name=self.name, infer_outputs=[infer_output], response_id=response_id)
         return infer_response
 
-
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()
 if __name__ == "__main__":
-    model = AlexNetModel("custom-model")
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
+    model = AlexNetModel()
     model.load()
     ModelServer().start([model])
 ```
@@ -253,7 +507,7 @@ if __name__ == "__main__":
 ### Build Custom Serving Image with BuildPacks
 Similar to building the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
 ```bash
-pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model-grpc:v1
+pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model-grpc:v1 --model_name="custom-model"
 docker push ${DOCKER_USER}/custom-model-grpc:v1
 ```
 
@@ -344,7 +598,7 @@ You can supply additional command arguments on the container spec to configure t
 
 - `--grpc_port`: the http port model server is listening on, the default gRPC port is 8081.
 - `--model_name`: the model name deployed in the model server, the default name the same as the service name.
-- `enable_latency_logging`: whether to log latency metrics per request, the default is True.
+
 
 Apply the yaml to deploy the InferenceService on KServe
 
@@ -413,9 +667,11 @@ KServe integrates [RayServe](https://docs.ray.io/en/master/serve/index.html) whi
 as separate python workers so the inference can be performed in parallel when serving multiple custom models.
 
 ```python
+import argparse
 import kserve
 from typing import Dict
 from ray import serve
+from kserve import logging
 
 @serve.deployment(name="custom-model", num_replicas=2)
 class AlexNetModel(kserve.Model):
@@ -430,11 +686,22 @@ class AlexNetModel(kserve.Model):
     def predict(self, request: Dict) -> Dict:
         ...
 
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()    
 if __name__ == "__main__":
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
     kserve.ModelServer().start({"custom-model": AlexNetModel})
 ```
 fractional gpu example
 ```python
+import argparse
+from typing import Dict
+import ray
+from ray import serve
+import kserve
+from kserve import logging
+
 @serve.deployment(name="custom-model", num_replicas=2, ray_actor_options={"num_cpus":1, "num_gpus": 0.5})
 class AlexNetModel(kserve.Model):
     def __init__(self):
@@ -448,7 +715,11 @@ class AlexNetModel(kserve.Model):
     def predict(self, request: Dict) -> Dict:
         ...
 
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()      
 if __name__ == "__main__":
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
     ray.init(num_cpus=2, num_gpus=1)
     kserve.ModelServer().start({"custom-model": AlexNetModel})
 ```
