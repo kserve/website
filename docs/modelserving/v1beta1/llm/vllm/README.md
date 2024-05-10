@@ -28,7 +28,7 @@ The LLaMA model can be downloaded from [huggingface](https://huggingface.co/meta
           command:
             - python3
             - -m
-            - vllm.entrypoints.api_server
+            - vllm.entrypoints.openai.api_server
           env:
             - name: STORAGE_URI
               value: gs://kfserving-examples/llm/huggingface/llama
@@ -69,7 +69,7 @@ to find out your ingress IP and port.
 You can run the [benchmarking script](./benchmark.py) and send the inference request to the exposed URL.
 
 ```bash
-python benchmark.py --backend vllm --port ${INGRESS_PORT} --host ${INGRESS_HOST} --dataset ./ShareGPT_V3_unfiltered_cleaned_split.json --tokenizer ./tokenizer --request-rate 5
+python benchmark_serving.py --backend openai --port ${INGRESS_PORT} --host ${INGRESS_HOST} --dataset ./ShareGPT_V3_unfiltered_cleaned_split.json --tokenizer ./tokenizer --request-rate 5
 ```
 
 !!! success "Expected Output"
