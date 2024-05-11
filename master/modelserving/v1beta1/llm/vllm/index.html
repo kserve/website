@@ -1178,7 +1178,7 @@ We have work in progress integrating <code>vLLM</code> with <code>Open Inference
 <span class="w">      </span><span class="nt">command</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python3</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-m</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm.entrypoints.api_server</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm.entrypoints.openai.api_server</span>
 <span class="w">      </span><span class="nt">env</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STORAGE_URI</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/llm/huggingface/llama</span>
@@ -1217,7 +1217,7 @@ We have work in progress integrating <code>vLLM</code> with <code>Open Inference
 <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out your ingress IP and port.</p>
 <p>You can run the <a href="benchmark.py">benchmarking script</a> and send the inference request to the exposed URL.</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>benchmark.py<span class="w"> </span>--backend<span class="w"> </span>vllm<span class="w"> </span>--port<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span>--host<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="w"> </span>--dataset<span class="w"> </span>./ShareGPT_V3_unfiltered_cleaned_split.json<span class="w"> </span>--tokenizer<span class="w"> </span>./tokenizer<span class="w"> </span>--request-rate<span class="w"> </span><span class="m">5</span>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>benchmark_serving.py<span class="w"> </span>--backend<span class="w"> </span>openai<span class="w"> </span>--port<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span>--host<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="w"> </span>--dataset<span class="w"> </span>./ShareGPT_V3_unfiltered_cleaned_split.json<span class="w"> </span>--tokenizer<span class="w"> </span>./tokenizer<span class="w"> </span>--request-rate<span class="w"> </span><span class="m">5</span>
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
