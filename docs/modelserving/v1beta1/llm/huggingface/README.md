@@ -5,7 +5,7 @@ In this example, we deploy a Llama2 model from Hugging Face by running an `Infer
 
 ### Serve the Hugging Face LLM model using vLLM
 KServe Hugging Face runtime by default uses vLLM to serve the LLM models for faster inference, higher throughput than Hugging Face API, implemented with paged attention, continous batching, optmized CUDA kernel. 
-You can still use `--disable_vllm` flag to fall back to perform the inference using Hugging Face API.
+You can still use `--backend=huggingface` in the container args to fall back to perform the inference using Hugging Face API.
 
 === "Yaml"
 
@@ -56,14 +56,28 @@ curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http:/
     {"predictions":["Where is Eiffel Tower?\nEiffel Tower is located in Paris, France. It is one of the most iconic landmarks in the world and stands at 324 meters (1,063 feet) tall. The tower was built for the 1889 World's Fair in Paris and was designed by Gustave Eiffel. It is made of iron and has four pillars that support the tower. The Eiffel Tower is a popular tourist destination and offers stunning views of the city of Paris."]}
   ```
 
-KServe Hugging Face vLLM runtime supports the [/generate](https://github.com/kserve/open-inference-protocol/blob/main/specification/protocol/generate_rest.yaml) endpoint schema for text generation endpoint.
+KServe Hugging Face vLLM runtime supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for inference
+
+Sample OpenAI Completions request:
 
 ```bash
-curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v2/models/${MODEL_NAME}/generate -d '{"text_input": "The capital of france is [MASK]." }'
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "<prompt>", "stream":false, "max_tokens": 30 }'
 
 ```
 !!! success "Expected Output"
 
   ```{ .bash .no-copy }
-    {"text_output":"Where is Eiffel Tower?\nThe Eiffel Tower is located in the 7th arrondissement of Paris, France. It stands on the Champ de Mars, a large public park next to the Seine River. The tower's exact address is:\n\n2 Rue du Champ de Mars, 75007 Paris, France.","model_name":"llama2","model_version":null,"details":null}
+    {"id":"cmpl-7c654258ab4d4f18b31f47b553439d96","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"<generated_text>"}],"created":1715353182,"model":"llama2","system_fingerprint":null,"object":"text_completion","usage":{"completion_tokens":26,"prompt_tokens":4,"total_tokens":30}}
+  ```
+
+Sample OpenAI Chat request:
+
+```bash
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/chat/completions -d '{"model": "${MODEL_NAME}", "messages": [{"role": "user","content": "<message>"}], "stream":false }'
+
+```
+!!! success "Expected Output"
+
+  ```{ .bash .no-copy }
+    {"id":"cmpl-87ee252062934e2f8f918dce011e8484","choices":[{"finish_reason":"length","index":0,"message":{"content":"<generated_response>","tool_calls":null,"role":"assistant","function_call":null},"logprobs":null}],"created":1715353461,"model":"llama2","system_fingerprint":null,"object":"chat.completion","usage":{"completion_tokens":30,"prompt_tokens":3,"total_tokens":33}}
   ```
