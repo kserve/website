@@ -21,11 +21,11 @@ Create an InferenceService with triton predictor by specifying the `storageUri` 
     name: huggingface-triton
     spec:
     predictor:
-        model:
+      model:
         args:
         - --log-verbose=1
         modelFormat:
-            name: triton
+          name: triton
         protocolVersion: v2
         resources:
           limits:
@@ -38,13 +38,13 @@ Create an InferenceService with triton predictor by specifying the `storageUri` 
         runtimeVersion: 23.10-py3
         storageUri: gs://kfserving-examples/models/triton/huggingface/model_repository
     transformer:
-        containers:
-        - args:
+      containers:
+      - args:
         - --model_name=bert
         - --model_id=bert-base-uncased
         - --predictor_protocol=v2
         - --tensor_input_names=input_ids
-        image: kserve/huggingfaceserver:v0.12.0
+        image: kserve/huggingfaceserver:v0.13.0
         name: kserve-container
         resources:
           limits:
