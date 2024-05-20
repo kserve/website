@@ -9,6 +9,7 @@ KServe Hugging Face runtime by default uses vLLM to serve the LLM models for fas
 
 You can still use `--disable_vllm` flag to fall back to perform the inference using Hugging Face API.
 
+
 === "Yaml"
 
     ```yaml
@@ -93,6 +94,7 @@ Sample OpenAI Chat request:
 
 ```bash
 curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d '{"instances": ["Where is Eiffel Tower?"] }'
+
 ```
 !!! success "Expected Output"
 
