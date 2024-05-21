@@ -7,7 +7,7 @@ In this example, we deploy a Llama2 model from Hugging Face by running an `Infer
 
 KServe Hugging Face runtime by default uses vLLM to serve the LLM models for faster inference and higher throughput than the Hugging Face API, implemented with paged attention, continuous batching and an optimized CUDA kernel. 
 
-You can still use `--disable_vllm` flag to fall back to perform the inference using Hugging Face API.
+You can still use `--backend=huggingface` arg to fall back to perform the inference using Hugging Face API.
 
 
 === "Yaml"
