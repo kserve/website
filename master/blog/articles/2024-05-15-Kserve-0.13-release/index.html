@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/sdk_docs/docs/V1beta1IngressConfig/" rel="canonical"/>
+<link href="https://kserve.io/website/master/blog/articles/2024-05-15-Kserve-0.13-release/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.0, mkdocs-material-8.0.5" name="generator"/>
-<title>V1beta1IngressConfig - KServe Documentation Website</title>
+<title>From Serverless Predictive Inference to Generative Inference: Introducing KServe v0.13 - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#v1beta1ingressconfig">
+<a class="md-skip" href="#from-serverless-predictive-inference-to-generative-inference-introducing-kserve-v013">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              V1beta1IngressConfig
+              From Serverless Predictive Inference to Generative Inference: Introducing KServe v0.13
             
           </span>
 </div>
@@ -140,7 +140,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-tabs__link" href="../2023-10-08-KServe-0.11-release/">
         Blog
       </a>
 </li>
@@ -980,7 +980,7 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sdk_doc/">
+<a class="md-nav__link" href="../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
@@ -1042,27 +1042,27 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-nav__link" href="../2023-10-08-KServe-0.11-release/">
         KServe 0.11 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-nav__link" href="../2023-02-05-KServe-0.10-release/">
         KServe 0.10 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-07-21-KServe-0.9-release/">
+<a class="md-nav__link" href="../2022-07-21-KServe-0.9-release/">
         KServe 0.9 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-02-18-KServe-0.8-release/">
+<a class="md-nav__link" href="../2022-02-18-KServe-0.8-release/">
         KServe 0.8 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-10-11-KServe-0.7-release/">
+<a class="md-nav__link" href="../2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
       </a>
 </li>
@@ -1082,7 +1082,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-09-27-kfserving-transition/">
+<a class="md-nav__link" href="../2021-09-27-kfserving-transition/">
         KFserving Transition
       </a>
 </li>
@@ -1132,8 +1132,51 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#properties">
-    Properties
+<a class="md-nav__link" href="#enhanced-hugging-face-runtime-support">
+    Enhanced Hugging Face Runtime Support
+  </a>
+<nav aria-label="Enhanced Hugging Face Runtime Support" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vllm-support">
+    vLLM support
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#openai-schema-integration">
+    OpenAI Schema Integration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#future-plan">
+    Future Plan
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#other-changes">
+    Other Changes
+  </a>
+<nav aria-label="Other Changes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-new">
+    What's New?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-changed">
+    What's Changed?
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#join-the-community">
+    Join the community
   </a>
 </li>
 </ul>
@@ -1143,72 +1186,107 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/sdk_docs/docs/V1beta1IngressConfig.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/blog/articles/2024-05-15-Kserve-0.13-release.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="v1beta1ingressconfig">V1beta1IngressConfig<a class="headerlink" href="#v1beta1ingressconfig" title="Permanent link">¶</a></h1>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>domain_template</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>ingress_class_name</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>ingress_domain</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>ingress_gateway</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>ingress_service</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>local_gateway</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>local_gateway_service</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>url_scheme</strong></td>
-<td><strong>str</strong></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-</tbody>
-</table>
-<p><a href="../../sdk_doc/#documentation-for-models">[Back to Model list]</a> <a href="../../sdk_doc/#documentation-for-api-endpoints">[Back to API list]</a> <a href="../../sdk_doc/">[Back to README]</a></p>
+<h1 id="from-serverless-predictive-inference-to-generative-inference-introducing-kserve-v013">From Serverless Predictive Inference to Generative Inference: Introducing KServe v0.13<a class="headerlink" href="#from-serverless-predictive-inference-to-generative-inference-introducing-kserve-v013" title="Permanent link">¶</a></h1>
+<p>We are excited to unveil KServe v0.13, marking a significant leap forward in evolving cloud native model serving to meet the demands of Generative AI inference. This release is highlighted by three pivotal updates: enhanced Hugging Face runtime, robust vLLM backend support for Generative Models, and the integration of OpenAI protocol standards.
+<img alt="kserve-components" src="../../../images/kserve_new.png"/></p>
+<p>Below are a summary of the key changes.</p>
+<h2 id="enhanced-hugging-face-runtime-support">Enhanced Hugging Face Runtime Support<a class="headerlink" href="#enhanced-hugging-face-runtime-support" title="Permanent link">¶</a></h2>
+<p>KServe v0.13 enriches its Hugging Face runtime and now supports running Hugging Face models out-of-the-box. KServe v0.13 implements a <a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">KServe Hugging Face Serving Runtime</a>, <code>kserve-huggingfaceserver</code>. With this implementation, KServe can now automatically infer a <a href="https://huggingface.co/tasks">task</a> from model architecture and select the optimized serving runtime. Currently supported tasks include sequence classification, token classification, fill mask, text generation, and text to text generation.</p>
+<p><img alt="kserve-huggingface" src="../../../images/kserve-huggingface.png"/></p>
+<p>Here is an example to serve BERT model by deploying an Inference Service with Hugging Face runtime for classification task.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-bert</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=bert</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=bert-base-uncased</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--tensor_input_names=input_ids</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100m</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+</code></pre></div>
+<p>You can also deploy BERT on the more optimized inference runtime like Triton using Hugging Face Runtime for pre/post processing, see more details <a href="https://kserve.github.io/website/master/modelserving/v1beta1/triton/huggingface/">here</a>.</p>
+<h3 id="vllm-support">vLLM support<a class="headerlink" href="#vllm-support" title="Permanent link">¶</a></h3>
+<p>Version 0.13 introduces dedicated runtime support for <a href="https://docs.vllm.ai/en/latest/">vLLM</a>, for enhanced transformer model serving. This support now includes auto-mapping vLLMs as the backend for supported tasks, streamlining the deployment process and optimizing performance. If vLLM does not support a particular task, it will default to the Hugging Face backend. See example below. </p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama2</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=meta-llama/Llama-2-7b-chat-hf</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+</code></pre></div>
+<p>See more details in our updated docs to <a href="https://kserve.github.io/website/master/modelserving/v1beta1/llm/huggingface/">Deploy the Llama2 model with Hugging Face LLM Serving Runtime</a>.</p>
+<p>Additionally, if the Hugging Face backend is preferred over vLLM, vLLM auto-mapping can be disabled with the <code>--backend=huggingface</code> arg.</p>
+<h3 id="openai-schema-integration">OpenAI Schema Integration<a class="headerlink" href="#openai-schema-integration" title="Permanent link">¶</a></h3>
+<p>Embracing the OpenAI protocol, KServe v0.13 now supports three specific endpoints for generative transformer models:</p>
+<ul>
+<li><code>/openai/v1/completions</code></li>
+<li><code>/openai/v1/chat/completions</code></li>
+<li><code>/openai/v1/models</code></li>
+</ul>
+<p>These endpoints are useful for generative transformer models, which take in messages and return a model-generated message output. The <a href="https://platform.openai.com/docs/guides/text-generation/chat-completions-api">chat completions endpoint</a> is designed for easily handling multi-turn conversations, while still being useful for single-turn tasks. The <a href="https://platform.openai.com/docs/guides/text-generation/completions-api">completions endpoint</a> is now a legacy endpoint that differs with the chat completions endpoint in that the interface for completions is a freeform text string called a <code>prompt</code>. Read more about the <a href="https://platform.openai.com/docs/api-reference/chat">chat completions</a> and <a href="https://platform.openai.com/docs/api-reference/completions">completions</a> endpoints int the OpenAI API docs. </p>
+<p>This update fosters a standardized approach to transformer model serving, ensuring compatibility with a broader spectrum of models and tools, and enhances the platform's versatility. The API can be directly used with OpenAI's client libraries or third-party tools, like LangChain or LlamaIndex. </p>
+<h3 id="future-plan">Future Plan<a class="headerlink" href="#future-plan" title="Permanent link">¶</a></h3>
+<ul>
+<li>Support other tasks like text embeddings <a href="https://github.com/kserve/kserve/issues/3572]">#3572</a></li>
+<li>Support more LLM backend options in the future, such as TensorRT-LLM.</li>
+<li>Enrich text generation metrics for Throughput(tokens/sec), TTFT(Time to first token) <a href="https://github.com/kserve/kserve/issues/3461">#3461</a>.</li>
+<li>KEDA integration for token based LLM Autoscaling <a href="https://github.com/kserve/kserve/issues/3561">#3561</a>.</li>
+</ul>
+<h2 id="other-changes">Other Changes<a class="headerlink" href="#other-changes" title="Permanent link">¶</a></h2>
+<p>This release also includes several enhancements and changes:</p>
+<h3 id="whats-new">What's New?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
+<ul>
+<li>Async streaming support for v1 endpoints <a href="https://github.com/kserve/kserve/issues/3402">#3402</a>.</li>
+<li>Support for <code>.json</code> and <code>.ubj</code> model formats in the XGBoost server image <a href="https://github.com/kserve/kserve/issues/3546">#3546</a>.</li>
+<li>Enhanced flexibility in KServe by allowing the configuration of multiple domains for an inference service <a href="https://github.com/kserve/kserve/issues/2747">#2747</a>.</li>
+<li>Enhanced the manager setup to dynamically adapt based on available CRDs, improving operational flexibility and reliability across different deployment environments <a href="https://github.com/kserve/kserve/issues/3470">#3470</a>.</li>
+</ul>
+<h3 id="whats-changed">What's Changed?<a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></h3>
+<ul>
+<li>Removed Seldon Alibi dependency <a href="https://github.com/kserve/kserve/issues/3380">#3380</a>.</li>
+<li>Removal of conversion webhook from manifests. <a href="https://github.com/kserve/kserve/issues/3344">#3344</a>.</li>
+</ul>
+<p>For complete details on the new features and updates, visit our <a href="https://github.com/kserve/kserve/releases/tag/v0.13.0-rc0">official release notes</a>.</p>
+<h2 id="join-the-community">Join the community<a class="headerlink" href="#join-the-community" title="Permanent link">¶</a></h2>
+<ul>
+<li>Visit our <a href="https://kserve.github.io/website/">Website</a> or <a href="https://github.com/kserve">GitHub</a></li>
+<li>Join the Slack (<a href="https://github.com/kserve/community?tab=readme-ov-file#questions-and-issues">#kserve</a>)</li>
+<li>Attend our community meeting by subscribing to the <a href="https://wiki.lfaidata.foundation/display/kserve/calendars">KServe calendar</a>.</li>
+<li>View our <a href="https://github.com/kserve/community">community github repository</a> to learn how to make contributions. We are excited to work with you to make KServe better and promote its adoption!</li>
+</ul>
+<p>Thanks for all the contributors who have made the commits to 0.13 release!</p>
+<p>The KServe Project</p>
 </article>
 </div>
 </div>

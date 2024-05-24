@@ -32,7 +32,7 @@
 <aside class="md-banner">
 <div class="md-banner__inner md-grid md-typeset">
 <h1>
-<b>KServe v0.11 is Released</b>, <a href="/website/0.11/blog/articles/2023-10-08-KServe-0.11-release/">Read blog &gt;&gt;</a>
+<b>KServe v0.13 is Released</b>, <a href="/website/0.13/blog/articles/2024-05-15-Kserve-0.13-release/">Read blog &gt;&gt;</a>
 </h1>
 </div>
 </aside>
@@ -1197,6 +1197,11 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#kserve.model.BaseKServeModel.healthy">
+    healthy
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#kserve.model.BaseKServeModel.stop">
     stop
   </a>
@@ -1480,9 +1485,7 @@
 <div class="doc doc-contents">
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">158</span>
 <span class="normal">159</span>
 <span class="normal">160</span>
 <span class="normal">161</span>
@@ -1705,7 +1708,8 @@
 <span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
-<span class="normal">381</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ModelServer</span><span class="p">:</span>
+<span class="normal">381</span>
+<span class="normal">382</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ModelServer</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
@@ -1717,8 +1721,6 @@
         <span class="n">enable_grpc</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_grpc</span><span class="p">,</span>
         <span class="n">enable_docs_url</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span>
         <span class="n">enable_latency_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span>
-        <span class="n">configure_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">,</span>
-        <span class="n">log_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">,</span>
         <span class="n">access_log_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">"""KServe ModelServer Constructor</span>
@@ -1733,9 +1735,12 @@
 <span class="sd">            enable_grpc: Whether to turn on grpc server. Default: ``True``</span>
 <span class="sd">            enable_docs_url: Whether to turn on ``/docs`` Swagger UI. Default: ``False``.</span>
 <span class="sd">            enable_latency_logging: Whether to log latency metric. Default: ``True``.</span>
-<span class="sd">            configure_logging: Whether to configure KServe and Uvicorn logging. Default: ``True``.</span>
-<span class="sd">            log_config: File path or dict containing log config. Default: ``None``.</span>
-<span class="sd">            access_log_format: Format to set for the access log (provided by asgi-logger). Default: ``None``</span>
+<span class="sd">            access_log_format: Format to set for the access log (provided by asgi-logger). Default: ``None``.</span>
+<span class="sd">                               it allows to override only the `uvicorn.access`'s format configuration with a richer</span>
+<span class="sd">                               set of fields (output hardcoded to `stdout`). This limitation is currently due to the</span>
+<span class="sd">                               ASGI specs that don't describe how access logging should be implemented in detail</span>
+<span class="sd">                               (please refer to this Uvicorn</span>
+<span class="sd">                               [github issue](https://github.com/encode/uvicorn/issues/527) for more info).</span>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span> <span class="o">=</span> <span class="n">registered_models</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">http_port</span> <span class="o">=</span> <span class="n">http_port</span>
@@ -1756,17 +1761,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_grpc_server</span> <span class="o">=</span> <span class="n">GRPCServer</span><span class="p">(</span>
                 <span class="n">grpc_port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span>
             <span class="p">)</span>
-
-        <span class="c1"># Logs can be passed as a path to a file or a dictConfig.</span>
-        <span class="c1"># We rely on Uvicorn to configure the loggers for us.</span>
-        <span class="k">if</span> <span class="n">configure_logging</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_config</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">log_config</span> <span class="k">if</span> <span class="n">log_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">KSERVE_LOG_CONFIG</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># By setting log_config to None we tell Uvicorn not to configure logging</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_config</span> <span class="o">=</span> <span class="kc">None</span>
-
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+            <span class="c1"># If the logger does not have any handlers, then the logger is not configured.</span>
+            <span class="c1"># For backward compatibility, we configure the logger here.</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span> <span class="o">=</span> <span class="n">access_log_format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -1832,7 +1831,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span>
-                    <span class="n">log_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_config</span><span class="p">,</span>
+                    <span class="c1"># By setting log_config to None we tell Uvicorn not to configure logging as it is already</span>
+                    <span class="c1"># configured by kserve.</span>
+                    <span class="n">log_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">access_log_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -1852,7 +1853,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span><span class="p">,</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span>
-                    <span class="n">log_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_config</span><span class="p">,</span>
+                    <span class="c1"># By setting log_config to None we tell Uvicorn not to configure logging as it is already</span>
+                    <span class="c1"># configured by kserve.</span>
+                    <span class="n">log_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                     <span class="n">access_log_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">):</span>
@@ -1936,7 +1939,7 @@
 <div class="doc doc-children">
 <div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="kserve.model_server.ModelServer.__init__">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">http_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span> <span class="n">grpc_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_threads</span><span class="p">,</span> <span class="n">max_asyncio_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_asyncio_workers</span><span class="p">,</span> <span class="n">registered_models</span><span class="o">=</span><span class="n">ModelRepository</span><span class="p">(),</span> <span class="n">enable_grpc</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_grpc</span><span class="p">,</span> <span class="n">enable_docs_url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span> <span class="n">enable_latency_logging</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span> <span class="n">configure_logging</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">,</span> <span class="n">log_config</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">,</span> <span class="n">access_log_format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">http_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span> <span class="n">grpc_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_threads</span><span class="p">,</span> <span class="n">max_asyncio_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_asyncio_workers</span><span class="p">,</span> <span class="n">registered_models</span><span class="o">=</span><span class="n">ModelRepository</span><span class="p">(),</span> <span class="n">enable_grpc</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_grpc</span><span class="p">,</span> <span class="n">enable_docs_url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span> <span class="n">enable_latency_logging</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span> <span class="n">access_log_format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">)</span></code>
 <a class="headerlink" href="#kserve.model_server.ModelServer.__init__" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>KServe ModelServer Constructor</p>
@@ -2078,41 +2081,18 @@
 </td>
 </tr>
 <tr class="doc-section-item">
-<td><code>configure_logging</code></td>
-<td>
-<code>bool</code>
-</td>
-<td>
-<div class="doc-md-description">
-<p>Whether to configure KServe and Uvicorn logging. Default: <code>True</code>.</p>
-</div>
-</td>
-<td>
-<code><span title="args.configure_logging">configure_logging</span></code>
-</td>
-</tr>
-<tr class="doc-section-item">
-<td><code>log_config</code></td>
-<td>
-<code><span title="typing.Optional">Optional</span>[<span title="typing.Union">Union</span>[<span title="typing.Dict">Dict</span>, str]]</code>
-</td>
-<td>
-<div class="doc-md-description">
-<p>File path or dict containing log config. Default: <code>None</code>.</p>
-</div>
-</td>
-<td>
-<code><span title="args.log_config_file">log_config_file</span></code>
-</td>
-</tr>
-<tr class="doc-section-item">
 <td><code>access_log_format</code></td>
 <td>
 <code>str</code>
 </td>
 <td>
 <div class="doc-md-description">
-<p>Format to set for the access log (provided by asgi-logger). Default: <code>None</code></p>
+<p>Format to set for the access log (provided by asgi-logger). Default: <code>None</code>.
+               it allows to override only the <code>uvicorn.access</code>'s format configuration with a richer
+               set of fields (output hardcoded to <code>stdout</code>). This limitation is currently due to the
+               ASGI specs that don't describe how access logging should be implemented in detail
+               (please refer to this Uvicorn
+               <a href="https://github.com/encode/uvicorn/issues/527">github issue</a> for more info).</p>
 </div>
 </td>
 <td>
@@ -2123,9 +2103,7 @@
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">159</span>
 <span class="normal">160</span>
 <span class="normal">161</span>
 <span class="normal">162</span>
@@ -2182,10 +2160,7 @@
 <span class="normal">213</span>
 <span class="normal">214</span>
 <span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">216</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
     <span class="n">grpc_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span>
@@ -2196,8 +2171,6 @@
     <span class="n">enable_grpc</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_grpc</span><span class="p">,</span>
     <span class="n">enable_docs_url</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span>
     <span class="n">enable_latency_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span>
-    <span class="n">configure_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">,</span>
-    <span class="n">log_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">,</span>
     <span class="n">access_log_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">"""KServe ModelServer Constructor</span>
@@ -2212,9 +2185,12 @@
 <span class="sd">        enable_grpc: Whether to turn on grpc server. Default: ``True``</span>
 <span class="sd">        enable_docs_url: Whether to turn on ``/docs`` Swagger UI. Default: ``False``.</span>
 <span class="sd">        enable_latency_logging: Whether to log latency metric. Default: ``True``.</span>
-<span class="sd">        configure_logging: Whether to configure KServe and Uvicorn logging. Default: ``True``.</span>
-<span class="sd">        log_config: File path or dict containing log config. Default: ``None``.</span>
-<span class="sd">        access_log_format: Format to set for the access log (provided by asgi-logger). Default: ``None``</span>
+<span class="sd">        access_log_format: Format to set for the access log (provided by asgi-logger). Default: ``None``.</span>
+<span class="sd">                           it allows to override only the `uvicorn.access`'s format configuration with a richer</span>
+<span class="sd">                           set of fields (output hardcoded to `stdout`). This limitation is currently due to the</span>
+<span class="sd">                           ASGI specs that don't describe how access logging should be implemented in detail</span>
+<span class="sd">                           (please refer to this Uvicorn</span>
+<span class="sd">                           [github issue](https://github.com/encode/uvicorn/issues/527) for more info).</span>
 <span class="sd">    """</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span> <span class="o">=</span> <span class="n">registered_models</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">http_port</span> <span class="o">=</span> <span class="n">http_port</span>
@@ -2235,17 +2211,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_grpc_server</span> <span class="o">=</span> <span class="n">GRPCServer</span><span class="p">(</span>
             <span class="n">grpc_port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span>
         <span class="p">)</span>
-
-    <span class="c1"># Logs can be passed as a path to a file or a dictConfig.</span>
-    <span class="c1"># We rely on Uvicorn to configure the loggers for us.</span>
-    <span class="k">if</span> <span class="n">configure_logging</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_config</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">log_config</span> <span class="k">if</span> <span class="n">log_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">KSERVE_LOG_CONFIG</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># By setting log_config to None we tell Uvicorn not to configure logging</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log_config</span> <span class="o">=</span> <span class="kc">None</span>
-
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="c1"># If the logger does not have any handlers, then the logger is not configured.</span>
+        <span class="c1"># For backward compatibility, we configure the logger here.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span> <span class="o">=</span> <span class="n">access_log_format</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
@@ -2263,8 +2233,7 @@ By default, this will shut down the server gracefully.</p>
 <p>This can be called by a custom exception handler that wants to defer to the default handler behavior.</p>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">348</span>
-<span class="normal">349</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">349</span>
 <span class="normal">350</span>
 <span class="normal">351</span>
 <span class="normal">352</span>
@@ -2275,7 +2244,8 @@ By default, this will shut down the server gracefully.</p>
 <span class="normal">357</span>
 <span class="normal">358</span>
 <span class="normal">359</span>
-<span class="normal">360</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span>
+<span class="normal">360</span>
+<span class="normal">361</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">default_exception_handler</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Default exception handler for event loop.</span>
@@ -2304,8 +2274,7 @@ will be a reference to the active event loop, 'context' will be a dict object (s
 documentation for details about context).</p>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">334</span>
-<span class="normal">335</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">335</span>
 <span class="normal">336</span>
 <span class="normal">337</span>
 <span class="normal">338</span>
@@ -2316,7 +2285,8 @@ documentation for details about context).</p>
 <span class="normal">343</span>
 <span class="normal">344</span>
 <span class="normal">345</span>
-<span class="normal">346</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span>
+<span class="normal">346</span>
+<span class="normal">347</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_exception_handler</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">):</span>
@@ -2368,8 +2338,7 @@ documentation for details about context).</p>
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">372</span>
-<span class="normal">373</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">373</span>
 <span class="normal">374</span>
 <span class="normal">375</span>
 <span class="normal">376</span>
@@ -2377,7 +2346,8 @@ documentation for details about context).</p>
 <span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
-<span class="normal">381</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">):</span>
+<span class="normal">381</span>
+<span class="normal">382</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Register a model to the model server.</span>
 
 <span class="sd">    Args:</span>
@@ -2440,15 +2410,15 @@ documentation for details about context).</p>
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">362</span>
-<span class="normal">363</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">363</span>
 <span class="normal">364</span>
 <span class="normal">365</span>
 <span class="normal">366</span>
 <span class="normal">367</span>
 <span class="normal">368</span>
 <span class="normal">369</span>
-<span class="normal">370</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_model_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">:</span> <span class="n">DeploymentHandle</span><span class="p">):</span>
+<span class="normal">370</span>
+<span class="normal">371</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">register_model_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_handle</span><span class="p">:</span> <span class="n">DeploymentHandle</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Register a model handle to the model server.</span>
 
 <span class="sd">    Args:</span>
@@ -2496,7 +2466,10 @@ documentation for details about context).</p>
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">221</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
 <span class="normal">222</span>
 <span class="normal">223</span>
 <span class="normal">224</span>
@@ -2591,7 +2564,8 @@ documentation for details about context).</p>
 <span class="normal">313</span>
 <span class="normal">314</span>
 <span class="normal">315</span>
-<span class="normal">316</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">start</span><span class="p">(</span>
+<span class="normal">316</span>
+<span class="normal">317</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">start</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">BaseKServeModel</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Deployment</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Start the model server with a set of registered models.</span>
@@ -2653,7 +2627,9 @@ documentation for details about context).</p>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span>
-                <span class="n">log_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_config</span><span class="p">,</span>
+                <span class="c1"># By setting log_config to None we tell Uvicorn not to configure logging as it is already</span>
+                <span class="c1"># configured by kserve.</span>
+                <span class="n">log_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">access_log_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -2673,7 +2649,9 @@ documentation for details about context).</p>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span>
-                <span class="n">log_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log_config</span><span class="p">,</span>
+                <span class="c1"># By setting log_config to None we tell Uvicorn not to configure logging as it is already</span>
+                <span class="c1"># configured by kserve.</span>
+                <span class="n">log_config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                 <span class="n">access_log_format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">workers</span><span class="p">):</span>
@@ -2729,8 +2707,7 @@ documentation for details about context).</p>
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model_server.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">318</span>
-<span class="normal">319</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">319</span>
 <span class="normal">320</span>
 <span class="normal">321</span>
 <span class="normal">322</span>
@@ -2743,7 +2720,8 @@ documentation for details about context).</p>
 <span class="normal">329</span>
 <span class="normal">330</span>
 <span class="normal">331</span>
-<span class="normal">332</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="normal">332</span>
+<span class="normal">333</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Stop the instances of REST and gRPC model servers.</span>
 
 <span class="sd">    Args:</span>
@@ -2802,7 +2780,16 @@ documentation for details about context).</p>
 <span class="normal">62</span>
 <span class="normal">63</span>
 <span class="normal">64</span>
-<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseKServeModel</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">BaseKServeModel</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    A base class to inherit all of the kserve models from.</span>
 
@@ -2818,6 +2805,15 @@ documentation for details about context).</p>
 <span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">healthy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Check the health of this model. By default returns `self.ready`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if healthy, false otherwise</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ready</span>
 
     <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""Stop handler can be overridden to perform model teardown"""</span>
@@ -2882,6 +2878,54 @@ documentation for details about context).</p>
 </div>
 </div>
 <div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="kserve.model.BaseKServeModel.healthy">
+<code class="highlight language-python"><span class="n">healthy</span><span class="p">()</span></code>
+<a class="headerlink" href="#kserve.model.BaseKServeModel.healthy" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Check the health of this model. By default returns <code>self.ready</code>.</p>
+<p><span class="doc-section-title">Returns:</span></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code>bool</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>True if healthy, false otherwise</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>kserve/model.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">healthy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Check the health of this model. By default returns `self.ready`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if healthy, false otherwise</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ready</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="kserve.model.BaseKServeModel.stop">
 <code class="highlight language-python"><span class="n">stop</span><span class="p">()</span></code>
 <a class="headerlink" href="#kserve.model.BaseKServeModel.stop" title="Permanent link">¶</a></h3>
@@ -2889,9 +2933,9 @@ documentation for details about context).</p>
 <p>Stop handler can be overridden to perform model teardown</p>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Stop handler can be overridden to perform model teardown"""</span>
     <span class="k">pass</span>
 </code></pre></div></td></tr></table></div>
@@ -2910,16 +2954,7 @@ documentation for details about context).</p>
               Bases: <code><a class="autorefs autorefs-internal" title="kserve.model.BaseKServeModel" href="#kserve.model.BaseKServeModel">BaseKServeModel</a></code></p>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">119</span>
 <span class="normal">120</span>
 <span class="normal">121</span>
 <span class="normal">122</span>
@@ -3248,7 +3283,16 @@ documentation for details about context).</p>
 <span class="normal">445</span>
 <span class="normal">446</span>
 <span class="normal">447</span>
-<span class="normal">448</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseKServeModel</span><span class="p">):</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">BaseKServeModel</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PredictorConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">"""KServe Model Public Interface</span>
 
@@ -3677,16 +3721,7 @@ documentation for details about context).</p>
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">154</span>
 <span class="normal">155</span>
 <span class="normal">156</span>
 <span class="normal">157</span>
@@ -3748,7 +3783,16 @@ documentation for details about context).</p>
 <span class="normal">213</span>
 <span class="normal">214</span>
 <span class="normal">215</span>
-<span class="normal">216</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">body</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">CloudEvent</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">],</span>
     <span class="n">verb</span><span class="p">:</span> <span class="n">InferenceVerb</span> <span class="o">=</span> <span class="n">InferenceVerb</span><span class="o">.</span><span class="n">PREDICT</span><span class="p">,</span>
@@ -3874,16 +3918,7 @@ documentation for details about context).</p>
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">120</span>
 <span class="normal">121</span>
 <span class="normal">122</span>
 <span class="normal">123</span>
@@ -3906,7 +3941,16 @@ documentation for details about context).</p>
 <span class="normal">140</span>
 <span class="normal">141</span>
 <span class="normal">142</span>
-<span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PredictorConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PredictorConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""KServe Model Public Interface</span>
 
 <span class="sd">    Model is intended to be subclassed to implement the model handlers.</span>
@@ -4017,16 +4061,7 @@ The default implementation makes call to the explainer if <code>explainer_host</
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">421</span>
-<span class="normal">422</span>
-<span class="normal">423</span>
-<span class="normal">424</span>
-<span class="normal">425</span>
-<span class="normal">426</span>
-<span class="normal">427</span>
-<span class="normal">428</span>
-<span class="normal">429</span>
-<span class="normal">430</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">430</span>
 <span class="normal">431</span>
 <span class="normal">432</span>
 <span class="normal">433</span>
@@ -4044,7 +4079,16 @@ The default implementation makes call to the explainer if <code>explainer_host</
 <span class="normal">445</span>
 <span class="normal">446</span>
 <span class="normal">447</span>
-<span class="normal">448</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""`explain` handler can be overridden to implement the model explanation.</span>
 <span class="sd">    The default implementation makes call to the explainer if ``explainer_host`` is specified.</span>
 
@@ -4106,15 +4150,15 @@ The <code>self.ready</code> should be set to True after the model is loaded. The
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">260</span>
-<span class="normal">261</span>
-<span class="normal">262</span>
-<span class="normal">263</span>
-<span class="normal">264</span>
-<span class="normal">265</span>
-<span class="normal">266</span>
-<span class="normal">267</span>
-<span class="normal">268</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Load handler can be overridden to load the model from storage.</span>
 <span class="sd">    The `self.ready` should be set to True after the model is loaded. The flag is used for model health check.</span>
 
@@ -4201,20 +4245,20 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">303</span>
-<span class="normal">304</span>
-<span class="normal">305</span>
-<span class="normal">306</span>
-<span class="normal">307</span>
-<span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">312</span>
 <span class="normal">313</span>
 <span class="normal">314</span>
 <span class="normal">315</span>
-<span class="normal">316</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">InferResponse</span><span class="p">],</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">InferResponse</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""The `postprocess` handler can be overridden for inference result or response transformation.</span>
@@ -4306,16 +4350,7 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">389</span>
-<span class="normal">390</span>
-<span class="normal">391</span>
-<span class="normal">392</span>
-<span class="normal">393</span>
-<span class="normal">394</span>
-<span class="normal">395</span>
-<span class="normal">396</span>
-<span class="normal">397</span>
-<span class="normal">398</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">398</span>
 <span class="normal">399</span>
 <span class="normal">400</span>
 <span class="normal">401</span>
@@ -4336,7 +4371,16 @@ The predictor sends back the inference result in <code>Dict</code> for v1 endpoi
 <span class="normal">416</span>
 <span class="normal">417</span>
 <span class="normal">418</span>
-<span class="normal">419</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">payload</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">ModelInferRequest</span><span class="p">],</span>
     <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -4455,22 +4499,22 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">286</span>
-<span class="normal">287</span>
-<span class="normal">288</span>
-<span class="normal">289</span>
-<span class="normal">290</span>
-<span class="normal">291</span>
-<span class="normal">292</span>
-<span class="normal">293</span>
-<span class="normal">294</span>
-<span class="normal">295</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">295</span>
 <span class="normal">296</span>
 <span class="normal">297</span>
 <span class="normal">298</span>
 <span class="normal">299</span>
 <span class="normal">300</span>
-<span class="normal">301</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">],</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""`preprocess` handler can be overridden for data or feature transformation.</span>
@@ -4500,16 +4544,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <div class="doc doc-contents">
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 97</span>
 <span class="normal"> 98</span>
 <span class="normal"> 99</span>
 <span class="normal">100</span>
@@ -4519,7 +4554,16 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">104</span>
 <span class="normal">105</span>
 <span class="normal">106</span>
-<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PredictorConfig</span><span class="p">:</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PredictorConfig</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -4619,16 +4663,7 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 </table>
 <details class="quote">
 <summary>Source code in <code>kserve/model.py</code></summary>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 98</span>
 <span class="normal"> 99</span>
 <span class="normal">100</span>
 <span class="normal">101</span>
@@ -4637,7 +4672,16 @@ The model decodes the request body to <code>Dict</code> for v1 endpoints and <co
 <span class="normal">104</span>
 <span class="normal">105</span>
 <span class="normal">106</span>
-<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">predictor_protocol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">PredictorProtocol</span><span class="o">.</span><span class="n">REST_V1</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
