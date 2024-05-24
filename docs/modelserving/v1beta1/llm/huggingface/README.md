@@ -4,8 +4,11 @@ The Hugging Face LLM serving runtime implements a runtime that can serve Hugging
 In this example, we deploy a Llama2 model from Hugging Face by running an `InferenceService` with [Hugging Face Serving runtime](https://github.com/kserve/kserve/tree/master/python/huggingfaceserver). Based on the performance requirement for large language models, KServe chooses to perform the inference using a more optimized inference engine like [vLLM](https://github.com/vllm-project/vllm) for text generation models.
 
 ### Serve the Hugging Face LLM model using vLLM
-KServe Hugging Face runtime by default uses vLLM to serve the LLM models for faster inference, higher throughput than Hugging Face API, implemented with paged attention, continous batching, optmized CUDA kernel. 
-You can still use `--backend=huggingface` in the container args to fall back to perform the inference using Hugging Face API.
+
+KServe Hugging Face runtime by default uses vLLM to serve the LLM models for faster inference and higher throughput than the Hugging Face API, implemented with paged attention, continuous batching and an optimized CUDA kernel. 
+
+You can still use `--backend=huggingface` arg to fall back to perform the inference using Hugging Face API.
+
 
 === "Yaml"
 
@@ -62,6 +65,35 @@ Sample OpenAI Completions request:
 
 ```bash
 curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "<prompt>", "stream":false, "max_tokens": 30 }'
+```
+
+!!! success "Expected Output"
+
+  ```{ .bash .no-copy }
+    {"id":"cmpl-7c654258ab4d4f18b31f47b553439d96","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"<generated_text>"}],"created":1715353182,"model":"llama2","system_fingerprint":null,"object":"text_completion","usage":{"completion_tokens":26,"prompt_tokens":4,"total_tokens":30}}
+  ```
+
+Sample OpenAI Chat request:
+
+```bash
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/chat/completions -d '{"model": "${MODEL_NAME}", "messages": [{"role": "user","content": "<message>"}], "stream":false }'
+```
+
+Sample OpenAI Completions request:
+
+```bash
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "<prompt>", "stream":false, "max_tokens": 30 }'
+```
+!!! success "Expected Output"
+
+  ```{ .bash .no-copy }
+    {"id":"cmpl-87ee252062934e2f8f918dce011e8484","choices":[{"finish_reason":"length","index":0,"message":{"content":"<generated_response>","tool_calls":null,"role":"assistant","function_call":null},"logprobs":null}],"created":1715353461,"model":"llama2","system_fingerprint":null,"object":"chat.completion","usage":{"completion_tokens":30,"prompt_tokens":3,"total_tokens":33}}
+  ```
+
+Sample OpenAI Chat request:
+
+```bash
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d '{"instances": ["Where is Eiffel Tower?"] }'
 
 ```
 !!! success "Expected Output"
