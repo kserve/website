@@ -8,16 +8,17 @@ This page contains a list of organizations who are using KServe either in produc
 | [Amazon Web Services](https://aws.amazon.com/)                               | [Ellis Tarn](https://github.com/ellistarn)         |
 | [Bloomberg](https://www.bloomberg.com/)                                      | [Dan Sun](https://github.com/yuzisun)              |
 | [Cars24](https://www.cars24.com/)                                            | [Swapnesh Khare](https://github.com/swapkh91)      |
-| [Chamred Kubeflow from Canonical](https://charmed-kubeflow.io/)              | [Daniela Plasencia](https://github.com/dnplas)     |
+| [Charmed Kubeflow from Canonical](https://charmed-kubeflow.io/)              | [Daniela Plasencia](https://github.com/dnplas)     |
 | [Cisco](https://www.cisco.com/)                                              | [Krishna Durai](https://github.com/krishnadurai)   |
 | [Cloudera](https://www.cloudera.com/)                                        | [Zoram Thanga](https://github.com/zoramt)          |
 | [CoreWeave](https://coreweave.com/)                                          | [Peter Salanki](https://github.com/salanki)        |
-| [Gojek](https://www.gojek.com/)                                              | [Willem Pienaar](https://github.com/woop)          |
 | [Deeploy](https://deeploy.ml)                                                | [Tim Kleinloog](https://github.com/TimKleinloog)   |
+| [Gojek](https://www.gojek.com/)                                              | [Willem Pienaar](https://github.com/woop)          |
 | [Halodoc ID](https://halodoc.com/)                                           | [Joinal Ahmed](https://github.com/joinal-ahmed)    |
 | [IBM](https://www.ibm.com/)                                                  | [Nick Hill](https://github.com/njhill)             |
-| [Kubeflow on Google Cloud](https://www.kubeflow.org/docs/distributions/gke/) | [James Liu](https://github.com/zijianjoy)          |
 | [Inspur](https://www.inspur.com/)                                            | [Qingshan Chen](https://github.com/iamlovingit)    |
+| [Intuit](https://www.intuit.com/)                                            | [Rachit Chauhan](https://github.com/rachitchauhan43)|
+| [Kubeflow on Google Cloud](https://www.kubeflow.org/docs/distributions/gke/) | [James Liu](https://github.com/zijianjoy)          |
 | [Max Kelsen](https://www.maxkelsen.com/)                                     | [Jacob O'Farrell](https://github.com/ofaz)         |
 | [Naver](https://www.navercorp.com/en)                                        | [Mark Winter](https://github.com/markwinter)       |
 | [Nuance](https://www.nuance.com/)                                            | [Jeff Griffith](https://github.com/jeffgriffith)   |
@@ -29,6 +30,5 @@ This page contains a list of organizations who are using KServe either in produc
 | [Patterson Consulting](http://www.pattersonconsultingtn.com/)                | [Josh Patterson](https://github.com/jpatanooga)    |
 | [Samsung SDS](https://www.samsungsds.com/)                                   | [Hanbae Seo](https://github.com/jazzsir)           |
 | [Striveworks](https://striveworks.us/)                                       | [Jordan Yono](https://github.com/jyono)            |
-| [Zillow](https://www.zillow.com/)                                            | [Peilun Li](https://github.com/Peilun-Li)          |
 | [Upstage](https://www.upstage.ai/)                                           | [JuHyung Son](https://github.com/JuHyung-Son)      |
-| [Intuit](https://www.intuit.com/)                                            | [Rachit Chauhan](https://github.com/rachitchauhan43)|
+| [Zillow](https://www.zillow.com/)                                            | [Peilun Li](https://github.com/Peilun-Li)          |
