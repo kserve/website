@@ -2,7 +2,7 @@ name: Mike deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 0.13 ]
 
 jobs:
   build_docs:
@@ -41,4 +41,5 @@ jobs:
         
       - name: Deploy with mike
         run: |
-          mike deploy --push $(cat version.txt)
+          mike deploy --push --update-aliases $(cat version.txt) latest
+
