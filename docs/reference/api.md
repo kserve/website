@@ -2045,7 +2045,7 @@ http://<inferenceservice.metadata.name>/v1/models/<trainedmodel>.metadata.name</
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>426fe21d</code>.
+on git commit <code>1c51eeee</code>.
 </em></p>
 <h2 id="serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</h2>
 <div>
@@ -2115,86 +2115,6 @@ ExplainerExtensionSpec
 </tr>
 </thead>
 <tbody><tr><td><p>&#34;SquareAttack&#34;</p></td>
-<td></td>
-</tr></tbody>
-</table>
-<h3 id="serving.kserve.io/v1beta1.AlibiExplainerSpec">AlibiExplainerSpec
-</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>)
-</p>
-<div>
-<p>AlibiExplainerSpec defines the arguments for configuring an Alibi Explanation Server</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<code>type</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.AlibiExplainerType">
-AlibiExplainerType
-</a>
-</em>
-</td>
-<td>
-<p>The type of Alibi explainer <br />
-Valid values are: <br />
-- &ldquo;AnchorTabular&rdquo;; <br />
-- &ldquo;AnchorImages&rdquo;; <br />
-- &ldquo;AnchorText&rdquo;; <br />
-- &ldquo;Counterfactuals&rdquo;; <br />
-- &ldquo;Contrastive&rdquo;; <br /></p>
-</td>
-</tr>
-<tr>
-<td>
-<code>ExplainerExtensionSpec</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.ExplainerExtensionSpec">
-ExplainerExtensionSpec
-</a>
-</em>
-</td>
-<td>
-<p>
-(Members of <code>ExplainerExtensionSpec</code> are embedded into this type.)
-</p>
-<p>Contains fields shared across all explainers</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="serving.kserve.io/v1beta1.AlibiExplainerType">AlibiExplainerType
-(<code>string</code> alias)</h3>
-<p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.AlibiExplainerSpec">AlibiExplainerSpec</a>)
-</p>
-<div>
-<p>AlibiExplainerType is the explanation method</p>
-</div>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody><tr><td><p>&#34;AnchorImages&#34;</p></td>
-<td></td>
-</tr><tr><td><p>&#34;AnchorTabular&#34;</p></td>
-<td></td>
-</tr><tr><td><p>&#34;AnchorText&#34;</p></td>
-<td></td>
-</tr><tr><td><p>&#34;Contrastive&#34;</p></td>
-<td></td>
-</tr><tr><td><p>&#34;Counterfactuals&#34;</p></td>
 <td></td>
 </tr></tbody>
 </table>
@@ -2416,6 +2336,20 @@ map[string]string
 <em>(Optional)</em>
 <p>Annotations that will be add to the component pod.
 More info: <a href="http://kubernetes.io/docs/user-guide/annotations">http://kubernetes.io/docs/user-guide/annotations</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>deploymentStrategy</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#deploymentstrategy-v1-apps">
+Kubernetes apps/v1.DeploymentStrategy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The deployment strategy to use to replace existing pods with new ones. Only applicable for raw deployment mode.</p>
 </td>
 </tr>
 </tbody>
@@ -2739,7 +2673,7 @@ string
 <h3 id="serving.kserve.io/v1beta1.ExplainerExtensionSpec">ExplainerExtensionSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.AlibiExplainerSpec">AlibiExplainerSpec</a>)
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec</a>)
 </p>
 <div>
 <p>ExplainerExtensionSpec defines configuration shared across all explainer frameworks</p>
@@ -2838,19 +2772,6 @@ The following fields follow a &ldquo;1-of&rdquo; semantic. Users must specify ex
 <tbody>
 <tr>
 <td>
-<code>alibi</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.AlibiExplainerSpec">
-AlibiExplainerSpec
-</a>
-</em>
-</td>
-<td>
-<p>Spec for alibi explainer</p>
-</td>
-</tr>
-<tr>
-<td>
 <code>art</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">
@@ -2877,8 +2798,8 @@ PodSpec
 </p>
 <p>This spec is dual purpose.
 1) Users may choose to provide a full PodSpec for their custom explainer.
-The field PodSpec.Containers is mutually exclusive with other explainers (i.e. Alibi).
-2) Users may choose to provide a Explainer (i.e. Alibi) and specify PodSpec
+The field PodSpec.Containers is mutually exclusive with other explainers.
+2) Users may choose to provide a Explainer and specify PodSpec
 overrides in the PodSpec. They must not provide PodSpec.Containers in this case.</p>
 </td>
 </tr>
@@ -2915,18 +2836,6 @@ ComponentExtensionSpec
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>
-<code>alibi</code><br/>
-<em>
-<a href="#serving.kserve.io/v1beta1.ExplainerConfig">
-ExplainerConfig
-</a>
-</em>
-</td>
-<td>
-</td>
-</tr>
 <tr>
 <td>
 <code>art</code><br/>
@@ -3453,6 +3362,16 @@ string
 <code>ingressClassName</code><br/>
 <em>
 string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>additionalIngressDomains</code><br/>
+<em>
+[]string
 </em>
 </td>
 <td>
@@ -5300,5 +5219,5 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>426fe21d</code>.
+on git commit <code>1c51eeee</code>.
 </em></p>
