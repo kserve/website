@@ -550,45 +550,15 @@
           LLM Runtime
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_1" id="__nav_4_2_3_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_2_3_1">
-          TorchServe LLM
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="TorchServe LLM" class="md-nav" data-md-level="4">
-<label class="md-nav__title" for="__nav_4_2_3_1">
-<span class="md-nav__icon md-icon"></span>
-          TorchServe LLM
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../modelserving/v1beta1/llm/torchserve/accelerate/">
-        Bloom7b1
-      </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_2" id="__nav_4_2_3_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_2_3_2">
-          Hugging Face LLM
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Hugging Face LLM" class="md-nav" data-md-level="4">
-<label class="md-nav__title" for="__nav_4_2_3_2">
-<span class="md-nav__icon md-icon"></span>
-          Hugging Face LLM
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../modelserving/v1beta1/llm/huggingface/">
-        Llama2
+        Hugging Face LLM
       </a>
 </li>
-</ul>
-</nav>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../modelserving/v1beta1/llm/torchserve/accelerate/">
+        TorchServe LLM
+      </a>
 </li>
 </ul>
 </nav>
@@ -1236,11 +1206,11 @@
 </li>
 <li>
 <p>You can then get started with a local deployment of KServe by using <em>KServe Quick installation script on Kind</em>:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/kserve/kserve/release-0.12/hack/quick_install.sh"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/kserve/kserve/release-0.13/hack/quick_install.sh"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
 <p>or install via our published Helm Charts:
-   <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.12.0
-helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.12.0
+   <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.13.0
+helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.13.0
 </code></pre></div></p>
 </li>
 </ol>
