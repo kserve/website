@@ -13,6 +13,7 @@ KServe Hugging Face runtime by default uses vLLM to serve the LLM models for fas
 
 
 === "Yaml"
+
     ```yaml
     kubectl apply -f - <<EOF
     apiVersion: serving.kserve.io/v1beta1
@@ -47,8 +48,8 @@ KServe Hugging Face runtime by default uses vLLM to serve the LLM models for fas
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```bash
-MODEL_NAME=llama2
-SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-llama2 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+MODEL_NAME=llama3
+SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-llama3 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
 KServe Hugging Face vLLM runtime supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for inference
@@ -62,7 +63,7 @@ curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http:/
 !!! success "Expected Output"
 
   ```{ .bash .no-copy }
-    {"id":"cmpl-7c654258ab4d4f18b31f47b553439d96","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"<generated_text>"}],"created":1715353182,"model":"llama2","system_fingerprint":null,"object":"text_completion","usage":{"completion_tokens":26,"prompt_tokens":4,"total_tokens":30}}
+    {"id":"cmpl-7c654258ab4d4f18b31f47b553439d96","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"<generated_text>"}],"created":1715353182,"model":"llama3","system_fingerprint":null,"object":"text_completion","usage":{"completion_tokens":26,"prompt_tokens":4,"total_tokens":30}}
   ```
 
 Sample OpenAI Chat request:
@@ -74,7 +75,7 @@ curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http:/
 !!! success "Expected Output"
 
   ```{ .bash .no-copy }
-    {"id":"cmpl-87ee252062934e2f8f918dce011e8484","choices":[{"finish_reason":"length","index":0,"message":{"content":"<generated_response>","tool_calls":null,"role":"assistant","function_call":null},"logprobs":null}],"created":1715353461,"model":"llama2","system_fingerprint":null,"object":"chat.completion","usage":{"completion_tokens":30,"prompt_tokens":3,"total_tokens":33}}
+    {"id":"cmpl-87ee252062934e2f8f918dce011e8484","choices":[{"finish_reason":"length","index":0,"message":{"content":"<generated_response>","tool_calls":null,"role":"assistant","function_call":null},"logprobs":null}],"created":1715353461,"model":"llama3","system_fingerprint":null,"object":"chat.completion","usage":{"completion_tokens":30,"prompt_tokens":3,"total_tokens":33}}
   ```
 
 ### Serve the Hugging Face LLM model using HuggingFace Backend
@@ -88,15 +89,15 @@ supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for i
     apiVersion: serving.kserve.io/v1beta1
     kind: InferenceService
     metadata:
-      name: huggingface-llama2
+      name: huggingface-llama3
     spec:
       predictor:
         model:
           modelFormat:
             name: huggingface
           args:
-          - --model_name=llama2
-          - --model_id=meta-llama/Llama-2-7b-chat-hf
+          - --model_name=llama3
+          - --model_id=meta-llama/meta-llama-3-8b-instruct
           - --backend=huggingface
           resources:
             limits:
