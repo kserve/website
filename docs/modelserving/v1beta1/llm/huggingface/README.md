@@ -111,10 +111,12 @@ supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for i
     EOF
     ```
 
-### HuggingFace Server Arguments
+### Hugging Face Runtime Arguments
+
+Below, you can find an explanation of command line arguments which are supported for Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/models/engine_args.html) can also be specified on the command line argument which is parsed by the Hugging Face runtime.
 
 - `--model_name`: The name of the model used on the endpoint path.
-- `--model_dir`: A URI pointer to the model binary. If `model_id` is provided, this argument will be ignored.
+- `--model_dir`: The local path where the model is downloaded to. If `model_id` is provided, this argument will be ignored.
 - `--model_id`: Huggingface model id.
 - `--model_revision`: Huggingface model revision.
 - `--tokenizer_revision`: Huggingface tokenizer revision.
