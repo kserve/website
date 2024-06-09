@@ -35,14 +35,14 @@ The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert 
 ## 4. Install KServe
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.13.0/kserve.yaml
     ```
 
 ## 5. Install KServe Built-in ClusterServingRuntimes
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-cluster-resources.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.13.0/kserve-cluster-resources.yaml
     ```
 
 !!! note
