@@ -43,7 +43,7 @@ KServe Hugging Face runtime by default uses vLLM to serve the LLM models for fas
     1. `SAFETENSORS_FAST_GPU` is set by default to improve the model loading performance.
     2. `HF_HUB_DISABLE_TELEMETRY` is set by default to disable the telemetry.
 
-### Perform Model Inference
+#### Perform Model Inference
 
 The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
@@ -89,15 +89,15 @@ supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for i
     apiVersion: serving.kserve.io/v1beta1
     kind: InferenceService
     metadata:
-      name: huggingface-llama3
+      name: huggingface-t5
     spec:
       predictor:
         model:
           modelFormat:
             name: huggingface
           args:
-          - --model_name=llama3
-          - --model_id=meta-llama/meta-llama-3-8b-instruct
+          - --model_name=t5
+          - --model_id=google-t5/t5-small
           - --backend=huggingface
           resources:
             limits:
@@ -110,6 +110,30 @@ supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for i
               nvidia.com/gpu: "1"
     EOF
     ```
+
+#### Perform Model Inference
+
+The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+
+```bash
+MODEL_NAME=t5
+SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-t5 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+```
+
+KServe Hugging Face vLLM runtime supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for inference
+
+Sample OpenAI Completions request:
+
+```bash
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "<prompt>", "stream":false, "max_tokens": 30 }'
+
+```
+!!! success "Expected Output"
+
+  ```{ .json .no-copy }
+  ```
+
+
 
 ### Hugging Face Runtime Arguments
 
