@@ -79,7 +79,7 @@ curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http:/
   ```
 
 ### Serve the Hugging Face LLM model using HuggingFace Backend
-You can use `--backend=huggingface` arg to perform the inference using Hugging Face. KServe Hugging Face backend runtime also 
+You can use `--backend=huggingface` argument to perform the inference using Hugging Face API. KServe Hugging Face backend runtime also 
 supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for inference.
 
 === "Yaml"
@@ -101,12 +101,12 @@ supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for i
           - --backend=huggingface
           resources:
             limits:
-              cpu: "6"
-              memory: 24Gi
+              cpu: "1"
+              memory: 2Gi
               nvidia.com/gpu: "1"
             requests:
-              cpu: "6"
-              memory: 24Gi
+              cpu: "1"
+              memory: 2Gi
               nvidia.com/gpu: "1"
     EOF
     ```
@@ -120,17 +120,36 @@ MODEL_NAME=t5
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-t5 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-KServe Hugging Face vLLM runtime supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for inference
-
 Sample OpenAI Completions request:
 
 ```bash
-curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "<prompt>", "stream":false, "max_tokens": 30 }'
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "translate English to German: The house is wonderful.", "stream":false, "max_tokens": 30 }'
 
 ```
 !!! success "Expected Output"
 
   ```{ .json .no-copy }
+  {"id":"de53f527-9cb9-47a5-9673-43d180b704f2","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"Das Haus ist wunderbar."}],"created":1717998661,"model":"t5","system_fingerprint":null,"object":"text_completion","usage":{"completion_tokens":7,"prompt_tokens":11,"total_tokens":18}}
+  ```
+
+Sample OpenAI Completions streaming request:
+
+```bash
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions -d '{"model": "${MODEL_NAME}", "prompt": "translate English to German: The house is wonderful.", "stream":true, "max_tokens": 30 }'
+
+```
+!!! success "Expected Output"
+
+  ```{ .json .no-copy }
+  data: {"id":"70bb8bea-57d5-4b34-aade-da38970c917c","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"Das "}],"created":1717998767,"model":"t5","system_fingerprint":null,"object":"text_completion","usage":null}
+
+  data: {"id":"70bb8bea-57d5-4b34-aade-da38970c917c","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"Haus "}],"created":1717998767,"model":"t5","system_fingerprint":null,"object":"text_completion","usage":null}
+
+  data: {"id":"70bb8bea-57d5-4b34-aade-da38970c917c","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"ist "}],"created":1717998767,"model":"t5","system_fingerprint":null,"object":"text_completion","usage":null}
+
+  data: {"id":"70bb8bea-57d5-4b34-aade-da38970c917c","choices":[{"finish_reason":"length","index":0,"logprobs":null,"text":"wunderbar.</s>"}],"created":1717998767,"model":"t5","system_fingerprint":null,"object":"text_completion","usage":null}
+
+  data: [DONE]
   ```
 
 
