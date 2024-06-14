@@ -42,7 +42,7 @@ KServe use `inferenceservice-config` ConfigMap for default configuration. If you
     }
   ~~~
   
-Afeter you update this configuration, please restart KServe controller pod to pick up the change.
+After you update this configuration, please restart KServe controller pod to pick up the change.
 
 When you create a inference service, then the ca bundle will be copied to your user namespace and it will be attached to the storage-initializer container.
 
