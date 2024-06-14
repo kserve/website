@@ -65,7 +65,7 @@ Apply the `PeerAuthentication` and `AuthorizationPolicy` rules with [auth.yaml](
 kubectl apply -f auth.yaml
 ```
 
-### Disable Top Level Virtual Service 
+### Disable Top Level Virtual Service {#disable-top-level-vs}
 KServe currently creates an Istio top level virtual service to support routing between InferenceService components like predictor, transformer and explainer, as well as support path based routing as an alternative routing with service hosts.
 In serverless service mesh mode this creates a problem that in order to route through the underlying virtual service created by Knative Service, the top level virtual service is required to route to the `Istio Gateway` instead of to the InferenceService component on the service mesh directly.
 
@@ -80,7 +80,36 @@ ingress : |- {
 }
 ```
 
-## Deploy InferenceService with Istio sidecar injection
+## Turn on strict mTLS on the entire service mesh {#mesh-wide-mtls}
+In the previous section, turning on strict mTLS on a namespace is discussed. For users requiring to lock down all workloads in the service mesh, Istio can be configured with [strict mTLS on the whole mesh](https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/#lock-down-mutual-tls-for-the-entire-mesh).
+
+Istio's Mutual TLS Migration docs are using `PeerAuthentication` resources to lock down the mesh, which act at server side. This means that Istio sidecars will only reject non-mTLS incoming connections while non-TLS _outgoing_ connections will still be allowed ([reference](https://istio.io/latest/docs/concepts/security/#authentication-policies)). To further lock down the mesh, you can also create a `DestinationRule` resource to require mTLS on outgoing connections. However, under this very strict mTLS configuration, you may notice that the KServe top level virtual service will stop working and inference requests will be blocked. You can fix this either by disabling the top level virtual service [as mentioned above](#disable-top-level-vs), or by configuring the Knative's local gateway with mTLS on its listening port.
+
+To configure Knative's local gateway with mTLS, assuming you have followed [Knative's guides to use Istio as networking layer](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#__tabbed_1_2), you will need to patch the `knative-local-gateway` resource to be like the following:
+
+```yaml
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: knative-local-gateway
+  namespace: knative-serving
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - '*'
+      port:
+        name: https
+        number: 8081
+        protocol: HTTPS
+      tls:
+        mode: ISTIO_MUTUAL
+```
+
+After patching Knative's local gateway resource, the KServe top level virtual service will work again.
+
+## Deploy InferenceService with Istio sidecar injection {#isvc-inject-sidecar}
 First label the namespace with `istio-injection=enabled` to turn on the sidecar injection for the namespace.
 
 ```bash
@@ -264,3 +293,124 @@ kubectl exec -it sleep-6d6b49d8b8-6ths6 -- curl -v sklearn-iris-burst-predictor-
     * Connection #0 to host sklearn-iris-burst-predictor-default.user1.svc.cluster.local left intact
     {"name":"sklearn-iris-burst","ready":true}
     ```
+
+## Invoking InferenceServices from workloads that are not part of the mesh {#invoking-isvc-non-mesh}
+Ideally, when using service mesh, all involved workloads should belong to the service mesh. This allows enabling strict mTLS in Istio and ensures policies are correctly applied. However, given the diverse requirements of applications, it is not always possible to migrate all workloads to the service mesh.
+
+When using KServe, you may successfully migrate InferenceServices to the service mesh (i.e. by [injecting the Istio sidecar](#isvc-inject-sidecar)), while workloads invoking inferencing remain outside the mesh. In this hybrid environment, workloads that are not part of the service mesh need to use an Istio ingress gateway as a port-of-entry to InferenceServices. In the default setup, KServe integrates with the gateway used by Knative. Both Knative and KServe apply the needed configurations to allow for these hybrid environments, however, this only works transparently if you haven't enabled strict TLS on Istio.
+
+Especially under a mesh-wide highly strict mTLS setup (involving both `PeerAuthentication` and `DestinationRule` resources as mentioned [above](#mesh-wide-mtls)), you will notice that workloads that are not part of the mesh will become blocked from calling InferenceServices. The easiest way to fix this is by [disabling the KServe top-level virtual service](#disable-top-level-vs). However, if you need the KServe top-level virtual service, you can still have a working hybrid environment by configuring KServe with its dedicated local Istio Gateway.
+
+First, you will need to patch the Knative gateway, as shown [above for turning on mesh-wide strict mTLS](#mesh-wide-mtls). Then, you will need to create the following resources:
+
+```yaml
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kserve-local-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - '*'
+      port:
+        name: http
+        number: 8082
+        protocol: HTTP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kserve-local-gateway
+  namespace: istio-system
+  labels:
+    experimental.istio.io/disable-gateway-port-translation: "true"
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8082
+  selector:
+    istio: ingressgateway
+```
+
+Finally, you need to edit the **ingress** config in the inferenceservice ConfigMap to have the following:
+
+```bash
+kubectl edit configmap/inferenceservice-config --namespace kserve
+
+ingress : |- {
+    "knativeLocalGatewayService": "knative-local-gateway.istio-system.svc.cluster.local",
+    "localGateway":               "istio-system/kserve-local-gateway",
+    "localGatewayService":        "kserve-local-gateway.istio-system.svc.cluster.local"
+}
+```
+
+After restarting the KServe controller, the needed Services and VirtualServices will be reconfigured and workloads outside the mesh will be unblocked from calling InferenceServices.
+
+## Securing the network border with TLS
+If you require TLS over all the network, the easiest is to enable mesh-wide strict mTLS in Istio. Though, communications are secure only for workloads inside the service mesh and the mesh-border is the weak point: if the Istio ingress gateway is not setup with TLS, data arriving at or departing from the mesh would still be plain-text.
+
+If you need incoming connections at the mesh-border to be secured with TLS:
+
+* For requests coming from outside the cluster (i.e. public endpoints), you can follow [Knative external domain encryption guide](https://knative.dev/docs/serving/encryption/external-domain-tls/)
+* For requests coming from workloads inside the cluster that are not part of the service mesh, you may use [Knative cluster local encryption](https://knative.dev/docs/serving/encryption/encryption-overview/#cluster-local-encryption), although it is still in an experimental state. It would, also, require you to [disable the KServe top-level virtual service](#disable-top-level-vs) to ensure there is no plain-text port-of-entry.
+
+If the experimental Knative cluster local encryption is not suitable for you, it is still possible to secure cluster-local traffic on the mesh border by configuring KServe with its own dedicated local gateway [similarly as shown previously](#invoking-isvc-non-mesh). The resources to create are as follows:
+
+```yaml
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: kserve-local-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        - '*'
+      port:
+        name: https
+        number: 8445
+        protocol: HTTPS
+      tls:
+        mode: SIMPLE
+        credentialName: kserve-cluster-local-tls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kserve-local-gateway
+  namespace: istio-system
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8445
+  selector:
+    istio: ingressgateway
+```
+
+In the `istio-system` namespace, you will need to create a Secret named `kserve-cluster-local-tls` holding the TLS certificate. You may get this certificate from `cert-manager` operator.
+
+Finally, edit the **ingress** config in the inferenceservice ConfigMap to have the following:
+
+```bash
+kubectl edit configmap/inferenceservice-config --namespace kserve
+
+ingress : |- {
+    "knativeLocalGatewayService": "knative-local-gateway.istio-system.svc.cluster.local",
+    "localGateway":               "istio-system/kserve-local-gateway",
+    "localGatewayService":        "kserve-local-gateway.istio-system.svc.cluster.local"
+}
+```
+
+After restarting KServe controller, cluster-local workloads outside the mesh would need to use HTTPS to run predictions.
+
+If you combine protecting the mesh border with TLS and also configuring Istio with mesh-wide strict mTLS, you would end up with a setup where traffic to KServe workloads with a sidecar is secured.
+
