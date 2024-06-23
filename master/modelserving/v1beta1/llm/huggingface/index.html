@@ -9,7 +9,7 @@
 <link href="https://kserve.io/website/master/modelserving/v1beta1/llm/huggingface/" rel="canonical"/>
 <link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.0, mkdocs-material-8.0.5" name="generator"/>
-<title>Hugging Face LLM - KServe Documentation Website</title>
+<title>Overview - KServe Documentation Website</title>
 <link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#deploy-the-llama3-model-with-hugging-face-llm-serving-runtime">
+<a class="md-skip" href="#hugging-face-llm-serving-runtime">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Hugging Face LLM
+              Overview
             
           </span>
 </div>
@@ -513,14 +513,26 @@
           LLM Runtime
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_1" id="__nav_4_2_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_3_1">
           Hugging Face LLM
           <span class="md-nav__icon md-icon"></span>
 </label>
+<nav aria-label="Hugging Face LLM" class="md-nav" data-md-level="4">
+<label class="md-nav__title" for="__nav_4_2_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Hugging Face LLM
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Hugging Face LLM
+        Overview
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -529,37 +541,52 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#serve-the-hugging-face-llm-model-using-vllm-backend">
-    Serve the Hugging Face LLM model using vLLM backend
-  </a>
-<nav aria-label="Serve the Hugging Face LLM model using vLLM backend" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#perform-model-inference">
-    Perform Model Inference
+<a class="md-nav__link" href="#supported-ml-tasks">
+    Supported ML Tasks
   </a>
 </li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#serve-the-hugging-face-llm-model-using-huggingface-backend">
-    Serve the Hugging Face LLM model using HuggingFace Backend
-  </a>
-<nav aria-label="Serve the Hugging Face LLM model using HuggingFace Backend" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#perform-model-inference_1">
-    Perform Model Inference
+<a class="md-nav__link" href="#api-endpoints">
+    API Endpoints
   </a>
 </li>
-</ul>
-</nav>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples">
+    Examples
+  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#hugging-face-runtime-arguments">
     Hugging Face Runtime Arguments
   </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="text_generation/">
+        Text Generation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="text2text_generation/">
+        Text2Text Generation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="token_classification/">
+        Token Classification
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="text_classification/">
+        Text Classification
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="fill_mask/">
+        Fill Mask
+      </a>
 </li>
 </ul>
 </nav>
@@ -1153,32 +1180,19 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#serve-the-hugging-face-llm-model-using-vllm-backend">
-    Serve the Hugging Face LLM model using vLLM backend
-  </a>
-<nav aria-label="Serve the Hugging Face LLM model using vLLM backend" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#perform-model-inference">
-    Perform Model Inference
+<a class="md-nav__link" href="#supported-ml-tasks">
+    Supported ML Tasks
   </a>
 </li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#serve-the-hugging-face-llm-model-using-huggingface-backend">
-    Serve the Hugging Face LLM model using HuggingFace Backend
-  </a>
-<nav aria-label="Serve the Hugging Face LLM model using HuggingFace Backend" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#perform-model-inference_1">
-    Perform Model Inference
+<a class="md-nav__link" href="#api-endpoints">
+    API Endpoints
   </a>
 </li>
-</ul>
-</nav>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples">
+    Examples
+  </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#hugging-face-runtime-arguments">
@@ -1195,137 +1209,44 @@
 <a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/llm/huggingface/README.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="deploy-the-llama3-model-with-hugging-face-llm-serving-runtime">Deploy the Llama3 model with Hugging Face LLM Serving Runtime<a class="headerlink" href="#deploy-the-llama3-model-with-hugging-face-llm-serving-runtime" title="Permanent link">¶</a></h1>
-<p>The Hugging Face serving runtime implements a runtime that can serve Hugging Face models out of the box.
-The preprocess and post-process handlers are implemented based on different ML tasks, for example text classification,
+<h1 id="hugging-face-llm-serving-runtime">Hugging Face LLM Serving Runtime<a class="headerlink" href="#hugging-face-llm-serving-runtime" title="Permanent link">¶</a></h1>
+<p>The Hugging Face serving runtime implements two backends namely <code>Hugging Face</code> and <code>vLLM</code> that can serve Hugging Face models out of the box.
+The preprocess and post-process handlers are already implemented based on different ML tasks, for example text classification,
 token-classification, text-generation, text2text-generation, fill-mask.</p>
-<p>Based on the performance requirement for large language models(LLM), KServe chooses to run the optimized inference engine <a href="https://github.com/vllm-project/vllm">vLLM</a> for text generation tasks by default considering its ease-of-use and high performance.</p>
-<p>In this example, we deploy a Llama3 model from Hugging Face by deploying the <code>InferenceService</code> with <a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">Hugging Face Serving runtime</a>. </p>
-<h3 id="serve-the-hugging-face-llm-model-using-vllm-backend">Serve the Hugging Face LLM model using vLLM backend<a class="headerlink" href="#serve-the-hugging-face-llm-model-using-vllm-backend" title="Permanent link">¶</a></h3>
-<p>KServe Hugging Face runtime by default uses vLLM to serve the LLM models for faster time-to-first-token(TTFT) and higher token generation throughput than the Hugging Face API. vLLM is implemented with common inference optimization techniques, such as paged attention, continuous batching and an optimized CUDA kernel. If the model is not supported by vLLM, KServe falls back to HuggingFace backend as a failsafe.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=meta-llama/meta-llama-3-8b-instruct</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
-</code></pre></div>
-</div>
-</div>
-</input></div>
+<p>KServe Hugging Face runtime by default uses <a href="(https://github.com/vllm-project/vllm)"><code>vLLM</code></a> backend to serve <code>text generation</code> and <code>text2text generation</code> LLM models for faster time-to-first-token(TTFT) and higher token generation throughput than the Hugging Face API. 
+vLLM is implemented with common inference optimization techniques, such as paged attention, continuous batching and an optimized CUDA kernel.
+If the Model is not supported by the vLLM engine, KServe falls back to the Hugging Face backend as a failsafe.</p>
+<h2 id="supported-ml-tasks">Supported ML Tasks<a class="headerlink" href="#supported-ml-tasks" title="Permanent link">¶</a></h2>
+<p>The Hugging Face runtime supports the following ML tasks:</p>
+<ul>
+<li>Text Generation</li>
+<li>Text2Text Generation</li>
+<li>Fill Mask</li>
+<li>Token Classification</li>
+<li>Sequence Classification (Text Classification)</li>
+</ul>
+<p>For, Models supported by the <code>vllm</code> backend, Please visit the <a href="https://docs.vllm.ai/en/latest/models/index.html">vLLM Supported Models page</a>.</p>
+<h2 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">¶</a></h2>
+<p>Both the backends supports serving generative models (text generation and text2text generation) using <a href="https://platform.openai.com/docs/api-reference/completions">OpenAI's Completion</a> and <a href="https://platform.openai.com/docs/api-reference/chat">Chat Completion</a> API.</p>
+<p>The other types of tasks like token classification, sequence classification, fill mask are served using KServe's <a href="../../../data_plane/v2_protocol/">Open Inference Protocol</a> or <a href="../../../data_plane/v1_protocol/">V1 API</a>. </p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
+<p>The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:</p>
+<ul>
+<li><a href="text_generation/">Text Generation using LLama3</a></li>
+<li><a href="text2text_generation/">Text2Text Generation using T5</a></li>
+<li><a href="token_classification/">Token Classification using BERT</a></li>
+<li><a href="text_classification/">Sequence Classification (Text Classification) using distilBERT</a></li>
+<li><a href="fill_mask/">Fill Mask using BERT</a></li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>The Hugging Face runtime image has the following environment variables set by default:</p>
 <ol>
 <li><code>SAFETENSORS_FAST_GPU</code> is set by default to improve the model loading performance.</li>
 <li><code>HF_HUB_DISABLE_TELEMETRY</code> is set by default to disable the telemetry.</li>
 </ol>
 </div>
-<h4 id="perform-model-inference">Perform Model Inference<a class="headerlink" href="#perform-model-inference" title="Permanent link">¶</a></h4>
-<p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>llama3
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-llama3<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
-</code></pre></div>
-<p>KServe Hugging Face vLLM runtime supports the OpenAI <code>/v1/completions</code> and <code>/v1/chat/completions</code> endpoints for inference</p>
-<p>Sample OpenAI Completions request:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"content-type:application/json"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-v<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/openai/v1/completions<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"model": "${MODEL_NAME}", "prompt": "&lt;prompt&gt;", "stream":false, "max_tokens": 30 }'</span>
-</code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-</div>
-<div class="no-copy highlight"><pre><span></span><code><span class="w">  </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"cmpl-7c654258ab4d4f18b31f47b553439d96"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"text"</span><span class="p">:</span><span class="s2">"&lt;generated_text&gt;"</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1715353182</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"llama3"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"text_completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:{</span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="mi">26</span><span class="p">,</span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="mi">30</span><span class="p">}}</span>
-</code></pre></div>
-<p>Sample OpenAI Chat request:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"content-type:application/json"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-v<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/openai/v1/chat/completions<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"model": "${MODEL_NAME}", "messages": [{"role": "user","content": "&lt;message&gt;"}], "stream":false }'</span>
-</code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-</div>
-<div class="no-copy highlight"><pre><span></span><code><span class="w">  </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"cmpl-87ee252062934e2f8f918dce011e8484"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"message"</span><span class="p">:{</span><span class="nt">"content"</span><span class="p">:</span><span class="s2">"&lt;generated_response&gt;"</span><span class="p">,</span><span class="nt">"tool_calls"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"role"</span><span class="p">:</span><span class="s2">"assistant"</span><span class="p">,</span><span class="nt">"function_call"</span><span class="p">:</span><span class="kc">null</span><span class="p">},</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1715353461</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"llama3"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"chat.completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:{</span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="mi">30</span><span class="p">,</span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="mi">33</span><span class="p">}}</span>
-</code></pre></div>
-<h3 id="serve-the-hugging-face-llm-model-using-huggingface-backend">Serve the Hugging Face LLM model using HuggingFace Backend<a class="headerlink" href="#serve-the-hugging-face-llm-model-using-huggingface-backend" title="Permanent link">¶</a></h3>
-<p>You can use <code>--backend=huggingface</code> argument to perform the inference using Hugging Face API. KServe Hugging Face backend runtime also 
-supports the OpenAI <code>/v1/completions</code> and <code>/v1/chat/completions</code> endpoints for inference.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Yaml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-t5</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=t5</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=google-t5/t5-small</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--backend=huggingface</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
-</code></pre></div>
-</div>
-</div>
-</input></div>
-<h4 id="perform-model-inference_1">Perform Model Inference<a class="headerlink" href="#perform-model-inference_1" title="Permanent link">¶</a></h4>
-<p>The first step is to <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>t5
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-t5<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
-</code></pre></div>
-<p>Sample OpenAI Completions request:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"content-type:application/json"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-v<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/openai/v1/completions<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"model": "${MODEL_NAME}", "prompt": "translate English to German: The house is wonderful.", "stream":false, "max_tokens": 30 }'</span>
-</code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-</div>
-<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"de53f527-9cb9-47a5-9673-43d180b704f2"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"text"</span><span class="p">:</span><span class="s2">"Das Haus ist wunderbar."</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1717998661</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"t5"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"text_completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:{</span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="mi">18</span><span class="p">}}</span>
-</code></pre></div>
-<p>Sample OpenAI Completions streaming request:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"content-type:application/json"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-v<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/openai/v1/completions<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"model": "${MODEL_NAME}", "prompt": "translate English to German: The house is wonderful.", "stream":true, "max_tokens": 30 }'</span>
-</code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-</div>
-<div class="no-copy highlight"><pre><span></span><code><span class="err">da</span><span class="kc">ta</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"70bb8bea-57d5-4b34-aade-da38970c917c"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"text"</span><span class="p">:</span><span class="s2">"Das "</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1717998767</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"t5"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"text_completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-
-<span class="err">da</span><span class="kc">ta</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"70bb8bea-57d5-4b34-aade-da38970c917c"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"text"</span><span class="p">:</span><span class="s2">"Haus "</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1717998767</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"t5"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"text_completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-
-<span class="err">da</span><span class="kc">ta</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"70bb8bea-57d5-4b34-aade-da38970c917c"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"text"</span><span class="p">:</span><span class="s2">"ist "</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1717998767</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"t5"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"text_completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-
-<span class="err">da</span><span class="kc">ta</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"70bb8bea-57d5-4b34-aade-da38970c917c"</span><span class="p">,</span><span class="nt">"choices"</span><span class="p">:[{</span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="s2">"length"</span><span class="p">,</span><span class="nt">"index"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"logprobs"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"text"</span><span class="p">:</span><span class="s2">"wunderbar.&lt;/s&gt;"</span><span class="p">}],</span><span class="nt">"created"</span><span class="p">:</span><span class="mi">1717998767</span><span class="p">,</span><span class="nt">"model"</span><span class="p">:</span><span class="s2">"t5"</span><span class="p">,</span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="nt">"object"</span><span class="p">:</span><span class="s2">"text_completion"</span><span class="p">,</span><span class="nt">"usage"</span><span class="p">:</span><span class="kc">null</span><span class="p">}</span>
-
-<span class="err">da</span><span class="kc">ta</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">DONE</span><span class="p">]</span>
-</code></pre></div>
-<h3 id="hugging-face-runtime-arguments">Hugging Face Runtime Arguments<a class="headerlink" href="#hugging-face-runtime-arguments" title="Permanent link">¶</a></h3>
+<h2 id="hugging-face-runtime-arguments">Hugging Face Runtime Arguments<a class="headerlink" href="#hugging-face-runtime-arguments" title="Permanent link">¶</a></h2>
 <p>Below, you can find an explanation of command line arguments which are supported for Hugging Face runtime. <a href="https://docs.vllm.ai/en/latest/models/engine_args.html">vLLM backend engine arguments</a> can also be specified on the command line argument which is parsed by the Hugging Face runtime.</p>
 <ul>
 <li><code>--model_name</code>: The name of the model used on the endpoint path.</li>
@@ -1336,7 +1257,8 @@ supports the OpenAI <code>/v1/completions</code> and <code>/v1/chat/completions<
 <li><code>--dtype</code>: Data type to load the weights in. One of 'auto', 'float16', 'float32', 'bfloat16', 'float', 'half'. 
              Defaults to float16 for GPU and float32 for CPU systems. 'auto' uses float16 if GPU is available and uses float32 otherwise to ensure consistency between vLLM and HuggingFace backends. 
              Encoder models defaults to 'float32'. 'float' is shorthand for 'float32'. 'half' is 'float16'. The rest are as the name reads.</li>
-<li><code>--task</code>: The ML task name. Can be one of 'text_generation', 'text2text_generation', 'fill_mask', 'token_classification', 'sequence_classification'.</li>
+<li><code>--task</code>: The ML task name. Can be one of 'text_generation', 'text2text_generation', 'fill_mask', 'token_classification', 'sequence_classification'. 
+            If not provided, model server will try infer the task from model architecture.</li>
 <li><code>--backend</code>: The backend to use to load the model. Can be one of 'auto', 'huggingface', 'vllm'.</li>
 <li><code>--max_length</code>: Max sequence length for the tokenizer.</li>
 <li><code>--disable_lower_case</code>: Disable lower case for the tokenizer.</li>
@@ -1369,13 +1291,13 @@ supports the OpenAI <code>/v1/completions</code> and <code>/v1/chat/completions<
             </div>
 </div>
 </a>
-<a aria-label="Next: TorchServe LLM" class="md-footer__link md-footer__link--next" href="../torchserve/accelerate/" rel="next">
+<a aria-label="Next: Text Generation" class="md-footer__link md-footer__link--next" href="text_generation/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              TorchServe LLM
+              Text Generation
             </div>
 </div>
 <div class="md-footer__button md-icon">
