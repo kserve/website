@@ -25,7 +25,6 @@ spec:
         image: kserve/alibi-explainer:v0.12.1
         args:
           - --model_name=cifar10
-          - 
     alibi:
       type: AnchorImages
       storageUri: "gs://kfserving-examples/models/tensorflow/cifar/explainer-0.9.1"
