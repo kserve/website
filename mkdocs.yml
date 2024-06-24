@@ -140,6 +140,19 @@ theme:
     - navigation.tracking
     - navigation.tabs.sticky
     - navigation.top
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
 
 markdown_extensions:
   - markdown_include.include:
@@ -183,7 +196,6 @@ plugins:
      css_dir: css
      javascript_dir: js
   - swagger-ui-tag:
-        background: White
         docExpansion: none
         filter: ""
         syntaxHighlightTheme: monokai
