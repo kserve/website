@@ -687,6 +687,30 @@
     Parallel Model Inference
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuring-logger-for-custom-serving-runtime">
+    Configuring Logger for Custom Serving Runtime
+  </a>
+<nav aria-label="Configuring Logger for Custom Serving Runtime" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-providing-logger-configuration-as-a-dict">
+    1. Providing logger configuration as a Dict:
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-providing-logger-configuration-as-a-file">
+    2. Providing logger configuration as a file:
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-disabling-logger-configuration">
+    3. Disabling logger Configuration:
+  </a>
+</li>
+</ul>
+</nav>
+</li>
 </ul>
 </nav>
 </li>
@@ -1371,6 +1395,30 @@
     Parallel Model Inference
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuring-logger-for-custom-serving-runtime">
+    Configuring Logger for Custom Serving Runtime
+  </a>
+<nav aria-label="Configuring Logger for Custom Serving Runtime" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-providing-logger-configuration-as-a-dict">
+    1. Providing logger configuration as a Dict:
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-providing-logger-configuration-as-a-file">
+    2. Providing logger configuration as a file:
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-disabling-logger-configuration">
+    3. Disabling logger Configuration:
+  </a>
+</li>
+</ul>
+</nav>
+</li>
 </ul>
 </nav>
 </div>
@@ -1402,7 +1450,9 @@ is loaded on startup and ready to serve prediction requests.</p>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
 <span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
 
 <span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -1434,8 +1484,13 @@ is loaded on startup and ready to serve prediction requests.</p>
         <span class="n">response_id</span> <span class="o">=</span> <span class="n">generate_uuid</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">"predictions"</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="s2">"custom-model"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>  <span class="c1"># Configure kserve and uvicorn logger</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
     <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
 <h3 id="build-custom-serving-image-with-buildpacks">Build Custom Serving Image with BuildPacks<a class="headerlink" href="#build-custom-serving-image-with-buildpacks" title="Permanent link">¶</a></h3>
@@ -1451,7 +1506,7 @@ docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</s
 <p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example.</p>
 <h3 id="deploy-locally-and-test">Deploy Locally and Test<a class="headerlink" href="#deploy-locally-and-test" title="Permanent link">¶</a></h3>
 <p>Launch the docker image built from last step with <code>buildpack</code>.
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1<span class="w"> </span>--model_name<span class="o">=</span><span class="s2">"custom-model"</span>
 </code></pre></div></p>
 <p>Send a test inference request locally with <a href="input.json">input.json</a>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
@@ -1482,10 +1537,11 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 <li><code>--model_name</code>: The model name deployed in the model server, the default name the same as the service name.</li>
 <li><code>--max_asyncio_workers</code>: Max number of workers to spawn for python async io loop, by default it is <code>min(32,cpu.limit + 4)</code>.</li>
 <li><code>--enable_latency_logging</code>: Whether to log latency metrics per request, the default is True.</li>
-<li><code>--configure_logging</code>: Whether to configure KServe and Uvicorn logging, the default is True.
-In this case you may want to set the KServe <code>ModelServer</code>'s <code>log_config</code> parameter to pass a dictionary containing all the logging directives and configurations (see <a href="https://docs.python.org/3/library/logging.config.html#dictionary-schema-details">the Python upstream docs</a> for more info). The alternative is to use the <code>--log_config_file</code> argument described below.</li>
-<li><code>--log_config_file</code>: The path of the Python config file configuration to use (either a json or a yaml file). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.</li>
+<li><code>--configure_logging</code>: Whether to configure KServe and Uvicorn logging, the default is True.</li>
+<li><code>--log_config_file</code>: The path of the Python config file configuration to use (can be a json, a yaml file or any other supported file format by 
+python logging module). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.</li>
 <li><code>--access_log_format</code>: A string representing the access log format configuration to use. The functionality is provided by the <code>asgi-logger</code> library and it allows to override only the <code>uvicorn.access</code>'s format configuration with a richer set of fields (output hardcoded to <code>stdout</code>). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn <a href="https://github.com/encode/uvicorn/issues/527">github issue</a> for more info). By default is None.</li>
+<li><code>enable_latency_logging</code>: whether to log latency metrics per request, the default is True.</li>
 </ul>
 <h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h4>
 <p>You can supply additional environment variables on the container spec.</p>
@@ -1556,10 +1612,13 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <h3 id="implement-custom-model-using-kserve-api_1">Implement Custom Model using KServe API<a class="headerlink" href="#implement-custom-model-using-kserve-api_1" title="Permanent link">¶</a></h3>
 <p>For <code>Open(v2) Inference Protocol</code>, KServe provides <code>InferRequest</code> and <code>InferResponse</code> API object for <code>predict</code>, <code>preprocess</code>, <code>postprocess</code>
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.</p>
-<div class="highlight"><span class="filename">model_grpc.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">io</span>
+<div class="highlight"><span class="filename">model_grpc.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
 <span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferResponse</span><span class="p">,</span> <span class="n">InferOutput</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span>
 <span class="kn">from</span> <span class="nn">kserve.utils.utils</span> <span class="kn">import</span> <span class="n">generate_uuid</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -1604,15 +1663,18 @@ handlers to abstract away the implementation details of REST/gRPC decoding and e
         <span class="n">infer_response</span> <span class="o">=</span> <span class="n">InferResponse</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="o">=</span><span class="p">[</span><span class="n">infer_output</span><span class="p">],</span> <span class="n">response_id</span><span class="o">=</span><span class="n">response_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">infer_response</span>
 
-
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="s2">"custom-model"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">()</span>
     <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
 <h3 id="build-custom-serving-image-with-buildpacks_1">Build Custom Serving Image with BuildPacks<a class="headerlink" href="#build-custom-serving-image-with-buildpacks_1" title="Permanent link">¶</a></h3>
 <p>Similar to building the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
-<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/buildpacks:20<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1
+<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/buildpacks:20<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1<span class="w"> </span>--model_name<span class="o">=</span><span class="s2">"custom-model"</span>
 docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1
 </code></pre></div></p>
 <p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example.</p>
@@ -1693,7 +1755,6 @@ In the <code>custom_grpc.yaml</code> file edit the container image and replace $
 <ul>
 <li><code>--grpc_port</code>: the http port model server is listening on, the default gRPC port is 8081.</li>
 <li><code>--model_name</code>: the model name deployed in the model server, the default name the same as the service name.</li>
-<li><code>enable_latency_logging</code>: whether to log latency metrics per request, the default is True.</li>
 </ul>
 <p>Apply the yaml to deploy the InferenceService on KServe</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
@@ -1755,9 +1816,11 @@ In the <code>custom_grpc.yaml</code> file edit the container image and replace $
 the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
 KServe integrates <a href="https://docs.ray.io/en/master/serve/index.html">RayServe</a> which provides a programmable API to deploy models
 as separate python workers so the inference can be performed in parallel when serving multiple custom models.</p>
-<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">serve</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
 
 <span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -1772,11 +1835,22 @@ as separate python workers so the inference can be performed in parallel when se
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="o">...</span>
 
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>    
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
     <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">"custom-model"</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
 </code></pre></div>
 fractional gpu example
-<div class="highlight"><pre><span></span><code><span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ray_actor_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"num_cpus"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"num_gpus"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">import</span> <span class="nn">ray</span>
+<span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">serve</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
+
+<span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ray_actor_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"num_cpus"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"num_gpus"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
 <span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"custom-model"</span>
@@ -1789,7 +1863,11 @@ fractional gpu example
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="o">...</span>
 
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>      
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
     <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">num_cpus</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_gpus</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">"custom-model"</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
 </code></pre></div>
@@ -1798,6 +1876,233 @@ The more details for ray fractional cpu and gpu can be found <a href="https://do
 <p>Modify the <code>Procfile</code> to <code>web: python -m model_remote</code> and then run the above <code>pack</code> command, it builds the serving image which launches
 each model as separate python worker and web server routes to the model workers by name.</p>
 <p><img alt="parallel_inference" src="parallel_inference.png"/></p>
+<h2 id="configuring-logger-for-custom-serving-runtime">Configuring Logger for Custom Serving Runtime<a class="headerlink" href="#configuring-logger-for-custom-serving-runtime" title="Permanent link">¶</a></h2>
+<p>KServe allows users to override the default logger configuration of serving runtime and uvicorn server.
+The logger configuration can be modified in one of the following ways:</p>
+<h3 id="1-providing-logger-configuration-as-a-dict">1. Providing <a href="https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema">logger configuration as a Dict</a>:<a class="headerlink" href="#1-providing-logger-configuration-as-a-dict" title="Permanent link">¶</a></h3>
+<p>If you are building a custom serving runtime and want to modify the logger configuration, this method offers the easiest solution.
+You can supply the logging configuration as a Python Dictionary to the <code>kserve.logging.configure_logging()</code> method. If the logging dictionary is not provided, KServe uses the default configuration <a href="https://github.com/kserve/kserve/blob/d19e31040c558ef88774736f67a0c2af7dbc6bc2/python/kserve/kserve/logging.py#L32">KSERVE_LOG_CONFIG</a>.
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
+
+<span class="c1">#################################</span>
+<span class="c1">#       Source code             #</span>
+<span class="c1">################################</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># Example Dict config</span>
+    <span class="n">dictConfig</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"version"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"disable_existing_loggers"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">"formatters"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"kserve"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"()"</span><span class="p">:</span> <span class="s2">"logging.Formatter"</span><span class="p">,</span>
+                <span class="s2">"fmt"</span><span class="p">:</span> <span class="s2">"</span><span class="si">%(asctime)s</span><span class="s2">.</span><span class="si">%(msecs)03d</span><span class="s2"> </span><span class="si">%(filename)s</span><span class="s2">:</span><span class="si">%(funcName)s</span><span class="s2">():</span><span class="si">%(lineno)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">,</span>
+                <span class="s2">"datefmt"</span><span class="p">:</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S"</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">"kserve_trace"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"()"</span><span class="p">:</span> <span class="s2">"logging.Formatter"</span><span class="p">,</span>
+                <span class="s2">"fmt"</span><span class="p">:</span> <span class="s2">"</span><span class="si">%(asctime)s</span><span class="s2">.</span><span class="si">%(msecs)03d</span><span class="s2"> </span><span class="si">%(name)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">,</span>
+                <span class="s2">"datefmt"</span><span class="p">:</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S"</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">"uvicorn"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"()"</span><span class="p">:</span> <span class="s2">"uvicorn.logging.DefaultFormatter"</span><span class="p">,</span>
+                <span class="s2">"datefmt"</span><span class="p">:</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S"</span><span class="p">,</span>
+                <span class="s2">"fmt"</span><span class="p">:</span> <span class="s2">"</span><span class="si">%(asctime)s</span><span class="s2">.</span><span class="si">%(msecs)03d</span><span class="s2"> </span><span class="si">%(name)s</span><span class="s2"> </span><span class="si">%(levelprefix)s</span><span class="s2"> </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">,</span>
+                <span class="s2">"use_colors"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">"handlers"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"kserve"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"formatter"</span><span class="p">:</span> <span class="s2">"kserve"</span><span class="p">,</span>
+                <span class="s2">"class"</span><span class="p">:</span> <span class="s2">"logging.StreamHandler"</span><span class="p">,</span>
+                <span class="s2">"stream"</span><span class="p">:</span> <span class="s2">"ext://sys.stderr"</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">"kserve_trace"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"formatter"</span><span class="p">:</span> <span class="s2">"kserve_trace"</span><span class="p">,</span>
+                <span class="s2">"class"</span><span class="p">:</span> <span class="s2">"logging.StreamHandler"</span><span class="p">,</span>
+                <span class="s2">"stream"</span><span class="p">:</span> <span class="s2">"ext://sys.stderr"</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">"uvicorn"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"formatter"</span><span class="p">:</span> <span class="s2">"uvicorn"</span><span class="p">,</span>
+                <span class="s2">"class"</span><span class="p">:</span> <span class="s2">"logging.StreamHandler"</span><span class="p">,</span>
+                <span class="s2">"stream"</span><span class="p">:</span> <span class="s2">"ext://sys.stderr"</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">"loggers"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"kserve"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"handlers"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"kserve"</span><span class="p">],</span>
+                <span class="s2">"level"</span><span class="p">:</span> <span class="s2">"INFO"</span><span class="p">,</span>
+                <span class="s2">"propagate"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">"kserve.trace"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"handlers"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"kserve_trace"</span><span class="p">],</span>
+                <span class="s2">"level"</span><span class="p">:</span> <span class="s2">"INFO"</span><span class="p">,</span>
+                <span class="s2">"propagate"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">"uvicorn"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"handlers"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"uvicorn"</span><span class="p">],</span> <span class="s2">"level"</span><span class="p">:</span> <span class="s2">"INFO"</span><span class="p">,</span> <span class="s2">"propagate"</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">dictConfig</span><span class="p">)</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The logger should be configured before doing any actual work. A recommended best practice is to configure the logger
+in the main, preferably as the first line of code. If the logger is configured later on in the source code, it may lead to
+inconsistent logger formats.</p>
+</div>
+<h3 id="2-providing-logger-configuration-as-a-file">2. Providing logger configuration as a file:<a class="headerlink" href="#2-providing-logger-configuration-as-a-file" title="Permanent link">¶</a></h3>
+<p>The logger configuration can be provided as a file. If the filename ends with <code>.json</code>, KServe will treat the file as JSON Configuration.
+If the filename ends with <code>.yaml</code> or <code>.yml</code>, KServe will treat the file as YAML Configuration. Otherwise, The file will be treated 
+as a configuration file in the format specified in the <a href="https://docs.python.org/3/library/logging.config.html#configuration-file-format">Python logging module documentation</a>.
+This offers a more flexible way of configuring the logger for pre-built serving runtimes.</p>
+<p>The model server offers a command line argument which accepts a file path pointing to the configuration. For example,
+<div class="highlight"><pre><span></span><code>sklearnserver<span class="w"> </span>--log_config_file<span class="o">=</span>/path/to/config.yaml
+</code></pre></div>
+For, Custom serving runtimes, they should accept the file path in their source code.
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
+
+<span class="c1">#################################</span>
+<span class="c1">#       Source code             #</span>
+<span class="c1">################################</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
+</code></pre></div>
+Here is an example logging config in <code>JSON</code> format.
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"disable_existing_loggers"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"formatters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"kserve"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"()"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logging.Formatter"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"fmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"datefmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%Y-%m-%d %H:%M:%S"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"kserve_trace"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"()"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logging.Formatter"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"fmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%(asctime)s.%(msecs)03d %(name)s %(message)s"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"datefmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%Y-%m-%d %H:%M:%S"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uvicorn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"()"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uvicorn.logging.DefaultFormatter"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"datefmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%Y-%m-%d %H:%M:%S"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"fmt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"use_colors"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"handlers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"kserve"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"formatter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kserve"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logging.StreamHandler"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext://sys.stderr"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"kserve_trace"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"formatter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kserve_trace"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logging.StreamHandler"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext://sys.stderr"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uvicorn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"formatter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uvicorn"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"class"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logging.StreamHandler"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ext://sys.stderr"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"loggers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"kserve"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"handlers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"kserve"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INFO"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"propagate"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"kserve.trace"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"handlers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"kserve_trace"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INFO"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"propagate"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uvicorn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"handlers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"uvicorn"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INFO"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"propagate"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p>Here is an example using <code>YAML</code> format for configuring logger.
+<div class="highlight"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">disable_existing_loggers</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">formatters</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kserve</span><span class="p">:</span>
+<span class="w">    </span><span class="s">"()"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logging.Formatter</span>
+<span class="w">    </span><span class="nt">fmt</span><span class="p">:</span><span class="w"> </span><span class="s">"%(asctime)s.%(msecs)03d</span><span class="nv"> </span><span class="s">%(filename)s:%(funcName)s():%(lineno)s</span><span class="nv"> </span><span class="s">%(message)s"</span>
+<span class="w">    </span><span class="nt">datefmt</span><span class="p">:</span><span class="w"> </span><span class="s">"%Y-%m-%d</span><span class="nv"> </span><span class="s">%H:%M:%S"</span>
+<span class="w">  </span><span class="nt">kserve_trace</span><span class="p">:</span>
+<span class="w">    </span><span class="s">"()"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logging.Formatter</span>
+<span class="w">    </span><span class="nt">fmt</span><span class="p">:</span><span class="w"> </span><span class="s">"%(asctime)s.%(msecs)03d</span><span class="nv"> </span><span class="s">%(name)s</span><span class="nv"> </span><span class="s">%(message)s"</span>
+<span class="w">    </span><span class="nt">datefmt</span><span class="p">:</span><span class="w"> </span><span class="s">"%Y-%m-%d</span><span class="nv"> </span><span class="s">%H:%M:%S"</span>
+<span class="w">  </span><span class="nt">uvicorn</span><span class="p">:</span>
+<span class="w">    </span><span class="s">"()"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uvicorn.logging.DefaultFormatter</span>
+<span class="w">    </span><span class="nt">datefmt</span><span class="p">:</span><span class="w"> </span><span class="s">"%Y-%m-%d</span><span class="nv"> </span><span class="s">%H:%M:%S"</span>
+<span class="w">    </span><span class="nt">fmt</span><span class="p">:</span><span class="w"> </span><span class="s">"%(asctime)s.%(msecs)03d</span><span class="nv"> </span><span class="s">%(name)s</span><span class="nv"> </span><span class="s">%(levelprefix)s</span><span class="nv"> </span><span class="s">%(message)s"</span>
+<span class="w">    </span><span class="nt">use_colors</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="nt">handlers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kserve</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">formatter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+<span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logging.StreamHandler</span>
+<span class="w">    </span><span class="nt">stream</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ext://sys.stderr</span>
+<span class="w">  </span><span class="nt">kserve_trace</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">formatter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve_trace</span>
+<span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logging.StreamHandler</span>
+<span class="w">    </span><span class="nt">stream</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ext://sys.stderr</span>
+<span class="w">  </span><span class="nt">uvicorn</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">formatter</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uvicorn</span>
+<span class="w">    </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logging.StreamHandler</span>
+<span class="w">    </span><span class="nt">stream</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ext://sys.stderr</span>
+<span class="nt">loggers</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">kserve</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">handlers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+<span class="w">    </span><span class="nt">propagate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">kserve.trace</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">handlers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve_trace</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+<span class="w">    </span><span class="nt">propagate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">uvicorn</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">handlers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uvicorn</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">INFO</span>
+<span class="w">    </span><span class="nt">propagate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+For other file formats, Please refer <a href="https://docs.python.org/3/library/logging.config.html#configuration-file-format">Python docs</a>.</p>
+<h3 id="3-disabling-logger-configuration">3. Disabling logger Configuration:<a class="headerlink" href="#3-disabling-logger-configuration" title="Permanent link">¶</a></h3>
+<p>If you don't want Kserve to configure the logger then, You can disable it by passing the commandline argument <code>--configure_logging=False</code> 
+to the model server. The command line argument <code>--log_config_file</code> will be ignored, if the logger configuration is disabled.
+In this case, the logger will inherit the root logger's configuration.</p>
+<div class="highlight"><pre><span></span><code>sklearnserver<span class="w"> </span>--configure_logging<span class="o">=</span>False
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the logger is not configured at the entrypoint in the serving runtime (i.e. logging.configure_logger() is not invoked),
+The model server will configure the logger using default configuration. But note that the logger is configured at 
+model server initialization. So any logs before the initialization will use the root logger's configuration.</p>
+</div>
 </article>
 </div>
 </div>

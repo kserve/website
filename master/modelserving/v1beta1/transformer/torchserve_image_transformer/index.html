@@ -663,6 +663,11 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#configuring-logger-for-serving-runtime">
+    Configuring Logger for Serving Runtime
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#build-transformer-docker-image">
     Build Transformer docker image
   </a>
@@ -1243,6 +1248,11 @@
   </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#configuring-logger-for-serving-runtime">
+    Configuring Logger for Serving Runtime
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#build-transformer-docker-image">
     Build Transformer docker image
   </a>
@@ -1315,15 +1325,16 @@ By default transformer makes a REST call to predictor, to make a gRPC call to pr
 <p>To implement a <code>Transformer</code> you can derive from the base <code>Model</code> class and then overwrite the <code>preprocess</code> and <code>postprocess</code> handler to have your own customized transformation logic.
 For <code>Open(v2) Inference Protocol</code>, KServe provides <code>InferRequest</code> and <code>InferResponse</code> API object for <code>predict</code>, <code>preprocess</code>, <code>postprocess</code>
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">model_server</span><span class="p">,</span> <span class="n">InferInput</span><span class="p">,</span> <span class="n">InferRequest</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">model_server</span><span class="p">,</span> <span class="n">InferInput</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">logging</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">kserve</span>
 
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">kserve</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_LOGLEVEL</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">image_transform</span><span class="p">(</span><span class="n">byte_array</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""converts the input image of Bytes Array into Tensor</span>
@@ -1373,6 +1384,8 @@ handlers to abstract away the implementation details of REST/gRPC decoding and e
 <h3 id="transformer-server-entrypoint">Transformer Server Entrypoint<a class="headerlink" href="#transformer-server-entrypoint" title="Permanent link">¶</a></h3>
 <p>For single model you just create a transformer object and register that to the model server.
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>  <span class="c1"># Configure kserve and uvicorn logger</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">ImageTransformer</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">predictor_host</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_host</span><span class="p">,</span>
                              <span class="n">protocol</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">protocol</span><span class="p">)</span>
     <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="n">model</span><span class="p">])</span>
@@ -1380,11 +1393,16 @@ handlers to abstract away the implementation details of REST/gRPC decoding and e
 <p>For multi-model case if all the models can share the same transformer you can register the same transformer for different models,
 or different transformers if each model requires its own transformation.
 <div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>  <span class="c1"># Configure kserve and uvicorn logger</span>
     <span class="k">for</span> <span class="n">model_name</span> <span class="ow">in</span> <span class="n">model_names</span><span class="p">:</span>
         <span class="n">transformer</span> <span class="o">=</span> <span class="n">ImageTransformer</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">predictor_host</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_host</span><span class="p">)</span>
         <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transformer</span><span class="p">)</span>
     <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">)</span>
 </code></pre></div></p>
+<h3 id="configuring-logger-for-serving-runtime">Configuring Logger for Serving Runtime<a class="headerlink" href="#configuring-logger-for-serving-runtime" title="Permanent link">¶</a></h3>
+<p>Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
+You can follow the <a href="../../custom/custom_model/#configuring-logger-for-serving-runtime">logger configuration documentation</a> to configure the logger.</p>
 <h3 id="build-transformer-docker-image">Build Transformer docker image<a class="headerlink" href="#build-transformer-docker-image" title="Permanent link">¶</a></h3>
 <p>Under <code>kserve/python</code> directory, build the transformer docker image using <a href="https://github.com/kserve/kserve/blob/release-0.11/python/custom_transformer.Dockerfile">Dockerfile</a>
 <div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>python
