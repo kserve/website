@@ -498,13 +498,13 @@ each model as separate python worker and web server routes to the model workers 
 ![parallel_inference](./parallel_inference.png)
 
 ## Configuring Logger for Custom Serving Runtime
-Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
+KServe allows users to override the default logger configuration of serving runtime and uvicorn server.
 The logger configuration can be modified in one of the following ways:
 
 ### 1. Providing [logger configuration as a Dict](https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema):
 
 If you are building a custom serving runtime and want to modify the logger configuration, this method offers the easiest solution.
-You can supply the logging configuration as a Python Dictionary to the `kserve.logging.configure_logging()` method.
+You can supply the logging configuration as a Python Dictionary to the `kserve.logging.configure_logging()` method. If the logging dictionary is not provided, KServe uses the default configuration [KSERVE_LOG_CONFIG](https://github.com/kserve/kserve/blob/d19e31040c558ef88774736f67a0c2af7dbc6bc2/python/kserve/kserve/logging.py#L32).
 ```python
 import argparse
 import kserve
@@ -571,7 +571,7 @@ if __name__ == "__main__":
         },
     }
     if args.configure_logging:
-        logging.configure_logging(args.log_config_file)
+        logging.configure_logging(dictConfig)
 ```
 !!! note
 
