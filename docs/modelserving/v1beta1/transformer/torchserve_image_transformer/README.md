@@ -14,15 +14,16 @@ To implement a `Transformer` you can derive from the base `Model` class and then
 For `Open(v2) Inference Protocol`, KServe provides `InferRequest` and `InferResponse` API object for `predict`, `preprocess`, `postprocess`
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
 ```python
-from kserve import Model, ModelServer, model_server, InferInput, InferRequest
+import argparse
+from kserve import Model, ModelServer, model_server, InferInput, InferRequest, logging
 from typing import Dict
 from PIL import Image
 import torchvision.transforms as transforms
 import logging
 import io
 import base64
+import kserve
 
-logging.basicConfig(level=kserve.constants.KSERVE_LOGLEVEL)
 
 def image_transform(byte_array):
     """converts the input image of Bytes Array into Tensor
@@ -75,6 +76,8 @@ Please see the code example [here](https://github.com/kserve/kserve/tree/release
 For single model you just create a transformer object and register that to the model server.
 ```python
 if __name__ == "__main__":
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)  # Configure kserve and uvicorn logger
     model = ImageTransformer(args.model_name, predictor_host=args.predictor_host,
                              protocol=args.protocol)
     ModelServer().start(models=[model])
@@ -84,11 +87,17 @@ For multi-model case if all the models can share the same transformer you can re
 or different transformers if each model requires its own transformation.
 ```python
 if __name__ == "__main__":
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)  # Configure kserve and uvicorn logger
     for model_name in model_names:
         transformer = ImageTransformer(model_name, predictor_host=args.predictor_host)
         models.append(transformer)
     kserve.ModelServer().start(models=models)
 ```
+
+### Configuring Logger for Serving Runtime
+Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
+You can follow the [logger configuration documentation](../../custom/custom_model/#configuring-logger-for-serving-runtime) to configure the logger.
 
 ### Build Transformer docker image
 Under `kserve/python` directory, build the transformer docker image using [Dockerfile](https://github.com/kserve/kserve/blob/release-0.11/python/custom_transformer.Dockerfile)
