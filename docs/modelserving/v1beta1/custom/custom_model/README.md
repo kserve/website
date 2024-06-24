@@ -65,246 +65,6 @@ if __name__ == "__main__":
     ModelServer().start([model])
 ```
 
-### Configuring Logger for Serving Runtime
-Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
-The logger configuration can be modified in one of the following ways:
-
-#### 1. Providing [logger configuration as a Dict](https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema):
-
-If you are building a custom serving runtime and want to modify the logger configuration, this method offers the easiest solution.
-You can supply the logging configuration as a Python Dictionary to the `kserve.logging.configure_logging()` method.
-```python
-import argparse
-import kserve
-from kserve import logging
-
-#################################
-#       Source code             #
-################################
-
-parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
-args, _ = parser.parse_known_args()
-if __name__ == "__main__":
-    # Example Dict config
-    dictConfig = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "formatters": {
-            "kserve": {
-                "()": "logging.Formatter",
-                "fmt": "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s",
-                "datefmt": "%Y-%m-%d %H:%M:%S",
-            },
-            "kserve_trace": {
-                "()": "logging.Formatter",
-                "fmt": "%(asctime)s.%(msecs)03d %(name)s %(message)s",
-                "datefmt": "%Y-%m-%d %H:%M:%S",
-            },
-            "uvicorn": {
-                "()": "uvicorn.logging.DefaultFormatter",
-                "datefmt": "%Y-%m-%d %H:%M:%S",
-                "fmt": "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s",
-                "use_colors": None,
-            },
-        },
-        "handlers": {
-            "kserve": {
-                "formatter": "kserve",
-                "class": "logging.StreamHandler",
-                "stream": "ext://sys.stderr",
-            },
-            "kserve_trace": {
-                "formatter": "kserve_trace",
-                "class": "logging.StreamHandler",
-                "stream": "ext://sys.stderr",
-            },
-            "uvicorn": {
-                "formatter": "uvicorn",
-                "class": "logging.StreamHandler",
-                "stream": "ext://sys.stderr",
-            },
-        },
-        "loggers": {
-            "kserve": {
-                "handlers": ["kserve"],
-                "level": "INFO",
-                "propagate": False,
-            },
-            "kserve.trace": {
-                "handlers": ["kserve_trace"],
-                "level": "INFO",
-                "propagate": False,
-            },
-            "uvicorn": {"handlers": ["uvicorn"], "level": "INFO", "propagate": False},
-        },
-    }
-    if args.configure_logging:
-        logging.configure_logging(args.log_config_file)
-```
-!!! note
-    The logger should be configured before doing any actual work. A recommended best practice is to configure the logger
-    in the main, preferably as the first line of code. If the logger is configured later on in the source code, it may lead to
-    inconsistent logger formats.
-
-#### 2. Providing logger configuration as a file:
-The logger configuration can be provided as a file. If the filename ends with `.json`, KServe will treat the file as JSON Configuration.
-If the filename ends with `.yaml` or `.yml`, KServe will treat the file as YAML Configuration. Otherwise, The file will be treated 
-as a configuration file in the format specified in the [Python logging module documentation](https://docs.python.org/3/library/logging.config.html#configuration-file-format).
-This offers a more flexible way of configuring the logger for pre-built serving runtimes.
-
-The model server offers a command line argument which accepts a file path pointing to the configuration. For example,
-```bash
-sklearnserver --log_config_file=/path/to/config.yaml
-```
-For, Custom serving runtimes, they should accept the file path in their source code.
-```python
-import argparse
-
-from kserve import logging
-import kserve
-
-#################################
-#       Source code             #
-################################
-
-parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
-args, _ = parser.parse_known_args()
-if __name__ == "__main__":
-    if args.configure_logging:
-        logging.configure_logging(args.log_config_file)
-           
-```
-Here is an example logging config in `JSON` format.
-```json
-{
-  "version": 1,
-  "disable_existing_loggers": false,
-  "formatters": {
-    "kserve": {
-      "()": "logging.Formatter",
-      "fmt": "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s",
-      "datefmt": "%Y-%m-%d %H:%M:%S"
-    },
-    "kserve_trace": {
-      "()": "logging.Formatter",
-      "fmt": "%(asctime)s.%(msecs)03d %(name)s %(message)s",
-      "datefmt": "%Y-%m-%d %H:%M:%S"
-    },
-    "uvicorn": {
-      "()": "uvicorn.logging.DefaultFormatter",
-      "datefmt": "%Y-%m-%d %H:%M:%S",
-      "fmt": "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s",
-      "use_colors": null
-    }
-  },
-  "handlers": {
-    "kserve": {
-      "formatter": "kserve",
-      "class": "logging.StreamHandler",
-      "stream": "ext://sys.stderr"
-    },
-    "kserve_trace": {
-      "formatter": "kserve_trace",
-      "class": "logging.StreamHandler",
-      "stream": "ext://sys.stderr"
-    },
-    "uvicorn": {
-      "formatter": "uvicorn",
-      "class": "logging.StreamHandler",
-      "stream": "ext://sys.stderr"
-    }
-  },
-  "loggers": {
-    "kserve": {
-      "handlers": [
-        "kserve"
-      ],
-      "level": "INFO",
-      "propagate": false
-    },
-    "kserve.trace": {
-      "handlers": [
-        "kserve_trace"
-      ],
-      "level": "INFO",
-      "propagate": false
-    },
-    "uvicorn": {
-      "handlers": [
-        "uvicorn"
-      ],
-      "level": "INFO",
-      "propagate": false
-    }
-  }
-}
-```
-Here is an example using `YAML` format for configuring logger.
-```yaml
-version: 1
-disable_existing_loggers: false
-formatters:
-  kserve:
-    "()": logging.Formatter
-    fmt: "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s"
-    datefmt: "%Y-%m-%d %H:%M:%S"
-  kserve_trace:
-    "()": logging.Formatter
-    fmt: "%(asctime)s.%(msecs)03d %(name)s %(message)s"
-    datefmt: "%Y-%m-%d %H:%M:%S"
-  uvicorn:
-    "()": uvicorn.logging.DefaultFormatter
-    datefmt: "%Y-%m-%d %H:%M:%S"
-    fmt: "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s"
-    use_colors: null
-handlers:
-  kserve:
-    formatter: kserve
-    class: logging.StreamHandler
-    stream: ext://sys.stderr
-  kserve_trace:
-    formatter: kserve_trace
-    class: logging.StreamHandler
-    stream: ext://sys.stderr
-  uvicorn:
-    formatter: uvicorn
-    class: logging.StreamHandler
-    stream: ext://sys.stderr
-loggers:
-  kserve:
-    handlers:
-      - kserve
-    level: INFO
-    propagate: false
-  kserve.trace:
-    handlers:
-      - kserve_trace
-    level: INFO
-    propagate: false
-  uvicorn:
-    handlers:
-      - uvicorn
-    level: INFO
-    propagate: false
-
-```
-For other file formats, Please refer [Python docs](https://docs.python.org/3/library/logging.config.html#configuration-file-format).
-#### 3. Disabling logger Configuration:
-If you don't want Kserve to configure the logger then, You can disable it by passing the commandline argument `--configure_logging=False` 
-to the model server. The command line argument `--log_config_file` will be ignored, if the logger configuration is disabled.
-In this case, the logger will inherit the root logger's configuration.
-
-```bash
-sklearnserver --configure_logging=False
-```
-
-!!! note
-    If the logger is not configured at the entrypoint in the serving runtime (i.e. logging.configure_logger() is not invoked),
-    The model server will configure the logger using default configuration. But note that the logger is configured at 
-    model server initialization. So any logs before the initialization will use the root logger's configuration.
- 
-
-
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
 needing to define the `Dockerfile`. Buildpacks automatically determines the python application and then install the dependencies from the
@@ -331,6 +91,7 @@ Send a test inference request locally with [input.json](./input.json)
 curl -H "Content-Type: application/json" localhost:8080/v1/models/custom-model:predict -d @./input.json
 ```
 !!! success "Expected Output"
+
     ```{ .json .no-copy }
     {"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
     ```
@@ -382,6 +143,7 @@ kubectl apply -f custom.yaml
 ```
 
 !!! success "Expected Output"
+
     ```{ .bash .no-copy }
     $ inferenceservice.serving.kserve.io/custom-model created
     ```
@@ -398,6 +160,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http:
 ```
 
 !!! success "Expected Output"
+
     ```{ .bash .no-copy }
     *   Trying 169.47.250.204...
     * TCP_NODELAY set
@@ -541,6 +304,7 @@ python grpc_test_client.py
 ```
 
 !!! success "Expected Output"
+
     ```{ .json .no-copy }
     id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
     outputs {
@@ -627,6 +391,7 @@ python grpc_test_client.py
 ```
 
 !!! success "Expected Output"
+
     ```{ .json .no-copy }
     id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
     outputs {
@@ -731,3 +496,246 @@ Modify the `Procfile` to `web: python -m model_remote` and then run the above `p
 each model as separate python worker and web server routes to the model workers by name.
 
 ![parallel_inference](./parallel_inference.png)
+
+## Configuring Logger for Custom Serving Runtime
+Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
+The logger configuration can be modified in one of the following ways:
+
+### 1. Providing [logger configuration as a Dict](https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema):
+
+If you are building a custom serving runtime and want to modify the logger configuration, this method offers the easiest solution.
+You can supply the logging configuration as a Python Dictionary to the `kserve.logging.configure_logging()` method.
+```python
+import argparse
+import kserve
+from kserve import logging
+
+#################################
+#       Source code             #
+################################
+
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()
+if __name__ == "__main__":
+    # Example Dict config
+    dictConfig = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "kserve": {
+                "()": "logging.Formatter",
+                "fmt": "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
+            "kserve_trace": {
+                "()": "logging.Formatter",
+                "fmt": "%(asctime)s.%(msecs)03d %(name)s %(message)s",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+            },
+            "uvicorn": {
+                "()": "uvicorn.logging.DefaultFormatter",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
+                "fmt": "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s",
+                "use_colors": None,
+            },
+        },
+        "handlers": {
+            "kserve": {
+                "formatter": "kserve",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stderr",
+            },
+            "kserve_trace": {
+                "formatter": "kserve_trace",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stderr",
+            },
+            "uvicorn": {
+                "formatter": "uvicorn",
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stderr",
+            },
+        },
+        "loggers": {
+            "kserve": {
+                "handlers": ["kserve"],
+                "level": "INFO",
+                "propagate": False,
+            },
+            "kserve.trace": {
+                "handlers": ["kserve_trace"],
+                "level": "INFO",
+                "propagate": False,
+            },
+            "uvicorn": {"handlers": ["uvicorn"], "level": "INFO", "propagate": False},
+        },
+    }
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
+```
+!!! note
+
+    The logger should be configured before doing any actual work. A recommended best practice is to configure the logger
+    in the main, preferably as the first line of code. If the logger is configured later on in the source code, it may lead to
+    inconsistent logger formats.
+
+### 2. Providing logger configuration as a file:
+The logger configuration can be provided as a file. If the filename ends with `.json`, KServe will treat the file as JSON Configuration.
+If the filename ends with `.yaml` or `.yml`, KServe will treat the file as YAML Configuration. Otherwise, The file will be treated 
+as a configuration file in the format specified in the [Python logging module documentation](https://docs.python.org/3/library/logging.config.html#configuration-file-format).
+This offers a more flexible way of configuring the logger for pre-built serving runtimes.
+
+The model server offers a command line argument which accepts a file path pointing to the configuration. For example,
+```bash
+sklearnserver --log_config_file=/path/to/config.yaml
+```
+For, Custom serving runtimes, they should accept the file path in their source code.
+```python
+import argparse
+
+from kserve import logging
+import kserve
+
+#################################
+#       Source code             #
+################################
+
+parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+args, _ = parser.parse_known_args()
+if __name__ == "__main__":
+    if args.configure_logging:
+        logging.configure_logging(args.log_config_file)
+           
+```
+Here is an example logging config in `JSON` format.
+```json
+{
+  "version": 1,
+  "disable_existing_loggers": false,
+  "formatters": {
+    "kserve": {
+      "()": "logging.Formatter",
+      "fmt": "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    },
+    "kserve_trace": {
+      "()": "logging.Formatter",
+      "fmt": "%(asctime)s.%(msecs)03d %(name)s %(message)s",
+      "datefmt": "%Y-%m-%d %H:%M:%S"
+    },
+    "uvicorn": {
+      "()": "uvicorn.logging.DefaultFormatter",
+      "datefmt": "%Y-%m-%d %H:%M:%S",
+      "fmt": "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s",
+      "use_colors": null
+    }
+  },
+  "handlers": {
+    "kserve": {
+      "formatter": "kserve",
+      "class": "logging.StreamHandler",
+      "stream": "ext://sys.stderr"
+    },
+    "kserve_trace": {
+      "formatter": "kserve_trace",
+      "class": "logging.StreamHandler",
+      "stream": "ext://sys.stderr"
+    },
+    "uvicorn": {
+      "formatter": "uvicorn",
+      "class": "logging.StreamHandler",
+      "stream": "ext://sys.stderr"
+    }
+  },
+  "loggers": {
+    "kserve": {
+      "handlers": [
+        "kserve"
+      ],
+      "level": "INFO",
+      "propagate": false
+    },
+    "kserve.trace": {
+      "handlers": [
+        "kserve_trace"
+      ],
+      "level": "INFO",
+      "propagate": false
+    },
+    "uvicorn": {
+      "handlers": [
+        "uvicorn"
+      ],
+      "level": "INFO",
+      "propagate": false
+    }
+  }
+}
+```
+
+Here is an example using `YAML` format for configuring logger.
+```yaml
+version: 1
+disable_existing_loggers: false
+formatters:
+  kserve:
+    "()": logging.Formatter
+    fmt: "%(asctime)s.%(msecs)03d %(filename)s:%(funcName)s():%(lineno)s %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+  kserve_trace:
+    "()": logging.Formatter
+    fmt: "%(asctime)s.%(msecs)03d %(name)s %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+  uvicorn:
+    "()": uvicorn.logging.DefaultFormatter
+    datefmt: "%Y-%m-%d %H:%M:%S"
+    fmt: "%(asctime)s.%(msecs)03d %(name)s %(levelprefix)s %(message)s"
+    use_colors: null
+handlers:
+  kserve:
+    formatter: kserve
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+  kserve_trace:
+    formatter: kserve_trace
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+  uvicorn:
+    formatter: uvicorn
+    class: logging.StreamHandler
+    stream: ext://sys.stderr
+loggers:
+  kserve:
+    handlers:
+      - kserve
+    level: INFO
+    propagate: false
+  kserve.trace:
+    handlers:
+      - kserve_trace
+    level: INFO
+    propagate: false
+  uvicorn:
+    handlers:
+      - uvicorn
+    level: INFO
+    propagate: false
+
+```
+For other file formats, Please refer [Python docs](https://docs.python.org/3/library/logging.config.html#configuration-file-format).
+
+### 3. Disabling logger Configuration:
+If you don't want Kserve to configure the logger then, You can disable it by passing the commandline argument `--configure_logging=False` 
+to the model server. The command line argument `--log_config_file` will be ignored, if the logger configuration is disabled.
+In this case, the logger will inherit the root logger's configuration.
+
+```bash
+sklearnserver --configure_logging=False
+```
+
+!!! note
+
+    If the logger is not configured at the entrypoint in the serving runtime (i.e. logging.configure_logger() is not invoked),
+    The model server will configure the logger using default configuration. But note that the logger is configured at 
+    model server initialization. So any logs before the initialization will use the root logger's configuration.
+ 
