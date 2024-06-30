@@ -77,7 +77,7 @@ Here’s an example of how an `InferenceService` configuration would look when u
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: my-infeference-service
+  name: my-inference-service
 spec:
   predictor:
     model:
