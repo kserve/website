@@ -45,3 +45,11 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
    helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.13.0
    helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.13.0
    ```
+
+   This second method requires cert-manager to be installed in the cluster. If you don't have cert-manager installed, you can install it with:
+
+   ```bash
+    export CERT_MANAGER_VERSION=v1.9.0
+    kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/${CERT_MANAGER_VERSION}/cert-manager.yaml
+    kubectl wait --for=condition=available --timeout=600s deployment/cert-manager-webhook -n cert-manager
+    ```
