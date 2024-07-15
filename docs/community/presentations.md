@@ -4,6 +4,10 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 
 | Presentation/Demo | Presenters |
 | ------------ | ------- |
+| [From Bash Scripts to Kubeflow and GitOps: Our Journey to Operationalizing ML at Scale](https://youtu.be/dwt-MBEUGpQ?si=_iCjP6zdON9cx4Zu) | Luca Grazioli, Dennis Ohrndorf |
+| [Production-Ready AI Platform on Kubernetes](https://youtu.be/_RthQ01bwU8?si=XY5krc-_WRsNt37x) | Yuan Tang |
+| [Fortifying AI Security in Kubernetes with Confidential Containers](https://youtu.be/Ko0o5_hpmxI?si=cTmDNLUuXNEuvWfh) | Suraj Deshmukh, Pradipta Banerjee |
+| [Platform Building Blocks: How to Build ML Infrastructure with CNCF Projects](https://sched.co/1YhIv) | Yuzhui Liu, Leon Zhou |
 | [Distributed Machine Learning Patterns from Manning Publications](https://github.com/terrytangyuan/distributed-ml-patterns) | Yuan Tang |
 | [KubeCon 2019: Introducing KFServing: Serverless Model Serving on Kubernetes](https://www.youtube.com/watch?v=saMkA4fIOH8) |Dan Sun, Ellis Tarn|
 | [KubeCon 2019: Advanced Model Inferencing Leveraging KNative, Istio & Kubeflow Serving](https://www.youtube.com/watch?v=YaGASyU88dQ) | Animesh Singh, Clive Cox|
