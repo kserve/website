@@ -3,9 +3,9 @@ The Hugging Face serving runtime implements two backends namely `Hugging Face` a
 The preprocess and post-process handlers are already implemented based on different ML tasks, for example text classification,
 token-classification, text-generation, text2text-generation, fill-mask.
 
-KServe Hugging Face runtime by default uses [`vLLM`]((https://github.com/vllm-project/vllm)) backend to serve `text generation` and `text2text generation` LLM models for faster time-to-first-token(TTFT) and higher token generation throughput than the Hugging Face API. 
-vLLM is implemented with common inference optimization techniques, such as paged attention, continuous batching and an optimized CUDA kernel.
-If the Model is not supported by the vLLM engine, KServe falls back to the Hugging Face backend as a failsafe.
+KServe Hugging Face runtime by default uses [`vLLM`](https://github.com/vllm-project/vllm) backend to serve `text generation` and `text2text generation` LLM models for faster time-to-first-token (TTFT) and higher token generation throughput than the Hugging Face API. 
+vLLM is implemented with common inference optimization techniques, such as [PagedAttention](https://vllm.ai), [continuous batching](https://www.anyscale.com/blog/continuous-batching-llm-inference) and an optimized CUDA kernel.
+If the model is not supported by the vLLM engine, KServe falls back to the Hugging Face backend as a failsafe.
 
 ## Supported ML Tasks
 The Hugging Face runtime supports the following ML tasks:
@@ -16,13 +16,13 @@ The Hugging Face runtime supports the following ML tasks:
 - Token Classification
 - Sequence Classification (Text Classification)
 
-For, Models supported by the `vllm` backend, Please visit the [vLLM Supported Models page](https://docs.vllm.ai/en/latest/models/index.html).
+For information on the models supported by the vLLM backend, please visit [vLLM's documentation](https://docs.vllm.ai/en/stable/models/supported_models.html).
 
 
 ## API Endpoints
-Both the backends supports serving generative models (text generation and text2text generation) using [OpenAI's Completion](https://platform.openai.com/docs/api-reference/completions) and [Chat Completion](https://platform.openai.com/docs/api-reference/chat) API.
+Both of the backends support serving generative models (text generation and text2text generation) using [OpenAI's Completion](https://platform.openai.com/docs/api-reference/completions) and [Chat Completion](https://platform.openai.com/docs/api-reference/chat) API.
 
-The other types of tasks like token classification, sequence classification, fill mask are served using KServe's [Open Inference Protocol](../../../data_plane/v2_protocol.md) or [V1 API](../../../data_plane/v1_protocol.md). 
+The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's [Open Inference Protocol](../../../data_plane/v2_protocol.md) or [V1 API](../../../data_plane/v1_protocol.md). 
 
 ## Examples
 The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:
@@ -42,13 +42,13 @@ The following examples demonstrate how to deploy and perform inference using the
 
 ## Hugging Face Runtime Arguments
 
-Below, you can find an explanation of command line arguments which are supported for Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/models/engine_args.html) can also be specified on the command line argument which is parsed by the Hugging Face runtime.
+Below, you can find an explanation of command line arguments which are supported by the Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/models/engine_args.html) can also be specified on the command line and will be parsed by the Hugging Face runtime.
 
 - `--model_name`: The name of the model used on the endpoint path.
 - `--model_dir`: The local path where the model is downloaded to. If `model_id` is provided, this argument will be ignored.
-- `--model_id`: Huggingface model id.
-- `--model_revision`: Huggingface model revision.
-- `--tokenizer_revision`: Huggingface tokenizer revision.
+- `--model_id`: Hugging Face model id.
+- `--model_revision`: Hugging Face model revision.
+- `--tokenizer_revision`: Hugging Face tokenizer revision.
 - `--dtype`: Data type to load the weights in. One of 'auto', 'float16', 'float32', 'bfloat16', 'float', 'half'. 
              Defaults to float16 for GPU and float32 for CPU systems. 'auto' uses float16 if GPU is available and uses float32 otherwise to ensure consistency between vLLM and HuggingFace backends. 
              Encoder models defaults to 'float32'. 'float' is shorthand for 'float32'. 'half' is 'float16'. The rest are as the name reads.
