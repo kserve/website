@@ -16,7 +16,7 @@ The Hugging Face runtime supports the following ML tasks:
 - Token Classification
 - Sequence Classification (Text Classification)
 
-For information on the models supported by the vLLM backend, please visit [this page](https://docs.vllm.ai/en/stable/models/supported_models.html).
+For information on the models supported by the vLLM backend, please visit [vLLM's documentation](https://docs.vllm.ai/en/stable/models/supported_models.html).
 
 
 ## API Endpoints
