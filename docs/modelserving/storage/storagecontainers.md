@@ -115,4 +115,4 @@ In this specific example the `model-registry://iris/v1` model is referring to a 
 
 ## Spec Attributes
 
-Spec attributes are in [API Reference](/website/reference/api/#serving.kserve.io/v1alpha1.ClusterStorageContainer) doc.
+Spec attributes are in [API Reference](../../reference//api.md#serving.kserve.io/v1alpha1.ClusterStorageContainer) doc.

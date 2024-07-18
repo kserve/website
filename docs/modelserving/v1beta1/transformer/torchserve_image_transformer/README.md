@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
 ### Configuring Logger for Serving Runtime
 Kserve allows users to override the default logger configuration of serving runtime and uvicorn server.
-You can follow the [logger configuration documentation](../../custom/custom_model/#configuring-logger-for-serving-runtime) to configure the logger.
+You can follow the [logger configuration documentation](../../custom/custom_model/README.md#configuring-logger-for-serving-runtime) to configure the logger.
 
 ### Build Transformer docker image
 Under `kserve/python` directory, build the transformer docker image using [Dockerfile](https://github.com/kserve/kserve/blob/release-0.11/python/custom_transformer.Dockerfile)

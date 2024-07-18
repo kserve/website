@@ -108,7 +108,7 @@ Here's what generally happens after you send the PR for review:
       `lgtm` label.
 
     - The
-      [KServe technical writers](/OWNERS)
+      [KServe technical writers](../../../OWNERS)
       are who provide the `approved` label when the content meets quality,
       clarity, and organization standards (see [Style Guide](./../style-guide/style-and-formatting.md)).
 

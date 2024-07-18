@@ -48,7 +48,7 @@ kubectl apply -f pmml.yaml
 
 
 ### Run a prediction
-The first step is to [determine the ingress IP and ports](/docs/get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 You can see an example payload below. Create a file named `iris-input.json` with the sample input.
 ```json

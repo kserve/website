@@ -1,6 +1,6 @@
 # Serving models with OCI images
 
-KServe's traditional approach for model initialization involves fetching models from sources like [S3 buckets](../s3/s3.md) or [URIs](../uri/uri.md). This process is adequate for small models but becomes a bottleneck for larger ones like used for large language models, significantly delaying startup times in auto-scaling scenarios.
+KServe's traditional approach for model initialization involves fetching models from sources like [S3 buckets](./s3/s3.md) or [URIs](./uri/uri.md). This process is adequate for small models but becomes a bottleneck for larger ones like used for large language models, significantly delaying startup times in auto-scaling scenarios.
 
 "Modelcars" is a KServe feature designed to address these challenges. It streamlines model fetching using OCI images, offering several advantages:
 
@@ -94,7 +94,7 @@ This means the image would be re-downloaded every time a Pod restarts or scales 
 
 ## Example
 
-Let's see how modecars work by deploying the [getting started example](../../../../get_started/first_isvc/) by using an OCI image and check how it is different to the startup with a storage-initalizer init-container. 
+Let's see how modecars work by deploying the [getting started example](../../get_started/first_isvc.md) by using an OCI image and check how it is different to the startup with a storage-initalizer init-container. 
 
 Asuming you have setup a namespace `kserve-test` that is KServe enabled, create an `InferenceService` that uses an `oci://` storage URL:
 
@@ -113,7 +113,7 @@ spec:
 EOF
 ```
 
-After the `InferenceService` has been deployed successfully, you can follow the [steps of the getting started example](../../../../get_started/first_isvc/) to verify the installation.
+After the `InferenceService` has been deployed successfully, you can follow the [steps of the getting started example](../../get_started/first_isvc.md) to verify the installation.
 
 Finally, let's have a brief look under the covers for how this feature works.
 Let's first check the runtime pod:
