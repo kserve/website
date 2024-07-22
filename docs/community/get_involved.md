@@ -25,7 +25,7 @@ For Open Inference Protocol (V2) related issues and feature requests, please use
 
 A good bug report should include:
 
-- What you were trying to do, and what happened
+- Description: Clearly state what you were trying to accomplish and what behavior you observed instead
 - What version of KServe, Knative (If Serverless), Kubeflow (If used with Kubeflow) and Kubernetes you are using (if using a cloud provider, indicate which one)
 - Relevant resource yaml, HTTP requests, or log lines
 
