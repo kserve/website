@@ -9,7 +9,7 @@ Feel free to ask questions, engage in discussions, or get involved in the KServe
 
 ### Ask Questions
 
-For the fastest response, you can ask questions on the`#kserve` channel of the [CNCF
+For the fastest response, you can ask questions on the `#kserve` channel of the [CNCF
 Slack](https://slack.cncf.io/).
 To Join the channel, [Create your CNCF Slack account](https://slack.cncf.io/) and Search for the `#kserve` channel or join via [this link](https://cloud-native.slack.com/archives/C06AH2C3K8B).
 
