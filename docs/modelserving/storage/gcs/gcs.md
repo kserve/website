@@ -58,12 +58,14 @@ metadata:
     name: sklearn-gcs
 spec:
   predictor:
-      sklearn:
-        storage:
-          key: gcs
-          path: models/tensorflow/flowers
-          parameters: # Parameters to override the default values
-            bucket: kfserving-examples
+    model:
+      modelFormat:
+        name: sklearn
+      storage:
+        key: gcs
+        path: models/tensorflow/flowers
+        parameters: # Parameters to override the default values
+          bucket: kfserving-examples
 ```
 
 Apply the `sklearn-gcs.yaml`.
