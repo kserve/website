@@ -13,7 +13,7 @@ For the fastest response, you can ask questions on the `#kserve` channel of the 
 Slack](https://slack.cncf.io/).
 To Join the channel, [Create your CNCF Slack account](https://slack.cncf.io/) and Search for the `#kserve` channel or join via [this link](https://cloud-native.slack.com/archives/C06AH2C3K8B).
 
-If you prefer, GitHub discussions, you can join the [KServe discussions](https://github.com/kserve/kserve/discussions).
+If you prefer to use GitHub discussions, you can join the [KServe discussions](https://github.com/kserve/kserve/discussions).
 
 ### Bug Reports and Feature Requests
 
