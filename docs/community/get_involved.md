@@ -3,7 +3,7 @@
 Welcome to the KServe community!
 
 
-Ask questions, join the conversation, or contribute to KServe's development. As an open-source project, KServe thrives on the active participation of its users and contributors. Let's work together to make machine learning model serving effortless. Join us!
+Feel free to ask questions, engage in discussions, or get involved in the KServe's development. KServe, as an open-source project, thrives on the active participation of its community. Let's work together to make machine learning model serving effortless. Join us!
 
 ## How do you want to get involved?
 
