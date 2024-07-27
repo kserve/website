@@ -145,7 +145,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../community/adopters/">
+<a class="md-tabs__link" href="../../../community/get_involved/">
         Community
       </a>
 </li>
@@ -1163,6 +1163,11 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../../community/get_involved/">
+        How to Get Involved
+      </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../../community/adopters/">
         Adopters
       </a>
@@ -1230,7 +1235,7 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="serving-models-with-oci-images">Serving models with OCI images<a class="headerlink" href="#serving-models-with-oci-images" title="Permanent link">¶</a></h1>
-<p>KServe's traditional approach for model initialization involves fetching models from sources like <a href="../s3/s3.md">S3 buckets</a> or <a href="../uri/uri.md">URIs</a>. This process is adequate for small models but becomes a bottleneck for larger ones like used for large language models, significantly delaying startup times in auto-scaling scenarios.</p>
+<p>KServe's traditional approach for model initialization involves fetching models from sources like <a href="../s3/s3/">S3 buckets</a> or <a href="../uri/uri/">URIs</a>. This process is adequate for small models but becomes a bottleneck for larger ones like used for large language models, significantly delaying startup times in auto-scaling scenarios.</p>
 <p>"Modelcars" is a KServe feature designed to address these challenges. It streamlines model fetching using OCI images, offering several advantages:</p>
 <ul>
 <li><strong>Reduced Startup Times:</strong> By avoiding repetitive downloads of large models, startup delays are significantly minimized.</li>
@@ -1307,7 +1312,7 @@ This approach ensures that the modelcar image is pulled with a <code>IfNotPresen
 On the other hand, using the <code>latest</code> tag, or omitting a tag altogether, defaults to a <code>Always</code> pull policy. 
 This means the image would be re-downloaded every time a Pod restarts or scales up, negating the benefits of local caching and potentially leading to increased startup times.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h2>
-<p>Let's see how modecars work by deploying the <a href="../../../../get_started/first_isvc/">getting started example</a> by using an OCI image and check how it is different to the startup with a storage-initalizer init-container. </p>
+<p>Let's see how modecars work by deploying the <a href="../../../get_started/first_isvc/">getting started example</a> by using an OCI image and check how it is different to the startup with a storage-initalizer init-container. </p>
 <p>Asuming you have setup a namespace <code>kserve-test</code> that is KServe enabled, create an <code>InferenceService</code> that uses an <code>oci://</code> storage URL:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 <span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
@@ -1322,7 +1327,7 @@ This means the image would be re-downloaded every time a Pod restarts or scales 
 <span class="s">      storageUri: "oci://rhuss/kserving-example-sklearn:1.0"</span>
 <span class="s">EOF</span>
 </code></pre></div>
-<p>After the <code>InferenceService</code> has been deployed successfully, you can follow the <a href="../../../../get_started/first_isvc/">steps of the getting started example</a> to verify the installation.</p>
+<p>After the <code>InferenceService</code> has been deployed successfully, you can follow the <a href="../../../get_started/first_isvc/">steps of the getting started example</a> to verify the installation.</p>
 <p>Finally, let's have a brief look under the covers for how this feature works.
 Let's first check the runtime pod:</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods
