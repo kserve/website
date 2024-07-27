@@ -46,7 +46,7 @@ kubectl get inferenceservices huggingface-bert
 
 ### Perform Model Inference
 
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+The first step is to [determine the ingress IP and ports](../../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```bash
 MODEL_NAME=bert
@@ -112,7 +112,7 @@ kubectl get inferenceservices huggingface-bert
 
 ### Perform Model Inference
 
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+The first step is to [determine the ingress IP and ports](../../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```bash
 MODEL_NAME=bert

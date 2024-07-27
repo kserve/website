@@ -118,6 +118,7 @@ nav:
           - Articles:
             - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
     - Community:
+        - How to Get Involved: community/get_involved.md
         - Adopters: community/adopters.md
         - Demos and Presentations: community/presentations.md
 

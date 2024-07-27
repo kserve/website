@@ -56,7 +56,7 @@ kubectl get inferenceservices huggingface-t5
 
 ### Perform Model Inference
 
-The first step is to [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+The first step is to [determine the ingress IP and ports](../../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-t5 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
