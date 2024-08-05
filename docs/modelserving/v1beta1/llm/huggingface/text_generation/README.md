@@ -6,6 +6,10 @@ In this example, We demonstrate how to deploy `Llama3 model` for text generation
 KServe Hugging Face runtime by default uses vLLM to serve the LLM models for faster time-to-first-token(TTFT) and higher token generation throughput than the Hugging Face API. vLLM is implemented with common inference optimization techniques, such as paged attention, continuous batching and an optimized CUDA kernel.
 If the model is not supported by vLLM, KServe falls back to HuggingFace backend as a failsafe.
 
+!!! note
+    The Llama3 model requires huggingface hub token to download the model. You can set the token using `HF_TOKEN` 
+    environment variable or `envFromSecret` in the `InferenceService` spec.
+
 === "Yaml"
 
     ```yaml
@@ -22,6 +26,9 @@ If the model is not supported by vLLM, KServe falls back to HuggingFace backend 
           args:
             - --model_name=llama3
             - --model_id=meta-llama/meta-llama-3-8b-instruct
+          env:
+            - name: HF_TOKEN
+              value: <token> # or (envFromSecret)
           resources:
             limits:
               cpu: "6"
@@ -167,6 +174,9 @@ supports the OpenAI `/v1/completions` and `/v1/chat/completions` endpoints for i
             - --model_name=llama3
             - --model_id=meta-llama/meta-llama-3-8b-instruct
             - --backend=huggingface
+          env:
+            - name: HF_TOKEN
+              value: <token> # or (envFromSecret)
           resources:
             limits:
               cpu: "6"
