@@ -127,7 +127,7 @@ Now, you can use `curl` to send the inference request as:
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-v2-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-curl -v \
+curl -XPOST -v \
   -H "Host: ${SERVICE_HOSTNAME}" \
   -H "Content-Type: application/json" \
   -d @./iris-input-v2.json \
