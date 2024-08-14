@@ -33,14 +33,21 @@ kubectl create namespace ${NAMESPACE}
 kubectl create -f housing.yaml -n ${NAMESPACE}
 ```
 
-To verify that the `InferenceService` is deployed you can run:
-
 !!! success "Expected Output"
     ```{ .bash .no-copy }
     $ namespace/kserve-explainer created
     $ inferenceservice.serving.kserve.io/housing created
+    ```
 
-    kubectl get pods -n ${NAMESPACE}
+To verify that the `InferenceService` is deployed you can run:
+
+=== "kubectl"
+```bash
+kubectl get pods -n ${NAMESPACE}
+```
+
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
     NAME                                                  READY   STATUS    RESTARTS   AGE
     housing-explainer-00001-deployment-75c56fdc65-wc2p5   2/2     Running   0          4m13s
     housing-predictor-00001-deployment-85fc685954-lp8z2   2/2     Running   0          4m13s
@@ -51,11 +58,14 @@ Here we will assume that the gateway service is available via port-forward, for 
 
 === "Port Forward"
     Alternatively you can do `Port Forward` for testing purposes.
+
     ```bash
     INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="app=istio-ingressgateway" --output jsonpath='{.items[0].metadata.name}')
     kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
     ```
+
     Open another terminal, and enter the following:
+
     ```bash
     export INGRESS_HOST=localhost
     export INGRESS_PORT=8080
@@ -95,6 +105,8 @@ We will get the following result, indicating a predicted house value of approxim
 ```json
 {"predictions":[2.9168394017053823]}
 ```
+
+## Requesting explanations
 
 By default, the TrustyAI explainer returns both a SHAP and a LIME explanation.
 These explanations will consist of a feature saliency map in the case of LIME, and a breakdown of individual feature contributions to the final result (relative to a dataset background value) for SHAP. The way in which the TrustyAI explainer creates the background dataset (especially in the "cold start" case in detailed in the [SHAP background generation](#shap-background-generation) section). We can request the explanation by using the same payload and the `:explain` endpoint.
@@ -199,7 +211,7 @@ curl -sv -X POST -H "Content-Type: application/json" \
 }
 ```
 
-## Aditional configuration
+## Additional configuration
 
 Additional explainer configuration can be made via environment variables on the `InferenceService`.
 For instance, to have only SHAP explanations we could use:
@@ -224,6 +236,7 @@ spec:
             value: "SHAP"
 ```
 
+To have only LIME, simply replace `"SHAP"` with `"LIME"`.
 Through environment variables, we can also configure several explainer parameters such as
 
 * Number of samples used by the explainers to explore the decision boundary
