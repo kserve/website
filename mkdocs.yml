@@ -1,126 +1,127 @@
 nav:
-    - Home: index.md
-    - Getting started:
-          - KServe Quickstart: get_started/README.md
-          - First InferenceService: get_started/first_isvc.md
-          - Interact with InferenceService Swagger UI: get_started/swagger_ui.md
-    - Administration Guide:
-          - Install KServe:
-                - Serverless:
-                  - Serverless installation: admin/serverless/serverless.md
-                  - Istio Service Mesh: admin/serverless/servicemesh/README.md
-                  - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
-                - ModelMesh installation: admin/modelmesh.md
-                - Kubernetes deployment installation: admin/kubernetes_deployment.md
-                - Migrating from KFServing: admin/migration.md
-    - User Guide:
-          - Concepts:
-                - Control Plane:
-                  - Model Serving Control Plane: modelserving/control_plane.md
-                - Data Plane:
-                  - Model Serving Data Plane: modelserving/data_plane/data_plane.md
-                  - V1 Inference Protocol: modelserving/data_plane/v1_protocol.md
-                  - Open Inference Protocol (V2 Inference Protocol): modelserving/data_plane/v2_protocol.md
-                - Serving Runtimes: modelserving/servingruntimes.md
-          - Model Serving Runtimes:
-              - Supported Model Frameworks/Formats:
-                - Overview: modelserving/v1beta1/serving_runtime.md
-                - Tensorflow: modelserving/v1beta1/tensorflow/README.md
-                - PyTorch: modelserving/v1beta1/torchserve/README.md
-                - Scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
-                - XGBoost: modelserving/v1beta1/xgboost/README.md
-                - PMML: modelserving/v1beta1/pmml/README.md
-                - Spark MLlib: modelserving/v1beta1/spark/README.md
-                - LightGBM: modelserving/v1beta1/lightgbm/README.md
-                - Paddle: modelserving/v1beta1/paddle/README.md
-                - MLFlow: modelserving/v1beta1/mlflow/v2/README.md
-                - ONNX: modelserving/v1beta1/onnx/README.md
-              - Multi-Framework Serving Runtimes:
-                - Nvidia Triton:
+  - Home: index.md
+  - Getting started:
+      - KServe Quickstart: get_started/README.md
+      - First InferenceService: get_started/first_isvc.md
+      - Interact with InferenceService Swagger UI: get_started/swagger_ui.md
+  - Administration Guide:
+      - Install KServe:
+          - Serverless:
+              - Serverless installation: admin/serverless/serverless.md
+              - Istio Service Mesh: admin/serverless/servicemesh/README.md
+              - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
+          - ModelMesh installation: admin/modelmesh.md
+          - Kubernetes deployment installation: admin/kubernetes_deployment.md
+          - Migrating from KFServing: admin/migration.md
+  - User Guide:
+      - Concepts:
+          - Control Plane:
+              - Model Serving Control Plane: modelserving/control_plane.md
+          - Data Plane:
+              - Model Serving Data Plane: modelserving/data_plane/data_plane.md
+              - V1 Inference Protocol: modelserving/data_plane/v1_protocol.md
+              - Open Inference Protocol (V2 Inference Protocol): modelserving/data_plane/v2_protocol.md
+          - Serving Runtimes: modelserving/servingruntimes.md
+      - Model Serving Runtimes:
+          - Supported Model Frameworks/Formats:
+              - Overview: modelserving/v1beta1/serving_runtime.md
+              - Tensorflow: modelserving/v1beta1/tensorflow/README.md
+              - PyTorch: modelserving/v1beta1/torchserve/README.md
+              - Scikit-learn: modelserving/v1beta1/sklearn/v2/README.md
+              - XGBoost: modelserving/v1beta1/xgboost/README.md
+              - PMML: modelserving/v1beta1/pmml/README.md
+              - Spark MLlib: modelserving/v1beta1/spark/README.md
+              - LightGBM: modelserving/v1beta1/lightgbm/README.md
+              - Paddle: modelserving/v1beta1/paddle/README.md
+              - MLFlow: modelserving/v1beta1/mlflow/v2/README.md
+              - ONNX: modelserving/v1beta1/onnx/README.md
+          - Multi-Framework Serving Runtimes:
+              - Nvidia Triton:
                   - Torchscript: modelserving/v1beta1/triton/torchscript/README.md
                   - Tensorflow: modelserving/v1beta1/triton/bert/README.md
                   - Hugging Face: modelserving/v1beta1/triton/huggingface/README.md
-                - AMD: modelserving/v1beta1/amd/README.md
-              - LLM Runtime:
-                - Hugging Face LLM:
+              - AMD: modelserving/v1beta1/amd/README.md
+          - LLM Runtime:
+              - Hugging Face LLM:
                   - Overview: modelserving/v1beta1/llm/huggingface/README.md
                   - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
                   - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
                   - Token Classification: modelserving/v1beta1/llm/huggingface/token_classification/README.md
                   - Text Classification: modelserving/v1beta1/llm/huggingface/text_classification/README.md
                   - Fill Mask: modelserving/v1beta1/llm/huggingface/fill_mask/README.md
-                - TorchServe LLM: modelserving/v1beta1/llm/torchserve/accelerate/README.md
-              - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
-          - Multi Model Serving:
-                - Overview:
-                  - The Scalability Problem: modelserving/mms/multi-model-serving.md
-                  - ModelMesh Overview: modelserving/mms/modelmesh/overview.md
-          - Transformers:
-                - Feast: modelserving/v1beta1/transformer/feast/README.md
-                - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
-                - Collocate transformer and predictor: modelserving/v1beta1/transformer/collocation/README.md
-          - Inference Graph:
-                - Concept: modelserving/inference_graph/README.md
-                - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
-          - Model Storage:
-                - Storage Containers: modelserving/storage/storagecontainers.md
-                - Azure: modelserving/storage/azure/azure.md
-                - PVC: modelserving/storage/pvc/pvc.md
-                - S3: modelserving/storage/s3/s3.md
-                - OCI: modelserving/storage/oci.md
-                - URI: modelserving/storage/uri/uri.md
-                - CA Certificate: modelserving/certificate/kserve.md
-                - GCS: modelserving/storage/gcs/gcs.md
-          - Model Explainability:
-                - Concept: modelserving/explainer/explainer.md
-                - Alibi Explainer:
-                  - Image Explainer: modelserving/explainer/alibi/cifar10/README.md
-                  - Income Explainer: modelserving/explainer/alibi/income/README.md
-                  - Text Explainer: modelserving/explainer/alibi/moviesentiment/README.md
-                - AIX Explainer: modelserving/explainer/aix/mnist/aix.md
-          - Model Monitoring:
-                - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
-                - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
-                - ART Adversarial Detector: modelserving/detect/art/mnist/README.md
-          - Request Batching:
-                - Inference Batcher: modelserving/batcher/batcher.md
-          - Payload Logging:
-                - Inference Logger: modelserving/logger/logger.md
-          - Autoscaling:
-                - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
-          - Node Scheduling:
-                - Overview: modelserving/nodescheduling/overview.md
-                - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
-          - Kafka:
-                - Inference with Kafka event source: modelserving/kafka/kafka.md
-          - Rollout Strategies:
-                - Canary:  modelserving/v1beta1/rollout/canary.md
-                - Canary Example: modelserving/v1beta1/rollout/canary-example.md
-          - Inference Observability:
-                - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
-                - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
-    - API Reference:
-          - Control Plane API: reference/api.md
-          - Open Inference Protocol API Spec: reference/swagger-ui.md
-          - Python Client SDK: sdk_docs/sdk_doc.md
-          - Python Runtime Server SDK: python_runtime_api/docs/index.md
-    - Developer Guide:
-          - How to contribute: developer/developer.md
-          - Debugging guide: developer/debug.md
-    - Blog:
-          - Releases:
-            - KServe 0.13 Release: blog/articles/2024-05-15-KServe-0.13-release.md
-            - KServe 0.11 Release: blog/articles/2023-10-08-KServe-0.11-release.md
-            - KServe 0.10 Release: blog/articles/2023-02-05-KServe-0.10-release.md
-            - KServe 0.9 Release: blog/articles/2022-07-21-KServe-0.9-release.md
-            - KServe 0.8 Release: blog/articles/2022-02-18-KServe-0.8-release.md
-            - KServe 0.7 Release: blog/articles/2021-10-11-KServe-0.7-release.md
-          - Articles:
-            - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
-    - Community:
-        - How to Get Involved: community/get_involved.md
-        - Adopters: community/adopters.md
-        - Demos and Presentations: community/presentations.md
+              - TorchServe LLM: modelserving/v1beta1/llm/torchserve/accelerate/README.md
+          - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
+      - Multi Model Serving:
+          - Overview:
+              - The Scalability Problem: modelserving/mms/multi-model-serving.md
+              - ModelMesh Overview: modelserving/mms/modelmesh/overview.md
+      - Transformers:
+          - Feast: modelserving/v1beta1/transformer/feast/README.md
+          - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
+          - Collocate transformer and predictor: modelserving/v1beta1/transformer/collocation/README.md
+      - Inference Graph:
+          - Concept: modelserving/inference_graph/README.md
+          - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
+      - Model Storage:
+          - Storage Containers: modelserving/storage/storagecontainers.md
+          - Azure: modelserving/storage/azure/azure.md
+          - PVC: modelserving/storage/pvc/pvc.md
+          - S3: modelserving/storage/s3/s3.md
+          - OCI: modelserving/storage/oci.md
+          - URI: modelserving/storage/uri/uri.md
+          - CA Certificate: modelserving/certificate/kserve.md
+          - GCS: modelserving/storage/gcs/gcs.md
+      - Model Explainability:
+          - Concept: modelserving/explainer/explainer.md
+          - Alibi Explainer:
+              - Image Explainer: modelserving/explainer/alibi/cifar10/README.md
+              - Income Explainer: modelserving/explainer/alibi/income/README.md
+              - Text Explainer: modelserving/explainer/alibi/moviesentiment/README.md
+          - AIX Explainer: modelserving/explainer/aix/mnist/aix.md
+          - TrustyAI Explainer: modelserving/explainer/trustyai/README.md
+      - Model Monitoring:
+          - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
+          - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
+          - ART Adversarial Detector: modelserving/detect/art/mnist/README.md
+      - Request Batching:
+          - Inference Batcher: modelserving/batcher/batcher.md
+      - Payload Logging:
+          - Inference Logger: modelserving/logger/logger.md
+      - Autoscaling:
+          - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
+      - Node Scheduling:
+          - Overview: modelserving/nodescheduling/overview.md
+          - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
+      - Kafka:
+          - Inference with Kafka event source: modelserving/kafka/kafka.md
+      - Rollout Strategies:
+          - Canary: modelserving/v1beta1/rollout/canary.md
+          - Canary Example: modelserving/v1beta1/rollout/canary-example.md
+      - Inference Observability:
+          - Prometheus Metrics: modelserving/observability/prometheus_metrics.md
+          - Grafana Dashboards: modelserving/observability/grafana_dashboards.md
+  - API Reference:
+      - Control Plane API: reference/api.md
+      - Open Inference Protocol API Spec: reference/swagger-ui.md
+      - Python Client SDK: sdk_docs/sdk_doc.md
+      - Python Runtime Server SDK: python_runtime_api/docs/index.md
+  - Developer Guide:
+      - How to contribute: developer/developer.md
+      - Debugging guide: developer/debug.md
+  - Blog:
+      - Releases:
+          - KServe 0.13 Release: blog/articles/2024-05-15-KServe-0.13-release.md
+          - KServe 0.11 Release: blog/articles/2023-10-08-KServe-0.11-release.md
+          - KServe 0.10 Release: blog/articles/2023-02-05-KServe-0.10-release.md
+          - KServe 0.9 Release: blog/articles/2022-07-21-KServe-0.9-release.md
+          - KServe 0.8 Release: blog/articles/2022-02-18-KServe-0.8-release.md
+          - KServe 0.7 Release: blog/articles/2021-10-11-KServe-0.7-release.md
+      - Articles:
+          - KFserving Transition: blog/articles/2021-09-27-kfserving-transition.md
+  - Community:
+      - How to Get Involved: community/get_involved.md
+      - Adopters: community/adopters.md
+      - Demos and Presentations: community/presentations.md
 
 site_name: KServe Documentation Website
 site_url: https://kserve.io/website
@@ -180,15 +181,15 @@ plugins:
         python:
           load_external_modules: true
   - mike:
-     version_selector: true
-     css_dir: css
-     javascript_dir: js
+      version_selector: true
+      css_dir: css
+      javascript_dir: js
   - swagger-ui-tag:
-        background: White
-        docExpansion: none
-        filter: ""
-        syntaxHighlightTheme: monokai
-        tryItOutEnabled: true
+      background: White
+      docExpansion: none
+      filter: ""
+      syntaxHighlightTheme: monokai
+      tryItOutEnabled: true
 
 extra:
   social:
