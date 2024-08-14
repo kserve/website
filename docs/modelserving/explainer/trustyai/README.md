@@ -6,8 +6,7 @@ The TrustyAI KServe explainer includes two explainer types: LIME (Local Interpre
 
 In this example, we will use the "California Housing Dataset". This dataset is available as part of `scikit-learn` and targets the median house value for California districts (scaled to 100k USD units), from eight input features including median income, average number of rooms per household and block group population.
 
-For example purposes, we trained a Random Forest regression and provide it ready for deployment with the following `InferenceService`:
-To enable the TrustyAI explainer in your `InferenceService`, simply use
+For example purposes, we trained a Random Forest model. To deploy it and enable the TrustyAI explainer, use the following `InferenceService`
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
