@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/master/get_started/first_isvc/" rel="canonical"/>
 <link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.6.0, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
 <title>First InferenceService - KServe Documentation Website</title>
 <link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -1255,7 +1255,7 @@
 <h1>First InferenceService</h1>
 <h2 id="run-your-first-inferenceservice">Run your first InferenceService<a class="headerlink" href="#run-your-first-inferenceservice" title="Permanent link">¶</a></h2>
 <p>In this tutorial, you will deploy an InferenceService with a predictor that will load a scikit-learn model trained with
-the <a href="https://archive.ics.uci.edu/ml/datasets/iris">iris</a> dataset. This dataset has three output class: Iris Setosa, Iris Versicolour, and Iris Virginica.</p>
+the <a href="https://archive.ics.uci.edu/ml/datasets/iris">iris</a> dataset. This dataset has three output classes: Iris Setosa, Iris Versicolour, and Iris Virginica.</p>
 <p>You will then send an inference request to your deployed model in order to get a prediction for the class of iris plant your request corresponds to.</p>
 <p>Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the storage location of the model and
 it gets some <strong>super powers out of the box</strong> <img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:">.</img></p>
@@ -1302,7 +1302,7 @@ is provided as reference.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Do not deploy <code>InferenceServices</code> in control plane namespaces (i.e. namespaces with <code>control-plane</code> label). The webhook is configured
-in a way to skip these namespaces to avoid any privillage escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being 
+in a way to skip these namespaces to avoid any privilege escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being 
 injected into the pod, causing the pod to fail with the error <code>No such file or directory: '/mnt/models'</code>.</p>
 </div>
 <h3 id="3-check-inferenceservice-status">3. Check <code>InferenceService</code> status.<a class="headerlink" href="#3-check-inferenceservice-status" title="Permanent link">¶</a></h3>
