@@ -3,7 +3,7 @@ The Hugging Face serving runtime implements two backends namely `Hugging Face` a
 The preprocess and post-process handlers are already implemented based on different ML tasks, for example text classification,
 token-classification, text-generation, text2text-generation, fill-mask.
 
-KServe Hugging Face runtime by default uses [`vLLM`](https://github.com/vllm-project/vllm) backend to serve `text generation` and `text2text generation` LLM models for faster time-to-first-token (TTFT) and higher token generation throughput than the Hugging Face API. 
+KServe Hugging Face runtime by default uses [`vLLM`](https://github.com/vllm-project/vllm) backend to serve `text generation` and `text2text generation` LLM models for faster time-to-first-token (TTFT) and higher token generation throughput than the Hugging Face API.
 vLLM is implemented with common inference optimization techniques, such as [PagedAttention](https://vllm.ai), [continuous batching](https://www.anyscale.com/blog/continuous-batching-llm-inference) and an optimized CUDA kernel.
 If the model is not supported by the vLLM engine, KServe falls back to the Hugging Face backend as a failsafe.
 
@@ -22,7 +22,7 @@ For information on the models supported by the vLLM backend, please visit [vLLM'
 ## API Endpoints
 Both of the backends support serving generative models (text generation and text2text generation) using [OpenAI's Completion](https://platform.openai.com/docs/api-reference/completions) and [Chat Completion](https://platform.openai.com/docs/api-reference/chat) API.
 
-The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's [Open Inference Protocol](../../../data_plane/v2_protocol.md) or [V1 API](../../../data_plane/v1_protocol.md). 
+The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's [Open Inference Protocol](../../../data_plane/v2_protocol.md) or [V1 API](../../../data_plane/v1_protocol.md).
 
 ## Examples
 The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:
@@ -32,6 +32,7 @@ The following examples demonstrate how to deploy and perform inference using the
 - [Token Classification using BERT](token_classification/README.md)
 - [Sequence Classification (Text Classification) using distilBERT](text_classification/README.md)
 - [Fill Mask using BERT](fill_mask/README.md)
+- [SDK Integration](sdk_integration/README.md)
 
 !!! note
     The Hugging Face runtime image has the following environment variables set by default:
