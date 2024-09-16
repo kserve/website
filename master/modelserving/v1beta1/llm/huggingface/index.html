@@ -588,6 +588,11 @@
         Fill Mask
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="sdk_integration/">
+        SDK Integration
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1218,7 +1223,7 @@
 <p>The Hugging Face serving runtime implements two backends namely <code>Hugging Face</code> and <code>vLLM</code> that can serve Hugging Face models out of the box.
 The preprocess and post-process handlers are already implemented based on different ML tasks, for example text classification,
 token-classification, text-generation, text2text-generation, fill-mask.</p>
-<p>KServe Hugging Face runtime by default uses <a href="https://github.com/vllm-project/vllm"><code>vLLM</code></a> backend to serve <code>text generation</code> and <code>text2text generation</code> LLM models for faster time-to-first-token (TTFT) and higher token generation throughput than the Hugging Face API. 
+<p>KServe Hugging Face runtime by default uses <a href="https://github.com/vllm-project/vllm"><code>vLLM</code></a> backend to serve <code>text generation</code> and <code>text2text generation</code> LLM models for faster time-to-first-token (TTFT) and higher token generation throughput than the Hugging Face API.
 vLLM is implemented with common inference optimization techniques, such as <a href="https://vllm.ai">PagedAttention</a>, <a href="https://www.anyscale.com/blog/continuous-batching-llm-inference">continuous batching</a> and an optimized CUDA kernel.
 If the model is not supported by the vLLM engine, KServe falls back to the Hugging Face backend as a failsafe.</p>
 <h2 id="supported-ml-tasks">Supported ML Tasks<a class="headerlink" href="#supported-ml-tasks" title="Permanent link">¶</a></h2>
@@ -1233,7 +1238,7 @@ If the model is not supported by the vLLM engine, KServe falls back to the Huggi
 <p>For information on the models supported by the vLLM backend, please visit <a href="https://docs.vllm.ai/en/stable/models/supported_models.html">vLLM's documentation</a>.</p>
 <h2 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">¶</a></h2>
 <p>Both of the backends support serving generative models (text generation and text2text generation) using <a href="https://platform.openai.com/docs/api-reference/completions">OpenAI's Completion</a> and <a href="https://platform.openai.com/docs/api-reference/chat">Chat Completion</a> API.</p>
-<p>The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's <a href="../../../data_plane/v2_protocol/">Open Inference Protocol</a> or <a href="../../../data_plane/v1_protocol/">V1 API</a>. </p>
+<p>The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's <a href="../../../data_plane/v2_protocol/">Open Inference Protocol</a> or <a href="../../../data_plane/v1_protocol/">V1 API</a>.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
 <p>The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:</p>
 <ul>
@@ -1242,6 +1247,7 @@ If the model is not supported by the vLLM engine, KServe falls back to the Huggi
 <li><a href="token_classification/">Token Classification using BERT</a></li>
 <li><a href="text_classification/">Sequence Classification (Text Classification) using distilBERT</a></li>
 <li><a href="fill_mask/">Fill Mask using BERT</a></li>
+<li><a href="sdk_integration/">SDK Integration</a></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>

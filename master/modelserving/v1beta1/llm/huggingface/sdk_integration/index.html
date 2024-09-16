@@ -6,25 +6,25 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/help/contributor/templates/template-troubleshooting/" rel="canonical"/>
-<link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
+<link href="https://kserve.io/website/master/modelserving/v1beta1/llm/huggingface/sdk_integration/" rel="canonical"/>
+<link href="../../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Troubleshooting template - KServe Documentation Website</title>
-<link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
-<link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<title>SDK Integration - KServe Documentation Website</title>
+<link href="../../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../../../assets/_mkdocstrings.css" rel="stylesheet"/>
-<link href="../../../../stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../../../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../../../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#troubleshooting-template">
+<a class="md-skip" href="#integrate-kserve-llm-deployment-with-llm-sdks">
           Skip to content
         </a>
 </div>
@@ -43,8 +43,8 @@
 </div>
 <header class="md-header md-header--lifted" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../../../images/logo/kserve.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Troubleshooting template
+              SDK Integration
             
           </span>
 </div>
@@ -110,42 +110,42 @@
 <div class="md-tabs__inner md-grid">
 <ul class="md-tabs__list">
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../..">
+<a class="md-tabs__link" href="../../../../..">
       Home
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../get_started/">
+<a class="md-tabs__link" href="../../../../../get_started/">
         Getting started
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../admin/serverless/serverless/">
+<a class="md-tabs__link" href="../../../../../admin/serverless/serverless/">
         Administration Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../modelserving/control_plane/">
+<a class="md-tabs__link md-tabs__link--active" href="../../../../control_plane/">
         User Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../reference/api/">
+<a class="md-tabs__link" href="../../../../../reference/api/">
         API Reference
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../developer/developer/">
+<a class="md-tabs__link" href="../../../../../developer/developer/">
         Developer Guide
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../blog/articles/2024-05-15-KServe-0.13-release/">
+<a class="md-tabs__link" href="../../../../../blog/articles/2024-05-15-KServe-0.13-release/">
         Blog
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../../community/get_involved/">
+<a class="md-tabs__link" href="../../../../../community/get_involved/">
         Community
       </a>
 </li>
@@ -161,8 +161,8 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../../images/logo/kserve.png"/>
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../../../.." title="KServe Documentation Website">
+<img alt="logo" src="../../../../../images/logo/kserve.png"/>
 </a>
     KServe Documentation Website
   </label>
@@ -178,7 +178,7 @@
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../..">
+<a class="md-nav__link" href="../../../../..">
         Home
       </a>
 </li>
@@ -195,17 +195,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../get_started/">
+<a class="md-nav__link" href="../../../../../get_started/">
         KServe Quickstart
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../get_started/first_isvc/">
+<a class="md-nav__link" href="../../../../../get_started/first_isvc/">
         First InferenceService
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../get_started/swagger_ui/">
+<a class="md-nav__link" href="../../../../../get_started/swagger_ui/">
         Interact with InferenceService Swagger UI
       </a>
 </li>
@@ -249,17 +249,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/serverless/serverless/">
+<a class="md-nav__link" href="../../../../../admin/serverless/serverless/">
         Serverless installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/serverless/servicemesh/">
+<a class="md-nav__link" href="../../../../../admin/serverless/servicemesh/">
         Istio Service Mesh
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/serverless/kourier_networking/">
+<a class="md-nav__link" href="../../../../../admin/serverless/kourier_networking/">
         Kourier Networking Layer
       </a>
 </li>
@@ -267,17 +267,17 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/modelmesh/">
+<a class="md-nav__link" href="../../../../../admin/modelmesh/">
         ModelMesh installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/kubernetes_deployment/">
+<a class="md-nav__link" href="../../../../../admin/kubernetes_deployment/">
         Kubernetes deployment installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../admin/migration/">
+<a class="md-nav__link" href="../../../../../admin/migration/">
         Migrating from KFServing
       </a>
 </li>
@@ -287,8 +287,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
@@ -324,7 +324,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/control_plane/">
+<a class="md-nav__link" href="../../../../control_plane/">
         Model Serving Control Plane
       </a>
 </li>
@@ -344,17 +344,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/data_plane/data_plane/">
+<a class="md-nav__link" href="../../../../data_plane/data_plane/">
         Model Serving Data Plane
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/data_plane/v1_protocol/">
+<a class="md-nav__link" href="../../../../data_plane/v1_protocol/">
         V1 Inference Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/data_plane/v2_protocol/">
+<a class="md-nav__link" href="../../../../data_plane/v2_protocol/">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
 </li>
@@ -362,15 +362,15 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/servingruntimes/">
+<a class="md-nav__link" href="../../../../servingruntimes/">
         Serving Runtimes
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_2">
           Model Serving Runtimes
           <span class="md-nav__icon md-icon"></span>
@@ -394,57 +394,57 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/serving_runtime/">
+<a class="md-nav__link" href="../../../serving_runtime/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/tensorflow/">
+<a class="md-nav__link" href="../../../tensorflow/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/torchserve/">
+<a class="md-nav__link" href="../../../torchserve/">
         PyTorch
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/sklearn/v2/">
+<a class="md-nav__link" href="../../../sklearn/v2/">
         Scikit-learn
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/xgboost/">
+<a class="md-nav__link" href="../../../xgboost/">
         XGBoost
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/pmml/">
+<a class="md-nav__link" href="../../../pmml/">
         PMML
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/spark/">
+<a class="md-nav__link" href="../../../spark/">
         Spark MLlib
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/lightgbm/">
+<a class="md-nav__link" href="../../../lightgbm/">
         LightGBM
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/paddle/">
+<a class="md-nav__link" href="../../../paddle/">
         Paddle
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/mlflow/v2/">
+<a class="md-nav__link" href="../../../mlflow/v2/">
         MLFlow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/onnx/">
+<a class="md-nav__link" href="../../../onnx/">
         ONNX
       </a>
 </li>
@@ -476,17 +476,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/triton/torchscript/">
+<a class="md-nav__link" href="../../../triton/torchscript/">
         Torchscript
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/triton/bert/">
+<a class="md-nav__link" href="../../../triton/bert/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/triton/huggingface/">
+<a class="md-nav__link" href="../../../triton/huggingface/">
         Hugging Face
       </a>
 </li>
@@ -494,15 +494,15 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/amd/">
+<a class="md-nav__link" href="../../../amd/">
         AMD
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3" id="__nav_4_2_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3" id="__nav_4_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_2_3">
           LLM Runtime
           <span class="md-nav__icon md-icon"></span>
@@ -513,8 +513,8 @@
           LLM Runtime
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_1" id="__nav_4_2_3_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_1" id="__nav_4_2_3_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_2_3_1">
           Hugging Face LLM
           <span class="md-nav__icon md-icon"></span>
@@ -526,45 +526,73 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/">
+<a class="md-nav__link" href="../">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/text_generation/">
+<a class="md-nav__link" href="../text_generation/">
         Text Generation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/text2text_generation/">
+<a class="md-nav__link" href="../text2text_generation/">
         Text2Text Generation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/token_classification/">
+<a class="md-nav__link" href="../token_classification/">
         Token Classification
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/text_classification/">
+<a class="md-nav__link" href="../text_classification/">
         Text Classification
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/fill_mask/">
+<a class="md-nav__link" href="../fill_mask/">
         Fill Mask
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/huggingface/sdk_integration/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          SDK Integration
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         SDK Integration
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-a-kserve-llm-inference-service">
+    Deploy a KServe LLM Inference Service
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#how-to-integrate-with-openai-sdk">
+    How to integrate with OpenAI SDK
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#how-to-integrate-with-langchain-sdk">
+    How to integrate with Langchain SDK
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/llm/torchserve/accelerate/">
+<a class="md-nav__link" href="../../torchserve/accelerate/">
         TorchServe LLM
       </a>
 </li>
@@ -572,7 +600,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/custom/custom_model/">
+<a class="md-nav__link" href="../../../custom/custom_model/">
         How to write a custom predictor
       </a>
 </li>
@@ -604,12 +632,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/mms/multi-model-serving/">
+<a class="md-nav__link" href="../../../../mms/multi-model-serving/">
         The Scalability Problem
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/mms/modelmesh/overview/">
+<a class="md-nav__link" href="../../../../mms/modelmesh/overview/">
         ModelMesh Overview
       </a>
 </li>
@@ -632,17 +660,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/transformer/feast/">
+<a class="md-nav__link" href="../../../transformer/feast/">
         Feast
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+<a class="md-nav__link" href="../../../transformer/torchserve_image_transformer/">
         How to write a custom transformer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/transformer/collocation/">
+<a class="md-nav__link" href="../../../transformer/collocation/">
         Collocate transformer and predictor
       </a>
 </li>
@@ -662,12 +690,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/inference_graph/">
+<a class="md-nav__link" href="../../../../inference_graph/">
         Concept
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/inference_graph/image_pipeline/">
+<a class="md-nav__link" href="../../../../inference_graph/image_pipeline/">
         Image classification inference graph
       </a>
 </li>
@@ -687,42 +715,42 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/storagecontainers/">
+<a class="md-nav__link" href="../../../../storage/storagecontainers/">
         Storage Containers
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/azure/azure/">
+<a class="md-nav__link" href="../../../../storage/azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/pvc/pvc/">
+<a class="md-nav__link" href="../../../../storage/pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/s3/s3/">
+<a class="md-nav__link" href="../../../../storage/s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/oci/">
+<a class="md-nav__link" href="../../../../storage/oci/">
         OCI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/uri/uri/">
+<a class="md-nav__link" href="../../../../storage/uri/uri/">
         URI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/certificate/kserve/">
+<a class="md-nav__link" href="../../../../certificate/kserve/">
         CA Certificate
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/storage/gcs/gcs/">
+<a class="md-nav__link" href="../../../../storage/gcs/gcs/">
         GCS
       </a>
 </li>
@@ -742,7 +770,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/explainer/explainer/">
+<a class="md-nav__link" href="../../../../explainer/explainer/">
         Concept
       </a>
 </li>
@@ -759,17 +787,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/explainer/alibi/cifar10/">
+<a class="md-nav__link" href="../../../../explainer/alibi/cifar10/">
         Image Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/explainer/alibi/income/">
+<a class="md-nav__link" href="../../../../explainer/alibi/income/">
         Income Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/explainer/alibi/moviesentiment/">
+<a class="md-nav__link" href="../../../../explainer/alibi/moviesentiment/">
         Text Explainer
       </a>
 </li>
@@ -777,7 +805,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/explainer/aix/mnist/aix/">
+<a class="md-nav__link" href="../../../../explainer/aix/mnist/aix/">
         AIX Explainer
       </a>
 </li>
@@ -797,17 +825,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/detect/alibi_detect/alibi_detect/">
+<a class="md-nav__link" href="../../../../detect/alibi_detect/alibi_detect/">
         Alibi Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/detect/aif/germancredit/">
+<a class="md-nav__link" href="../../../../detect/aif/germancredit/">
         AIF Bias Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/detect/art/mnist/">
+<a class="md-nav__link" href="../../../../detect/art/mnist/">
         ART Adversarial Detector
       </a>
 </li>
@@ -827,7 +855,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/batcher/batcher/">
+<a class="md-nav__link" href="../../../../batcher/batcher/">
         Inference Batcher
       </a>
 </li>
@@ -847,7 +875,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/logger/logger/">
+<a class="md-nav__link" href="../../../../logger/logger/">
         Inference Logger
       </a>
 </li>
@@ -867,7 +895,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/autoscaling/autoscaling/">
+<a class="md-nav__link" href="../../../../autoscaling/autoscaling/">
         Inference Autoscaling
       </a>
 </li>
@@ -887,12 +915,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/nodescheduling/overview/">
+<a class="md-nav__link" href="../../../../nodescheduling/overview/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+<a class="md-nav__link" href="../../../../nodescheduling/inferenceservicenodescheduling/">
         InferenceService Node Scheduling
       </a>
 </li>
@@ -912,7 +940,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/kafka/kafka/">
+<a class="md-nav__link" href="../../../../kafka/kafka/">
         Inference with Kafka event source
       </a>
 </li>
@@ -932,12 +960,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/rollout/canary/">
+<a class="md-nav__link" href="../../../rollout/canary/">
         Canary
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/v1beta1/rollout/canary-example/">
+<a class="md-nav__link" href="../../../rollout/canary-example/">
         Canary Example
       </a>
 </li>
@@ -957,12 +985,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/observability/prometheus_metrics/">
+<a class="md-nav__link" href="../../../../observability/prometheus_metrics/">
         Prometheus Metrics
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../modelserving/observability/grafana_dashboards/">
+<a class="md-nav__link" href="../../../../observability/grafana_dashboards/">
         Grafana Dashboards
       </a>
 </li>
@@ -985,22 +1013,22 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../reference/api/">
+<a class="md-nav__link" href="../../../../../reference/api/">
         Control Plane API
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../reference/swagger-ui/">
+<a class="md-nav__link" href="../../../../../reference/swagger-ui/">
         Open Inference Protocol API Spec
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../sdk_docs/sdk_doc/">
+<a class="md-nav__link" href="../../../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../python_runtime_api/docs/">
+<a class="md-nav__link" href="../../../../../python_runtime_api/docs/">
         Python Runtime Server SDK
       </a>
 </li>
@@ -1020,12 +1048,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../developer/developer/">
+<a class="md-nav__link" href="../../../../../developer/developer/">
         How to contribute
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../developer/debug/">
+<a class="md-nav__link" href="../../../../../developer/debug/">
         Debugging guide
       </a>
 </li>
@@ -1057,32 +1085,32 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2024-05-15-KServe-0.13-release/">
+<a class="md-nav__link" href="../../../../../blog/articles/2024-05-15-KServe-0.13-release/">
         KServe 0.13 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-nav__link" href="../../../../../blog/articles/2023-10-08-KServe-0.11-release/">
         KServe 0.11 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-nav__link" href="../../../../../blog/articles/2023-02-05-KServe-0.10-release/">
         KServe 0.10 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2022-07-21-KServe-0.9-release/">
+<a class="md-nav__link" href="../../../../../blog/articles/2022-07-21-KServe-0.9-release/">
         KServe 0.9 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2022-02-18-KServe-0.8-release/">
+<a class="md-nav__link" href="../../../../../blog/articles/2022-02-18-KServe-0.8-release/">
         KServe 0.8 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2021-10-11-KServe-0.7-release/">
+<a class="md-nav__link" href="../../../../../blog/articles/2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
       </a>
 </li>
@@ -1102,7 +1130,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../blog/articles/2021-09-27-kfserving-transition/">
+<a class="md-nav__link" href="../../../../../blog/articles/2021-09-27-kfserving-transition/">
         KFserving Transition
       </a>
 </li>
@@ -1125,17 +1153,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../community/get_involved/">
+<a class="md-nav__link" href="../../../../../community/get_involved/">
         How to Get Involved
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../community/adopters/">
+<a class="md-nav__link" href="../../../../../community/adopters/">
         Adopters
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../../community/presentations/">
+<a class="md-nav__link" href="../../../../../community/presentations/">
         Demos and Presentations
       </a>
 </li>
@@ -1157,13 +1185,18 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#example-troubleshooting-table">
-    Example Troubleshooting Table
+<a class="md-nav__link" href="#deploy-a-kserve-llm-inference-service">
+    Deploy a KServe LLM Inference Service
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#troubleshooting">
-    Troubleshooting
+<a class="md-nav__link" href="#how-to-integrate-with-openai-sdk">
+    How to integrate with OpenAI SDK
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#how-to-integrate-with-langchain-sdk">
+    How to integrate with Langchain SDK
   </a>
 </li>
 </ul>
@@ -1173,34 +1206,135 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/help/contributor/templates/template-troubleshooting.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/llm/huggingface/sdk_integration/README.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="troubleshooting-template">Troubleshooting template<a class="headerlink" href="#troubleshooting-template" title="Permanent link">¶</a></h1>
-<p>When writing guidance to help to troubleshoot specific errors, the error must include:</p>
-<ul>
-<li>
-<p><strong>Error Description:</strong> To describe the error very briefly so that users can search for it easily.</p>
-</li>
-<li>
-<p><strong>Symptom:</strong> To describe the error in a way that helps users to diagnose their issue.
-Include error messages or anything else users might see if they encounter this error.</p>
-</li>
-<li>
-<p><strong>Explanation (or cause):</strong> To inform users about why they are seeing this error.
-This can be omitted if the cause of the error is unknown.</p>
-</li>
-<li>
-<p><strong>Solution:</strong> To inform the user about how to fix the error.</p>
-</li>
-</ul>
-<h2 id="example-troubleshooting-table">Example Troubleshooting Table<a class="headerlink" href="#example-troubleshooting-table" title="Permanent link">¶</a></h2>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<p>| <strong>Error Description</strong> |
-|----------|------------|
-| Symptom  | During the event something breaks. |
-| Cause    | The thing is broken. |
-| Solution | To solve this issue, do the following:<br/><br/>1. This.<br/>2. That. |</p>
+<h1 id="integrate-kserve-llm-deployment-with-llm-sdks">Integrate KServe LLM Deployment with LLM SDKs<a class="headerlink" href="#integrate-kserve-llm-deployment-with-llm-sdks" title="Permanent link">¶</a></h1>
+<p>This document provides the example of how to integrate KServe LLM Inference Service with the popular LLM SDKs.</p>
+<h2 id="deploy-a-kserve-llm-inference-service">Deploy a KServe LLM Inference Service<a class="headerlink" href="#deploy-a-kserve-llm-inference-service" title="Permanent link">¶</a></h2>
+<p>Please follow this example: <a href="../text_generation/">Text Generation using LLama3</a> to deploy a KServe LLM Inference Service.</p>
+<p>Get the <code>SERVICE_HOSTNAME</code> by running the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-llama3<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+</code></pre></div>
+<p>The model name for the above example is <code>llama3</code>.</p>
+<h2 id="how-to-integrate-with-openai-sdk">How to integrate with OpenAI SDK<a class="headerlink" href="#how-to-integrate-with-openai-sdk" title="Permanent link">¶</a></h2>
+<p>Install the <a href="https://github.com/openai/openai-python">OpenAI SDK</a>:</p>
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>openai
+</code></pre></div>
+<p>Create a Python script to interact with the KServe LLM Inference Service and save it as <code>sample_openai.py</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="n">Deployment_url</span> <span class="o">=</span> <span class="s2">"&lt;SERVICE_HOSTNAME&gt;"</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">Deployment_url</span><span class="si">}</span><span class="s2">/openai/v1"</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">"empty"</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># typial chat completion response</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Typical chat completion response:"</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"llama3"</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">'role'</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">:</span> <span class="s2">"What's 1+1? Answer in one word."</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">256</span>
+<span class="p">)</span>
+
+<span class="n">reply</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Extracted reply: </span><span class="se">\n</span><span class="si">{</span><span class="n">reply</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># streaming chat completion response</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Streaming chat completion response:"</span><span class="p">)</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">=</span><span class="s1">'llama3'</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s1">'role'</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'Count to 100, with a comma between each number and no newlines. E.g., 1, 2, 3, ...'</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># this time, we set stream=True</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>Run the python script:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>sample_openai.py
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Typical<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
+Extracted<span class="w"> </span>reply:<span class="w"> </span>
+Two.
+
+Streaming<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
+<span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="m">4</span>,<span class="w"> </span><span class="m">5</span>,<span class="w"> </span><span class="m">6</span>,<span class="w"> </span><span class="m">7</span>,<span class="w"> </span><span class="m">8</span>,<span class="w"> </span><span class="m">9</span>,<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="m">11</span>,<span class="w"> </span><span class="m">12</span>,<span class="w"> </span><span class="m">13</span>,<span class="w"> </span><span class="m">14</span>,<span class="w"> </span><span class="m">15</span>,<span class="w"> </span><span class="m">16</span>,<span class="w"> </span><span class="m">17</span>,<span class="w"> </span><span class="m">18</span>,<span class="w"> </span><span class="m">19</span>,<span class="w"> </span><span class="m">20</span>,<span class="w"> </span><span class="m">21</span>,<span class="w"> </span><span class="m">22</span>,<span class="w"> </span><span class="m">23</span>,<span class="w"> </span><span class="m">24</span>,<span class="w"> </span><span class="m">25</span>,<span class="w"> </span><span class="m">26</span>,<span class="w"> </span><span class="m">27</span>,<span class="w"> </span><span class="m">28</span>,<span class="w"> </span><span class="m">29</span>,<span class="w"> </span><span class="m">30</span>,<span class="w"> </span><span class="m">31</span>,<span class="w"> </span><span class="m">32</span>,<span class="w"> </span><span class="m">33</span>,<span class="w"> </span><span class="m">34</span>,<span class="w"> </span><span class="m">35</span>,<span class="w"> </span><span class="m">36</span>,<span class="w"> </span><span class="m">37</span>,<span class="w"> </span><span class="m">38</span>,<span class="w"> </span><span class="m">39</span>,<span class="w"> </span><span class="m">40</span>,<span class="w"> </span><span class="m">41</span>,<span class="w"> </span><span class="m">42</span>,<span class="w"> </span><span class="m">43</span>,<span class="w"> </span><span class="m">44</span>,<span class="w"> </span><span class="m">45</span>,<span class="w"> </span><span class="m">46</span>,<span class="w"> </span><span class="m">47</span>,<span class="w"> </span><span class="m">48</span>,<span class="w"> </span><span class="m">49</span>,<span class="w"> </span><span class="m">50</span>,<span class="w"> </span><span class="m">51</span>,<span class="w"> </span><span class="m">52</span>,<span class="w"> </span><span class="m">53</span>,<span class="w"> </span><span class="m">54</span>,<span class="w"> </span><span class="m">55</span>,<span class="w"> </span><span class="m">56</span>,<span class="w"> </span><span class="m">57</span>,<span class="w"> </span><span class="m">58</span>,<span class="w"> </span><span class="m">59</span>,<span class="w"> </span><span class="m">60</span>,<span class="w"> </span><span class="m">61</span>,<span class="w"> </span><span class="m">62</span>,<span class="w"> </span><span class="m">63</span>,<span class="w"> </span><span class="m">64</span>,<span class="w"> </span><span class="m">65</span>,<span class="w"> </span><span class="m">66</span>,<span class="w"> </span><span class="m">67</span>,<span class="w"> </span><span class="m">68</span>,<span class="w"> </span><span class="m">69</span>,<span class="w"> </span><span class="m">70</span>,<span class="w"> </span><span class="m">71</span>,<span class="w"> </span><span class="m">72</span>,<span class="w"> </span><span class="m">73</span>,<span class="w"> </span><span class="m">74</span>,<span class="w"> </span><span class="m">75</span>,<span class="w"> </span><span class="m">76</span>,<span class="w"> </span><span class="m">77</span>,<span class="w"> </span><span class="m">78</span>,<span class="w"> </span><span class="m">79</span>,<span class="w"> </span><span class="m">80</span>,<span class="w"> </span><span class="m">81</span>,<span class="w"> </span><span class="m">82</span>,<span class="w"> </span><span class="m">83</span>,<span class="w"> </span><span class="m">84</span>,<span class="w"> </span><span class="m">85</span>,<span class="w"> </span><span class="m">86</span>,<span class="w"> </span><span class="m">87</span>,<span class="w"> </span><span class="m">88</span>,<span class="w"> </span><span class="m">89</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">91</span>,<span class="w"> </span><span class="m">92</span>,<span class="w"> </span><span class="m">93</span>,<span class="w"> </span><span class="m">94</span>,<span class="w"> </span><span class="m">95</span>,<span class="w"> </span><span class="m">96</span>,<span class="w"> </span><span class="m">97</span>,<span class="w"> </span><span class="m">98</span>,<span class="w"> </span><span class="m">99</span>,<span class="w"> </span><span class="m">100</span>
+</code></pre></div>
+</div>
+<h2 id="how-to-integrate-with-langchain-sdk">How to integrate with Langchain SDK<a class="headerlink" href="#how-to-integrate-with-langchain-sdk" title="Permanent link">¶</a></h2>
+<p>Install the <a href="https://python.langchain.com/v0.2/docs/how_to/installation/#integration-packages">Langchain SDK</a>:</p>
+<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>langchain-openai
+</code></pre></div>
+<p>Create a Python script to interact with the KServe LLM Inference Service and save it as <code>sample_langchain.py</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+
+<span class="n">Deployment_url</span> <span class="o">=</span> <span class="s2">"&lt;SERVICE_HOSTNAME&gt;"</span>
+
+<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span>
+    <span class="n">model_name</span><span class="o">=</span><span class="s2">"llama3"</span><span class="p">,</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">Deployment_url</span><span class="si">}</span><span class="s2">/openai/v1"</span><span class="p">,</span>
+    <span class="n">openai_api_key</span><span class="o">=</span><span class="s2">"empty"</span><span class="p">,</span>
+    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># typial chat completion response</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Typical chat completion response:"</span><span class="p">)</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span>
+        <span class="s2">"system"</span><span class="p">,</span>
+        <span class="s2">"You are a helpful assistant that translates English to French. Translate the user sentence."</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="p">(</span><span class="s2">"human"</span><span class="p">,</span> <span class="s2">"I love programming."</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">reply</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Extracted reply: </span><span class="se">\n</span><span class="si">{</span><span class="n">reply</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># streaming chat completion response</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Streaming chat completion response:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">llm</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="s2">"Write me a 1 verse song about goldfish on the moon"</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p>Run the python script:</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>sample_langchain.py
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="w">    </span>Typical<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
+<span class="w">    </span>Extracted<span class="w"> </span>reply:<span class="w"> </span>
+<span class="w">    </span>Je<span class="w"> </span>adore<span class="w"> </span>le<span class="w"> </span>programmation.
+
+<span class="w">    </span>Streaming<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
+<span class="w">    </span>Here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span><span class="m">1</span>-verse<span class="w"> </span>song<span class="w"> </span>about<span class="w"> </span>goldfish<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>moon:
+
+<span class="w">    </span><span class="s2">"In the lunar lake, where the craters shine</span>
+<span class="s2">    A school of goldfish swim, in a celestial shrine</span>
+<span class="s2">    Their scales glimmer bright, like stars in the night</span>
+<span class="s2">    As they dart and play, in the moon's gentle light"</span>
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>
@@ -1210,6 +1344,34 @@ This can be omitted if the cause of the error is unknown.</p>
           </a>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Fill Mask" class="md-footer__link md-footer__link--prev" href="../fill_mask/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Fill Mask
+            </div>
+</div>
+</a>
+<a aria-label="Next: TorchServe LLM" class="md-footer__link md-footer__link--next" href="../../torchserve/accelerate/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              TorchServe LLM
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
@@ -1238,8 +1400,8 @@ This can be omitted if the cause of the error is unknown.</p>
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+<script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
 <script>document$.subscribe(() => {
             window.update_swagger_ui_iframe_height = function (id) {
                 var iFrameID = document.getElementById(id);
