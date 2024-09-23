@@ -27,7 +27,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [One Convergence](https://dkube.io/)                                         | [Subra Ongole](https://github.com/songole)         |
 | [PITS Global Data Recovery Services](https://www.pitsdatarecovery.net/)      | [Pheianox](https://github.com/pheianox)            |
 | [Red Hat](https://www.redhat.com/)                                           | [Taneem Ibrahim](https://github.com/taneem-ibrahim)|
-| [Seldon](https://www.seldon.io/)                                             | [Clive Cox](https://github.com/cliveseldon)        |
+| [Seldon](https://www.seldon.io/)                                             | [Alex Housley](https://github.com/ahousley)        |
 | [Patterson Consulting](http://www.pattersonconsultingtn.com/)                | [Josh Patterson](https://github.com/jpatanooga)    |
 | [Samsung SDS](https://www.samsungsds.com/)                                   | [Hanbae Seo](https://github.com/jazzsir)           |
 | [Striveworks](https://striveworks.us/)                                       | [Jordan Yono](https://github.com/jyono)            |
