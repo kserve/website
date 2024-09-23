@@ -14,6 +14,7 @@ The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert 
 **i. Create a yaml file**
 Open an editor of your choice and create `kustomization.yaml` file.     
     ```yaml
+    
     apiVersion: kustomize.config.k8s.io/v1beta1
     kind: Kustomization
 
