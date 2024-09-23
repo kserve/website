@@ -5,4 +5,4 @@ metadata:
 spec:
   predictor:
     sklearn:
-      storageUri: "pvc://${PVC_NAME}/model.joblib"
+      storageUri: "pvc://${PVC_NAME}/sklearn-pvc"
