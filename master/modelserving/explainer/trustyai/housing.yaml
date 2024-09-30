@@ -1,0 +1,14 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "housing"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: https://github.com/trustyai-explainability/model-collection/raw/main/housing-data/model.joblib
+  explainer:
+    containers:
+      - name: explainer
+        image: quay.io/trustyai/trustyai-kserve-explainer:latest
