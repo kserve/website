@@ -74,6 +74,7 @@ nav:
                 - GCS: modelserving/storage/gcs/gcs.md
           - Model Explainability:
                 - Concept: modelserving/explainer/explainer.md
+                - TrustyAI Explainer: modelserving/explainer/trustyai/README.md
                 - Alibi Explainer:
                   - Image Explainer: modelserving/explainer/alibi/cifar10/README.md
                   - Income Explainer: modelserving/explainer/alibi/income/README.md
