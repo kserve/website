@@ -2654,7 +2654,7 @@ documentation for details about context).</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">healthy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">healthy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Check the health of this model. By default returns `self.ready`.</span>
 
@@ -2742,6 +2742,9 @@ documentation for details about context).</p>
 <div class="doc doc-object doc-function">
 <h3 class="doc doc-heading" id="kserve.model.BaseKServeModel.healthy">
 <code class="highlight language-python"><span class="n">healthy</span><span class="p">()</span></code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-async"><code>async</code></small>
+</span>
 <a class="headerlink" href="#kserve.model.BaseKServeModel.healthy" title="Permanent link">¶</a></h3>
 <div class="doc doc-contents">
 <p>Check the health of this model. By default returns <code>self.ready</code>.</p>
@@ -2775,7 +2778,7 @@ documentation for details about context).</p>
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
-<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">healthy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">async</span> <span class="k">def</span> <span class="nf">healthy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Check the health of this model. By default returns `self.ready`.</span>
 
