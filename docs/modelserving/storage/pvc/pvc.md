@@ -103,7 +103,7 @@ Update the ${PVC_NAME} to the created PVC name and create the InferenceService w
         model:
           modelFormat:
             name: sklearn
-          storageUri: "pvc://${PVC_NAME}/model.joblib"
+          storageUri: "pvc://${PVC_NAME}/${MODEL_NAME}/"
     ```
 
 === "Old Schema"
@@ -116,15 +116,22 @@ Update the ${PVC_NAME} to the created PVC name and create the InferenceService w
     spec:
       predictor:
         sklearn:
-          storageUri: "pvc://${PVC_NAME}/model.joblib"
+          storageUri: "pvc://${PVC_NAME}/${MODEL_NAME}/"
     ```
 
-Apply the `autoscale-gpu.yaml`.
+Apply the `sklearn-pvc.yaml`.
 
 === "kubectl"
 ```bash
 kubectl apply -f sklearn-pvc.yaml
 ```
+
+Note that inside the folder `${PVC_NAME}/${MODEL_NAME}/` you should have your
+model `model.joblib`.
+
+Note also that `${MODEL_NAME}` is just a folder, but a good convention to keep
+the same name.
+
 
 ## Run a prediction
 
