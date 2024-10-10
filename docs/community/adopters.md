@@ -15,6 +15,7 @@ This page contains a list of organizations who are using KServe either in produc
 | [Deeploy](https://deeploy.ml)                                                | [Tim Kleinloog](https://github.com/TimKleinloog)   |
 | [Gojek](https://www.gojek.com/)                                              | [Willem Pienaar](https://github.com/woop)          |
 | [Halodoc ID](https://halodoc.com/)                                           | [Joinal Ahmed](https://github.com/joinal-ahmed)    |
+| [Hewlett Packard Enterprise (HPE)](https://www.hpe.com/)                     | [Jerry Harrow](https://github.com/jerryharrow)     |
 | [Hypermode](https://hypermode.com/)                                          | [Kevin Mingtarja](https://github.com/kevinmingtarja)|
 | [IBM](https://www.ibm.com/)                                                  | [Nick Hill](https://github.com/njhill)             |
 | [Inspur](https://www.inspur.com/)                                            | [Qingshan Chen](https://github.com/iamlovingit)    |
