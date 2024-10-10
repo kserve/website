@@ -70,7 +70,7 @@ class ImageTransformer(kserve.Model):
         return infer_request
 ```
 
-Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.11/python/custom_transformer).
+Please see the code example [here](https://github.com/kserve/kserve/tree/release-0.14/python/custom_transformer).
 
 ### Transformer Server Entrypoint
 For single model you just create a transformer object and register that to the model server.
@@ -100,10 +100,10 @@ Kserve allows users to override the default logger configuration of serving runt
 You can follow the [logger configuration documentation](../../custom/custom_model/README.md#configuring-logger-for-serving-runtime) to configure the logger.
 
 ### Build Transformer docker image
-Under `kserve/python` directory, build the transformer docker image using [Dockerfile](https://github.com/kserve/kserve/blob/release-0.11/python/custom_transformer.Dockerfile)
+Under `kserve/python` directory, build the transformer docker image using [Dockerfile](https://github.com/kserve/kserve/blob/release-0.14/python/custom_transformer.Dockerfile)
 ```bash
 cd python
-docker build -t $DOCKER_USER/image-transformer:latest -f transformer.Dockerfile .
+docker build -t $DOCKER_USER/image-transformer:latest -f custom_transformer.Dockerfile .
 
 docker push {username}/image-transformer:latest
 ```
