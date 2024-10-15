@@ -38,6 +38,11 @@ data:
   gcloud-application-credentials.json: <base64 encoded value of the credential file>
 ```
 
+=== "kubectl"
+```bash
+kubectl apply -f create-gcs-secret.yaml
+```
+
 ### Attach secret to a service account
 === "yaml"
 ```yaml
@@ -55,8 +60,8 @@ secrets:
 Create the InferenceService with the Google service account credential
 === "yaml"
 ```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
 metadata:
   name: sklearn-gcs
 spec:
