@@ -87,9 +87,9 @@ Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow 
 to find out the ingress IP and port.
 
 ```bash
-SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-gcs -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+SERVICE_HOSTNAME=$(kubectl get inferenceservice tensorflow-gcs -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-MODEL_NAME=sklearn-gcs
+MODEL_NAME=tensorflow-gcs
 INPUT_PATH=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
@@ -100,8 +100,8 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http:
     *   Trying 127.0.0.1:8080...
     * TCP_NODELAY set
     * Connected to localhost (127.0.0.1) port 8080 (#0)
-    > POST /v1/models/sklearn-gcs:predict HTTP/1.1
-    > Host: sklearn-gcs.default.example.com
+    > POST /v1/models/tensorflow-gcs:predict HTTP/1.1
+    > Host: tensorflow-gcs.default.example.com
     > User-Agent: curl/7.68.0
     > Accept: */*
     > Content-Length: 84
