@@ -23,7 +23,7 @@ KServe supports authenticating using Google Service Account Key
 * Base64 encode the generated Service Account Key file
 
 
-## Create Secret and attach to Service Account¶
+## Create Secret and attach to Service Account
 
 
 ### Create secret
