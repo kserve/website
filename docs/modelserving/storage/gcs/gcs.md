@@ -32,7 +32,7 @@ KServe supports authenticating using Google Service Account Key
 apiVersion: v1
 kind: Secret
 metadata:
-  name: storage-config
+  name: gcscreds
 type: Opaque
 data:
   gcloud-application-credentials.json: <base64 encoded value of the credential file>
