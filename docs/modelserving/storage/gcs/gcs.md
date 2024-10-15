@@ -63,7 +63,7 @@ Create the InferenceService with the Google service account credential
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: sklearn-gcs
+  name: tensorflow-gcs
 spec:
   predictor:
     serviceAccountName: sa
@@ -74,7 +74,7 @@ spec:
 
 ```
 
-Apply the `sklearn-gcs.yaml`.
+Apply the `tensorflow-gcs.yaml`.
 
 === "kubectl"
 ```bash
