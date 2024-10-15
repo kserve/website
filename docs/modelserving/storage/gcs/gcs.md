@@ -78,7 +78,7 @@ Apply the `tensorflow-gcs.yaml`.
 
 === "kubectl"
 ```bash
-kubectl apply -f sklearn-gcs.yaml
+kubectl apply -f tensorflow-gcs.yaml
 ```
 
 ## Run a prediction
