@@ -17,13 +17,14 @@ e.g. ```gs://kfserving-examples/models/tensorflow/flowers```
 
 KServe supports authenticating using Google Service Account Key
 
-### Create a Service Account Key
+### Create a Google Service Account Key
 
 * To create a Service Account Key follow the steps [here](https://cloud.google.com/iam/docs/keys-create-delete#iam-service-account-keys-create-console).
 * Base64 encode the generated Service Account Key file
 
 
-## Create Google Secret
+## Create Secret and attach to Service Account¶
+
 
 ### Create secret
 === "yaml"
@@ -33,39 +34,39 @@ kind: Secret
 metadata:
   name: storage-config
 type: Opaque
-stringData:
-  gcs: |
-    {
-      "type": "gs",
-      "bucket": "mlpipeline",
-      "base64_service_account": "c2VydmljZWFjY291bnQ=" # base64 encoded value of the credential file
-    }
+data:
+  gcloud-application-credentials.json: <base64 encoded value of the credential file>
 ```
 
-=== "kubectl"
-```bash
-kubectl apply -f create-gcs-secret.yaml
+### Attach secret to a service account
+=== "yaml"
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa
+secrets:
+- name: gcscreds
 ```
+
 
 ## Deploy the model on GCS with `InferenceService`
 
 Create the InferenceService with the Google service account credential
 === "yaml"
 ```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
 metadata:
-    name: sklearn-gcs
+  name: sklearn-gcs
 spec:
   predictor:
+    serviceAccountName: sa
     model:
       modelFormat:
-        name: sklearn
-      storage:
-        key: gcs
-        path: models/tensorflow/flowers
-        parameters: # Parameters to override the default values
-          bucket: kfserving-examples
+        name: tensorflow
+      storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+
 ```
 
 Apply the `sklearn-gcs.yaml`.
