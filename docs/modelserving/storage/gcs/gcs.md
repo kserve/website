@@ -34,7 +34,7 @@ You can create a secret using either the imperative kubectl command or by declar
 
 === "kubectl"
 ```bash
-kubectl create secret generic gcs-credential --from-file=gcloud-application-credentials.json=/path/to/gcloud-application-credentials.json
+kubectl create secret generic gcscreds --from-file=gcloud-application-credentials.json=/path/to/gcloud-application-credentials.json
 ```
 
 #### Using Declarative YAML
@@ -52,7 +52,7 @@ data:
 
 === "kubectl"
 ```bash
-kubectl apply -f create-gcs-secret.yaml
+kubectl apply -f gcs-secret.yaml
 ```
 
 ### Attach secret to a service account
