@@ -27,6 +27,18 @@ KServe supports authenticating using Google Service Account Key
 
 
 ### Create secret
+
+You can create a secret using either the imperative kubectl command or by declaratively defining it in a YAML file.
+
+#### Using Imperative Command
+
+=== "kubectl"
+```bash
+kubectl create secret generic gcs-credential --from-file=gcloud-application-credentials.json=/path/to/gcloud-application-credentials.json
+```
+
+#### Using Declarative YAML
+
 === "yaml"
 ```yaml
 apiVersion: v1
