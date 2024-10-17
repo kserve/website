@@ -9,31 +9,49 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 - A **Persistent Volume Claim (PVC)** is required for multi-node configurations, and it must support the **ReadWriteMany (RWM)** access mode.
 
 
+### Key Validations
+
+- `TENSOR_PARALLEL_SIZE` and `PIPELINE_PARALLEL_SIZE` cannot be set via environment variables. They must be configured through `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize`.
+- In a ServingRuntime designed for multi-node, both `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize` must be set.
+- The minimum value for `workerSpec.tensorParallelSize` is **1**, and the minimum value for `workerSpec.pipelineParallelSize` is **2**.
+- Currently, four GPU types are allowed: `nvidia.com/gpu` (*default*), `intel.com/gpu`, `amd.com/gpu`, and `habana.ai/gaudi`.
+- You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. Then it can cause issues.
+- The Autoscaler must be configured as `external`.
+- The only supported storage protocol for StorageURI is `PVC`.
+
 !!! note 
 
     You must have **exactly one head pod** in your setup. The replica count for this head pod can be adjusted using the `min_replicas` or `max_replicas` settings in the `InferenceService (ISVC)`. However, creating additional head pods will cause them to be excluded from the Ray cluster, resulting in improper functioning. Ensure this limitation is clearly documented.
 
 ## WorkerSpec and ServingRuntime
 
-To enable multi-node/multi-GPU inference, a new API field, `workerSpec`, must be configured. The `huggingface-server-multinode` `ServingRuntime` includes this field and is built on **vLLM**, which supports multi-node/multi-GPU setups. Note that this setup is **not compatible with Triton**.
+To enable multi-node/multi-GPU inference,  `workerSpec` must be configured in both ServingRuntime and InferenceService. The `huggingface-server-multinode` `ServingRuntime` already includes this field and is built on **vLLM**, which supports multi-node/multi-GPU feature. Note that this setup is **not compatible with Triton**.
+Even if the `ServingRuntime` is properly configured with `workerSpec`, multi-node/multi-GPU will not be enabled unless the InferenceService also configures the workerSpec.
+
+```
+...
+  predictor:
+    model:
+      runtime: kserve-huggingfaceserver-multinode
+      modelFormat:
+        name: huggingface
+      storageUri: pvc://llama-3-8b-pvc/hf/8b_instruction_tuned  
+    workerSpec: {} # Specifying workerSpec indicates that multi-node functionality will be used     
+```
 
 ## Key Configurations
 
 When using the `huggingface-server-multinode` `ServingRuntime`, there are two critical configurations you need to understand:
 
-1. **`tensor-parallel-size`**:     
-   This setting controls how many GPUs are used per node. You can configure it via the environment variable `"TENSOR_PARALLEL_SIZE"`. Once set, the GPU count (`nvidia.com/gpu`) in both the head and worker node deployment resources will be updated automatically.
+1. **`workerSpec.tensorParallelSize`**:    
+   This setting controls how many GPUs are used per node. The GPU type count in both the head and worker node deployment resources will be updated automatically.
 
 
-2. **`pipeline-parallel-size`**:  
-  This setting determines how many nodes are involved in the deployment. There are two ways to configure it:
-    - Set the `WorkerSpec.Size` field.
-    - Use the environment variable `"PIPELINE_PARALLEL_SIZE"`. Unlike `WorkerSpec.Size`, this variable represents the total number of nodes, including both the head and worker nodes.
-
-    Therefore, the `"PIPELINE_PARALLEL_SIZE"` should always be **1 greater** than `WorkerSpec.Size`. If both the `WorkerSpec.Size` and `"PIPELINE_PARALLEL_SIZE"` are specified, the **environment variable takes precedence**. The default value for `"PIPELINE_PARALLEL_SIZE"` is 2.
+2. **`workerSpec.pipelineParallelSize`**
+  This setting determines how many nodes are involved in the deployment. This variable represents the total number of nodes, including both the head and worker nodes.
 
 
-### Example Configuration
+### Example InferenceService
 
 Here’s an example of an `InferenceService` configuration for a Hugging Face model:
 
@@ -48,20 +66,10 @@ spec:
       modelFormat:
         name: huggingface
       storageUri: pvc://llama-3-8b-pvc/hf/8b_instruction_tuned
-      env:
-        - name: TENSOR_PARALLEL_SIZE
-          value: "1"
-        - name: PIPELINE_PARALLEL_SIZE
-          value: "2"
-      resources:
-        limits:
-          cpu: "6"
-          memory: 24Gi
-        requests:
-          cpu: "6"
-          memory: 24Gi
-    workerSpec:
-      size: 1   # This will be ignored because PIPELINE_PARALLEL_SIZE is set in environments
+    workerSpec: {
+      pipelineParallelSize: 2
+      tensorParallelSize: 1
+    }  
 ```
 
 ## Serve the Hugging Face LLM Model Using 2 Nodes
@@ -120,6 +128,9 @@ kubectl apply -f - <<EOF
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/autoscalerClass: external
   name: huggingface-llama3
 spec:
   predictor:
@@ -128,6 +139,7 @@ spec:
       modelFormat:
         name: huggingface
       storageUri: pvc://llama-3-8b-pvc/hf/8b_instruction_tuned  
+    workerSpec: {}
 EOF
 ```      
 
@@ -171,7 +183,7 @@ To check the GPU resource status, follow these steps:
     | NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
     |-----------------------------------------+------------------------+----------------------+
     | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
-    | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |            # Specifying workerSpec indicates that multi-node functionality will be used     Memory-Usage | GPU-Util  Compute M. |
     |                                         |                        |               MIG M. |
     |=========================================+========================+======================|
     |   0  NVIDIA A10G                    On  |   00000000:00:1E.0 Off |                    0 |
