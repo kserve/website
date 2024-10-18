@@ -2,15 +2,15 @@
 KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
-Kubernetes 1.22 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
+Kubernetes 1.28 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
 |:-------------------|:--------------------------|:----------------------------|
-| 1.27               | 1.18,1.19                 | 1.10,1.11                   |
-| 1.28               | 1.19,1.20                 | 1.11,1.12.4                 |
-| 1.29               | 1.20,1.21                 | 1.12.4,1.13.1               |
+| 1.28               | 1.22                      | 1.15                        |
+| 1.29               | 1.22,1.23                 | 1.15,1.16                   |
+| 1.30               | 1.22,1.23                 | 1.15,1.16                   |
 
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
@@ -27,7 +27,7 @@ The recommended networking layer for KServe is [Istio](https://istio.io/) as cur
 Alternatively you can also choose other networking layers like [Kourier](https://github.com/knative-sandbox/net-kourier) or [Contour](https://projectcontour.io/), see [how to install Kourier with KServe guide](./kourier_networking/README.md).
 
 ## 3. Install Cert Manager
-The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert Manager](https://cert-manager.io/docs/installation/).
+The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert Manager](https://cert-manager.io/docs/installation/).
 
 !!! note
     Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.
