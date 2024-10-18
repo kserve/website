@@ -176,6 +176,8 @@ copyright: "Copyright © 2021 The KServe Authors"
 
 plugins:
   - search
+  - macros:
+      on_undefined: keep
   - mkdocstrings:
       default_handler: python
       handlers:
@@ -191,8 +193,10 @@ plugins:
         filter: ""
         syntaxHighlightTheme: monokai
         tryItOutEnabled: true
+       
 
 extra:
+  kserve_release_version: 0.13.0
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/kserve

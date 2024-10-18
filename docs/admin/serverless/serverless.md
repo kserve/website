@@ -7,7 +7,7 @@ Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
-|:-------------------|:--------------------------|:----------------------------|
+| :----------------- | :------------------------ | :-------------------------- |
 | 1.27               | 1.18,1.19                 | 1.10,1.11                   |
 | 1.28               | 1.19,1.20                 | 1.11,1.12.4                 |
 | 1.29               | 1.20,1.21                 | 1.12.4,1.13.1               |
@@ -35,14 +35,14 @@ The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert 
 ## 4. Install KServe
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.13.0/kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
     ```
 
 ## 5. Install KServe Built-in ClusterServingRuntimes
-
+{{ kserve_release_version }}
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.13.0/kserve-cluster-resources.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{ kserve_release_version }}/kserve-cluster-resources.yaml
     ```
 
 !!! note
