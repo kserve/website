@@ -27,7 +27,7 @@ from kserve import logging
 
 class AlexNetModel(Model):
     def __init__(self, name: str):
-       super().__init__(name)
+       super().__init__(name, return_response_headers=True)
        self.name = name
        self.load()
 
@@ -36,7 +36,12 @@ class AlexNetModel(Model):
         self.model.eval()
         self.ready = True
 
-    def predict(self, payload: Dict, headers: Dict[str, str] = None) -> Dict:
+    def predict(
+        self, 
+        payload: Dict, 
+        headers: Dict[str, str] = None, 
+        response_headers: Dict[str, str] = None,
+    ) -> Dict:
         img_data = payload["instances"][0]["image"]["b64"]
         raw_img_data = base64.b64decode(img_data)
         input_image = Image.open(io.BytesIO(raw_img_data))
@@ -64,6 +69,9 @@ if __name__ == "__main__":
     model = AlexNetModel(args.model_name)
     ModelServer().start([model])
 ```
+
+!!! note
+    `return_response_headers=True` will be used to return response headers from v1 and v2 endpoints
 
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
