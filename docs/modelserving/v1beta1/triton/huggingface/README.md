@@ -45,7 +45,7 @@ Create an InferenceService with triton predictor by specifying the `storageUri` 
           - --model_id=bert-base-uncased
           - --predictor_protocol=v2
           - --tensor_input_names=input_ids
-          image: kserve/huggingfaceserver:v0.13.0
+          image: kserve/huggingfaceserver:v{{  kserve_release_version }}
           name: kserve-container
           resources:
             limits:
