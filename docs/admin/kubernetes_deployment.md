@@ -6,7 +6,7 @@ Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version |
-|:-------------------|:--------------------------|
+| :----------------- | :------------------------ |
 | 1.27               | 1.18, 1.19                |
 | 1.28               | 1.19, 1.20                |
 | 1.29               | 1.20, 1.21                |
@@ -46,14 +46,14 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.13.0/kserve.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
     ```
 
 Install KServe default serving runtimes:
 
 === "kubectl"
     ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.13.0/kserve-cluster-resources.yaml
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve-cluster-resources.yaml
     ```
 
 **ii. Change default deployment mode and ingress option**
