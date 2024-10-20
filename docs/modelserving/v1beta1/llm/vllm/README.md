@@ -1,4 +1,8 @@
 ## Deploy the LLaMA model with vLLM Runtime
+
+!!! Warning
+    This page is outdated and only provides experimental vLLM support. The official vLLM support is available through [Hugging Face Serving Runtime](https://kserve.github.io/website/master/modelserving/v1beta1/llm/huggingface/).
+
 Serving LLM models can be surprisingly slow even on high end GPUs, [vLLM](https://github.com/vllm-project/vllm) is a fast and easy-to-use LLM inference engine. It can achieve 10x-20x higher throughput than Huggingface transformers.
 It supports [continuous batching](https://www.anyscale.com/blog/continuous-batching-llm-inference) for increased throughput and GPU utilization,
 [paged attention](https://vllm.ai) to address the memory bottleneck where in the autoregressive decoding process all the attention key value tensors(KV Cache) are kept in the GPU memory to generate next tokens.
