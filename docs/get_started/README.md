@@ -42,6 +42,6 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
 
     or install via our published Helm Charts:
    ```bash
-   helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.13.0
-   helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.13.0
+   helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v{{  kserve_release_version }}
+   helm install kserve oci://ghcr.io/kserve/charts/kserve --version v{{  kserve_release_version }}
    ```
