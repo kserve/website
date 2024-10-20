@@ -23,6 +23,8 @@ Create a secret with the Hugging Face token.
         HF_TOKEN: <token>
     ```
 
+Then create the inference service.
+
 === "Yaml"
 
     ```yaml
@@ -190,6 +192,7 @@ Create a secret with the Hugging Face token.
     stringData:
         HF_TOKEN: <token>
     ```
+Then create the inference service.
 
 === "Yaml"
 
