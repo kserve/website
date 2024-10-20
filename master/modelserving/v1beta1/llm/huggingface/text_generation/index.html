@@ -1347,7 +1347,7 @@ If the model is not supported by vLLM, KServe falls back to HuggingFace backend 
 environment variable.</p>
 </div>
 <p>Create a secret with the Hugging Face token.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label><label for="__tabbed_1_2">Yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -1359,6 +1359,11 @@ environment variable.</p>
 <span class="w">    </span><span class="nt">HF_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
 </code></pre></div>
 </div>
+</div>
+</input></div>
+<p>Then create the inference service.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Yaml</label></div>
+<div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
 <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
@@ -1393,7 +1398,7 @@ environment variable.</p>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
+</input></div>
 <h3 id="check-inferenceservice-status">Check <code>InferenceService</code> status.<a class="headerlink" href="#check-inferenceservice-status" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-llama3
 </code></pre></div>
@@ -1501,7 +1506,7 @@ supports the OpenAI <code>/v1/completions</code> and <code>/v1/chat/completions<
 environment variable.</p>
 </div>
 <p>Create a secret with the Hugging Face token.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Yaml</label><label for="__tabbed_2_2">Yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
@@ -1513,6 +1518,11 @@ environment variable.</p>
 <span class="w">    </span><span class="nt">HF_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
 </code></pre></div>
 </div>
+</div>
+</input></div>
+<p>Then create the inference service.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Yaml</label></div>
+<div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
 <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
@@ -1548,7 +1558,7 @@ environment variable.</p>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
+</input></div>
 <h3 id="check-inferenceservice-status_1">Check <code>InferenceService</code> status.<a class="headerlink" href="#check-inferenceservice-status_1" title="Permanent link">¶</a></h3>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-llama3
 </code></pre></div>
