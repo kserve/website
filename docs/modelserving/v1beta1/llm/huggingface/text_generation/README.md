@@ -13,6 +13,7 @@ If the model is not supported by vLLM, KServe falls back to HuggingFace backend 
 Create a secret with the Hugging Face token.
 
 === "Yaml"
+
     ```yaml
     apiVersion: v1
     kind: Secret
