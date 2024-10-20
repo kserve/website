@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#authors">
+<a class="md-skip" href="#macro-syntax-error">
           Skip to content
         </a>
 </div>
@@ -1083,61 +1083,9 @@
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          KServe 0.8 Release
-          <span class="md-nav__icon md-icon"></span>
-</label>
 <a class="md-nav__link md-nav__link--active" href="./">
         KServe 0.8 Release
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#authors">
-    Authors
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#announcing-kserve-v08">
-    Announcing: KServe v0.8
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-changed">
-    What’s changed?
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-new">
-    What's new?
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servingruntimes-and-clusterservingruntimes">
-    ServingRuntimes and ClusterServingRuntimes
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#updated-inferenceservice-predictor-spec">
-    Updated InferenceService Predictor Spec
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmesh-updates">
-    ModelMesh Updates
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#join-the-community">
-    Join the community
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../2021-10-11-KServe-0.7-release/">
@@ -1209,52 +1157,6 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#authors">
-    Authors
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#announcing-kserve-v08">
-    Announcing: KServe v0.8
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-changed">
-    What’s changed?
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-new">
-    What's new?
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servingruntimes-and-clusterservingruntimes">
-    ServingRuntimes and ClusterServingRuntimes
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#updated-inferenceservice-predictor-spec">
-    Updated InferenceService Predictor Spec
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmesh-updates">
-    ModelMesh Updates
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#join-the-community">
-    Join the community
-  </a>
-</li>
-</ul>
 </nav>
 </div>
 </div>
@@ -1264,125 +1166,11 @@
 <a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/blog/articles/2022-02-18-KServe-0.8-release.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>KServe 0.8 Release</h1>
-<h3 id="authors">Authors<a class="headerlink" href="#authors" title="Permanent link">¶</a></h3>
-<p><strong>Dan Sun</strong>, <strong>Paul Van Eck</strong>, <strong>Vedant Padwal</strong>, <strong>Andrews Arokiam</strong> on behalf of the KServe Working Group.</p>
-<h3 id="announcing-kserve-v08"><strong>Announcing: KServe v0.8</strong><a class="headerlink" href="#announcing-kserve-v08" title="Permanent link">¶</a></h3>
-<p><em>February 18, 2022</em></p>
-<p>Today, we are pleased to announce the v0.8.0 release of KServe! While the last release was focused on the
-<a href="https://blog.kubeflow.org/release/official/2021/09/27/kfserving-transition.html">transition</a> of KFServing to KServe,
-this release was focused on unifying the InferenceService API for deploying models on KServe and ModelMesh.</p>
-<blockquote>
-<p><strong>Note</strong>: For current users of KFServing/KServe, please take a few minutes to answer this <a href="https://groups.google.com/g/kubeflow-discuss/c/B0trz3qZiJE">short survey</a> and provide your feedback!</p>
-</blockquote>
-<p>Now, let's take a look at some of the changes and additions to KServe.</p>
-<h3 id="whats-changed"><strong><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/26a0.svg" title=":warning:"> What’s changed?</img></strong><a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></h3>
-<ul>
-<li><strong>ONNX Runtime Server</strong> has been removed from the supported serving runtime list. KServe by default now uses the <strong>Triton Inference Server</strong> to serve ONNX models.</li>
-<li>KServe’s <strong>PyTorchServer</strong> has been removed from the supported serving runtime list. KServe by default now uses <strong>TorchServe</strong> to serve PyTorch models.</li>
-<li>A few main KServe SDK class names have been changed:<ul>
-<li><strong>KFModel</strong> is renamed to <strong>Model</strong></li>
-<li><strong>KFServer</strong> is renamed to <strong>ModelServer</strong></li>
-<li><strong>KFModelRepository</strong> is renamed to <strong>ModelRepository</strong></li>
-</ul>
-</li>
-</ul>
-<h3 id="whats-new"><strong><img alt="🌈" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f308.svg" title=":rainbow:"> What's new?</img></strong><a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
-<p>Some notable updates are:</p>
-<ul>
-<li><strong>ClusterServingRuntime</strong> and <strong>ServingRuntime</strong> CRDs are introduced. Learn more <a href="#servingruntimes-and-clusterservingruntimes">below</a>.</li>
-<li>A new <strong>Model Spec</strong> was introduced to the InferenceService Predictor Spec as a new way to specify models. Learn more <a href="#updated-inferenceservice-predictor-spec">below</a>.</li>
-<li><strong>Knative 1.0</strong> is now supported and certified for the KServe Serverless installation.</li>
-<li><strong>gRPC</strong> is now supported for transformer to predictor network communication.</li>
-<li><strong>TorchServe</strong> Serving runtime has been updated to 0.5.2 which now supports the KServe V2 REST protocol.</li>
-<li><strong>ModelMesh</strong> now has multi-namespace support, and users can now deploy GCS or HTTP(S) hosted models.</li>
-</ul>
-<p>To see all release updates, check out the KServe <a href="https://github.com/kserve/kserve/releases/tag/v0.8.0">release notes</a> and ModelMesh Serving <a href="https://github.com/kserve/modelmesh-serving/releases/tag/v0.8.0">release notes</a>!</p>
-<h3 id="servingruntimes-and-clusterservingruntimes"><strong>ServingRuntimes and ClusterServingRuntimes</strong><a class="headerlink" href="#servingruntimes-and-clusterservingruntimes" title="Permanent link">¶</a></h3>
-<p>This release introduces two new CRDs <em>ServingRuntimes</em> and <em>ClusterServingRuntimes</em> with the only difference between these two is that one is
-namespace-scoped and one is cluster-scoped. A ServingRuntime defines the templates for Pods that can serve one or more particular model formats.
-Each ServingRuntime defines key information such as the container image of the runtime and a list of the model formats that the runtime supports.</p>
-<p>In previous versions of KServe, supported predictor formats and container images were defined in a
-<a href="https://github.com/kserve/kserve/blob/release-0.7/config/configmap/inferenceservice.yaml#L7">config map</a> in the control plane namespace.
-The ServingRuntime CRD should allow for improved flexibility and extensibility for defining or customizing runtimes to how you see fit without having to modify
-any controller code or any resources in the controller namespace.</p>
-<p>Several out-of-the-box ClusterServingRuntimes are provided with KServe so that users can continue to use KServe how they did before without having to define the runtimes themselves.</p>
-<p><strong>Example SKLearn ClusterServingRuntime:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterServingRuntime</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-sklearnserver</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">supportedModelFormats</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">      </span><span class="nt">autoSelect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/sklearnserver:latest</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name={{.Name}}</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_dir=/mnt/models</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--http_port=8080</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-</code></pre></div>
-<h3 id="updated-inferenceservice-predictor-spec"><strong>Updated InferenceService Predictor Spec</strong><a class="headerlink" href="#updated-inferenceservice-predictor-spec" title="Permanent link">¶</a></h3>
-<p>A new Model spec was also introduced as a part of the Predictor spec for InferenceServices. One of the problems KServe was having was that the InferenceService CRD was
-becoming unwieldy with each model serving runtime being an object in the Predictor spec. This generated a lot of field duplication in the schema,
-bloating the overall size of the CRD. If a user wanted to introduce a new model serving framework for KServe to support, the CRD would have to be modified,
-and subsequently the controller code.</p>
-<p>Now, with the Model spec, a user can specify a model format and optionally a corresponding version. The KServe control plane will automatically select and use the
-<em>ClusterServingRuntime</em> or <em>ServingRuntime</em> that supports the given format. Each <em>ServingRuntime</em> maintains a list of supported model formats and versions. If a format has
-<code>autoselect</code> as <code>true</code>, then that opens the <em>ServingRuntime</em> up for automatic model placement for that model format.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Previous Schema</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-sklearn-isvc</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://bucket/sklearn/mnist.joblib</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-sklearn-isvc</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">sklearn</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://bucket/sklearn/mnist.joblib</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<p>The previous way of defining predictors is still supported, however, the new approach will be the preferred one going forward. Eventually, the previous schema, with the framework names as keys in the predictor spec, will be removed.</p>
-<h3 id="modelmesh-updates"><strong>ModelMesh Updates</strong><a class="headerlink" href="#modelmesh-updates" title="Permanent link">¶</a></h3>
-<p><a href="https://developer.ibm.com/blogs/kserve-and-watson-modelmesh-extreme-scale-model-inferencing-for-trusted-ai/">ModelMesh</a> has been in the process of integrating as KServe’s
-multi-model serving backend.  With the inclusion of the aforementioned ServingRuntime CRDs and the Predictor Model spec, the two projects are now much more aligned,
-with continual improvements underway.</p>
-<p>ModelMesh now supports multi-namespace reconciliation. Previously, the ModelMesh controller would only reconcile against resources deployed in the same namespace as the controller. Now, by default, ModelMesh will be able to handle InferenceService deployments in any "modelmesh-enabled" namespace. Learn more <a href="https://github.com/kserve/modelmesh-serving/blob/release-0.8/docs/install/install-script.md#setup-additional-namespaces">here</a>.</p>
-<p>Also, while ModelMesh previously only supported S3-based storage, we are happy to share that ModelMesh now works with models hosted using GCS and HTTP(S).</p>
-<h3 id="join-the-community"><strong>Join the community</strong><a class="headerlink" href="#join-the-community" title="Permanent link">¶</a></h3>
-<ul>
-<li>Visit our <a href="https://kserve.github.io/website/">Website</a> or <a href="https://github.com/kserve">GitHub</a></li>
-<li>Join the Slack (<a href="https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#/">#kubeflow-kfserving</a>)</li>
-<li>Attend a <a href="https://docs.google.com/document/d/1KZUURwr9MnHXqHA08TFbfVbM8EAJSJjmaMhnvstvi-k/edit#heading=h.4i9fb8ndp9vp">biweekly community meeting on Wednesday 9am PST</a></li>
-<li>View our <a href="https://github.com/kserve/website/blob/main/docs/developer/developer.md">developer</a> and <a href="https://github.com/kserve/website/blob/main/docs/help/contributor/mkdocs-contributor-guide.md">doc</a> contribution guides to learn how to make contributions. We are excited to work with you to make KServe better and promote its adoption!</li>
-</ul>
-<p>Thank you for trying out KServe!</p>
+<h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">¶</a></h1>
+<p><em>File</em>: <code>blog/articles/2022-02-18-KServe-0.8-release.md</code></p>
+<p><em>Line 67 in Markdown file:</em> <strong>unexpected '.'</strong>
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="k">-</span><span class="w"> </span>--model_name={{.Name}}
+</code></pre></div></p>
 </article>
 </div>
 </div>

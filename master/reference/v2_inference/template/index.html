@@ -9,7 +9,7 @@
 <link href="https://kserve.io/website/master/reference/v2_inference/template/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Template - KServe Documentation Website</title>
+<title>Macro Syntax Error - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#name">
+<a class="md-skip" href="#macro-syntax-error">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Template
+              Macro Syntax Error
             
           </span>
 </div>
@@ -1156,31 +1156,6 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#name">
-    {{.Name}}
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#messages">
-    Messages
-  </a>
-<nav aria-label="Messages" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#longname">
-    {{.LongName}}
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
 </nav>
 </div>
 </div>
@@ -1190,32 +1165,11 @@
 <a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/reference/v2_inference/template.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Template</h1>
-<p>{{range $file := .Files}}</p>
-<p>{{range $service := .Services -}}
-{{range .Methods -}}</p>
-<h3 id="name">{{.Name}}<a class="headerlink" href="#name" title="Permanent link">¶</a></h3>
-<p>{{ .Description}}</p>
-<blockquote>
-<p>rpc {{$file.Package}}.{{$service.Name}}/{{.Name}}(<a href='#{{.RequestLongType | lower | replace "." "-"}}'>{{.RequestLongType}}</a>)
-  returns <a href='#{{.ResponseLongType | lower | replace "." "-"}}'>{{.ResponseLongType}}</a></p>
-</blockquote>
-<p>{{end}}
-{{end}}</p>
-<hr/>
-<h3 id="messages">Messages<a class="headerlink" href="#messages" title="Permanent link">¶</a></h3>
-<p>{{range .Messages}}</p>
-<h4 id="longname">{{.LongName}}<a class="headerlink" href="#longname" title="Permanent link">¶</a></h4>
-<p>{{.Description}}</p>
-<p>{{if .HasFields}}
-| Field | Type | Description |
-| ----- | ---- | ----------- |
-{{range .Fields -}}
-| {{if .IsOneof}}<a href="https://developers.google.com/protocol-buffers/docs/proto3#oneof">oneof</a> {{.OneofDecl}}.{{end}}{{.Name}} | <a href='#{{.LongType | lower | replace "." "-"}}'>{{if .IsMap}}map {{else if .Label}}{{.Label}} {{end}}{{.LongType}}</a> | {{if .Description}}{{nobr .Description}}{{else}}N/A{{end}} |
-{{end}}
-{{end}}
-{{end}}</p>
-<p>{{end}}</p>
+<h1 id="macro-syntax-error"><em>Macro Syntax Error</em><a class="headerlink" href="#macro-syntax-error" title="Permanent link">¶</a></h1>
+<p><em>File</em>: <code>reference/v2_inference/template.md</code></p>
+<p><em>Line 1 in Markdown file:</em> <strong>unexpected char '$' at 8</strong>
+<div class="highlight"><pre><span></span><code>{{range $file := .Files}}
+</code></pre></div></p>
 </article>
 </div>
 </div>
