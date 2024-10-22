@@ -23,6 +23,21 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 
     You must have **exactly one head pod** in your setup. The replica count for this head pod can be adjusted using the `min_replicas` or `max_replicas` settings in the `InferenceService (ISVC)`. However, creating additional head pods will cause them to be excluded from the Ray cluster, resulting in improper functioning. Ensure this limitation is clearly documented.
 
+### Consideration
+
+Using the multi-node feature likely indicates that you are trying to deploy a very large model. In such cases, you should consider increasing the `initialDelaySeconds` for the `livenessProbe`, `readinessProbe`, and `startupProbe`. The default values may not be suitable for your specific needs. 
+
+~~~
+..
+      livenessProbe:
+        failureThreshold: 2
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+        initialDelaySeconds: 10
+..
+~~~
+
 ## WorkerSpec and ServingRuntime
 
 To enable multi-node/multi-GPU inference,  `workerSpec` must be configured in both ServingRuntime and InferenceService. The `huggingface-server-multinode` `ServingRuntime` already includes this field and is built on **vLLM**, which supports multi-node/multi-GPU feature. Note that this setup is **not compatible with Triton**.
