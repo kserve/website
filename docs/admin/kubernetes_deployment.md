@@ -32,7 +32,7 @@ spec:
 
 
 ## 2. Install Cert Manager
-The minimally required Cert Manager version is 1.9.0 and you can refer to [Cert Manager installation guide](https://cert-manager.io/docs/installation/).
+The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert Manager installation guide](https://cert-manager.io/docs/installation/).
 
 !!! note
     Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.
