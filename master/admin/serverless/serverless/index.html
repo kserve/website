@@ -1247,7 +1247,7 @@
 <h1 id="serverless-installation-guide">Serverless Installation Guide<a class="headerlink" href="#serverless-installation-guide" title="Permanent link">¶</a></h1>
 <p>KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.</p>
-<p>Kubernetes 1.22 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
+<p>Kubernetes 1.28 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.</p>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">¶</a></h2>
 <table>
@@ -1260,19 +1260,19 @@ Kubernetes version.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">1.27</td>
-<td style="text-align: left;">1.18,1.19</td>
-<td style="text-align: left;">1.10,1.11</td>
-</tr>
-<tr>
 <td style="text-align: left;">1.28</td>
-<td style="text-align: left;">1.19,1.20</td>
-<td style="text-align: left;">1.11,1.12.4</td>
+<td style="text-align: left;">1.22</td>
+<td style="text-align: left;">1.15</td>
 </tr>
 <tr>
 <td style="text-align: left;">1.29</td>
-<td style="text-align: left;">1.20,1.21</td>
-<td style="text-align: left;">1.12.4,1.13.1</td>
+<td style="text-align: left;">1.22,1.23</td>
+<td style="text-align: left;">1.15,1.16</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.30</td>
+<td style="text-align: left;">1.22,1.23</td>
+<td style="text-align: left;">1.15,1.16</td>
 </tr>
 </tbody>
 </table>
@@ -1291,7 +1291,7 @@ you need to turn on the corresponding <a href="https://knative.dev/docs/admin/se
 <p>The recommended networking layer for KServe is <a href="https://istio.io/">Istio</a> as currently it works best with KServe, please refer to the <a href="https://knative.dev/docs/admin/install/installing-istio">Istio install guide</a>.
 Alternatively you can also choose other networking layers like <a href="https://github.com/knative-sandbox/net-kourier">Kourier</a> or <a href="https://projectcontour.io/">Contour</a>, see <a href="../kourier_networking/">how to install Kourier with KServe guide</a>.</p>
 <h2 id="3-install-cert-manager">3. Install Cert Manager<a class="headerlink" href="#3-install-cert-manager" title="Permanent link">¶</a></h2>
-<p>The minimally required Cert Manager version is 1.9.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager</a>.</p>
+<p>The minimally required Cert Manager version is 1.15.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.</p>
