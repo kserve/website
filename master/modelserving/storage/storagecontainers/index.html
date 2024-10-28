@@ -1285,7 +1285,7 @@
 <p class="admonition-title">Note</p>
 <p>KServe controller will take care of properly injecting your container image and invoking it with those proper arguments.</p>
 </div>
-<p>A more concrete example can be found <a href="https://github.com/lampajr/model-registry-storage-initializer">here</a>, where the storage initializer query an existing <code>model registry</code> service in order to retrieve the original location of the model that the user requested to deploy. </p>
+<p>A more concrete example can be found <a href="https://github.com/kubeflow/model-registry/tree/main/csi#model-registry-custom-storage-initializer">here</a>, where the storage initializer query an existing <code>model registry</code> service in order to retrieve the original location of the model that the user requested to deploy.</p>
 <h3 id="create-the-clusterstoragecontainer-cr">Create the <code>ClusterStorageContainer</code> CR<a class="headerlink" href="#create-the-clusterstoragecontainer-cr" title="Permanent link">¶</a></h3>
 <p>Once the Custom Storage Initializer image is ready, you just need to create a new <code>ClusterStorageContainer</code> CR to make it available in the cluster. You just need to provide 2 essential information:
 1. The <em>container spec definition</em>, this is strictly dependent on your own custom storage initializer image.
@@ -1303,7 +1303,7 @@
 <span class="s">spec:</span>
 <span class="s">  container:</span>
 <span class="s">    name: storage-initializer</span>
-<span class="s">    image: abc/model-registry-storage-initializer:latest</span>
+<span class="s">    image: kubeflow/model-registry-storage-initializer:latest</span>
 <span class="s">    env:</span>
 <span class="s">    - name: MODEL_REGISTRY_BASE_URL</span>
 <span class="s">      value: "$MODEL_REGISTRY_SERVICE.model-registry.svc.cluster.local:$MODEL_REGISTRY_REST_PORT"</span>
