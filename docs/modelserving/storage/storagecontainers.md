@@ -51,7 +51,7 @@ The only requirement is that the `Entrypoint` of this container image should tak
 !!! note
     KServe controller will take care of properly injecting your container image and invoking it with those proper arguments.
 
-A more concrete example can be found [here](https://github.com/lampajr/model-registry-storage-initializer), where the storage initializer query an existing `model registry` service in order to retrieve the original location of the model that the user requested to deploy. 
+A more concrete example can be found [here](https://github.com/kubeflow/model-registry/tree/main/csi#model-registry-custom-storage-initializer), where the storage initializer query an existing `model registry` service in order to retrieve the original location of the model that the user requested to deploy.
 
 ###  Create the `ClusterStorageContainer` CR
 
@@ -69,7 +69,7 @@ metadata:
 spec:
   container:
     name: storage-initializer
-    image: abc/model-registry-storage-initializer:latest
+    image: kubeflow/model-registry-storage-initializer:latest
     env:
     - name: MODEL_REGISTRY_BASE_URL
       value: "$MODEL_REGISTRY_SERVICE.model-registry.svc.cluster.local:$MODEL_REGISTRY_REST_PORT"
