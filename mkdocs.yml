@@ -72,6 +72,7 @@ nav:
                 - URI: modelserving/storage/uri/uri.md
                 - CA Certificate: modelserving/certificate/kserve.md
                 - GCS: modelserving/storage/gcs/gcs.md
+                - Hugging Face: modelserving/storage/huggingface/hf.md
           - Model Explainability:
                 - Concept: modelserving/explainer/explainer.md
                 - TrustyAI Explainer: modelserving/explainer/trustyai/README.md
