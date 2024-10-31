@@ -164,7 +164,7 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
     kubectl edit cm config-domain --namespace knative-serving
     ```
 
-    Now in your editor, change example.com to {{external-ip}}.xip.io (make sure to replace {{external-ip}} with the IP you found earlier).
+    Now in your editor, change example.com to {{ '{{' }}external-ip{{ '}}' }}.xip.io (make sure to replace {{ '{{' }}external-ip{{ '}}' }} with the IP you found earlier).
 
     With the change applied you can now directly curl the URL
     ```bash
