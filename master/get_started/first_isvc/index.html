@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#macro-rendering-error">
+<a class="md-skip" href="#run-your-first-inferenceservice">
           Skip to content
         </a>
 </div>
@@ -201,9 +201,60 @@
 </li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          First InferenceService
+          <span class="md-nav__icon md-icon"></span>
+</label>
 <a class="md-nav__link md-nav__link--active" href="./">
         First InferenceService
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-your-first-inferenceservice">
+    Run your first InferenceService
+  </a>
+<nav aria-label="Run your first InferenceService" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-create-a-namespace">
+    1. Create a namespace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-create-an-inferenceservice">
+    2. Create an InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-check-inferenceservice-status">
+    3. Check InferenceService status.
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-determine-the-ingress-ip-and-ports">
+    4. Determine the ingress IP and ports
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-perform-inference">
+    5. Perform inference
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-run-performance-test-optional">
+    6. Run performance test (optional)
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../swagger_ui/">
@@ -1157,6 +1208,51 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#run-your-first-inferenceservice">
+    Run your first InferenceService
+  </a>
+<nav aria-label="Run your first InferenceService" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-create-a-namespace">
+    1. Create a namespace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-create-an-inferenceservice">
+    2. Create an InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-check-inferenceservice-status">
+    3. Check InferenceService status.
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-determine-the-ingress-ip-and-ports">
+    4. Determine the ingress IP and ports
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-perform-inference">
+    5. Perform inference
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-run-performance-test-optional">
+    6. Run performance test (optional)
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -1166,19 +1262,183 @@
 <a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/get_started/first_isvc.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="macro-rendering-error"><em>Macro Rendering Error</em><a class="headerlink" href="#macro-rendering-error" title="Permanent link">¶</a></h1>
-<p><em>File</em>: <code>get_started/first_isvc.md</code></p>
-<p><em>UndefinedError</em>: 'external' is undefined</p>
-<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/mkdocs_macros/plugin.py", line 688, in render
-    return md_template.render(**page_variables)
-  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jinja2/environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "/opt/hostedtoolcache/Python/3.8.18/x64/lib/python3.8/site-packages/jinja2/environment.py", line 939, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "&lt;template&gt;", line 167, in top-level template code
-jinja2.exceptions.UndefinedError: 'external' is undefined
+<h1>First InferenceService</h1>
+<h2 id="run-your-first-inferenceservice">Run your first InferenceService<a class="headerlink" href="#run-your-first-inferenceservice" title="Permanent link">¶</a></h2>
+<p>In this tutorial, you will deploy an InferenceService with a predictor that will load a scikit-learn model trained with
+the <a href="https://archive.ics.uci.edu/ml/datasets/iris">iris</a> dataset. This dataset has three output classes: Iris Setosa, Iris Versicolour, and Iris Virginica.</p>
+<p>You will then send an inference request to your deployed model in order to get a prediction for the class of iris plant your request corresponds to.</p>
+<p>Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the storage location of the model and
+it gets some <strong>super powers out of the box</strong> <img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f680.svg" title=":rocket:">.</img></p>
+<h3 id="1-create-a-namespace">1. Create a namespace<a class="headerlink" href="#1-create-a-namespace" title="Permanent link">¶</a></h3>
+<p>First, create a namespace to use for deploying KServe resources:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>kserve-test
 </code></pre></div>
+<h3 id="2-create-an-inferenceservice">2. Create an <code>InferenceService</code><a class="headerlink" href="#2-create-an-inferenceservice" title="Permanent link">¶</a></h3>
+<p>Next, define a new InferenceService YAML for the model and apply it to the cluster.</p>
+<p>A new predictor schema was introduced in <code>v0.8.0</code>. New <code>InferenceServices</code> should be deployed using the new schema. The old schema
+is provided as reference.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "sklearn-iris"</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    model:</span>
+<span class="s">      modelFormat:</span>
+<span class="s">        name: sklearn</span>
+<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
+<span class="s">kind: "InferenceService"</span>
+<span class="s">metadata:</span>
+<span class="s">  name: "sklearn-iris"</span>
+<span class="s">spec:</span>
+<span class="s">  predictor:</span>
+<span class="s">    sklearn:</span>
+<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"</span>
+<span class="s">EOF</span>
+</code></pre></div>
+</div>
+</div>
+</input></input></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not deploy <code>InferenceServices</code> in control plane namespaces (i.e. namespaces with <code>control-plane</code> label). The webhook is configured
+in a way to skip these namespaces to avoid any privilege escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being 
+injected into the pod, causing the pod to fail with the error <code>No such file or directory: '/mnt/models'</code>.</p>
+</div>
+<h3 id="3-check-inferenceservice-status">3. Check <code>InferenceService</code> status.<a class="headerlink" href="#3-check-inferenceservice-status" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">           </span>URL<span class="w">                                                 </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                    </span>AGE
+sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">         </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-47q2g<span class="w">   </span>7d23h
+</code></pre></div>
+</div>
+<p>If your DNS contains example.com please consult your admin for configuring DNS or using <a href="https://knative.dev/docs/serving/using-a-custom-domain">custom domain</a>.</p>
+<h3 id="4-determine-the-ingress-ip-and-ports">4. Determine the ingress IP and ports<a class="headerlink" href="#4-determine-the-ingress-ip-and-ports" title="Permanent link">¶</a></h3>
+<p>Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-n<span class="w"> </span>istio-system
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                   </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">       </span>EXTERNAL-IP<span class="w">      </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">   </span>AGE
+istio-ingressgateway<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">172</span>.21.109.129<span class="w">   </span><span class="m">130</span>.211.10.121<span class="w">   </span>...<span class="w">       </span>17h
+</code></pre></div>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Load Balancer</label><label for="__tabbed_2_2">Node Port</label><label for="__tabbed_2_3">Port Forward</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.loadBalancer.ingress[0].ip}'</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.ports[?(@.name=="http2")].port}'</span><span class="k">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway.
+In this case, you can access the gateway using the service’s node port.
+<div class="highlight"><pre><span></span><code><span class="c1"># GKE</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>worker-node-address
+<span class="c1"># Minikube</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>minikube<span class="w"> </span>ip<span class="k">)</span>
+<span class="c1"># Other environment(On Prem)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>po<span class="w"> </span>-l<span class="w"> </span><span class="nv">istio</span><span class="o">=</span>ingressgateway<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].status.hostIP}'</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.ports[?(@.name=="http2")].nodePort}'</span><span class="k">)</span>
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p>Alternatively you can do <code>Port Forward</code> for testing purposes.
+<div class="highlight"><pre><span></span><code><span class="nv">INGRESS_GATEWAY_SERVICE</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>--namespace<span class="w"> </span>istio-system<span class="w"> </span>--selector<span class="o">=</span><span class="s2">"app=istio-ingressgateway"</span><span class="w"> </span>--output<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="k">)</span>
+kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>istio-system<span class="w"> </span>svc/<span class="si">${</span><span class="nv">INGRESS_GATEWAY_SERVICE</span><span class="si">}</span><span class="w"> </span><span class="m">8080</span>:80
+</code></pre></div>
+Open another terminal, and enter the following:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>localhost
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="m">8080</span>
+</code></pre></div></p>
+</div>
+</div>
+</input></input></input></div>
+<h3 id="5-perform-inference">5. Perform inference<a class="headerlink" href="#5-perform-inference" title="Permanent link">¶</a></h3>
+<p>First, prepare your inference input request inside a file:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; "./iris-input.json"</span>
+<span class="s">{</span>
+<span class="s">  "instances": [</span>
+<span class="s">    [6.8,  2.8,  4.8,  1.4],</span>
+<span class="s">    [6.0,  3.4,  4.5,  1.6]</span>
+<span class="s">  ]</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+</code></pre></div>
+<p>Depending on your setup, use one of the following commands to curl the <code>InferenceService</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:4"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Real DNS</label><label for="__tabbed_3_2">Magic DNS</label><label for="__tabbed_3_3">From Ingress gateway with HOST Header</label><label for="__tabbed_3_4">From local cluster gateway</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>If you have configured the DNS, you can directly curl the <code>InferenceService</code> with the URL obtained from the status print.
+e.g
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test.<span class="si">${</span><span class="nv">CUSTOM_DOMAIN</span><span class="si">}</span>/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p>If you don't want to go through the trouble to get a real domain, you can instead use "magic" dns <a href="http://xip.io/">xip.io</a>.
+The key is to get the external IP for your cluster.
+<div class="highlight"><pre><span></span><code>kubectl get svc istio-ingressgateway --namespace istio-system
+</code></pre></div>
+Look for the <code>EXTERNAL-IP</code> column's value(in this case 35.237.217.209)</p>
+<div class="highlight"><pre><span></span><code>NAME<span class="w">                   </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">     </span>EXTERNAL-IP<span class="w">      </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">                                                                                                                                      </span>AGE
+istio-ingressgateway<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">10</span>.51.253.94<span class="w">   </span><span class="m">35</span>.237.217.209
+</code></pre></div>
+<p>Next step is to setting up the custom domain:
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>cm<span class="w"> </span>config-domain<span class="w"> </span>--namespace<span class="w"> </span>knative-serving
+</code></pre></div></p>
+<p>Now in your editor, change example.com to {{external-ip}}.xip.io (make sure to replace {{external-ip}} with the IP you found earlier).</p>
+<p>With the change applied you can now directly curl the URL
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p>If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2">/v1/models/sklearn-iris:predict"</span><span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p>If you are calling from in cluster you can curl with the internal url with host {{ InferenceServiceName }}.<class 'jinja2.utils.namespace'="">
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+</code></pre></div></class></p>
+</div>
+</div>
+</input></input></input></input></div>
+<p>You should see two predictions returned (i.e. <code>{"predictions": [1, 1]}</code>). Both sets of data points sent for inference correspond to the flower with index <code>1</code>.
+In this case, the model predicts that both flowers are "Iris Versicolour".</p>
+<h3 id="6-run-performance-test-optional">6. Run performance test (optional)<a class="headerlink" href="#6-run-performance-test-optional" title="Permanent link">¶</a></h3>
+<p>If you want to load test the deployed model, try deploying the following Kubernetes Job to drive load to the model:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply</span>
+kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/release-0.11/docs/samples/v1beta1/sklearn/v1/perf.yaml<span class="w"> </span>-n<span class="w"> </span>kserve-test
+</code></pre></div>
+<p>Execute the following command to view output:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>load-test8b58n-rgfxr<span class="w"> </span>-n<span class="w"> </span>kserve-test
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>Requests<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>rate,<span class="w"> </span>throughput<span class="o">]</span><span class="w">         </span><span class="m">30000</span>,<span class="w"> </span><span class="m">500</span>.02,<span class="w"> </span><span class="m">499</span>.99
+Duration<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>attack,<span class="w"> </span>wait<span class="o">]</span><span class="w">             </span>1m0s,<span class="w"> </span><span class="m">59</span>.998s,<span class="w"> </span><span class="m">3</span>.336ms
+Latencies<span class="w">     </span><span class="o">[</span>min,<span class="w"> </span>mean,<span class="w"> </span><span class="m">50</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">95</span>,<span class="w"> </span><span class="m">99</span>,<span class="w"> </span>max<span class="o">]</span><span class="w">  </span><span class="m">1</span>.743ms,<span class="w"> </span><span class="m">2</span>.748ms,<span class="w"> </span><span class="m">2</span>.494ms,<span class="w"> </span><span class="m">3</span>.363ms,<span class="w"> </span><span class="m">4</span>.091ms,<span class="w"> </span><span class="m">7</span>.749ms,<span class="w"> </span><span class="m">46</span>.354ms
+Bytes<span class="w"> </span>In<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">690000</span>,<span class="w"> </span><span class="m">23</span>.00
+Bytes<span class="w"> </span>Out<span class="w">     </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">2460000</span>,<span class="w"> </span><span class="m">82</span>.00
+Success<span class="w">       </span><span class="o">[</span>ratio<span class="o">]</span><span class="w">                           </span><span class="m">100</span>.00%
+Status<span class="w"> </span>Codes<span class="w">  </span><span class="o">[</span>code:count<span class="o">]</span><span class="w">                      </span><span class="m">200</span>:30000
+Error<span class="w"> </span>Set:
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>

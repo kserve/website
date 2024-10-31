@@ -1439,7 +1439,7 @@ runtime deployment with the number of Pods to best match the demand.</p>
 <p>A new <a href="https://github.com/kserve/modelmesh-serving/blob/main/docs/monitoring.md#import-the-grafana-dashboard">Grafana dashboard</a> was added to display the comprehensive set of <a href="https://github.com/kserve/modelmesh-serving/blob/main/docs/monitoring.md">Prometheus metrics</a> like model loading
 and unloading rates, internal queuing delays, capacity and usage, cache state, etc. to monitor the general health of the ModelMesh Serving deployment.</p>
 <p>The new <a href="https://github.com/kserve/modelmesh/blob/main/src/main/java/com/ibm/watson/modelmesh/payload/"><code>PayloadProcessor</code> interface</a> can be implemented to log prediction requests and responses, to create data sinks for data visualization, for model quality assessment, or for drift and outlier detection by external monitoring systems.</p>
-<h2 id="whats-changed">What's Changed? <img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/26a0.svg" title=":warning:"><a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></img></h2>
+<h2 id="whats-changed">What's Changed? <img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/26a0.svg" title=":warning:"><a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></img></h2>
 <ul>
 <li>
 <p>To allow longer InferenceService name due to DNS max length limits from <a href="https://github.com/kserve/kserve/issues/1397">issue</a>, the <code>Default</code> suffix in the inference service component(predictor/transformer/explainer) name has been removed for newly created InferenceServices. 
