@@ -5,28 +5,42 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 ## Prerequisites
 
 - Multi-node functionality is only supported in **RawDeployment** mode.
-- **Auto-scaling is not available** for multi-node setups. The auto-scaler will be automatically set to external.
+- **Auto-scaling is not available** for multi-node setups. 
 - A **Persistent Volume Claim (PVC)** is required for multi-node configurations, and it must support the **ReadWriteMany (RWM)** access mode.
 
 
 ### Key Validations
 
-- `TENSOR_PARALLEL_SIZE` and `PIPELINE_PARALLEL_SIZE` cannot be set via environment variables. They must be configured through `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize`.
+- `TENSOR_PARALLEL_SIZE` and `PIPELINE_PARALLEL_SIZE` cannot be set via environment variables. They must be configured through `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize` respectively.
 - In a ServingRuntime designed for multi-node, both `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize` must be set.
 - The minimum value for `workerSpec.tensorParallelSize` is **1**, and the minimum value for `workerSpec.pipelineParallelSize` is **2**.
 - Currently, four GPU types are allowed: `nvidia.com/gpu` (*default*), `intel.com/gpu`, `amd.com/gpu`, and `habana.ai/gaudi`.
 - You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. Then it can cause issues.
 - The Autoscaler must be configured as `external`.
 - The only supported storage protocol for StorageURI is `PVC`.
+- By default, the following 4 types of GPU resources are allowed:
+  ~~~ 
+  "nvidia.com/gpu"
+  "amd.com/gpu"
+  "intel.com/gpu"
+  "habana.ai/gaudi" 
+  ~~~
+  - If you want to use other GPU types, you can set this in the annotations of ISVC as follows:
+    ~~~
+    serving.kserve.io/gpu-resource-types: '["gpu-type1", "gpu-type2", "gpu-type3"]'
+    ~~~
 
 !!! note 
 
     You must have **exactly one head pod** in your setup. The replica count for this head pod can be adjusted using the `min_replicas` or `max_replicas` settings in the `InferenceService (ISVC)`. However, creating additional head pods will cause them to be excluded from the Ray cluster, resulting in improper functioning. Ensure this limitation is clearly documented.
 
+    Do not use 2 different GPU types for multi node serving.
+
 ### Consideration
 
 Using the multi-node feature likely indicates that you are trying to deploy a very large model. In such cases, you should consider increasing the `initialDelaySeconds` for the `livenessProbe`, `readinessProbe`, and `startupProbe`. The default values may not be suitable for your specific needs. 
 
+You can set this in ServingRuntime.
 ~~~
 ..
       livenessProbe:
@@ -41,7 +55,10 @@ Using the multi-node feature likely indicates that you are trying to deploy a ve
 ## WorkerSpec and ServingRuntime
 
 To enable multi-node/multi-GPU inference,  `workerSpec` must be configured in both ServingRuntime and InferenceService. The `huggingface-server-multinode` `ServingRuntime` already includes this field and is built on **vLLM**, which supports multi-node/multi-GPU feature. Note that this setup is **not compatible with Triton**.
-Even if the `ServingRuntime` is properly configured with `workerSpec`, multi-node/multi-GPU will not be enabled unless the InferenceService also configures the workerSpec.
+
+!!! note 
+
+    Even if the `ServingRuntime` is properly configured with `workerSpec`, multi-node/multi-GPU will not be enabled unless the InferenceService also configures the workerSpec.
 
 ```
 ...
@@ -169,10 +186,8 @@ kubectl get inferenceservices huggingface-llama3
 !!! success "Expected Output"
     ```{ .bash .no-copy }
     NAME                 URL                                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                          AGE
-    huggingface-llama3   http://huggingface-llama3.default.example.com                                          12m
+    huggingface-llama3   http://huggingface-llama3.default.example.com                                          5m
     ```
-
-
 
 ## Check `GPU resource` status.
 
