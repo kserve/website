@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#deploy-the-llama-model-with-vllm-runtime">
+<a class="md-skip" href="#vllm-runtime">
           Skip to content
         </a>
 </div>
@@ -1162,13 +1162,8 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-the-llama-model-with-vllm-runtime">
-    Deploy the LLaMA model with vLLM Runtime
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#benchmarking-vllm-runtime">
-    Benchmarking vLLM Runtime
+<a class="md-nav__link" href="#vllm-runtime">
+    vLLM Runtime
   </a>
 </li>
 </ul>
@@ -1182,82 +1177,8 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1>Index</h1>
-<h2 id="deploy-the-llama-model-with-vllm-runtime">Deploy the LLaMA model with vLLM Runtime<a class="headerlink" href="#deploy-the-llama-model-with-vllm-runtime" title="Permanent link">¶</a></h2>
-<p>Serving LLM models can be surprisingly slow even on high end GPUs, <a href="https://github.com/vllm-project/vllm">vLLM</a> is a fast and easy-to-use LLM inference engine. It can achieve 10x-20x higher throughput than Huggingface transformers.
-It supports <a href="https://www.anyscale.com/blog/continuous-batching-llm-inference">continuous batching</a> for increased throughput and GPU utilization,
-<a href="https://vllm.ai">paged attention</a> to address the memory bottleneck where in the autoregressive decoding process all the attention key value tensors(KV Cache) are kept in the GPU memory to generate next tokens.</p>
-<p>You can deploy the LLaMA model with built vLLM inference server container image using the <code>InferenceService</code> yaml API spec. 
-We have work in progress integrating <code>vLLM</code> with <code>Open Inference Protocol</code> and KServe observability stack.</p>
-<p>The LLaMA model can be downloaded from <a href="https://huggingface.co/meta-llama/Llama-2-7b">huggingface</a> and upload to your cloud storage.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -n kserve-test -f - &lt;&lt;EOF</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama-2-7b</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--port</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"8080"</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/mnt/models</span>
-<span class="w">      </span><span class="nt">command</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python3</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-m</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm.entrypoints.openai.api_server</span>
-<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">STORAGE_URI</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/llm/huggingface/llama</span>
-<span class="w">      </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/vllmserver:latest</span>
-<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"4"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-</code></pre></div>
-</div>
-</div>
-</input></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>vLLM runtime is still experimental, please expect API changes and further integration in the next KServe release.</p>
-</div>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>./vllm.yaml
-</code></pre></div>
-<h2 id="benchmarking-vllm-runtime">Benchmarking vLLM Runtime<a class="headerlink" href="#benchmarking-vllm-runtime" title="Permanent link">¶</a></h2>
-<p>You can download the benchmark testing data set by running
-<div class="highlight"><pre><span></span><code>wget<span class="w"> </span>https://huggingface.co/datasets/anon8231489123/ShareGPT_Vicuna_unfiltered/resolve/main/ShareGPT_V3_unfiltered_cleaned_split.json
-</code></pre></div></p>
-<p>The tokenizer can be found from the downloaded llama model.</p>
-<p>Now, assuming that your ingress can be accessed at
-<code>${INGRESS_HOST}:${INGRESS_PORT}</code> or you can follow <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">this instruction</a>
-to find out your ingress IP and port.</p>
-<p>You can run the <a href="benchmark.py">benchmarking script</a> and send the inference request to the exposed URL.</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>benchmark_serving.py<span class="w"> </span>--backend<span class="w"> </span>openai<span class="w"> </span>--port<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="w"> </span>--host<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="w"> </span>--dataset<span class="w"> </span>./ShareGPT_V3_unfiltered_cleaned_split.json<span class="w"> </span>--tokenizer<span class="w"> </span>./tokenizer<span class="w"> </span>--request-rate<span class="w"> </span><span class="m">5</span>
-</code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code><span class="w">   </span><span class="err">To</span><span class="kc">tal</span><span class="w"> </span><span class="kc">t</span><span class="err">ime</span><span class="p">:</span><span class="w"> </span><span class="mf">216.81</span><span class="w"> </span><span class="err">s</span>
-<span class="w">   </span><span class="err">Throughpu</span><span class="kc">t</span><span class="p">:</span><span class="w"> </span><span class="mf">4.61</span><span class="w"> </span><span class="err">reques</span><span class="kc">ts</span><span class="err">/s</span>
-<span class="w">   </span><span class="err">Average</span><span class="w"> </span><span class="err">la</span><span class="kc">ten</span><span class="err">cy</span><span class="p">:</span><span class="w"> </span><span class="mf">7.96</span><span class="w"> </span><span class="err">s</span>
-<span class="w">   </span><span class="err">Average</span><span class="w"> </span><span class="err">la</span><span class="kc">ten</span><span class="err">cy</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="p">:</span><span class="w"> </span><span class="mf">0.02</span><span class="w"> </span><span class="err">s</span>
-<span class="w">   </span><span class="err">Average</span><span class="w"> </span><span class="err">la</span><span class="kc">ten</span><span class="err">cy</span><span class="w"> </span><span class="err">per</span><span class="w"> </span><span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">t</span><span class="w"> </span><span class="kc">t</span><span class="err">oke</span><span class="kc">n</span><span class="p">:</span><span class="w"> </span><span class="mf">0.04</span><span class="w"> </span><span class="err">s</span>
-</code></pre></div>
-</div>
+<h2 id="vllm-runtime">vLLM Runtime<a class="headerlink" href="#vllm-runtime" title="Permanent link">¶</a></h2>
+<p>The official vLLM support is available through <a href="https://kserve.github.io/website/master/modelserving/v1beta1/llm/huggingface/">Hugging Face Serving Runtime</a>.</p>
 </article>
 </div>
 </div>
