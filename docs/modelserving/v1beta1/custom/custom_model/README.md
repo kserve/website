@@ -58,6 +58,13 @@ class AlexNetModel(Model):
         values, top_5 = torch.topk(output, 5)
         result = values.flatten().tolist()
         response_id = generate_uuid()
+
+        # Update the response_headers argument with your header values
+        # Example: 
+        res_headers = {"example_header": "my_header"}
+        if response_headers is not None:
+            response_headers.update(res_headers) 
+            
         return {"predictions": result}
 
 parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
@@ -71,7 +78,7 @@ if __name__ == "__main__":
 ```
 
 !!! note
-    `return_response_headers=True` will be used to return response headers from v1 and v2 endpoints
+    `return_response_headers=True` can be added to return response headers for v1 and v2 endpoints
 
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
