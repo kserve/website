@@ -14,11 +14,9 @@ e.g. ```hf://facebook/opt-125m```
 
 ## Using Private HuggingFace Repo
 
-KServe supports authenticating using HF_TOKEN
+KServe supports authenticating with HF_TOKEN for downloading the model.
 
-## Option 1: Create HF Secret
-
-### Create secret
+### Create secret and attach the secret to service account
 === "yaml"
 ```yaml
 apiVersion: v1
@@ -28,40 +26,18 @@ metadata:
 type: Opaque
 data:
   HF_TOKEN: aGZfVk5Vd1JVAUdCa0l4WmZMTHVrc2VHeW9VVm9udU5pBHUVT==
-```
-
-=== "kubectl"
-```bash
-kubectl apply -f create-hf-secret.yaml
-```
-
-## Option 2: using env
-
-Create the InferenceService with HF_TOKEN as env
-
-=== "yaml"
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
+---
+apiVersion: v1
+kind: ServiceAccount
 metadata:
-  name: huggingface-llama2
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: huggingface
-      args:
-      - --model_name=<model_name>
-      - --model_id=<private_model>
-      - --backend=huggingface
-      - --task=text_generation
-      env:
-      - name: HF_TOKEN
-        value: <token> or (envFromSecret)
+  name: hfserviceacc
+secrets:
+  - name: storage-config
 ```
 
+Specify the ServiceAccountName in InferenceService Spec
 
-## Deploy the model on GCS with `InferenceService`
+## Deploy the model on HF with `InferenceService`
 
 Create the InferenceService with the a saved model on HF
 
@@ -73,13 +49,14 @@ metadata:
   name: huggingface-llama3
 spec:
   predictor:
+    serviceAccountName: hfserviceacc  # Option 1 for authenticating with HF_TOKEN
     model:
       modelFormat:
         name: huggingface
       args:
-      - --model_name=llama2
-      - --model_dir=/mnt/models
-      - --backend=huggingface
+        - --model_name=llama2
+        - --model_dir=/mnt/models
+        - --backend=huggingface
       storageUri: hf://meta-llama/meta-llama-3-8b-instruct
       resources:
         limits:
@@ -90,6 +67,13 @@ spec:
           cpu: "6"
           memory: 24Gi
           nvidia.com/gpu: "1"
+      env:
+        - name: HF_TOKEN  # Option 2 for authenticating with HF_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-secret
+              key: HF_TOKEN
+              optional: false
 ```
 
 Apply the `hf-llama3.yaml`.
