@@ -5,6 +5,7 @@ This page contains a list of organizations who are using KServe either in produc
 | Organization                                                                 | Contact                                            |
 |------------------------------------------------------------------------------|----------------------------------------------------|
 | [Advanced Micro Devices](https://www.amd.com)                                | [Varun Sharma](https://github.com/varunsh-xilinx)  |
+| [Alauda](https://www.alauda.io)                                              | [Wu Yi](https://github.com/typhoonzero)  |
 | [Amazon Web Services](https://aws.amazon.com/)                               | [Ellis Tarn](https://github.com/ellistarn)         |
 | [Bloomberg](https://www.bloomberg.com/)                                      | [Dan Sun](https://github.com/yuzisun)              |
 | [Cars24](https://www.cars24.com/)                                            | [Swapnesh Khare](https://github.com/swapkh91)      |
