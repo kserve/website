@@ -27,7 +27,7 @@ from kserve import logging
 
 class AlexNetModel(Model):
     def __init__(self, name: str):
-       super().__init__(name)
+       super().__init__(name, return_response_headers=True)
        self.name = name
        self.load()
 
@@ -36,7 +36,12 @@ class AlexNetModel(Model):
         self.model.eval()
         self.ready = True
 
-    def predict(self, payload: Dict, headers: Dict[str, str] = None) -> Dict:
+    def predict(
+        self, 
+        payload: Dict, 
+        headers: Dict[str, str] = None, 
+        response_headers: Dict[str, str] = None,
+    ) -> Dict:
         img_data = payload["instances"][0]["image"]["b64"]
         raw_img_data = base64.b64decode(img_data)
         input_image = Image.open(io.BytesIO(raw_img_data))
@@ -53,6 +58,13 @@ class AlexNetModel(Model):
         values, top_5 = torch.topk(output, 5)
         result = values.flatten().tolist()
         response_id = generate_uuid()
+
+        # Update the response_headers argument with your header values
+        # Example: 
+        res_headers = {"example_header": "my_header"}
+        if response_headers is not None:
+            response_headers.update(res_headers) 
+            
         return {"predictions": result}
 
 parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
@@ -64,6 +76,9 @@ if __name__ == "__main__":
     model = AlexNetModel(args.model_name)
     ModelServer().start([model])
 ```
+
+!!! note
+    `return_response_headers=True` can be added to return response headers for v1 and v2 endpoints
 
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
