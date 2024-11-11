@@ -1471,7 +1471,7 @@ is loaded on startup and ready to serve prediction requests.</p>
 
 <span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">return_response_headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
@@ -1480,7 +1480,12 @@ is loaded on startup and ready to serve prediction requests.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> 
+        <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+        <span class="n">response_headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="n">img_data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"image"</span><span class="p">][</span><span class="s2">"b64"</span><span class="p">]</span>
         <span class="n">raw_img_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
         <span class="n">input_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">raw_img_data</span><span class="p">))</span>
@@ -1497,6 +1502,13 @@ is loaded on startup and ready to serve prediction requests.</p>
         <span class="n">values</span><span class="p">,</span> <span class="n">top_5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
         <span class="n">response_id</span> <span class="o">=</span> <span class="n">generate_uuid</span><span class="p">()</span>
+
+        <span class="c1"># Update the response_headers argument with your header values</span>
+        <span class="c1"># Example: </span>
+        <span class="n">res_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"example_header"</span><span class="p">:</span> <span class="s2">"my_header"</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">response_headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">response_headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">res_headers</span><span class="p">)</span> 
+
         <span class="k">return</span> <span class="p">{</span><span class="s2">"predictions"</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
 
 <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
@@ -1508,6 +1520,10 @@ is loaded on startup and ready to serve prediction requests.</p>
     <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
     <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>return_response_headers=True</code> can be added to return response headers for v1 and v2 endpoints</p>
+</div>
 <h3 id="build-custom-serving-image-with-buildpacks">Build Custom Serving Image with BuildPacks<a class="headerlink" href="#build-custom-serving-image-with-buildpacks" title="Permanent link">¶</a></h3>
 <p><a href="https://buildpacks.io/">Buildpacks</a> allows you to transform your inference code into images that can be deployed on KServe without
 needing to define the <code>Dockerfile</code>. Buildpacks automatically determines the python application and then install the dependencies from the
