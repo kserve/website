@@ -33,15 +33,22 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
     Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.
     
 ## 4. Install KServe
-=== "kubectl"
-    ```bash
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
-    ```
 
-## 5. Install KServe Built-in ClusterServingRuntimes
-{{ kserve_release_version }}
-=== "kubectl"
+=== "Install using Helm"
     ```bash
+    # Install KServe CRDs
+    helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v{{ kserve_release_version }}
+    
+    # Install KServe Resources
+    helm install kserve oci://ghcr.io/kserve/charts/kserve --version v{{ kserve_release_version }}
+    ```
+    
+=== "Install using YAML"
+    ```bash
+    # Install Kserve CRDs and Controller
+    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
+    
+    # Install KServe Built-in ClusterServingRuntimes
     kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{ kserve_release_version }}/kserve-cluster-resources.yaml
     ```
 
