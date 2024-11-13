@@ -15,7 +15,7 @@ Before submitting a PR, see also [CONTRIBUTING.md](https://github.com/kserve/kse
 
 You must install these tools:
 
-1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.20.0+.
+1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.22.7+.
 1. [`git`](https://help.github.com/articles/set-up-git/): For source control.
 1. [`Go Module`](https://blog.golang.org/using-go-modules): Go's new dependency management system.
 1. [`ko`](https://github.com/google/ko):
@@ -24,6 +24,7 @@ You must install these tools:
    managing development environments.
 1. [`kustomize`](https://github.com/kubernetes-sigs/kustomize/) To customize YAMLs for different environments, requires v5.0.0+.
 1. [`yq`](https://github.com/mikefarah/yq) yq is used in the project makefiles to parse and display YAML output, requires yq `4.*`.
+1. [`pre-commit`](https://pre-commit.com/) pre-commit is used to run checks on the codebase before committing changes.
 
 ### Install Knative on a Kubernetes cluster
 
@@ -33,7 +34,7 @@ KServe currently requires `Knative Serving` for auto-scaling, canary rollout, `I
 use the [Knative Operators](https://knative.dev/docs/install/operator/knative-with-operators/) to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
 they can be installed via the [directions here](https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md).
 
-* If you start from scratch, KServe requires Kubernetes 1.25+, Knative 1.7+, Istio 1.15+.
+* If you start from scratch, KServe requires Kubernetes, Knative, Istio. You can find the recommended [version matrix](../admin/serverless/serverless.md#recommended-version-matrix) in the installation documentation.
 
 * If you already have `Istio` or `Knative` (e.g. from a Kubeflow install) then you don't need to install them explicitly, as long as version dependencies are satisfied.
   
@@ -96,6 +97,13 @@ _Adding the `upstream` remote sets you up nicely for regularly
 
 Once you reach this point you are ready to do a full build and deploy as
 described below.
+
+### Install pre-commit hooks
+Configuring pre-commit hooks will run checks on the codebase before committing changes. This will help you to catch lint errors, formatting issues, and other common problems before they reach the repository.
+
+```shell
+pre-commit install --install-hooks
+```
 
 ## Deploy KServe
 
