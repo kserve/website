@@ -2,10 +2,12 @@
 When the out-of-the-box `Serving Runtime` does not fit your need, you can choose to build your own model server using `KServe ModelServer API`
 to deploy as `Custom Serving Runtime` on KServe.
 
-## Setup
-1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
-
 ## Create and Deploy Custom REST ServingRuntime
+
+### Setup
+1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
+2. [The code samples](./rest) can be found in the KServe website repository.
+
 ### Implement Custom Model using KServe API
 `KServe.Model` base class mainly defines three handlers `preprocess`, `predict` and `postprocess`, these handlers are executed
 in sequence, the output of the `preprocess` is passed to `predict` as the input, the `predictor` handler executes the
@@ -14,34 +16,50 @@ is an additional `load` handler which is used for writing custom code to load yo
 remote model storage, a general good practice is to call the `load` handler in the model server class `__init__` function, so your model
 is loaded on startup and ready to serve prediction requests.
 
-```python
+```python title="model.py"
 import argparse
+import base64
+import io
+import time
 
-from torchvision import models
-from typing import Dict, Union
+from fastapi.middleware.cors import CORSMiddleware
+from torchvision import models, transforms
+from typing import Dict
 import torch
-import numpy as np
+from PIL import Image
+
 import kserve
-from kserve import Model, ModelServer
-from kserve import logging
+from kserve import Model, ModelServer, logging
+from kserve.model_server import app
+from kserve.utils.utils import generate_uuid
+
 
 class AlexNetModel(Model):
     def __init__(self, name: str):
        super().__init__(name, return_response_headers=True)
+       super().__init__(name, return_response_headers=True)
        self.name = name
-       self.load()
+        super().__init__(name, return_response_headers=True)
+       self.name = name
+        self.load()
+        self.ready = False
 
     def load(self):
         self.model = models.alexnet(pretrained=True)
         self.model.eval()
+        # The ready flag is used by model ready endpoint for readiness probes,
+        # set to True when model is loaded successfully without exceptions.
         self.ready = True
 
-    def predict(
-        self, 
-        payload: Dict, 
-        headers: Dict[str, str] = None, 
+    async def predict(
+        self,
+        payload: Dict,
+        headers: Dict[str, str] = None,
         response_headers: Dict[str, str] = None,
     ) -> Dict:
+        start = time.time()
+        # Input follows the Tensorflow V1 HTTP API for binary values
+        # https://www.tensorflow.org/tfx/serving/api_rest#encoding_binary_values
         img_data = payload["instances"][0]["image"]["b64"]
         raw_img_data = base64.b64decode(img_data)
         input_image = Image.open(io.BytesIO(raw_img_data))
@@ -57,23 +75,35 @@ class AlexNetModel(Model):
         torch.nn.functional.softmax(output, dim=1)
         values, top_5 = torch.topk(output, 5)
         result = values.flatten().tolist()
+        end = time.time()
         response_id = generate_uuid()
 
-        # Update the response_headers argument with your header values
-        # Example: 
-        res_headers = {"example_header": "my_header"}
+        # Custom response headers can be added to the inference response
         if response_headers is not None:
-            response_headers.update(res_headers) 
-            
+            response_headers.update(
+                {"prediction-time-latency": f"{round((end - start) * 1000, 9)}"}
+            )
+
         return {"predictions": result}
+
 
 parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
 args, _ = parser.parse_known_args()
-    
+
 if __name__ == "__main__":
+    # Configure kserve and uvicorn logger
     if args.configure_logging:
-        logging.configure_logging(args.log_config_file)  # Configure kserve and uvicorn logger
+        logging.configure_logging(args.log_config_file)
     model = AlexNetModel(args.model_name)
+    model.load()
+    # Custom middlewares can be added to the model
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     ModelServer().start([model])
 ```
 
@@ -89,16 +119,17 @@ to run the image build on the cloud and continuously build/deploy new versions f
 
 You can use pack cli to build and push the custom model server image
 ```bash
-pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model:v1
+pack build --builder=heroku/builder:24 ${DOCKER_USER}/custom-model:v1
 docker push ${DOCKER_USER}/custom-model:v1
 ```
 
-Note: If your buildpack command fails, make sure you have a `runtimes.txt` file with the correct python version specified. See the [custom model server runtime.txt](https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt) file as an example.
+!!! Tip 
+    If your buildpack command fails, make sure you have a [`.python-version`](./rest/.python-version) file with the correct python version specified and a [`Procfile`](./rest/Procfile) with correct entrypoint and arguments.
 
 ### Deploy Locally and Test
-Launch the docker image built from last step with `buildpack`.
+Launch the docker image built from last step.
 ```bash
-docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model:v1 --model_name="custom-model"
+docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model:v1
 ```
 
 Send a test inference request locally with [input.json](./input.json)
@@ -113,7 +144,7 @@ curl -H "Content-Type: application/json" localhost:8080/v1/models/custom-model:p
 
 ### Deploy the REST Custom Serving Runtime on KServe
 
-```yaml
+```yaml title="custom.yaml"
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
@@ -132,6 +163,11 @@ You can supply additional command arguments on the container spec to configure t
 - `--workers`: Spawn the specified number of `uvicorn` workers(multi-processing) of the model server, the default value is 1, this option is often used
   to help increase the resource utilization of the container.
 - `--http_port`: The http port model server is listening on, the default REST port is 8080.
+- `--grpc_port`: The GRPC Port listened to by the model server. Default is 8081.
+- `--max_threads`: The max number of gRPC processing threads. Default is 4.
+- `--enable_grpc`: Enable gRPC for the model server. Default is true.
+- `--grpc_max_send_message_length`: The max message length for gRPC send message. Default is 8388608 bytes (8 MB).
+- `--grpc_max_receive_message_length`: The max message length for gRPC receive message. Default is 8388608 bytes (8 MB).
 - `--model_name`: The model name deployed in the model server, the default name the same as the service name.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
 - `--enable_latency_logging`: Whether to log latency metrics per request, the default is True.
@@ -140,6 +176,7 @@ You can supply additional command arguments on the container spec to configure t
 python logging module). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
 - `--access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
 - `enable_latency_logging`: whether to log latency metrics per request, the default is True.
+- `--enable_docs_url`: Enable docs url '/docs' to display Swagger UI.
 
 #### Environment Variables
 
@@ -150,7 +187,7 @@ You can supply additional environment variables on the container spec.
 - `PROTOCOL`: specify the protocol version supported by the model e.g `V1`. This acts the same as `protocolVersion` when using a built-in predictor.
 - `KSERVE_LOGLEVEL`: sets the `kserve` and `kserve_trace`'s logger verbosity. Default is `INFO`.
 
-Apply the yaml to deploy the InferenceService on KServe
+Apply the YAML to deploy the InferenceService on KServe
 
 === "kubectl"
 ```
@@ -216,6 +253,10 @@ KServe gRPC ServingRuntimes enables high performance inference data plane which 
 
 Compared to REST it has limited support for browser and the message is not human-readable which requires additional debugging tools.
 
+### Setup
+1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
+2. [The code samples](./grpc) can be found in the KServe website repository.
+
 ### Implement Custom Model using KServe API
 For `Open(v2) Inference Protocol`, KServe provides `InferRequest` and `InferResponse` API object for `predict`, `preprocess`, `postprocess`
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.
@@ -226,58 +267,68 @@ import io
 from typing import Dict
 
 import torch
-import kserve
-from kserve import logging
-from kserve import InferRequest, InferResponse, InferOutput, Model, ModelServer
-from kserve.utils.utils import generate_uuid
 from PIL import Image
 from torchvision import models, transforms
 
+from kserve import InferRequest, InferResponse, Model, ModelServer, logging, model_server
+from kserve.utils.utils import get_predict_response
 
-# This custom predictor example implements the custom model following KServe v2 inference gPPC protocol,
-# the input can be raw image bytes or image tensor which is pre-processed by transformer
-# and then passed to predictor, the output is the prediction response.
+# This custom predictor example implements the custom model following KServe
+# v2 inference gPPC protocol, the input can be raw image bytes or image tensor
+# which is pre-processed by transformer and then passed to predictor, the
+# output is the prediction response.
 class AlexNetModel(Model):
     def __init__(self, name: str):
         super().__init__(name)
-        self.name = name
         self.load()
-        self.model = None
         self.ready = False
 
     def load(self):
         self.model = models.alexnet(pretrained=True)
         self.model.eval()
+        # The ready flag is used by model ready endpoint for readiness probes,
+        # set to True when model is loaded successfully without exceptions.
         self.ready = True
 
-    def predict(self, payload: InferRequest, headers: Dict[str, str] = None) -> InferResponse:
+    async def predict(
+        self, payload: InferRequest,
+        headers: Dict[str, str] = None,
+        response_headers: Dict[str, str] = None,
+    ) -> InferResponse:
         req = payload.inputs[0]
-        input_image = Image.open(io.BytesIO(req.data[0]))
-        preprocess = transforms.Compose([
-                transforms.Resize(256),
-                transforms.CenterCrop(224),
-                transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                     std=[0.229, 0.224, 0.225]),
-            ])
+        if req.datatype == "BYTES":
+            input_image = Image.open(io.BytesIO(req.data[0]))
+            preprocess = transforms.Compose(
+                [
+                    transforms.Resize(256),
+                    transforms.CenterCrop(224),
+                    transforms.ToTensor(),
+                    transforms.Normalize(
+                        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                    ),
+                ]
+            )
+            input_tensor = preprocess(input_image)
+            input_tensor = input_tensor.unsqueeze(0)
+        elif req.datatype == "FP32":
+            np_array = payload.inputs[0].as_numpy()
+            input_tensor = torch.Tensor(np_array)
 
-        input_tensor = preprocess(input_image)
-        input_tensor = input_tensor.unsqueeze(0)
         output = self.model(input_tensor)
         torch.nn.functional.softmax(output, dim=1)
         values, top_5 = torch.topk(output, 5)
-        result = values.flatten().tolist()
-        response_id = generate_uuid()
-        infer_output = InferOutput(name="output-0", shape=list(values.shape), datatype="FP32", data=result)
-        infer_response = InferResponse(model_name=self.name, infer_outputs=[infer_output], response_id=response_id)
-        return infer_response
+        result = values.detach().numpy()
+        return get_predict_response(payload, result, self.name)
 
-parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
+
+parser = argparse.ArgumentParser(parents=[model_server.parser])
 args, _ = parser.parse_known_args()
+
 if __name__ == "__main__":
+    # Configure kserve and uvicorn logger
     if args.configure_logging:
         logging.configure_logging(args.log_config_file)
-    model = AlexNetModel()
+    model = AlexNetModel(args.model_name)
     model.load()
     ModelServer().start([model])
 ```
@@ -285,11 +336,12 @@ if __name__ == "__main__":
 ### Build Custom Serving Image with BuildPacks
 Similar to building the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
 ```bash
-pack build --builder=heroku/buildpacks:20 ${DOCKER_USER}/custom-model-grpc:v1 --model_name="custom-model"
+pack build --builder=heroku/builder:24 ${DOCKER_USER}/custom-model-grpc:v1
 docker push ${DOCKER_USER}/custom-model-grpc:v1
 ```
 
-Note: If your buildpack command fails, make sure you have a `runtimes.txt` file with the correct python version specified. See the [custom model server runtime.txt](https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt) file as an example.
+!!! Tip 
+    If your buildpack command fails, make sure you have a [`.python-version`](./grpc/.python-version) file with the correct python version specified and a [`Procfile`](./grpc/Procfile) with correct entrypoint and arguments.
 
 ### Deploy Locally and Test
 Launch the docker image built from last step with `buildpack`.
@@ -297,65 +349,46 @@ Launch the docker image built from last step with `buildpack`.
 docker run -ePORT=8081 -p8081:8081 ${DOCKER_USER}/custom-model-grpc:v1
 ```
 
-Send a test inference request locally using `InferenceServerClient` [grpc_test_client.py](./grpc_test_client.py)
-```python
-from kserve import InferRequest, InferInput, InferenceServerClient
+Send a test inference request locally using `InferenceServerClient` [grpc_client.py](./grpc/grpc_client.py)
+```python title="grpc_client.py"
+import asyncio
 import json
 import base64
 import os
 
-client = InferenceServerClient(url=os.environ.get("INGRESS_HOST", "localhost")+":"+os.environ.get("INGRESS_PORT", "8081"),
-                               channel_args=(('grpc.ssl_target_name_override', os.environ.get("SERVICE_HOSTNAME", "")),))
-json_file = open("./input.json")
-data = json.load(json_file)
-infer_input = InferInput(name="input-0", shape=[1], datatype="BYTES", data=[base64.b64decode(data["instances"][0]["image"]["b64"])])
-request = InferRequest(infer_inputs=[infer_input], model_name="custom-model")
-res = client.infer(infer_request=request)
-print(res)
+from kserve import InferRequest, InferInput
+from kserve.inference_client import InferenceGRPCClient
+
+
+async def main():
+    client = InferenceGRPCClient(
+        url=os.environ.get("INGRESS_HOST", "localhost") + ":" + os.environ.get("INGRESS_PORT", "8081"),
+        channel_args=[('grpc.ssl_target_name_override', os.environ.get("SERVICE_HOSTNAME", ""))]
+    )
+    with open("../input.json") as json_file:
+        data = json.load(json_file)
+    infer_input = InferInput(name="input-0", shape=[1], datatype="BYTES",
+                             data=[base64.b64decode(data["instances"][0]["image"]["b64"])])
+    request = InferRequest(infer_inputs=[infer_input], model_name=os.environ.get("MODEL_NAME", "custom-model"))
+    res = await client.infer(infer_request=request)
+    print(res)
+
+asyncio.run(main())
 ```
 
 ```bash
-python grpc_test_client.py
+python grpc_client.py
 ```
 
 !!! success "Expected Output"
 
-    ```{ .json .no-copy }
-    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-    outputs {
-      name: "output-0"
-      datatype: "FP32"
-      shape: 1
-      shape: 5
-      contents {
-        fp32_contents: 14.9756203
-        fp32_contents: 14.036808
-        fp32_contents: 13.9660349
-        fp32_contents: 12.2522783
-        fp32_contents: 12.0862684
-      }
-    }
-
-    model_name: "custom-model"
-    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-    outputs {
-      name: "output-0"
-      datatype: "FP32"
-      shape: 1
-      shape: 5
-      contents {
-        fp32_contents: 14.9756203
-        fp32_contents: 14.036808
-        fp32_contents: 13.9660349
-        fp32_contents: 12.2522783
-        fp32_contents: 12.0862684
-      }
-    }
+    ```{.no-copy }
+    "id": "b6a08abf-dcec-42ae-81af-084d9cad1c16","model_name": "custom-model","outputs": ["name": "output-0","shape": [1, 5],"datatype": "FP32","data": [14.975618362426758, 14.036808967590332, 13.966032028198242, 12.252279281616211, 12.086268424987793],"parameters": {}],"parameters": {},"from_grpc": True
     ```
 
 ### Deploy the gRPC Custom Serving Runtime on KServe
 Create the InferenceService yaml and expose the gRPC port by specifying on `ports` section, currently only one port is allowed to expose and by default HTTP port is exposed.
-```yaml
+```yaml title="custom_grpc.yaml"
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
@@ -399,118 +432,198 @@ MODEL_NAME=custom-model
 SERVICE_HOSTNAME=$(kubectl get inferenceservice custom-model-grpc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-Send an inference request to the gRPC service using `InferenceServerClient` [grpc_test_client.py](./grpc_test_client.py).
+Send an inference request to the gRPC service using `InferenceServerClient` [grpc_client.py](./grpc/grpc_client.py).
 
 ```bash
-python grpc_test_client.py
+python grpc_client.py
 ```
 
 !!! success "Expected Output"
 
-    ```{ .json .no-copy }
-    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-    outputs {
-      name: "output-0"
-      datatype: "FP32"
-      shape: 1
-      shape: 5
-      contents {
-        fp32_contents: 14.9756203
-        fp32_contents: 14.036808
-        fp32_contents: 13.9660349
-        fp32_contents: 12.2522783
-        fp32_contents: 12.0862684
-      }
-    }
-
-    model_name: "custom-model"
-    id: "df27b8a5-f13e-4c7a-af61-20bdb55b6523"
-    outputs {
-      name: "output-0"
-      datatype: "FP32"
-      shape: 1
-      shape: 5
-      contents {
-        fp32_contents: 14.9756203
-        fp32_contents: 14.036808
-        fp32_contents: 13.9660349
-        fp32_contents: 12.2522783
-        fp32_contents: 12.0862684
-      }
-    }
+    ```{.no-copy }
+    "id": "b6a08abf-dcec-42ae-81af-084d9cad1c16","model_name": "custom-model","outputs": ["name": "output-0","shape": [1, 5],"datatype": "FP32","data": [14.975618362426758, 14.036808967590332, 13.966032028198242, 12.252279281616211, 12.086268424987793],"parameters": {}],"parameters": {},"from_grpc": True
     ```
 
 ## Parallel Model Inference
-By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
-the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
+By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
 KServe integrates [RayServe](https://docs.ray.io/en/master/serve/index.html) which provides a programmable API to deploy models
-as separate python workers so the inference can be performed in parallel when serving multiple custom models.
+as separate python workers so, the inference can be performed in parallel when serving multiple custom models.
 
-```python
+![parallel_inference](./parallel_inference.png)
+
+### Setup
+1. Install [pack CLI](https://buildpacks.io/docs/tools/pack/) to build your custom model server image.
+2. [The code samples](./grpc) can be found in the KServe website repository.
+
+
+```python title="model_remote.py"
 import argparse
-import kserve
+import base64
+import io
 from typing import Dict
-from ray import serve
-from kserve import logging
 
-@serve.deployment(name="custom-model", num_replicas=2)
-class AlexNetModel(kserve.Model):
-    def __init__(self):
-       self.name = "custom-model"
-       super().__init__(self.name)
-       self.load()
+from torchvision import models, transforms
+import torch
+from PIL import Image
+from ray import serve
+from kserve import Model, ModelServer, logging, model_server
+from kserve.ray import RayModel
+
+
+# the model handle name should match the model endpoint name
+@serve.deployment(name="custom-model", num_replicas=1)
+class AlexNetModel(Model):
+    def __init__(self, name):
+        super().__init__(name)
+        self.ready = False
+        self.load()
 
     def load(self):
-        ...
+        self.model = models.alexnet(pretrained=True, progress=False)
+        self.model.eval()
+        # The ready flag is used by model ready endpoint for readiness probes,
+        # set to True when model is loaded successfully without exceptions.
+        self.ready = True
 
-    def predict(self, request: Dict) -> Dict:
-        ...
+    async def predict(self, payload: Dict, headers: Dict[str, str] = None) -> Dict:
+        inputs = payload["instances"]
 
-parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
-args, _ = parser.parse_known_args()    
+        # Input follows the Tensorflow V1 HTTP API for binary values
+        # https://www.tensorflow.org/tfx/serving/api_rest#encoding_binary_values
+        data = inputs[0]["image"]["b64"]
+        raw_img_data = base64.b64decode(data)
+        input_image = Image.open(io.BytesIO(raw_img_data))
+        preprocess = transforms.Compose(
+            [
+                transforms.Resize(256),
+                transforms.CenterCrop(224),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                ),
+            ]
+        )
+
+        input_tensor = preprocess(input_image)
+        input_batch = input_tensor.unsqueeze(0)
+        output = self.model(input_batch)
+        torch.nn.functional.softmax(output, dim=1)
+        values, top_5 = torch.topk(output, 5)
+        return {"predictions": values.tolist()}
+
+parser = argparse.ArgumentParser(parents=[model_server.parser])
+args, _ = parser.parse_known_args()
+
 if __name__ == "__main__":
+    # Configure kserve and uvicorn logger
     if args.configure_logging:
         logging.configure_logging(args.log_config_file)
-    kserve.ModelServer().start({"custom-model": AlexNetModel})
+    app = AlexNetModel.bind(name=args.model_name)
+    handle = serve.run(app)
+    model = RayModel(name=args.model_name, handle=handle)
+    model.load()
+    ModelServer().start([model])
 ```
-fractional gpu example
+### Fractional GPU example
 ```python
 import argparse
+import base64
+import io
 from typing import Dict
+
+from torchvision import models, transforms
+import torch
+from PIL import Image
 import ray
 from ray import serve
-import kserve
-from kserve import logging
+from kserve import Model, ModelServer, logging, model_server
+from kserve.ray import RayModel
 
-@serve.deployment(name="custom-model", num_replicas=2, ray_actor_options={"num_cpus":1, "num_gpus": 0.5})
-class AlexNetModel(kserve.Model):
-    def __init__(self):
-       self.name = "custom-model"
-       super().__init__(self.name)
-       self.load()
+
+# the model handle name should match the model endpoint name
+@serve.deployment(name="custom-model", num_replicas=1, ray_actor_options={"num_cpus":1, "num_gpus": 0.5})
+class AlexNetModel(Model):
+    def __init__(self, name):
+        super().__init__(name)
+        self.ready = False
+        self.load()
 
     def load(self):
-        ...
+        self.model = models.alexnet(pretrained=True, progress=False)
+        self.model.eval()
+        # The ready flag is used by model ready endpoint for readiness probes,
+        # set to True when model is loaded successfully without exceptions.
+        self.ready = True
 
-    def predict(self, request: Dict) -> Dict:
-        ...
+    async def predict(self, payload: Dict, headers: Dict[str, str] = None) -> Dict:
+        inputs = payload["instances"]
 
-parser = argparse.ArgumentParser(parents=[kserve.model_server.parser])
-args, _ = parser.parse_known_args()      
+        # Input follows the Tensorflow V1 HTTP API for binary values
+        # https://www.tensorflow.org/tfx/serving/api_rest#encoding_binary_values
+        data = inputs[0]["image"]["b64"]
+        raw_img_data = base64.b64decode(data)
+        input_image = Image.open(io.BytesIO(raw_img_data))
+        preprocess = transforms.Compose(
+            [
+                transforms.Resize(256),
+                transforms.CenterCrop(224),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                ),
+            ]
+        )
+
+        input_tensor = preprocess(input_image)
+        input_batch = input_tensor.unsqueeze(0)
+        output = self.model(input_batch)
+        torch.nn.functional.softmax(output, dim=1)
+        values, top_5 = torch.topk(output, 5)
+        return {"predictions": values.tolist()}
+
+parser = argparse.ArgumentParser(parents=[model_server.parser])
+args, _ = parser.parse_known_args()
+
 if __name__ == "__main__":
+    # Configure kserve and uvicorn logger
     if args.configure_logging:
         logging.configure_logging(args.log_config_file)
     ray.init(num_cpus=2, num_gpus=1)
-    kserve.ModelServer().start({"custom-model": AlexNetModel})
+    app = AlexNetModel.bind(name=args.model_name)
+    handle = serve.run(app)
+    model = RayModel(name=args.model_name, handle=handle)
+    model.load()
+    ModelServer().start([model])
 ```
 The more details for ray fractional cpu and gpu can be found [here](https://docs.ray.io/en/latest/serve/resource-allocation.html#fractional-cpus-and-fractional-gpus).
 
-The full code example can be found [here](https://github.com/kserve/kserve/blob/release-0.11/python/custom_model/model_remote.py).
+### Build Custom Serving Image with BuildPacks
 
-Modify the `Procfile` to `web: python -m model_remote` and then run the above `pack` command, it builds the serving image which launches
-each model as separate python worker and web server routes to the model workers by name.
+You can use pack cli to build the serving image which launches each model as separate python worker 
+and web server routes to the model workers by name.
+```bash
+pack build --builder=heroku/builder:24 ${DOCKER_USER}/custom-model-ray:v1
+docker push ${DOCKER_USER}/custom-model-ray:v1
+```
 
-![parallel_inference](./parallel_inference.png)
+!!! Tip 
+    If your buildpack command fails, make sure you have a [`.python-version`](./ray/.python-version) file with the correct python version specified and a [`Procfile`](./ray/Procfile) with correct entrypoint and arguments.
+
+### Deploy Locally and Test
+Launch the docker image built from last step.
+```bash
+docker run -ePORT=8080 -p8080:8080 ${DOCKER_USER}/custom-model-ray:v1
+```
+
+Send a test inference request locally with [input.json](./input.json)
+```bash
+curl -H "Content-Type: application/json" localhost:8080/v1/models/custom-model:predict -d @./input.json
+```
+!!! success "Expected Output"
+
+    ```{ .json .no-copy }
+    {"predictions": [[14.861763000488281, 13.94291877746582, 13.924378395080566, 12.182709693908691, 12.00634765625]]}
+    ```
 
 ## Configuring Logger for Custom Serving Runtime
 KServe allows users to override the default logger configuration of serving runtime and uvicorn server.
