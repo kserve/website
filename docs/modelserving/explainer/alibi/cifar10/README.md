@@ -16,7 +16,7 @@ spec:
       resources:
         requests:
           cpu: 0.1
-          memory: 5Gi   
+          memory: 5Gi
         limits:
           memory: 10Gi
   explainer:
@@ -25,18 +25,22 @@ spec:
         image: kserve/alibi-explainer:v0.12.1
         args:
           - --model_name=cifar10
-    alibi:
-      type: AnchorImages
-      storageUri: "gs://kfserving-examples/models/tensorflow/cifar/explainer-0.9.1"
-      config:
-        batch_size: "40"
-        stop_on_first: "True"
-      resources:
-        requests:
-          cpu: 0.1
-          memory: 5Gi 
-        limits:
-          memory: 10Gi
+          - --http_port=8080 
+          - --predictor_host=cifar10-predictor.default 
+          - --storage_uri=/mnt/models 
+          - AnchorImages 
+          - --batch_size=40 
+          - --stop_on_first=True
+        env:
+          - name: STORAGE_URI
+            value: "gs://kfserving-examples/models/tensorflow/cifar/explainer-0.9.1"
+        resources:
+          requests:
+            cpu: 0.1
+            memory: 5Gi
+          limits:
+            cpu: 1
+            memory: 10Gi
 ```
 !!! Note
     The InferenceService resource describes:
