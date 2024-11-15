@@ -186,6 +186,22 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
     curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
+=== "Client"
+
+    If you want to use InferenceClient to perform the inference, you can follow the below example
+    ```python
+    from kserve import RESTConfig, InferenceRESTClient
+
+    config = RESTConfig(protocol="v1", retries=5, timeout=30)
+    client = InferenceRESTClient(config)
+    base_url = "http://sklearn-iris.kserve-test"
+    data = {"instances": [[6.8,  2.8,  4.8,  1.4], [6.0,  3.4,  4.5,  1.6]]}
+    model_name = "sklearn-iris"
+    result = await client.infer(base_url, data, model_name=model_name)
+    print(result)
+    ```
+    
+
 You should see two predictions returned (i.e. `{"predictions": [1, 1]}`). Both sets of data points sent for inference correspond to the flower with index `1`.
 In this case, the model predicts that both flowers are "Iris Versicolour".
 

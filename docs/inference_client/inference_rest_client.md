@@ -3,7 +3,7 @@
 > InferenceRESTClient(config: RESTConfig = None)
 
 InferenceRESTClient is designed to interact with inference servers that follow the V1 and V2 protocols for model serving.
-It provides methods to perform inference, explanation, and health checks on the server and models.
+It provides methods to perform inference, explanation, and health checks on the server and models. This feature is currently in alpha and may be subject to change.
 
 parameter |  Description
 ------------ | -------------
