@@ -1,12 +1,12 @@
-# Multi-node/Multi-GPU Inference with Hugging Face LLM Serving Runtime
+# Multi-node/Multi-GPU Inference with Hugging Face vLLM Serving Runtime
 
-This guide provides step-by-step instructions on setting up multi-node and multi-GPU inference using Hugging Face's LLM Serving Runtime. Before proceeding, please ensure you meet the following prerequisites and understand the limitations of this setup.
+This guide provides step-by-step instructions on setting up multi-node and multi-GPU inference using Hugging Face's vLLM Serving Runtime. Before proceeding, please ensure you meet the following prerequisites and understand the limitations of this setup.
 
 ## Prerequisites
 
 - Multi-node functionality is only supported in **RawDeployment** mode.
 - **Auto-scaling is not available** for multi-node setups. 
-- A **Persistent Volume Claim (PVC)** is required for multi-node configurations, and it must support the **ReadWriteMany (RWM)** access mode.
+- A **Persistent Volume Claim (PVC)** is required for multi-node configurations, and it must support the **ReadWriteMany (RWX)** access mode.
 
 
 ### Key Validations
@@ -40,15 +40,15 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 
 Using the multi-node feature likely indicates that you are trying to deploy a very large model. In such cases, you should consider increasing the `initialDelaySeconds` for the `livenessProbe`, `readinessProbe`, and `startupProbe`. The default values may not be suitable for your specific needs. 
 
-You can set this in ServingRuntime.
+You can set StartupProbe in ServingRuntime for your own situation.
 ~~~
 ..
-      livenessProbe:
-        failureThreshold: 2
-        periodSeconds: 10
+      startupProbe:
+        failureThreshold: 40
+        periodSeconds: 30
         successThreshold: 1
-        timeoutSeconds: 5
-        initialDelaySeconds: 10
+        timeoutSeconds: 30
+        initialDelaySeconds: 20
 ..
 ~~~
 
@@ -92,6 +92,10 @@ apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   name: huggingface-llama3
+  annotations:
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/autoscalerClass: external
+
 spec:
   predictor:
     model:
@@ -104,9 +108,9 @@ spec:
     }  
 ```
 
-## Serve the Hugging Face LLM Model Using 2 Nodes
+## Serve the Hugging Face vLLM Model Using 2 Nodes
 
-Follow these steps to serve the Hugging Face LLM model using a multi-node setup.
+Follow these steps to serve the Hugging Face vLLM model using a multi-node setup.
 
 ### 1. Create a Persistent Volume Claim (PVC)
 
@@ -138,7 +142,7 @@ To download the model, export your Hugging Face token (`HF_TEST_TOKEN`) as an en
 export HF_TEST_TOKEN=%token%
 export MODEL=meta-llama/Meta-Llama-3-8B-Instruct
 
-curl -o download-model-to-pvc.yaml https://kserve.github.io/website/latest/modelserving/v1beta1/llm/huggingface/multi-node/download-model-to-pvc.yaml
+curl -o download-model-to-pvc.yaml https://kserve.github.io/website/latest/modelserving/v1beta1/vLLM/huggingface/multi-node/download-model-to-pvc.yaml
 envsubst < download-model-to-pvc.yaml | kubectl create -f -
 ```
 
@@ -213,7 +217,7 @@ To check the GPU resource status, follow these steps:
     | NVIDIA-SMI 550.90.07              Driver Version: 550.90.07      CUDA Version: 12.4     |
     |-----------------------------------------+------------------------+----------------------+
     | GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
-    | Fan  Temp   Perf          Pwr:Usage/Cap |            # Specifying workerSpec indicates that multi-node functionality will be used     Memory-Usage | GPU-Util  Compute M. |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
     |                                         |                        |               MIG M. |
     |=========================================+========================+======================|
     |   0  NVIDIA A10G                    On  |   00000000:00:1E.0 Off |                    0 |
