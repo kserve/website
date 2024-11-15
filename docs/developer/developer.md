@@ -25,6 +25,7 @@ You must install these tools:
 1. [`kustomize`](https://github.com/kubernetes-sigs/kustomize/) To customize YAMLs for different environments, requires v5.0.0+.
 1. [`yq`](https://github.com/mikefarah/yq) yq is used in the project makefiles to parse and display YAML output, requires yq `4.*`.
 1. [`pre-commit`](https://pre-commit.com/) pre-commit is used to run checks on the codebase before committing changes.
+1. [`helm`](https://helm.sh/docs/intro/install/) Helm is used to install Kserve.
 
 ### Install Knative on a Kubernetes cluster
 

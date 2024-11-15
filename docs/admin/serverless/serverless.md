@@ -46,11 +46,13 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
 === "Install using YAML"
     ```bash
     # Install Kserve CRDs and Controller
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
+    kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
     
     # Install KServe Built-in ClusterServingRuntimes
-    kubectl apply -f https://github.com/kserve/kserve/releases/download/v{{ kserve_release_version }}/kserve-cluster-resources.yaml
+    kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v{{ kserve_release_version }}/kserve-cluster-resources.yaml
     ```
+!!! note
+    --server-side option is needed because the InferenceService CRD is too long to process, see [this issue](https://github.com/kserve/kserve/issues/3487) for details.
 
 !!! note
     **ClusterServingRuntimes** are required to create InferenceService for built-in model serving runtimes with KServe v0.8.0 or higher.
