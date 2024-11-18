@@ -41,6 +41,19 @@ stringData: # use `stringData` for raw credential string or `data` for base64 en
   AZ_TENANT_ID: xxxxx
 ```
 
+A [SAS](https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview) Token can be used to authenticate as well:
+
+=== "yaml"
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azcreds
+type: Opaque
+stringData: # use `stringData` for raw credential string or `data` for base64 encoded string
+  AZURE_STORAGE_ACCESS_KEY: xxxxx
+```
+
 ### Attach secret to a service account
 === "yaml"
 ```yaml
