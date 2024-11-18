@@ -4,6 +4,11 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 
 | Presentation/Demo | Presenters |
 | ------------ | ------- |
+| [Optimizing Load Balancing and Autoscaling for Large Language Model (LLM) Inference on Kubernetes](https://www.youtube.com/watch?v=TSEGAh1bs4A) | David Gray |
+| [Engaging the KServe Community, The Impact of Integrating a Solutions with Standardized CNCF Projects](https://www.youtube.com/watch?v=S27wzRNsStU) | Adam Tetelman, Taneem Ibrahim, Johnu George, Tessa Pham, Andreea Munteanu |
+| [AI Day Keynote: Advancing Cloud Native AI Innovation Through Open Collaboration](https://www.youtube.com/watch?v=kG_wqP2CXUE) | Yuan Tang |
+| [Unlocking Potential of Large Models in Production](https://www.youtube.com/watch?v=-xEpzaIvor4) | Yuan Tang, Adam Tetelman |
+| [WG Serving: Accelerating AI/ML Inference Workloads on Kubernetes](https://www.youtube.com/watch?v=QMz4wf0mwfA) | Yuan Tang, Eduardo Arango Gutierrez |
 | [From Bash Scripts to Kubeflow and GitOps: Our Journey to Operationalizing ML at Scale](https://youtu.be/dwt-MBEUGpQ?si=_iCjP6zdON9cx4Zu) | Luca Grazioli, Dennis Ohrndorf |
 | [Production-Ready AI Platform on Kubernetes](https://youtu.be/_RthQ01bwU8?si=XY5krc-_WRsNt37x) | Yuan Tang |
 | [Fortifying AI Security in Kubernetes with Confidential Containers](https://youtu.be/Ko0o5_hpmxI?si=cTmDNLUuXNEuvWfh) | Suraj Deshmukh, Pradipta Banerjee |
