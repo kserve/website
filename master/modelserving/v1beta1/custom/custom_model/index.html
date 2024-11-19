@@ -587,16 +587,16 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#create-and-deploy-custom-rest-servingruntime">
     Create and Deploy Custom REST ServingRuntime
   </a>
 <nav aria-label="Create and Deploy Custom REST ServingRuntime" class="md-nav">
 <ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup">
+    Setup
+  </a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#implement-custom-model-using-kserve-api">
     Implement Custom Model using KServe API
@@ -651,6 +651,11 @@
 <nav aria-label="Create and Deploy Custom gRPC ServingRuntime" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#setup_1">
+    Setup
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#implement-custom-model-using-kserve-api_1">
     Implement Custom Model using KServe API
   </a>
@@ -691,6 +696,30 @@
 <a class="md-nav__link" href="#parallel-model-inference">
     Parallel Model Inference
   </a>
+<nav aria-label="Parallel Model Inference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup_2">
+    Setup
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fractional-gpu-example">
+    Fractional GPU example
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build-custom-serving-image-with-buildpacks_2">
+    Build Custom Serving Image with BuildPacks
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-locally-and-test_2">
+    Deploy Locally and Test
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#configuring-logger-for-custom-serving-runtime">
@@ -1305,16 +1334,16 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
-  </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#create-and-deploy-custom-rest-servingruntime">
     Create and Deploy Custom REST ServingRuntime
   </a>
 <nav aria-label="Create and Deploy Custom REST ServingRuntime" class="md-nav">
 <ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup">
+    Setup
+  </a>
+</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#implement-custom-model-using-kserve-api">
     Implement Custom Model using KServe API
@@ -1369,6 +1398,11 @@
 <nav aria-label="Create and Deploy Custom gRPC ServingRuntime" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#setup_1">
+    Setup
+  </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#implement-custom-model-using-kserve-api_1">
     Implement Custom Model using KServe API
   </a>
@@ -1409,6 +1443,30 @@
 <a class="md-nav__link" href="#parallel-model-inference">
     Parallel Model Inference
   </a>
+<nav aria-label="Parallel Model Inference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup_2">
+    Setup
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fractional-gpu-example">
+    Fractional GPU example
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#build-custom-serving-image-with-buildpacks_2">
+    Build Custom Serving Image with BuildPacks
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-locally-and-test_2">
+    Deploy Locally and Test
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#configuring-logger-for-custom-serving-runtime">
@@ -1447,11 +1505,12 @@
 <h1 id="deploy-custom-python-serving-runtime-with-inferenceservice">Deploy Custom Python Serving Runtime with InferenceService<a class="headerlink" href="#deploy-custom-python-serving-runtime-with-inferenceservice" title="Permanent link">¶</a></h1>
 <p>When the out-of-the-box <code>Serving Runtime</code> does not fit your need, you can choose to build your own model server using <code>KServe ModelServer API</code>
 to deploy as <code>Custom Serving Runtime</code> on KServe.</p>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
+<h2 id="create-and-deploy-custom-rest-servingruntime">Create and Deploy Custom REST ServingRuntime<a class="headerlink" href="#create-and-deploy-custom-rest-servingruntime" title="Permanent link">¶</a></h2>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h3>
 <ol>
 <li>Install <a href="https://buildpacks.io/docs/tools/pack/">pack CLI</a> to build your custom model server image.</li>
+<li><a href="./rest">The code samples</a> can be found in the KServe website repository.</li>
 </ol>
-<h2 id="create-and-deploy-custom-rest-servingruntime">Create and Deploy Custom REST ServingRuntime<a class="headerlink" href="#create-and-deploy-custom-rest-servingruntime" title="Permanent link">¶</a></h2>
 <h3 id="implement-custom-model-using-kserve-api">Implement Custom Model using KServe API<a class="headerlink" href="#implement-custom-model-using-kserve-api" title="Permanent link">¶</a></h3>
 <p><code>KServe.Model</code> base class mainly defines three handlers <code>preprocess</code>, <code>predict</code> and <code>postprocess</code>, these handlers are executed
 in sequence, the output of the <code>preprocess</code> is passed to <code>predict</code> as the input, the <code>predictor</code> handler executes the
@@ -1459,33 +1518,49 @@ inference for your model, the <code>postprocess</code> handler then turns the ra
 is an additional <code>load</code> handler which is used for writing custom code to load your model into the memory from local file system or
 remote model storage, a general good practice is to call the <code>load</code> handler in the model server class <code>__init__</code> function, so your model
 is loaded on startup and ready to serve prediction requests.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<div class="highlight"><span class="filename">model.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">fastapi.middleware.cors</span> <span class="kn">import</span> <span class="n">CORSMiddleware</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
 <span class="kn">import</span> <span class="nn">kserve</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">logging</span>
+<span class="kn">from</span> <span class="nn">kserve.model_server</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">kserve.utils.utils</span> <span class="kn">import</span> <span class="n">generate_uuid</span>
+
 
 <span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">return_response_headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">return_response_headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">return_response_headers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">alexnet</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="c1"># The ready flag is used by model ready endpoint for readiness probes,</span>
+        <span class="c1"># set to True when model is loaded successfully without exceptions.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> 
-        <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> 
-        <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">response_headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># Input follows the Tensorflow V1 HTTP API for binary values</span>
+        <span class="c1"># https://www.tensorflow.org/tfx/serving/api_rest#encoding_binary_values</span>
         <span class="n">img_data</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"image"</span><span class="p">][</span><span class="s2">"b64"</span><span class="p">]</span>
         <span class="n">raw_img_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
         <span class="n">input_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">raw_img_data</span><span class="p">))</span>
@@ -1501,23 +1576,35 @@ is loaded on startup and ready to serve prediction requests.</p>
         <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">values</span><span class="p">,</span> <span class="n">top_5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="n">response_id</span> <span class="o">=</span> <span class="n">generate_uuid</span><span class="p">()</span>
 
-        <span class="c1"># Update the response_headers argument with your header values</span>
-        <span class="c1"># Example: </span>
-        <span class="n">res_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"example_header"</span><span class="p">:</span> <span class="s2">"my_header"</span><span class="p">}</span>
+        <span class="c1"># Custom response headers can be added to the inference response</span>
         <span class="k">if</span> <span class="n">response_headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">response_headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">res_headers</span><span class="p">)</span> 
+            <span class="n">response_headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">"prediction-time-latency"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">round</span><span class="p">((</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">"predictions"</span><span class="p">:</span> <span class="n">result</span><span class="p">}</span>
+
 
 <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
 <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># Configure kserve and uvicorn logger</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>  <span class="c1"># Configure kserve and uvicorn logger</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="c1"># Custom middlewares can be added to the model</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">add_middleware</span><span class="p">(</span>
+        <span class="n">CORSMiddleware</span><span class="p">,</span>
+        <span class="n">allow_origins</span><span class="o">=</span><span class="p">[</span><span class="s2">"*"</span><span class="p">],</span>
+        <span class="n">allow_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">allow_methods</span><span class="o">=</span><span class="p">[</span><span class="s2">"*"</span><span class="p">],</span>
+        <span class="n">allow_headers</span><span class="o">=</span><span class="p">[</span><span class="s2">"*"</span><span class="p">],</span>
+    <span class="p">)</span>
     <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
 <div class="admonition note">
@@ -1531,13 +1618,16 @@ needing to define the <code>Dockerfile</code>. Buildpacks automatically determin
 image manually with <code>pack</code>, you can also choose to use <a href="https://github.com/pivotal/kpack">kpack</a>
 to run the image build on the cloud and continuously build/deploy new versions from your source git repository.</p>
 <p>You can use pack cli to build and push the custom model server image
-<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/buildpacks:20<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
+<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/builder:24<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div></p>
-<p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If your buildpack command fails, make sure you have a <a href="rest/.python-version"><code>.python-version</code></a> file with the correct python version specified and a <a href="rest/Procfile"><code>Procfile</code></a> with correct entrypoint and arguments.</p>
+</div>
 <h3 id="deploy-locally-and-test">Deploy Locally and Test<a class="headerlink" href="#deploy-locally-and-test" title="Permanent link">¶</a></h3>
-<p>Launch the docker image built from last step with <code>buildpack</code>.
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1<span class="w"> </span>--model_name<span class="o">=</span><span class="s2">"custom-model"</span>
+<p>Launch the docker image built from last step.
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model:v1
 </code></pre></div></p>
 <p>Send a test inference request locally with <a href="input.json">input.json</a>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
@@ -1548,7 +1638,7 @@ docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</s
 </code></pre></div>
 </div>
 <h3 id="deploy-the-rest-custom-serving-runtime-on-kserve">Deploy the REST Custom Serving Runtime on KServe<a class="headerlink" href="#deploy-the-rest-custom-serving-runtime-on-kserve" title="Permanent link">¶</a></h3>
-<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<p><div class="highlight"><span class="filename">custom.yaml</span><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-model</span>
@@ -1565,6 +1655,11 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 <li><code>--workers</code>: Spawn the specified number of <code>uvicorn</code> workers(multi-processing) of the model server, the default value is 1, this option is often used
   to help increase the resource utilization of the container.</li>
 <li><code>--http_port</code>: The http port model server is listening on, the default REST port is 8080.</li>
+<li><code>--grpc_port</code>: The GRPC Port listened to by the model server. Default is 8081.</li>
+<li><code>--max_threads</code>: The max number of gRPC processing threads. Default is 4.</li>
+<li><code>--enable_grpc</code>: Enable gRPC for the model server. Default is true.</li>
+<li><code>--grpc_max_send_message_length</code>: The max message length for gRPC send message. Default is 8388608 bytes (8 MB).</li>
+<li><code>--grpc_max_receive_message_length</code>: The max message length for gRPC receive message. Default is 8388608 bytes (8 MB).</li>
 <li><code>--model_name</code>: The model name deployed in the model server, the default name the same as the service name.</li>
 <li><code>--max_asyncio_workers</code>: Max number of workers to spawn for python async io loop, by default it is <code>min(32,cpu.limit + 4)</code>.</li>
 <li><code>--enable_latency_logging</code>: Whether to log latency metrics per request, the default is True.</li>
@@ -1573,6 +1668,7 @@ In the <code>custom.yaml</code> file edit the container image and replace ${DOCK
 python logging module). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.</li>
 <li><code>--access_log_format</code>: A string representing the access log format configuration to use. The functionality is provided by the <code>asgi-logger</code> library and it allows to override only the <code>uvicorn.access</code>'s format configuration with a richer set of fields (output hardcoded to <code>stdout</code>). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn <a href="https://github.com/encode/uvicorn/issues/527">github issue</a> for more info). By default is None.</li>
 <li><code>enable_latency_logging</code>: whether to log latency metrics per request, the default is True.</li>
+<li><code>--enable_docs_url</code>: Enable docs url '/docs' to display Swagger UI.</li>
 </ul>
 <h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h4>
 <p>You can supply additional environment variables on the container spec.</p>
@@ -1582,7 +1678,7 @@ python logging module). This file allows to override the default Uvicorn configu
 <li><code>PROTOCOL</code>: specify the protocol version supported by the model e.g <code>V1</code>. This acts the same as <code>protocolVersion</code> when using a built-in predictor.</li>
 <li><code>KSERVE_LOGLEVEL</code>: sets the <code>kserve</code> and <code>kserve_trace</code>'s logger verbosity. Default is <code>INFO</code>.</li>
 </ul>
-<p>Apply the yaml to deploy the InferenceService on KServe</p>
+<p>Apply the YAML to deploy the InferenceService on KServe</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
@@ -1640,6 +1736,11 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <li>gRPC transports binary data format with <a href="https://github.com/protocolbuffers/protobuf">Protobuf</a> which is efficient to send over the wire.</li>
 </ul>
 <p>Compared to REST it has limited support for browser and the message is not human-readable which requires additional debugging tools.</p>
+<h3 id="setup_1">Setup<a class="headerlink" href="#setup_1" title="Permanent link">¶</a></h3>
+<ol>
+<li>Install <a href="https://buildpacks.io/docs/tools/pack/">pack CLI</a> to build your custom model server image.</li>
+<li><a href="./grpc">The code samples</a> can be found in the KServe website repository.</li>
+</ol>
 <h3 id="implement-custom-model-using-kserve-api_1">Implement Custom Model using KServe API<a class="headerlink" href="#implement-custom-model-using-kserve-api_1" title="Permanent link">¶</a></h3>
 <p>For <code>Open(v2) Inference Protocol</code>, KServe provides <code>InferRequest</code> and <code>InferResponse</code> API object for <code>predict</code>, <code>preprocess</code>, <code>postprocess</code>
 handlers to abstract away the implementation details of REST/gRPC decoding and encoding over the wire.</p>
@@ -1648,125 +1749,119 @@ handlers to abstract away the implementation details of REST/gRPC decoding and e
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">kserve</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferResponse</span><span class="p">,</span> <span class="n">InferOutput</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span>
-<span class="kn">from</span> <span class="nn">kserve.utils.utils</span> <span class="kn">import</span> <span class="n">generate_uuid</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span>
 
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferResponse</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">logging</span><span class="p">,</span> <span class="n">model_server</span>
+<span class="kn">from</span> <span class="nn">kserve.utils.utils</span> <span class="kn">import</span> <span class="n">get_predict_response</span>
 
-<span class="c1"># This custom predictor example implements the custom model following KServe v2 inference gPPC protocol,</span>
-<span class="c1"># the input can be raw image bytes or image tensor which is pre-processed by transformer</span>
-<span class="c1"># and then passed to predictor, the output is the prediction response.</span>
+<span class="c1"># This custom predictor example implements the custom model following KServe</span>
+<span class="c1"># v2 inference gPPC protocol, the input can be raw image bytes or image tensor</span>
+<span class="c1"># which is pre-processed by transformer and then passed to predictor, the</span>
+<span class="c1"># output is the prediction response.</span>
 <span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">alexnet</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="c1"># The ready flag is used by model ready endpoint for readiness probes,</span>
+        <span class="c1"># set to True when model is loaded successfully without exceptions.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferResponse</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">InferRequest</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">response_headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InferResponse</span><span class="p">:</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">input_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        <span class="n">preprocess</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
-                <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
-                <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
-                <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
-                <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
-                                     <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]),</span>
-            <span class="p">])</span>
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">datatype</span> <span class="o">==</span> <span class="s2">"BYTES"</span><span class="p">:</span>
+            <span class="n">input_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">preprocess</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+                    <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+                    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span>
+                        <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+                    <span class="p">),</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span>
+            <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">req</span><span class="o">.</span><span class="n">datatype</span> <span class="o">==</span> <span class="s2">"FP32"</span><span class="p">:</span>
+            <span class="n">np_array</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">as_numpy</span><span class="p">()</span>
+            <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="n">np_array</span><span class="p">)</span>
 
-        <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span>
-        <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">values</span><span class="p">,</span> <span class="n">top_5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-        <span class="n">response_id</span> <span class="o">=</span> <span class="n">generate_uuid</span><span class="p">()</span>
-        <span class="n">infer_output</span> <span class="o">=</span> <span class="n">InferOutput</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"output-0"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">"FP32"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
-        <span class="n">infer_response</span> <span class="o">=</span> <span class="n">InferResponse</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">infer_outputs</span><span class="o">=</span><span class="p">[</span><span class="n">infer_output</span><span class="p">],</span> <span class="n">response_id</span><span class="o">=</span><span class="n">response_id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">infer_response</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">get_predict_response</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
 <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># Configure kserve and uvicorn logger</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">()</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
     <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
     <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
 <h3 id="build-custom-serving-image-with-buildpacks_1">Build Custom Serving Image with BuildPacks<a class="headerlink" href="#build-custom-serving-image-with-buildpacks_1" title="Permanent link">¶</a></h3>
 <p>Similar to building the REST custom image, you can also use pack cli to build and push the custom gRPC model server image
-<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/buildpacks:20<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1<span class="w"> </span>--model_name<span class="o">=</span><span class="s2">"custom-model"</span>
+<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/builder:24<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1
 docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1
 </code></pre></div></p>
-<p>Note: If your buildpack command fails, make sure you have a <code>runtimes.txt</code> file with the correct python version specified. See the <a href="https://github.com/kserve/kserve/blob/master/python/custom_model/runtime.txt">custom model server runtime.txt</a> file as an example.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If your buildpack command fails, make sure you have a <a href="grpc/.python-version"><code>.python-version</code></a> file with the correct python version specified and a <a href="grpc/Procfile"><code>Procfile</code></a> with correct entrypoint and arguments.</p>
+</div>
 <h3 id="deploy-locally-and-test_1">Deploy Locally and Test<a class="headerlink" href="#deploy-locally-and-test_1" title="Permanent link">¶</a></h3>
 <p>Launch the docker image built from last step with <code>buildpack</code>.
 <div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8081</span><span class="w"> </span>-p8081:8081<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-grpc:v1
 </code></pre></div></p>
-<p>Send a test inference request locally using <code>InferenceServerClient</code> <a href="grpc_test_client.py">grpc_test_client.py</a>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferInput</span><span class="p">,</span> <span class="n">InferenceServerClient</span>
+<p>Send a test inference request locally using <code>InferenceServerClient</code> <a href="grpc/grpc_client.py">grpc_client.py</a>
+<div class="highlight"><span class="filename">grpc_client.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">base64</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">InferenceServerClient</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"INGRESS_HOST"</span><span class="p">,</span> <span class="s2">"localhost"</span><span class="p">)</span><span class="o">+</span><span class="s2">":"</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"INGRESS_PORT"</span><span class="p">,</span> <span class="s2">"8081"</span><span class="p">),</span>
-                               <span class="n">channel_args</span><span class="o">=</span><span class="p">((</span><span class="s1">'grpc.ssl_target_name_override'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"SERVICE_HOSTNAME"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)),))</span>
-<span class="n">json_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"./input.json"</span><span class="p">)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
-<span class="n">infer_input</span> <span class="o">=</span> <span class="n">InferInput</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"input-0"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">"BYTES"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"image"</span><span class="p">][</span><span class="s2">"b64"</span><span class="p">])])</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">InferRequest</span><span class="p">(</span><span class="n">infer_inputs</span><span class="o">=</span><span class="p">[</span><span class="n">infer_input</span><span class="p">],</span> <span class="n">model_name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">)</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">infer_request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferInput</span>
+<span class="kn">from</span> <span class="nn">kserve.inference_client</span> <span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceGRPCClient</span><span class="p">(</span>
+        <span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"INGRESS_HOST"</span><span class="p">,</span> <span class="s2">"localhost"</span><span class="p">)</span> <span class="o">+</span> <span class="s2">":"</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"INGRESS_PORT"</span><span class="p">,</span> <span class="s2">"8081"</span><span class="p">),</span>
+        <span class="n">channel_args</span><span class="o">=</span><span class="p">[(</span><span class="s1">'grpc.ssl_target_name_override'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"SERVICE_HOSTNAME"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))]</span>
+    <span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"../input.json"</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+    <span class="n">infer_input</span> <span class="o">=</span> <span class="n">InferInput</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"input-0"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">datatype</span><span class="o">=</span><span class="s2">"BYTES"</span><span class="p">,</span>
+                             <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"image"</span><span class="p">][</span><span class="s2">"b64"</span><span class="p">])])</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">InferRequest</span><span class="p">(</span><span class="n">infer_inputs</span><span class="o">=</span><span class="p">[</span><span class="n">infer_input</span><span class="p">],</span> <span class="n">model_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"MODEL_NAME"</span><span class="p">,</span> <span class="s2">"custom-model"</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">infer_request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 </code></pre></div></p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>grpc_test_client.py
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>grpc_client.py
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">"df27b8a5-f13e-4c7a-af61-20bdb55b6523"</span>
-<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">"output-0"</span>
-<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-
-<span class="err">model_</span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom-model"</span>
-<span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">"df27b8a5-f13e-4c7a-af61-20bdb55b6523"</span>
-<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">"output-0"</span>
-<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>"id": "b6a08abf-dcec-42ae-81af-084d9cad1c16","model_name": "custom-model","outputs": ["name": "output-0","shape": [1, 5],"datatype": "FP32","data": [14.975618362426758, 14.036808967590332, 13.966032028198242, 12.252279281616211, 12.086268424987793],"parameters": {}],"parameters": {},"from_grpc": True
 </code></pre></div>
 </div>
 <h3 id="deploy-the-grpc-custom-serving-runtime-on-kserve">Deploy the gRPC Custom Serving Runtime on KServe<a class="headerlink" href="#deploy-the-grpc-custom-serving-runtime-on-kserve" title="Permanent link">¶</a></h3>
 <p>Create the InferenceService yaml and expose the gRPC port by specifying on <code>ports</code> section, currently only one port is allowed to expose and by default HTTP port is exposed.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<div class="highlight"><span class="filename">custom_grpc.yaml</span><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom-model-grpc</span>
@@ -1805,108 +1900,184 @@ In the <code>custom_grpc.yaml</code> file edit the container image and replace $
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>custom-model
 <span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>custom-model-grpc<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
-<p>Send an inference request to the gRPC service using <code>InferenceServerClient</code> <a href="grpc_test_client.py">grpc_test_client.py</a>.</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>grpc_test_client.py
+<p>Send an inference request to the gRPC service using <code>InferenceServerClient</code> <a href="grpc/grpc_client.py">grpc_client.py</a>.</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>grpc_client.py
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code><span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">"df27b8a5-f13e-4c7a-af61-20bdb55b6523"</span>
-<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">"output-0"</span>
-<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-
-<span class="err">model_</span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom-model"</span>
-<span class="err">id</span><span class="p">:</span><span class="w"> </span><span class="s2">"df27b8a5-f13e-4c7a-af61-20bdb55b6523"</span>
-<span class="err">ou</span><span class="kc">t</span><span class="err">pu</span><span class="kc">ts</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="kc">na</span><span class="err">me</span><span class="p">:</span><span class="w"> </span><span class="s2">"output-0"</span>
-<span class="w">  </span><span class="err">da</span><span class="kc">tat</span><span class="err">ype</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="err">shape</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="err">co</span><span class="kc">ntents</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.9756203</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">14.036808</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">13.9660349</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.2522783</span>
-<span class="w">    </span><span class="kc">f</span><span class="err">p</span><span class="mi">32</span><span class="err">_co</span><span class="kc">ntents</span><span class="p">:</span><span class="w"> </span><span class="mf">12.0862684</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span><code>"id": "b6a08abf-dcec-42ae-81af-084d9cad1c16","model_name": "custom-model","outputs": ["name": "output-0","shape": [1, 5],"datatype": "FP32","data": [14.975618362426758, 14.036808967590332, 13.966032028198242, 12.252279281616211, 12.086268424987793],"parameters": {}],"parameters": {},"from_grpc": True
 </code></pre></div>
 </div>
 <h2 id="parallel-model-inference">Parallel Model Inference<a class="headerlink" href="#parallel-model-inference" title="Permanent link">¶</a></h2>
-<p>By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models
-the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
+<p>By default, the models are loaded in the same process and inference is executed in the same process as the HTTP or gRPC server, if you are hosting multiple models the inference can only be run for one model at a time which limits the concurrency when you share the container for the models.
 KServe integrates <a href="https://docs.ray.io/en/master/serve/index.html">RayServe</a> which provides a programmable API to deploy models
-as separate python workers so the inference can be performed in parallel when serving multiple custom models.</p>
-<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">import</span> <span class="nn">kserve</span>
+as separate python workers so, the inference can be performed in parallel when serving multiple custom models.</p>
+<p><img alt="parallel_inference" src="parallel_inference.png"/></p>
+<h3 id="setup_2">Setup<a class="headerlink" href="#setup_2" title="Permanent link">¶</a></h3>
+<ol>
+<li>Install <a href="https://buildpacks.io/docs/tools/pack/">pack CLI</a> to build your custom model server image.</li>
+<li><a href="./grpc">The code samples</a> can be found in the KServe website repository.</li>
+</ol>
+<div class="highlight"><span class="filename">model_remote.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
-<span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">serve</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
 
-<span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"custom-model"</span>
-       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">serve</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">logging</span><span class="p">,</span> <span class="n">model_server</span>
+<span class="kn">from</span> <span class="nn">kserve.ray</span> <span class="kn">import</span> <span class="n">RayModel</span>
+
+
+<span class="c1"># the model handle name should match the model endpoint name</span>
+<span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">alexnet</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="c1"># The ready flag is used by model ready endpoint for readiness probes,</span>
+        <span class="c1"># set to True when model is loaded successfully without exceptions.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="o">...</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">]</span>
 
-<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
-<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>    
+        <span class="c1"># Input follows the Tensorflow V1 HTTP API for binary values</span>
+        <span class="c1"># https://www.tensorflow.org/tfx/serving/api_rest#encoding_binary_values</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"image"</span><span class="p">][</span><span class="s2">"b64"</span><span class="p">]</span>
+        <span class="n">raw_img_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">input_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">raw_img_data</span><span class="p">))</span>
+        <span class="n">preprocess</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span>
+                    <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span>
+        <span class="n">input_batch</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_batch</span><span class="p">)</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">values</span><span class="p">,</span> <span class="n">top_5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"predictions"</span><span class="p">:</span> <span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># Configure kserve and uvicorn logger</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
-    <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">"custom-model"</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="n">serve</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">RayModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">handle</span><span class="o">=</span><span class="n">handle</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
-fractional gpu example
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<h3 id="fractional-gpu-example">Fractional GPU example<a class="headerlink" href="#fractional-gpu-example" title="Permanent link">¶</a></h3>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">ray</span>
 <span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">serve</span>
-<span class="kn">import</span> <span class="nn">kserve</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">logging</span>
+<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">logging</span><span class="p">,</span> <span class="n">model_server</span>
+<span class="kn">from</span> <span class="nn">kserve.ray</span> <span class="kn">import</span> <span class="n">RayModel</span>
 
-<span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ray_actor_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"num_cpus"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"num_gpus"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
-<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"custom-model"</span>
-       <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-       <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c1"># the model handle name should match the model endpoint name</span>
+<span class="nd">@serve</span><span class="o">.</span><span class="n">deployment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"custom-model"</span><span class="p">,</span> <span class="n">num_replicas</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ray_actor_options</span><span class="o">=</span><span class="p">{</span><span class="s2">"num_cpus"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"num_gpus"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
+<span class="k">class</span> <span class="nc">AlexNetModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="o">...</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">alexnet</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="c1"># The ready flag is used by model ready endpoint for readiness probes,</span>
+        <span class="c1"># set to True when model is loaded successfully without exceptions.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-        <span class="o">...</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">]</span>
 
-<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">kserve</span><span class="o">.</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
-<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>      
+        <span class="c1"># Input follows the Tensorflow V1 HTTP API for binary values</span>
+        <span class="c1"># https://www.tensorflow.org/tfx/serving/api_rest#encoding_binary_values</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"image"</span><span class="p">][</span><span class="s2">"b64"</span><span class="p">]</span>
+        <span class="n">raw_img_data</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">input_image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">raw_img_data</span><span class="p">))</span>
+        <span class="n">preprocess</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span>
+                    <span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">]</span>
+                <span class="p">),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">input_image</span><span class="p">)</span>
+        <span class="n">input_batch</span> <span class="o">=</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">input_batch</span><span class="p">)</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">values</span><span class="p">,</span> <span class="n">top_5</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"predictions"</span><span class="p">:</span> <span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()}</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">model_server</span><span class="o">.</span><span class="n">parser</span><span class="p">])</span>
+<span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># Configure kserve and uvicorn logger</span>
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">:</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
     <span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">num_cpus</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_gpus</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">kserve</span><span class="o">.</span><span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">({</span><span class="s2">"custom-model"</span><span class="p">:</span> <span class="n">AlexNetModel</span><span class="p">})</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">AlexNetModel</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+    <span class="n">handle</span> <span class="o">=</span> <span class="n">serve</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">RayModel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">handle</span><span class="o">=</span><span class="n">handle</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">ModelServer</span><span class="p">()</span><span class="o">.</span><span class="n">start</span><span class="p">([</span><span class="n">model</span><span class="p">])</span>
 </code></pre></div>
 The more details for ray fractional cpu and gpu can be found <a href="https://docs.ray.io/en/latest/serve/resource-allocation.html#fractional-cpus-and-fractional-gpus">here</a>.</p>
-<p>The full code example can be found <a href="https://github.com/kserve/kserve/blob/release-0.11/python/custom_model/model_remote.py">here</a>.</p>
-<p>Modify the <code>Procfile</code> to <code>web: python -m model_remote</code> and then run the above <code>pack</code> command, it builds the serving image which launches
-each model as separate python worker and web server routes to the model workers by name.</p>
-<p><img alt="parallel_inference" src="parallel_inference.png"/></p>
+<h3 id="build-custom-serving-image-with-buildpacks_2">Build Custom Serving Image with BuildPacks<a class="headerlink" href="#build-custom-serving-image-with-buildpacks_2" title="Permanent link">¶</a></h3>
+<p>You can use pack cli to build the serving image which launches each model as separate python worker 
+and web server routes to the model workers by name.
+<div class="highlight"><pre><span></span><code>pack<span class="w"> </span>build<span class="w"> </span>--builder<span class="o">=</span>heroku/builder:24<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-ray:v1
+docker<span class="w"> </span>push<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-ray:v1
+</code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If your buildpack command fails, make sure you have a <a href="ray/.python-version"><code>.python-version</code></a> file with the correct python version specified and a <a href="ray/Procfile"><code>Procfile</code></a> with correct entrypoint and arguments.</p>
+</div>
+<h3 id="deploy-locally-and-test_2">Deploy Locally and Test<a class="headerlink" href="#deploy-locally-and-test_2" title="Permanent link">¶</a></h3>
+<p>Launch the docker image built from last step.
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-ePORT<span class="o">=</span><span class="m">8080</span><span class="w"> </span>-p8080:8080<span class="w"> </span><span class="si">${</span><span class="nv">DOCKER_USER</span><span class="si">}</span>/custom-model-ray:v1
+</code></pre></div></p>
+<p>Send a test inference request locally with <a href="input.json">input.json</a>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>localhost:8080/v1/models/custom-model:predict<span class="w"> </span>-d<span class="w"> </span>@./input.json
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="mf">14.861763000488281</span><span class="p">,</span><span class="w"> </span><span class="mf">13.94291877746582</span><span class="p">,</span><span class="w"> </span><span class="mf">13.924378395080566</span><span class="p">,</span><span class="w"> </span><span class="mf">12.182709693908691</span><span class="p">,</span><span class="w"> </span><span class="mf">12.00634765625</span><span class="p">]]}</span>
+</code></pre></div>
+</div>
 <h2 id="configuring-logger-for-custom-serving-runtime">Configuring Logger for Custom Serving Runtime<a class="headerlink" href="#configuring-logger-for-custom-serving-runtime" title="Permanent link">¶</a></h2>
 <p>KServe allows users to override the default logger configuration of serving runtime and uvicorn server.
 The logger configuration can be modified in one of the following ways:</p>
