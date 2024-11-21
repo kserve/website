@@ -10,6 +10,7 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 | [Unlocking Potential of Large Models in Production](https://www.youtube.com/watch?v=-xEpzaIvor4) | Yuan Tang, Adam Tetelman |
 | [WG Serving: Accelerating AI/ML Inference Workloads on Kubernetes](https://www.youtube.com/watch?v=QMz4wf0mwfA) | Yuan Tang, Eduardo Arango Gutierrez |
 | [Best Practices for Deploying LLM Inference, RAG and Fine Tuning Pipelines](https://www.youtube.com/watch?v=EmGe_58524g) | Meenakshi Kaushik, Shiva Krishna Merla |
+| [Production AI at Scale: Cloudera's Journey Adopting KServe](https://www.youtube.com/watch?v=VnTHlo56AI4) | Zoram Thanga, Peter Ableda |
 | [From Bash Scripts to Kubeflow and GitOps: Our Journey to Operationalizing ML at Scale](https://youtu.be/dwt-MBEUGpQ?si=_iCjP6zdON9cx4Zu) | Luca Grazioli, Dennis Ohrndorf |
 | [Production-Ready AI Platform on Kubernetes](https://youtu.be/_RthQ01bwU8?si=XY5krc-_WRsNt37x) | Yuan Tang |
 | [Fortifying AI Security in Kubernetes with Confidential Containers](https://youtu.be/Ko0o5_hpmxI?si=cTmDNLUuXNEuvWfh) | Suraj Deshmukh, Pradipta Banerjee |
