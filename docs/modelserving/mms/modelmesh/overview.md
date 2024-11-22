@@ -48,7 +48,7 @@ System-wide configuration parameters can be set by [creating a ConfigMap](https:
 Note that the integration of KServe with ModelMesh is still in an alpha stage and there are still features like explainers that do not yet work when deploying on ModelMesh.
 
 In any case, ModelMesh Serving supports deploying models using KServe's
-[InferenceService interface](https://github.com/kserve/kserve/blob/master/config/crd/serving.kserve.io_inferenceservices.yaml). ModelMesh Serving also supports transformer use cases in which the transformers and predictors are separately deployed by KServe and ModelMesh controllers. An example of ModelMesh transformer can be found [here](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast).
+[InferenceService interface](https://github.com/kserve/kserve/blob/master/config/crd/full/serving.kserve.io_inferenceservices.yaml). ModelMesh Serving also supports transformer use cases in which the transformers and predictors are separately deployed by KServe and ModelMesh controllers. An example of ModelMesh transformer can be found [here](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast).
 
 While ModelMesh Serving can handle both its original `Predictor` CRD and the KServe `InferenceService` CRD, there is work being done to
 eventually have both KServe and ModelMesh converge on the usage of `InferenceService` CRD.
@@ -60,5 +60,3 @@ For installation instructions check out [here](../../../admin/modelmesh.md).
 ## Learn more
 
 To learn more about ModelMesh, check out the [documentation](https://github.com/kserve/modelmesh-serving/tree/main/docs).
-
-
