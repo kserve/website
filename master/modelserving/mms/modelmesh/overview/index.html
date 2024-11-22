@@ -1328,7 +1328,7 @@ Please assume that the interface is subject to changes.</p>
 <h2 id="kserve-integration">KServe integration<a class="headerlink" href="#kserve-integration" title="Permanent link">¶</a></h2>
 <p>Note that the integration of KServe with ModelMesh is still in an alpha stage and there are still features like explainers that do not yet work when deploying on ModelMesh.</p>
 <p>In any case, ModelMesh Serving supports deploying models using KServe's
-<a href="https://github.com/kserve/kserve/blob/master/config/crd/serving.kserve.io_inferenceservices.yaml">InferenceService interface</a>. ModelMesh Serving also supports transformer use cases in which the transformers and predictors are separately deployed by KServe and ModelMesh controllers. An example of ModelMesh transformer can be found <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast">here</a>.</p>
+<a href="https://github.com/kserve/kserve/blob/master/config/crd/full/serving.kserve.io_inferenceservices.yaml">InferenceService interface</a>. ModelMesh Serving also supports transformer use cases in which the transformers and predictors are separately deployed by KServe and ModelMesh controllers. An example of ModelMesh transformer can be found <a href="https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast">here</a>.</p>
 <p>While ModelMesh Serving can handle both its original <code>Predictor</code> CRD and the KServe <code>InferenceService</code> CRD, there is work being done to
 eventually have both KServe and ModelMesh converge on the usage of <code>InferenceService</code> CRD.</p>
 <h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">¶</a></h2>
