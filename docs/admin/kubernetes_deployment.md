@@ -64,6 +64,7 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
     I. Install KServe
 
     ```bash
+    # --server-side option is required as the InferenceService CRD is large, see [this issue](https://github.com/kserve/kserve/issues/3487) for details.
     kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
     ```
 
@@ -72,8 +73,6 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
     ```bash
     kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve-cluster-resources.yaml
     ```
-!!! note
-    --server-side option is needed because the InferenceService CRD is too long to process, see [this issue](https://github.com/kserve/kserve/issues/3487) for details.
 
     III. Change default deployment mode and ingress option
 
