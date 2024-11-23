@@ -11,9 +11,9 @@ Kubernetes version.
 | 1.29               | 1.22, 1.23                |
 | 1.30               | 1.22, 1.23                |
 
-## 1. Install Istio 
+## 1. Install Ingress Controller 
 
-The minimally required Istio version is 1.22 and you can refer to the [Istio install guide](https://istio.io/latest/docs/setup/install).
+In this guide we choose to install Istio as ingress controller. The minimally required Istio version is 1.22 and you can refer to the [Istio install guide](https://istio.io/latest/docs/setup/install).
 
 Once Istio is installed, create `IngressClass` resource for istio.
 ```yaml
@@ -25,11 +25,9 @@ spec:
   controller: istio.io/ingress-controller
 ```
 
-
 !!! note 
     Istio ingress is recommended, but you can choose to install with other [Ingress controllers](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) and create `IngressClass` resource for your Ingress option.
-
-
+    
 
 ## 2. Install Cert Manager
 The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert Manager installation guide](https://cert-manager.io/docs/installation/).
@@ -48,6 +46,7 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
     ```shell
     helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v{{ kserve_release_version }}
     ```
+    
     II. Install KServe Resources
 
     Set the `kserve.controller.deploymentMode` to `RawDeployment` and `kserve.controller.gateway.ingressGateway.className` to point to the `IngressClass`
@@ -62,9 +61,9 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
 === "Install using YAML"
 
     I. Install KServe
+    `--server-side` option is required as the InferenceService CRD is large to apply client side, see [this issue](https://github.com/kserve/kserve/issues/3487) for details.
 
     ```bash
-    # --server-side option is required as the InferenceService CRD is large, see [this issue](https://github.com/kserve/kserve/issues/3487) for details.
     kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v{{  kserve_release_version }}/kserve.yaml
     ```
 
@@ -76,13 +75,13 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
 
     III. Change default deployment mode and ingress option
 
-    First in ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` in the `deploy` section,
+    First in the ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` in the `deploy` section to `RawDeployment`,
 
     ```bash
     kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'
     ```
 
-    then modify the `ingressClassName` in `ingress` section to point to `IngressClass` name created in [step 1](#1-install-istio).
+    then modify the `ingressClassName` in `ingress` section to the `IngressClass` name created in [step 1](#1-install-ingress-controller).
     ```yaml
     ingress: |-
     {
