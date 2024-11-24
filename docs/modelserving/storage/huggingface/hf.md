@@ -30,11 +30,12 @@ data:
 
 ## Deploy InferenceService with Models from HF Hub
 
-### Option 1:
+### Option 1: Use Service Account with Secret Ref
 Create a Kubernetes `ServiceAccount` with the HF token secret name reference and specify the `ServiceAccountName` in the `InferenceService` Spec.
 
 === "yaml"
 ```yaml
+cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -65,13 +66,15 @@ spec:
           cpu: "6"
           memory: 24Gi
           nvidia.com/gpu: "1"
+EOF
 ```
 
-### Option 2:
+### Option 2: Use Environment Variable with Secret Ref
 Create a Kubernete HF token and specify the HF token secret reference using environment variable in the `InferenceService` Spec.
 
 === "yaml"
 ```yaml
+cat <<EOF | kubectl apply -f -
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
@@ -101,6 +104,7 @@ spec:
               name: hf-secret
               key: HF_TOKEN
               optional: false
+EOF
 ```
 
 ## Check the InferenceService status.
