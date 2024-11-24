@@ -1,10 +1,6 @@
-# Deploy InferenceService with a saved model on Huggingface (HF)
+# Deploy InferenceService with model from Hugging Face(HF) Hub
 
-## Using Public HuggingFace Repo
-
-If no credential is provided, anonymous client will be used to download the model from HF repo.
-The uri is in the following format:
-
+You can specify the `storageUri` field on `InferenceService` YAML with the following format to deploy the models from Hugging Face Hub.
 
 ```
 hf://${REPO}/${MODEL}:${HASH}(optional)
@@ -12,11 +8,14 @@ hf://${REPO}/${MODEL}:${HASH}(optional)
 
 e.g. ```hf://facebook/opt-125m```
 
-## Using Private HuggingFace Repo
+## Public Hugging Face Models
 
-KServe supports authenticating with HF_TOKEN for downloading the model.
+If no credential is provided, anonymous client will be used to download the model from HF repo.
 
-### Create secret and attach the secret to service account
+## Private Hugging Face Models
+
+KServe supports authenticating with `HF_TOKEN` for downloading the model and create a Kubernetes secret to store the HF token.
+
 === "yaml"
 ```yaml
 apiVersion: v1
@@ -26,23 +25,23 @@ metadata:
 type: Opaque
 data:
   HF_TOKEN: aGZfVk5Vd1JVAUdCa0l4WmZMTHVrc2VHeW9VVm9udU5pBHUVT==
----
+```
+
+
+## Deploy InferenceService with Models from HF Hub
+
+### Option 1:
+Create a Kubernetes `ServiceAccount` with the HF token secret name reference and specify the `ServiceAccountName` in the `InferenceService` Spec.
+
+=== "yaml"
+```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hfserviceacc
 secrets:
   - name: storage-config
-```
-
-Specify the ServiceAccountName in InferenceService Spec
-
-## Deploy the model on HF with `InferenceService`
-
-Create the InferenceService with the a saved model on HF
-
-=== "yaml"
-```yaml
+---
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
@@ -54,9 +53,37 @@ spec:
       modelFormat:
         name: huggingface
       args:
-        - --model_name=llama2
+        - --model_name=llama3
         - --model_dir=/mnt/models
-        - --backend=huggingface
+      storageUri: hf://meta-llama/meta-llama-3-8b-instruct
+      resources:
+        limits:
+          cpu: "6"
+          memory: 24Gi
+          nvidia.com/gpu: "1"
+        requests:
+          cpu: "6"
+          memory: 24Gi
+          nvidia.com/gpu: "1"
+```
+
+### Option 2:
+Create a Kubernete HF token and specify the HF token secret reference using environment variable in the `InferenceService` Spec.
+
+=== "yaml"
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: huggingface-llama3
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: huggingface
+      args:
+        - --model_name=llama3
+        - --model_dir=/mnt/models
       storageUri: hf://meta-llama/meta-llama-3-8b-instruct
       resources:
         limits:
@@ -76,21 +103,14 @@ spec:
               optional: false
 ```
 
-Apply the `hf-llama3.yaml`.
-
-=== "kubectl"
-```bash
-kubectl apply -f hf-llama3.yaml
-```
-
-
-### Check `InferenceService` status.
+## Check the InferenceService status.
 
 ```bash
 kubectl get inferenceservices huggingface-llama3
 ```
 
 !!! success "Expected Output"
+
     ```{ .bash .no-copy }
     NAME                 URL                                                   READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                          AGE
     huggingface-llama3   http://huggingface-llama3.default.example.com         True           100                              huggingface-llama3-predictor-default-47q2g   7d23h
