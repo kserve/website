@@ -186,7 +186,7 @@ Depending on your setup, use one of the following commands to curl the `Inferenc
     curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict -d @./iris-input.json
     ```
 
-=== "Client"
+=== "Inference Python Client"
 
     If you want to use InferenceClient to perform the inference, you can follow the below example
     ```python

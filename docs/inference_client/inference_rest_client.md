@@ -20,7 +20,7 @@ Configuration class for REST client settings.
 parameter | Type | Description
 ------------ | ------------- | -------------
 transport | httpx.AsyncBaseTransport |  Custom transport for HTTP requests. |
-protocol | Union[str, PredictorProtocol] | Protocol version, default is "v1". |
+protocol | Union[str, PredictorProtocol] | Protocol version v1 or v2, default is "v1". |
 retries | int | Number of retries for HTTP requests, default is 3. |
 http2 | bool | Whether to use HTTP/2, default is False. |
 timeout | (Union[float, None, tuple, httpx.Timeout]) | Timeout setting for HTTP requests, default is 60 seconds. |
@@ -180,7 +180,7 @@ Return Type: `bool`
 
 > is_server_live(base_url, headers=None, timeout=USE_CLIENT_DEFAULT) ~async~
 
-Get liveness of the inference server.
+Return the liveness status of the inference server.
 
 ### Example
 
@@ -222,7 +222,7 @@ Return Type: `bool`
 
 > is_model_ready(base_url, model_name, headers=None, timeout=USE_CLIENT_DEFAULT) ~async~
 
-Get readiness of the specified model.
+Return the readiness status of the specified model.
 
 ### Example
 
