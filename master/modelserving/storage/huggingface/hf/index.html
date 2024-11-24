@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/modelserving/v1beta1/llm/vllm/" rel="canonical"/>
+<link href="https://kserve.io/website/master/modelserving/storage/huggingface/hf/" rel="canonical"/>
 <link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Index - KServe Documentation Website</title>
+<title>Hugging Face - KServe Documentation Website</title>
 <link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#vllm-runtime">
+<a class="md-skip" href="#deploy-inferenceservice-with-model-from-hugging-facehf-hub">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Index
+              Hugging Face
             
           </span>
 </div>
@@ -125,7 +125,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../control_plane/">
+<a class="md-tabs__link md-tabs__link--active" href="../../../control_plane/">
         User Guide
       </a>
 </li>
@@ -287,8 +287,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
@@ -414,57 +414,57 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../serving_runtime/">
+<a class="md-nav__link" href="../../../v1beta1/serving_runtime/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../tensorflow/">
+<a class="md-nav__link" href="../../../v1beta1/tensorflow/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../torchserve/">
+<a class="md-nav__link" href="../../../v1beta1/torchserve/">
         PyTorch
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sklearn/v2/">
+<a class="md-nav__link" href="../../../v1beta1/sklearn/v2/">
         Scikit-learn
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../xgboost/">
+<a class="md-nav__link" href="../../../v1beta1/xgboost/">
         XGBoost
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../pmml/">
+<a class="md-nav__link" href="../../../v1beta1/pmml/">
         PMML
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../spark/">
+<a class="md-nav__link" href="../../../v1beta1/spark/">
         Spark MLlib
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../lightgbm/">
+<a class="md-nav__link" href="../../../v1beta1/lightgbm/">
         LightGBM
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../paddle/">
+<a class="md-nav__link" href="../../../v1beta1/paddle/">
         Paddle
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../mlflow/v2/">
+<a class="md-nav__link" href="../../../v1beta1/mlflow/v2/">
         MLFlow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../onnx/">
+<a class="md-nav__link" href="../../../v1beta1/onnx/">
         ONNX
       </a>
 </li>
@@ -496,17 +496,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../triton/torchscript/">
+<a class="md-nav__link" href="../../../v1beta1/triton/torchscript/">
         Torchscript
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../triton/bert/">
+<a class="md-nav__link" href="../../../v1beta1/triton/bert/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../triton/huggingface/">
+<a class="md-nav__link" href="../../../v1beta1/triton/huggingface/">
         Hugging Face
       </a>
 </li>
@@ -514,7 +514,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../amd/">
+<a class="md-nav__link" href="../../../v1beta1/amd/">
         AMD
       </a>
 </li>
@@ -546,37 +546,37 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/text_generation/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/text_generation/">
         Text Generation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/text2text_generation/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/text2text_generation/">
         Text2Text Generation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/token_classification/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/token_classification/">
         Token Classification
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/text_classification/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/text_classification/">
         Text Classification
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/fill_mask/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/fill_mask/">
         Fill Mask
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../huggingface/sdk_integration/">
+<a class="md-nav__link" href="../../../v1beta1/llm/huggingface/sdk_integration/">
         SDK Integration
       </a>
 </li>
@@ -584,7 +584,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../torchserve/accelerate/">
+<a class="md-nav__link" href="../../../v1beta1/llm/torchserve/accelerate/">
         TorchServe LLM
       </a>
 </li>
@@ -592,7 +592,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../custom/custom_model/">
+<a class="md-nav__link" href="../../../v1beta1/custom/custom_model/">
         How to write a custom predictor
       </a>
 </li>
@@ -652,17 +652,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../transformer/feast/">
+<a class="md-nav__link" href="../../../v1beta1/transformer/feast/">
         Feast
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../transformer/torchserve_image_transformer/">
+<a class="md-nav__link" href="../../../v1beta1/transformer/torchserve_image_transformer/">
         How to write a custom transformer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../transformer/collocation/">
+<a class="md-nav__link" href="../../../v1beta1/transformer/collocation/">
         Collocate transformer and predictor
       </a>
 </li>
@@ -694,8 +694,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_6">
           Model Storage
           <span class="md-nav__icon md-icon"></span>
@@ -707,32 +707,32 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/storagecontainers/">
+<a class="md-nav__link" href="../../storagecontainers/">
         Storage Containers
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/azure/azure/">
+<a class="md-nav__link" href="../../azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/pvc/pvc/">
+<a class="md-nav__link" href="../../pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/s3/s3/">
+<a class="md-nav__link" href="../../s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/oci/">
+<a class="md-nav__link" href="../../oci/">
         OCI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/uri/uri/">
+<a class="md-nav__link" href="../../uri/uri/">
         URI
       </a>
 </li>
@@ -742,14 +742,61 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/gcs/gcs/">
+<a class="md-nav__link" href="../../gcs/gcs/">
         GCS
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../storage/huggingface/hf/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Hugging Face
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Hugging Face
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#public-hugging-face-models">
+    Public Hugging Face Models
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#private-hugging-face-models">
+    Private Hugging Face Models
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-inferenceservice-with-models-from-hf-hub">
+    Deploy InferenceService with Models from HF Hub
+  </a>
+<nav aria-label="Deploy InferenceService with Models from HF Hub" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#option-1-use-service-account-with-secret-ref">
+    Option 1: Use Service Account with Secret Ref
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#option-2-use-environment-variable-with-secret-ref">
+    Option 2: Use Environment Variable with Secret Ref
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-the-inferenceservice-status">
+    Check the InferenceService status.
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -962,12 +1009,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../rollout/canary/">
+<a class="md-nav__link" href="../../../v1beta1/rollout/canary/">
         Canary
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../rollout/canary-example/">
+<a class="md-nav__link" href="../../../v1beta1/rollout/canary-example/">
         Canary Example
       </a>
 </li>
@@ -1187,8 +1234,37 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#vllm-runtime">
-    vLLM Runtime
+<a class="md-nav__link" href="#public-hugging-face-models">
+    Public Hugging Face Models
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#private-hugging-face-models">
+    Private Hugging Face Models
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deploy-inferenceservice-with-models-from-hf-hub">
+    Deploy InferenceService with Models from HF Hub
+  </a>
+<nav aria-label="Deploy InferenceService with Models from HF Hub" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#option-1-use-service-account-with-secret-ref">
+    Option 1: Use Service Account with Secret Ref
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#option-2-use-environment-variable-with-secret-ref">
+    Option 2: Use Environment Variable with Secret Ref
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-the-inferenceservice-status">
+    Check the InferenceService status.
   </a>
 </li>
 </ul>
@@ -1198,12 +1274,120 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/llm/vllm/README.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/storage/huggingface/hf.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>Index</h1>
-<h2 id="vllm-runtime">vLLM Runtime<a class="headerlink" href="#vllm-runtime" title="Permanent link">¶</a></h2>
-<p>The official vLLM support is available through <a href="https://kserve.github.io/website/master/modelserving/v1beta1/llm/huggingface/">Hugging Face Serving Runtime</a>.</p>
+<h1 id="deploy-inferenceservice-with-model-from-hugging-facehf-hub">Deploy InferenceService with model from Hugging Face(HF) Hub<a class="headerlink" href="#deploy-inferenceservice-with-model-from-hugging-facehf-hub" title="Permanent link">¶</a></h1>
+<p>You can specify the <code>storageUri</code> field on <code>InferenceService</code> YAML with the following format to deploy the models from Hugging Face Hub.</p>
+<div class="highlight"><pre><span></span><code>hf://${REPO}/${MODEL}:${HASH}(optional)
+</code></pre></div>
+<p>e.g. <code>hf://facebook/opt-125m</code></p>
+<h2 id="public-hugging-face-models">Public Hugging Face Models<a class="headerlink" href="#public-hugging-face-models" title="Permanent link">¶</a></h2>
+<p>If no credential is provided, anonymous client will be used to download the model from HF repo.</p>
+<h2 id="private-hugging-face-models">Private Hugging Face Models<a class="headerlink" href="#private-hugging-face-models" title="Permanent link">¶</a></h2>
+<p>KServe supports authenticating with <code>HF_TOKEN</code> for downloading the model and create a Kubernetes secret to store the HF token.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-config</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">HF_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aGZfVk5Vd1JVAUdCa0l4WmZMTHVrc2VHeW9VVm9udU5pBHUVT==</span>
+</code></pre></div>
+<h2 id="deploy-inferenceservice-with-models-from-hf-hub">Deploy InferenceService with Models from HF Hub<a class="headerlink" href="#deploy-inferenceservice-with-models-from-hf-hub" title="Permanent link">¶</a></h2>
+<h3 id="option-1-use-service-account-with-secret-ref">Option 1: Use Service Account with Secret Ref<a class="headerlink" href="#option-1-use-service-account-with-secret-ref" title="Permanent link">¶</a></h3>
+<p>Create a Kubernetes <code>ServiceAccount</code> with the HF token secret name reference and specify the <code>ServiceAccountName</code> in the <code>InferenceService</code> Spec.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl apply -f -</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hfserviceacc</span>
+<span class="nt">secrets</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-config</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hfserviceacc</span><span class="w">  </span><span class="c1"># Option 1 for authenticating with HF_TOKEN</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_dir=/mnt/models</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h3 id="option-2-use-environment-variable-with-secret-ref">Option 2: Use Environment Variable with Secret Ref<a class="headerlink" href="#option-2-use-environment-variable-with-secret-ref" title="Permanent link">¶</a></h3>
+<p>Create a Kubernete HF token and specify the HF token secret reference using environment variable in the <code>InferenceService</code> Spec.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl apply -f -</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_dir=/mnt/models</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span><span class="w">  </span><span class="c1"># Option 2 for authenticating with HF_TOKEN</span>
+<span class="w">          </span><span class="nt">valueFrom</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf-secret</span>
+<span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
+<span class="w">              </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="check-the-inferenceservice-status">Check the InferenceService status.<a class="headerlink" href="#check-the-inferenceservice-status" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-llama3
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                 </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
+huggingface-llama3<span class="w">   </span>http://huggingface-llama3.default.example.com<span class="w">         </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>huggingface-llama3-predictor-default-47q2g<span class="w">   </span>7d23h
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>
@@ -1213,6 +1397,34 @@
           </a>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: GCS" class="md-footer__link md-footer__link--prev" href="../../gcs/gcs/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              GCS
+            </div>
+</div>
+</a>
+<a aria-label="Next: Concept" class="md-footer__link md-footer__link--next" href="../../../explainer/explainer/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Concept
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">

@@ -269,6 +269,10 @@
          <lastmod>2024-11-24</lastmod>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/modelserving/storage/huggingface/hf/</loc>
+         <lastmod>2024-11-24</lastmod>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/modelserving/storage/pvc/pvc/</loc>
          <lastmod>2024-11-24</lastmod>
     </url>
