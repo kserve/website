@@ -137,6 +137,18 @@
          <lastmod>2024-11-24</lastmod>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/inference_client/doc/</loc>
+         <lastmod>2024-11-24</lastmod>
+    </url>
+    <url>
+         <loc>https://kserve.io/website/master/inference_client/inference_grpc_client/</loc>
+         <lastmod>2024-11-24</lastmod>
+    </url>
+    <url>
+         <loc>https://kserve.io/website/master/inference_client/inference_rest_client/</loc>
+         <lastmod>2024-11-24</lastmod>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/modelserving/control_plane/</loc>
          <lastmod>2024-11-24</lastmod>
     </url>

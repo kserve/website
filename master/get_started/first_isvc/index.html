@@ -1086,6 +1086,11 @@
         Python Runtime Server SDK
       </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../inference_client/doc/">
+        Inference Python Client
+      </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1407,7 +1412,7 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <span class="s">EOF</span>
 </code></pre></div>
 <p>Depending on your setup, use one of the following commands to curl the <code>InferenceService</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:4"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Real DNS</label><label for="__tabbed_3_2">Magic DNS</label><label for="__tabbed_3_3">From Ingress gateway with HOST Header</label><label for="__tabbed_3_4">From local cluster gateway</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:5"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><input id="__tabbed_3_5" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Real DNS</label><label for="__tabbed_3_2">Magic DNS</label><label for="__tabbed_3_3">From Ingress gateway with HOST Header</label><label for="__tabbed_3_4">From local cluster gateway</label><label for="__tabbed_3_5">Inference Python Client</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>If you have configured the DNS, you can directly curl the <code>InferenceService</code> with the URL obtained from the status print.
@@ -1443,8 +1448,21 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
 </code></pre></div></class></p>
 </div>
+<div class="tabbed-block">
+<p>If you want to use InferenceClient to perform the inference, you can follow the below example
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v1"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">InferenceRESTClient</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="s2">"http://sklearn-iris.kserve-test"</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"instances"</span><span class="p">:</span> <span class="p">[[</span><span class="mf">6.8</span><span class="p">,</span>  <span class="mf">2.8</span><span class="p">,</span>  <span class="mf">4.8</span><span class="p">,</span>  <span class="mf">1.4</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span>  <span class="mf">3.4</span><span class="p">,</span>  <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">1.6</span><span class="p">]]}</span>
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">"sklearn-iris"</span>
+<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></p>
 </div>
-</input></input></input></input></div>
+</div>
+</input></input></input></input></input></div>
 <p>You should see two predictions returned (i.e. <code>{"predictions": [1, 1]}</code>). Both sets of data points sent for inference correspond to the flower with index <code>1</code>.
 In this case, the model predicts that both flowers are "Iris Versicolour".</p>
 <h3 id="6-run-performance-test-optional">6. Run performance test (optional)<a class="headerlink" href="#6-run-performance-test-optional" title="Permanent link">¶</a></h3>
