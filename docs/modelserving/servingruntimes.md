@@ -80,9 +80,9 @@ Available attributes in the `ServingRuntime` spec:
 
 ModelMesh leverages additional fields not listed here. More information [here](https://github.com/kserve/modelmesh-serving/blob/main/docs/runtimes/custom_runtimes.md#spec-attributes).
 
->**Note:** `ServingRuntimes` support the use of template variables of the form `{{.Variable}}` inside the container spec. These should map to fields inside an
+**Note:** `ServingRuntimes` support the use of template variables of the form `{{ '{{' }}.Variable{{ '}}'}}` inside the container spec. These should map to fields inside an
 InferenceService's [metadata object](https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#ObjectMeta). The primary use of this is for passing in
-InferenceService-specific information, such as a name, to the runtime environment. Several of the out-of-box ClusterServingRuntimes make use of this by having `--model_name={{.Name}}` inside the
+InferenceService-specific information, such as a name, to the runtime environment. Several of the out-of-box ClusterServingRuntimes make use of this by having `--model_name={{ '{{' }}.Name{{ '}}' }}` inside the
 runtime container args to ensure that when a user deploys an InferenceService, the name is passed to the server.
 
 ## Using ServingRuntimes
@@ -111,6 +111,22 @@ Here, the runtime specified is `kserve-mlserver`, so the KServe controller will 
 none exist, the controller will then search the list of ClusterServingRuntimes. If one is found, the controller will first
 verify that the `modelFormat` provided in the predictor is in the list of `supportedModelFormats`. If it is, then the container and pod information provided
 by the runtime will be used for model deployment.
+
+!!! Note
+    The model serving runtime version can be overwritten with the `runtimeVersion` field on InferenceService yaml and we highly recommend
+    setting this field for production services.
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "torchscript-cifar"
+    spec:
+      predictor:
+        triton:
+          storageUri: "gs://kfserving-examples/models/torchscript"
+          runtimeVersion: 21.08-py3
+    ```
 
 ### Implicit: Automatic selection
 

@@ -82,8 +82,10 @@ SERVICE_HOSTNAME=$(kubectl get inferenceservice bloom7b1 -o jsonpath='{.status.u
 curl -v \
   -H "Host: ${SERVICE_HOSTNAME}" \
   -H "Content-Type: application/json" \
-  -d @./text.json \
+  -d '{"instances": ["My dog is cute."]}' \
   http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/bloom7b1:predict
-
-{"predictions":["My dog is cute.\nNice.\n- Hey, Mom.\n- Yeah?\nWhat color's your dog?\n- It's gray.\n- Gray?\nYeah.\nIt looks gray to me.\n- Where'd you get it?\n- Well, Dad says it's kind of...\n- Gray?\n- Gray.\nYou got a gray dog?\n- It's gray.\n- Gray.\nIs your dog gray?\nAre you sure?\nNo.\nYou sure"]}
 ```
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    {"predictions":["My dog is cute.\nNice.\n- Hey, Mom.\n- Yeah?\nWhat color's your dog?\n- It's gray.\n- Gray?\nYeah.\nIt looks gray to me.\n- Where'd you get it?\n- Well, Dad says it's kind of...\n- Gray?\n- Gray.\nYou got a gray dog?\n- It's gray.\n- Gray.\nIs your dog gray?\nAre you sure?\nNo.\nYou sure"]}
+    ```

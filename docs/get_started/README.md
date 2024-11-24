@@ -13,6 +13,8 @@ You can use [`kind`](https://kind.sigs.k8s.io/docs/user/quick-start){target=_bla
 
 The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-kubectl){target=_blank}, allows you to run commands against Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and manage cluster resources, and view logs.
 
+### Install Helm
+The [Helm](https://helm.sh/docs/intro/install/){target=_blank} package manager for Kubernetes helps you define, install and upgrade software built for Kubernetes.
 
 ## Install the KServe "Quickstart" environment
 1. After having kind installed, create a `kind` cluster with:
@@ -31,17 +33,10 @@ The [Kubernetes CLI (`kubectl`)](https://kubernetes.io/docs/tasks/tools/install-
     ```bash
     kubectl config use-context kind-kind
     ```
-
     to use this context.
 
 3. You can then get started with a local deployment of KServe by using _KServe Quick installation script on Kind_:
 
     ```bash
-    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.13/hack/quick_install.sh" | bash
+    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{ kserve_release_version | replace('.0', '') }}/hack/quick_install.sh" | bash
     ```
-
-    or install via our published Helm Charts:
-   ```bash
-   helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v{{  kserve_release_version }}
-   helm install kserve oci://ghcr.io/kserve/charts/kserve --version v{{  kserve_release_version }}
-   ```

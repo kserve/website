@@ -90,6 +90,202 @@ int
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterLocalModel">ClusterLocalModel
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ClusterLocalModelSpec">
+ClusterLocalModelSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>sourceModelUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Original StorageUri</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelSize</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Model size to make sure it does not exceed the disk space reserved for local models. The limit is defined on the NodeGroup.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeGroup</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>group of nodes to cache the model on.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">
+ClusterLocalModelStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterLocalModelSpec">ClusterLocalModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModel">ClusterLocalModel</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sourceModelUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Original StorageUri</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelSize</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Model size to make sure it does not exceed the disk space reserved for local models. The limit is defined on the NodeGroup.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeGroup</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>group of nodes to cache the model on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModel">ClusterLocalModel</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodeStatus</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.NodeStatus">
+map[string]kserve.io/serving/pkg/apis/serving/v1alpha1.NodeStatus
+</a>
+</em>
+</td>
+<td>
+<p>Status of the model on a node, like NodeDownloaded or NodeNotReady</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>copies</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ModelCopies">
+ModelCopies
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>How many nodes have the model available locally</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>inferenceServices</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.NamespacedName">
+[]NamespacedName
+</a>
+</em>
+</td>
+<td>
+<p>Inference services using this local model</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime
 </h3>
 <div>
@@ -177,6 +373,20 @@ bool
 <td>
 <em>(Optional)</em>
 <p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set WorkerSpec to enable multi-node/multi-gpu</p>
 </td>
 </tr>
 <tr>
@@ -353,6 +563,18 @@ Kubernetes core/v1.Container
 </td>
 <td>
 <p>List of URI formats that this container supports</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workloadType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkloadType">
+WorkloadType
+</a>
+</em>
+</td>
+<td>
 </td>
 </tr>
 </table>
@@ -706,6 +928,14 @@ knative.dev/pkg/apis.URL
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraphValidator">InferenceGraphValidator
+</h3>
+<div>
+<p>InferenceGraphValidator is responsible for setting default values on the InferenceGraph resources
+when created or updated.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as it is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
 <h3 id="serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter
 </h3>
 <p>
@@ -1048,6 +1278,242 @@ string
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1alpha1.LocalModelNodeGroup">LocalModelNodeGroup
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroupSpec">
+LocalModelNodeGroupSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>storageLimit</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Max storage size per node in this node group</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumespec-v1-core">
+Kubernetes core/v1.PersistentVolumeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumes for downloading models and in inference service namespaces</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeClaimSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumeclaimspec-v1-core">
+Kubernetes core/v1.PersistentVolumeClaimSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumeClaims for download and in inference service namespaces</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroupStatus">
+LocalModelNodeGroupStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.LocalModelNodeGroupSpec">LocalModelNodeGroupSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroup">LocalModelNodeGroup</a>)
+</p>
+<div>
+<p>LocalModelNodeGroupSpec defines a group of nodes for to download the model to.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>storageLimit</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Max storage size per node in this node group</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumespec-v1-core">
+Kubernetes core/v1.PersistentVolumeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumes for downloading models and in inference service namespaces</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeClaimSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumeclaimspec-v1-core">
+Kubernetes core/v1.PersistentVolumeClaimSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumeClaims for download and in inference service namespaces</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.LocalModelNodeGroupStatus">LocalModelNodeGroupStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroup">LocalModelNodeGroup</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>used</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Used storage space on any node for this node group</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>available</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Available storage space on any node for this node group</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ModelCopies">ModelCopies
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>available</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>total</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Total number of nodes that we expect the model to be downloaded. Including nodes that are not ready</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>failed</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Download Failed</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1alpha1.ModelSpec">ModelSpec
 </h3>
 <p>
@@ -1099,6 +1565,76 @@ k8s.io/apimachinery/pkg/api/resource.Quantity
 </td>
 </tr>
 </tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.NamespacedName">NamespacedName
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>namespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.NodeStatus">NodeStatus
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus</a>)
+</p>
+<div>
+<p>NodeStatus enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;NodeDeleted&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeDeleting&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeDeletionError&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeDownloadError&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeDownloadPending&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeDownloaded&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeDownloading&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;NodeNotReady&#34;</p></td>
+<td></td>
+</tr></tbody>
 </table>
 <h3 id="serving.kserve.io/v1alpha1.ScaleMetric">ScaleMetric
 (<code>string</code> alias)</h3>
@@ -1225,6 +1761,20 @@ bool
 </tr>
 <tr>
 <td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set WorkerSpec to enable multi-node/multi-gpu</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>ServingRuntimePodSpec</code><br/>
 <em>
 <a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
@@ -1337,7 +1887,7 @@ ServingRuntimeStatus
 <h3 id="serving.kserve.io/v1alpha1.ServingRuntimePodSpec">ServingRuntimePodSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>, <a href="#serving.kserve.io/v1alpha1.WorkerSpec">WorkerSpec</a>)
 </p>
 <div>
 </div>
@@ -1465,6 +2015,19 @@ in the case of docker, only DockerConfig type secrets are honored.
 More info: <a href="https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod">https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod</a></p>
 </td>
 </tr>
+<tr>
+<td>
+<code>hostIPC</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Use the host&rsquo;s ipc namespace.
+Optional: Default to false.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec
@@ -1532,6 +2095,20 @@ bool
 <td>
 <em>(Optional)</em>
 <p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set WorkerSpec to enable multi-node/multi-gpu</p>
 </td>
 </tr>
 <tr>
@@ -1678,6 +2255,18 @@ Kubernetes core/v1.Container
 </td>
 <td>
 <p>List of URI formats that this container supports</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workloadType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkloadType">
+WorkloadType
+</a>
+</em>
+</td>
+<td>
 </td>
 </tr>
 </tbody>
@@ -2042,10 +2631,83 @@ http://<inferenceservice.metadata.name>/v1/models/<trainedmodel>.metadata.name</
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModelValidator">TrainedModelValidator
+</h3>
+<div>
+<p>TrainedModelValidator is responsible for setting default values on the TrainedModel resources
+when created or updated.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as it is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
+<h3 id="serving.kserve.io/v1alpha1.WorkerSpec">WorkerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+<p>WorkerSpec is the schema for multi-node/multi-GPU feature</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>size</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the worker set, each worker set represents the unit of scaling</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.WorkloadType">WorkloadType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.StorageContainerSpec">StorageContainerSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>&#34;initContainer&#34;</p></td>
+<td></td>
+</tr><tr><td><p>&#34;localModelDownloadJob&#34;</p></td>
+<td></td>
+</tr></tbody>
+</table>
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>1c51eeee</code>.
+on git commit <code>7e436424</code>.
 </em></p>
 <h2 id="serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</h2>
 <div>
@@ -2321,8 +2983,8 @@ map[string]string
 </td>
 <td>
 <em>(Optional)</em>
-<p>Labels that will be add to the component pod.
-More info: <a href="http://kubernetes.io/docs/user-guide/labels">http://kubernetes.io/docs/user-guide/labels</a></p>
+<p>Labels that will be added to the component pod.
+More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/</a></p>
 </td>
 </tr>
 <tr>
@@ -2334,8 +2996,8 @@ map[string]string
 </td>
 <td>
 <em>(Optional)</em>
-<p>Annotations that will be add to the component pod.
-More info: <a href="http://kubernetes.io/docs/user-guide/annotations">http://kubernetes.io/docs/user-guide/annotations</a></p>
+<p>Annotations that will be added to the component pod.
+More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/</a></p>
 </td>
 </tr>
 <tr>
@@ -3112,6 +3774,14 @@ InferenceServiceStatus
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.InferenceServiceDefaulter">InferenceServiceDefaulter
+</h3>
+<div>
+<p>InferenceServiceDefaulter is responsible for setting default values on the InferenceService
+when created or updated.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as it is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
 <h3 id="serving.kserve.io/v1beta1.InferenceServiceSpec">InferenceServiceSpec
 </h3>
 <p>
@@ -3268,6 +3938,14 @@ ModelStatus
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.InferenceServiceValidator">InferenceServiceValidator
+</h3>
+<div>
+<p>InferenceServiceValidator is responsible for validating the InferenceService resource
+when it is created, updated, or deleted.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as this struct is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
 <h3 id="serving.kserve.io/v1beta1.InferenceServicesConfig">InferenceServicesConfig
 </h3>
 <div>
@@ -3319,7 +3997,7 @@ string
 </tr>
 <tr>
 <td>
-<code>ingressService</code><br/>
+<code>knativeLocalGatewayService</code><br/>
 <em>
 string
 </em>
@@ -3463,6 +4141,60 @@ PredictorExtensionSpec
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.LocalModelConfig">LocalModelConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>jobNamespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>defaultJobImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>fsGroup</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.LoggerSpec">LoggerSpec
 </h3>
 <p>
@@ -3509,6 +4241,18 @@ Valid values are: <br />
 - &ldquo;response&rdquo;: log only response <br /></p>
 </td>
 </tr>
+<tr>
+<td>
+<code>metadataHeaders</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Matched metadata HTTP headers for propagating to inference logger cloud events.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.LoggerType">LoggerType
@@ -3527,13 +4271,13 @@ Valid values are: <br />
 </tr>
 </thead>
 <tbody><tr><td><p>&#34;all&#34;</p></td>
-<td><p>Logger mode to log both request and response</p>
+<td><p>LogAll Logger mode to log both request and response</p>
 </td>
 </tr><tr><td><p>&#34;request&#34;</p></td>
-<td><p>Logger mode to log only request</p>
+<td><p>LogRequest Logger mode to log only request</p>
 </td>
 </tr><tr><td><p>&#34;response&#34;</p></td>
-<td><p>Logger mode to log only response</p>
+<td><p>LogResponse Logger mode to log only response</p>
 </td>
 </tr></tbody>
 </table>
@@ -3925,7 +4669,7 @@ PredictorExtensionSpec
 <h3 id="serving.kserve.io/v1beta1.PodSpec">PodSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>, <a href="#serving.kserve.io/v1beta1.TransformerSpec">TransformerSpec</a>)
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>, <a href="#serving.kserve.io/v1beta1.TransformerSpec">TransformerSpec</a>, <a href="#serving.kserve.io/v1beta1.WorkerSpec">WorkerSpec</a>)
 </p>
 <div>
 <p>PodSpec is a description of a pod.</p>
@@ -4836,6 +5580,19 @@ ModelSpec
 </tr>
 <tr>
 <td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<p>WorkerSpec for enabling multi-node/multi-gpu</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>PodSpec</code><br/>
 <em>
 <a href="#serving.kserve.io/v1beta1.PodSpec">
@@ -4930,6 +5687,30 @@ PredictorExtensionSpec
 </tr><tr><td><p>&#34;rps&#34;</p></td>
 <td></td>
 </tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.SecurityConfig">SecurityConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>autoMountServiceAccountToken</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
 </table>
 <h3 id="serving.kserve.io/v1beta1.StorageSpec">StorageSpec
 </h3>
@@ -5182,6 +5963,50 @@ PredictorExtensionSpec
 </tr>
 </tbody>
 </table>
+<h3 id="serving.kserve.io/v1beta1.WorkerSpec">WorkerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PodSpec">
+PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>size</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the worker set, each worker set represents the unit of scaling</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec
 </h3>
 <p>
@@ -5219,5 +6044,5 @@ PredictorExtensionSpec
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>1c51eeee</code>.
+on git commit <code>7e436424</code>.
 </em></p>
