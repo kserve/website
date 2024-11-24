@@ -109,6 +109,7 @@ nav:
           - Open Inference Protocol API Spec: reference/swagger-ui.md
           - Python Client SDK: sdk_docs/sdk_doc.md
           - Python Runtime Server SDK: python_runtime_api/docs/index.md
+          - Inference Python Client: inference_client/doc.md
     - Developer Guide:
           - How to contribute: developer/developer.md
           - Debugging guide: developer/debug.md
