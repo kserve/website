@@ -292,8 +292,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#1-install-istio">
-    1. Install Istio
+<a class="md-nav__link" href="#1-install-ingress-controller">
+    1. Install Ingress Controller
   </a>
 </li>
 <li class="md-nav__item">
@@ -1220,8 +1220,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#1-install-istio">
-    1. Install Istio
+<a class="md-nav__link" href="#1-install-ingress-controller">
+    1. Install Ingress Controller
   </a>
 </li>
 <li class="md-nav__item">
@@ -1246,7 +1246,7 @@
 </a>
 <h1 id="kubernetes-deployment-installation-guide">Kubernetes Deployment Installation Guide<a class="headerlink" href="#kubernetes-deployment-installation-guide" title="Permanent link">¶</a></h1>
 <p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
-<p>Kubernetes 1.22 is the minimally required version and please check the following recommended Istio versions for the corresponding
+<p>Kubernetes 1.28 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.</p>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">¶</a></h2>
 <table>
@@ -1258,21 +1258,21 @@ Kubernetes version.</p>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">1.27</td>
-<td style="text-align: left;">1.18, 1.19</td>
-</tr>
-<tr>
 <td style="text-align: left;">1.28</td>
-<td style="text-align: left;">1.19, 1.20</td>
+<td style="text-align: left;">1.22</td>
 </tr>
 <tr>
 <td style="text-align: left;">1.29</td>
-<td style="text-align: left;">1.20, 1.21</td>
+<td style="text-align: left;">1.22, 1.23</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.30</td>
+<td style="text-align: left;">1.22, 1.23</td>
 </tr>
 </tbody>
 </table>
-<h2 id="1-install-istio">1. Install Istio<a class="headerlink" href="#1-install-istio" title="Permanent link">¶</a></h2>
-<p>The minimally required Istio version is 1.13 and you can refer to the <a href="https://istio.io/latest/docs/setup/install">Istio install guide</a>.</p>
+<h2 id="1-install-ingress-controller">1. Install Ingress Controller<a class="headerlink" href="#1-install-ingress-controller" title="Permanent link">¶</a></h2>
+<p>In this guide we choose to install Istio as ingress controller. The minimally required Istio version is 1.22 and you can refer to the <a href="https://istio.io/latest/docs/setup/install">Istio install guide</a>.</p>
 <p>Once Istio is installed, create <code>IngressClass</code> resource for istio.
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IngressClass</span>
@@ -1296,40 +1296,41 @@ Kubernetes version.</p>
 <p class="admonition-title">Note</p>
 <p>The default KServe deployment mode is <code>Serverless</code> which depends on Knative. The following step changes the default deployment mode to <code>RawDeployment</code> before installing KServe.</p>
 </div>
-<p><strong>i. Install KServe</strong></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Install using Helm</label><label for="__tabbed_1_2">Install using YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.13.0/kserve.yaml
+<p>I. Install KServe CRDs</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.14.0
+</code></pre></div>
+<p>II. Install KServe Resources</p>
+<p>Set the <code>kserve.controller.deploymentMode</code> to <code>RawDeployment</code> and <code>kserve.controller.gateway.ingressGateway.className</code> to point to the <code>IngressClass</code>
+name created in <a href="#1-install-ingress-controller">step 1</a>.</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.0<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>kserve.controller.deploymentMode<span class="o">=</span>RawDeployment<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.className<span class="o">=</span>your-ingress-class
 </code></pre></div>
 </div>
-</div>
-</input></div>
-<p>Install KServe default serving runtimes:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
-<div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.13.0/kserve-cluster-resources.yaml
+<p>I. Install KServe:
+<code>--server-side</code> option is required as the InferenceService CRD is large, see <a href="https://github.com/kserve/kserve/issues/3487">this issue</a> for details.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.0/kserve.yaml
 </code></pre></div>
-</div>
-</div>
-</input></div>
-<p><strong>ii. Change default deployment mode and ingress option</strong></p>
-<p>First in ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> in the <code>deploy</code> section,</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<p>II. Install KServe default serving runtimes:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.0/kserve-cluster-resources.yaml
+</code></pre></div>
+<p>III. Change default deployment mode and ingress option</p>
+<p>First in the ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> from the <code>deploy</code> section to <code>RawDeployment</code>,</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>configmap/inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>--type<span class="o">=</span>strategic<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'</span>
 </code></pre></div>
-</div>
-</div>
-</input></div>
-<p>then modify the <code>ingressClassName</code> in <code>ingress</code> section to point to <code>IngressClass</code> name created in <a href="#1-install-istio">step 1</a>.
-    <div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<p>then modify the <code>ingressClassName</code> from <code>ingress</code> section to the <code>IngressClass</code> name created in <a href="#1-install-ingress-controller">step 1</a>.
+<div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
 <span class="p p-Indicator">{</span>
 <span class="w">    </span><span class="s">"ingressClassName"</span><span class="nt"> </span><span class="p">:</span><span class="w"> </span><span class="s">"your-ingress-class"</span><span class="p p-Indicator">,</span>
 <span class="p p-Indicator">}</span>
 </code></pre></div></p>
+</div>
+</div>
+</input></input></div>
 </article>
 </div>
 </div>

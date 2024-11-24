@@ -1085,6 +1085,11 @@
     Checkout your fork
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#install-pre-commit-hooks">
+    Install pre-commit hooks
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1308,6 +1313,11 @@
     Checkout your fork
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#install-pre-commit-hooks">
+    Install pre-commit hooks
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1391,7 +1401,7 @@ meet these requirements, you can make changes and
 <h3 id="install-requirements">Install requirements<a class="headerlink" href="#install-requirements" title="Permanent link">¶</a></h3>
 <p>You must install these tools:</p>
 <ol>
-<li><a href="https://golang.org/doc/install"><code>go</code></a>: KServe controller is written in Go and requires Go 1.20.0+.</li>
+<li><a href="https://golang.org/doc/install"><code>go</code></a>: KServe controller is written in Go and requires Go 1.22.7+.</li>
 <li><a href="https://help.github.com/articles/set-up-git/"><code>git</code></a>: For source control.</li>
 <li><a href="https://blog.golang.org/using-go-modules"><code>Go Module</code></a>: Go's new dependency management system.</li>
 <li><a href="https://github.com/google/ko"><code>ko</code></a>:
@@ -1400,6 +1410,8 @@ meet these requirements, you can make changes and
    managing development environments.</li>
 <li><a href="https://github.com/kubernetes-sigs/kustomize/"><code>kustomize</code></a> To customize YAMLs for different environments, requires v5.0.0+.</li>
 <li><a href="https://github.com/mikefarah/yq"><code>yq</code></a> yq is used in the project makefiles to parse and display YAML output, requires yq <code>4.*</code>.</li>
+<li><a href="https://pre-commit.com/"><code>pre-commit</code></a> pre-commit is used to run checks on the codebase before committing changes.</li>
+<li><a href="https://helm.sh/docs/intro/install/"><code>helm</code></a> Helm is used to install Kserve.</li>
 </ol>
 <h3 id="install-knative-on-a-kubernetes-cluster">Install Knative on a Kubernetes cluster<a class="headerlink" href="#install-knative-on-a-kubernetes-cluster" title="Permanent link">¶</a></h3>
 <p>KServe currently requires <code>Knative Serving</code> for auto-scaling, canary rollout, <code>Istio</code> for traffic routing and ingress.</p>
@@ -1410,7 +1422,7 @@ use the <a href="https://knative.dev/docs/install/operator/knative-with-operator
 they can be installed via the <a href="https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md">directions here</a>.</p>
 </li>
 <li>
-<p>If you start from scratch, KServe requires Kubernetes 1.25+, Knative 1.7+, Istio 1.15+.</p>
+<p>If you start from scratch, KServe requires Kubernetes, Knative, Istio. You can find the recommended <a href="../../admin/serverless/serverless/#recommended-version-matrix">version matrix</a> in the installation documentation.</p>
 </li>
 <li>
 <p>If you already have <code>Istio</code> or <code>Knative</code> (e.g. from a Kubeflow install) then you don't need to install them explicitly, as long as version dependencies are satisfied.</p>
@@ -1470,6 +1482,10 @@ git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w">
 <a href="https://help.github.com/articles/syncing-a-fork/">syncing your fork</a>.</em></p>
 <p>Once you reach this point you are ready to do a full build and deploy as
 described below.</p>
+<h3 id="install-pre-commit-hooks">Install pre-commit hooks<a class="headerlink" href="#install-pre-commit-hooks" title="Permanent link">¶</a></h3>
+<p>Configuring pre-commit hooks will run checks on the codebase before committing changes. This will help you to catch lint errors, formatting issues, and other common problems before they reach the repository.</p>
+<div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>install<span class="w"> </span>--install-hooks
+</code></pre></div>
 <h2 id="deploy-kserve">Deploy KServe<a class="headerlink" href="#deploy-kserve" title="Permanent link">¶</a></h2>
 <h3 id="check-knative-serving-installation">Check Knative Serving installation<a class="headerlink" href="#check-knative-serving-installation" title="Permanent link">¶</a></h3>
 <p>Once you've <a href="#prerequisites">setup your development environment</a>, you can verify the installation with following:</p>

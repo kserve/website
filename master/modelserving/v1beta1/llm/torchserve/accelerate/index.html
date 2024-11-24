@@ -1308,11 +1308,14 @@ to find out your ingress IP and port.</p>
 curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span>@./text.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"instances": ["My dog is cute."]}'</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/bloom7b1:predict
-
-<span class="o">{</span><span class="s2">"predictions"</span>:<span class="o">[</span><span class="s2">"My dog is cute.\nNice.\n- Hey, Mom.\n- Yeah?\nWhat color's your dog?\n- It's gray.\n- Gray?\nYeah.\nIt looks gray to me.\n- Where'd you get it?\n- Well, Dad says it's kind of...\n- Gray?\n- Gray.\nYou got a gray dog?\n- It's gray.\n- Gray.\nIs your dog gray?\nAre you sure?\nNo.\nYou sure"</span><span class="o">]}</span>
 </code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="p">{</span><span class="nt">"predictions"</span><span class="p">:[</span><span class="s2">"My dog is cute.\nNice.\n- Hey, Mom.\n- Yeah?\nWhat color's your dog?\n- It's gray.\n- Gray?\nYeah.\nIt looks gray to me.\n- Where'd you get it?\n- Well, Dad says it's kind of...\n- Gray?\n- Gray.\nYou got a gray dog?\n- It's gray.\n- Gray.\nIs your dog gray?\nAre you sure?\nNo.\nYou sure"</span><span class="p">]}</span>
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>

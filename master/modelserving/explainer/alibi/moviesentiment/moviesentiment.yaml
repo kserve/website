@@ -10,17 +10,24 @@ spec:
       resources:
         requests:
           cpu: 0.1
-          memory: 1Gi
+          memory: 1Gi       
         limits:
           cpu: 1
-          memory: 1Gi                        
+          memory: 1Gi         
   explainer:
     minReplicas: 1
-    alibi:
-      type: AnchorText
-      resources:
-        requests:
-          cpu: 0.1
-          memory: 2Gi
-        limits:
-          memory: 6Gi
+    containers:
+        - name: kserve-container
+          image: kserve/alibi-explainer:v0.12.1
+          args:
+            - --model_name=moviesentiment
+            - --http_port=8080
+            - --predictor_host=moviesentiment-predictor.default
+            - AnchorText
+          resources:
+            requests:
+              cpu: 0.1
+              memory: 6Gi 
+            limits:
+              cpu: 1
+              memory: 10Gi

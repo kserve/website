@@ -13,16 +13,25 @@ spec:
           memory: 1Gi
         limits:
           cpu: 1
-          memory: 1Gi            
+          memory: 1Gi   
   explainer:
     minReplicas: 1
-    alibi:
-      type: AnchorTabular
-      storageUri: "gs://kfserving-examples/models/sklearn/1.3/income/explainer"
-      resources:
-        requests:
-          cpu: 0.1
-          memory: 1Gi
-        limits:
-          cpu: 1
-          memory: 4Gi
+    containers:
+      - name: kserve-container
+        image: kserve/alibi-explainer:v0.12.1
+        args:
+        - --model_name=income
+        - --http_port=8080
+        - --predictor_host=income-predictor.default
+        - --storage_uri=/mnt/models
+        - AnchorTabular
+        env:
+          - name: STORAGE_URI
+            value: "gs://kfserving-examples/models/sklearn/1.3/income/explainer"
+        resources:
+          requests:
+            cpu: 0.1
+            memory: 1Gi
+          limits:
+            cpu: 1
+            memory: 4Gi

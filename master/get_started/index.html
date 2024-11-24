@@ -225,6 +225,11 @@
     Install the Kubernetes CLI
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#install-helm">
+    Install Helm
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1234,6 +1239,11 @@
     Install the Kubernetes CLI
   </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#install-helm">
+    Install Helm
+  </a>
+</li>
 </ul>
 </nav>
 </li>
@@ -1263,6 +1273,8 @@
 <p>You can use <a href="https://kind.sigs.k8s.io/docs/user/quick-start" target="_blank"><code>kind</code></a> (Kubernetes in Docker) to run a local Kubernetes cluster with Docker container nodes.</p>
 <h3 id="install-the-kubernetes-cli">Install the Kubernetes CLI<a class="headerlink" href="#install-the-kubernetes-cli" title="Permanent link">¶</a></h3>
 <p>The <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl" target="_blank">Kubernetes CLI (<code>kubectl</code>)</a>, allows you to run commands against Kubernetes clusters. You can use <code>kubectl</code> to deploy applications, inspect and manage cluster resources, and view logs.</p>
+<h3 id="install-helm">Install Helm<a class="headerlink" href="#install-helm" title="Permanent link">¶</a></h3>
+<p>The <a href="https://helm.sh/docs/intro/install/" target="_blank">Helm</a> package manager for Kubernetes helps you define, install and upgrade software built for Kubernetes.</p>
 <h2 id="install-the-kserve-quickstart-environment">Install the KServe "Quickstart" environment<a class="headerlink" href="#install-the-kserve-quickstart-environment" title="Permanent link">¶</a></h2>
 <ol>
 <li>
@@ -1275,18 +1287,14 @@
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>get-contexts
 </code></pre></div>
 <p>It should list out a list of contexts you have, one of them should be <code>kind-kind</code>. Then run:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>kind-kind
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>use-context<span class="w"> </span>kind-kind
 </code></pre></div>
-<p>to use this context.</p>
+to use this context.</p>
 </li>
 <li>
 <p>You can then get started with a local deployment of KServe by using <em>KServe Quick installation script on Kind</em>:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/kserve/kserve/release-0.13/hack/quick_install.sh"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/kserve/kserve/release-0.14/hack/quick_install.sh"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
-<p>or install via our published Helm Charts:
-   <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.13.0
-helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.13.0
-</code></pre></div></p>
 </li>
 </ol>
 </article>
