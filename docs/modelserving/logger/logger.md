@@ -214,14 +214,16 @@ logger: |-
 
 ### Considerations
 
-- If TLS is configured in ConfigMap, but the bundle is not available or the CA cert is not found, the logger will use plain-text HTTP with no TLS.
+- If TLS is configured in ConfigMap, but the bundle is not available or the CA cert is not found, the logger will use plain-text HTTP with no TLS. 
+This is to preserve the backward compatibility with older versions which do not support TLS.
 - If TLS is configured, but the logger's endpoint protocol scheme is of type http, the inference logger will use the plain-text HTTP with no TLS.
 
 ### Constraints
 
 - The CA cert file should be in the same namespace as the InferenceService.
 - You can only specify one CA cert per namespace.
-- Since, the ConfigMap name and the CA cert file name are cluster wide configurations, it cannot be changed for each namespace.
+- Since, the `caBundle` name and the `caCertFile` name are cluster wide configurations (configured in `inferenceservice-config` ConfigMap), 
+the names cannot be changed for each namespace.
 
 ## Knative Eventing Inference Logger
 
