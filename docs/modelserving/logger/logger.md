@@ -154,6 +154,77 @@ kubectl logs $(kubectl get pod -l serving.knative.dev/service=message-dumper -o 
       }
     ```
 
+## Inference Logger with Request Header Metadata
+
+The request metadata headers can be included in the log message by specifying the metadata header names in the `metadataHeaders` field 
+of the InferenceService CRD. These headers are included in the CloudEvent extension attribute `metadata`.
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: sklearn-iris
+spec:
+predictor:
+  logger:
+    mode: all
+    url: http://message-dumper.default/
+    metadataHeaders:
+      - "x-request-id"
+      - "x-b3-traceid"
+      - "x-b3-spanid"
+      - "x-b3-flags"
+  model:
+    modelFormat:
+      name: sklearn
+    storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+```
+
+## Inference Logger with TLS
+
+The InferenceService logger can be configured to use TLS for secure communication. The logger can be configured to use TLS by configuring the logger configuration in the `inferenceservice-config` ConfigMap.
+
+1. Create a ConfigMap with the CaBundle cert in the same namespace as the InferenceService. By default, Ca cert file should be named as `service-ca.crt`. If you want to use a different name, update the `caCertFile` field in the logger configuration section of the `inferenceservice-config` ConfigMap.
+
+```shell
+kubectl create configmap example-com-ca --from-file=service-ca.crt=/path/to/example-ca.crt -n <isvc-namespace> 
+```
+2. Update the `caBundle` field with the name of the ConfigMap created from the above step in the logger configuration section of the `inferenceservice-config` ConfigMap. The CaBundle will be mounted as a volume on the agent and the CA cert will be used to configure the transport.
+
+!!! Tip
+    You can skip the TLS verification by setting `tlsSkipVerify` to `true` in the logger configuration section of the `inferenceservice-config` ConfigMap.
+    But, Note that this will be applied cluster-wide and will affect all the InferenceServices in the cluster.
+
+### Example configuration
+
+```yaml
+logger: |-
+    {
+        "image" : "kserve/agent:latest",
+        "memoryRequest": "100Mi",
+        "memoryLimit": "1Gi",
+        "cpuRequest": "100m",
+        "cpuLimit": "1",
+        "defaultUrl": "http://default-broker",
+        "caBundle": "example-com-ca",
+        "caCertFile": "service-ca.crt",
+        "tlsSkipVerify": false
+    }
+```
+
+### Considerations
+
+- If TLS is configured in ConfigMap, but the bundle is not available or the CA cert is not found, the logger will use plain-text HTTP with no TLS. 
+This is to preserve the backward compatibility with older versions which do not support TLS.
+- If TLS is configured, but the logger's endpoint protocol scheme is of type http, the inference logger will use the plain-text HTTP with no TLS.
+
+### Constraints
+
+- The CA cert file should be in the same namespace as the InferenceService.
+- You can only specify one CA cert per namespace.
+- Since, the `caBundle` name and the `caCertFile` name are cluster wide configurations (configured in `inferenceservice-config` ConfigMap), 
+the names cannot be changed for each namespace.
+
 ## Knative Eventing Inference Logger
 
 A cluster running with [Knative Eventing installed](https://knative.dev/docs/admin/install/eventing/install-eventing-with-yaml/), along with KServe.
