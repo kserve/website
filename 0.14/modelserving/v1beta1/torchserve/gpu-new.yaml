@@ -1,0 +1,14 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "torchserve"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: pytorch
+      storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+      resources:
+        limits:
+          memory: 4Gi
+          nvidia.com/gpu: "1"

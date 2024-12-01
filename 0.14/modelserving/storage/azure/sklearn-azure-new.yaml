@@ -1,0 +1,11 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sklearn-azure"
+spec:
+  predictor:
+    serviceAccountName: sa
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: "https://modelstoreaccount.blob.core.windows.net/model-store/model.joblib"

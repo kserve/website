@@ -1,0 +1,39 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "cat-dog-classifier"
+spec:
+  predictor:
+    pytorch:
+      resources:
+        requests:
+          cpu: 100m
+      storageUri: gs://kfserving-examples/models/torchserve/cat_dog_classification
+---
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "dog-breed-classifier"
+spec:
+  predictor:
+    pytorch:
+      resources:
+        requests:
+          cpu: 100m
+      storageUri: gs://kfserving-examples/models/torchserve/dog_breed_classification
+---
+apiVersion: "serving.kserve.io/v1alpha1"
+kind: "InferenceGraph"
+metadata:
+  name: "dog-breed-pipeline"
+spec:
+  nodes:
+    root:
+      routerType: Sequence
+      steps:
+      - serviceName: cat-dog-classifier
+        name: cat_dog_classifier
+      - serviceName: dog-breed-classifier
+        name: dog_breed_classifier
+        data: $request
+        condition: "[@this].#(predictions.0==\"dog\")"
