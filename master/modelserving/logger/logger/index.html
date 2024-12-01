@@ -916,6 +916,35 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#inference-logger-with-request-header-metadata">
+    Inference Logger with Request Header Metadata
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-logger-with-tls">
+    Inference Logger with TLS
+  </a>
+<nav aria-label="Inference Logger with TLS" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-configuration">
+    Example configuration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#considerations">
+    Considerations
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#constraints">
+    Constraints
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#knative-eventing-inference-logger">
     Knative Eventing Inference Logger
   </a>
@@ -1287,6 +1316,35 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#inference-logger-with-request-header-metadata">
+    Inference Logger with Request Header Metadata
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-logger-with-tls">
+    Inference Logger with TLS
+  </a>
+<nav aria-label="Inference Logger with TLS" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-configuration">
+    Example configuration
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#considerations">
+    Considerations
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#constraints">
+    Constraints
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#knative-eventing-inference-logger">
     Knative Eventing Inference Logger
   </a>
@@ -1482,6 +1540,68 @@ Data,
 <span class="w">  </span><span class="o">}</span>
 </code></pre></div>
 </div>
+<h2 id="inference-logger-with-request-header-metadata">Inference Logger with Request Header Metadata<a class="headerlink" href="#inference-logger-with-request-header-metadata" title="Permanent link">¶</a></h2>
+<p>The request metadata headers can be included in the log message by specifying the metadata header names in the <code>metadataHeaders</code> field 
+of the InferenceService CRD. These headers are included in the CloudEvent extension attribute <code>metadata</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="nt">predictor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://message-dumper.default/</span>
+<span class="w">    </span><span class="nt">metadataHeaders</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"x-request-id"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"x-b3-traceid"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"x-b3-spanid"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"x-b3-flags"</span>
+<span class="w">  </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">    </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sklearn/1.0/model</span>
+</code></pre></div>
+<h2 id="inference-logger-with-tls">Inference Logger with TLS<a class="headerlink" href="#inference-logger-with-tls" title="Permanent link">¶</a></h2>
+<p>The InferenceService logger can be configured to use TLS for secure communication. The logger can be configured to use TLS by configuring the logger configuration in the <code>inferenceservice-config</code> ConfigMap.</p>
+<ol>
+<li>Create a ConfigMap with the CaBundle cert in the same namespace as the InferenceService. By default, Ca cert file should be named as <code>service-ca.crt</code>. If you want to use a different name, update the <code>caCertFile</code> field in the logger configuration section of the <code>inferenceservice-config</code> ConfigMap.</li>
+</ol>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>configmap<span class="w"> </span>example-com-ca<span class="w"> </span>--from-file<span class="o">=</span>service-ca.crt<span class="o">=</span>/path/to/example-ca.crt<span class="w"> </span>-n<span class="w"> </span>&lt;isvc-namespace&gt;<span class="w"> </span>
+</code></pre></div>
+2. Update the <code>caBundle</code> field with the name of the ConfigMap created from the above step in the logger configuration section of the <code>inferenceservice-config</code> ConfigMap. The CaBundle will be mounted as a volume on the agent and the CA cert will be used to configure the transport.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can skip the TLS verification by setting <code>tlsSkipVerify</code> to <code>true</code> in the logger configuration section of the <code>inferenceservice-config</code> ConfigMap.
+But, Note that this will be applied cluster-wide and will affect all the InferenceServices in the cluster.</p>
+</div>
+<h3 id="example-configuration">Example configuration<a class="headerlink" href="#example-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">logger</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">    </span><span class="no">{</span>
+<span class="w">        </span><span class="no">"image" : "kserve/agent:latest",</span>
+<span class="w">        </span><span class="no">"memoryRequest": "100Mi",</span>
+<span class="w">        </span><span class="no">"memoryLimit": "1Gi",</span>
+<span class="w">        </span><span class="no">"cpuRequest": "100m",</span>
+<span class="w">        </span><span class="no">"cpuLimit": "1",</span>
+<span class="w">        </span><span class="no">"defaultUrl": "http://default-broker",</span>
+<span class="w">        </span><span class="no">"caBundle": "example-com-ca",</span>
+<span class="w">        </span><span class="no">"caCertFile": "service-ca.crt",</span>
+<span class="w">        </span><span class="no">"tlsSkipVerify": false</span>
+<span class="w">    </span><span class="no">}</span>
+</code></pre></div>
+<h3 id="considerations">Considerations<a class="headerlink" href="#considerations" title="Permanent link">¶</a></h3>
+<ul>
+<li>If TLS is configured in ConfigMap, but the bundle is not available or the CA cert is not found, the logger will use plain-text HTTP with no TLS. 
+This is to preserve the backward compatibility with older versions which do not support TLS.</li>
+<li>If TLS is configured, but the logger's endpoint protocol scheme is of type http, the inference logger will use the plain-text HTTP with no TLS.</li>
+</ul>
+<h3 id="constraints">Constraints<a class="headerlink" href="#constraints" title="Permanent link">¶</a></h3>
+<ul>
+<li>The CA cert file should be in the same namespace as the InferenceService.</li>
+<li>You can only specify one CA cert per namespace.</li>
+<li>Since, the <code>caBundle</code> name and the <code>caCertFile</code> name are cluster wide configurations (configured in <code>inferenceservice-config</code> ConfigMap), 
+the names cannot be changed for each namespace.</li>
+</ul>
 <h2 id="knative-eventing-inference-logger">Knative Eventing Inference Logger<a class="headerlink" href="#knative-eventing-inference-logger" title="Permanent link">¶</a></h2>
 <p>A cluster running with <a href="https://knative.dev/docs/admin/install/eventing/install-eventing-with-yaml/">Knative Eventing installed</a>, along with KServe.</p>
 <div class="admonition note">
