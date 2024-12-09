@@ -13,12 +13,9 @@ Modelcars represents a step forward in efficient model serving, particularly ben
 
 ## Enabling Modelcars
 
-Modelcars is an experimental feature in KServe and is not enabled by default. 
+Modelcars feature in KServe is not enabled by default. 
 To take advantage of this new model serving method, it needs to be activated in the KServe configuration. 
 Follow the steps below to enable Modelcars in your environment.
-
-!!! note
-    Modelcars are currently in an experimental phase. Enable this feature in a test environment first to ensure it meets your requirements before using it in a production setting.
 
 Modelcars can be enabled by modifying the `storageInitializer` configuration in the `inferenceservice-config` ConfigMap. 
 This can be done manually using `kubectl edit` or by executing the script provided below, with the current namespace set to the namespace where the `kserve-controller-manager` is installed (depends on the way how KServer is installed.)
