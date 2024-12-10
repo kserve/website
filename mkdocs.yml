@@ -115,6 +115,7 @@ nav:
           - Debugging guide: developer/debug.md
     - Blog:
           - Releases:
+            - KServe 0.14 Release: blog/articles/2024-12-13-KServe-0.14-release.md
             - KServe 0.13 Release: blog/articles/2024-05-15-KServe-0.13-release.md
             - KServe 0.11 Release: blog/articles/2023-10-08-KServe-0.11-release.md
             - KServe 0.10 Release: blog/articles/2023-02-05-KServe-0.10-release.md
