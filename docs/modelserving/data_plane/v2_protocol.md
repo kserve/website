@@ -23,12 +23,12 @@ See also: The HTTP/REST endpoints are defined in [rest_predict_v2.yaml](https://
 
 | API  | Verb | Path | Request Payload | Response Payload | 
 | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Inference | POST | v2/models/<model_name>[/versions/\<model_version\>]/infer | [$inference_request](#inference-request-json-object) | [$inference_response](#inference-response-json-object) |
+| Inference | POST | v2/models/\<model_name\>[/versions/\<model_version\>]/infer | [$inference_request](#inference-request-json-object) | [$inference_response](#inference-response-json-object) |
 | Model Metadata | GET | v2/models/\<model_name\>[/versions/\<model_version\>] | | [$metadata_model_response](#model-metadata-response-json-object) | 
 | Server Ready | GET | v2/health/ready | | [$ready_server_response](#server-ready-response-json-object) | 
 | Server Live | GET | v2/health/live | | [$live_server_response](#server-live-response-json-objet)| 
 | Server Metadata | GET | v2 | | [$metadata_server_response](#server-metadata-response-json-object) |
-| Model Ready| GET   | v2/models/\<model_name\>[/versions/<model_version>]/ready |  | [$ready_model_response](#model-ready-response-json-object) |
+| Model Ready| GET   | v2/models/\<model_name\>[/versions/\<model_version\>]/ready |  | [$ready_model_response](#model-ready-response-json-object) |
 
 ** path contents in `[]` are optional
 
