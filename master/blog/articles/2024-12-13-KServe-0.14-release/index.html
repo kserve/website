@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/sdk_docs/docs/V1alpha1ServingRuntime/" rel="canonical"/>
+<link href="https://kserve.io/website/master/blog/articles/2024-12-13-KServe-0.14-release/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>V1alpha1ServingRuntime - KServe Documentation Website</title>
+<title>KServe 0.14 Release - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#v1alpha1servingruntime">
+<a class="md-skip" href="#announcing-kserve-v014">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              V1alpha1ServingRuntime
+              KServe 0.14 Release
             
           </span>
 </div>
@@ -140,7 +140,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../blog/articles/2024-12-13-KServe-0.14-release/">
+<a class="md-tabs__link md-tabs__link--active" href="./">
         Blog
       </a>
 </li>
@@ -1025,7 +1025,7 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sdk_doc/">
+<a class="md-nav__link" href="../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
@@ -1067,8 +1067,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7">
           Blog
           <span class="md-nav__icon md-icon"></span>
@@ -1079,8 +1079,8 @@
           Blog
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" id="__nav_7_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" id="__nav_7_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7_1">
           Releases
           <span class="md-nav__icon md-icon"></span>
@@ -1091,38 +1091,104 @@
           Releases
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2024-12-13-KServe-0.14-release/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          KServe 0.14 Release
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         KServe 0.14 Release
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introducing-inference-client-for-python">
+    Introducing Inference client for Python
+  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2024-05-15-KServe-0.13-release/">
+<a class="md-nav__link" href="#support-for-oci-storage-for-models-modelcars-becomes-stable">
+    Support for OCI storage for models (modelcars) becomes stable
+  </a>
+<nav aria-label="Support for OCI storage for models (modelcars) becomes stable" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#future-plan">
+    Future plan
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introducing-model-cache">
+    Introducing model cache
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-for-hugging-face-hub-in-storage-initializer">
+    Support for Hugging Face hub in storage initializer
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#other-changes">
+    Other Changes
+  </a>
+<nav aria-label="Other Changes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-new">
+    What's New?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-changed">
+    What's Changed?
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#join-the-community">
+    Join the community
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../2024-05-15-KServe-0.13-release/">
         KServe 0.13 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-10-08-KServe-0.11-release/">
+<a class="md-nav__link" href="../2023-10-08-KServe-0.11-release/">
         KServe 0.11 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2023-02-05-KServe-0.10-release/">
+<a class="md-nav__link" href="../2023-02-05-KServe-0.10-release/">
         KServe 0.10 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-07-21-KServe-0.9-release/">
+<a class="md-nav__link" href="../2022-07-21-KServe-0.9-release/">
         KServe 0.9 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2022-02-18-KServe-0.8-release/">
+<a class="md-nav__link" href="../2022-02-18-KServe-0.8-release/">
         KServe 0.8 Release
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-10-11-KServe-0.7-release/">
+<a class="md-nav__link" href="../2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
       </a>
 </li>
@@ -1142,7 +1208,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-09-27-kfserving-transition/">
+<a class="md-nav__link" href="../2021-09-27-kfserving-transition/">
         KFserving Transition
       </a>
 </li>
@@ -1197,8 +1263,56 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#properties">
-    Properties
+<a class="md-nav__link" href="#introducing-inference-client-for-python">
+    Introducing Inference client for Python
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-for-oci-storage-for-models-modelcars-becomes-stable">
+    Support for OCI storage for models (modelcars) becomes stable
+  </a>
+<nav aria-label="Support for OCI storage for models (modelcars) becomes stable" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#future-plan">
+    Future plan
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introducing-model-cache">
+    Introducing model cache
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-for-hugging-face-hub-in-storage-initializer">
+    Support for Hugging Face hub in storage initializer
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#other-changes">
+    Other Changes
+  </a>
+<nav aria-label="Other Changes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-new">
+    What's New?
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-changed">
+    What's Changed?
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#join-the-community">
+    Join the community
   </a>
 </li>
 </ul>
@@ -1208,55 +1322,122 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/sdk_docs/docs/V1alpha1ServingRuntime.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/blog/articles/2024-12-13-KServe-0.14-release.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="v1alpha1servingruntime">V1alpha1ServingRuntime<a class="headerlink" href="#v1alpha1servingruntime" title="Permanent link">¶</a></h1>
-<p>ServingRuntime is the Schema for the servingruntimes API</p>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>api_version</strong></td>
-<td><strong>str</strong></td>
-<td>APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>kind</strong></td>
-<td><strong>str</strong></td>
-<td>Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>metadata</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1ObjectMeta.md"><strong>V1ObjectMeta</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>spec</strong></td>
-<td><a href="../V1alpha1ServingRuntimeSpec/"><strong>V1alpha1ServingRuntimeSpec</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>status</strong></td>
-<td><a href=".md"><strong>object</strong></a></td>
-<td>ServingRuntimeStatus defines the observed state of ServingRuntime</td>
-<td>[optional]</td>
-</tr>
-</tbody>
-</table>
-<p><a href="../../sdk_doc/#documentation-for-models">[Back to Model list]</a> <a href="../../sdk_doc/#documentation-for-api-endpoints">[Back to API list]</a> <a href="../../sdk_doc/">[Back to README]</a></p>
+<h1 id="announcing-kserve-v014">Announcing: KServe v0.14<a class="headerlink" href="#announcing-kserve-v014" title="Permanent link">¶</a></h1>
+<p>We are excited to announce KServe v0.14. In this release we are introducing a new Python client designed for KServe, and a new model cache feature; we are promoting OCI storage for models as a stable feature; and we added support for deploying models directly from Hugging Face.</p>
+<p>Below are a summary of the key changes.</p>
+<h2 id="introducing-inference-client-for-python">Introducing Inference client for Python<a class="headerlink" href="#introducing-inference-client-for-python" title="Permanent link">¶</a></h2>
+<p>The KServe Python SDK now includes both <a href="https://github.com/kserve/kserve/blob/v0.14.0/python/kserve/kserve/inference_client.py#L388">REST</a> and <a href="https://github.com/kserve/kserve/blob/v0.14.0/python/kserve/kserve/inference_client.py#L61">GRPC</a> inference clients. The new Inference clients of the SDK were delivered as <strong>alpha</strong> features.</p>
+<p>Inline with the features documented in issue <a href="https://github.com/kserve/kserve/issues/3270">#3270</a>, both clients have the following characteristics:</p>
+<ul>
+<li>The clients are asynchronous</li>
+<li>Support for HTTP/2 (via <a href="https://www.python-httpx.org/">httpx</a> library)</li>
+<li>Support Open Inference Protocol v1 and v2</li>
+</ul>
+<p>As usual, the version 0.14.0 of the KServe Python SDK is <a href="https://pypi.org/project/kserve/0.14.0/">published to PyPI</a> and available to install via <code>pip install</code>.</p>
+<!--
+Related tickets:
+* Initial implementation [#3270](https://github.com/kserve/kserve/issues/3270)
+* FP16 support [#3643](https://github.com/kserve/kserve/issues/3643)
+-->
+<h2 id="support-for-oci-storage-for-models-modelcars-becomes-stable">Support for OCI storage for models (modelcars) becomes stable<a class="headerlink" href="#support-for-oci-storage-for-models-modelcars-becomes-stable" title="Permanent link">¶</a></h2>
+<p>In KServe version 0.12, support for using OCI containers for model storage was introduced as an experimental feature. This allows users to store models in containers in OCI format, and allows the usage of OCI-compatible registries for publishing the models.</p>
+<p>This feature was implemented by configuring the OCI model container as a sidecar in the InferenceService pod, which was the motivation for naming the feature as modelcars. The model files are made available to the model server by configuring <a href="https://kubernetes.io/docs/tasks/configure-pod-container/share-process-namespace/">process namespace sharing</a> in the pod.</p>
+<p>There was one small but important detail that was unsolved and motivated the experimental status: since the modelcar is part of the main containers of the pod, there was no certainty that the modelcar would start quickly. The model server would be unstable if it starts first than the modelcar, and since there was no prefetching of the model image, this was thought as a likely condition.</p>
+<p>The unstable situation has been mitigated by configuring the OCI model as an init container in addition to also configuring it as a sidecar. The configuration as an init container ensures that the model is fetched before the main containers are started. The prefetching allows the modelcar to start quickly.
+The stabilization is available since KServe version 0.14, where modelcars are now a stable feature.</p>
+<h3 id="future-plan">Future plan<a class="headerlink" href="#future-plan" title="Permanent link">¶</a></h3>
+<p>Modelcars is one implementation option for supporting OCI images for model storage. There are other alternatives commented in <a href="https://github.com/kserve/kserve/issues/4083">issue #4083</a>.</p>
+<p>Using volume mounts based on OCI artifacts is the optimal implementation, but this is only <a href="https://kubernetes.io/blog/2024/08/16/kubernetes-1-31-image-volume-source/">recently possible since Kubernetes 1.31</a> as a native alpha feature. KServe can now evolve to use this new Kubernetes feature.</p>
+<h2 id="introducing-model-cache">Introducing model cache<a class="headerlink" href="#introducing-model-cache" title="Permanent link">¶</a></h2>
+<p>With models increasing in size, specially true for LLM models, pulling from storage each time a pod is created can result in unmanageable start-up times. Although OCI storage also has the benefit of model caching, the capabilities are not flexible since the management is delegated to the cluster.</p>
+<p>The Model Cache was proposed as another alternative to enhance KServe usability with big models, released in KServe v0.14 as an <strong>alpha</strong> feature. It relies on a PV for storing models and it provides control about which models to store in the cache. The feature was designed to mainly to use node Filesystem as storage. Read the <a href="https://docs.google.com/document/d/1nao8Ws3tonO2zNAzdmXTYa0hECZNoP2SV_z9Zg0PzLA/edit">design document for the details</a>.</p>
+<p>The model cache is currently disabled by default. To enable, you need to modify the <code>localmodel.enabled</code> field on the <code>inferenceservice-config</code> ConfigMap.</p>
+<p>You start by creating a node group as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalModelNodeGroup</span><span class="w"> </span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodegroup1</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">persistentVolumeSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
+<span class="w">    </span><span class="nt">capacity</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">    </span><span class="nt">hostPath</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete</span>
+<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
+<span class="w">  </span><span class="nt">persistentVolumeClaimSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
+<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
+<span class="w">    </span><span class="nt">volumeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+</code></pre></div>
+<p>Then, you can specify to store an cache a model with the following resource:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterLocalModel</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iris</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">modelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
+<span class="w">  </span><span class="nt">nodeGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodegroup1</span>
+<span class="w">  </span><span class="nt">sourceModelUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sklearn/1.0/model</span>
+</code></pre></div>
+<!--
+Related tickets:
+* Cluster local model controller: [#3860](https://github.com/kserve/kserve/pull/3860)
+* Cluster Local Model CR [#3839](https://github.com/kserve/kserve/pull/3839)
+* Add NodeDownloadPending status to ClusterLocalModel [#3955](https://github.com/kserve/kserve/pull/3955)
+-->
+<h2 id="support-for-hugging-face-hub-in-storage-initializer">Support for Hugging Face hub in storage initializer<a class="headerlink" href="#support-for-hugging-face-hub-in-storage-initializer" title="Permanent link">¶</a></h2>
+<p>The KServe storage initializer has been enhanced to support downloading models directly from Hugging Face. For this, the new schema <code>hf://</code> is now supported in the <code>storageUri</code> field of InferenceServices. The following YAML partial shows this:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
+</code></pre></div>
+<p>Both public and private Hugging Face repositories are supported. The credentials can be provided by the usual mechanism of binding Secrets to ServiceAccounts, or by binding the credentials Secret as environment variables in the InferenceService.</p>
+<p>Read the <a href="../../../modelserving/storage/huggingface/hf/">documentation</a> for more details.</p>
+<!--
+Related tickets:
+* Implement Huggingface model download in storage initializer [#3584](https://github.com/kserve/kserve/pull/3584)
+-->
+<h2 id="other-changes">Other Changes<a class="headerlink" href="#other-changes" title="Permanent link">¶</a></h2>
+<p>This release also includes several enhancements and changes:</p>
+<h3 id="whats-new">What's New?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
+<ul>
+<li>New flag for automount serviceaccount token by <a href="https://github.com/kserve/kserve/pull/3979">#3979</a></li>
+<li>TLS support for inference loggers <a href="https://github.com/kserve/kserve/issues/3837">#3837</a></li>
+<li>Allow PVC storage to be mounted in ReadWrite mode via an annotation <a href="https://github.com/kserve/kserve/issues/3687">#3687</a></li>
+</ul>
+<h3 id="whats-changed">What's Changed?<a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></h3>
+<ul>
+<li>Added <code>hostIPC</code> field to <code>ServingRuntime</code> CRD, for supporting more than one GPU in Serverless mode <a href="https://github.com/kserve/kserve/issues/3791">#3791</a></li>
+<li>Support for Python 3.12 is added, while support Python 3.8 is removed <a href="https://github.com/kserve/kserve/pull/3645">#3645</a></li>
+</ul>
+<p>For complete details on the new features and updates, visit our <a href="https://github.com/kserve/kserve/releases/tag/v0.14.0">official release notes</a>.</p>
+<h2 id="join-the-community">Join the community<a class="headerlink" href="#join-the-community" title="Permanent link">¶</a></h2>
+<ul>
+<li>Visit our <a href="https://kserve.github.io/website/">Website</a> or <a href="https://github.com/kserve">GitHub</a></li>
+<li>Join the Slack (<a href="https://github.com/kserve/community?tab=readme-ov-file#questions-and-issues">#kserve</a>)</li>
+<li>Attend our community meeting by subscribing to the <a href="https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month">KServe calendar</a>.</li>
+<li>View our <a href="https://github.com/kserve/community">community github repository</a> to learn how to make contributions. We are excited to work with you to make KServe better and promote its adoption!</li>
+</ul>
+<p>Thanks for all the contributors who have made the commits to 0.14 release!</p>
+<p>The KServe Project</p>
 </article>
 </div>
 </div>
@@ -1266,6 +1447,34 @@
           </a>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Debugging guide" class="md-footer__link md-footer__link--prev" href="../../../developer/debug/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Debugging guide
+            </div>
+</div>
+</a>
+<a aria-label="Next: KServe 0.13 Release" class="md-footer__link md-footer__link--next" href="../2024-05-15-KServe-0.13-release/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              KServe 0.13 Release
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
