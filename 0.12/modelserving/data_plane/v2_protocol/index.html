@@ -8,7 +8,7 @@
 <meta content="KServe Documentation" name="description"/>
 <link href="https://kserve.io/website/0.12/modelserving/data_plane/v2_protocol/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.5.3, mkdocs-material-8.0.5" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
 <title>Open Inference Protocol (V2 Inference Protocol) - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
@@ -1725,7 +1725,7 @@ fundamental JSON types. #optional indicates an optional JSON field.</p>
 <tr>
 <td>Inference</td>
 <td>POST</td>
-<td>v2/models/<model_name>[/versions/&lt;model_version&gt;]/infer</model_name></td>
+<td>v2/models/&lt;model_name&gt;[/versions/&lt;model_version&gt;]/infer</td>
 <td><a href="#inference-request-json-object">$inference_request</a></td>
 <td><a href="#inference-response-json-object">$inference_response</a></td>
 </tr>
@@ -1760,7 +1760,7 @@ fundamental JSON types. #optional indicates an optional JSON field.</p>
 <tr>
 <td>Model Ready</td>
 <td>GET</td>
-<td>v2/models/&lt;model_name&gt;[/versions/<model_version>]/ready</model_version></td>
+<td>v2/models/&lt;model_name&gt;[/versions/&lt;model_version&gt;]/ready</td>
 <td></td>
 <td><a href="#model-ready-response-json-object">$ready_model_response</a></td>
 </tr>

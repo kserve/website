@@ -2,852 +2,682 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://kserve.io/website/0.12/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/admin/kubernetes_deployment/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/admin/migration/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/admin/modelmesh/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/admin/serverless/serverless/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/admin/serverless/kourier_networking/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/admin/serverless/servicemesh/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/api/api/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/_index/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/2021-09-27-kfserving-transition/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/2021-10-11-KServe-0.7-release/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/2022-02-18-KServe-0.8-release/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/2022-07-21-KServe-0.9-release/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/2023-02-05-KServe-0.10-release/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/2023-10-08-KServe-0.11-release/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/blog/articles/_index/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/community/adopters/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/community/presentations/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/developer/debug/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/developer/developer/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/get_started/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/get_started/first_isvc/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/get_started/swagger_ui/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/contributor/github/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/contributor/mkdocs-contributor-guide/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/contributor/templates/template-blog/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/contributor/templates/template-concept/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/contributor/templates/template-procedure/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/contributor/templates/template-troubleshooting/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/style-guide/documenting-code/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/style-guide/style-and-formatting/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/help/style-guide/voice-and-language/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/control_plane/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/servingruntimes/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/autoscaling/autoscaling/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/batcher/batcher/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/certificate/kserve/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/data_plane/data_plane/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/data_plane/v1_protocol/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/data_plane/v2_protocol/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/detect/aif/germancredit/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/detect/aif/germancredit/server/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/detect/alibi_detect/alibi_detect/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/detect/art/mnist/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/explainer/explainer/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/explainer/aix/mnist/aix/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/explainer/alibi/cifar10/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/explainer/alibi/income/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/explainer/alibi/moviesentiment/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/inference_graph/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/inference_graph/image_pipeline/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/kafka/kafka/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/logger/logger/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/mms/multi-model-serving/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/mms/modelmesh/overview/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/nodescheduling/inferenceservicenodescheduling/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/nodescheduling/overview/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/observability/grafana_dashboards/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/observability/prometheus_metrics/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/oci/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/storagecontainers/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/azure/azure/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/gcs/gcs/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/pvc/pvc/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/s3/s3/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/storage/uri/uri/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/serving_runtime/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/amd/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/custom/custom_model/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/lightgbm/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/llm/torchserve/accelerate/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/llm/vllm/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/mlflow/v2/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/onnx/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/paddle/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/pmml/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/rollout/canary-example/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/rollout/canary/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/sklearn/v2/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/spark/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/tensorflow/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/torchserve/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/torchserve/bert/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/torchserve/metrics/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/torchserve/model-archiver/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/torchserve/model-archiver/model-archiver-image/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/torchserve/model-archiver/model-store/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/transformer/collocation/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/transformer/feast/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/transformer/torchserve_image_transformer/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/triton/bert/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/triton/torchscript/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/modelserving/v1beta1/xgboost/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/python_runtime_api/docs/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/python_runtime_api/docs/api/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/reference/api/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/reference/swagger-ui/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/reference/v2_inference/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/reference/v2_inference/template/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/sdk_doc/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/KServeClient/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/KnativeAddressable/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/KnativeCondition/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/KnativeStatus/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/KnativeURL/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/KnativeVolatileTime/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/NetUrlUserinfo/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1Time/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1BuiltInAdapter/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1ClusterServingRuntime/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1ClusterServingRuntimeList/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1Container/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceGraph/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceGraphList/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceGraphSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceGraphStatus/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceRouter/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceStep/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1InferenceTarget/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1ServingRuntime/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1ServingRuntimeList/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1ServingRuntimePodSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1ServingRuntimeSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1StorageHelper/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1alpha1SupportedModelFormat/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1AIXExplainerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ARTExplainerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1AlibiExplainerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1Batcher/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ComponentExtensionSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ComponentStatusSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1CustomExplainer/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1CustomPredictor/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1CustomTransformer/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ExplainerConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ExplainerExtensionSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ExplainerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ExplainersConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1FailureInfo/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1InferenceService/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1InferenceServiceList/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1InferenceServiceSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1InferenceServiceStatus/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1InferenceServicesConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1IngressConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1LightGBMSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1LoggerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ModelCopies/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ModelFormat/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ModelRevisionStates/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ModelSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ModelStatus/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1ONNXRuntimeSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PMMLSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PaddleServerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PodSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PredictorConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PredictorExtensionSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PredictorProtocols/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PredictorSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1PredictorsConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1SKLearnSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1StorageSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1TFServingSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1TorchServeSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1TransformerConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1TransformerSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1TransformersConfig/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1TritonSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
     <url>
          <loc>https://kserve.io/website/0.12/sdk_docs/docs/V1beta1XGBoostSpec/</loc>
-         <lastmod>2024-04-06</lastmod>
-         <changefreq>daily</changefreq>
+         <lastmod>2024-12-22</lastmod>
     </url>
 </urlset>
