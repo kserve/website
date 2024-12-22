@@ -29,12 +29,16 @@ spec:
       args: ["--enable_docs_url=True"]
       modelFormat:
         name: sklearn
+      runtime: kserve-sklearnserver
       storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
 EOF
 ```
 
 After the InferenceService becomes ready the Swagger UI will be served at **`/docs`**. 
 In our example above, the Swagger UI will be available at `http://sklearn-iris.kserve-test.example.com/docs`.
+
+!!! note
+    The Swagger UI may not be exposed or exposed with a different endpoint on other serving runtimes. For example, the MLServer runtime exposes the Swagger UI at `/v2/docs` endpoint. This example is only applicable to the KServe provided runtimes and runtimes that extend the KServe runtime SDK.
 
 ## Interact with InferenceService
 
