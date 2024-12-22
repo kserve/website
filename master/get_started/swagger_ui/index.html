@@ -1268,11 +1268,16 @@ since the endpoint does not require authentication at this time.</p>
 <span class="hll"><span class="s">      args: ["--enable_docs_url=True"]</span>
 </span><span class="s">      modelFormat:</span>
 <span class="s">        name: sklearn</span>
+<span class="s">      runtime: kserve-sklearnserver</span>
 <span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"</span>
 <span class="s">EOF</span>
 </code></pre></div>
 <p>After the InferenceService becomes ready the Swagger UI will be served at <strong><code>/docs</code></strong>. 
 In our example above, the Swagger UI will be available at <code>http://sklearn-iris.kserve-test.example.com/docs</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Swagger UI may not be exposed or exposed with a different endpoint on other serving runtimes. For example, the MLServer runtime exposes the Swagger UI at <code>/v2/docs</code> endpoint. This example is only applicable to the KServe provided runtimes and runtimes that extend the KServe runtime SDK.</p>
+</div>
 <h2 id="interact-with-inferenceservice">Interact with InferenceService<a class="headerlink" href="#interact-with-inferenceservice" title="Permanent link">¶</a></h2>
 <p>Click one of the V2 endpoints like <code>/v2</code>, it will expand and display the description and response from this API endpoint:</p>
 <p><img alt="V2 Metadata" src="../../images/swagger/v2-metadata.png"/></p>
