@@ -121,7 +121,7 @@ After `LocalModelCache` is created, KServe creates the download jobs on each nod
 ```bash
 kubectl get jobs meta-llama3-8b-instruct-kind-worker  -n kserve-localmodel-jobs
 NAME                                       STATUS     COMPLETIONS   DURATION   AGE
-meta-llama3-8b-instruct-gptq-kind-worker   Complete   1/1           4m21s      5d17h
+meta-llama3-8b-instruct-kind-worker   Complete   1/1           4m21s      5d17h
 ```
 
 The download job is created using the provisioned PV/PVC.
@@ -142,7 +142,7 @@ kubectl get localmodelcache meta-llama3-8b-instruct -oyaml
 apiVersion: serving.kserve.io/v1alpha1
 kind: LocalModelCache
 metadata:
-  name: meta-llama3-8b-instruct-gptq
+  name: meta-llama3-8b-instruct
 spec:
   modelSize: 10Gi
   nodeGroup: workers
