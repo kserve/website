@@ -9,7 +9,7 @@
 <link href="https://kserve.io/website/master/modelserving/certificate/kserve/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>CA Certificate - KServe Documentation Website</title>
+<title>Configure CA Certificate - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -32,7 +32,7 @@
 <aside class="md-banner">
 <div class="md-banner__inner md-grid md-typeset">
 <h1>
-<b>KServe v0.13 is Released</b>, <a href="/website/0.13/blog/articles/2024-05-15-KServe-0.13-release/">Read blog &gt;&gt;</a>
+<b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
 </h1>
 </div>
 </aside>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              CA Certificate
+              Configure CA Certificate
             
           </span>
 </div>
@@ -711,39 +711,14 @@
         Storage Containers
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/azure/azure/">
-        Azure
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/pvc/pvc/">
-        PVC
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/s3/s3/">
-        S3
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/oci/">
-        OCI
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../storage/uri/uri/">
-        URI
-      </a>
-</li>
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          CA Certificate
+          Configure CA Certificate
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        CA Certificate
+        Configure CA Certificate
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -779,6 +754,31 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/azure/azure/">
+        Azure
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/pvc/pvc/">
+        PVC
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/s3/s3/">
+        S3
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/oci/">
+        OCI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/uri/uri/">
+        URI
+      </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../storage/gcs/gcs/">
         GCS
       </a>
@@ -786,6 +786,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../storage/huggingface/hf/">
         Hugging Face
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../storage/modelcache/localmodel/">
+        Model Cache
       </a>
 </li>
 </ul>
@@ -1166,26 +1171,6 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" id="__nav_7_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7_2">
-          Articles
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Articles" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_7_2">
-<span class="md-nav__icon md-icon"></span>
-          Articles
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../blog/articles/2021-09-27-kfserving-transition/">
-        KFserving Transition
-      </a>
-</li>
-</ul>
-</nav>
-</li>
 </ul>
 </nav>
 </li>
@@ -1414,7 +1399,7 @@ type: Opaque
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: URI" class="md-footer__link md-footer__link--prev" href="../../storage/uri/uri/" rel="prev">
+<a aria-label="Previous: Storage Containers" class="md-footer__link md-footer__link--prev" href="../../storage/storagecontainers/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1423,17 +1408,17 @@ type: Opaque
 <span class="md-footer__direction">
                 Previous
               </span>
-              URI
+              Storage Containers
             </div>
 </div>
 </a>
-<a aria-label="Next: GCS" class="md-footer__link md-footer__link--next" href="../../storage/gcs/gcs/" rel="next">
+<a aria-label="Next: Azure" class="md-footer__link md-footer__link--next" href="../../storage/azure/azure/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              GCS
+              Azure
             </div>
 </div>
 <div class="md-footer__button md-icon">

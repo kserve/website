@@ -32,7 +32,7 @@
 <aside class="md-banner">
 <div class="md-banner__inner md-grid md-typeset">
 <h1>
-<b>KServe v0.13 is Released</b>, <a href="/website/0.13/blog/articles/2024-05-15-KServe-0.13-release/">Read blog &gt;&gt;</a>
+<b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
 </h1>
 </div>
 </aside>
@@ -712,6 +712,11 @@
       </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="../../../modelserving/certificate/kserve/">
+        Configure CA Certificate
+      </a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="../../../modelserving/storage/azure/azure/">
         Azure
       </a>
@@ -737,11 +742,6 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/certificate/kserve/">
-        CA Certificate
-      </a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="../../../modelserving/storage/gcs/gcs/">
         GCS
       </a>
@@ -749,6 +749,11 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../../modelserving/storage/huggingface/hf/">
         Hugging Face
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../modelserving/storage/modelcache/localmodel/">
+        Model Cache
       </a>
 </li>
 </ul>
@@ -1127,12 +1132,17 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#introducing-model-cache">
-    Introducing model cache
+    Introducing Model Cache
   </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#support-for-hugging-face-hub-in-storage-initializer">
     Support for Hugging Face hub in storage initializer
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hugging-face-vllm-backend-changes">
+    Hugging Face vLLM backend changes
   </a>
 </li>
 <li class="md-nav__item">
@@ -1190,26 +1200,6 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../2021-10-11-KServe-0.7-release/">
         KServe 0.7 Release
-      </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" id="__nav_7_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7_2">
-          Articles
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Articles" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_7_2">
-<span class="md-nav__icon md-icon"></span>
-          Articles
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2021-09-27-kfserving-transition/">
-        KFserving Transition
       </a>
 </li>
 </ul>
@@ -1283,12 +1273,17 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#introducing-model-cache">
-    Introducing model cache
+    Introducing Model Cache
   </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#support-for-hugging-face-hub-in-storage-initializer">
     Support for Hugging Face hub in storage initializer
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hugging-face-vllm-backend-changes">
+    Hugging Face vLLM backend changes
   </a>
 </li>
 <li class="md-nav__item">
@@ -1335,6 +1330,7 @@
 <li>The clients are asynchronous</li>
 <li>Support for HTTP/2 (via <a href="https://www.python-httpx.org/">httpx</a> library)</li>
 <li>Support Open Inference Protocol v1 and v2</li>
+<li>Allow client send and receive tensor data in binary format for HTTP/REST request, see <a href="https://kserve.github.io/website/0.14/modelserving/data_plane/binary_tensor_data_extension/">binary tensor data extension docs</a>.</li>
 </ul>
 <p>As usual, the version 0.14.0 of the KServe Python SDK is <a href="https://pypi.org/project/kserve/0.14.0/">published to PyPI</a> and available to install via <code>pip install</code>.</p>
 <!--
@@ -1351,47 +1347,27 @@ The stabilization is available since KServe version 0.14, where modelcars are no
 <h3 id="future-plan">Future plan<a class="headerlink" href="#future-plan" title="Permanent link">¶</a></h3>
 <p>Modelcars is one implementation option for supporting OCI images for model storage. There are other alternatives commented in <a href="https://github.com/kserve/kserve/issues/4083">issue #4083</a>.</p>
 <p>Using volume mounts based on OCI artifacts is the optimal implementation, but this is only <a href="https://kubernetes.io/blog/2024/08/16/kubernetes-1-31-image-volume-source/">recently possible since Kubernetes 1.31</a> as a native alpha feature. KServe can now evolve to use this new Kubernetes feature.</p>
-<h2 id="introducing-model-cache">Introducing model cache<a class="headerlink" href="#introducing-model-cache" title="Permanent link">¶</a></h2>
+<h2 id="introducing-model-cache">Introducing Model Cache<a class="headerlink" href="#introducing-model-cache" title="Permanent link">¶</a></h2>
 <p>With models increasing in size, specially true for LLM models, pulling from storage each time a pod is created can result in unmanageable start-up times. Although OCI storage also has the benefit of model caching, the capabilities are not flexible since the management is delegated to the cluster.</p>
-<p>The Model Cache was proposed as another alternative to enhance KServe usability with big models, released in KServe v0.14 as an <strong>alpha</strong> feature. It relies on a PV for storing models and it provides control about which models to store in the cache. The feature was designed to mainly to use node Filesystem as storage. Read the <a href="https://docs.google.com/document/d/1nao8Ws3tonO2zNAzdmXTYa0hECZNoP2SV_z9Zg0PzLA/edit">design document for the details</a>.</p>
+<p>The Model Cache was proposed as another alternative to enhance KServe usability with big models, released in KServe v0.14 as an <strong>alpha</strong> feature. 
+In this release local node storage is used for storing models and <code>LocalModelCache</code> custom resource provides the control about which models to store in the cache.
+The local model cache state can always be rebuilt from the models stored on persistent storage like model registry or S3.
+Read the <a href="https://docs.google.com/document/d/1nao8Ws3tonO2zNAzdmXTYa0hECZNoP2SV_z9Zg0PzLA/edit">design document for the details</a>.</p>
+<p><img alt="!localmodelcache" src="../../../images/localmodelcache.png"/></p>
+<p>By caching the models, you get the following benefits:</p>
+<ul>
+<li>
+<p>Minimize the time it takes for LLM pods to start serving requests.</p>
+</li>
+<li>
+<p>Sharing the same storage for pods scheduled on the same GPU node.</p>
+</li>
+<li>
+<p>Model Cache allows scaling your AI workload efficiently without worrying about the slow model server container startup.</p>
+</li>
+</ul>
 <p>The model cache is currently disabled by default. To enable, you need to modify the <code>localmodel.enabled</code> field on the <code>inferenceservice-config</code> ConfigMap.</p>
-<p>You start by creating a node group as follows:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalModelNodeGroup</span><span class="w"> </span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodegroup1</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">persistentVolumeSpec</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
-<span class="w">    </span><span class="nt">capacity</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-<span class="w">    </span><span class="nt">hostPath</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
-<span class="w">    </span><span class="nt">persistentVolumeReclaimPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Delete</span>
-<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
-<span class="w">  </span><span class="nt">persistentVolumeClaimSpec</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
-<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">standard</span>
-<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
-<span class="w">    </span><span class="nt">volumeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
-</code></pre></div>
-<p>Then, you can specify to store an cache a model with the following resource:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterLocalModel</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iris</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">modelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1Gi</span>
-<span class="w">  </span><span class="nt">nodeGroup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nodegroup1</span>
-<span class="w">  </span><span class="nt">sourceModelUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sklearn/1.0/model</span>
-</code></pre></div>
+<p>You can follow <a href="../../../modelserving/storage/modelcache/localmodel/">local model cache tutorial</a> to cache LLMs on local NVMe of your GPU nodes and deploy LLMs with <code>InferenceService</code> by loading models from local cache to accelerate the container startup. </p>
 <!--
 Related tickets:
 * Cluster local model controller: [#3860](https://github.com/kserve/kserve/pull/3860)
@@ -1415,6 +1391,15 @@ Related tickets:
 Related tickets:
 * Implement Huggingface model download in storage initializer [#3584](https://github.com/kserve/kserve/pull/3584)
 -->
+<h2 id="hugging-face-vllm-backend-changes">Hugging Face vLLM backend changes<a class="headerlink" href="#hugging-face-vllm-backend-changes" title="Permanent link">¶</a></h2>
+<ul>
+<li>vLLM backend to update to 0.6.1 <a href="https://github.com/kserve/kserve/pull/3948">#3948</a></li>
+<li>Support trust_remote_code flag for vllm <a href="https://github.com/kserve/kserve/pull/3729">#3729</a></li>
+<li>Support text embedding task in hugging face server <a href="https://github.com/kserve/kserve/pull/3743">#3743</a></li>
+<li>Add health endpoint for vLLM backend <a href="https://github.com/kserve/kserve/pull/3850">#3850</a></li>
+<li>Added <code>hostIPC</code> field to <code>ServingRuntime</code> CRD, for supporting more than one GPU in Serverless mode <a href="https://github.com/kserve/kserve/issues/3791">#3791</a></li>
+<li>Support shared memory volume for vLLM backend <a href="https://github.com/kserve/kserve/pull/3910">#3910</a></li>
+</ul>
 <h2 id="other-changes">Other Changes<a class="headerlink" href="#other-changes" title="Permanent link">¶</a></h2>
 <p>This release also includes several enhancements and changes:</p>
 <h3 id="whats-new">What's New?<a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
@@ -1422,10 +1407,11 @@ Related tickets:
 <li>New flag for automount serviceaccount token by <a href="https://github.com/kserve/kserve/pull/3979">#3979</a></li>
 <li>TLS support for inference loggers <a href="https://github.com/kserve/kserve/issues/3837">#3837</a></li>
 <li>Allow PVC storage to be mounted in ReadWrite mode via an annotation <a href="https://github.com/kserve/kserve/issues/3687">#3687</a></li>
+<li>Support HTTP Headers passing for KServe python custom runtimes <a href="https://github.com/kserve/kserve/pull/3669">#3669</a></li>
 </ul>
 <h3 id="whats-changed">What's Changed?<a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></h3>
 <ul>
-<li>Added <code>hostIPC</code> field to <code>ServingRuntime</code> CRD, for supporting more than one GPU in Serverless mode <a href="https://github.com/kserve/kserve/issues/3791">#3791</a></li>
+<li>Ray is now an optional dependency <a href="https://github.com/kserve/kserve/pull/3834">#3834</a></li>
 <li>Support for Python 3.12 is added, while support Python 3.8 is removed <a href="https://github.com/kserve/kserve/pull/3645">#3645</a></li>
 </ul>
 <p>For complete details on the new features and updates, visit our <a href="https://github.com/kserve/kserve/releases/tag/v0.14.0">official release notes</a>.</p>
