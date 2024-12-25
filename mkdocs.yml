@@ -200,7 +200,7 @@ plugins:
        
 
 extra:
-  kserve_release_version: 0.14.0
+  kserve_release_version: 0.14.1
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/kserve
