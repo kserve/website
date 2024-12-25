@@ -2,8 +2,8 @@
 
 KServe provides a simple Kubernetes CRD to enable deploying single or multiple trained models onto model serving runtimes such as [TFServing](https://www.tensorflow.org/tfx/guide/serving),
 [TorchServe](https://pytorch.org/serve/server.html), [Triton Inference Server](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs).
-For Hugging Face Transformer based models, KServe provides [Hugging Face Server](https://github.com/kserve/kserve/tree/master/python/huggingfaceserver) for hosting the transformer based models with v2 or OpenAI protocol.
-In addition [ModelServer](https://github.com/kserve/kserve/tree/master/python/kserve/kserve) is the Python model serving runtime implemented in KServe itself with prediction v1 and open inference protocol(v2),
+For Hugging Face models, KServe provides [Hugging Face Server](https://github.com/kserve/kserve/tree/master/python/huggingfaceserver) for hosting the transformer based models with Open Inference and OpenAI Protocol.
+In addition [ModelServer](https://github.com/kserve/kserve/tree/master/python/kserve/kserve) is the Python model serving runtime implemented in KServe itself with prediction v1 and Open Inference Protocol(v2),
 These model serving runtimes are able to provide out-of-the-box model serving, but you could also choose to build your own model server for more complex use case.
 KServe provides basic API primitives to allow you easily build custom model serving runtime, you can use other tools like [BentoML](https://docs.bentoml.org/en/latest) to build your custom model serving image.
 
