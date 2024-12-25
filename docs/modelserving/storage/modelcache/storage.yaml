@@ -1,0 +1,33 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelNodeGroup
+metadata:
+  name: workers
+spec:
+  storageLimit: 10Gi
+  persistentVolumeClaimSpec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: local-storage
+    volumeMode: Filesystem
+    volumeName: models
+  persistentVolumeSpec:
+    accessModes:
+      - ReadWriteOnce
+    volumeMode: Filesystem
+    capacity:
+      storage: 10Gi
+    local:
+      path: /models
+    persistentVolumeReclaimPolicy: Delete
+    storageClassName: local-storage    
+    nodeAffinity:
+       required:
+         nodeSelectorTerms:
+           - matchExpressions:
+             - key: kubernetes.io/hostname
+               operator: In
+               values:
+               - kind-worker
