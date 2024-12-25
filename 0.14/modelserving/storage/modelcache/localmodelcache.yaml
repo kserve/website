@@ -1,0 +1,9 @@
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelCache
+metadata:
+  name: meta-llama3-8b-instruct
+spec:
+  sourceModelUri: hf://meta-llama/meta-llama-3-8b-instruct
+  modelSize: 10Gi
+  nodeGroups:
+  - workers
