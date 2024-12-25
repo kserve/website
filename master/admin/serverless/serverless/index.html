@@ -1311,18 +1311,18 @@ Alternatively you can also choose other networking layers like <a href="https://
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>Install KServe CRDs
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.14.0
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.14.1
 </code></pre></div></p>
 <p>Install KServe Resources
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.0
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1
 </code></pre></div></p>
 </div>
 <div class="tabbed-block">
 <p>Install KServe CRDs and Controller, <code>--server-side</code> option is required as the InferenceService CRD is large, see <a href="https://github.com/kserve/kserve/issues/3487">this issue</a> for details.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.0/kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve.yaml
 </code></pre></div>
 <p>Install KServe Built-in ClusterServingRuntimes
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.0/kserve-cluster-resources.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve-cluster-resources.yaml
 </code></pre></div></p>
 </div>
 </div>

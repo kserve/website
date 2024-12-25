@@ -1189,8 +1189,8 @@
 <h1 id="model-serving-runtimes">Model Serving Runtimes<a class="headerlink" href="#model-serving-runtimes" title="Permanent link">¶</a></h1>
 <p>KServe provides a simple Kubernetes CRD to enable deploying single or multiple trained models onto model serving runtimes such as <a href="https://www.tensorflow.org/tfx/guide/serving">TFServing</a>,
 <a href="https://pytorch.org/serve/server.html">TorchServe</a>, <a href="https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs">Triton Inference Server</a>.
-In addition <a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">ModelServer</a> is the Python model serving runtime implemented in KServe itself with prediction v1 protocol,
-<a href="https://github.com/SeldonIO/MLServer">MLServer</a> implements the <a href="https://github.com/kserve/kserve/tree/master/docs/predict-api/v2">prediction v2 protocol</a> with both REST and gRPC.
+For Hugging Face models, KServe provides <a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">Hugging Face Server</a> for hosting the transformer based models with Open Inference and OpenAI Protocol.
+In addition <a href="https://github.com/kserve/kserve/tree/master/python/kserve/kserve">ModelServer</a> is the Python model serving runtime implemented in KServe itself with prediction v1 and Open Inference Protocol(v2),
 These model serving runtimes are able to provide out-of-the-box model serving, but you could also choose to build your own model server for more complex use case.
 KServe provides basic API primitives to allow you easily build custom model serving runtime, you can use other tools like <a href="https://docs.bentoml.org/en/latest">BentoML</a> to build your custom model serving image.</p>
 <p>After models are deployed with InferenceService, you get all the following serverless features provided by KServe.</p>
@@ -1239,20 +1239,11 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td><a href="../custom/custom_model/">Custom Model</a></td>
 </tr>
 <tr>
-<td><a href="https://mlserver.readthedocs.io/en/latest/runtimes/lightgbm.html">LightGBM MLServer</a></td>
-<td><a href="https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html#lightgbm.Booster.save_model">Saved LightGBM Model</a></td>
-<td>v2</td>
-<td>v2</td>
-<td>v1.5.0 (MLServer)</td>
-<td>4</td>
-<td><a href="../lightgbm/">LightGBM Iris V2</a></td>
-</tr>
-<tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/lgbserver">LightGBM ModelServer</a></td>
 <td><a href="https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.Booster.html#lightgbm.Booster.save_model">Saved LightGBM Model</a></td>
 <td>v1, v2</td>
 <td>v2</td>
-<td>v0.14.0 (KServe)</td>
+<td>v0.14.1 (KServe)</td>
 <td>4</td>
 <td><a href="../lightgbm/">LightGBM Iris</a></td>
 </tr>
@@ -1270,25 +1261,16 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td><a href="http://dmg.org/pmml/v4-4-1/GeneralStructure.html">PMML</a></td>
 <td>v1, v2</td>
 <td>v2</td>
-<td>v0.14.0 (KServe)</td>
+<td>v0.14.1 (KServe)</td>
 <td>3, 4 (<a href="https://github.com/autodeployai/pypmml">PMML4.4.1</a>)</td>
 <td><a href="../pmml/">SKLearn PMML</a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/SeldonIO/MLServer">SKLearn MLServer</a></td>
-<td><a href="https://scikit-learn.org/stable/modules/model_persistence.html">Pickled Model</a></td>
-<td>v2</td>
-<td>v2</td>
-<td>v1.5.0 (MLServer)</td>
-<td>1</td>
-<td><a href="../sklearn/v2/">SKLearn Iris V2</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/sklearnserver">SKLearn ModelServer</a></td>
 <td><a href="https://scikit-learn.org/stable/modules/model_persistence.html">Pickled Model</a></td>
 <td>v1, v2</td>
 <td>v2</td>
-<td>v0.14.0 (KServe)</td>
+<td>v0.14.1 (KServe)</td>
 <td>1.5</td>
 <td><a href="../sklearn/v2/">SKLearn Iris</a></td>
 </tr>
@@ -1320,38 +1302,29 @@ In a given serving runtime directory the pyproject.toml file contains the exact 
 <td><a href="../triton/torchscript/">Torchscript cifar</a></td>
 </tr>
 <tr>
-<td><a href="https://github.com/SeldonIO/MLServer">XGBoost MLServer</a></td>
-<td><a href="https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html">Saved Model</a></td>
-<td>v2</td>
-<td>v2</td>
-<td>v1.5.0 (MLServer)</td>
-<td>2</td>
-<td><a href="../xgboost/">XGBoost Iris V2</a></td>
-</tr>
-<tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/xgbserver">XGBoost ModelServer</a></td>
 <td><a href="https://xgboost.readthedocs.io/en/latest/tutorials/saving_model.html">Saved Model</a></td>
 <td>v1, v2</td>
 <td>v2</td>
-<td>v0.14.0 (KServe)</td>
+<td>v0.14.1 (KServe)</td>
 <td>2</td>
 <td><a href="../xgboost/">XGBoost Iris</a></td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">HuggingFace ModelServer</a></td>
 <td><a href="https://huggingface.co/docs/transformers/v4.39.2/en/main_classes/model#transformers.PreTrainedModel.save_pretrained">Saved Model</a> / <a href="https://huggingface.co/models">Huggingface Hub Model_Id</a></td>
-<td>v1, v2</td>
+<td>v1, v2, OpenAI</td>
 <td>--</td>
-<td>v0.14.0 (KServe)</td>
+<td>v0.14.1 (KServe)</td>
 <td>4 (<a href="https://pypi.org/project/transformers/4.43.4/">Transformers</a>)</td>
 <td>--</td>
 </tr>
 <tr>
 <td><a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">HuggingFace VLLM ModelServer</a></td>
 <td><a href="https://huggingface.co/docs/transformers/v4.43.4/en/main_classes/model#transformers.PreTrainedModel.save_pretrained">Saved Model</a> / <a href="https://huggingface.co/models">Huggingface Hub Model_Id</a></td>
-<td>v2</td>
+<td>v2, OpenAI</td>
 <td>--</td>
-<td>v0.14.0 (KServe)</td>
+<td>v0.14.1 (KServe)</td>
 <td>0 (<a href="https://pypi.org/project/vllm/0.6.1.post2/">Vllm</a>)</td>
 <td>--</td>
 </tr>
