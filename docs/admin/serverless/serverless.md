@@ -12,6 +12,9 @@ Kubernetes version.
 | 1.29               | 1.22,1.23                 | 1.15,1.16                   |
 | 1.30               | 1.22,1.23                 | 1.15,1.16                   |
 
+!!! tip
+    Installing KServe on a GKE Autopilot Cluster presents unique challenges. This [tutorial](https://github.com/GoogleCloudPlatform/ai-on-gke/tree/main/tutorials-and-examples/kserve) will guide you through the process step-by-step.
+
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
 
