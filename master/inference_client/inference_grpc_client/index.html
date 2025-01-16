@@ -1444,7 +1444,7 @@ options or to disable retry set the channel option ("grpc.enable_retries", 0).
 <p>This method sends an inference request to the server and returns the inference response. 
 It supports asynchronous execution and allows for optional timeout and headers customization.</p>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceGRPCClient</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">"https://localhost:443"</span><span class="p">)</span>
 <span class="n">infer_request</span> <span class="o">=</span> <span class="n">InferRequest</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
@@ -1498,7 +1498,7 @@ It supports asynchronous execution and allows for optional timeout and headers c
 <p>This asynchronous method sends a readiness request to the inference server and returns a boolean indicating
 whether the server is ready to handle requests.</p>
 <h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceClient</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">is_ready</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">is_server_ready</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">)</span>
@@ -1545,7 +1545,7 @@ issues, server-side errors.</p>
 <p>Check if the inference server is live.</p>
 <p>This asynchronous method sends a request to the inference server to check its liveness status.</p>
 <h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceClient</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">is_live</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">is_server_live</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">)</span>
@@ -1592,7 +1592,7 @@ issues, server-side errors.</p>
 <p>Check if the specified model is ready.</p>
 <p>This asynchronous method sends a request to check the readiness of a model by its name.</p>
 <h3 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">InferenceGRPCClient</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceClient</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="n">is_ready</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">is_model_ready</span><span class="p">(</span><span class="s2">"my_model"</span><span class="p">)</span>

@@ -1440,7 +1440,7 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 </div>
 <div class="tabbed-block">
 <p>If you want to use InferenceClient to perform the inference, you can follow the below example
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v1"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceRESTClient</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>

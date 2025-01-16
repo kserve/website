@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/modelserving/v1beta1/llm/huggingface/sdk_integration/" rel="canonical"/>
+<link href="https://kserve.io/website/master/modelserving/v1beta1/llm/huggingface/multi-node/" rel="canonical"/>
 <link href="../../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>SDK Integration - KServe Documentation Website</title>
+<title>Multi-node/Multi-GPU Inference with Hugging Face vLLM Serving Runtime - KServe Documentation Website</title>
 <link href="../../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#integrate-kserve-llm-deployment-with-llm-sdks">
+<a class="md-skip" href="#multi-nodemulti-gpu-inference-with-hugging-face-vllm-serving-runtime">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              SDK Integration
+              Multi-node/Multi-GPU Inference with Hugging Face vLLM Serving Runtime
             
           </span>
 </div>
@@ -125,7 +125,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="../../../../control_plane/">
+<a class="md-tabs__link" href="../../../../control_plane/">
         User Guide
       </a>
 </li>
@@ -287,8 +287,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
@@ -389,8 +389,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_2">
           Model Serving Runtimes
           <span class="md-nav__icon md-icon"></span>
@@ -521,8 +521,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3" id="__nav_4_2_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3" id="__nav_4_2_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_2_3">
           LLM Runtime
           <span class="md-nav__icon md-icon"></span>
@@ -533,8 +533,8 @@
           LLM Runtime
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_1" id="__nav_4_2_3_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_3_1" id="__nav_4_2_3_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_2_3_1">
           Hugging Face LLM
           <span class="md-nav__icon md-icon"></span>
@@ -575,38 +575,10 @@
         Fill Mask
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          SDK Integration
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../sdk_integration/">
         SDK Integration
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-a-kserve-llm-inference-service">
-    Deploy a KServe LLM Inference Service
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#how-to-integrate-with-openai-sdk">
-    How to integrate with OpenAI SDK
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#how-to-integrate-with-langchain-sdk">
-    How to integrate with Langchain SDK
-  </a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -1210,19 +1182,100 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-a-kserve-llm-inference-service">
-    Deploy a KServe LLM Inference Service
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+<nav aria-label="Prerequisites" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-validations">
+    Key Validations
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#how-to-integrate-with-openai-sdk">
-    How to integrate with OpenAI SDK
+<a class="md-nav__link" href="#consideration">
+    Consideration
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workerspec-and-servingruntime">
+    WorkerSpec and ServingRuntime
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#how-to-integrate-with-langchain-sdk">
-    How to integrate with Langchain SDK
+<a class="md-nav__link" href="#key-configurations">
+    Key Configurations
   </a>
+<nav aria-label="Key Configurations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-inferenceservice">
+    Example InferenceService
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serve-the-hugging-face-vllm-model-using-2-nodes">
+    Serve the Hugging Face vLLM Model Using 2 Nodes
+  </a>
+<nav aria-label="Serve the Hugging Face vLLM Model Using 2 Nodes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-create-a-persistent-volume-claim-pvc">
+    1. Create a Persistent Volume Claim (PVC)
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-download-the-model-to-the-pvc">
+    2. Download the Model to the PVC
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-create-a-servingruntime">
+    3. Create a ServingRuntime
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-deploy-the-model">
+    4. Deploy the model
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-inferenceservice-status">
+    Check InferenceService status.
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#check-gpu-resource-status">
+    Check GPU resource status.
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#perform-model-inference">
+    Perform Model Inference
+  </a>
+<nav aria-label="Perform Model Inference" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sample-openai-completions-request">
+    Sample OpenAI Completions request:
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sample-openai-chat-request">
+    Sample OpenAI Chat request:
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1231,133 +1284,289 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/llm/huggingface/sdk_integration/README.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/llm/huggingface/multi-node/README.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="integrate-kserve-llm-deployment-with-llm-sdks">Integrate KServe LLM Deployment with LLM SDKs<a class="headerlink" href="#integrate-kserve-llm-deployment-with-llm-sdks" title="Permanent link">¶</a></h1>
-<p>This document provides the example of how to integrate KServe LLM Inference Service with the popular LLM SDKs.</p>
-<h2 id="deploy-a-kserve-llm-inference-service">Deploy a KServe LLM Inference Service<a class="headerlink" href="#deploy-a-kserve-llm-inference-service" title="Permanent link">¶</a></h2>
-<p>Please follow this example: <a href="../text_generation/">Text Generation using LLama3</a> to deploy a KServe LLM Inference Service.</p>
-<p>Get the <code>SERVICE_HOSTNAME</code> by running the following command:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-llama3<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
-</code></pre></div>
-<p>The model name for the above example is <code>llama3</code>.</p>
-<h2 id="how-to-integrate-with-openai-sdk">How to integrate with OpenAI SDK<a class="headerlink" href="#how-to-integrate-with-openai-sdk" title="Permanent link">¶</a></h2>
-<p>Install the <a href="https://github.com/openai/openai-python">OpenAI SDK</a>:</p>
-<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>openai
-</code></pre></div>
-<p>Create a Python script to interact with the KServe LLM Inference Service and save it as <code>sample_openai.py</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">python</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
+<h1 id="multi-nodemulti-gpu-inference-with-hugging-face-vllm-serving-runtime">Multi-node/Multi-GPU Inference with Hugging Face vLLM Serving Runtime<a class="headerlink" href="#multi-nodemulti-gpu-inference-with-hugging-face-vllm-serving-runtime" title="Permanent link">¶</a></h1>
+<p>This guide provides step-by-step instructions on setting up multi-node and multi-GPU inference using Hugging Face's vLLM Serving Runtime. Before proceeding, please ensure you meet the following prerequisites and understand the limitations of this setup.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<ul>
+<li>Multi-node functionality is only supported in <strong>RawDeployment</strong> mode.</li>
+<li><strong>Auto-scaling is not available</strong> for multi-node setups. </li>
+<li>A <strong>Persistent Volume Claim (PVC)</strong> is required for multi-node configurations, and it must support the <strong>ReadWriteMany (RWX)</strong> access mode.</li>
+</ul>
+<h3 id="key-validations">Key Validations<a class="headerlink" href="#key-validations" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>TENSOR_PARALLEL_SIZE</code> and <code>PIPELINE_PARALLEL_SIZE</code> cannot be set via environment variables. They must be configured through <code>workerSpec.tensorParallelSize</code> and <code>workerSpec.pipelineParallelSize</code> respectively.</li>
+<li>In a ServingRuntime designed for multi-node, both <code>workerSpec.tensorParallelSize</code> and <code>workerSpec.pipelineParallelSize</code> must be set.</li>
+<li>The minimum value for <code>workerSpec.tensorParallelSize</code> is <strong>1</strong>, and the minimum value for <code>workerSpec.pipelineParallelSize</code> is <strong>2</strong>.</li>
+<li>Currently, four GPU types are allowed: <code>nvidia.com/gpu</code> (<em>default</em>), <code>intel.com/gpu</code>, <code>amd.com/gpu</code>, and <code>habana.ai/gaudi</code>.</li>
+<li>You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. Then it can cause issues.</li>
+<li>The Autoscaler must be configured as <code>external</code>.</li>
+<li>The only supported storage protocol for StorageURI is <code>PVC</code>.</li>
+<li>By default, the following 4 types of GPU resources are allowed:
+  <div class="highlight"><pre><span></span><code>"nvidia.com/gpu"
+"amd.com/gpu"
+"intel.com/gpu"
+"habana.ai/gaudi" 
+</code></pre></div></li>
+<li>If you want to use other GPU types, you can set this in the annotations of ISVC as follows:
+    <div class="highlight"><pre><span></span><code>serving.kserve.io/gpu-resource-types: '["gpu-type1", "gpu-type2", "gpu-type3"]'
+</code></pre></div></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must have <strong>exactly one head pod</strong> in your setup. The replica count for this head pod can be adjusted using the <code>min_replicas</code> or <code>max_replicas</code> settings in the <code>InferenceService (ISVC)</code>. However, creating additional head pods will cause them to be excluded from the Ray cluster, resulting in improper functioning. Ensure this limitation is clearly documented.</p>
+<p>Do not use 2 different GPU types for multi node serving.</p>
 </div>
-</input></div>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
-
-<span class="n">Deployment_url</span> <span class="o">=</span> <span class="s2">"&lt;SERVICE_HOSTNAME&gt;"</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">Deployment_url</span><span class="si">}</span><span class="s2">/openai/v1"</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">"empty"</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># typial chat completion response</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Typical chat completion response:"</span><span class="p">)</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">"llama3"</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span><span class="s1">'role'</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">:</span> <span class="s2">"What's 1+1? Answer in one word."</span><span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">256</span>
-<span class="p">)</span>
-
-<span class="n">reply</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Extracted reply: </span><span class="se">\n</span><span class="si">{</span><span class="n">reply</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># streaming chat completion response</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Streaming chat completion response:"</span><span class="p">)</span>
-<span class="n">stream</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s1">'llama3'</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-        <span class="p">{</span><span class="s1">'role'</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'Count to 100, with a comma between each number and no newlines. E.g., 1, 2, 3, ...'</span><span class="p">}</span>
-    <span class="p">],</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-    <span class="n">stream</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># this time, we set stream=True</span>
-<span class="p">)</span>
-
-<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">stream</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">delta</span><span class="o">.</span><span class="n">content</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<h3 id="consideration">Consideration<a class="headerlink" href="#consideration" title="Permanent link">¶</a></h3>
+<p>Using the multi-node feature likely indicates that you are trying to deploy a very large model. In such cases, you should consider increasing the <code>initialDelaySeconds</code> for the <code>livenessProbe</code>, <code>readinessProbe</code>, and <code>startupProbe</code>. The default values may not be suitable for your specific needs. </p>
+<p>You can set StartupProbe in ServingRuntime for your own situation.
+<div class="highlight"><pre><span></span><code>..
+      startupProbe:
+        failureThreshold: 40
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 30
+        initialDelaySeconds: 20
+..
+</code></pre></div></p>
+<h2 id="workerspec-and-servingruntime">WorkerSpec and ServingRuntime<a class="headerlink" href="#workerspec-and-servingruntime" title="Permanent link">¶</a></h2>
+<p>To enable multi-node/multi-GPU inference,  <code>workerSpec</code> must be configured in both ServingRuntime and InferenceService. The <code>huggingface-server-multinode</code> <code>ServingRuntime</code> already includes this field and is built on <strong>vLLM</strong>, which supports multi-node/multi-GPU feature. Note that this setup is <strong>not compatible with Triton</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even if the <code>ServingRuntime</code> is properly configured with <code>workerSpec</code>, multi-node/multi-GPU will not be enabled unless the InferenceService also configures the workerSpec.</p>
+</div>
+<div class="highlight"><pre><span></span><code>...
+  predictor:
+    model:
+      runtime: kserve-huggingfaceserver-multinode
+      modelFormat:
+        name: huggingface
+      storageUri: pvc://llama-3-8b-pvc/hf/8b_instruction_tuned  
+    workerSpec: {} # Specifying workerSpec indicates that multi-node functionality will be used     
 </code></pre></div>
-<p>Run the python script:</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>sample_openai.py
+<h2 id="key-configurations">Key Configurations<a class="headerlink" href="#key-configurations" title="Permanent link">¶</a></h2>
+<p>When using the <code>huggingface-server-multinode</code> <code>ServingRuntime</code>, there are two critical configurations you need to understand:</p>
+<ol>
+<li>
+<p><strong><code>workerSpec.tensorParallelSize</code></strong>:  <br/>
+   This setting controls how many GPUs are used per node. The GPU type count in both the head and worker node deployment resources will be updated automatically.</p>
+</li>
+<li>
+<p><strong><code>workerSpec.pipelineParallelSize</code></strong>
+  This setting determines how many nodes are involved in the deployment. This variable represents the total number of nodes, including both the head and worker nodes.</p>
+</li>
+</ol>
+<h3 id="example-inferenceservice">Example InferenceService<a class="headerlink" href="#example-inferenceservice" title="Permanent link">¶</a></h3>
+<p>Here’s an example of an <code>InferenceService</code> configuration for a Hugging Face model:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc://llama-3-8b-pvc/hf/8b_instruction_tuned</span>
+<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
+<span class="nt">      pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span>
+<span class="w">      </span><span class="nv">tensorParallelSize</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="nv">1</span>
+<span class="w">    </span><span class="p p-Indicator">}</span><span class="w">  </span>
+</code></pre></div>
+<h2 id="serve-the-hugging-face-vllm-model-using-2-nodes">Serve the Hugging Face vLLM Model Using 2 Nodes<a class="headerlink" href="#serve-the-hugging-face-vllm-model-using-2-nodes" title="Permanent link">¶</a></h2>
+<p>Follow these steps to serve the Hugging Face vLLM model using a multi-node setup.</p>
+<h3 id="1-create-a-persistent-volume-claim-pvc">1. Create a Persistent Volume Claim (PVC)<a class="headerlink" href="#1-create-a-persistent-volume-claim-pvc" title="Permanent link">¶</a></h3>
+<p>First, create a PVC for model storage. Be sure to update <code>%fileStorageClassName%</code> with your actual storage class.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PersistentVolumeClaim</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama-3-8b-pvc</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteMany</span>
+<span class="w">  </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
+<span class="w">  </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50Gi</span>
+<span class="w">  </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="err">%</span><span class="l l-Scalar l-Scalar-Plain">fileStorageClassName%</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h3 id="2-download-the-model-to-the-pvc">2. Download the Model to the PVC<a class="headerlink" href="#2-download-the-model-to-the-pvc" title="Permanent link">¶</a></h3>
+<p>To download the model, export your Hugging Face token (<code>HF_TEST_TOKEN</code>) as an environment variable. Replace <code>%token%</code> with your actual token.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">export HF_TEST_TOKEN=%token%</span>
+<span class="l l-Scalar l-Scalar-Plain">export MODEL=meta-llama/Meta-Llama-3-8B-Instruct</span>
+
+<span class="l l-Scalar l-Scalar-Plain">curl -o download-model-to-pvc.yaml https://kserve.github.io/website/latest/modelserving/v1beta1/vLLM/huggingface/multi-node/download-model-to-pvc.yaml</span>
+<span class="l l-Scalar l-Scalar-Plain">envsubst &lt; download-model-to-pvc.yaml | kubectl create -f -</span>
+</code></pre></div>
+<h3 id="3-create-a-servingruntime">3. Create a ServingRuntime<a class="headerlink" href="#3-create-a-servingruntime" title="Permanent link">¶</a></h3>
+<p>Apply the ServingRuntime configuration. Replace %TBD% with the path to your ServingRuntime YAML.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/blob/master/config/runtimes/kserve-huggingfaceserver-multinode.yaml
+</code></pre></div>
+<h3 id="4-deploy-the-model">4. Deploy the model<a class="headerlink" href="#4-deploy-the-model" title="Permanent link">¶</a></h3>
+<p>Finally, deploy the model using the following InferenceService configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-huggingfaceserver-multinode</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc://llama-3-8b-pvc/hf/8b_instruction_tuned</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="check-inferenceservice-status">Check <code>InferenceService</code> status.<a class="headerlink" href="#check-inferenceservice-status" title="Permanent link">¶</a></h2>
+<p>To verify the status of your <code>InferenceService</code>, run the following command:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-llama3
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>Typical<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
-Extracted<span class="w"> </span>reply:<span class="w"> </span>
-Two.
-
-Streaming<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
-<span class="m">1</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">3</span>,<span class="w"> </span><span class="m">4</span>,<span class="w"> </span><span class="m">5</span>,<span class="w"> </span><span class="m">6</span>,<span class="w"> </span><span class="m">7</span>,<span class="w"> </span><span class="m">8</span>,<span class="w"> </span><span class="m">9</span>,<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="m">11</span>,<span class="w"> </span><span class="m">12</span>,<span class="w"> </span><span class="m">13</span>,<span class="w"> </span><span class="m">14</span>,<span class="w"> </span><span class="m">15</span>,<span class="w"> </span><span class="m">16</span>,<span class="w"> </span><span class="m">17</span>,<span class="w"> </span><span class="m">18</span>,<span class="w"> </span><span class="m">19</span>,<span class="w"> </span><span class="m">20</span>,<span class="w"> </span><span class="m">21</span>,<span class="w"> </span><span class="m">22</span>,<span class="w"> </span><span class="m">23</span>,<span class="w"> </span><span class="m">24</span>,<span class="w"> </span><span class="m">25</span>,<span class="w"> </span><span class="m">26</span>,<span class="w"> </span><span class="m">27</span>,<span class="w"> </span><span class="m">28</span>,<span class="w"> </span><span class="m">29</span>,<span class="w"> </span><span class="m">30</span>,<span class="w"> </span><span class="m">31</span>,<span class="w"> </span><span class="m">32</span>,<span class="w"> </span><span class="m">33</span>,<span class="w"> </span><span class="m">34</span>,<span class="w"> </span><span class="m">35</span>,<span class="w"> </span><span class="m">36</span>,<span class="w"> </span><span class="m">37</span>,<span class="w"> </span><span class="m">38</span>,<span class="w"> </span><span class="m">39</span>,<span class="w"> </span><span class="m">40</span>,<span class="w"> </span><span class="m">41</span>,<span class="w"> </span><span class="m">42</span>,<span class="w"> </span><span class="m">43</span>,<span class="w"> </span><span class="m">44</span>,<span class="w"> </span><span class="m">45</span>,<span class="w"> </span><span class="m">46</span>,<span class="w"> </span><span class="m">47</span>,<span class="w"> </span><span class="m">48</span>,<span class="w"> </span><span class="m">49</span>,<span class="w"> </span><span class="m">50</span>,<span class="w"> </span><span class="m">51</span>,<span class="w"> </span><span class="m">52</span>,<span class="w"> </span><span class="m">53</span>,<span class="w"> </span><span class="m">54</span>,<span class="w"> </span><span class="m">55</span>,<span class="w"> </span><span class="m">56</span>,<span class="w"> </span><span class="m">57</span>,<span class="w"> </span><span class="m">58</span>,<span class="w"> </span><span class="m">59</span>,<span class="w"> </span><span class="m">60</span>,<span class="w"> </span><span class="m">61</span>,<span class="w"> </span><span class="m">62</span>,<span class="w"> </span><span class="m">63</span>,<span class="w"> </span><span class="m">64</span>,<span class="w"> </span><span class="m">65</span>,<span class="w"> </span><span class="m">66</span>,<span class="w"> </span><span class="m">67</span>,<span class="w"> </span><span class="m">68</span>,<span class="w"> </span><span class="m">69</span>,<span class="w"> </span><span class="m">70</span>,<span class="w"> </span><span class="m">71</span>,<span class="w"> </span><span class="m">72</span>,<span class="w"> </span><span class="m">73</span>,<span class="w"> </span><span class="m">74</span>,<span class="w"> </span><span class="m">75</span>,<span class="w"> </span><span class="m">76</span>,<span class="w"> </span><span class="m">77</span>,<span class="w"> </span><span class="m">78</span>,<span class="w"> </span><span class="m">79</span>,<span class="w"> </span><span class="m">80</span>,<span class="w"> </span><span class="m">81</span>,<span class="w"> </span><span class="m">82</span>,<span class="w"> </span><span class="m">83</span>,<span class="w"> </span><span class="m">84</span>,<span class="w"> </span><span class="m">85</span>,<span class="w"> </span><span class="m">86</span>,<span class="w"> </span><span class="m">87</span>,<span class="w"> </span><span class="m">88</span>,<span class="w"> </span><span class="m">89</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">91</span>,<span class="w"> </span><span class="m">92</span>,<span class="w"> </span><span class="m">93</span>,<span class="w"> </span><span class="m">94</span>,<span class="w"> </span><span class="m">95</span>,<span class="w"> </span><span class="m">96</span>,<span class="w"> </span><span class="m">97</span>,<span class="w"> </span><span class="m">98</span>,<span class="w"> </span><span class="m">99</span>,<span class="w"> </span><span class="m">100</span>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                 </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
+huggingface-llama3<span class="w">   </span>http://huggingface-llama3.default.example.com<span class="w">                                          </span>5m
 </code></pre></div>
 </div>
-<h2 id="how-to-integrate-with-langchain-sdk">How to integrate with Langchain SDK<a class="headerlink" href="#how-to-integrate-with-langchain-sdk" title="Permanent link">¶</a></h2>
-<p>Install the <a href="https://python.langchain.com/v0.2/docs/how_to/installation/#integration-packages">Langchain SDK</a>:</p>
-<div class="highlight"><pre><span></span><code>pip3<span class="w"> </span>install<span class="w"> </span>langchain-openai
+<h2 id="check-gpu-resource-status">Check <code>GPU resource</code> status.<a class="headerlink" href="#check-gpu-resource-status" title="Permanent link">¶</a></h2>
+<p>To check the GPU resource status, follow these steps:</p>
+<ol>
+<li>
+<p>Retrieve the pod names for the head and worker nodes:
+    <div class="highlight"><pre><span></span><code><span class="c1"># Get pod name</span>
+<span class="nv">podName</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>isvc.huggingface-llama3-predictor<span class="w"> </span>--no-headers<span class="p">|</span>cut<span class="w"> </span>-d<span class="s1">' '</span><span class="w"> </span>-f1<span class="k">)</span>
+<span class="nv">workerPodName</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>-l<span class="w"> </span><span class="nv">app</span><span class="o">=</span>isvc.huggingface-llama3-predictor-worker<span class="w"> </span>--no-headers<span class="p">|</span>cut<span class="w"> </span>-d<span class="s1">' '</span><span class="w"> </span>-f1<span class="k">)</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Check the GPU memory size for both the head and worker pods:
+      <div class="highlight"><pre><span></span><code><span class="c1"># Check GPU memory size</span>
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$podName</span><span class="w"> </span>--<span class="w"> </span>nvidia-smi
+kubectl<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="nv">$workerPodName</span><span class="w"> </span>--<span class="w"> </span>nvidia-smi
+</code></pre></div></p>
+</li>
+</ol>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>+-----------------------------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>NVIDIA-SMI<span class="w"> </span><span class="m">550</span>.90.07<span class="w">              </span>Driver<span class="w"> </span>Version:<span class="w"> </span><span class="m">550</span>.90.07<span class="w">      </span>CUDA<span class="w"> </span>Version:<span class="w"> </span><span class="m">12</span>.4<span class="w">     </span><span class="p">|</span>
+<span class="p">|</span>-----------------------------------------+------------------------+----------------------+
+<span class="p">|</span><span class="w"> </span>GPU<span class="w">  </span>Name<span class="w">                 </span>Persistence-M<span class="w"> </span><span class="p">|</span><span class="w"> </span>Bus-Id<span class="w">          </span>Disp.A<span class="w"> </span><span class="p">|</span><span class="w"> </span>Volatile<span class="w"> </span>Uncorr.<span class="w"> </span>ECC<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>Fan<span class="w">  </span>Temp<span class="w">   </span>Perf<span class="w">          </span>Pwr:Usage/Cap<span class="w"> </span><span class="p">|</span><span class="w">           </span>Memory-Usage<span class="w"> </span><span class="p">|</span><span class="w"> </span>GPU-Util<span class="w">  </span>Compute<span class="w"> </span>M.<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                         </span><span class="p">|</span><span class="w">                        </span><span class="p">|</span><span class="w">               </span>MIG<span class="w"> </span>M.<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="o">=========================================</span>+<span class="o">========================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span><span class="w">   </span><span class="m">0</span><span class="w">  </span>NVIDIA<span class="w"> </span>A10G<span class="w">                    </span>On<span class="w">  </span><span class="p">|</span><span class="w">   </span><span class="m">00000000</span>:00:1E.0<span class="w"> </span>Off<span class="w"> </span><span class="p">|</span><span class="w">                    </span><span class="m">0</span><span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w">  </span><span class="m">0</span>%<span class="w">   </span>33C<span class="w">    </span>P0<span class="w">             </span>71W<span class="w"> </span>/<span class="w">  </span>300W<span class="w"> </span><span class="p">|</span><span class="w">   </span>19031MiB<span class="w"> </span>/<span class="w">  </span>23028MiB<span class="w"> </span><span class="p">|</span><span class="w">      </span><span class="m">0</span>%<span class="w">      </span>Default<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                         </span><span class="p">|</span><span class="w">                        </span><span class="p">|</span><span class="w">                  </span>N/A<span class="w"> </span><span class="p">|</span>
++-----------------------------------------+------------------------+----------------------+
+<span class="w">         </span>...<span class="w">                                                               </span>
++-----------------------------------------------------------------------------------------+
+<span class="p">|</span><span class="w"> </span>NVIDIA-SMI<span class="w"> </span><span class="m">550</span>.90.07<span class="w">              </span>Driver<span class="w"> </span>Version:<span class="w"> </span><span class="m">550</span>.90.07<span class="w">      </span>CUDA<span class="w"> </span>Version:<span class="w"> </span><span class="m">12</span>.4<span class="w">     </span><span class="p">|</span>
+<span class="p">|</span>-----------------------------------------+------------------------+----------------------+
+<span class="p">|</span><span class="w"> </span>GPU<span class="w">  </span>Name<span class="w">                 </span>Persistence-M<span class="w"> </span><span class="p">|</span><span class="w"> </span>Bus-Id<span class="w">          </span>Disp.A<span class="w"> </span><span class="p">|</span><span class="w"> </span>Volatile<span class="w"> </span>Uncorr.<span class="w"> </span>ECC<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w"> </span>Fan<span class="w">  </span>Temp<span class="w">   </span>Perf<span class="w">          </span>Pwr:Usage/Cap<span class="w"> </span><span class="p">|</span><span class="w">           </span>Memory-Usage<span class="w"> </span><span class="p">|</span><span class="w"> </span>GPU-Util<span class="w">  </span>Compute<span class="w"> </span>M.<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                         </span><span class="p">|</span><span class="w">                        </span><span class="p">|</span><span class="w">               </span>MIG<span class="w"> </span>M.<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="o">=========================================</span>+<span class="o">========================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span><span class="w">   </span><span class="m">0</span><span class="w">  </span>NVIDIA<span class="w"> </span>A10G<span class="w">                    </span>On<span class="w">  </span><span class="p">|</span><span class="w">   </span><span class="m">00000000</span>:00:1E.0<span class="w"> </span>Off<span class="w"> </span><span class="p">|</span><span class="w">                    </span><span class="m">0</span><span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w">  </span><span class="m">0</span>%<span class="w">   </span>30C<span class="w">    </span>P0<span class="w">             </span>69W<span class="w"> </span>/<span class="w">  </span>300W<span class="w"> </span><span class="p">|</span><span class="w">   </span>18959MiB<span class="w"> </span>/<span class="w">  </span>23028MiB<span class="w"> </span><span class="p">|</span><span class="w">      </span><span class="m">0</span>%<span class="w">      </span>Default<span class="w"> </span><span class="p">|</span>
+<span class="p">|</span><span class="w">                                         </span><span class="p">|</span><span class="w">                        </span><span class="p">|</span><span class="w">                  </span>N/A<span class="w"> </span><span class="p">|</span>
++-----------------------------------------+------------------------+----------------------+<span class="w">             </span>
 </code></pre></div>
-<p>Create a Python script to interact with the KServe LLM Inference Service and save it as <code>sample_langchain.py</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">python</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
 </div>
-</input></div>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
-
-<span class="n">Deployment_url</span> <span class="o">=</span> <span class="s2">"&lt;SERVICE_HOSTNAME&gt;"</span>
-
-<span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span>
-    <span class="n">model_name</span><span class="o">=</span><span class="s2">"llama3"</span><span class="p">,</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">Deployment_url</span><span class="si">}</span><span class="s2">/openai/v1"</span><span class="p">,</span>
-    <span class="n">openai_api_key</span><span class="o">=</span><span class="s2">"empty"</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">max_tokens</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># typial chat completion response</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Typical chat completion response:"</span><span class="p">)</span>
-
-<span class="n">messages</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span>
-        <span class="s2">"system"</span><span class="p">,</span>
-        <span class="s2">"You are a helpful assistant that translates English to French. Translate the user sentence."</span><span class="p">,</span>
-    <span class="p">),</span>
-    <span class="p">(</span><span class="s2">"human"</span><span class="p">,</span> <span class="s2">"I love programming."</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">reply</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Extracted reply: </span><span class="se">\n</span><span class="si">{</span><span class="n">reply</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># streaming chat completion response</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Streaming chat completion response:"</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">llm</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="s2">"Write me a 1 verse song about goldfish on the moon"</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<h2 id="perform-model-inference">Perform Model Inference<a class="headerlink" href="#perform-model-inference" title="Permanent link">¶</a></h2>
+<p>You can perform model inference by forwarding the port for testing purposes. Use the following command:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>pod/<span class="nv">$podName</span><span class="w"> </span><span class="m">8080</span>:8080
 </code></pre></div>
-<p>Run the python script:</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>sample_langchain.py
+<p>The KServe Hugging Face vLLM runtime supports the following OpenAI endpoints for inference:</p>
+<ul>
+<li><code>/v1/completions</code></li>
+<li><code>/v1/chat/completions</code> </li>
+</ul>
+<h4 id="sample-openai-completions-request">Sample OpenAI Completions request:<a class="headerlink" href="#sample-openai-completions-request" title="Permanent link">¶</a></h4>
+<p>To make a request to the OpenAI completions endpoint, use the following <code>curl</code> command:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/openai/v1/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">        "model": "huggingface-llama3",</span>
+<span class="s1">        "prompt": "At what temperature does Nitrogen boil?",</span>
+<span class="s1">        "max_tokens": 100,</span>
+<span class="s1">        "temperature": 0</span>
+<span class="s1">    }'</span>
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code><span class="w">    </span>Typical<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
-<span class="w">    </span>Extracted<span class="w"> </span>reply:<span class="w"> </span>
-<span class="w">    </span>Je<span class="w"> </span>adore<span class="w"> </span>le<span class="w"> </span>programmation.
-
-<span class="w">    </span>Streaming<span class="w"> </span>chat<span class="w"> </span>completion<span class="w"> </span>response:
-<span class="w">    </span>Here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span><span class="m">1</span>-verse<span class="w"> </span>song<span class="w"> </span>about<span class="w"> </span>goldfish<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>moon:
-
-<span class="w">    </span><span class="s2">"In the lunar lake, where the craters shine</span>
-<span class="s2">    A school of goldfish swim, in a celestial shrine</span>
-<span class="s2">    Their scales glimmer bright, like stars in the night</span>
-<span class="s2">    As they dart and play, in the moon's gentle light"</span>
+<div class="no-copy highlight"><pre><span></span><code><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cmpl-3bf2b04bac4a43548bc657c999e4fe5f"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"length"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">" Nitrogen is a colorless, odorless, tasteless, and non-toxic gas. It is a member of the group 15 elements in the periodic table. Nitrogen is a very common element in the universe and is found in many compounds, including ammonia, nitric acid, and nitrate salts.\nThe boiling point of nitrogen is -195.8°C (-320.4°F) at standard atmospheric pressure. This means that at this temperature, nitrogen will change from a liquid to a"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1728348255</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"huggingface-llama3"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text_completion"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"usage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">109</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span><span class="w">    </span>
+</code></pre></div>
+</div>
+<h4 id="sample-openai-chat-request">Sample OpenAI Chat request:<a class="headerlink" href="#sample-openai-chat-request" title="Permanent link">¶</a></h4>
+<p>To make a request to the OpenAI chat completions endpoint, use the following <code>curl</code> command:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>http://localhost:8080/openai/v1/chat/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">        "model": "huggingface-llama3",</span>
+<span class="s1">        "messages":[{"role":"system","content":"At what temperature does Nitrogen boil?"}],</span>
+<span class="s1">        "max_tokens": 100,</span>
+<span class="s1">        "stream": false</span>
+<span class="s1">       }'</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cmpl-1201662139294b81b02aca115d7981b7"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The boiling point of nitrogen is -195.8°C (-320.44°F) at a pressure of 1 atm."</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"tool_calls"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"function_call"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1728348754</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"huggingface-llama3"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"system_fingerprint"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chat.completion"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"usage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">26</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">19</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span><span class="w">    </span>
 </code></pre></div>
 </div>
 </article>
@@ -1369,34 +1578,6 @@ Streaming<span class="w"> </span>chat<span class="w"> </span>completion<span cla
           </a>
 </main>
 <footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Fill Mask" class="md-footer__link md-footer__link--prev" href="../fill_mask/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                Previous
-              </span>
-              Fill Mask
-            </div>
-</div>
-</a>
-<a aria-label="Next: TorchServe LLM" class="md-footer__link md-footer__link--next" href="../../torchserve/accelerate/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
-                Next
-              </span>
-              TorchServe LLM
-            </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
-</div>
-</a>
-</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">

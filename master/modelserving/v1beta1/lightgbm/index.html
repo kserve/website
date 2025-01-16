@@ -1377,9 +1377,9 @@
 <h1 id="deploy-lightgbm-model-with-inferenceservice">Deploy LightGBM model with InferenceService<a class="headerlink" href="#deploy-lightgbm-model-with-inferenceservice" title="Permanent link">¶</a></h1>
 <h2 id="train-a-lightgbm-model">Train a LightGBM model<a class="headerlink" href="#train-a-lightgbm-model" title="Permanent link">¶</a></h2>
 <p>To test the LightGBM Server, first you need to train a simple LightGBM model with following python code.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">lightgbm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">lgb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">model_dir</span> <span class="o">=</span> <span class="s2">"."</span>
 <span class="n">BST_FILE</span> <span class="o">=</span> <span class="s2">"model.bst"</span>
@@ -1404,7 +1404,7 @@
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>lgbserver<span class="w"> </span>--model_dir<span class="w"> </span>/path/to/model_dir<span class="w"> </span>--model_name<span class="w"> </span>lgb
 </code></pre></div>
 <p>After the <code>LightGBM Server</code> is up locally we can then test the model by sending an inference request.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">requests</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
 <span class="n">request</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'sepal_width_(cm)'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">},</span> <span class="s1">'petal_length_(cm)'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">1.4</span><span class="p">},</span> <span class="s1">'petal_width_(cm)'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">},</span><span class="s1">'sepal_length_(cm)'</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">5.1</span><span class="p">}</span> <span class="p">}</span>
 <span class="n">formData</span> <span class="o">=</span> <span class="p">{</span>

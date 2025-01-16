@@ -1466,7 +1466,7 @@ It provides methods to perform inference, explanation, and health checks on the 
 </blockquote>
 <p>Perform inference by sending a request to the specified model endpoint.</p>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v2"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceRESTClient</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -1546,7 +1546,7 @@ It provides methods to perform inference, explanation, and health checks on the 
 </blockquote>
 <p>Sends an asynchronous request to the model server to get an explanation for the given input data. Only supports V1 protocol.</p>
 <h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v2"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">InferenceRESTClient</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
@@ -1613,7 +1613,7 @@ It provides methods to perform inference, explanation, and health checks on the 
 </blockquote>
 <p>Check if the inference server is ready. Only supports V2 protocol.</p>
 <h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v2"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 
@@ -1668,7 +1668,7 @@ It provides methods to perform inference, explanation, and health checks on the 
 </blockquote>
 <p>Return the liveness status of the inference server.</p>
 <h3 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v2"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 
@@ -1723,7 +1723,7 @@ It provides methods to perform inference, explanation, and health checks on the 
 </blockquote>
 <p>Return the readiness status of the specified model.</p>
 <h3 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v2"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 

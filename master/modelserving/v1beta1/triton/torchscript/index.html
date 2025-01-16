@@ -1399,7 +1399,7 @@ to a serialized representation that can be loaded and executed purely from C++ l
 that can be understood, compiled and serialized by the Torch Script compiler. If you are starting out from an existing PyTorch model written in the vanilla <code>eager</code> API,
 you must first convert your model to Torch Script.</p>
 <p>Convert the above model via Tracing and serialize the script module to a file
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="c1"># Use torch.jit.trace to generate a torch.jit.ScriptModule via tracing.</span>
 <span class="n">example</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
 <span class="n">traced_script_module</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">net</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
@@ -1677,14 +1677,14 @@ when the user is sending in request with raw input format. Transformer component
 User is responsible to create a python class which extends from KServe <code>Model</code> base class which implements <code>preprocess</code> handler to transform raw input
 format to tensor format according to V2 prediction protocol, <code>postprocess</code> handle is to convert raw prediction response to a more user friendly response.</p>
 <h3 id="implement-prepost-processing-functions">Implement pre/post processing functions<a class="headerlink" href="#implement-prepost-processing-functions" title="Permanent link">¶</a></h3>
-<p><div class="highlight"><span class="filename">image_transformer_v2.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">kserve</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">base64</span>
+<p><div class="highlight"><span class="filename">image_transformer_v2.py</span><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">kserve</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">transforms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">kserve</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">KSERVE_LOGLEVEL</span><span class="p">)</span>
 
@@ -1692,7 +1692,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
         <span class="p">[</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
          <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))])</span>
 
-<span class="k">def</span> <span class="nf">image_transform</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">image_transform</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
     <span class="n">byte_array</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s1">'image_bytes'</span><span class="p">][</span><span class="s1">'b64'</span><span class="p">])</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">byte_array</span><span class="p">))</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
@@ -1702,13 +1702,13 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
     <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">ImageTransformerV2</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImageTransformerV2</span><span class="p">(</span><span class="n">kserve</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">predictor_host</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">protocol</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">predictor_host</span> <span class="o">=</span> <span class="n">predictor_host</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">protocol</span> <span class="o">=</span> <span class="n">protocol</span>
 
-    <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span>
            <span class="s1">'inputs'</span><span class="p">:</span> <span class="p">[</span>
                <span class="p">{</span>
@@ -1720,7 +1720,7 @@ format to tensor format according to V2 prediction protocol, <code>postprocess</
             <span class="p">]</span>
         <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">output</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">"data"</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="s2">"shape"</span><span class="p">])</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
                 <span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">"outputs"</span><span class="p">]}</span>
 </code></pre></div>
