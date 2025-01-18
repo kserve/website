@@ -13,6 +13,7 @@ nav:
                 - ModelMesh installation: admin/modelmesh.md
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - Migrating from KFServing: admin/migration.md
+                - Gateway API migration: admin/gatewayapi_migration.md
     - User Guide:
           - Concepts:
                 - Control Plane:
