@@ -52,7 +52,7 @@ You can set StartupProbe in ServingRuntime for your own situation.
 ..
 ~~~
 
-Multi-node setups typically use the `RollingUpdate strategy`, which ensures that the existing service remains operational until the new service becomes Ready. However, this approach requires more than twice the resources to function effectively. Therefore, during the development phase, it is more appropriate to use the `Recreate strategy`.
+Multi-node setups typically use the `RollingUpdate` deployment strategy, which ensures that the existing service remains operational until the new service becomes Ready. However, this approach requires more than twice the resources to function effectively. Therefore, during the development phase, it is more appropriate to use the `Recreate` strategy.
 
 ~~~
 spec:
