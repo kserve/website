@@ -66,7 +66,7 @@ spec:
       storageUri: pvc://XXXX
     workerSpec: {}
 ~~~
-Additionally, modifying the PipelineParallelSize (either increasing or decreasing it) can impact the existing service due to the default behavior of the Deployment resource. It is important to note that **PipelineParallelSize is not an autoscaling concept**; rather, it determines how many nodes will be used to run the model. For this reason, it is strongly recommended not to modify this setting in production environments.
+Additionally, modifying the `PipelineParallelSize` (either increasing or decreasing it) can impact the existing service due to the default behavior of the Deployment resource. It is important to note that **PipelineParallelSize is not an autoscaling concept**; rather, it determines how many nodes will be used to run the model. For this reason, it is strongly recommended not to modify this setting in production environments.
 
 If the `Recreate` deployment strategy is not used and you need to change the PipelineParallelSize, the best approach is to delete the existing InferenceService (ISVC) and create a new one with the desired configuration. The same recommendation applies to TensorParallelSize, as modifying this setting dynamically can also affect the service's stability and performance.
 
