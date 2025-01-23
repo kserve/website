@@ -1331,6 +1331,24 @@
         initialDelaySeconds: 20
 ..
 </code></pre></div></p>
+<p>Multi-node setups typically use the <code>RollingUpdate</code> deployment strategy, which ensures that the existing service remains operational until the new service becomes Ready. However, this approach requires more than twice the resources to function effectively. Therefore, during the development phase, it is more appropriate to use the <code>Recreate</code> strategy.</p>
+<p><div class="highlight"><pre><span></span><code>spec:
+  predictor:
+    deploymentStrategy:
+      type: Recreate
+    model:
+      modelFormat:
+        name: huggingface
+      runtime: kserve-huggingfaceserver-multinode
+      storageUri: pvc://XXXX
+    workerSpec: {}
+</code></pre></div>
+Additionally, modifying the <code>PipelineParallelSize</code> (either increasing or decreasing it) can impact the existing service due to the default behavior of the Deployment resource. It is important to note that <strong>PipelineParallelSize is not an autoscaling concept</strong>; rather, it determines how many nodes will be used to run the model. For this reason, it is strongly recommended not to modify this setting in production environments.</p>
+<p>If the <code>Recreate</code> deployment strategy is not used and you need to change the PipelineParallelSize, the best approach is to delete the existing InferenceService (ISVC) and create a new one with the desired configuration. The same recommendation applies to TensorParallelSize, as modifying this setting dynamically can also affect the service's stability and performance.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To reiterate, <strong>PipelineParallelSize is not a general-purpose autoscaling mechanism</strong>, and changes to it should be handled with caution, especially in production environments.</p>
+</div>
 <h2 id="workerspec-and-servingruntime">WorkerSpec and ServingRuntime<a class="headerlink" href="#workerspec-and-servingruntime" title="Permanent link">¶</a></h2>
 <p>To enable multi-node/multi-GPU inference,  <code>workerSpec</code> must be configured in both ServingRuntime and InferenceService. The <code>huggingface-server-multinode</code> <code>ServingRuntime</code> already includes this field and is built on <strong>vLLM</strong>, which supports multi-node/multi-GPU feature. Note that this setup is <strong>not compatible with Triton</strong>.</p>
 <div class="admonition note">
