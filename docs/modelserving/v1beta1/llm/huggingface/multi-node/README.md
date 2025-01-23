@@ -52,6 +52,29 @@ You can set StartupProbe in ServingRuntime for your own situation.
 ..
 ~~~
 
+Multi-node setups typically use the `RollingUpdate` deployment strategy, which ensures that the existing service remains operational until the new service becomes Ready. However, this approach requires more than twice the resources to function effectively. Therefore, during the development phase, it is more appropriate to use the `Recreate` strategy.
+
+~~~
+spec:
+  predictor:
+    deploymentStrategy:
+      type: Recreate
+    model:
+      modelFormat:
+        name: huggingface
+      runtime: kserve-huggingfaceserver-multinode
+      storageUri: pvc://XXXX
+    workerSpec: {}
+~~~
+Additionally, modifying the `PipelineParallelSize` (either increasing or decreasing it) can impact the existing service due to the default behavior of the Deployment resource. It is important to note that **PipelineParallelSize is not an autoscaling concept**; rather, it determines how many nodes will be used to run the model. For this reason, it is strongly recommended not to modify this setting in production environments.
+
+If the `Recreate` deployment strategy is not used and you need to change the PipelineParallelSize, the best approach is to delete the existing InferenceService (ISVC) and create a new one with the desired configuration. The same recommendation applies to TensorParallelSize, as modifying this setting dynamically can also affect the service's stability and performance.
+
+!!! note
+
+    To reiterate, **PipelineParallelSize is not a general-purpose autoscaling mechanism**, and changes to it should be handled with caution, especially in production environments.
+
+
 ## WorkerSpec and ServingRuntime
 
 To enable multi-node/multi-GPU inference,  `workerSpec` must be configured in both ServingRuntime and InferenceService. The `huggingface-server-multinode` `ServingRuntime` already includes this field and is built on **vLLM**, which supports multi-node/multi-GPU feature. Note that this setup is **not compatible with Triton**.

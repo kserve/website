@@ -33,6 +33,7 @@ The following examples demonstrate how to deploy and perform inference using the
 - [Sequence Classification (Text Classification) using distilBERT](text_classification/README.md)
 - [Fill Mask using BERT](fill_mask/README.md)
 - [SDK Integration](sdk_integration/README.md)
+- [Multi-Node Multi-GPU using Ray](multi-node/README.md)
 
 !!! note
     The Hugging Face runtime image has the following environment variables set by default:
