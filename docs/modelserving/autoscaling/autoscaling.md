@@ -1,6 +1,8 @@
 # Autoscale InferenceService with inference workload
 
-## InferenceService with target concurrency
+## Autoscaler for kserve's Serverless
+
+### InferenceService with target concurrency
 
 ### Create `InferenceService`
 
