@@ -1,14 +1,15 @@
 # Kubernetes Ingress to Gateway API Migration Guide
 
 ## 1. Install Gateway API CRD
-Install the Gateway API CRD as it is not part of the Kubernetes installation. KServe implements Gateway API version 1.2.1.
+The Kubernetes Gateway API is a newer, more flexible and standardized way to manage traffic ingress and egress in Kubernetes clusters. KServe Implements the Gateway API version `1.2.1`.
 
+The Gateway API is not part of the Kubernetes cluster, therefore it needs to be installed manually, to do this, follow the next step.
 ```shell
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
 ```
 
 ## 2. Create GatewayClass
-Create a `GatewayClass` resource using your preferred network controller. For this example, you will use [Envoy Gateway](https://gateway.envoyproxy.io/docs/) as the network controller.
+Create a `GatewayClass` resource using your preferred network controller. For this example, we will use [Envoy Gateway](https://gateway.envoyproxy.io/docs/) as the network controller.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
@@ -20,7 +21,7 @@ spec:
 ```
 
 ## 3. Enable Gateway API
-Enable Gateway API support in KServe by setting the `enableGatewayApi` to `true` in `inferenceservice-config` ConfigMap.
+To enable Gateway API support in KServe you need to set the `enableGatewayApi` to `true` in the `inferenceservice-config` ConfigMap.
 
 === "Helm"
 
@@ -43,7 +44,7 @@ Enable Gateway API support in KServe by setting the `enableGatewayApi` to `true`
     ```
 
 ## 4. Create Gateway resource
-Create a `Gateway` resource to expose the `InferenceService`. In this example, you will use the `envoy` `GatewayClass` that you created in [step 2](#2-create-gatewayclass). If you already have a `Gateway` resource, you can skip this step.
+Create a `Gateway` resource to expose the `InferenceService`. In this example, we will use the `envoy` `GatewayClass` that was created in [step 2](#2-create-gatewayclass). If you already have a `Gateway` resource, you can skip this step.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
@@ -57,9 +58,9 @@ spec:
     - name: http
       protocol: HTTP
       port: 80
-        allowedRoutes:
-          namespaces:
-            from: All
+      allowedRoutes:
+        namespaces:
+          from: All
     - name: https
       protocol: HTTPS
       port: 443
@@ -92,11 +93,10 @@ envoy-gateway-system   service/envoy-kserve-kserve-ingress-gateway-deaaa49b   Lo
 ```
 
 !!! note
-    KServe comes with a default `Gateway` named kserve-ingress-gateway. You can enable the default gateway by setting Helm value `kserve.controller.gateway.ingressGateway.createGateway` to `true`.
-    If you want to use the default gateway, you can skip this step and proceed to [step 6](#6-restart-the-kserve-controller).
+    KServe can automatically create a default `Gateway` named `kserve-ingress-gateway` during installation if the Helm value `kserve.controller.gateway.ingressGateway.createGateway` set to `true`. If you choose to use this default gateway, you can skip this step and proceed to [step 6](#6-restart-the-kserve-controller).
 
 ## 5. Configure the Gateway name and namespace in KServe
-In the ConfigMap `inferenceservice-config` modify the `kserveIngressGateway` from the `ingress` section with gateway namespace and name with the format <gateway namespace>/<gateway name>. In this example, you will use the `Gateway` resource that you created in [step 4](#4-create-gateway-resource).
+In the ConfigMap `inferenceservice-config` modify the `kserveIngressGateway` in the `ingress` section with `gateway namespace` and `name` respecting the format `<gateway namespace>/<gateway name>`. In this example, we will use the `Gateway` resource that was created in [step 4](#4-create-gateway-resource).
 
 === "Helm"
     
@@ -152,7 +152,7 @@ spec:
 EOF
 ```
 
-Execute the following command to determine if your Kubernetes cluster is running in an environment that supports external load balancers
+Execute the following command to determine if the Kubernetes cluster is running in an environment that supports external load balancers
 ```shell
 kubectl get svc kserve-ingress-gateway -l serving.kserve.io/gateway=kserve-ingress-gateway -A
 ```
@@ -195,9 +195,6 @@ kubectl get svc kserve-ingress-gateway -l serving.kserve.io/gateway=kserve-ingre
     ```bash
     export INGRESS_HOST=localhost
     export INGRESS_PORT=8080
-
-    SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-    curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict" -d @./iris-input.json
     ```
 
 Create a file named `iris-input-v2.json` with the sample input.

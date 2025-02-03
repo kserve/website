@@ -25,7 +25,9 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
 
 === "Gateway API"
 
-    Install the Gateway API CRD as it is not part of the Kubernetes installation. KServe implements Gateway API version 1.2.1.
+    The Kubernetes Gateway API is a newer, more flexible and standardized way to manage traffic ingress and egress in Kubernetes clusters. KServe Implements the Gateway API version `1.2.1`.
+    
+    The Gateway API is not part of the Kubernetes cluster, therefore it needs to be installed manually, to do this, follow the next step.
 
     ```shell
     kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
