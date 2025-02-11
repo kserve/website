@@ -44,7 +44,7 @@ The following examples demonstrate how to deploy and perform inference using the
 
 ## Hugging Face Runtime Arguments
 
-Below, you can find an explanation of command line arguments which are supported by the Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/models/engine_args.html) can also be specified on the command line and will be parsed by the Hugging Face runtime.
+Below, you can find an explanation of command line arguments which are supported by the Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/serving/engine_args.html) can also be specified on the command line and will be parsed by the Hugging Face runtime.
 
 - `--model_name`: The name of the model used on the endpoint path.
 - `--model_dir`: The local path where the model is downloaded to. If `model_id` is provided, this argument will be ignored.
