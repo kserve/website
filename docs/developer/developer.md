@@ -210,8 +210,8 @@ kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/master/docs/sam
 
 You should see model serving deployment running under default or your specified namespace.
 
-```kubectl
-$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
+```bash
+kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
 ```
 
 !!! success "Expected Output" 
