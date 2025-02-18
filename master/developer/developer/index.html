@@ -1575,7 +1575,7 @@ The built image is only for development and testing purpose, the current limitat
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/master/docs/samples/v1beta1/tensorflow/tensorflow.yaml
 </code></pre></div></p>
 <p>You should see model serving deployment running under default or your specified namespace.</p>
-<div class="highlight"><pre><span></span><code>$ kubectl get pods -n default -l serving.kserve.io/inferenceservice=flower-sample
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>default<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/inferenceservice<span class="o">=</span>flower-sample
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
