@@ -1,6 +1,6 @@
 # Autoscale InferenceService with inference workload
 - The examples below depend on Knative. You need to implement HPA yourself without Knative.
-- To disable the HPA created by KServe, set serving.kserve.io/autoscalerClass: "external" in the InferenceService annotations.
+- To disable the HPA created by KServe, set `serving.kserve.io/autoscalerClass: "external"` in the InferenceService annotations.
 
 ## InferenceService with target concurrency
 
