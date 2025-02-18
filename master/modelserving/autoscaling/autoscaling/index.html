@@ -1387,6 +1387,10 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="autoscale-inferenceservice-with-inference-workload">Autoscale InferenceService with inference workload<a class="headerlink" href="#autoscale-inferenceservice-with-inference-workload" title="Permanent link">¶</a></h1>
+<ul>
+<li>The examples below depend on Knative. You need to implement HPA yourself without Knative.</li>
+<li>To disable the HPA created by KServe, set <code>serving.kserve.io/autoscalerClass: "external"</code> in the InferenceService annotations.</li>
+</ul>
 <h2 id="inferenceservice-with-target-concurrency">InferenceService with target concurrency<a class="headerlink" href="#inferenceservice-with-target-concurrency" title="Permanent link">¶</a></h2>
 <h3 id="create-inferenceservice">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice" title="Permanent link">¶</a></h3>
 <p>Apply the tensorflow example CR with scaling target set to 1. Annotation <code>autoscaling.knative.dev/target</code> is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.</p>
