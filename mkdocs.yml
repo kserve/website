@@ -94,6 +94,7 @@ nav:
                 - Inference Logger: modelserving/logger/logger.md
           - Autoscaling:
                 - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
+                - keda Autoscaling: modelserving/autoscaling/keda/autoscaling_keda.md
           - Node Scheduling:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
