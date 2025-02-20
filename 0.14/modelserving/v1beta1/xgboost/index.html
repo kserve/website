@@ -1315,9 +1315,9 @@ compatible with the <a href="https://github.com/kserve/open-inference-protocol">
 <h2 id="train-the-model">Train the Model<a class="headerlink" href="#train-the-model" title="Permanent link">¶</a></h2>
 <p>The first step will be to train a sample <code>xgboost</code> model.
 We will save this model as <code>model.bst</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">xgboost</span> <span class="k">as</span> <span class="nn">xgb</span>
-<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xgb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
 <span class="n">model_dir</span> <span class="o">=</span> <span class="s2">"."</span>
 <span class="n">BST_FILE</span> <span class="o">=</span> <span class="s2">"model.bst"</span>

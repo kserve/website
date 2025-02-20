@@ -1468,7 +1468,7 @@
 <p>Create or update a <code>Secret</code> and <code>Service Account</code> for GCS and S3 for the provided credentials. Once the <code>Service Account</code> is applied, it may be used in the <code>Service Account</code> field of a InferenceService's <a href="../V1beta1ModelSpec/">V1beta1ModelSpec</a>.</p>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
 <p>Example for creating GCP credentials.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">storage_type</span><span class="o">=</span><span class="s1">'GCS'</span><span class="p">,</span>
@@ -1478,7 +1478,7 @@
 </code></pre></div></p>
 <p>The API supports specifying a Service Account by <code>service_account</code>, or using default Service Account <code>kfserving-service-credentials</code>, if the Service Account does not exist, the API will create it and attach the created secret with the Service Account, if exists, only patch it to attach the created Secret.</p>
 <p>Example for creating S3 credentials.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">storage_type</span><span class="o">=</span><span class="s1">'S3'</span><span class="p">,</span>
@@ -1491,7 +1491,7 @@
                           <span class="n">s3_verify_ssl</span><span class="o">=</span><span class="s1">'0'</span><span class="p">)</span>
 </code></pre></div></p>
 <p>Example for creating Azure credentials.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">set_credentials</span><span class="p">(</span><span class="n">storage_type</span><span class="o">=</span><span class="s1">'Azure'</span><span class="p">,</span>
@@ -1569,14 +1569,14 @@ INFO:kfserving.api.set_credentials:Created (or Patched) Service account: kfservi
 </blockquote>
 <p>Create the provided InferenceService in the specified namespace</p>
 <h3 id="example_1">Example<a class="headerlink" href="#example_1" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kubernetes</span> <span class="kn">import</span> <span class="n">client</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kubernetes</span><span class="w"> </span><span class="kn">import</span> <span class="n">client</span>
 
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">constants</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1PredictorSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1TFServingSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceServiceSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1PredictorSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1TFServingSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1InferenceServiceSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
 
 <span class="n">default_model_spec</span> <span class="o">=</span> <span class="n">V1beta1InferenceServiceSpec</span><span class="p">(</span><span class="n">predictor</span><span class="o">=</span><span class="n">V1beta1PredictorSpec</span><span class="p">(</span><span class="n">tensorflow</span><span class="o">=</span><span class="n">V1beta1TFServingSpec</span><span class="p">(</span>
     <span class="n">storage_uri</span><span class="o">=</span><span class="s1">'gs://kfserving-examples/models/tensorflow/flowers'</span><span class="p">)))</span>
@@ -1638,13 +1638,13 @@ INFO:kfserving.api.set_credentials:Created (or Patched) Service account: kfservi
 </blockquote>
 <p>Get the created InferenceService in the specified namespace</p>
 <h3 id="example_2">Example<a class="headerlink" href="#example_2" title="Permanent link">¶</a></h3>
-<p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'flower-sample'</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">'kubeflow'</span><span class="p">)</span>
 </code></pre></div>
 The API also support watching the specified InferenceService or all InferenceService in the namespace.
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'flower-sample'</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">'kubeflow'</span><span class="p">,</span> <span class="n">watch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout_seconds</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
@@ -1701,13 +1701,13 @@ flower-sample<span class="w">        </span>True<span class="w">       </span><s
 <p>Patch the created InferenceService in the specified namespace.</p>
 <p>Note that if you want to set the field from existing value to <code>None</code>, <code>patch</code> API may not work, you need to use <a href="#replace">replace</a> API to remove the field value.</p>
 <h3 id="example_3">Example<a class="headerlink" href="#example_3" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kubernetes</span> <span class="kn">import</span> <span class="n">client</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">constants</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1PredictorSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1TFServingSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceServiceSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kubernetes</span><span class="w"> </span><span class="kn">import</span> <span class="n">client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1PredictorSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1TFServingSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1InferenceServiceSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">service_name</span> <span class="o">=</span> <span class="s1">'flower-sample'</span>
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
@@ -1784,13 +1784,13 @@ flower-sample<span class="w">        </span>True<span class="w">       </span><s
 </blockquote>
 <p>Replace the created InferenceService in the specified namespace. Generally use the <code>replace</code> API to update whole InferenceService or remove a field such as canary or other components of the InferenceService.</p>
 <h3 id="example_4">Example<a class="headerlink" href="#example_4" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kubernetes</span> <span class="kn">import</span> <span class="n">client</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">constants</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1PredictorSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1TFServingSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceServiceSpec</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
-<span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kubernetes</span><span class="w"> </span><span class="kn">import</span> <span class="n">client</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1PredictorSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1TFServingSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1InferenceServiceSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">V1beta1InferenceService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">service_name</span> <span class="o">=</span> <span class="s1">'flower-sample'</span>
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
@@ -1866,7 +1866,7 @@ flower-sample<span class="w">        </span>True<span class="w">       </span><s
 </blockquote>
 <p>Delete the created InferenceService in the specified namespace</p>
 <h3 id="example_5">Example<a class="headerlink" href="#example_5" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">'flower-sample'</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">'kubeflow'</span><span class="p">)</span>
@@ -1904,7 +1904,7 @@ flower-sample<span class="w">        </span>True<span class="w">       </span><s
 </blockquote>
 <p>Wait for the InferenceService to be ready.</p>
 <h3 id="example_6">Example<a class="headerlink" href="#example_6" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">wait_isvc_ready</span><span class="p">(</span><span class="s1">'flower-sample'</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">'kubeflow'</span><span class="p">)</span>
@@ -1960,7 +1960,7 @@ flower-sample<span class="w">        </span>True<span class="w">       </span><s
 </blockquote>
 <p>Returns True if the InferenceService is ready; false otherwise.</p>
 <h3 id="example_7">Example<a class="headerlink" href="#example_7" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">KServeClient</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">KServeClient</span>
 
 <span class="n">kserve</span> <span class="o">=</span> <span class="n">KServeClient</span><span class="p">()</span>
 <span class="n">kserve</span><span class="o">.</span><span class="n">is_isvc_ready</span><span class="p">(</span><span class="s1">'flower-sample'</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">'kubeflow'</span><span class="p">)</span>

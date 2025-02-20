@@ -1366,9 +1366,9 @@ Content-Length:<span class="w"> </span>&lt;yy+16&gt;<span class="w">   </span><s
 <div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">InferenceRESTClient</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferInput</span>
-<span class="kn">from</span> <span class="nn">kserve.protocol.infer_type</span> <span class="kn">import</span> <span class="n">RequestedOutput</span>
-<span class="kn">from</span> <span class="nn">kserve.inference_client</span> <span class="kn">import</span> <span class="n">RESTConfig</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">InferenceRESTClient</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferInput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve.protocol.infer_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestedOutput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve.inference_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span>
 
 <span class="n">fp16_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">2.22</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.345</span><span class="p">,</span> <span class="mf">4.34343</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
 <span class="n">uint32_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
@@ -1471,9 +1471,9 @@ Content-Length:<span class="w"> </span>&lt;yy+48&gt;<span class="w">   </span><s
 <div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">kserve</span> <span class="kn">import</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">InferenceRESTClient</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferInput</span>
-<span class="kn">from</span> <span class="nn">kserve.protocol.infer_type</span> <span class="kn">import</span> <span class="n">RequestedOutput</span>
-<span class="kn">from</span> <span class="nn">kserve.inference_client</span> <span class="kn">import</span> <span class="n">RESTConfig</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelServer</span><span class="p">,</span> <span class="n">InferenceRESTClient</span><span class="p">,</span> <span class="n">InferRequest</span><span class="p">,</span> <span class="n">InferInput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve.protocol.infer_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">RequestedOutput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kserve.inference_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span>
 
 <span class="n">fp32_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">32.045</span><span class="p">,</span> <span class="mf">399.043</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 

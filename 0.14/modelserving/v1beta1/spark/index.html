@@ -1352,9 +1352,9 @@ pip<span class="w"> </span>install<span class="w"> </span>pyspark2pmml
 <div class="highlight"><pre><span></span><code>pyspark<span class="w"> </span>--jars<span class="w"> </span>./jpmml-sparkml-executable-1.6.3.jar
 </code></pre></div></p>
 <p>Fitting a Spark ML pipeline:
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pyspark.ml</span> <span class="kn">import</span> <span class="n">Pipeline</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
-<span class="kn">from</span> <span class="nn">pyspark.ml.feature</span> <span class="kn">import</span> <span class="n">RFormula</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.classification</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.ml.feature</span><span class="w"> </span><span class="kn">import</span> <span class="n">RFormula</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">"Iris.csv"</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">inferSchema</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 
@@ -1363,7 +1363,7 @@ pip<span class="w"> </span>install<span class="w"> </span>pyspark2pmml
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">stages</span> <span class="o">=</span> <span class="p">[</span><span class="n">formula</span><span class="p">,</span> <span class="n">classifier</span><span class="p">])</span>
 <span class="n">pipelineModel</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pyspark2pmml</span> <span class="kn">import</span> <span class="n">PMMLBuilder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyspark2pmml</span><span class="w"> </span><span class="kn">import</span> <span class="n">PMMLBuilder</span>
 
 <span class="n">pmmlBuilder</span> <span class="o">=</span> <span class="n">PMMLBuilder</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">pipelineModel</span><span class="p">)</span>
 
