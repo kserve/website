@@ -126,7 +126,7 @@ kubectl get pods
     sklearn-iris-oci-predictor-00001-deployment-58fc6564d7   3/3     Running   1 (39m ago)   40m
     ```
 
-As you can see, the Pod has now one additional container. This container is running the modelcar image and runs a `ln -s /proc/$$/root/models /mnt/` command to create a symbolic link on a shared empty volume that is mounted on `/mnt` in the modelcar container and the serving runtime container. The magic here is the symbolic link over proc filesystem, which is shared among all containers. This is possible on Kubernetes for the container's of a Pod if the field `.spec.shareProcessNamespace` is set to `true`, which is the case for all storageUri that leverages the `oci://` schema.
+As you can see, the Pod has now one additional container. This container is running the modelcar image and runs a `ln -sf /proc/$$/root/models /mnt/` command to create a symbolic link on a shared empty volume that is mounted on `/mnt` in the modelcar container and the serving runtime container. The magic here is the symbolic link over proc filesystem, which is shared among all containers. This is possible on Kubernetes for the container's of a Pod if the field `.spec.shareProcessNamespace` is set to `true`, which is the case for all storageUri that leverages the `oci://` schema.
 
 Let's jump into the runtime container and examine the mounted `/mnt` filesystem:
 
