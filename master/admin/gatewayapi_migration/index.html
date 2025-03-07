@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/reference/swagger-ui/" rel="canonical"/>
+<link href="https://kserve.io/website/master/admin/gatewayapi_migration/" rel="canonical"/>
 <link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Open Inference Protocol API Spec - KServe Documentation Website</title>
+<title>Gateway API migration - KServe Documentation Website</title>
 <link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#open-inference-protocol-api-specification">
+<a class="md-skip" href="#kubernetes-ingress-to-gateway-api-migration-guide">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Open Inference Protocol API Spec
+              Gateway API migration
             
           </span>
 </div>
@@ -120,7 +120,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../admin/serverless/serverless/">
+<a class="md-tabs__link md-tabs__link--active" href="../serverless/serverless/">
         Administration Guide
       </a>
 </li>
@@ -130,7 +130,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="../api/">
+<a class="md-tabs__link" href="../../reference/api/">
         API Reference
       </a>
 </li>
@@ -212,8 +212,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3">
           Administration Guide
           <span class="md-nav__icon md-icon"></span>
@@ -224,8 +224,8 @@
           Administration Guide
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" id="__nav_3_1" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" id="__nav_3_1" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3_1">
           Install KServe
           <span class="md-nav__icon md-icon"></span>
@@ -249,17 +249,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/serverless/serverless/">
+<a class="md-nav__link" href="../serverless/serverless/">
         Serverless installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/serverless/servicemesh/">
+<a class="md-nav__link" href="../serverless/servicemesh/">
         Istio Service Mesh
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/serverless/kourier_networking/">
+<a class="md-nav__link" href="../serverless/kourier_networking/">
         Kourier Networking Layer
       </a>
 </li>
@@ -267,19 +267,72 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/modelmesh/">
+<a class="md-nav__link" href="../modelmesh/">
         ModelMesh installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/kubernetes_deployment/">
+<a class="md-nav__link" href="../kubernetes_deployment/">
         Kubernetes deployment installation
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/gatewayapi_migration/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Gateway API migration
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Gateway API migration
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-install-gateway-api-crd">
+    1. Install Gateway API CRD
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-create-gatewayclass">
+    2. Create GatewayClass
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-enable-gateway-api">
+    3. Enable Gateway API
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-create-gateway-resource">
+    4. Create Gateway resource
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-configure-the-gateway-name-and-namespace-in-kserve">
+    5. Configure the Gateway name and namespace in KServe
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-restart-the-kserve-controller">
+    6. Restart the KServe controller
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-configure-the-external-traffic">
+    7. Configure the external traffic
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-verify-the-gateway-api-configuration">
+    8. Verify the Gateway API configuration
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1007,8 +1060,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_5">
           API Reference
           <span class="md-nav__icon md-icon"></span>
@@ -1020,195 +1073,14 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../api/">
+<a class="md-nav__link" href="../../reference/api/">
         Control Plane API
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Open Inference Protocol API Spec
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/swagger-ui/">
         Open Inference Protocol API Spec
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#rest">
-    REST
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#grpc">
-    GRPC
-  </a>
-<nav aria-label="GRPC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverlive">
-    ServerLive
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverready">
-    ServerReady
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelready">
-    ModelReady
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servermetadata">
-    ServerMetadata
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadata">
-    ModelMetadata
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinfer">
-    ModelInfer
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#messages">
-    Messages
-  </a>
-<nav aria-label="Messages" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#inferparameter">
-    InferParameter
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#infertensorcontents">
-    InferTensorContents
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequest">
-    ModelInferRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferinputtensor">
-    ModelInferRequest.InferInputTensor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferinputtensorparametersentry">
-    ModelInferRequest.InferInputTensor.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferrequestedoutputtensor">
-    ModelInferRequest.InferRequestedOutputTensor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferrequestedoutputtensorparametersentry">
-    ModelInferRequest.InferRequestedOutputTensor.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestparametersentry">
-    ModelInferRequest.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponse">
-    ModelInferResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponseinferoutputtensor">
-    ModelInferResponse.InferOutputTensor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponseinferoutputtensorparametersentry">
-    ModelInferResponse.InferOutputTensor.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponseparametersentry">
-    ModelInferResponse.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadatarequest">
-    ModelMetadataRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadataresponse">
-    ModelMetadataResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadataresponsetensormetadata">
-    ModelMetadataResponse.TensorMetadata
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelreadyrequest">
-    ModelReadyRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelreadyresponse">
-    ModelReadyResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverliverequest">
-    ServerLiveRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverliveresponse">
-    ServerLiveResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servermetadatarequest">
-    ServerMetadataRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servermetadataresponse">
-    ServerMetadataResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverreadyrequest">
-    ServerReadyRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverreadyresponse">
-    ServerReadyResponse
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../sdk_docs/sdk_doc/">
@@ -1363,172 +1235,44 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#rest">
-    REST
+<a class="md-nav__link" href="#1-install-gateway-api-crd">
+    1. Install Gateway API CRD
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#grpc">
-    GRPC
-  </a>
-<nav aria-label="GRPC" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverlive">
-    ServerLive
+<a class="md-nav__link" href="#2-create-gatewayclass">
+    2. Create GatewayClass
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#serverready">
-    ServerReady
+<a class="md-nav__link" href="#3-enable-gateway-api">
+    3. Enable Gateway API
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#modelready">
-    ModelReady
+<a class="md-nav__link" href="#4-create-gateway-resource">
+    4. Create Gateway resource
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#servermetadata">
-    ServerMetadata
+<a class="md-nav__link" href="#5-configure-the-gateway-name-and-namespace-in-kserve">
+    5. Configure the Gateway name and namespace in KServe
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadata">
-    ModelMetadata
+<a class="md-nav__link" href="#6-restart-the-kserve-controller">
+    6. Restart the KServe controller
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#modelinfer">
-    ModelInfer
+<a class="md-nav__link" href="#7-configure-the-external-traffic">
+    7. Configure the external traffic
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#messages">
-    Messages
+<a class="md-nav__link" href="#8-verify-the-gateway-api-configuration">
+    8. Verify the Gateway API configuration
   </a>
-<nav aria-label="Messages" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#inferparameter">
-    InferParameter
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#infertensorcontents">
-    InferTensorContents
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequest">
-    ModelInferRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferinputtensor">
-    ModelInferRequest.InferInputTensor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferinputtensorparametersentry">
-    ModelInferRequest.InferInputTensor.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferrequestedoutputtensor">
-    ModelInferRequest.InferRequestedOutputTensor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestinferrequestedoutputtensorparametersentry">
-    ModelInferRequest.InferRequestedOutputTensor.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferrequestparametersentry">
-    ModelInferRequest.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponse">
-    ModelInferResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponseinferoutputtensor">
-    ModelInferResponse.InferOutputTensor
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponseinferoutputtensorparametersentry">
-    ModelInferResponse.InferOutputTensor.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelinferresponseparametersentry">
-    ModelInferResponse.ParametersEntry
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadatarequest">
-    ModelMetadataRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadataresponse">
-    ModelMetadataResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmetadataresponsetensormetadata">
-    ModelMetadataResponse.TensorMetadata
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelreadyrequest">
-    ModelReadyRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelreadyresponse">
-    ModelReadyResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverliverequest">
-    ServerLiveRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverliveresponse">
-    ServerLiveResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servermetadatarequest">
-    ServerMetadataRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servermetadataresponse">
-    ServerMetadataResponse
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverreadyrequest">
-    ServerReadyRequest
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#serverreadyresponse">
-    ServerReadyResponse
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -1537,634 +1281,223 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/reference/swagger-ui.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/admin/gatewayapi_migration.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="open-inference-protocol-api-specification">Open Inference Protocol API Specification<a class="headerlink" href="#open-inference-protocol-api-specification" title="Permanent link">¶</a></h1>
-<h2 id="rest">REST<a class="headerlink" href="#rest" title="Permanent link">¶</a></h2>
-<p><iframe class="swagger-ui-iframe" frameborder="0" id="e8776513" src="swagger-e8776513.html" style="overflow:hidden;width:100%;" width="100%"></iframe></p>
-<h2 id="grpc">GRPC<a class="headerlink" href="#grpc" title="Permanent link">¶</a></h2>
-<h3 id="serverlive">ServerLive<a class="headerlink" href="#serverlive" title="Permanent link">¶</a></h3>
-<p>The ServerLive API indicates if the inference server is able to receive 
-and respond to metadata and inference requests.</p>
-<blockquote>
-<p>rpc inference.GRPCInferenceService/ServerLive(<a href="#serverliverequest">ServerLiveRequest</a>)
-  returns <a href="#serverliveresponse">ServerLiveResponse</a></p>
-</blockquote>
-<h3 id="serverready">ServerReady<a class="headerlink" href="#serverready" title="Permanent link">¶</a></h3>
-<p>The ServerReady API indicates if the server is ready for inferencing.</p>
-<blockquote>
-<p>rpc inference.GRPCInferenceService/ServerReady(<a href="#serverreadyrequest">ServerReadyRequest</a>)
-  returns <a href="#serverreadyresponse">ServerReadyResponse</a></p>
-</blockquote>
-<h3 id="modelready">ModelReady<a class="headerlink" href="#modelready" title="Permanent link">¶</a></h3>
-<p>The ModelReady API indicates if a specific model is ready for inferencing.</p>
-<blockquote>
-<p>rpc inference.GRPCInferenceService/ModelReady(<a href="#modelreadyrequest">ModelReadyRequest</a>)
-  returns <a href="#modelreadyresponse">ModelReadyResponse</a></p>
-</blockquote>
-<h3 id="servermetadata">ServerMetadata<a class="headerlink" href="#servermetadata" title="Permanent link">¶</a></h3>
-<p>The ServerMetadata API provides information about the server. Errors are 
-indicated by the google.rpc.Status returned for the request. The OK code 
-indicates success and other codes indicate failure.</p>
-<blockquote>
-<p>rpc inference.GRPCInferenceService/ServerMetadata(<a href="#servermetadatarequest">ServerMetadataRequest</a>)
-  returns <a href="#servermetadataresponse">ServerMetadataResponse</a></p>
-</blockquote>
-<h3 id="modelmetadata">ModelMetadata<a class="headerlink" href="#modelmetadata" title="Permanent link">¶</a></h3>
-<p>The per-model metadata API provides information about a model. Errors are 
-indicated by the google.rpc.Status returned for the request. The OK code 
-indicates success and other codes indicate failure.</p>
-<blockquote>
-<p>rpc inference.GRPCInferenceService/ModelMetadata(<a href="#modelmetadatarequest">ModelMetadataRequest</a>)
-  returns <a href="#modelmetadataresponse">ModelMetadataResponse</a></p>
-</blockquote>
-<h3 id="modelinfer">ModelInfer<a class="headerlink" href="#modelinfer" title="Permanent link">¶</a></h3>
-<p>The ModelInfer API performs inference using the specified model. Errors are
-indicated by the google.rpc.Status returned for the request. The OK code 
-indicates success and other codes indicate failure.</p>
-<blockquote>
-<p>rpc inference.GRPCInferenceService/ModelInfer(<a href="#modelinferrequest">ModelInferRequest</a>)
-  returns <a href="#modelinferresponse">ModelInferResponse</a></p>
-</blockquote>
-<hr/>
-<h3 id="messages">Messages<a class="headerlink" href="#messages" title="Permanent link">¶</a></h3>
-<h4 id="inferparameter">InferParameter<a class="headerlink" href="#inferparameter" title="Permanent link">¶</a></h4>
-<p>An inference parameter value. The Parameters message describes a 
-“name”/”value” pair, where the “name” is the name of the parameter
-and the “value” is a boolean, integer, or string corresponding to 
-the parameter.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://developers.google.com/protocol-buffers/docs/proto3#oneof">oneof</a> parameter_choice.bool_param</td>
-<td><a href="#bool">bool</a></td>
-<td>A boolean parameter value.</td>
-</tr>
-<tr>
-<td><a href="https://developers.google.com/protocol-buffers/docs/proto3#oneof">oneof</a> parameter_choice.int64_param</td>
-<td><a href="#int64">int64</a></td>
-<td>An int64 parameter value.</td>
-</tr>
-<tr>
-<td><a href="https://developers.google.com/protocol-buffers/docs/proto3#oneof">oneof</a> parameter_choice.string_param</td>
-<td><a href="#string">string</a></td>
-<td>A string parameter value.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="infertensorcontents">InferTensorContents<a class="headerlink" href="#infertensorcontents" title="Permanent link">¶</a></h4>
-<p>The data contained in a tensor represented by the repeated type
-that matches the tensor's data type. Protobuf oneof is not used
-because oneofs cannot contain repeated fields.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bool_contents</td>
-<td><a href="#bool">repeated bool</a></td>
-<td>Representation for BOOL data type. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>int_contents</td>
-<td><a href="#int32">repeated int32</a></td>
-<td>Representation for INT8, INT16, and INT32 data types. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>int64_contents</td>
-<td><a href="#int64">repeated int64</a></td>
-<td>Representation for INT64 data types. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>uint_contents</td>
-<td><a href="#uint32">repeated uint32</a></td>
-<td>Representation for UINT8, UINT16, and UINT32 data types. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>uint64_contents</td>
-<td><a href="#uint64">repeated uint64</a></td>
-<td>Representation for UINT64 data types. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>fp32_contents</td>
-<td><a href="#float">repeated float</a></td>
-<td>Representation for FP32 data type. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>fp64_contents</td>
-<td><a href="#double">repeated double</a></td>
-<td>Representation for FP64 data type. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-<tr>
-<td>bytes_contents</td>
-<td><a href="#bytes">repeated bytes</a></td>
-<td>Representation for BYTES data type. The size must match what is expected by the tensor's shape. The contents must be the flattened, one-dimensional, row-major order of the tensor elements.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferrequest">ModelInferRequest<a class="headerlink" href="#modelinferrequest" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>model_name</td>
-<td><a href="#string">string</a></td>
-<td>The name of the model to use for inferencing.</td>
-</tr>
-<tr>
-<td>model_version</td>
-<td><a href="#string">string</a></td>
-<td>The version of the model to use for inference. If not given the server will choose a version based on the model and internal policy.</td>
-</tr>
-<tr>
-<td>id</td>
-<td><a href="#string">string</a></td>
-<td>Optional identifier for the request. If specified will be returned in the response.</td>
-</tr>
-<tr>
-<td>parameters</td>
-<td><a href="#modelinferrequest-parametersentry">map ModelInferRequest.ParametersEntry</a></td>
-<td>Optional inference parameters.</td>
-</tr>
-<tr>
-<td>inputs</td>
-<td><a href="#modelinferrequest-inferinputtensor">repeated ModelInferRequest.InferInputTensor</a></td>
-<td>The input tensors for the inference.</td>
-</tr>
-<tr>
-<td>outputs</td>
-<td><a href="#modelinferrequest-inferrequestedoutputtensor">repeated ModelInferRequest.InferRequestedOutputTensor</a></td>
-<td>The requested output tensors for the inference. Optional, if not specified all outputs produced by the model will be returned.</td>
-</tr>
-<tr>
-<td>raw_input_contents</td>
-<td><a href="#bytes">repeated bytes</a></td>
-<td>The data contained in an input tensor can be represented in "raw" bytes form or in the repeated type that matches the tensor's data type. To use the raw representation 'raw_input_contents' must be initialized with data for each tensor in the same order as 'inputs'. For each tensor, the size of this content must match what is expected by the tensor's shape and data type. The raw data must be the flattened, one-dimensional, row-major order of the tensor elements without any stride or padding between the elements. Note that the FP16 and BF16 data types must be represented as raw content as there is no specific data type for a 16-bit float type.</td>
-</tr>
-</tbody>
-</table>
-<p>If this field is specified then InferInputTensor::contents must not be specified for any input tensor. |</p>
-<h4 id="modelinferrequestinferinputtensor">ModelInferRequest.InferInputTensor<a class="headerlink" href="#modelinferrequestinferinputtensor" title="Permanent link">¶</a></h4>
-<p>An input tensor for an inference request.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The tensor name.</td>
-</tr>
-<tr>
-<td>datatype</td>
-<td><a href="#string">string</a></td>
-<td>The tensor data type.</td>
-</tr>
-<tr>
-<td>shape</td>
-<td><a href="#int64">repeated int64</a></td>
-<td>The tensor shape.</td>
-</tr>
-<tr>
-<td>parameters</td>
-<td><a href="#modelinferrequest-inferinputtensor-parametersentry">map ModelInferRequest.InferInputTensor.ParametersEntry</a></td>
-<td>Optional inference input tensor parameters.</td>
-</tr>
-<tr>
-<td>contents</td>
-<td><a href="#infertensorcontents">InferTensorContents</a></td>
-<td>The tensor contents using a data-type format. This field must not be specified if "raw" tensor contents are being used for the inference request.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferrequestinferinputtensorparametersentry">ModelInferRequest.InferInputTensor.ParametersEntry<a class="headerlink" href="#modelinferrequestinferinputtensorparametersentry" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>key</td>
-<td><a href="#string">string</a></td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>value</td>
-<td><a href="#inferparameter">InferParameter</a></td>
-<td>N/A</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferrequestinferrequestedoutputtensor">ModelInferRequest.InferRequestedOutputTensor<a class="headerlink" href="#modelinferrequestinferrequestedoutputtensor" title="Permanent link">¶</a></h4>
-<p>An output tensor requested for an inference request.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The tensor name.</td>
-</tr>
-<tr>
-<td>parameters</td>
-<td><a href="#modelinferrequest-inferrequestedoutputtensor-parametersentry">map ModelInferRequest.InferRequestedOutputTensor.ParametersEntry</a></td>
-<td>Optional requested output tensor parameters.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferrequestinferrequestedoutputtensorparametersentry">ModelInferRequest.InferRequestedOutputTensor.ParametersEntry<a class="headerlink" href="#modelinferrequestinferrequestedoutputtensorparametersentry" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>key</td>
-<td><a href="#string">string</a></td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>value</td>
-<td><a href="#inferparameter">InferParameter</a></td>
-<td>N/A</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferrequestparametersentry">ModelInferRequest.ParametersEntry<a class="headerlink" href="#modelinferrequestparametersentry" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>key</td>
-<td><a href="#string">string</a></td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>value</td>
-<td><a href="#inferparameter">InferParameter</a></td>
-<td>N/A</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferresponse">ModelInferResponse<a class="headerlink" href="#modelinferresponse" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>model_name</td>
-<td><a href="#string">string</a></td>
-<td>The name of the model used for inference.</td>
-</tr>
-<tr>
-<td>model_version</td>
-<td><a href="#string">string</a></td>
-<td>The version of the model used for inference.</td>
-</tr>
-<tr>
-<td>id</td>
-<td><a href="#string">string</a></td>
-<td>The id of the inference request if one was specified.</td>
-</tr>
-<tr>
-<td>parameters</td>
-<td><a href="#modelinferresponse-parametersentry">map ModelInferResponse.ParametersEntry</a></td>
-<td>Optional inference response parameters.</td>
-</tr>
-<tr>
-<td>outputs</td>
-<td><a href="#modelinferresponse-inferoutputtensor">repeated ModelInferResponse.InferOutputTensor</a></td>
-<td>The output tensors holding inference results.</td>
-</tr>
-<tr>
-<td>raw_output_contents</td>
-<td><a href="#bytes">repeated bytes</a></td>
-<td>The data contained in an output tensor can be represented in "raw" bytes form or in the repeated type that matches the tensor's data type. To use the raw representation 'raw_output_contents' must be initialized with data for each tensor in the same order as 'outputs'. For each tensor, the size of this content must match what is expected by the tensor's shape and data type. The raw data must be the flattened, one-dimensional, row-major order of the tensor elements without any stride or padding between the elements. Note that the FP16 and BF16 data types must be represented as raw content as there is no specific data type for a 16-bit float type.</td>
-</tr>
-</tbody>
-</table>
-<p>If this field is specified then InferOutputTensor::contents must not be specified for any output tensor. |</p>
-<h4 id="modelinferresponseinferoutputtensor">ModelInferResponse.InferOutputTensor<a class="headerlink" href="#modelinferresponseinferoutputtensor" title="Permanent link">¶</a></h4>
-<p>An output tensor returned for an inference request.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The tensor name.</td>
-</tr>
-<tr>
-<td>datatype</td>
-<td><a href="#string">string</a></td>
-<td>The tensor data type.</td>
-</tr>
-<tr>
-<td>shape</td>
-<td><a href="#int64">repeated int64</a></td>
-<td>The tensor shape.</td>
-</tr>
-<tr>
-<td>parameters</td>
-<td><a href="#modelinferresponse-inferoutputtensor-parametersentry">map ModelInferResponse.InferOutputTensor.ParametersEntry</a></td>
-<td>Optional output tensor parameters.</td>
-</tr>
-<tr>
-<td>contents</td>
-<td><a href="#infertensorcontents">InferTensorContents</a></td>
-<td>The tensor contents using a data-type format. This field must not be specified if "raw" tensor contents are being used for the inference response.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferresponseinferoutputtensorparametersentry">ModelInferResponse.InferOutputTensor.ParametersEntry<a class="headerlink" href="#modelinferresponseinferoutputtensorparametersentry" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>key</td>
-<td><a href="#string">string</a></td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>value</td>
-<td><a href="#inferparameter">InferParameter</a></td>
-<td>N/A</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelinferresponseparametersentry">ModelInferResponse.ParametersEntry<a class="headerlink" href="#modelinferresponseparametersentry" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>key</td>
-<td><a href="#string">string</a></td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>value</td>
-<td><a href="#inferparameter">InferParameter</a></td>
-<td>N/A</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelmetadatarequest">ModelMetadataRequest<a class="headerlink" href="#modelmetadatarequest" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The name of the model.</td>
-</tr>
-<tr>
-<td>version</td>
-<td><a href="#string">string</a></td>
-<td>The version of the model to check for readiness. If not given the server will choose a version based on the model and internal policy.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelmetadataresponse">ModelMetadataResponse<a class="headerlink" href="#modelmetadataresponse" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The model name.</td>
-</tr>
-<tr>
-<td>versions</td>
-<td><a href="#string">repeated string</a></td>
-<td>The versions of the model available on the server.</td>
-</tr>
-<tr>
-<td>platform</td>
-<td><a href="#string">string</a></td>
-<td>The model's platform. See Platforms.</td>
-</tr>
-<tr>
-<td>inputs</td>
-<td><a href="#modelmetadataresponse-tensormetadata">repeated ModelMetadataResponse.TensorMetadata</a></td>
-<td>The model's inputs.</td>
-</tr>
-<tr>
-<td>outputs</td>
-<td><a href="#modelmetadataresponse-tensormetadata">repeated ModelMetadataResponse.TensorMetadata</a></td>
-<td>The model's outputs.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelmetadataresponsetensormetadata">ModelMetadataResponse.TensorMetadata<a class="headerlink" href="#modelmetadataresponsetensormetadata" title="Permanent link">¶</a></h4>
-<p>Metadata for a tensor.</p>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The tensor name.</td>
-</tr>
-<tr>
-<td>datatype</td>
-<td><a href="#string">string</a></td>
-<td>The tensor data type.</td>
-</tr>
-<tr>
-<td>shape</td>
-<td><a href="#int64">repeated int64</a></td>
-<td>The tensor shape. A variable-size dimension is represented by a -1 value.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelreadyrequest">ModelReadyRequest<a class="headerlink" href="#modelreadyrequest" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The name of the model to check for readiness.</td>
-</tr>
-<tr>
-<td>version</td>
-<td><a href="#string">string</a></td>
-<td>The version of the model to check for readiness. If not given the server will choose a version based on the model and internal policy.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="modelreadyresponse">ModelReadyResponse<a class="headerlink" href="#modelreadyresponse" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ready</td>
-<td><a href="#bool">bool</a></td>
-<td>True if the model is ready, false if not ready.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="serverliverequest">ServerLiveRequest<a class="headerlink" href="#serverliverequest" title="Permanent link">¶</a></h4>
-<h4 id="serverliveresponse">ServerLiveResponse<a class="headerlink" href="#serverliveresponse" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>live</td>
-<td><a href="#bool">bool</a></td>
-<td>True if the inference server is live, false if not live.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="servermetadatarequest">ServerMetadataRequest<a class="headerlink" href="#servermetadatarequest" title="Permanent link">¶</a></h4>
-<h4 id="servermetadataresponse">ServerMetadataResponse<a class="headerlink" href="#servermetadataresponse" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td><a href="#string">string</a></td>
-<td>The server name.</td>
-</tr>
-<tr>
-<td>version</td>
-<td><a href="#string">string</a></td>
-<td>The server version.</td>
-</tr>
-<tr>
-<td>extensions</td>
-<td><a href="#string">repeated string</a></td>
-<td>The extensions supported by the server.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="serverreadyrequest">ServerReadyRequest<a class="headerlink" href="#serverreadyrequest" title="Permanent link">¶</a></h4>
-<h4 id="serverreadyresponse">ServerReadyResponse<a class="headerlink" href="#serverreadyresponse" title="Permanent link">¶</a></h4>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ready</td>
-<td><a href="#bool">bool</a></td>
-<td>True if the inference server is ready, false if not ready.</td>
-</tr>
-</tbody>
-</table>
+<h1 id="kubernetes-ingress-to-gateway-api-migration-guide">Kubernetes Ingress to Gateway API Migration Guide<a class="headerlink" href="#kubernetes-ingress-to-gateway-api-migration-guide" title="Permanent link">¶</a></h1>
+<h2 id="1-install-gateway-api-crd">1. Install Gateway API CRD<a class="headerlink" href="#1-install-gateway-api-crd" title="Permanent link">¶</a></h2>
+<p>The Kubernetes Gateway API is a newer, more flexible and standardized way to manage traffic ingress and egress in Kubernetes clusters. KServe Implements the Gateway API version <code>1.2.1</code>.</p>
+<p>The Gateway API is not part of the Kubernetes cluster, therefore it needs to be installed manually, to do this, follow the next step.
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+</code></pre></div></p>
+<h2 id="2-create-gatewayclass">2. Create GatewayClass<a class="headerlink" href="#2-create-gatewayclass" title="Permanent link">¶</a></h2>
+<p>Create a <code>GatewayClass</code> resource using your preferred network controller. For this example, we will use <a href="https://gateway.envoyproxy.io/docs/">Envoy Gateway</a> as the network controller.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GatewayClass</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">controllerName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io/gatewayclass-controller</span><span class="w">  </span>
+</code></pre></div>
+<h2 id="3-enable-gateway-api">3. Enable Gateway API<a class="headerlink" href="#3-enable-gateway-api" title="Permanent link">¶</a></h2>
+<p>To enable Gateway API support in KServe you need to set the <code>enableGatewayApi</code> to <code>true</code> in the <code>inferenceservice-config</code> ConfigMap.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Helm</label><label for="__tabbed_1_2">Kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.enableGatewayApi<span class="o">=</span><span class="nb">true</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>configmap<span class="w"> </span>inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">         </span><span class="no">{    </span>
+<span class="w">             </span><span class="no">"enableGatewayApi": true,</span>
+<span class="w">         </span><span class="no">}</span>
+</code></pre></div></p>
+</div>
+</div>
+</input></input></div>
+<h2 id="4-create-gateway-resource">4. Create Gateway resource<a class="headerlink" href="#4-create-gateway-resource" title="Permanent link">¶</a></h2>
+<p>Create a <code>Gateway</code> resource to expose the <code>InferenceService</code>. In this example, we will use the <code>envoy</code> <code>GatewayClass</code> that was created in <a href="#2-create-gatewayclass">step 2</a>. If you already have a <code>Gateway</code> resource, you can skip this step.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Gateway</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-ingress-gateway</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gatewayClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy</span>
+<span class="w">  </span><span class="nt">listeners</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTP</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">      </span><span class="nt">allowedRoutes</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">namespaces</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPS</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">      </span><span class="nt">tls</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Terminate</span>
+<span class="w">        </span><span class="nt">certificateRefs</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-secret</span>
+<span class="w">            </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+<span class="w">      </span><span class="nt">allowedRoutes</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">namespaces</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
+<span class="w">    </span><span class="nt">infrastructure</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">serving.kserve.io/gateway</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-ingress-gateway</span>
+</code></pre></div>
+<p>This should create a gateway instance pod and a LoadBalancer service.
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods,svc<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+</div>
+<div class="highlight"><pre><span></span><code>NAMESPACE<span class="w">              </span>NAME<span class="w">                                                                </span>READY<span class="w">   </span>STATUS<span class="w">    </span>RESTARTS<span class="w">   </span>AGE
+envoy-gateway-system<span class="w">   </span>pod/envoy-kserve-kserve-ingress-gateway-deaaa49b-6679ddc496-dlqfs<span class="w">   </span><span class="m">2</span>/2<span class="w">     </span>Running<span class="w">   </span><span class="m">0</span><span class="w">          </span>3m52s
+
+NAMESPACE<span class="w">              </span>NAME<span class="w">                                                   </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">      </span>EXTERNAL-IP<span class="w">     </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">                      </span>AGE
+envoy-gateway-system<span class="w">   </span>service/envoy-kserve-kserve-ingress-gateway-deaaa49b<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">10</span>.98.163.134<span class="w">   </span><span class="m">10</span>.98.163.134<span class="w">   </span><span class="m">80</span>:32390/TCP,443:32001/TCP<span class="w">   </span>3m52s
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>KServe can automatically create a default <code>Gateway</code> named <code>kserve-ingress-gateway</code> during installation if the Helm value <code>kserve.controller.gateway.ingressGateway.createGateway</code> set to <code>true</code>. If you choose to use this default gateway, you can skip this step and proceed to <a href="#6-restart-the-kserve-controller">step 6</a>.</p>
+</div>
+<h2 id="5-configure-the-gateway-name-and-namespace-in-kserve">5. Configure the Gateway name and namespace in KServe<a class="headerlink" href="#5-configure-the-gateway-name-and-namespace-in-kserve" title="Permanent link">¶</a></h2>
+<p>In the ConfigMap <code>inferenceservice-config</code> modify the <code>kserveIngressGateway</code> in the <code>ingress</code> section with <code>gateway namespace</code> and <code>name</code> respecting the format <code>&lt;gateway namespace&gt;/&lt;gateway name&gt;</code>. In this example, we will use the <code>Gateway</code> resource that was created in <a href="#4-create-gateway-resource">step 4</a>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Helm</label><label for="__tabbed_2_2">Kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.kserveGateway<span class="o">=</span>kserve/kserve-ingress-gateway
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>configmap<span class="w"> </span>inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">         </span><span class="no">{    </span>
+<span class="w">             </span><span class="no">"kserveIngressGateway": "kserve/kserve-ingress-gateway",</span>
+<span class="w">         </span><span class="no">}</span>
+</code></pre></div></p>
+</div>
+</div>
+</input></input></div>
+<h2 id="6-restart-the-kserve-controller">6. Restart the KServe controller<a class="headerlink" href="#6-restart-the-kserve-controller" title="Permanent link">¶</a></h2>
+<p>The existing InferenceServices will not use the Gateway API configuration until the next reconciliation.
+You can restart the KServe controller to trigger the reconciliation and apply the Gateway API configuration to all the existing InferenceServices.
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>rollout<span class="w"> </span>restart<span class="w"> </span>deployment<span class="w"> </span>kserve-controller-manager<span class="w"> </span>-n<span class="w"> </span>kserve
+</code></pre></div></p>
+<h2 id="7-configure-the-external-traffic">7. Configure the external traffic<a class="headerlink" href="#7-configure-the-external-traffic" title="Permanent link">¶</a></h2>
+<p>If you are using a cloud provider, you may need to configure the external traffic to the LoadBalancer service created in <a href="#4-create-gateway-resource">step 4</a>.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>kserve-ingress-gateway<span class="w"> </span>-l<span class="w">  </span>-A
+</code></pre></div>
+<h2 id="8-verify-the-gateway-api-configuration">8. Verify the Gateway API configuration<a class="headerlink" href="#8-verify-the-gateway-api-configuration" title="Permanent link">¶</a></h2>
+<p>Create an InferenceService to verify that the Gateway API configuration is applied to the InferenceService.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-v2-iris"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-sklearnserver</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.0/model"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<p>Execute the following command to determine if the Kubernetes cluster is running in an environment that supports external load balancers
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>kserve-ingress-gateway<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="highlight"><pre><span></span><code>NAMESPACE<span class="w">              </span>NAME<span class="w">                                           </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">      </span>EXTERNAL-IP<span class="w">     </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">                      </span>AGE
+envoy-gateway-system<span class="w">   </span>envoy-kserve-kserve-ingress-gateway-deaaa49b<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">10</span>.98.163.134<span class="w">   </span><span class="m">10</span>.98.163.134<span class="w">   </span><span class="m">80</span>:32390/TCP,443:32001/TCP<span class="w">   </span>54s
+</code></pre></div>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Load Balancer</label><label for="__tabbed_3_2">Node Port</label><label for="__tabbed_3_3">Port Forward</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].status.loadBalancer.ingress[0].ip}'</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].spec.ports[?(@.name=="http2")].port}'</span><span class="k">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway.
+In this case, you can access the gateway using the service’s node port.
+<div class="highlight"><pre><span></span><code><span class="c1"># GKE</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>worker-node-address
+<span class="c1"># Minikube</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>minikube<span class="w"> </span>ip<span class="k">)</span>
+<span class="c1"># Other environment(On Prem)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>po<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].status.hostIP}'</span><span class="k">)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].spec.ports[?(@.name=="http-80")].nodePort}'</span><span class="k">)</span>
+</code></pre></div></p>
+</div>
+<div class="tabbed-block">
+<p>Alternatively you can do <code>Port Forward</code> for testing purposes.
+<div class="highlight"><pre><span></span><code><span class="nv">INGRESS_GATEWAY_SERVICE</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A<span class="w"> </span>--output<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="k">)</span>
+<span class="nv">INGRESS_GATEWAY_NAMESPACE</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A<span class="w"> </span>--output<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.namespace}'</span><span class="k">)</span>
+kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span><span class="si">${</span><span class="nv">INGRESS_GATEWAY_NAMESPACE</span><span class="si">}</span><span class="w"> </span>svc/<span class="si">${</span><span class="nv">INGRESS_GATEWAY_SERVICE</span><span class="si">}</span><span class="w"> </span><span class="m">8080</span>:80
+</code></pre></div>
+Open another terminal, and enter the following to perform inference:
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>localhost
+<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="m">8080</span>
+</code></pre></div></p>
+</div>
+</div>
+</input></input></input></div>
+<p>Create a file named <code>iris-input-v2.json</code> with the sample input.
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-0"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"shape"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"datatype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP32"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span><span class="mf">6.8</span><span class="p">,</span><span class="w"> </span><span class="mf">2.8</span><span class="p">,</span><span class="w"> </span><span class="mf">4.8</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="mf">6.0</span><span class="p">,</span><span class="w"> </span><span class="mf">3.4</span><span class="p">,</span><span class="w"> </span><span class="mf">4.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.6</span><span class="p">]</span>
+<span class="w">      </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+Now, verify the InferenceService is accessible outside the cluster using <code>curl</code>.
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-v2-iris<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+
+curl<span class="w"> </span>-v<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span>@./iris-input-v2.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/sklearn-v2-iris/infer
+</code></pre></div></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"823248cc-d770-4a51-9606-16803395569c"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sklearn-v2-iris"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"datatype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INT64"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"predict"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"shape"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>
@@ -2175,7 +1508,7 @@ because oneofs cannot contain repeated fields.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Control Plane API" class="md-footer__link md-footer__link--prev" href="../api/" rel="prev">
+<a aria-label="Previous: Kubernetes deployment installation" class="md-footer__link md-footer__link--prev" href="../kubernetes_deployment/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -2184,17 +1517,17 @@ because oneofs cannot contain repeated fields.</p>
 <span class="md-footer__direction">
                 Previous
               </span>
-              Control Plane API
+              Kubernetes deployment installation
             </div>
 </div>
 </a>
-<a aria-label="Next: Python Client SDK" class="md-footer__link md-footer__link--next" href="../../sdk_docs/sdk_doc/" rel="next">
+<a aria-label="Next: Model Serving Control Plane" class="md-footer__link md-footer__link--next" href="../../modelserving/control_plane/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Python Client SDK
+              Model Serving Control Plane
             </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -2248,7 +1581,7 @@ because oneofs cannot contain repeated fields.</p>
                 iframe_id_list.push(iframes[i].getAttribute("id"))
             }
         
-            let ticking = false;
+            let ticking = true;
             
             document.addEventListener('scroll', function(e) {
                 if (!ticking) {

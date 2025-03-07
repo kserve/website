@@ -292,13 +292,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#1-install-ingress-controller">
-    1. Install Ingress Controller
+<a class="md-nav__link" href="#1-install-cert-manager">
+    1. Install Cert Manager
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#2-install-cert-manager">
-    2. Install Cert Manager
+<a class="md-nav__link" href="#2-install-network-controller">
+    2. Install Network Controller
   </a>
 </li>
 <li class="md-nav__item">
@@ -308,6 +308,11 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../gatewayapi_migration/">
+        Gateway API migration
+      </a>
 </li>
 </ul>
 </nav>
@@ -1215,13 +1220,13 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#1-install-ingress-controller">
-    1. Install Ingress Controller
+<a class="md-nav__link" href="#1-install-cert-manager">
+    1. Install Cert Manager
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#2-install-cert-manager">
-    2. Install Cert Manager
+<a class="md-nav__link" href="#2-install-network-controller">
+    2. Install Network Controller
   </a>
 </li>
 <li class="md-nav__item">
@@ -1240,9 +1245,13 @@
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
 <h1 id="kubernetes-deployment-installation-guide">Kubernetes Deployment Installation Guide<a class="headerlink" href="#kubernetes-deployment-installation-guide" title="Permanent link">¶</a></h1>
-<p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
+<p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> / <a href="https://kubernetes.io/docs/concepts/services-networking/gateway/"><code>Gateway API</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
 <p>Kubernetes 1.28 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>Gateway API</code> is the recommended option for KServe while Ingress API is still supported. Follow the <a href="../gatewayapi_migration/">Gateway API migration guide</a> to migrate from Kubernetes Ingress to Gateway API.</p>
+</div>
 <h2 id="recommended-version-matrix">Recommended Version Matrix<a class="headerlink" href="#recommended-version-matrix" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -1266,32 +1275,129 @@ Kubernetes version.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="1-install-ingress-controller">1. Install Ingress Controller<a class="headerlink" href="#1-install-ingress-controller" title="Permanent link">¶</a></h2>
+<h2 id="1-install-cert-manager">1. Install Cert Manager<a class="headerlink" href="#1-install-cert-manager" title="Permanent link">¶</a></h2>
+<p>The minimally required Cert Manager version is 1.15.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager installation guide</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.</p>
+</div>
+<h2 id="2-install-network-controller">2. Install Network Controller<a class="headerlink" href="#2-install-network-controller" title="Permanent link">¶</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Gateway API</label><label for="__tabbed_1_2">Kubernetes Ingress</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The Kubernetes Gateway API is a newer, more flexible and standardized way to manage traffic ingress and egress in Kubernetes clusters. KServe Implements the Gateway API version <code>1.2.1</code>.</p>
+<p>The Gateway API is not part of the Kubernetes cluster, therefore it needs to be installed manually, to do this, follow the next step.</p>
+<p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+</code></pre></div>
+Then, create a <code>GatewayClass</code> resource using your preferred network controller. For this example, we will use <a href="https://gateway.envoyproxy.io/docs/">Envoy Gateway</a> as the network controller.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GatewayClass</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">controllerName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io/gatewayclass-controller</span><span class="w">  </span>
+</code></pre></div>
+Create a <code>Gateway</code> resource to expose the <code>InferenceService</code>. In this example, you will use the <code>envoy</code> <code>GatewayClass</code> that we created above. If you already have a <code>Gateway</code> resource, you can skip this step and can configure KServe to use the existing <code>Gateway</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Gateway</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-ingress-gateway</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gatewayClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy</span>
+<span class="w">  </span><span class="nt">listeners</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTP</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">allowedRoutes</span><span class="p p-Indicator">:</span>
+<span class="w">          </span><span class="nt">namespaces</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPS</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
+<span class="w">      </span><span class="nt">tls</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Terminate</span>
+<span class="w">        </span><span class="nt">certificateRefs</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-secret</span>
+<span class="w">            </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve</span>
+<span class="w">      </span><span class="nt">allowedRoutes</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">namespaces</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
+<span class="w">    </span><span class="nt">infrastructure</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">serving.kserve.io/gateway</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-ingress-gateway</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>KServe comes with a default <code>Gateway</code> named kserve-ingress-gateway. You can enable the default gateway by setting Helm value <code>kserve.controller.gateway.ingressGateway.createGateway</code> to <code>true</code>.</p>
+</div>
+</div>
+<div class="tabbed-block">
 <p>In this guide we choose to install Istio as ingress controller. The minimally required Istio version is 1.22 and you can refer to the <a href="https://istio.io/latest/docs/setup/install">Istio install guide</a>.</p>
-<p>Once Istio is installed, create <code>IngressClass</code> resource for istio.
+<p>Once Istio is installed, create <code>IngressClass</code> resource for istio.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IngressClass</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">istio</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">controller</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">istio.io/ingress-controller</span>
-</code></pre></div></p>
+</code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Istio ingress is recommended, but you can choose to install with other <a href="https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/">Ingress controllers</a> and create <code>IngressClass</code> resource for your Ingress option.</p>
 </div>
-<h2 id="2-install-cert-manager">2. Install Cert Manager<a class="headerlink" href="#2-install-cert-manager" title="Permanent link">¶</a></h2>
-<p>The minimally required Cert Manager version is 1.15.0 and you can refer to <a href="https://cert-manager.io/docs/installation/">Cert Manager installation guide</a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Cert manager is required to provision webhook certs for production grade installation, alternatively you can run self signed certs generation script.</p>
 </div>
+</div>
+</input></input></div>
 <h2 id="3-install-kserve">3. Install KServe<a class="headerlink" href="#3-install-kserve" title="Permanent link">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The default KServe deployment mode is <code>Serverless</code> which depends on Knative. The following step changes the default deployment mode to <code>RawDeployment</code> before installing KServe.</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Install using Helm</label><label for="__tabbed_1_2">Install using YAML</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Gateway API</label><label for="__tabbed_2_2">Kubernetes Ingress</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Install using Helm</label><label for="__tabbed_3_2">Install using YAML</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>I. Install KServe CRDs</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.14.1
+</code></pre></div>
+<p>II. Install KServe Resources</p>
+<p>Set the <code>kserve.controller.deploymentMode</code> to <code>RawDeployment</code> and <code>kserve.controller.gateway.ingressGateway.kserveGateway</code> to point to the <code>Gateway</code>
+created in <a href="#2-install-network-controller">step 2</a>.</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>kserve.controller.deploymentMode<span class="o">=</span>RawDeployment<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.enableGatewayApi<span class="o">=</span><span class="nb">true</span>
+<span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.kserveGateway<span class="o">=</span>&lt;gateway-namespace&gt;/&lt;gateway-name&gt;
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>I. Install KServe:
+<code>--server-side</code> option is required as the InferenceService CRD is large, see <a href="https://github.com/kserve/kserve/issues/3487">this issue</a> for details.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve.yaml
+</code></pre></div>
+<p>II. Install KServe default serving runtimes:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve-cluster-resources.yaml
+</code></pre></div>
+<p>III. Change default deployment mode and ingress option</p>
+<p>First in the ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> from the <code>deploy</code> section to <code>RawDeployment</code>.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>configmap/inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>--type<span class="o">=</span>strategic<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'</span>
+</code></pre></div>
+<p>Then from <code>ingress</code> section, modify the <code>enableGatewayApi</code> to the <code>true</code> and modify the <code>kserveIngressGateway</code> to point to the Gateway created in <a href="#2-install-network-controller">step 2</a>.
+<div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="p p-Indicator">{</span>
+<span class="w">    </span><span class="s">"enableGatewayApi"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span>
+<span class="w">    </span><span class="s">"kserveIngressGateway"</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"&lt;gateway-namespace&gt;/&lt;gateway-name&gt;"</span><span class="p p-Indicator">,</span>
+<span class="p p-Indicator">}</span>
+</code></pre></div></p>
+</div>
+</div>
+</input></input></div>
+</div>
+<div class="tabbed-block">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><input id="__tabbed_4_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">Install using Helm</label><label for="__tabbed_4_2">Install using YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>I. Install KServe CRDs</p>
@@ -1299,7 +1405,7 @@ Kubernetes version.</p>
 </code></pre></div>
 <p>II. Install KServe Resources</p>
 <p>Set the <code>kserve.controller.deploymentMode</code> to <code>RawDeployment</code> and <code>kserve.controller.gateway.ingressGateway.className</code> to point to the <code>IngressClass</code>
-name created in <a href="#1-install-ingress-controller">step 1</a>.</p>
+name created in <a href="#2-install-network-controller">step 2</a>.</p>
 <div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.deploymentMode<span class="o">=</span>RawDeployment<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.className<span class="o">=</span>your-ingress-class
@@ -1317,12 +1423,15 @@ name created in <a href="#1-install-ingress-controller">step 1</a>.</p>
 <p>First in the ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> from the <code>deploy</code> section to <code>RawDeployment</code>,</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>patch<span class="w"> </span>configmap/inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>--type<span class="o">=</span>strategic<span class="w"> </span>-p<span class="w"> </span><span class="s1">'{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'</span>
 </code></pre></div>
-<p>then modify the <code>ingressClassName</code> from <code>ingress</code> section to the <code>IngressClass</code> name created in <a href="#1-install-ingress-controller">step 1</a>.
+<p>then modify the <code>ingressClassName</code> from <code>ingress</code> section to the <code>IngressClass</code> name created in <a href="#2-install-network-controller">step 2</a>.
 <div class="highlight"><pre><span></span><code><span class="nt">ingress</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
 <span class="p p-Indicator">{</span>
 <span class="w">    </span><span class="s">"ingressClassName"</span><span class="nt"> </span><span class="p">:</span><span class="w"> </span><span class="s">"your-ingress-class"</span><span class="p p-Indicator">,</span>
 <span class="p p-Indicator">}</span>
 </code></pre></div></p>
+</div>
+</div>
+</input></input></div>
 </div>
 </div>
 </input></input></div>
@@ -1349,13 +1458,13 @@ name created in <a href="#1-install-ingress-controller">step 1</a>.</p>
             </div>
 </div>
 </a>
-<a aria-label="Next: Model Serving Control Plane" class="md-footer__link md-footer__link--next" href="../../modelserving/control_plane/" rel="next">
+<a aria-label="Next: Gateway API migration" class="md-footer__link md-footer__link--next" href="../gatewayapi_migration/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Model Serving Control Plane
+              Gateway API migration
             </div>
 </div>
 <div class="md-footer__button md-icon">
