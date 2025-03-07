@@ -4,9 +4,8 @@ KServe supports `RawDeployment` mode to enable `InferenceService` deployment wit
 Kubernetes 1.28 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.
 
-!!! warning
-    Kubernetes `Ingress` support is deprecated and will be removed in the future. `Gateway API` is the recommended option for KServe.
-    Follow the [Gateway API migration guide](gatewayapi_migration.md) to migrate from Kubernetes Ingress to Gateway API.
+!!! note
+    `Gateway API` is the recommended option for KServe while Ingress API is still supported. Follow the [Gateway API migration guide](gatewayapi_migration.md) to migrate from Kubernetes Ingress to Gateway API.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version |
