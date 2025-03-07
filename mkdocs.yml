@@ -12,6 +12,7 @@ nav:
                   - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
                 - ModelMesh installation: admin/modelmesh.md
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
+                - Gateway API migration: admin/gatewayapi_migration.md
     - User Guide:
           - Concepts:
                 - Control Plane:
