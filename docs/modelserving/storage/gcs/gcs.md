@@ -50,6 +50,8 @@ data:
   gcloud-application-credentials.json: <base64 encoded value of the credential file>
 ```
 
+Note that the key `gcloud-application-credentials.json` is [configurable](https://github.com/kserve/kserve/blob/20c5a5244b8b94569aacdc44988da34643aeff2e/config/configmap/inferenceservice.yaml#L144). If you change its value in the configuration, ensure you use the same name when creating your GCS credentials secret.
+
 === "kubectl"
 ```bash
 kubectl apply -f gcs-secret.yaml
