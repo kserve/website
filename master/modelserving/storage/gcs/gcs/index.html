@@ -768,22 +768,41 @@
 <nav aria-label="Using Private GCS bucket" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-a-service-account-key">
-    Create a Service Account Key
+<a class="md-nav__link" href="#create-a-google-service-account-key">
+    Create a Google Service Account Key
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-google-secret">
-    Create Google Secret
+<a class="md-nav__link" href="#create-secret-and-attach-to-service-account">
+    Create Secret and attach to Service Account
   </a>
-<nav aria-label="Create Google Secret" class="md-nav">
+<nav aria-label="Create Secret and attach to Service Account" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-secret">
     Create secret
+  </a>
+<nav aria-label="Create secret" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-imperative-command">
+    Using Imperative Command
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-declarative-yaml">
+    Using Declarative YAML
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#attach-secret-to-a-service-account">
+    Attach secret to a service account
   </a>
 </li>
 </ul>
@@ -1249,22 +1268,41 @@
 <nav aria-label="Using Private GCS bucket" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-a-service-account-key">
-    Create a Service Account Key
+<a class="md-nav__link" href="#create-a-google-service-account-key">
+    Create a Google Service Account Key
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-google-secret">
-    Create Google Secret
+<a class="md-nav__link" href="#create-secret-and-attach-to-service-account">
+    Create Secret and attach to Service Account
   </a>
-<nav aria-label="Create Google Secret" class="md-nav">
+<nav aria-label="Create Secret and attach to Service Account" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-secret">
     Create secret
+  </a>
+<nav aria-label="Create secret" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-imperative-command">
+    Using Imperative Command
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-declarative-yaml">
+    Using Declarative YAML
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#attach-secret-to-a-service-account">
+    Attach secret to a service account
   </a>
 </li>
 </ul>
@@ -1299,14 +1337,24 @@ The uri is in the following format:</p>
 <p>e.g. <code>gs://kfserving-examples/models/tensorflow/flowers</code></p>
 <h2 id="using-private-gcs-bucket">Using Private GCS bucket<a class="headerlink" href="#using-private-gcs-bucket" title="Permanent link">¶</a></h2>
 <p>KServe supports authenticating using Google Service Account Key</p>
-<h3 id="create-a-service-account-key">Create a Service Account Key<a class="headerlink" href="#create-a-service-account-key" title="Permanent link">¶</a></h3>
+<h3 id="create-a-google-service-account-key">Create a Google Service Account Key<a class="headerlink" href="#create-a-google-service-account-key" title="Permanent link">¶</a></h3>
 <ul>
 <li>To create a Service Account Key follow the steps <a href="https://cloud.google.com/iam/docs/keys-create-delete#iam-service-account-keys-create-console">here</a>.</li>
 <li>Base64 encode the generated Service Account Key file</li>
 </ul>
-<h2 id="create-google-secret">Create Google Secret<a class="headerlink" href="#create-google-secret" title="Permanent link">¶</a></h2>
+<h2 id="create-secret-and-attach-to-service-account">Create Secret and attach to Service Account<a class="headerlink" href="#create-secret-and-attach-to-service-account" title="Permanent link">¶</a></h2>
 <h3 id="create-secret">Create secret<a class="headerlink" href="#create-secret" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
+<p>You can create a secret using either the imperative kubectl command or by declaratively defining it in a YAML file.</p>
+<h4 id="using-imperative-command">Using Imperative Command<a class="headerlink" href="#using-imperative-command" title="Permanent link">¶</a></h4>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>generic<span class="w"> </span>gcscreds<span class="w"> </span>--from-file<span class="o">=</span>gcloud-application-credentials.json<span class="o">=</span>/path/to/gcloud-application-credentials.json
+</code></pre></div>
+<h4 id="using-declarative-yaml">Using Declarative YAML<a class="headerlink" href="#using-declarative-yaml" title="Permanent link">¶</a></h4>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
@@ -1314,26 +1362,35 @@ The uri is in the following format:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-config</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcscreds</span>
 <span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
-<span class="nt">stringData</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">gcs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">{</span>
-<span class="w">      </span><span class="no">"type": "gs",</span>
-<span class="w">      </span><span class="no">"bucket": "mlpipeline",</span>
-<span class="w">      </span><span class="no">"base64_service_account": "c2VydmljZWFjY291bnQ=" # base64 encoded value of the credential file</span>
-<span class="w">    </span><span class="no">}</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gcloud-application-credentials.json</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;base64 encoded value of the credential file&gt;</span>
 </code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<p>Note that the key <code>gcloud-application-credentials.json</code> is <a href="https://github.com/kserve/kserve/blob/20c5a5244b8b94569aacdc44988da34643aeff2e/config/configmap/inferenceservice.yaml#L144">configurable</a>. If you change its value in the configuration, ensure you use the same name when creating your GCS credentials secret.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>create-gcs-secret.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>gcs-secret.yaml
+</code></pre></div>
+<h3 id="attach-secret-to-a-service-account">Attach secret to a service account<a class="headerlink" href="#attach-secret-to-a-service-account" title="Permanent link">¶</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">yaml</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span>
+<span class="nt">secrets</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcscreds</span>
 </code></pre></div>
 <h2 id="deploy-the-model-on-gcs-with-inferenceservice">Deploy the model on GCS with <code>InferenceService</code><a class="headerlink" href="#deploy-the-model-on-gcs-with-inferenceservice" title="Permanent link">¶</a></h2>
 <p>Create the InferenceService with the Google service account credential</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">yaml</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
@@ -1341,32 +1398,29 @@ The uri is in the following format:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-gcs</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow-gcs</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gcs</span>
-<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models/tensorflow/flowers</span>
-<span class="w">        </span><span class="nt">parameters</span><span class="p">:</span><span class="w"> </span><span class="c1"># Parameters to override the default values</span>
-<span class="w">          </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kfserving-examples</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
 </code></pre></div>
-<p>Apply the <code>sklearn-gcs.yaml</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">kubectl</label></div>
+<p>Apply the <code>tensorflow-gcs.yaml</code>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>sklearn-gcs.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>tensorflow-gcs.yaml
 </code></pre></div>
 <h2 id="run-a-prediction">Run a prediction<a class="headerlink" href="#run-a-prediction" title="Permanent link">¶</a></h2>
 <p>Now, the ingress can be accessed at <code>${INGRESS_HOST}:${INGRESS_PORT}</code> or follow <a href="../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">this instruction</a>
 to find out the ingress IP and port.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-gcs<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>tensorflow-gcs<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 
-<span class="nv">MODEL_NAME</span><span class="o">=</span>sklearn-gcs
+<span class="nv">MODEL_NAME</span><span class="o">=</span>tensorflow-gcs
 <span class="nv">INPUT_PATH</span><span class="o">=</span>@./input.json
 curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="nv">$MODEL_NAME</span>:predict<span class="w"> </span>-d<span class="w"> </span><span class="nv">$INPUT_PATH</span>
 </code></pre></div>
@@ -1375,8 +1429,8 @@ curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span>
 <div class="no-copy highlight"><pre><span></span><code>*<span class="w">   </span>Trying<span class="w"> </span><span class="m">127</span>.0.0.1:8080...
 *<span class="w"> </span>TCP_NODELAY<span class="w"> </span><span class="nb">set</span>
 *<span class="w"> </span>Connected<span class="w"> </span>to<span class="w"> </span>localhost<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w"> </span>port<span class="w"> </span><span class="m">8080</span><span class="w"> </span><span class="o">(</span><span class="c1">#0)</span>
-&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/sklearn-gcs:predict<span class="w"> </span>HTTP/1.1
-&gt;<span class="w"> </span>Host:<span class="w"> </span>sklearn-gcs.default.example.com
+&gt;<span class="w"> </span>POST<span class="w"> </span>/v1/models/tensorflow-gcs:predict<span class="w"> </span>HTTP/1.1
+&gt;<span class="w"> </span>Host:<span class="w"> </span>tensorflow-gcs.default.example.com
 &gt;<span class="w"> </span>User-Agent:<span class="w"> </span>curl/7.68.0
 &gt;<span class="w"> </span>Accept:<span class="w"> </span>*/*
 &gt;<span class="w"> </span>Content-Length:<span class="w"> </span><span class="m">84</span>
