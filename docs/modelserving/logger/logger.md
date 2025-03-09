@@ -24,6 +24,9 @@ spec:
 kubectl create -f message-dumper.yaml
 ```
 
+!!! Note
+    You can create your own message-dumper service, in order to print during testing. Knative is not necessary for this feature.
+
 ### Create an InferenceService with Logger
 
 Create a sklearn predictor with the logger which points at the message dumper url.
