@@ -48,9 +48,9 @@ is provided as reference.
     kubectl apply -n kserve-test -f - <<EOF
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
-    namespace: kserve-test
     metadata:
       name: "sklearn-iris"
+      namespace: kserve-test
     spec:
       predictor:
         sklearn:
