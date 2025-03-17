@@ -95,6 +95,7 @@ nav:
           - Autoscaling:
                 - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
                 - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
+                - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
           - Node Scheduling:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
