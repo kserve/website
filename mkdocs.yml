@@ -12,7 +12,7 @@ nav:
                   - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
                 - ModelMesh installation: admin/modelmesh.md
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
-                - Migrating from KFServing: admin/migration.md
+                - Gateway API migration: admin/gatewayapi_migration.md
     - User Guide:
           - Concepts:
                 - Control Plane:
@@ -24,6 +24,16 @@ nav:
                   - Open Inference Protocol Extensions:
                     - Binary Tensor Data Extension: modelserving/data_plane/binary_tensor_data_extension.md
                 - Serving Runtimes: modelserving/servingruntimes.md
+          - LLM Serving Runtime:
+              - Hugging Face vLLM:
+                - Overview: modelserving/v1beta1/llm/huggingface/README.md
+                - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
+                - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
+                - Token Classification: modelserving/v1beta1/llm/huggingface/token_classification/README.md
+                - Text Classification: modelserving/v1beta1/llm/huggingface/text_classification/README.md
+                - Fill Mask: modelserving/v1beta1/llm/huggingface/fill_mask/README.md
+                - Multi Node Inference: modelserving/v1beta1/llm/huggingface/multi-node/README.md
+                - SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
           - Model Serving Runtimes:
               - Supported Model Frameworks/Formats:
                 - Overview: modelserving/v1beta1/serving_runtime.md
@@ -43,16 +53,6 @@ nav:
                   - Tensorflow: modelserving/v1beta1/triton/bert/README.md
                   - Hugging Face: modelserving/v1beta1/triton/huggingface/README.md
                 - AMD: modelserving/v1beta1/amd/README.md
-              - LLM Runtime:
-                - Hugging Face LLM:
-                  - Overview: modelserving/v1beta1/llm/huggingface/README.md
-                  - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
-                  - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
-                  - Token Classification: modelserving/v1beta1/llm/huggingface/token_classification/README.md
-                  - Text Classification: modelserving/v1beta1/llm/huggingface/text_classification/README.md
-                  - Fill Mask: modelserving/v1beta1/llm/huggingface/fill_mask/README.md
-                  - SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
-                - TorchServe LLM: modelserving/v1beta1/llm/torchserve/accelerate/README.md
               - How to write a custom predictor: modelserving/v1beta1/custom/custom_model/README.md
           - Multi Model Serving:
                 - Overview:
@@ -93,8 +93,9 @@ nav:
           - Payload Logging:
                 - Inference Logger: modelserving/logger/logger.md
           - Autoscaling:
-                - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
-                - keda Autoscaling: modelserving/autoscaling/keda/autoscaling_keda.md
+                - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
+                - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
+                - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
           - Node Scheduling:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
