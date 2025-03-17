@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/sdk_docs/docs/V1beta1InferenceServicesConfig/" rel="canonical"/>
+<link href="https://kserve.io/website/master/modelserving/autoscaling/raw_deployment_autoscaling/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>V1beta1InferenceServicesConfig - KServe Documentation Website</title>
+<title>Kubernetes Autoscaler(HPA) - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#v1beta1inferenceservicesconfig">
+<a class="md-skip" href="#kubernetes-autoscaler">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              V1beta1InferenceServicesConfig
+              Kubernetes Autoscaler(HPA)
             
           </span>
 </div>
@@ -125,7 +125,7 @@
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../modelserving/control_plane/">
+<a class="md-tabs__link md-tabs__link--active" href="../../control_plane/">
         User Guide
       </a>
 </li>
@@ -287,8 +287,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
@@ -324,7 +324,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/control_plane/">
+<a class="md-nav__link" href="../../control_plane/">
         Model Serving Control Plane
       </a>
 </li>
@@ -344,17 +344,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/data_plane/">
+<a class="md-nav__link" href="../../data_plane/data_plane/">
         Model Serving Data Plane
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v1_protocol/">
+<a class="md-nav__link" href="../../data_plane/v1_protocol/">
         V1 Inference Protocol
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v2_protocol/">
+<a class="md-nav__link" href="../../data_plane/v2_protocol/">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
 </li>
@@ -371,7 +371,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/binary_tensor_data_extension/">
+<a class="md-nav__link" href="../../data_plane/binary_tensor_data_extension/">
         Binary Tensor Data Extension
       </a>
 </li>
@@ -382,7 +382,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/servingruntimes/">
+<a class="md-nav__link" href="../../servingruntimes/">
         Serving Runtimes
       </a>
 </li>
@@ -414,42 +414,42 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/text_generation/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/text_generation/">
         Text Generation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/text2text_generation/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/text2text_generation/">
         Text2Text Generation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/token_classification/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/token_classification/">
         Token Classification
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/text_classification/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/text_classification/">
         Text Classification
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/fill_mask/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/fill_mask/">
         Fill Mask
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/multi-node/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/multi-node/">
         Multi Node Inference
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/sdk_integration/">
+<a class="md-nav__link" href="../../v1beta1/llm/huggingface/sdk_integration/">
         SDK Integration
       </a>
 </li>
@@ -484,57 +484,57 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/serving_runtime/">
+<a class="md-nav__link" href="../../v1beta1/serving_runtime/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/tensorflow/">
+<a class="md-nav__link" href="../../v1beta1/tensorflow/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/torchserve/">
+<a class="md-nav__link" href="../../v1beta1/torchserve/">
         PyTorch
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/sklearn/v2/">
+<a class="md-nav__link" href="../../v1beta1/sklearn/v2/">
         Scikit-learn
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/xgboost/">
+<a class="md-nav__link" href="../../v1beta1/xgboost/">
         XGBoost
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/pmml/">
+<a class="md-nav__link" href="../../v1beta1/pmml/">
         PMML
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/spark/">
+<a class="md-nav__link" href="../../v1beta1/spark/">
         Spark MLlib
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/lightgbm/">
+<a class="md-nav__link" href="../../v1beta1/lightgbm/">
         LightGBM
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/paddle/">
+<a class="md-nav__link" href="../../v1beta1/paddle/">
         Paddle
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/mlflow/v2/">
+<a class="md-nav__link" href="../../v1beta1/mlflow/v2/">
         MLFlow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/onnx/">
+<a class="md-nav__link" href="../../v1beta1/onnx/">
         ONNX
       </a>
 </li>
@@ -566,17 +566,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/torchscript/">
+<a class="md-nav__link" href="../../v1beta1/triton/torchscript/">
         Torchscript
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/bert/">
+<a class="md-nav__link" href="../../v1beta1/triton/bert/">
         Tensorflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/huggingface/">
+<a class="md-nav__link" href="../../v1beta1/triton/huggingface/">
         Hugging Face
       </a>
 </li>
@@ -584,7 +584,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/amd/">
+<a class="md-nav__link" href="../../v1beta1/amd/">
         AMD
       </a>
 </li>
@@ -592,7 +592,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/custom/custom_model/">
+<a class="md-nav__link" href="../../v1beta1/custom/custom_model/">
         How to write a custom predictor
       </a>
 </li>
@@ -624,12 +624,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/multi-model-serving/">
+<a class="md-nav__link" href="../../mms/multi-model-serving/">
         The Scalability Problem
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/modelmesh/overview/">
+<a class="md-nav__link" href="../../mms/modelmesh/overview/">
         ModelMesh Overview
       </a>
 </li>
@@ -652,17 +652,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/feast/">
+<a class="md-nav__link" href="../../v1beta1/transformer/feast/">
         Feast
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+<a class="md-nav__link" href="../../v1beta1/transformer/torchserve_image_transformer/">
         How to write a custom transformer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/collocation/">
+<a class="md-nav__link" href="../../v1beta1/transformer/collocation/">
         Collocate transformer and predictor
       </a>
 </li>
@@ -682,12 +682,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/">
+<a class="md-nav__link" href="../../inference_graph/">
         Concept
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/image_pipeline/">
+<a class="md-nav__link" href="../../inference_graph/image_pipeline/">
         Image classification inference graph
       </a>
 </li>
@@ -707,52 +707,52 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/storagecontainers/">
+<a class="md-nav__link" href="../../storage/storagecontainers/">
         Storage Containers
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/certificate/kserve/">
+<a class="md-nav__link" href="../../certificate/kserve/">
         Configure CA Certificate
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/azure/azure/">
+<a class="md-nav__link" href="../../storage/azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/pvc/pvc/">
+<a class="md-nav__link" href="../../storage/pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/s3/s3/">
+<a class="md-nav__link" href="../../storage/s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/oci/">
+<a class="md-nav__link" href="../../storage/oci/">
         OCI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/uri/uri/">
+<a class="md-nav__link" href="../../storage/uri/uri/">
         URI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/gcs/gcs/">
+<a class="md-nav__link" href="../../storage/gcs/gcs/">
         GCS
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/huggingface/hf/">
+<a class="md-nav__link" href="../../storage/huggingface/hf/">
         Hugging Face
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/modelcache/localmodel/">
+<a class="md-nav__link" href="../../storage/modelcache/localmodel/">
         Model Cache
       </a>
 </li>
@@ -772,12 +772,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/explainer/">
+<a class="md-nav__link" href="../../explainer/explainer/">
         Concept
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/trustyai/">
+<a class="md-nav__link" href="../../explainer/trustyai/">
         TrustyAI Explainer
       </a>
 </li>
@@ -794,17 +794,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/cifar10/">
+<a class="md-nav__link" href="../../explainer/alibi/cifar10/">
         Image Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/income/">
+<a class="md-nav__link" href="../../explainer/alibi/income/">
         Income Explainer
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/moviesentiment/">
+<a class="md-nav__link" href="../../explainer/alibi/moviesentiment/">
         Text Explainer
       </a>
 </li>
@@ -812,7 +812,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/aix/mnist/aix/">
+<a class="md-nav__link" href="../../explainer/aix/mnist/aix/">
         AIX Explainer
       </a>
 </li>
@@ -832,17 +832,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/alibi_detect/alibi_detect/">
+<a class="md-nav__link" href="../../detect/alibi_detect/alibi_detect/">
         Alibi Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/aif/germancredit/">
+<a class="md-nav__link" href="../../detect/aif/germancredit/">
         AIF Bias Detector
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/art/mnist/">
+<a class="md-nav__link" href="../../detect/art/mnist/">
         ART Adversarial Detector
       </a>
 </li>
@@ -862,7 +862,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/batcher/batcher/">
+<a class="md-nav__link" href="../../batcher/batcher/">
         Inference Batcher
       </a>
 </li>
@@ -882,15 +882,15 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/logger/logger/">
+<a class="md-nav__link" href="../../logger/logger/">
         Inference Logger
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_12">
           Autoscaling
           <span class="md-nav__icon md-icon"></span>
@@ -902,14 +902,46 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/autoscaling/">
+<a class="md-nav__link" href="../autoscaling/">
         Knative Autoscaler(KPA)
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/raw_deployment_autoscaling/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          Kubernetes Autoscaler(HPA)
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         Kubernetes Autoscaler(HPA)
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubernetes-autoscaler">
+    Kubernetes Autoscaler
+  </a>
+<nav aria-label="Kubernetes Autoscaler" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hpa-in-raw-deployment">
+    HPA in Raw Deployment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#disable-hpa-in-raw-deployment">
+    Disable HPA in Raw Deployment
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -927,12 +959,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/overview/">
+<a class="md-nav__link" href="../../nodescheduling/overview/">
         Overview
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+<a class="md-nav__link" href="../../nodescheduling/inferenceservicenodescheduling/">
         InferenceService Node Scheduling
       </a>
 </li>
@@ -952,7 +984,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/kafka/kafka/">
+<a class="md-nav__link" href="../../kafka/kafka/">
         Inference with Kafka event source
       </a>
 </li>
@@ -972,12 +1004,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary/">
+<a class="md-nav__link" href="../../v1beta1/rollout/canary/">
         Canary
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary-example/">
+<a class="md-nav__link" href="../../v1beta1/rollout/canary-example/">
         Canary Example
       </a>
 </li>
@@ -997,12 +1029,12 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/prometheus_metrics/">
+<a class="md-nav__link" href="../../observability/prometheus_metrics/">
         Prometheus Metrics
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/grafana_dashboards/">
+<a class="md-nav__link" href="../../observability/grafana_dashboards/">
         Grafana Dashboards
       </a>
 </li>
@@ -1035,7 +1067,7 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../sdk_doc/">
+<a class="md-nav__link" href="../../../sdk_docs/sdk_doc/">
         Python Client SDK
       </a>
 </li>
@@ -1187,9 +1219,23 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#properties">
-    Properties
+<a class="md-nav__link" href="#kubernetes-autoscaler">
+    Kubernetes Autoscaler
   </a>
+<nav aria-label="Kubernetes Autoscaler" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hpa-in-raw-deployment">
+    HPA in Raw Deployment
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#disable-hpa-in-raw-deployment">
+    Disable HPA in Raw Deployment
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1198,42 +1244,75 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/sdk_docs/docs/V1beta1InferenceServicesConfig.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/autoscaling/raw_deployment_autoscaling.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="v1beta1inferenceservicesconfig">V1beta1InferenceServicesConfig<a class="headerlink" href="#v1beta1inferenceservicesconfig" title="Permanent link">¶</a></h1>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>explainers</strong></td>
-<td><a href="../V1beta1ExplainersConfig/"><strong>V1beta1ExplainersConfig</strong></a></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>predictors</strong></td>
-<td><a href="../V1beta1PredictorsConfig/"><strong>V1beta1PredictorsConfig</strong></a></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong>transformers</strong></td>
-<td><a href="../V1beta1TransformersConfig/"><strong>V1beta1TransformersConfig</strong></a></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><a href="../../sdk_doc/#documentation-for-models">[Back to Model list]</a> <a href="../../sdk_doc/#documentation-for-api-endpoints">[Back to API list]</a> <a href="../../sdk_doc/">[Back to README]</a></p>
+<h1>Kubernetes Autoscaler(HPA)</h1>
+<h2 id="kubernetes-autoscaler">Kubernetes Autoscaler<a class="headerlink" href="#kubernetes-autoscaler" title="Permanent link">¶</a></h2>
+<p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with following Kubernetes resources:</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a></li>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a></li>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a></li>
+<li><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a></li>
+</ul>
+<p>Compared to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
+<h3 id="hpa-in-raw-deployment">HPA in Raw Deployment<a class="headerlink" href="#hpa-in-raw-deployment" title="Permanent link">¶</a></h3>
+<p>When using KServe with the <code>RawDeployment</code> mode, Knative is not required. In this mode, if you deploy an <code>InferenceService</code>, KServe uses <strong>Kubernetes’ Horizontal Pod Autoscaler (HPA)</strong> for autoscaling instead of <strong>Knative Pod Autoscaler (KPA)</strong>. For how to use Knative Autoscaler in KServe, you can refer to the <a href="https://kserve.github.io/website/master/modelserving/autoscaling/autoscaling">Knative Autoscaler</a> documentation.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">YAML</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-iris-hpa"</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hpa</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cpu</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.0/model"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+</div>
+</div>
+</input></div>
+<p><code>ScaleTarget</code> specifies the integer target value of the metric type the Autoscaler watches for. <code>ScaleMetric</code> defines the scaling metric type watched by autoscaler, possible values for raw deployment are:</p>
+<ul>
+<li>cpu</li>
+<li>memory </li>
+</ul>
+<p>Concurrency and RPS are supported via Knative Pod Autoscaler, you can refer to <a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">Knative Autoscaler Metrics</a> documentation.</p>
+<h3 id="disable-hpa-in-raw-deployment">Disable HPA in Raw Deployment<a class="headerlink" href="#disable-hpa-in-raw-deployment" title="Permanent link">¶</a></h3>
+<p>If you want to control the scaling of the deployment created by KServe inference service with an external tool like <a href="https://keda.sh/"><code>KEDA</code></a>, you can disable KServe's creation of the <strong>HPA</strong> by replacing <strong>external</strong> value with autoscaler class annotation which should disable the creation of HPA.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">New Schema</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-iris"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.0/model"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+</div>
+</div>
+</input></div>
 </article>
 </div>
 </div>
@@ -1243,6 +1322,34 @@
           </a>
 </main>
 <footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Knative Autoscaler(KPA)" class="md-footer__link md-footer__link--prev" href="../autoscaling/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Knative Autoscaler(KPA)
+            </div>
+</div>
+</a>
+<a aria-label="Next: Overview" class="md-footer__link md-footer__link--next" href="../../nodescheduling/overview/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Overview
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">

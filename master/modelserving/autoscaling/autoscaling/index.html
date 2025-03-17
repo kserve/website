@@ -9,7 +9,7 @@
 <link href="https://kserve.io/website/master/modelserving/autoscaling/autoscaling/" rel="canonical"/>
 <link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Inference Autoscaling - KServe Documentation Website</title>
+<title>Knative Autoscaler(KPA) - KServe Documentation Website</title>
 <link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#autoscale-inferenceservice-with-inference-workload">
+<a class="md-skip" href="#autoscale-inferenceservice-with-knative-autoscaler">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Inference Autoscaling
+              Knative Autoscaler(KPA)
             
           </span>
 </div>
@@ -904,11 +904,11 @@
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Inference Autoscaling
+          Knative Autoscaler(KPA)
           <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
-        Inference Autoscaling
+        Knative Autoscaler(KPA)
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -917,10 +917,10 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#inferenceservice-with-target-concurrency">
-    InferenceService with target concurrency
+<a class="md-nav__link" href="#autoscale-with-target-concurrency">
+    Autoscale with Target Concurrency
   </a>
-<nav aria-label="InferenceService with target concurrency" class="md-nav">
+<nav aria-label="Autoscale with Target Concurrency" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-inferenceservice">
@@ -928,8 +928,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#predict-inferenceservice-with-concurrent-requests">
-    Predict InferenceService with concurrent requests
+<a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests">
+    Autoscale InferenceService with Concurrent Requests
   </a>
 </li>
 <li class="md-nav__item">
@@ -941,10 +941,10 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#inferenceservice-with-target-qps">
-    InferenceService with target QPS
+<a class="md-nav__link" href="#autoscale-with-target-qps">
+    Autoscale with Target QPS
   </a>
-<nav aria-label="InferenceService with target QPS" class="md-nav">
+<nav aria-label="Autoscale with Target QPS" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-the-inferenceservice">
@@ -966,18 +966,18 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#autoscaling-on-gpu">
-    Autoscaling on GPU!
+    Autoscaling on GPU
   </a>
-<nav aria-label="Autoscaling on GPU!" class="md-nav">
+<nav aria-label="Autoscaling on GPU" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-the-inferenceservice-with-gpu-resource">
-    Create the InferenceService with GPU resource
+    Create the InferenceService with GPU Resource
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#predict-inferenceservice-with-concurrent-requests_1">
-    Predict InferenceService with concurrent requests
+<a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests_1">
+    Autoscale InferenceService with Concurrent Requests
   </a>
 </li>
 </ul>
@@ -990,25 +990,30 @@
 <nav aria-label="Autoscaling Customization" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#autoscaling-with-containerconcurrency">
-    Autoscaling with ContainerConcurrency
+<a class="md-nav__link" href="#autoscaling-with-container-concurrency">
+    Autoscaling with Container Concurrency
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#enable-scale-down-to-zero">
-    Enable scale down to zero
+<a class="md-nav__link" href="#enable-scale-to-zero">
+    Enable Scale To Zero
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#autoscaling-configuration-at-component-level">
-    Autoscaling configuration at component level
+<a class="md-nav__link" href="#autoscale-on-both-transformer-and-predictor">
+    Autoscale on both Transformer and Predictor
   </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../raw_deployment_autoscaling/">
+        Kubernetes Autoscaler(HPA)
+      </a>
 </li>
 </ul>
 </nav>
@@ -1286,10 +1291,10 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#inferenceservice-with-target-concurrency">
-    InferenceService with target concurrency
+<a class="md-nav__link" href="#autoscale-with-target-concurrency">
+    Autoscale with Target Concurrency
   </a>
-<nav aria-label="InferenceService with target concurrency" class="md-nav">
+<nav aria-label="Autoscale with Target Concurrency" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-inferenceservice">
@@ -1297,8 +1302,8 @@
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#predict-inferenceservice-with-concurrent-requests">
-    Predict InferenceService with concurrent requests
+<a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests">
+    Autoscale InferenceService with Concurrent Requests
   </a>
 </li>
 <li class="md-nav__item">
@@ -1310,10 +1315,10 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#inferenceservice-with-target-qps">
-    InferenceService with target QPS
+<a class="md-nav__link" href="#autoscale-with-target-qps">
+    Autoscale with Target QPS
   </a>
-<nav aria-label="InferenceService with target QPS" class="md-nav">
+<nav aria-label="Autoscale with Target QPS" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-the-inferenceservice">
@@ -1335,18 +1340,18 @@
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#autoscaling-on-gpu">
-    Autoscaling on GPU!
+    Autoscaling on GPU
   </a>
-<nav aria-label="Autoscaling on GPU!" class="md-nav">
+<nav aria-label="Autoscaling on GPU" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#create-the-inferenceservice-with-gpu-resource">
-    Create the InferenceService with GPU resource
+    Create the InferenceService with GPU Resource
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#predict-inferenceservice-with-concurrent-requests_1">
-    Predict InferenceService with concurrent requests
+<a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests_1">
+    Autoscale InferenceService with Concurrent Requests
   </a>
 </li>
 </ul>
@@ -1359,21 +1364,21 @@
 <nav aria-label="Autoscaling Customization" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#autoscaling-with-containerconcurrency">
-    Autoscaling with ContainerConcurrency
+<a class="md-nav__link" href="#autoscaling-with-container-concurrency">
+    Autoscaling with Container Concurrency
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#enable-scale-down-to-zero">
-    Enable scale down to zero
+<a class="md-nav__link" href="#enable-scale-to-zero">
+    Enable Scale To Zero
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#autoscaling-configuration-at-component-level">
-    Autoscaling configuration at component level
+<a class="md-nav__link" href="#autoscale-on-both-transformer-and-predictor">
+    Autoscale on both Transformer and Predictor
   </a>
 </li>
 </ul>
@@ -1386,20 +1391,15 @@
 <a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/autoscaling/autoscaling.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="autoscale-inferenceservice-with-inference-workload">Autoscale InferenceService with inference workload<a class="headerlink" href="#autoscale-inferenceservice-with-inference-workload" title="Permanent link">¶</a></h1>
-<ul>
-<li>The examples below depend on Knative. You need to implement HPA yourself without Knative.</li>
-<li>To disable the HPA created by KServe, set <code>serving.kserve.io/autoscalerClass: "external"</code> in the InferenceService annotations.</li>
-</ul>
-<h2 id="inferenceservice-with-target-concurrency">InferenceService with target concurrency<a class="headerlink" href="#inferenceservice-with-target-concurrency" title="Permanent link">¶</a></h2>
+<h1 id="autoscale-inferenceservice-with-knative-autoscaler">Autoscale InferenceService with Knative Autoscaler<a class="headerlink" href="#autoscale-inferenceservice-with-knative-autoscaler" title="Permanent link">¶</a></h1>
+<h2 id="autoscale-with-target-concurrency">Autoscale with Target Concurrency<a class="headerlink" href="#autoscale-with-target-concurrency" title="Permanent link">¶</a></h2>
 <h3 id="create-inferenceservice">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice" title="Permanent link">¶</a></h3>
-<p>Apply the tensorflow example CR with scaling target set to 1. Annotation <code>autoscaling.knative.dev/target</code> is the soft limit rather than a strictly enforced limit, if there is sudden burst of the requests, this value can be exceeded.</p>
-<p>The <code>scaleTarget</code> and <code>scaleMetric</code> are introduced in version 0.9 of kserve and should be available in both new and old schema.
-This is the preferred way of defining autoscaling options.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
+<p>Apply the tensorflow example with scaling target set to 1. The annotation <code>autoscaling.knative.dev/target</code> is the soft limit rather than a strictly enforced limit. If there is sudden burst of the requests, this value can be exceeded.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
@@ -1411,37 +1411,17 @@ This is the preferred way of defining autoscaling options.</p>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">autoscaling.knative.dev/target</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<p>Apply the <code>autoscale.yaml</code> to create the Autoscale InferenceService.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl apply -f autoscale.yaml
-</code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
 <div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/flowers-sample<span class="w"> </span>created
 </code></pre></div>
 </div>
-<h3 id="predict-inferenceservice-with-concurrent-requests">Predict <code>InferenceService</code> with concurrent requests<a class="headerlink" href="#predict-inferenceservice-with-concurrent-requests" title="Permanent link">¶</a></h3>
+<h3 id="autoscale-inferenceservice-with-concurrent-requests">Autoscale <code>InferenceService</code> with Concurrent Requests<a class="headerlink" href="#autoscale-inferenceservice-with-concurrent-requests" title="Permanent link">¶</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send traffic in 30 seconds spurts maintaining 5 in-flight requests.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample
@@ -1496,7 +1476,7 @@ Status<span class="w"> </span>code<span class="w"> </span>distribution:
 <span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">4126</span><span class="w"> </span>responses
 </code></pre></div>
 </div>
-<p>Check the number of running pods now, <code>Kserve</code> uses <code>Knative Serving</code> autoscaler which is based on the average number of in-flight requests per pod(concurrency). As the scaling target is set to 1 and we load the service with 5 concurrent requests, so the autoscaler tries scaling up to 5 pods. Notice that out of all the requests there are 5 requests on the histogram that take around 10s, that's the cold start time cost to initially spawn the pods and download model to be ready to serve. The cold start may take longer(to pull the serving image) if the image is not cached on the node that the pod is scheduled on.</p>
+<p>Check the number of running pods now, <code>KServe</code> uses <code>Knative</code> autoscaler which is based on the average number of in-flight requests per pod(concurrency). As the scaling target is set to 1 and we load the service with 5 concurrent requests, so the autoscaler tries scaling up to 5 pods. Notice that out of all the requests there are 5 requests on the histogram that take around 10s, that's the cold start time cost to initially spawn the pods and download model to be ready to serve. The cold start may take longer(to pull the serving image) if the image is not cached on the node that the pod is scheduled on.</p>
 <div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
 NAME<span class="w">                                                       </span>READY<span class="w">   </span>STATUS<span class="w">            </span>RESTARTS<span class="w">   </span>AGE
 flowers-sample-default-7kqt6-deployment-75d577dcdb-sr5wd<span class="w">         </span><span class="m">3</span>/3<span class="w">     </span>Running<span class="w">       </span><span class="m">0</span><span class="w">          </span>42s
@@ -1507,7 +1487,7 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d<span class="w">        
 </code></pre></div>
 <h3 id="check-dashboard">Check Dashboard<a class="headerlink" href="#check-dashboard" title="Permanent link">¶</a></h3>
 <p>View the Knative Serving Scaling dashboards (if configured).</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block"></div>
 </div>
@@ -1515,16 +1495,30 @@ flowers-sample-default-7kqt6-deployment-75d577dcdb-vm58d<span class="w">        
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>--namespace<span class="w"> </span>knative-monitoring<span class="w"> </span>--selector<span class="o">=</span><span class="nv">app</span><span class="o">=</span>grafana<span class="w">  </span>--output<span class="o">=</span><span class="nv">jsonpath</span><span class="o">=</span><span class="s2">"{.items..metadata.name}"</span><span class="k">)</span><span class="w"> </span><span class="m">3000</span>
 </code></pre></div>
 <p><img alt="scaling dashboard" src="../images/scaling_debug.png"/></p>
-<h2 id="inferenceservice-with-target-qps">InferenceService with target QPS<a class="headerlink" href="#inferenceservice-with-target-qps" title="Permanent link">¶</a></h2>
+<h2 id="autoscale-with-target-qps">Autoscale with Target QPS<a class="headerlink" href="#autoscale-with-target-qps" title="Permanent link">¶</a></h2>
 <h3 id="create-the-inferenceservice">Create the InferenceService<a class="headerlink" href="#create-the-inferenceservice" title="Permanent link">¶</a></h3>
 <p>Apply the same tensorflow example CR</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">kubectl</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">YAML</label></div>
 <div class="tabbed-content">
-<div class="tabbed-block"></div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">qps</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+</div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale.yaml
-</code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
 <div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/flowers-sample<span class="w"> </span>created
@@ -1593,14 +1587,15 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 </code></pre></div>
 <p><img alt="scaling dashboard" src="../images/scaling_debug_qps.png"/></p>
 <p>Autoscaler calculates average concurrency over 60 second window so it takes a minute to stabilize at the desired concurrency level, however it also calculates the 6 second panic window and will enter into <a href="https://knative.dev/docs/serving/autoscaling/kpa-specific/#panic-mode-threshold">panic mode</a> if that window reaches 2x target concurrency. From the dashboard you can see that it enters panic mode in which autoscaler operates on shorter and more sensitive window. Once the panic conditions are no longer met for 60 seconds, autoscaler will return back to 60 seconds stable window.</p>
-<h2 id="autoscaling-on-gpu">Autoscaling on GPU!<a class="headerlink" href="#autoscaling-on-gpu" title="Permanent link">¶</a></h2>
-<p>Autoscaling on GPU is hard with GPU metrics, however thanks to Knative's concurrency based autoscaler scaling on GPU is pretty easy and effective!</p>
-<h3 id="create-the-inferenceservice-with-gpu-resource">Create the InferenceService with GPU resource<a class="headerlink" href="#create-the-inferenceservice-with-gpu-resource" title="Permanent link">¶</a></h3>
-<p>Apply the tensorflow gpu example CR</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><input id="__tabbed_5_2" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">New Schema</label><label for="__tabbed_5_2">Old Schema</label></div>
+<h2 id="autoscaling-on-gpu">Autoscaling on GPU<a class="headerlink" href="#autoscaling-on-gpu" title="Permanent link">¶</a></h2>
+<p>Autoscale using GPU metrics can be challenging as GPU utilization can fluctuate dramatically depending on the task, thanks to Knative's concurrency based autoscaler scaling on GPU is pretty easy and effective!</p>
+<h3 id="create-the-inferenceservice-with-gpu-resource">Create the InferenceService with GPU Resource<a class="headerlink" href="#create-the-inferenceservice-with-gpu-resource" title="Permanent link">¶</a></h3>
+<p>Apply the tensorflow gpu example.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample-gpu"</span>
@@ -1616,36 +1611,12 @@ that it hits the average concurrency 10 and autoscaler tries scaling up to 10 po
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample-gpu"</span>
-<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">autoscaling.knative.dev/target</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
-<span class="w">      </span><span class="nt">runtimeVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"2.6.2-gpu"</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<p>Apply the <code>autoscale-gpu.yaml</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">kubectl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale-gpu.yaml
-</code></pre></div>
-<h3 id="predict-inferenceservice-with-concurrent-requests_1">Predict InferenceService with concurrent requests<a class="headerlink" href="#predict-inferenceservice-with-concurrent-requests_1" title="Permanent link">¶</a></h3>
+<h3 id="autoscale-inferenceservice-with-concurrent-requests_1">Autoscale InferenceService with Concurrent Requests<a class="headerlink" href="#autoscale-inferenceservice-with-concurrent-requests_1" title="Permanent link">¶</a></h3>
 <p>The first step is to <a href="../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
 <p>Send 30 seconds of traffic maintaining 5 in-flight requests.</p>
 <div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>flowers-sample-gpu
@@ -1701,14 +1672,15 @@ Status<span class="w"> </span>code<span class="w"> </span>distribution:
 </code></pre></div>
 </div>
 <h2 id="autoscaling-customization">Autoscaling Customization<a class="headerlink" href="#autoscaling-customization" title="Permanent link">¶</a></h2>
-<h3 id="autoscaling-with-containerconcurrency">Autoscaling with ContainerConcurrency<a class="headerlink" href="#autoscaling-with-containerconcurrency" title="Permanent link">¶</a></h3>
+<h3 id="autoscaling-with-container-concurrency">Autoscaling with Container Concurrency<a class="headerlink" href="#autoscaling-with-container-concurrency" title="Permanent link">¶</a></h3>
 <p><code>ContainerConcurrency</code> determines the number of simultaneous requests that can be processed by each replica of the <code>InferenceService</code>
 at any given time, it is a hard limit and if the concurrency reaches the hard limit surplus requests will be buffered and must wait until
 enough capacity is free to execute the requests.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio"><input id="__tabbed_7_2" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="__tabbed_7_1">New Schema</label><label for="__tabbed_7_2">Old Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
@@ -1719,37 +1691,19 @@ enough capacity is free to execute the requests.</p>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">containerConcurrency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<p>Apply the <code>autoscale-custom.yaml</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="__tabbed_8_1">kubectl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>autoscale-custom.yaml
-</code></pre></div>
-<h3 id="enable-scale-down-to-zero">Enable scale down to zero<a class="headerlink" href="#enable-scale-down-to-zero" title="Permanent link">¶</a></h3>
+<h3 id="enable-scale-to-zero">Enable Scale To Zero<a class="headerlink" href="#enable-scale-to-zero" title="Permanent link">¶</a></h3>
 <p>KServe by default sets <code>minReplicas</code> to 1, if you want to enable scaling down to zero especially for use cases like serving on GPUs you can
 set <code>minReplicas</code> to 0 so that the pods automatically scale down to zero when no traffic is received.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio"><input id="__tabbed_9_2" name="__tabbed_9" type="radio"><div class="tabbed-labels"><label for="__tabbed_9_1">New Schema</label><label for="__tabbed_9_2">Old Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
@@ -1760,37 +1714,19 @@ set <code>minReplicas</code> to 0 so that the pods automatically scale down to z
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"flowers-sample"</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="w">    </span><span class="nt">tensorflow</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/tensorflow/flowers"</span>
-</code></pre></div>
-</div>
-</div>
-</input></input></div>
-<p>Apply the <code>scale-down-to-zero.yaml</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="10:1"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio"><div class="tabbed-labels"><label for="__tabbed_10_1">kubectl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
 </div>
 </input></div>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>scale-down-to-zero.yaml
-</code></pre></div>
-<h2 id="autoscaling-configuration-at-component-level">Autoscaling configuration at component level<a class="headerlink" href="#autoscaling-configuration-at-component-level" title="Permanent link">¶</a></h2>
+<h2 id="autoscale-on-both-transformer-and-predictor">Autoscale on both Transformer and Predictor<a class="headerlink" href="#autoscale-on-both-transformer-and-predictor" title="Permanent link">¶</a></h2>
 <p>Autoscaling options can also be configured at the component level.
 This allows more flexibility in terms of the autoscaling configuration. In a typical deployment, transformers may require a different autoscaling configuration than a predictor. This feature allows the user to scale individual components as required.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio"><input id="__tabbed_11_2" name="__tabbed_11" type="radio"><div class="tabbed-labels"><label for="__tabbed_11_1">New Schema</label><label for="__tabbed_11_2">Old Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="__tabbed_7_1">YAML</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span><span class="w">  </span>
@@ -1815,38 +1751,12 @@ This allows more flexibility in terms of the autoscaling configuration. In a typ
 <span class="w">        </span><span class="nt">args</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torch-transformer</span><span class="w">  </span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">concurrency</span>
-<span class="w">    </span><span class="nt">pytorch</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/torchserve/image_classifier</span>
-<span class="w">  </span><span class="nt">transformer</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">scaleTarget</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
-<span class="w">    </span><span class="nt">scaleMetric</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rps</span>
-<span class="w">    </span><span class="nt">containers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve/image-transformer:latest</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
-<span class="w">        </span><span class="nt">command</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"python"</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"-m"</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"model"</span>
-<span class="w">        </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mnist</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
-<p>Apply the <code>autoscale-adv.yaml</code> to create the Autoscale InferenceService.
-The default for scaleMetric is <code>concurrency</code> and possible values are <code>concurrency</code>, <code>rps</code>, <code>cpu</code> and <code>memory</code>.</p>
+</input></div>
+<p>The default for scaleMetric is <code>concurrency</code> and possible values are <code>concurrency</code>, <code>rps</code>, <code>cpu</code> and <code>memory</code>.</p>
 </article>
 </div>
 </div>
@@ -1870,13 +1780,13 @@ The default for scaleMetric is <code>concurrency</code> and possible values are 
             </div>
 </div>
 </a>
-<a aria-label="Next: Overview" class="md-footer__link md-footer__link--next" href="../../nodescheduling/overview/" rel="next">
+<a aria-label="Next: Kubernetes Autoscaler(HPA)" class="md-footer__link md-footer__link--next" href="../raw_deployment_autoscaling/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Overview
+              Kubernetes Autoscaler(HPA)
             </div>
 </div>
 <div class="md-footer__button md-icon">
