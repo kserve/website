@@ -129,7 +129,7 @@ kubectl rollout restart deployment kserve-controller-manager -n kserve
 If you are using a cloud provider, you may need to configure the external traffic to the LoadBalancer service created in [step 4](#4-create-gateway-resource).
 
 ```shell
-kubectl get svc kserve-ingress-gateway -l  -A
+kubectl get svc -l serving.kserve.io/gateway=kserve-ingress-gateway -A
 ```
 
 ## 8. Verify the Gateway API configuration
