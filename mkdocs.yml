@@ -93,7 +93,8 @@ nav:
           - Payload Logging:
                 - Inference Logger: modelserving/logger/logger.md
           - Autoscaling:
-                - Inference Autoscaling: modelserving/autoscaling/autoscaling.md
+                - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
+                - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
           - Node Scheduling:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
