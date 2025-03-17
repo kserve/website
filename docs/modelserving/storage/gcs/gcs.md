@@ -17,35 +17,57 @@ e.g. ```gs://kfserving-examples/models/tensorflow/flowers```
 
 KServe supports authenticating using Google Service Account Key
 
-### Create a Service Account Key
+### Create a Google Service Account Key
 
 * To create a Service Account Key follow the steps [here](https://cloud.google.com/iam/docs/keys-create-delete#iam-service-account-keys-create-console).
 * Base64 encode the generated Service Account Key file
 
 
-## Create Google Secret
+## Create Secret and attach to Service Account
+
 
 ### Create secret
+
+You can create a secret using either the imperative kubectl command or by declaratively defining it in a YAML file.
+
+#### Using Imperative Command
+
+=== "kubectl"
+```bash
+kubectl create secret generic gcscreds --from-file=gcloud-application-credentials.json=/path/to/gcloud-application-credentials.json
+```
+
+#### Using Declarative YAML
+
 === "yaml"
 ```yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: storage-config
+  name: gcscreds
 type: Opaque
-stringData:
-  gcs: |
-    {
-      "type": "gs",
-      "bucket": "mlpipeline",
-      "base64_service_account": "c2VydmljZWFjY291bnQ=" # base64 encoded value of the credential file
-    }
+data:
+  gcloud-application-credentials.json: <base64 encoded value of the credential file>
 ```
+
+Note that the key `gcloud-application-credentials.json` is [configurable](https://github.com/kserve/kserve/blob/20c5a5244b8b94569aacdc44988da34643aeff2e/config/configmap/inferenceservice.yaml#L144). If you change its value in the configuration, ensure you use the same name when creating your GCS credentials secret.
 
 === "kubectl"
 ```bash
-kubectl apply -f create-gcs-secret.yaml
+kubectl apply -f gcs-secret.yaml
 ```
+
+### Attach secret to a service account
+=== "yaml"
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa
+secrets:
+- name: gcscreds
+```
+
 
 ## Deploy the model on GCS with `InferenceService`
 
@@ -55,24 +77,22 @@ Create the InferenceService with the Google service account credential
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-    name: sklearn-gcs
+  name: tensorflow-gcs
 spec:
   predictor:
+    serviceAccountName: sa
     model:
       modelFormat:
-        name: sklearn
-      storage:
-        key: gcs
-        path: models/tensorflow/flowers
-        parameters: # Parameters to override the default values
-          bucket: kfserving-examples
+        name: tensorflow
+      storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+
 ```
 
-Apply the `sklearn-gcs.yaml`.
+Apply the `tensorflow-gcs.yaml`.
 
 === "kubectl"
 ```bash
-kubectl apply -f sklearn-gcs.yaml
+kubectl apply -f tensorflow-gcs.yaml
 ```
 
 ## Run a prediction
@@ -81,9 +101,9 @@ Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow 
 to find out the ingress IP and port.
 
 ```bash
-SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-gcs -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+SERVICE_HOSTNAME=$(kubectl get inferenceservice tensorflow-gcs -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
-MODEL_NAME=sklearn-gcs
+MODEL_NAME=tensorflow-gcs
 INPUT_PATH=@./input.json
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
@@ -94,8 +114,8 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http:
     *   Trying 127.0.0.1:8080...
     * TCP_NODELAY set
     * Connected to localhost (127.0.0.1) port 8080 (#0)
-    > POST /v1/models/sklearn-gcs:predict HTTP/1.1
-    > Host: sklearn-gcs.default.example.com
+    > POST /v1/models/tensorflow-gcs:predict HTTP/1.1
+    > Host: tensorflow-gcs.default.example.com
     > User-Agent: curl/7.68.0
     > Accept: */*
     > Content-Length: 84

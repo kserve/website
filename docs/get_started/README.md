@@ -36,7 +36,7 @@ The [Helm](https://helm.sh/docs/intro/install/){target=_blank} package manager f
     to use this context.
 
 3. You can then get started with a local deployment of KServe by using _KServe Quick installation script on Kind_:
-
+{% set parts = kserve_release_version.split('.') %}
     ```bash
-    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{ kserve_release_version | replace('.0', '') }}/hack/quick_install.sh" | bash
+    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{ parts[0] ~ '.' ~ parts[1] }}/hack/quick_install.sh" | bash
     ```
