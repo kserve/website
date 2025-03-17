@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/modelserving/storage/huggingface/hf/" rel="canonical"/>
+<link href="https://kserve.io/website/master/modelserving/autoscaling/keda/autoscaling_keda/" rel="canonical"/>
 <link href="../../../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Hugging Face - KServe Documentation Website</title>
+<title>KEDA Autoscaler - KServe Documentation Website</title>
 <link href="../../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#deploy-inferenceservice-with-model-from-hugging-facehf-hub">
+<a class="md-skip" href="#autoscale-inferenceservice-with-keda">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Hugging Face
+              KEDA Autoscaler
             
           </span>
 </div>
@@ -694,8 +694,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_7">
           Model Storage
           <span class="md-nav__icon md-icon"></span>
@@ -707,7 +707,7 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../storagecontainers/">
+<a class="md-nav__link" href="../../../storage/storagecontainers/">
         Storage Containers
       </a>
 </li>
@@ -717,89 +717,42 @@
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../azure/azure/">
+<a class="md-nav__link" href="../../../storage/azure/azure/">
         Azure
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../pvc/pvc/">
+<a class="md-nav__link" href="../../../storage/pvc/pvc/">
         PVC
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../s3/s3/">
+<a class="md-nav__link" href="../../../storage/s3/s3/">
         S3
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../oci/">
+<a class="md-nav__link" href="../../../storage/oci/">
         OCI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../uri/uri/">
+<a class="md-nav__link" href="../../../storage/uri/uri/">
         URI
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../gcs/gcs/">
+<a class="md-nav__link" href="../../../storage/gcs/gcs/">
         GCS
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          Hugging Face
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../storage/huggingface/hf/">
         Hugging Face
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#public-hugging-face-models">
-    Public Hugging Face Models
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#private-hugging-face-models">
-    Private Hugging Face Models
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-inferenceservice-with-models-from-hf-hub">
-    Deploy InferenceService with Models from HF Hub
-  </a>
-<nav aria-label="Deploy InferenceService with Models from HF Hub" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#option-1-use-service-account-with-secret-ref">
-    Option 1: Use Service Account with Secret Ref
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#option-2-use-environment-variable-with-secret-ref">
-    Option 2: Use Environment Variable with Secret Ref
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#check-the-inferenceservice-status">
-    Check the InferenceService status.
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../modelcache/localmodel/">
+<a class="md-nav__link" href="../../../storage/modelcache/localmodel/">
         Model Cache
       </a>
 </li>
@@ -936,8 +889,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4_12">
           Autoscaling
           <span class="md-nav__icon md-icon"></span>
@@ -949,19 +902,75 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../autoscaling/autoscaling/">
+<a class="md-nav__link" href="../../autoscaling/">
         Knative Autoscaler(KPA)
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../../autoscaling/raw_deployment_autoscaling/">
+<a class="md-nav__link" href="../../raw_deployment_autoscaling/">
         Kubernetes Autoscaler(HPA)
       </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../autoscaling/keda/autoscaling_keda/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          KEDA Autoscaler
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         KEDA Autoscaler
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scale-using-the-cpu-utilization">
+    Scale using the CPU Utilization
+  </a>
+<nav aria-label="Scale using the CPU Utilization" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-inferenceservice">
+    Create InferenceService
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scale-using-the-llm-metrics">
+    Scale using the LLM Metrics
+  </a>
+<nav aria-label="Scale using the LLM Metrics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites_1">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-inferenceservice_1">
+    Create InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests">
+    Autoscale InferenceService with Concurrent Requests
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1239,38 +1248,47 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#public-hugging-face-models">
-    Public Hugging Face Models
+<a class="md-nav__link" href="#scale-using-the-cpu-utilization">
+    Scale using the CPU Utilization
   </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#private-hugging-face-models">
-    Private Hugging Face Models
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#deploy-inferenceservice-with-models-from-hf-hub">
-    Deploy InferenceService with Models from HF Hub
-  </a>
-<nav aria-label="Deploy InferenceService with Models from HF Hub" class="md-nav">
+<nav aria-label="Scale using the CPU Utilization" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#option-1-use-service-account-with-secret-ref">
-    Option 1: Use Service Account with Secret Ref
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#option-2-use-environment-variable-with-secret-ref">
-    Option 2: Use Environment Variable with Secret Ref
+<a class="md-nav__link" href="#create-inferenceservice">
+    Create InferenceService
   </a>
 </li>
 </ul>
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#check-the-inferenceservice-status">
-    Check the InferenceService status.
+<a class="md-nav__link" href="#scale-using-the-llm-metrics">
+    Scale using the LLM Metrics
   </a>
+<nav aria-label="Scale using the LLM Metrics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites_1">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-inferenceservice_1">
+    Create InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests">
+    Autoscale InferenceService with Concurrent Requests
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1279,120 +1297,259 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/storage/huggingface/hf.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/modelserving/autoscaling/keda/autoscaling_keda.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1 id="deploy-inferenceservice-with-model-from-hugging-facehf-hub">Deploy InferenceService with model from Hugging Face(HF) Hub<a class="headerlink" href="#deploy-inferenceservice-with-model-from-hugging-facehf-hub" title="Permanent link">¶</a></h1>
-<p>You can specify the <code>storageUri</code> field on <code>InferenceService</code> YAML with the following format to deploy the models from Hugging Face Hub.</p>
-<div class="highlight"><pre><span></span><code>hf://${REPO}/${MODEL}:${HASH}(optional)
-</code></pre></div>
-<p>e.g. <code>hf://facebook/opt-125m</code></p>
-<h2 id="public-hugging-face-models">Public Hugging Face Models<a class="headerlink" href="#public-hugging-face-models" title="Permanent link">¶</a></h2>
-<p>If no credential is provided, anonymous client will be used to download the model from HF repo.</p>
-<h2 id="private-hugging-face-models">Private Hugging Face Models<a class="headerlink" href="#private-hugging-face-models" title="Permanent link">¶</a></h2>
-<p>KServe supports authenticating with <code>HF_TOKEN</code> for downloading the model and create a Kubernetes secret to store the HF token.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">yaml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</input></div>
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<h1 id="autoscale-inferenceservice-with-keda">Autoscale InferenceService with KEDA<a class="headerlink" href="#autoscale-inferenceservice-with-keda" title="Permanent link">¶</a></h1>
+<p><a href="https://keda.sh">KEDA (Kubernetes Event-driven Autoscaler)</a> is a lightweight, open-source component that extends Kubernetes' scaling capabilities by enabling event-driven scaling for any container workload, allowing applications to scale based on external metrics such as <a href="https://docs.vllm.ai/en/latest/serving/metrics.html">vLLM metrics</a> for the number of waiting requests or KV Cache usage. </p>
+<h2 id="scale-using-the-cpu-utilization">Scale using the CPU Utilization<a class="headerlink" href="#scale-using-the-cpu-utilization" title="Permanent link">¶</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p>Kubernetes cluster with KServe installed.</p>
+</li>
+<li>
+<p><a href="https://keda.sh/docs/2.9/deploy/#install">KEDA installed</a> for event-driven autoscaling.</p>
+</li>
+</ol>
+<h3 id="create-inferenceservice">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice" title="Permanent link">¶</a></h3>
+<p>Apply the sklearnserver example and set annotation <code>serving.kserve.io/autoscalerClass: "keda"</code> for autoscaling with KEDA <code>ScaledObject</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">"serving.kserve.io/v1beta1"</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">"InferenceService"</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-config</span>
-<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
-<span class="nt">data</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">HF_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aGZfVk5Vd1JVAUdCa0l4WmZMTHVrc2VHeW9VVm9udU5pBHUVT==</span>
-</code></pre></div>
-<h2 id="deploy-inferenceservice-with-models-from-hf-hub">Deploy InferenceService with Models from HF Hub<a class="headerlink" href="#deploy-inferenceservice-with-models-from-hf-hub" title="Permanent link">¶</a></h2>
-<h3 id="option-1-use-service-account-with-secret-ref">Option 1: Use Service Account with Secret Ref<a class="headerlink" href="#option-1-use-service-account-with-secret-ref" title="Permanent link">¶</a></h3>
-<p>Create a Kubernetes <code>ServiceAccount</code> with the HF token secret name reference and specify the <code>ServiceAccountName</code> in the <code>InferenceService</code> Spec.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">yaml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</input></div>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl apply -f -</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hfserviceacc</span>
-<span class="nt">secrets</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">storage-config</span>
-<span class="nn">---</span>
-<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hfserviceacc</span><span class="w">  </span><span class="c1"># Option 1 for authenticating with HF_TOKEN</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_dir=/mnt/models</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
-</code></pre></div>
-<h3 id="option-2-use-environment-variable-with-secret-ref">Option 2: Use Environment Variable with Secret Ref<a class="headerlink" href="#option-2-use-environment-variable-with-secret-ref" title="Permanent link">¶</a></h3>
-<p>Create a Kubernete HF token and specify the HF token secret reference using environment variable in the <code>InferenceService</code> Spec.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">yaml</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block"></div>
-</div>
-</input></div>
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">cat &lt;&lt;EOF | kubectl apply -f -</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"sklearn-v2-iris"</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="s">"RawDeployment"</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="s">"keda"</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
-<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_dir=/mnt/models</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
-<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">24Gi</span>
-<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
-<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span><span class="w">  </span><span class="c1"># Option 2 for authenticating with HF_TOKEN</span>
-<span class="w">          </span><span class="nt">valueFrom</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">secretKeyRef</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf-secret</span>
-<span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
-<span class="w">              </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
+<span class="w">      </span><span class="nt">runtime</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-sklearnserver</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">"gs://kfserving-examples/models/sklearn/1.0/model"</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">autoScaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Resource</span>
+<span class="w">          </span><span class="nt">resource</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cpu</span>
+<span class="w">            </span><span class="nt">target</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"Utilization"</span>
+<span class="w">              </span><span class="nt">averageUtilization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
-<h2 id="check-the-inferenceservice-status">Check the InferenceService status.<a class="headerlink" href="#check-the-inferenceservice-status" title="Permanent link">¶</a></h2>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-llama3
+<p>The <code>metrics</code> section in the InferenceService specification defines the scaling criteria for <code>autoscaling</code> the inferenceservice based on various metrics. It supports Resource-based scaling (CPU/Memory) and External metrics (Prometheus, Graphite, etc.) when using KEDA as the autoscaler.</p>
+<p><code>type</code>: Specifies the metric type:</p>
+<ul>
+<li>set to <code>Resource</code> for CPU/Memory-based scaling.</li>
+<li>set to <code>External</code> for custom metrics from monitoring systems.</li>
+</ul>
+<p><strong><code>Resource</code> Metrics:</strong></p>
+<ul>
+<li><code>resource.name</code>: Defines the resource type, either cpu or memory.</li>
+<li><code>resource.target.type:</code> Determines the scaling target type. Options: "Utilization" or "AverageValue".</li>
+<li><code>resource.target.averageUtilization</code>: Specifies the target CPU utilization percentage for scaling. Example: 50 means pods will scale if CPU usage is above 50%.</li>
+<li><code>resource.target.averageValue</code>: Specifies the memory consumption threshold (e.g., 50 means pods will scale when memory usage exceeds 50Mi).</li>
+</ul>
+<p><strong><code>External</code> Metrics:</strong></p>
+<ul>
+<li><code>external.metric.backend</code>: Defines the external metric source, such as "prometheus" or "graphite".</li>
+<li><code>external.metric.serverAddress</code>: Specifies the monitoring server URL (e.g., http://<prometheus-host>:9090).</prometheus-host></li>
+<li><code>external.metric.query</code>: Defines the query to fetch the required metric from the monitoring system (e.g., PromQL query for Prometheus).</li>
+<li><code>external.target.value</code>: Specifies the threshold value that triggers autoscaling (e.g., 100.50 requests per second).</li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/sklearn-v2-iris<span class="w"> </span>created
+</code></pre></div>
+</div>
+<p>Check KEDA <code>ScaledObject</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl get scaledobjects sklearn-v2-iris-predictor
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                 </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
-huggingface-llama3<span class="w">   </span>http://huggingface-llama3.default.example.com<span class="w">         </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>huggingface-llama3-predictor-default-47q2g<span class="w">   </span>7d23h
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                        </span>SCALETARGETKIND<span class="w">      </span>SCALETARGETNAME<span class="w">             </span>MIN<span class="w">   </span>MAX<span class="w">   </span>TRIGGERS<span class="w">   </span>AUTHENTICATION<span class="w">   </span>READY<span class="w">   </span>ACTIVE<span class="w">   </span>FALLBACK<span class="w">   </span>PAUSED<span class="w">    </span>AGE
+sklearn-v2-iris-predictor<span class="w">   </span>apps/v1.Deployment<span class="w">   </span>sklearn-v2-iris-predictor<span class="w">   </span><span class="m">1</span><span class="w">     </span><span class="m">5</span><span class="w">     </span>cpu<span class="w">                         </span>True<span class="w">    </span>True<span class="w">     </span>Unknown<span class="w">    </span>Unknown<span class="w">   </span>2m22s
 </code></pre></div>
 </div>
+<p>Check KEDA Triggers</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl describe scaledobject sklearn-v2-iris-predictor
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>...
+
+Spec:
+<span class="w">  </span>Max<span class="w"> </span>Replica<span class="w"> </span>Count:<span class="w">  </span><span class="m">5</span>
+<span class="w">  </span>Min<span class="w"> </span>Replica<span class="w"> </span>Count:<span class="w">  </span><span class="m">1</span>
+<span class="w">  </span>Scale<span class="w"> </span>Target<span class="w"> </span>Ref:
+<span class="w">    </span>Name:<span class="w">  </span>sklearn-v2-iris-predictor
+<span class="w">  </span>Triggers:
+<span class="w">    </span>Metadata:
+<span class="w">      </span>Value:<span class="w">      </span><span class="m">50</span>
+<span class="w">    </span>Metric<span class="w"> </span>Type:<span class="w">  </span>Utilization
+<span class="w">    </span>Type:<span class="w">         </span>cpu
+
+...
+</code></pre></div>
+</div>
+<h2 id="scale-using-the-llm-metrics">Scale using the LLM Metrics<a class="headerlink" href="#scale-using-the-llm-metrics" title="Permanent link">¶</a></h2>
+<p>Scale an InferenceService in Kubernetes using LLM (Large Language Model) metrics collected in Prometheus. 
+The setup leverages KServe with KEDA for autoscaling based on custom <a href="../../../observability/prometheus_metrics/">Prometheus metrics</a>.</p>
+<h3 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p>Kubernetes cluster with KServe installed.</p>
+</li>
+<li>
+<p><a href="https://keda.sh/docs/2.9/deploy/#install">KEDA installed</a> for event-driven autoscaling.</p>
+</li>
+<li>
+<p>Prometheus configured to collect metrics from KServe.</p>
+</li>
+</ol>
+<h3 id="create-inferenceservice_1">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice_1" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-fbopt</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="s">"RawDeployment"</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="s">"keda"</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/enable-prometheus-scraping</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">    </span><span class="nt">prometheus.io/scrape</span><span class="p">:</span><span class="w"> </span><span class="s">"true"</span>
+<span class="w">    </span><span class="nt">prometheus.io/path</span><span class="p">:</span><span class="w"> </span><span class="s">"/metrics"</span>
+<span class="w">    </span><span class="nt">prometheus.io/port</span><span class="p">:</span><span class="w"> </span><span class="s">"8080"</span>
+<span class="w">    </span><span class="nt">prometheus.io/scheme</span><span class="p">:</span><span class="w"> </span><span class="s">"http"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=fbopt</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=facebook/opt-125m</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">autoScaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">External</span>
+<span class="w">          </span><span class="nt">external</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">metric</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="s">"prometheus"</span>
+<span class="w">              </span><span class="nt">serverAddress</span><span class="p">:</span><span class="w"> </span><span class="s">"http://prometheus.istio-system.svc.cluster.local:9090"</span>
+<span class="w">              </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm:num_requests_running</span>
+<span class="w">            </span><span class="nt">target</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Value</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"2"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/huggingface-fbopt<span class="w"> </span>created
+</code></pre></div>
+</div>
+<p>Check KEDA <code>ScaledObject</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl get scaledobjects huggingface-fbopt-predictor
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                          </span>SCALETARGETKIND<span class="w">      </span>SCALETARGETNAME<span class="w">               </span>MIN<span class="w">   </span>MAX<span class="w">   </span>TRIGGERS<span class="w">     </span>AUTHENTICATION<span class="w">   </span>READY<span class="w">   </span>ACTIVE<span class="w">   </span>FALLBACK<span class="w">   </span>PAUSED<span class="w">    </span>AGE
+huggingface-fbopt-predictor<span class="w">   </span>apps/v1.Deployment<span class="w">   </span>huggingface-fbopt-predictor<span class="w">   </span><span class="m">1</span><span class="w">     </span><span class="m">5</span><span class="w">     </span>prometheus<span class="w">                    </span>True<span class="w">    </span>False<span class="w">    </span>False<span class="w">      </span>Unknown<span class="w">   </span>32m
+</code></pre></div>
+</div>
+<h3 id="autoscale-inferenceservice-with-concurrent-requests">Autoscale <code>InferenceService</code> with Concurrent Requests<a class="headerlink" href="#autoscale-inferenceservice-with-concurrent-requests" title="Permanent link">¶</a></h3>
+<p>The first step is to <a href="../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code></p>
+<p>Send traffic in 30 seconds spurts maintaining 5 in-flight requests.</p>
+<div class="highlight"><pre><span></span><code>SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-fbopt -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
+hey -z 30s -c 5 -m POST -host ${SERVICE_HOSTNAME} \
+-H "Content-Type: application/json" \
+-d '{"model": "fbopt", "prompt": "Write a poem about colors", "stream": false, "max_tokens": 100}' \
+http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/completions
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+</div>
+<div class="no-copy highlight"><pre><span></span><code>Summary:
+<span class="w">  </span>Total:<span class="w">    </span><span class="m">33</span>.2111<span class="w"> </span>secs
+<span class="w">  </span>Slowest:<span class="w">  </span><span class="m">11</span>.5146<span class="w"> </span>secs
+<span class="w">  </span>Fastest:<span class="w">  </span><span class="m">0</span>.3014<span class="w"> </span>secs
+<span class="w">  </span>Average:<span class="w">  </span><span class="m">6</span>.8919<span class="w"> </span>secs
+<span class="w">  </span>Requests/sec:<span class="w"> </span><span class="m">0</span>.6925
+
+<span class="w">  </span>Total<span class="w"> </span>data:<span class="w">   </span><span class="m">12893</span><span class="w"> </span>bytes
+<span class="w">  </span>Size/request:<span class="w"> </span><span class="m">560</span><span class="w"> </span>bytes
+
+Response<span class="w"> </span><span class="nb">time</span><span class="w"> </span>histogram:
+<span class="w">  </span><span class="m">0</span>.301<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■
+<span class="w">  </span><span class="m">1</span>.423<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■
+<span class="w">  </span><span class="m">2</span>.544<span class="w"> </span><span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■
+<span class="w">  </span><span class="m">3</span>.665<span class="w"> </span><span class="o">[</span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">4</span>.787<span class="w"> </span><span class="o">[</span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">5</span>.908<span class="w"> </span><span class="o">[</span><span class="m">3</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">7</span>.029<span class="w"> </span><span class="o">[</span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">8</span>.151<span class="w"> </span><span class="o">[</span><span class="m">3</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">9</span>.272<span class="w"> </span><span class="o">[</span><span class="m">0</span><span class="o">]</span><span class="w"> </span><span class="p">|</span>
+<span class="w">  </span><span class="m">10</span>.393<span class="w"> </span><span class="o">[</span><span class="m">3</span><span class="o">]</span><span class="w">    </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■
+<span class="w">  </span><span class="m">11</span>.515<span class="w"> </span><span class="o">[</span><span class="m">5</span><span class="o">]</span><span class="w">    </span><span class="p">|</span>■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+
+Latency<span class="w"> </span>distribution:
+<span class="w">  </span><span class="m">10</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">3</span>.1980<span class="w"> </span>secs
+<span class="w">  </span><span class="m">25</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">4</span>.7160<span class="w"> </span>secs
+<span class="w">  </span><span class="m">50</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">7</span>.4213<span class="w"> </span>secs
+<span class="w">  </span><span class="m">75</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">10</span>.8935<span class="w"> </span>secs
+<span class="w">  </span><span class="m">90</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">11</span>.2992<span class="w"> </span>secs
+<span class="w">  </span><span class="m">95</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">11</span>.5146<span class="w"> </span>secs
+<span class="w">  </span><span class="m">0</span>%<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs
+
+Details<span class="w"> </span><span class="o">(</span>average,<span class="w"> </span>fastest,<span class="w"> </span>slowest<span class="o">)</span>:
+<span class="w">  </span>DNS+dialup:<span class="w">   </span><span class="m">0</span>.0002<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.3014<span class="w"> </span>secs,<span class="w"> </span><span class="m">11</span>.5146<span class="w"> </span>secs
+<span class="w">  </span>DNS-lookup:<span class="w">   </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0006<span class="w"> </span>secs
+<span class="w">  </span>req<span class="w"> </span>write:<span class="w">    </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0000<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0003<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>wait:<span class="w">    </span><span class="m">6</span>.8898<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.3012<span class="w"> </span>secs,<span class="w"> </span><span class="m">11</span>.5119<span class="w"> </span>secs
+<span class="w">  </span>resp<span class="w"> </span>read:<span class="w">    </span><span class="m">0</span>.0017<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0001<span class="w"> </span>secs,<span class="w"> </span><span class="m">0</span>.0078<span class="w"> </span>secs
+
+Status<span class="w"> </span>code<span class="w"> </span>distribution:
+<span class="w">  </span><span class="o">[</span><span class="m">200</span><span class="o">]</span><span class="w"> </span><span class="m">23</span><span class="w"> </span>responses
+</code></pre></div>
+<p>Check the number of running pods now, As the scaling target threshold is set to 2 and the <code>vllm:num_requests_running</code> metric is monitored, the autoscaler triggers when the number of running requests exceeds 2. The Prometheus server, running at <code>http://prometheus.istio-system.svc.cluster.local:9090</code>, provides near real-time metrics for scaling decisions. For instance, when the service handles more than 2 concurrent requests, KEDA scales up the number of pods to manage the increased load.</p>
+<p>The period to wait after the last trigger reports active before scaling the resource back to 0 in 5 minutes (300 seconds) by default.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+NAME<span class="w">                                                       </span>READY<span class="w">        </span>STATUS<span class="w">            </span>RESTARTS<span class="w">   </span>AGE
+huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </span><span class="m">1</span>/1<span class="w">          </span>Running<span class="w">           </span><span class="m">0</span><span class="w">          </span>2m
+huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </span><span class="m">1</span>/1<span class="w">          </span>Running<span class="w">           </span><span class="m">0</span><span class="w">          </span>51s
+huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </span><span class="m">1</span>/1<span class="w">          </span>Running<span class="w">           </span><span class="m">0</span><span class="w">          </span>51s
+huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </span><span class="m">1</span>/1<span class="w">          </span>Running<span class="w">           </span><span class="m">0</span><span class="w">          </span>51s
+</code></pre></div>
 </article>
 </div>
 </div>
@@ -1403,7 +1560,7 @@ huggingface-llama3<span class="w">   </span>http://huggingface-llama3.default.ex
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: GCS" class="md-footer__link md-footer__link--prev" href="../../gcs/gcs/" rel="prev">
+<a aria-label="Previous: Kubernetes Autoscaler(HPA)" class="md-footer__link md-footer__link--prev" href="../../raw_deployment_autoscaling/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1412,17 +1569,17 @@ huggingface-llama3<span class="w">   </span>http://huggingface-llama3.default.ex
 <span class="md-footer__direction">
                 Previous
               </span>
-              GCS
+              Kubernetes Autoscaler(HPA)
             </div>
 </div>
 </a>
-<a aria-label="Next: Model Cache" class="md-footer__link md-footer__link--next" href="../../modelcache/localmodel/" rel="next">
+<a aria-label="Next: Overview" class="md-footer__link md-footer__link--next" href="../../../nodescheduling/overview/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Model Cache
+              Overview
             </div>
 </div>
 <div class="md-footer__button md-icon">

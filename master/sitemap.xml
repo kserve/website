@@ -173,6 +173,10 @@
          <lastmod>2025-03-17</lastmod>
     </url>
     <url>
+         <loc>https://kserve.io/website/master/modelserving/autoscaling/keda/autoscaling_keda/</loc>
+         <lastmod>2025-03-17</lastmod>
+    </url>
+    <url>
          <loc>https://kserve.io/website/master/modelserving/batcher/batcher/</loc>
          <lastmod>2025-03-17</lastmod>
     </url>
