@@ -1,24 +1,28 @@
 # Autoscale InferenceService with KEDA
+[KEDA (Kubernetes Event-driven Autoscaler)](https://keda.sh) is a lightweight, open-source component that extends Kubernetes' scaling capabilities by enabling event-driven scaling for any container workload, allowing applications to scale based on external metrics such as [vLLM metrics](https://docs.vllm.ai/en/latest/serving/metrics.html) for the number of waiting requests or KV Cache usage. 
 
-## Scale using the CPU utilization
+
+## Scale using the CPU Utilization
 
 ### Prerequisites
 
-1. Kubernetes cluster with KServe installed
+1. Kubernetes cluster with KServe installed.
 
-2. [KEDA installed](https://keda.sh/docs/2.9/deploy/#install) for event-driven autoscaling
+2. [KEDA installed](https://keda.sh/docs/2.9/deploy/#install) for event-driven autoscaling.
 
 ### Create `InferenceService`
 
-Apply the sklearnserver example and set Annotation `serving.kserve.io/autoscalerClass: "keda"` for autoscaling with keda scaledobject
+Apply the sklearnserver example and set annotation `serving.kserve.io/autoscalerClass: "keda"` for autoscaling with KEDA `ScaledObject`.
 
 
 ```yaml
+kubectl apply -f - <<EOF
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "sklearn-v2-iris"
   annotations:
+    serving.kserve.io/deploymentMode: "RawDeployment"
     serving.kserve.io/autoscalerClass: "keda"
 spec:
   predictor:
@@ -38,6 +42,7 @@ spec:
             target:
               type: "Utilization"
               averageUtilization: 50
+EOF
 ```
 
 The `metrics` section in the InferenceService specification defines the scaling criteria for `autoscaling` the inferenceservice based on various metrics. It supports Resource-based scaling (CPU/Memory) and External metrics (Prometheus, Graphite, etc.) when using KEDA as the autoscaler.
@@ -46,7 +51,6 @@ The `metrics` section in the InferenceService specification defines the scaling 
 `type`: Specifies the metric type:
 
 - set to `Resource` for CPU/Memory-based scaling.
-
 - set to `External` for custom metrics from monitoring systems.
 
 **`Resource` Metrics:**
@@ -64,24 +68,17 @@ The `metrics` section in the InferenceService specification defines the scaling 
 - `external.target.value`: Specifies the threshold value that triggers autoscaling (e.g., 100.50 requests per second).
 
 
-Apply the `autoscale.yaml` to create the Autoscale InferenceService.
-
-=== "kubectl"
-```
-kubectl apply -f autoscale.yaml
-```
-
 !!! success "Expected Output"
 
     ```{ .bash .no-copy }
     $ inferenceservice.serving.kserve.io/sklearn-v2-iris created
     ```
 
-Check KEDA scaledobject
+Check KEDA `ScaledObject`:
 
 === "kubectl"
 ```
-kubectl get scaledobjects
+kubectl get scaledobjects sklearn-v2-iris-predictor
 ```
 
 
@@ -92,7 +89,7 @@ kubectl get scaledobjects
     sklearn-v2-iris-predictor   apps/v1.Deployment   sklearn-v2-iris-predictor   1     5     cpu                         True    True     Unknown    Unknown   2m22s
     ```
 
-Check triggers
+Check KEDA Triggers
 
 === "kubectl"
 ```
@@ -120,26 +117,27 @@ kubectl describe scaledobject sklearn-v2-iris-predictor
 
 ## Scale using the LLM Metrics
 
-scaling an InferenceService in Kubernetes using LLM (Large Language Model) metrics collected in Prometheus. 
+Scale an InferenceService in Kubernetes using LLM (Large Language Model) metrics collected in Prometheus. 
 The setup leverages KServe with KEDA for autoscaling based on custom [Prometheus metrics](../../../modelserving/observability/prometheus_metrics.md).
 
 ### Prerequisites
 
-1. Kubernetes cluster with KServe installed
+1. Kubernetes cluster with KServe installed.
 
-2. [KEDA installed](https://keda.sh/docs/2.9/deploy/#install) for event-driven autoscaling
+2. [KEDA installed](https://keda.sh/docs/2.9/deploy/#install) for event-driven autoscaling.
 
-3. Prometheus configured to collect metrics from KServe
+3. Prometheus configured to collect metrics from KServe.
 
 ### Create `InferenceService`
 
-
 ``` yaml
+kubectl apply -f - <<EOF
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   name: huggingface-fbopt
   annotations:
+    serving.kserve.io/deploymentMode: "RawDeployment"
     serving.kserve.io/autoscalerClass: "keda"
     serving.kserve.io/enable-prometheus-scraping: "true"
     prometheus.io/scrape: "true"
@@ -174,14 +172,9 @@ spec:
             target:
               type: Value
               value: "2"
+EOF
+```
 
-```
-Apply the `autoscale.yaml` to create the Autoscale InferenceService.
-
-=== "kubectl"
-```
-kubectl apply -f autoscale.yaml
-```
 
 !!! success "Expected Output"
 
@@ -189,11 +182,11 @@ kubectl apply -f autoscale.yaml
     $ inferenceservice.serving.kserve.io/huggingface-fbopt created
     ```
 
-Check KEDA scaledobject
+Check KEDA `ScaledObject`:
 
 === "kubectl"
 ```
-kubectl get scaledobjects
+kubectl get scaledobjects huggingface-fbopt-predictor
 ```
 
 !!! success "Expected Output"
@@ -203,7 +196,7 @@ kubectl get scaledobjects
     huggingface-fbopt-predictor   apps/v1.Deployment   huggingface-fbopt-predictor   1     5     prometheus                    True    False    False      Unknown   32m
     ```
 
-### Predict `InferenceService` with concurrent requests
+### Autoscale `InferenceService` with Concurrent Requests
 
 The first step is to [determine the ingress IP and ports](../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
