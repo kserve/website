@@ -1406,7 +1406,7 @@ You can restart the KServe controller to trigger the reconciliation and apply th
 </code></pre></div></p>
 <h2 id="7-configure-the-external-traffic">7. Configure the external traffic<a class="headerlink" href="#7-configure-the-external-traffic" title="Permanent link">¶</a></h2>
 <p>If you are using a cloud provider, you may need to configure the external traffic to the LoadBalancer service created in <a href="#4-create-gateway-resource">step 4</a>.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>kserve-ingress-gateway<span class="w"> </span>-l<span class="w">  </span>-A
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-l<span class="w"> </span>serving.kserve.io/gateway<span class="o">=</span>kserve-ingress-gateway<span class="w"> </span>-A
 </code></pre></div>
 <h2 id="8-verify-the-gateway-api-configuration">8. Verify the Gateway API configuration<a class="headerlink" href="#8-verify-the-gateway-api-configuration" title="Permanent link">¶</a></h2>
 <p>Create an InferenceService to verify that the Gateway API configuration is applied to the InferenceService.</p>

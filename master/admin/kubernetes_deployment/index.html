@@ -1319,9 +1319,9 @@ Create a <code>Gateway</code> resource to expose the <code>InferenceService</cod
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
 <span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTP</span>
 <span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">allowedRoutes</span><span class="p p-Indicator">:</span>
-<span class="w">          </span><span class="nt">namespaces</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
+<span class="w">      </span><span class="nt">allowedRoutes</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">namespaces</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https</span>
 <span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPS</span>
 <span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span>
@@ -1334,9 +1334,9 @@ Create a <code>Gateway</code> resource to expose the <code>InferenceService</cod
 <span class="w">      </span><span class="nt">allowedRoutes</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">namespaces</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">All</span>
-<span class="w">    </span><span class="nt">infrastructure</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">serving.kserve.io/gateway</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-ingress-gateway</span>
+<span class="w">  </span><span class="nt">infrastructure</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/gateway</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-ingress-gateway</span>
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
