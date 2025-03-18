@@ -55,9 +55,9 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
         - name: http
           protocol: HTTP
           port: 80
-            allowedRoutes:
-              namespaces:
-                from: All
+          allowedRoutes:
+            namespaces:
+              from: All
         - name: https
           protocol: HTTPS
           port: 443
@@ -70,9 +70,9 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert
           allowedRoutes:
             namespaces:
               from: All
-        infrastructure:
-        labels:
-          serving.kserve.io/gateway: kserve-ingress-gateway
+      infrastructure:
+      labels:
+        serving.kserve.io/gateway: kserve-ingress-gateway
     ```
     !!! note
         KServe comes with a default `Gateway` named kserve-ingress-gateway. You can enable the default gateway by setting Helm value `kserve.controller.gateway.ingressGateway.createGateway` to `true`.
