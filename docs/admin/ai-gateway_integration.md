@@ -44,7 +44,7 @@ stringData:
 
 Create an InferenceService in the `kserve-test` namespace with OpenAI route prefix disabled. The following example creates an InferenceService with the 'llama3.2-1B' model from Hugging Face.
 
-```shell
+```yaml
 kubectl apply -f - <<EOF
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
@@ -83,7 +83,9 @@ EOF
 
 ## Create BackendSecurityPolicy
 
-You can configure the BackendSecurityPolicy for authentication and authorization with the InferenceService. For example, you can create a BackendSecurityPolicy to secure communication with the InferenceService using an API key. But for simplicity, we will ignore the authentication and authorization for this example.
+You can configure the BackendSecurityPolicy for authentication and authorization with the InferenceService. For example, you can create a BackendSecurityPolicy to secure communication with the InferenceService using an API key. 
+
+But for simplicity, we will ignore the authentication and authorization for this example.
 
 ```yaml
 kubectl apply -f - <<EOF
@@ -103,7 +105,9 @@ EOF
 
 ## Create BackendTLSPolicy
 
-If the InferenceService is using TLS, you can create a BackendTLSPolicy to configure the TLS settings for the InferenceService. For this example, we will ignore the TLS settings.
+If the InferenceService is using TLS, you can create a BackendTLSPolicy to configure the TLS settings for the InferenceService. 
+
+For this example, we will ignore the TLS settings.
 
 ```yaml
 kubectl apply -f - <<EOF
@@ -127,7 +131,7 @@ EOF
 
 Create an AIServiceBackend for the InferenceService created in the previous step. You can uncomment the `backendSecurityPolicyRef` field to use the BackendSecurityPolicy if you have configured it.
 
-```shell
+```yaml
 kubectl apply -f - <<EOF
 apiVersion: aigateway.envoyproxy.io/v1alpha1
 kind: AIServiceBackend
@@ -154,9 +158,9 @@ EOF
 
 ## Create ReferenceGrant
 
-Since the InferenceService is in the `kserve-test` namespace, we need to create a `ReferenceGrant` to allow the `AIServiceBackend` to reference the InferenceService.
+Since the InferenceService is in the `kserve-test` namespace and the AIServiceBacked in the `default` namespace, we need to create a `ReferenceGrant` to allow the `AIServiceBackend` to reference the InferenceService.
 
-```shell
+```yaml
 kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
@@ -178,7 +182,7 @@ EOF
 
 Create a Gateway for the AI Gateway to route the traffic to different LLM providers.
 
-```shell
+```yaml
 kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -198,7 +202,7 @@ EOF
 
 Create an `AIGatewayRoute` and configure KServe as the LLM service provider for the model `llama3-1b` using the `AIServiceBackend` created in the previous step. AI Gateway automatically tracks token usage for each request. We will configure `AIGatewayRoute` to track InputToken, OutputToken, and TotalToken usage.
 
-```shell
+```yaml
 kubectl apply -f - <<EOF
 apiVersion: aigateway.envoyproxy.io/v1alpha1
 kind: AIGatewayRoute
@@ -237,7 +241,7 @@ The traffic from the Envoy AI Gateway will be routed to the InferenceService bas
 
 AI Gateway uses Envoy Gateway's Global Rate Limit API to configure rate limits. Rate limits should be defined using a combination of user and model identifiers to properly control costs at the model level. We will configure a rate limit of 1000 total tokens per hour per user for the model `llama3-1b` using `BackendTrafficPolicy`.
 
-```shell
+```yaml
 kubectl apply -f - <<EOF
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
@@ -277,7 +281,11 @@ EOF
 ```
 
 !!! warning
-When configuring rate limits: 1. Always set the request cost number to 0 to ensure only token usage counts towards the limit 2. Set appropriate limits for different models based on their costs and capabilities 3. Ensure both user and model identifiers are used in rate limiting rules
+    When configuring rate limits: 
+    
+     1. Always set the request cost number to 0 to ensure only token usage counts towards the limit.
+     2. Set appropriate limits for different models based on their costs and capabilities.
+     3. Ensure both user and model identifiers are used in rate limiting rules.
 
 ## Configure $GATEWAY_URL
 
@@ -298,7 +306,7 @@ eg-envoy-ai-gateway    LoadBalancer   10.96.61.234    <pending/IP>     80:31234/
 Choose one of these options based on the EXTERNAL-IP status:
 
 === "Using External IP"
-If the EXTERNAL-IP shows an actual IP address (not <pending>), you can access the gateway directly:
+    If the EXTERNAL-IP shows an actual IP address (not \<pending\>), you can access the gateway directly:
 
     First, save the external IP and set the gateway URL:
 
@@ -307,7 +315,7 @@ If the EXTERNAL-IP shows an actual IP address (not <pending>), you can access th
     ```
 
 === "Using Port Forwarding"
-If the EXTERNAL-IP shows <pending> or your cluster doesn't support LoadBalancer services, use port forwarding.
+    If the EXTERNAL-IP shows \<pending\> or your cluster doesn't support LoadBalancer services, use port forwarding.
 
     First, set the gateway URL:
 
@@ -333,11 +341,10 @@ echo $GATEWAY_URL
 ```
 
 !!! tip
-If you're opening a new terminal, you'll need to set the GATEWAY_URL variable again.
-For proper cost control and rate limiting, requests must include: - x-user-id: Identifies the user making the request
+    If you're opening a new terminal, you'll need to set the GATEWAY_URL variable again.
+    For proper cost control and rate limiting, requests must include: - x-user-id: Identifies the user making the request
 
 Send a test request to the AI Gateway as user _user123_ using the GATEWAY_URL we set up:
-
 ```shell
 curl -v -H "Content-Type: application/json" -H "x-user-id: user123" -d '{
         "model": "llama3-1b",
@@ -355,39 +362,37 @@ curl -v -H "Content-Type: application/json" -H "x-user-id: user123" -d '{
 ```
 
 !!! success "Expected Output"
-The response should be similar to the following:
-`json
-    {
-        "id": "chatcmpl-7e49ea73-8e9a-4790-9fdd-c6e551ae14b0",
-        "object": "chat.completion",
-        "created": 1742223214,
-        "model": "llama3-1b",
-        "choices": [
-            {
-                "index": 0,
-                "message": {
-                    "role": "assistant",
-                    "reasoning_content": null,
-                    "content": "Majestic silhouettes drifting by,\n Shapes that morph, a constant sigh,\nTheir whispers echo, yet remain unseen,\nGently drifting, leaving memories unseen.\n\nSoft puffs of white, like cotton tufts,\nFleeting wisps, a wistful route,\nAcross the sky, a canvas so grand,\nA symphony of shapes, at the clouds' command.\n\nTheir shadows dance, on walls so bright,\nA silver glow, in the moon's pale light,\nTheir silence is a reassuring sound,\nAs clouds resurface, without a bound.\n\nIn their depths, a world is spun,\nA realm of wonder, where dreams have begun,\nTheir wispy tendrils, reaching high,\nA veil of mystery, touched by the sky.\n\nAnd when they fade, into the ground,\nTheir memory remains, a poet's sound,\nFor in their fleeting, ephemeral kiss,\nLies a beauty, that forever bliss.\n\nTheir ethereal voice, a lullaby sweet,\nEchoes still, a wonder to the heart hecat,\nFor in the clouds, our souls ascend,\nAnd the magic of the heavens, will forever transcend.",
-                    "tool_calls": []
-                },
-                "logprobs": null,
-                "finish_reason": "stop",
-                "stop_reason": null
-            }
-        ],
-        "usage": {
-            "prompt_tokens": 46,
-            "total_tokens": 277,
-            "completion_tokens": 231,
-            "prompt_tokens_details": null
-        },
-        "prompt_logprobs": null
-    }
-    `
-
-Once the token limit is reached, you will receive a 429 error response with the message `Too Many Requests`.
-
+    The response should be similar to the following:
+    ```json
+        {
+            "id": "chatcmpl-7e49ea73-8e9a-4790-9fdd-c6e551ae14b0",
+            "object": "chat.completion",
+            "created": 1742223214,
+            "model": "llama3-1b",
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "reasoning_content": null,
+                        "content": "Majestic silhouettes drifting by,\n Shapes that morph, a constant sigh,\nTheir whispers echo, yet remain unseen,\nGently drifting, leaving memories unseen.\n\nSoft puffs of white, like cotton tufts,\nFleeting wisps, a wistful route,\nAcross the sky, a canvas so grand,\nA symphony of shapes, at the clouds' command.\n\nTheir shadows dance, on walls so bright,\nA silver glow, in the moon's pale light,\nTheir silence is a reassuring sound,\nAs clouds resurface, without a bound.\n\nIn their depths, a world is spun,\nA realm of wonder, where dreams have begun,\nTheir wispy tendrils, reaching high,\nA veil of mystery, touched by the sky.\n\nAnd when they fade, into the ground,\nTheir memory remains, a poet's sound,\nFor in their fleeting, ephemeral kiss,\nLies a beauty, that forever bliss.\n\nTheir ethereal voice, a lullaby sweet,\nEchoes still, a wonder to the heart hecat,\nFor in the clouds, our souls ascend,\nAnd the magic of the heavens, will forever transcend.",
+                        "tool_calls": []
+                   },
+                   "logprobs": null,
+                   "finish_reason": "stop",
+                   "stop_reason": null
+              }
+            ],
+            "usage": {
+                "prompt_tokens": 46,
+                "total_tokens": 277,
+                "completion_tokens": 231,
+                "prompt_tokens_details": null
+            },
+            "prompt_logprobs": null
+        }
+    ```
+Once the token limit is reached, you will receive a 429 error response with the message `Too Many Requests`. For example:
 ```
 < HTTP/1.1 429 Too Many Requests
 < x-envoy-ratelimited: true
