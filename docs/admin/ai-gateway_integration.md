@@ -70,11 +70,11 @@ spec:
         - name: KSERVE_OPENAI_ROUTE_PREFIX # Disable OpenAI Route Prefix
           value: ""
       resources:
-        limits:
+        requests:
           cpu: "4"
           memory: 12Gi
           nvidia.com/gpu: "1"
-        requests:
+        limits:
           cpu: "6"
           memory: 12Gi
           nvidia.com/gpu: "1"
@@ -86,6 +86,7 @@ EOF
 You can configure the BackendSecurityPolicy for authentication and authorization with the InferenceService. For example, you can create a BackendSecurityPolicy to secure communication with the InferenceService using an API key. But for simplicity, we will ignore the authentication and authorization for this example.
 
 ```yaml
+kubectl apply -f - <<EOF
 apiVersion: aigateway.envoyproxy.io/v1alpha1
 kind: BackendSecurityPolicy
 metadata:
@@ -97,6 +98,7 @@ spec:
     secretRef:
       name: envoy-ai-gateway-openai-kserve-apikey
       namespace: default
+EOF
 ```
 
 ## Create BackendTLSPolicy
@@ -104,6 +106,7 @@ spec:
 If the InferenceService is using TLS, you can create a BackendTLSPolicy to configure the TLS settings for the InferenceService. For this example, we will ignore the TLS settings.
 
 ```yaml
+kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1alpha3
 kind: BackendTLSPolicy
 metadata:
@@ -117,6 +120,7 @@ spec:
   validation:
     wellKnownCACertificates: "System"
     hostname: "llama3-1b-kserve-test.example.com"
+EOF
 ```
 
 ## Create AIServiceBackend
