@@ -6,10 +6,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="KServe Documentation" name="description"/>
-<link href="https://kserve.io/website/master/get_started/first_isvc/" rel="canonical"/>
+<link href="https://kserve.io/website/master/admin/ai-gateway_integration/" rel="canonical"/>
 <link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>First InferenceService - KServe Documentation Website</title>
+<title>AI Gateway Integration - KServe Documentation Website</title>
 <link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -24,7 +24,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#run-your-first-inferenceservice">
+<a class="md-skip" href="#integrating-kserve-with-envoy-ai-gateway">
           Skip to content
         </a>
 </div>
@@ -59,7 +59,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              First InferenceService
+              AI Gateway Integration
             
           </span>
 </div>
@@ -115,12 +115,12 @@
     </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="../">
+<a class="md-tabs__link" href="../../get_started/">
         Getting started
       </a>
 </li>
 <li class="md-tabs__item">
-<a class="md-tabs__link" href="../../admin/serverless/serverless/">
+<a class="md-tabs__link md-tabs__link--active" href="../serverless/serverless/">
         Administration Guide
       </a>
 </li>
@@ -182,8 +182,8 @@
         Home
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2">
           Getting started
           <span class="md-nav__icon md-icon"></span>
@@ -195,77 +195,25 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../">
+<a class="md-nav__link" href="../../get_started/">
         KServe Quickstart
       </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-          First InferenceService
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/first_isvc/">
         First InferenceService
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#run-your-first-inferenceservice">
-    Run your first InferenceService
-  </a>
-<nav aria-label="Run your first InferenceService" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#1-create-a-namespace">
-    1. Create a namespace
-  </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#2-create-an-inferenceservice">
-    2. Create an InferenceService
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#3-check-inferenceservice-status">
-    3. Check InferenceService status.
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#4-determine-the-ingress-ip-and-ports">
-    4. Determine the ingress IP and ports
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#5-perform-inference">
-    5. Perform inference
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#6-run-performance-test-optional">
-    6. Run performance test (optional)
-  </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../swagger_ui/">
+<a class="md-nav__link" href="../../get_started/swagger_ui/">
         Interact with InferenceService Swagger UI
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3">
           Administration Guide
           <span class="md-nav__icon md-icon"></span>
@@ -301,17 +249,17 @@
         </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/serverless/serverless/">
+<a class="md-nav__link" href="../serverless/serverless/">
         Serverless installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/serverless/servicemesh/">
+<a class="md-nav__link" href="../serverless/servicemesh/">
         Istio Service Mesh
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/serverless/kourier_networking/">
+<a class="md-nav__link" href="../serverless/kourier_networking/">
         Kourier Networking Layer
       </a>
 </li>
@@ -319,27 +267,110 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/modelmesh/">
+<a class="md-nav__link" href="../modelmesh/">
         ModelMesh installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/kubernetes_deployment/">
+<a class="md-nav__link" href="../kubernetes_deployment/">
         Kubernetes deployment installation
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/gatewayapi_migration/">
+<a class="md-nav__link" href="../gatewayapi_migration/">
         Gateway API migration
       </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../admin/ai-gateway_integration/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+          AI Gateway Integration
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
         AI Gateway Integration
       </a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-gateway-overview">
+    AI Gateway Overview
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-namespace">
+    Create Namespace
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-an-inferenceservice">
+    Create an InferenceService
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-backendsecuritypolicy">
+    Create BackendSecurityPolicy
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-backendtlspolicy">
+    Create BackendTLSPolicy
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-aiservicebackend">
+    Create AIServiceBackend
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-referencegrant">
+    Create ReferenceGrant
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-gateway-for-the-ai-gateway">
+    Create Gateway for the AI Gateway
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-aigatewayroute-with-llm-request-costs">
+    Create AIGatewayRoute with LLM Request Costs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configure-rate-limiting">
+    Configure Rate Limiting
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configure-gateway_url">
+    Configure $GATEWAY_URL
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-the-gateway">
+    Testing the Gateway
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+    Next Steps
+  </a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -1249,43 +1280,74 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#run-your-first-inferenceservice">
-    Run your first InferenceService
-  </a>
-<nav aria-label="Run your first InferenceService" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#1-create-a-namespace">
-    1. Create a namespace
+<a class="md-nav__link" href="#ai-gateway-overview">
+    AI Gateway Overview
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#2-create-an-inferenceservice">
-    2. Create an InferenceService
+<a class="md-nav__link" href="#prerequisites">
+    Prerequisites
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#3-check-inferenceservice-status">
-    3. Check InferenceService status.
+<a class="md-nav__link" href="#create-namespace">
+    Create Namespace
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#4-determine-the-ingress-ip-and-ports">
-    4. Determine the ingress IP and ports
+<a class="md-nav__link" href="#create-an-inferenceservice">
+    Create an InferenceService
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#5-perform-inference">
-    5. Perform inference
+<a class="md-nav__link" href="#create-backendsecuritypolicy">
+    Create BackendSecurityPolicy
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#6-run-performance-test-optional">
-    6. Run performance test (optional)
+<a class="md-nav__link" href="#create-backendtlspolicy">
+    Create BackendTLSPolicy
   </a>
 </li>
-</ul>
-</nav>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-aiservicebackend">
+    Create AIServiceBackend
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-referencegrant">
+    Create ReferenceGrant
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-gateway-for-the-ai-gateway">
+    Create Gateway for the AI Gateway
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-aigatewayroute-with-llm-request-costs">
+    Create AIGatewayRoute with LLM Request Costs
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configure-rate-limiting">
+    Configure Rate Limiting
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configure-gateway_url">
+    Configure $GATEWAY_URL
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-the-gateway">
+    Testing the Gateway
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+    Next Steps
+  </a>
 </li>
 </ul>
 </nav>
@@ -1294,202 +1356,364 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/get_started/first_isvc.md" title="Edit this page">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/admin/ai-gateway_integration.md" title="Edit this page">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
 </a>
-<h1>First InferenceService</h1>
-<h2 id="run-your-first-inferenceservice">Run your first InferenceService<a class="headerlink" href="#run-your-first-inferenceservice" title="Permanent link">¶</a></h2>
-<p>In this tutorial, you will deploy an InferenceService with a predictor that will load a scikit-learn model trained with
-the <a href="https://archive.ics.uci.edu/ml/datasets/iris">iris</a> dataset. This dataset has three output classes: Iris Setosa, Iris Versicolour, and Iris Virginica.</p>
-<p>You will then send an inference request to your deployed model in order to get a prediction for the class of iris plant your request corresponds to.</p>
-<p>Since your model is being deployed as an InferenceService, not a raw Kubernetes Service, you just need to provide the storage location of the model and
-it gets some <strong>super powers out of the box</strong> <img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f680.svg" title=":rocket:">.</img></p>
-<h3 id="1-create-a-namespace">1. Create a namespace<a class="headerlink" href="#1-create-a-namespace" title="Permanent link">¶</a></h3>
-<p>First, create a namespace to use for deploying KServe resources:</p>
+<h1 id="integrating-kserve-with-envoy-ai-gateway">Integrating KServe with Envoy AI Gateway<a class="headerlink" href="#integrating-kserve-with-envoy-ai-gateway" title="Permanent link">¶</a></h1>
+<p>This guide explains how to integrate KServe with the Envoy AI Gateway. KServe can be integrated with the AI Gateway either within the same cluster or across different clusters. In this example, we will demonstrate how to integrate KServe with the Envoy AI Gateway within the same cluster.</p>
+<h2 id="ai-gateway-overview">AI Gateway Overview<a class="headerlink" href="#ai-gateway-overview" title="Permanent link">¶</a></h2>
+<p>The Envoy AI Gateway was created to address the complexity of connecting applications to GenAI services by leveraging Envoy's flexibility and Kubernetes-native features. It provides a secure, scalable, and efficient way to manage LLM/AI traffic, with backend rate limiting and policy control.Key features of the AI Gateway include:</p>
+<ul>
+<li><strong>Request Routing</strong>: Directs API requests to appropriate GenAI services.</li>
+<li><strong>Authentication and Authorization</strong>: Implements API key validation to secure communication.</li>
+<li><strong>Backend Security Policy</strong>: Introduces fine-grained access control for backend services, controlling LLM/AI backend usage using token-per-second (TPS) policies to prevent overuse.</li>
+<li><strong>Multi-Upstream Provider Support for LLM/AI Services</strong>: The ability to receive requests in the format of one LLM provider and route them to different upstream providers, ensuring compatibility with their expected formats. This is achieved through built-in transformation capabilities that adapt requests and responses accordingly.</li>
+<li><strong>AWS Request Signing</strong>: Supports external processing for secure communication with AWS-hosted LLM/AI services.</li>
+</ul>
+<p>For more information, see the <a href="https://aigateway.envoyproxy.io/docs/">Envoy AI Gateway documentation</a>.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h2>
+<ul>
+<li>A Kubernetes cluster with <a href="../kubernetes_deployment/">KServe with Gateway API Enabled</a>, <a href="https://aigateway.envoyproxy.io/docs/getting-started/prerequisites">Envoy Gateway</a>, and <a href="https://aigateway.envoyproxy.io/docs/getting-started/installation">Envoy AI Gateway installed</a>.</li>
+<li>The <code>kubectl</code> command-line tool installed</li>
+</ul>
+<h2 id="create-namespace">Create Namespace<a class="headerlink" href="#create-namespace" title="Permanent link">¶</a></h2>
+<p>Create a namespace for the InferenceService.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>create<span class="w"> </span>namespace<span class="w"> </span>kserve-test
 </code></pre></div>
-<h3 id="2-create-an-inferenceservice">2. Create an <code>InferenceService</code><a class="headerlink" href="#2-create-an-inferenceservice" title="Permanent link">¶</a></h3>
-<p>Next, define a new InferenceService YAML for the model and apply it to the cluster.</p>
-<p>A new predictor schema was introduced in <code>v0.8.0</code>. New <code>InferenceServices</code> should be deployed using the new schema. The old schema
-is provided as reference.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Old Schema</label></div>
+<h2 id="create-an-inferenceservice">Create an InferenceService<a class="headerlink" href="#create-an-inferenceservice" title="Permanent link">¶</a></h2>
+<p>Create a secret with the Hugging Face token.</p>
+<div class="highlight"><span class="filename">hf-secret.yaml</span><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf-secret</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-test</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="nt">stringData</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">HF_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;token&gt;</span>
+</code></pre></div>
+<p>Create an InferenceService in the <code>kserve-test</code> namespace with OpenAI route prefix disabled. The following example creates an InferenceService with the 'llama3.2-1B' model from Hugging Face.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama3-1b</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-test</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3-1b</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=meta-llama/Llama-3.2-1B-Instruct</span>
+<span class="w">      </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
+<span class="w">          </span><span class="nt">valueFrom</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">secretKeyRef</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf-secret</span>
+<span class="w">              </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HF_TOKEN</span>
+<span class="w">              </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">KSERVE_OPENAI_ROUTE_PREFIX</span><span class="w"> </span><span class="c1"># Disable OpenAI Route Prefix</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"4"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"6"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12Gi</span>
+<span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="create-backendsecuritypolicy">Create BackendSecurityPolicy<a class="headerlink" href="#create-backendsecuritypolicy" title="Permanent link">¶</a></h2>
+<p>You can configure the BackendSecurityPolicy for authentication and authorization with the InferenceService. For example, you can create a BackendSecurityPolicy to secure communication with the InferenceService using an API key. </p>
+<p>But for simplicity, we will ignore the authentication and authorization for this example.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aigateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BackendSecurityPolicy</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-openai-kserve-apikey</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">APIKey</span>
+<span class="w">  </span><span class="nt">apiKey</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">secretRef</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-openai-kserve-apikey</span>
+<span class="w">      </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="create-backendtlspolicy">Create BackendTLSPolicy<a class="headerlink" href="#create-backendtlspolicy" title="Permanent link">¶</a></h2>
+<p>If the InferenceService is using TLS, you can create a BackendTLSPolicy to configure the TLS settings for the InferenceService. </p>
+<p>For this example, we will ignore the TLS settings.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1alpha3</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BackendTLSPolicy</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-basic-openai-tls</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">targetRefs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama3-1b-predictor</span>
+<span class="w">  </span><span class="nt">validation</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">wellKnownCACertificates</span><span class="p">:</span><span class="w"> </span><span class="s">"System"</span>
+<span class="w">    </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">"llama3-1b-kserve-test.example.com"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="create-aiservicebackend">Create AIServiceBackend<a class="headerlink" href="#create-aiservicebackend" title="Permanent link">¶</a></h2>
+<p>Create an AIServiceBackend for the InferenceService created in the previous step. You can uncomment the <code>backendSecurityPolicyRef</code> field to use the BackendSecurityPolicy if you have configured it.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aigateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AIServiceBackend</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-openai-kserve</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenAI</span>
+<span class="w">  </span><span class="nt">backendRef</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama3-1b-predictor</span>
+<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-test</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="w">    </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="w">  </span><span class="nt">timeouts</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">request</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+<span class="w">  </span><span class="c1"># backendSecurityPolicyRef:</span>
+<span class="w">  </span><span class="c1">#   name: envoy-ai-gateway-openai-kserve-apikey</span>
+<span class="w">  </span><span class="c1">#   kind: BackendSecurityPolicy</span>
+<span class="w">  </span><span class="c1">#   group: aigateway.envoyproxy.io</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="create-referencegrant">Create ReferenceGrant<a class="headerlink" href="#create-referencegrant" title="Permanent link">¶</a></h2>
+<p>Since the InferenceService is in the <code>kserve-test</code> namespace and the AIServiceBacked in the <code>default</code> namespace, we need to create a <code>ReferenceGrant</code> to allow the <code>AIServiceBackend</code> to reference the InferenceService.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReferenceGrant</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-gateway-ref-grant</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-test</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">from</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTPRoute</span>
+<span class="w">    </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">  </span><span class="nt">to</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="s">""</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Service</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="create-gateway-for-the-ai-gateway">Create Gateway for the AI Gateway<a class="headerlink" href="#create-gateway-for-the-ai-gateway" title="Permanent link">¶</a></h2>
+<p>Create a Gateway for the AI Gateway to route the traffic to different LLM providers.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Gateway</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-basic</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">gatewayClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-basic</span>
+<span class="w">  </span><span class="nt">listeners</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
+<span class="w">      </span><span class="nt">protocol</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">HTTP</span>
+<span class="w">      </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<h2 id="create-aigatewayroute-with-llm-request-costs">Create AIGatewayRoute with LLM Request Costs<a class="headerlink" href="#create-aigatewayroute-with-llm-request-costs" title="Permanent link">¶</a></h2>
+<p>Create an <code>AIGatewayRoute</code> and configure KServe as the LLM service provider for the model <code>llama3-1b</code> using the <code>AIServiceBackend</code> created in the previous step. AI Gateway automatically tracks token usage for each request. We will configure <code>AIGatewayRoute</code> to track InputToken, OutputToken, and TotalToken usage.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aigateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AIGatewayRoute</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schema</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OpenAI</span>
+<span class="w">  </span><span class="nt">targetRefs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-basic</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Gateway</span>
+<span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matches</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exact</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x-ai-eg-model</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama3-1b</span>
+<span class="w">      </span><span class="nt">backendRefs</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-openai-kserve</span><span class="w">  </span><span class="c1"># AIServiceBackend Name</span>
+<span class="w">          </span><span class="nt">weight</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">llmRequestCosts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadataKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm_input_token</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InputToken</span><span class="w">    </span><span class="c1"># Counts tokens in the request</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadataKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm_output_token</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OutputToken</span><span class="w">   </span><span class="c1"># Counts tokens in the response</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">metadataKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm_total_token</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">TotalToken</span><span class="w">   </span><span class="c1"># Tracks combined usage</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<p>The traffic from the Envoy AI Gateway will be routed to the InferenceService based on the <code>x-ai-eg-model</code> header value. This header is automatically set by the AI Gateway by reading the model name in the payload request.</p>
+<h2 id="configure-rate-limiting">Configure Rate Limiting<a class="headerlink" href="#configure-rate-limiting" title="Permanent link">¶</a></h2>
+<p>AI Gateway uses Envoy Gateway's Global Rate Limit API to configure rate limits. Rate limits should be defined using a combination of user and model identifiers to properly control costs at the model level. We will configure a rate limit of 1000 total tokens per hour per user for the model <code>llama3-1b</code> using <code>BackendTrafficPolicy</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.envoyproxy.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BackendTrafficPolicy</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">model-specific-token-limit-policy</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">targetRefs</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">envoy-ai-gateway-basic</span>
+<span class="w">      </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Gateway</span>
+<span class="w">      </span><span class="nt">group</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gateway.networking.k8s.io</span>
+<span class="w">  </span><span class="nt">rateLimit</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Global</span>
+<span class="w">    </span><span class="nt">global</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">        </span><span class="c1"># Rate limit rule for llama3-1b: 1000 total tokens per hour per user</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">clientSelectors</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x-user-id</span>
+<span class="w">                  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Distinct</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">x-ai-eg-model</span>
+<span class="w">                  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Exact</span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llama3-1b</span>
+<span class="w">          </span><span class="nt">limit</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">requests</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1000</span><span class="w">    </span><span class="c1"># 1000 total tokens per hour</span>
+<span class="w">            </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hour</span>
+<span class="w">          </span><span class="nt">cost</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">request</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Number</span>
+<span class="w">              </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">      </span><span class="c1"># Set to 0 so only token usage counts</span>
+<span class="w">            </span><span class="nt">response</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Metadata</span>
+<span class="w">              </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">io.envoy.ai_gateway</span>
+<span class="w">                </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">llm_total_token</span><span class="w">    </span><span class="c1"># Uses total tokens from the responses</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When configuring rate limits: </p>
+<ol>
+<li>Always set the request cost number to 0 to ensure only token usage counts towards the limit.</li>
+<li>Set appropriate limits for different models based on their costs and capabilities.</li>
+<li>Ensure both user and model identifiers are used in rate limiting rules.</li>
+</ol>
+</div>
+<h2 id="configure-gateway_url">Configure $GATEWAY_URL<a class="headerlink" href="#configure-gateway_url" title="Permanent link">¶</a></h2>
+<p>First, check if your Gateway has an external IP address assigned:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>envoy-gateway-system<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--selector<span class="o">=</span>gateway.envoyproxy.io/owning-gateway-namespace<span class="o">=</span>default,gateway.envoyproxy.io/owning-gateway-name<span class="o">=</span>envoy-ai-gateway-basic
+</code></pre></div>
+<p>You'll see output similar to this:</p>
+<div class="highlight"><pre><span></span><code>NAME                    TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)
+eg-envoy-ai-gateway    LoadBalancer   10.96.61.234    &lt;pending/IP&gt;     80:31234/TCP
+</code></pre></div>
+<p>Choose one of these options based on the EXTERNAL-IP status:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Using External IP</label><label for="__tabbed_1_2">Using Port Forwarding</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
-<span class="s">kind: "InferenceService"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
-<span class="s">spec:</span>
-<span class="s">  predictor:</span>
-<span class="s">    model:</span>
-<span class="s">      modelFormat:</span>
-<span class="s">        name: sklearn</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"</span>
-<span class="s">EOF</span>
+<p>If the EXTERNAL-IP shows an actual IP address (not &lt;pending&gt;), you can access the gateway directly:</p>
+<p>First, save the external IP and set the gateway URL:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">GATEWAY_URL</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>gateway/envoy-ai-gateway-basic<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.addresses[0].value}'</span><span class="k">)</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<span class="s">apiVersion: "serving.kserve.io/v1beta1"</span>
-<span class="s">kind: "InferenceService"</span>
-<span class="s">metadata:</span>
-<span class="s">  name: "sklearn-iris"</span>
-<span class="s">spec:</span>
-<span class="s">  predictor:</span>
-<span class="s">    sklearn:</span>
-<span class="s">      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"</span>
-<span class="s">EOF</span>
+<p>If the EXTERNAL-IP shows &lt;pending&gt; or your cluster doesn't support LoadBalancer services, use port forwarding.</p>
+<p>First, set the gateway URL:</p>
+<p><div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">GATEWAY_URL</span><span class="o">=</span><span class="s2">"http://localhost:8080"</span>
+</code></pre></div>
+Then set up port forwarding (this will block the terminal):</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ENVOY_SERVICE</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>-n<span class="w"> </span>envoy-gateway-system<span class="w"> </span><span class="se">\</span>
+--selector<span class="o">=</span>gateway.envoyproxy.io/owning-gateway-namespace<span class="o">=</span>default,gateway.envoyproxy.io/owning-gateway-name<span class="o">=</span>envoy-ai-gateway-basic<span class="w"> </span><span class="se">\</span>
+-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="k">)</span>
+
+kubectl<span class="w"> </span>port-forward<span class="w"> </span>-n<span class="w"> </span>envoy-gateway-system<span class="w"> </span>svc/<span class="nv">$ENVOY_SERVICE</span><span class="w"> </span><span class="m">8080</span>:80
 </code></pre></div>
 </div>
 </div>
 </input></input></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Do not deploy <code>InferenceServices</code> in control plane namespaces (i.e. namespaces with <code>control-plane</code> label). The webhook is configured
-in a way to skip these namespaces to avoid any privilege escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being 
-injected into the pod, causing the pod to fail with the error <code>No such file or directory: '/mnt/models'</code>.</p>
-</div>
-<h3 id="3-check-inferenceservice-status">3. Check <code>InferenceService</code> status.<a class="headerlink" href="#3-check-inferenceservice-status" title="Permanent link">¶</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test
+<h2 id="testing-the-gateway">Testing the Gateway<a class="headerlink" href="#testing-the-gateway" title="Permanent link">¶</a></h2>
+<p>Verify the URL is available:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$GATEWAY_URL</span>
 </code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">           </span>URL<span class="w">                                                 </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                    </span>AGE
-sklearn-iris<span class="w">   </span>http://sklearn-iris.kserve-test.example.com<span class="w">         </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>sklearn-iris-predictor-default-47q2g<span class="w">   </span>7d23h
-</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you're opening a new terminal, you'll need to set the GATEWAY_URL variable again.
+For proper cost control and rate limiting, requests must include: - x-user-id: Identifies the user making the request</p>
 </div>
-<p>If your DNS contains example.com please consult your admin for configuring DNS or using <a href="https://knative.dev/docs/serving/using-a-custom-domain">custom domain</a>.</p>
-<h3 id="4-determine-the-ingress-ip-and-ports">4. Determine the ingress IP and ports<a class="headerlink" href="#4-determine-the-ingress-ip-and-ports" title="Permanent link">¶</a></h3>
-<p>Execute the following command to determine if your kubernetes cluster is running in an environment that supports external load balancers
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-n<span class="w"> </span>istio-system
+<p>Send a test request to the AI Gateway as user <em>user123</em> using the GATEWAY_URL we set up:
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"x-user-id: user123"</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">'{</span>
+<span class="s1">        "model": "llama3-1b",</span>
+<span class="s1">        "messages": [</span>
+<span class="s1">              {</span>
+<span class="s1">                  "role": "system",</span>
+<span class="s1">                  "content": "You are a poet."</span>
+<span class="s1">              },</span>
+<span class="s1">              {</span>
+<span class="s1">                  "role": "user",</span>
+<span class="s1">                  "content": "Write a poem about clouds."</span>
+<span class="s1">              }</span>
+<span class="s1">          ]</span>
+<span class="s1">     }'</span><span class="w">     </span>localhost:8080/v1/chat/completions
 </code></pre></div></p>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                   </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">       </span>EXTERNAL-IP<span class="w">      </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">   </span>AGE
-istio-ingressgateway<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">172</span>.21.109.129<span class="w">   </span><span class="m">130</span>.211.10.121<span class="w">   </span>...<span class="w">       </span>17h
-</code></pre></div>
-</div>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Load Balancer</label><label for="__tabbed_2_2">Node Port</label><label for="__tabbed_2_3">Port Forward</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>If the EXTERNAL-IP value is set, your environment has an external load balancer that you can use for the ingress gateway.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.loadBalancer.ingress[0].ip}'</span><span class="k">)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.ports[?(@.name=="http2")].port}'</span><span class="k">)</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<p>If the EXTERNAL-IP value is none (or perpetually pending), your environment does not provide an external load balancer for the ingress gateway.
-In this case, you can access the gateway using the service’s node port.
-<div class="highlight"><pre><span></span><code><span class="c1"># GKE</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>worker-node-address
-<span class="c1"># Minikube</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>minikube<span class="w"> </span>ip<span class="k">)</span>
-<span class="c1"># Other environment(On Prem)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>po<span class="w"> </span>-l<span class="w"> </span><span class="nv">istio</span><span class="o">=</span>ingressgateway<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].status.hostIP}'</span><span class="k">)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>istio-system<span class="w"> </span>get<span class="w"> </span>service<span class="w"> </span>istio-ingressgateway<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.spec.ports[?(@.name=="http2")].nodePort}'</span><span class="k">)</span>
+<p>The response should be similar to the following:
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chatcmpl-7e49ea73-8e9a-4790-9fdd-c6e551ae14b0"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chat.completion"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="mi">1742223214</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"llama3-1b"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"reasoning_content"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Majestic silhouettes drifting by,\n Shapes that morph, a constant sigh,\nTheir whispers echo, yet remain unseen,\nGently drifting, leaving memories unseen.\n\nSoft puffs of white, like cotton tufts,\nFleeting wisps, a wistful route,\nAcross the sky, a canvas so grand,\nA symphony of shapes, at the clouds' command.\n\nTheir shadows dance, on walls so bright,\nA silver glow, in the moon's pale light,\nTheir silence is a reassuring sound,\nAs clouds resurface, without a bound.\n\nIn their depths, a world is spun,\nA realm of wonder, where dreams have begun,\nTheir wispy tendrils, reaching high,\nA veil of mystery, touched by the sky.\n\nAnd when they fade, into the ground,\nTheir memory remains, a poet's sound,\nFor in their fleeting, ephemeral kiss,\nLies a beauty, that forever bliss.\n\nTheir ethereal voice, a lullaby sweet,\nEchoes still, a wonder to the heart hecat,\nFor in the clouds, our souls ascend,\nAnd the magic of the heavens, will forever transcend."</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"tool_calls"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">               </span><span class="p">},</span>
+<span class="w">               </span><span class="nt">"logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop"</span><span class="p">,</span>
+<span class="w">               </span><span class="nt">"stop_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">"usage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">277</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">231</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"prompt_tokens_details"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">"prompt_logprobs"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
 </code></pre></div></p>
 </div>
-<div class="tabbed-block">
-<p>Alternatively you can do <code>Port Forward</code> for testing purposes.
-<div class="highlight"><pre><span></span><code><span class="nv">INGRESS_GATEWAY_SERVICE</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>svc<span class="w"> </span>--namespace<span class="w"> </span>istio-system<span class="w"> </span>--selector<span class="o">=</span><span class="s2">"app=istio-ingressgateway"</span><span class="w"> </span>--output<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.items[0].metadata.name}'</span><span class="k">)</span>
-kubectl<span class="w"> </span>port-forward<span class="w"> </span>--namespace<span class="w"> </span>istio-system<span class="w"> </span>svc/<span class="si">${</span><span class="nv">INGRESS_GATEWAY_SERVICE</span><span class="si">}</span><span class="w"> </span><span class="m">8080</span>:80
-</code></pre></div>
-Open another terminal, and enter the following to perform inference:
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_HOST</span><span class="o">=</span>localhost
-<span class="nb">export</span><span class="w"> </span><span class="nv">INGRESS_PORT</span><span class="o">=</span><span class="m">8080</span>
-
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
-curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2">/v1/models/sklearn-iris:predict"</span><span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
+<p>Once the token limit is reached, you will receive a 429 error response with the message <code>Too Many Requests</code>. For example:
+<div class="highlight"><pre><span></span><code>&lt; HTTP/1.1 429 Too Many Requests
+&lt; x-envoy-ratelimited: true
+&lt; x-ratelimit-limit: 1000, 1000;w=3600
+&lt; x-ratelimit-remaining: 0
+&lt; x-ratelimit-reset: 1715
+&lt; date: Mon, 17 Mar 2025 14:31:24 GMT
+&lt; content-length: 0
+&lt;
+* Connection #0 to host localhost left intact
 </code></pre></div></p>
-</div>
-</div>
-</input></input></input></div>
-<h3 id="5-perform-inference">5. Perform inference<a class="headerlink" href="#5-perform-inference" title="Permanent link">¶</a></h3>
-<p>First, prepare your inference input request inside a file:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; "./iris-input.json"</span>
-<span class="s">{</span>
-<span class="s">  "instances": [</span>
-<span class="s">    [6.8,  2.8,  4.8,  1.4],</span>
-<span class="s">    [6.0,  3.4,  4.5,  1.6]</span>
-<span class="s">  ]</span>
-<span class="s">}</span>
-<span class="s">EOF</span>
-</code></pre></div>
-<p>Depending on your setup, use one of the following commands to curl the <code>InferenceService</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:5"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio"><input id="__tabbed_3_2" name="__tabbed_3" type="radio"><input id="__tabbed_3_3" name="__tabbed_3" type="radio"><input id="__tabbed_3_4" name="__tabbed_3" type="radio"><input id="__tabbed_3_5" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="__tabbed_3_1">Real DNS</label><label for="__tabbed_3_2">Magic DNS</label><label for="__tabbed_3_3">From Ingress gateway with HOST Header</label><label for="__tabbed_3_4">From local cluster gateway</label><label for="__tabbed_3_5">Inference Python Client</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>If you have configured the DNS, you can directly curl the <code>InferenceService</code> with the URL obtained from the status print.
-e.g
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test.<span class="si">${</span><span class="nv">CUSTOM_DOMAIN</span><span class="si">}</span>/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
-</code></pre></div></p>
-</div>
-<div class="tabbed-block">
-<p>If you don't want to go through the trouble to get a real domain, you can instead use "magic" dns <a href="http://xip.io/">xip.io</a>.
-The key is to get the external IP for your cluster.
-<div class="highlight"><pre><span></span><code>kubectl get svc istio-ingressgateway --namespace istio-system
-</code></pre></div>
-Look for the <code>EXTERNAL-IP</code> column's value(in this case 35.237.217.209)</p>
-<div class="highlight"><pre><span></span><code>NAME<span class="w">                   </span>TYPE<span class="w">           </span>CLUSTER-IP<span class="w">     </span>EXTERNAL-IP<span class="w">      </span>PORT<span class="o">(</span>S<span class="o">)</span><span class="w">                                                                                                                                      </span>AGE
-istio-ingressgateway<span class="w">   </span>LoadBalancer<span class="w">   </span><span class="m">10</span>.51.253.94<span class="w">   </span><span class="m">35</span>.237.217.209
-</code></pre></div>
-<p>Next step is to setting up the custom domain:
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>cm<span class="w"> </span>config-domain<span class="w"> </span>--namespace<span class="w"> </span>knative-serving
-</code></pre></div></p>
-<p>Now in your editor, change example.com to {{external-ip}}.xip.io (make sure to replace {{external-ip}} with the IP you found earlier).</p>
-<p>With the change applied you can now directly curl the URL
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test.35.237.217.209.xip.io/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
-</code></pre></div></p>
-</div>
-<div class="tabbed-block">
-<p>If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
-<div class="highlight"><pre><span></span><code><span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>sklearn-iris<span class="w"> </span>-n<span class="w"> </span>kserve-test<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.url}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">"/"</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
-curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="s2">"http://</span><span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span><span class="s2">/v1/models/sklearn-iris:predict"</span><span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
-</code></pre></div></p>
-</div>
-<div class="tabbed-block">
-<p>If you are calling from in cluster you can curl with the internal url with host {{ InferenceServiceName }}.<class 'jinja2.utils.namespace'="">
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span>http://sklearn-iris.kserve-test/v1/models/sklearn-iris:predict<span class="w"> </span>-d<span class="w"> </span>@./iris-input.json
-</code></pre></div></class></p>
-</div>
-<div class="tabbed-block">
-<p>If you want to use InferenceClient to perform the inference, you can follow the below example
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kserve</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTConfig</span><span class="p">,</span> <span class="n">InferenceRESTClient</span>
-
-<span class="n">config</span> <span class="o">=</span> <span class="n">RESTConfig</span><span class="p">(</span><span class="n">protocol</span><span class="o">=</span><span class="s2">"v1"</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">InferenceRESTClient</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-<span class="n">base_url</span> <span class="o">=</span> <span class="s2">"http://sklearn-iris.kserve-test"</span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"instances"</span><span class="p">:</span> <span class="p">[[</span><span class="mf">6.8</span><span class="p">,</span>  <span class="mf">2.8</span><span class="p">,</span>  <span class="mf">4.8</span><span class="p">,</span>  <span class="mf">1.4</span><span class="p">],</span> <span class="p">[</span><span class="mf">6.0</span><span class="p">,</span>  <span class="mf">3.4</span><span class="p">,</span>  <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">1.6</span><span class="p">]]}</span>
-<span class="n">model_name</span> <span class="o">=</span> <span class="s2">"sklearn-iris"</span>
-<span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">infer</span><span class="p">(</span><span class="n">base_url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-</code></pre></div></p>
-</div>
-</div>
-</input></input></input></input></input></div>
-<p>You should see two predictions returned (i.e. <code>{"predictions": [1, 1]}</code>). Both sets of data points sent for inference correspond to the flower with index <code>1</code>.
-In this case, the model predicts that both flowers are "Iris Versicolour".</p>
-<h3 id="6-run-performance-test-optional">6. Run performance test (optional)<a class="headerlink" href="#6-run-performance-test-optional" title="Permanent link">¶</a></h3>
-<p>If you want to load test the deployed model, try deploying the following Kubernetes Job to drive load to the model:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply</span>
-kubectl<span class="w"> </span>create<span class="w"> </span>-f<span class="w"> </span>https://raw.githubusercontent.com/kserve/kserve/release-0.11/docs/samples/v1beta1/sklearn/v1/perf.yaml<span class="w"> </span>-n<span class="w"> </span>kserve-test
-</code></pre></div>
-<p>Execute the following command to view output:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>logs<span class="w"> </span>load-test8b58n-rgfxr<span class="w"> </span>-n<span class="w"> </span>kserve-test
-</code></pre></div>
-<div class="admonition success">
-<p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>Requests<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>rate,<span class="w"> </span>throughput<span class="o">]</span><span class="w">         </span><span class="m">30000</span>,<span class="w"> </span><span class="m">500</span>.02,<span class="w"> </span><span class="m">499</span>.99
-Duration<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>attack,<span class="w"> </span>wait<span class="o">]</span><span class="w">             </span>1m0s,<span class="w"> </span><span class="m">59</span>.998s,<span class="w"> </span><span class="m">3</span>.336ms
-Latencies<span class="w">     </span><span class="o">[</span>min,<span class="w"> </span>mean,<span class="w"> </span><span class="m">50</span>,<span class="w"> </span><span class="m">90</span>,<span class="w"> </span><span class="m">95</span>,<span class="w"> </span><span class="m">99</span>,<span class="w"> </span>max<span class="o">]</span><span class="w">  </span><span class="m">1</span>.743ms,<span class="w"> </span><span class="m">2</span>.748ms,<span class="w"> </span><span class="m">2</span>.494ms,<span class="w"> </span><span class="m">3</span>.363ms,<span class="w"> </span><span class="m">4</span>.091ms,<span class="w"> </span><span class="m">7</span>.749ms,<span class="w"> </span><span class="m">46</span>.354ms
-Bytes<span class="w"> </span>In<span class="w">      </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">690000</span>,<span class="w"> </span><span class="m">23</span>.00
-Bytes<span class="w"> </span>Out<span class="w">     </span><span class="o">[</span>total,<span class="w"> </span>mean<span class="o">]</span><span class="w">                     </span><span class="m">2460000</span>,<span class="w"> </span><span class="m">82</span>.00
-Success<span class="w">       </span><span class="o">[</span>ratio<span class="o">]</span><span class="w">                           </span><span class="m">100</span>.00%
-Status<span class="w"> </span>Codes<span class="w">  </span><span class="o">[</span>code:count<span class="o">]</span><span class="w">                      </span><span class="m">200</span>:30000
-Error<span class="w"> </span>Set:
-</code></pre></div>
-</div>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<p>Now that you've tested the basic setup, you can:</p>
+<ul>
+<li>
+<p>For more rate limiter related configuration, see the <a href="https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting">Envoy AI Gateway documentation</a>.</p>
+</li>
+<li>
+<p>Explore the <a href="https://aigateway.envoyproxy.io/docs/">Envoy AI Gateway documentation</a> to learn more about the features and capabilities.</p>
+</li>
+</ul>
 </article>
 </div>
 </div>
@@ -1500,7 +1724,7 @@ Error<span class="w"> </span>Set:
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: KServe Quickstart" class="md-footer__link md-footer__link--prev" href="../" rel="prev">
+<a aria-label="Previous: Gateway API migration" class="md-footer__link md-footer__link--prev" href="../gatewayapi_migration/" rel="prev">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
 </div>
@@ -1509,17 +1733,17 @@ Error<span class="w"> </span>Set:
 <span class="md-footer__direction">
                 Previous
               </span>
-              KServe Quickstart
+              Gateway API migration
             </div>
 </div>
 </a>
-<a aria-label="Next: Interact with InferenceService Swagger UI" class="md-footer__link md-footer__link--next" href="../swagger_ui/" rel="next">
+<a aria-label="Next: Model Serving Control Plane" class="md-footer__link md-footer__link--next" href="../../modelserving/control_plane/" rel="next">
 <div class="md-footer__title">
 <div class="md-ellipsis">
 <span class="md-footer__direction">
                 Next
               </span>
-              Interact with InferenceService Swagger UI
+              Model Serving Control Plane
             </div>
 </div>
 <div class="md-footer__button md-icon">
