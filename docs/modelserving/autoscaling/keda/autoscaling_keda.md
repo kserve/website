@@ -354,6 +354,27 @@ Check KEDA `ScaledObject`:
 
 === "kubectl"
 ```
+kubectl get scaledobjects huggingface-fbopt-predictor
+```
+
+!!! success "Expected Output"
+
+    ```{ .bash .no-copy }
+    NAME                          SCALETARGETKIND      SCALETARGETNAME               MIN   MAX   TRIGGERS     AUTHENTICATION   READY   ACTIVE   FALLBACK   PAUSED    AGE
+    huggingface-fbopt-predictor   apps/v1.Deployment   huggingface-fbopt-predictor   1     5     prometheus                    True    False    False      Unknown   32m
+    ```
+
+Check `OpenTelemetryCollector`:
+
+=== "kubectl"
+```
 kubectl get opentelemetrycollector huggingface-fbopt-predictor
 ```
+
+!!! success "Expected Output"
+
+    ```{ .bash .no-copy }
+    NAME                          MODE      VERSION   READY   AGE   IMAGE   MANAGEMENT
+    huggingface-fbopt-predictor   sidecar   0.120.0           8h            managed
+    ```
 
