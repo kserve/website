@@ -115,7 +115,15 @@ kubectl describe scaledobject sklearn-v2-iris-predictor
     ...
     ```
 
-## Scale using the LLM Metrics
+## Scale using the Metrics
+
+InferenceService scaling can be achieved in two ways:
+
+- **Using Metrics via Prometheus**: Scale based on Large Language Model (LLM) metrics collected in Prometheus.
+
+- **Using Metrics via OpenTelemetry**: Collect pod-level metrics (including LLM metrics) using OpenTelemetry, export them to the keda-otel-add-on gRPC endpoint, and use KEDA's external scaler for autoscaling.
+
+## Autoscale based on metrics from Prometheus
 
 Scale an InferenceService in Kubernetes using LLM (Large Language Model) metrics collected in Prometheus. 
 The setup leverages KServe with KEDA for autoscaling based on custom [Prometheus metrics](../../../modelserving/observability/prometheus_metrics.md).
@@ -270,4 +278,103 @@ huggingface-fbopt-predictor-58f9c58b85-l69f7               1/1          Running 
 huggingface-fbopt-predictor-58f9c58b85-l69f7               1/1          Running           0          51s
 huggingface-fbopt-predictor-58f9c58b85-l69f7               1/1          Running           0          51s
 ```
+
+## Autoscale by using OpenTelemetry Collector
+
+[KEDA (Kubernetes Event-driven Autoscaler)](https://keda.sh) traditionally uses a polling mechanism to monitor trigger sources like Prometheus, Kubernetes API, and external event sources. While effective, polling can introduce latency and additional load on the cluster. The [otel-add-on](https://github.com/kedify/otel-add-on) enables OpenTelemetry-based push metrics for more efficient and real-time autoscaling, reducing the overhead associated with frequent polling.
+
+### Prerequisites
+
+1. Kubernetes cluster with KServe installed.
+
+2. [KEDA installed](https://keda.sh/docs/2.9/deploy/#install) for event-driven autoscaling.
+
+3. [OpenTelemetry Operator](https://github.com/open-telemetry/opentelemetry-operator) installed.
+
+4. [kedify-otel-add-on](https://github.com/kedify/otel-add-on): Install the otel-add-on with the validation webhook disabled. Certain metrics, including the vLLM pattern (e.g., vllm:num_requests_running), fail to comply with the validation constraints enforced by the webhook.
+
+=== "kubectl"
+```
+helm upgrade -i kedify-otel oci://ghcr.io/kedify/charts/otel-add-on --version=v0.0.6 --namespace keda --wait --set validatingAdmissionPolicy.enabled=false
+```
+
+### Create `InferenceService`
+
+``` yaml
+kubectl apply -f - <<EOF
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: huggingface-fbopt
+  annotations:
+    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/autoscalerClass: "keda"
+    sidecar.opentelemetry.io/inject: "huggingface-fbopt-predictor"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: huggingface
+      args:
+        - --model_name=fbopt
+        - --model_id=facebook/opt-125m
+      resources:
+        limits:
+          cpu: "1"
+          memory: 4Gi
+        requests:
+          cpu: "1"
+          memory: 4Gi
+    minReplicas: 1
+    maxReplicas: 5
+    autoScaling:
+      metrics:
+        - type: PodMetric
+          podmetric:
+            metric:
+              backend: "opentelemetry"
+              metricNames: 
+                - vllm:num_requests_running
+              query: "vllm:num_requests_running"
+            target:
+              type: Value
+              value: "4"
+EOF
+```
+
+The `sidecar.opentelemetry.io/inject` annotation ensures that an OpenTelemetry Collector runs as a sidecar container within the InferenceService pod. This collector is responsible for gathering pod-level metrics and forwarding them to the `otel-add-on` GRPC endpoint, which in turn enables KEDA's `scaledobject` to use these metrics for autoscaling decisions. The annotation must follow the pattern `<inferenceservice-name>-predictor`
+
+!!! success "Expected Output"
+
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/huggingface-fbopt created
+    ```
+
+Check KEDA `ScaledObject`:
+
+=== "kubectl"
+```
+kubectl get scaledobjects huggingface-fbopt-predictor
+```
+
+!!! success "Expected Output"
+
+    ```{ .bash .no-copy }
+    NAME                          SCALETARGETKIND      SCALETARGETNAME               MIN   MAX   TRIGGERS     AUTHENTICATION   READY   ACTIVE   FALLBACK   PAUSED    AGE
+    huggingface-fbopt-predictor   apps/v1.Deployment   huggingface-fbopt-predictor   1     5     prometheus                    True    False    False      Unknown   32m
+    ```
+
+Check `OpenTelemetryCollector`:
+
+=== "kubectl"
+```
+kubectl get opentelemetrycollector huggingface-fbopt-predictor
+```
+
+!!! success "Expected Output"
+
+    ```{ .bash .no-copy }
+    NAME                          MODE      VERSION   READY   AGE   IMAGE   MANAGEMENT
+    huggingface-fbopt-predictor   sidecar   0.120.0           8h            managed
+    ```
 
