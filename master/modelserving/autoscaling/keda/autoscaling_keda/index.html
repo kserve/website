@@ -946,10 +946,15 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#scale-using-the-llm-metrics">
-    Scale using the LLM Metrics
+<a class="md-nav__link" href="#scale-using-the-metrics">
+    Scale using the Metrics
   </a>
-<nav aria-label="Scale using the LLM Metrics" class="md-nav">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscale-based-on-metrics-from-prometheus">
+    Autoscale based on metrics from Prometheus
+  </a>
+<nav aria-label="Autoscale based on metrics from Prometheus" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#prerequisites_1">
@@ -964,6 +969,25 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests">
     Autoscale InferenceService with Concurrent Requests
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscale-by-using-opentelemetry-collector">
+    Autoscale by using OpenTelemetry Collector
+  </a>
+<nav aria-label="Autoscale by using OpenTelemetry Collector" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites_2">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-inferenceservice_2">
+    Create InferenceService
   </a>
 </li>
 </ul>
@@ -1267,10 +1291,15 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#scale-using-the-llm-metrics">
-    Scale using the LLM Metrics
+<a class="md-nav__link" href="#scale-using-the-metrics">
+    Scale using the Metrics
   </a>
-<nav aria-label="Scale using the LLM Metrics" class="md-nav">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscale-based-on-metrics-from-prometheus">
+    Autoscale based on metrics from Prometheus
+  </a>
+<nav aria-label="Autoscale based on metrics from Prometheus" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#prerequisites_1">
@@ -1285,6 +1314,25 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#autoscale-inferenceservice-with-concurrent-requests">
     Autoscale InferenceService with Concurrent Requests
+  </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscale-by-using-opentelemetry-collector">
+    Autoscale by using OpenTelemetry Collector
+  </a>
+<nav aria-label="Autoscale by using OpenTelemetry Collector" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites_2">
+    Prerequisites
+  </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#create-inferenceservice_2">
+    Create InferenceService
   </a>
 </li>
 </ul>
@@ -1407,7 +1455,17 @@ Spec:
 ...
 </code></pre></div>
 </div>
-<h2 id="scale-using-the-llm-metrics">Scale using the LLM Metrics<a class="headerlink" href="#scale-using-the-llm-metrics" title="Permanent link">¶</a></h2>
+<h2 id="scale-using-the-metrics">Scale using the Metrics<a class="headerlink" href="#scale-using-the-metrics" title="Permanent link">¶</a></h2>
+<p>InferenceService scaling can be achieved in two ways:</p>
+<ul>
+<li>
+<p><strong>Using Metrics via Prometheus</strong>: Scale based on Large Language Model (LLM) metrics collected in Prometheus.</p>
+</li>
+<li>
+<p><strong>Using Metrics via OpenTelemetry</strong>: Collect pod-level metrics (including LLM metrics) using OpenTelemetry, export them to the keda-otel-add-on gRPC endpoint, and use KEDA's external scaler for autoscaling.</p>
+</li>
+</ul>
+<h2 id="autoscale-based-on-metrics-from-prometheus">Autoscale based on metrics from Prometheus<a class="headerlink" href="#autoscale-based-on-metrics-from-prometheus" title="Permanent link">¶</a></h2>
 <p>Scale an InferenceService in Kubernetes using LLM (Large Language Model) metrics collected in Prometheus. 
 The setup leverages KServe with KEDA for autoscaling based on custom <a href="../../../observability/prometheus_metrics/">Prometheus metrics</a>.</p>
 <h3 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">¶</a></h3>
@@ -1550,6 +1608,105 @@ huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </spa
 huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </span><span class="m">1</span>/1<span class="w">          </span>Running<span class="w">           </span><span class="m">0</span><span class="w">          </span>51s
 huggingface-fbopt-predictor-58f9c58b85-l69f7<span class="w">               </span><span class="m">1</span>/1<span class="w">          </span>Running<span class="w">           </span><span class="m">0</span><span class="w">          </span>51s
 </code></pre></div>
+<h2 id="autoscale-by-using-opentelemetry-collector">Autoscale by using OpenTelemetry Collector<a class="headerlink" href="#autoscale-by-using-opentelemetry-collector" title="Permanent link">¶</a></h2>
+<p><a href="https://keda.sh">KEDA (Kubernetes Event-driven Autoscaler)</a> traditionally uses a polling mechanism to monitor trigger sources like Prometheus, Kubernetes API, and external event sources. While effective, polling can introduce latency and additional load on the cluster. The <a href="https://github.com/kedify/otel-add-on">otel-add-on</a> enables OpenTelemetry-based push metrics for more efficient and real-time autoscaling, reducing the overhead associated with frequent polling.</p>
+<h3 id="prerequisites_2">Prerequisites<a class="headerlink" href="#prerequisites_2" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p>Kubernetes cluster with KServe installed.</p>
+</li>
+<li>
+<p><a href="https://keda.sh/docs/2.9/deploy/#install">KEDA installed</a> for event-driven autoscaling.</p>
+</li>
+<li>
+<p><a href="https://github.com/open-telemetry/opentelemetry-operator">OpenTelemetry Operator</a> installed.</p>
+</li>
+<li>
+<p><a href="https://github.com/kedify/otel-add-on">kedify-otel-add-on</a>: Install the otel-add-on with the validation webhook disabled. Certain metrics, including the vLLM pattern (e.g., vllm:num_requests_running), fail to comply with the validation constraints enforced by the webhook.</p>
+</li>
+</ol>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="__tabbed_4_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>helm upgrade -i kedify-otel oci://ghcr.io/kedify/charts/otel-add-on --version=v0.0.6 --namespace keda --wait --set validatingAdmissionPolicy.enabled=false
+</code></pre></div>
+<h3 id="create-inferenceservice_2">Create <code>InferenceService</code><a class="headerlink" href="#create-inferenceservice_2" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-fbopt</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="s">"RawDeployment"</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="s">"keda"</span>
+<span class="w">    </span><span class="nt">sidecar.opentelemetry.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s">"huggingface-fbopt-predictor"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=fbopt</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=facebook/opt-125m</span>
+<span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
+<span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">autoScaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PodMetric</span>
+<span class="w">          </span><span class="nt">podmetric</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">metric</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="s">"opentelemetry"</span>
+<span class="w">              </span><span class="nt">metricNames</span><span class="p">:</span><span class="w"> </span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm:num_requests_running</span>
+<span class="w">              </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">"vllm:num_requests_running"</span>
+<span class="w">            </span><span class="nt">target</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Value</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">"4"</span>
+<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+</code></pre></div>
+<p>The <code>sidecar.opentelemetry.io/inject</code> annotation ensures that an OpenTelemetry Collector runs as a sidecar container within the InferenceService pod. This collector is responsible for gathering pod-level metrics and forwarding them to the <code>otel-add-on</code> GRPC endpoint, which in turn enables KEDA's <code>scaledobject</code> to use these metrics for autoscaling decisions. The annotation must follow the pattern <code>&lt;inferenceservice-name&gt;-predictor</code></p>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>$<span class="w"> </span>inferenceservice.serving.kserve.io/huggingface-fbopt<span class="w"> </span>created
+</code></pre></div>
+</div>
+<p>Check KEDA <code>ScaledObject</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="__tabbed_5_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl get scaledobjects huggingface-fbopt-predictor
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                          </span>SCALETARGETKIND<span class="w">      </span>SCALETARGETNAME<span class="w">               </span>MIN<span class="w">   </span>MAX<span class="w">   </span>TRIGGERS<span class="w">     </span>AUTHENTICATION<span class="w">   </span>READY<span class="w">   </span>ACTIVE<span class="w">   </span>FALLBACK<span class="w">   </span>PAUSED<span class="w">    </span>AGE
+huggingface-fbopt-predictor<span class="w">   </span>apps/v1.Deployment<span class="w">   </span>huggingface-fbopt-predictor<span class="w">   </span><span class="m">1</span><span class="w">     </span><span class="m">5</span><span class="w">     </span>prometheus<span class="w">                    </span>True<span class="w">    </span>False<span class="w">    </span>False<span class="w">      </span>Unknown<span class="w">   </span>32m
+</code></pre></div>
+</div>
+<p>Check <code>OpenTelemetryCollector</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="__tabbed_6_1">kubectl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+</div>
+</input></div>
+<div class="highlight"><pre><span></span><code>kubectl get opentelemetrycollector huggingface-fbopt-predictor
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Expected Output</p>
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                          </span>MODE<span class="w">      </span>VERSION<span class="w">   </span>READY<span class="w">   </span>AGE<span class="w">   </span>IMAGE<span class="w">   </span>MANAGEMENT
+huggingface-fbopt-predictor<span class="w">   </span>sidecar<span class="w">   </span><span class="m">0</span>.120.0<span class="w">           </span>8h<span class="w">            </span>managed
+</code></pre></div>
+</div>
 </article>
 </div>
 </div>
