@@ -1377,12 +1377,12 @@ Create a <code>Gateway</code> resource to expose the <code>InferenceService</cod
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>I. Install KServe CRDs</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.14.1
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.15.0
 </code></pre></div>
 <p>II. Install KServe Resources</p>
 <p>Set the <code>kserve.controller.deploymentMode</code> to <code>RawDeployment</code> and <code>kserve.controller.gateway.ingressGateway.kserveGateway</code> to point to the <code>Gateway</code>
 created in <a href="#2-install-network-controller">step 2</a>.</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.15.0<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.deploymentMode<span class="o">=</span>RawDeployment<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.enableGatewayApi<span class="o">=</span><span class="nb">true</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.kserveGateway<span class="o">=</span>&lt;gateway-namespace&gt;/&lt;gateway-name&gt;
@@ -1391,10 +1391,10 @@ created in <a href="#2-install-network-controller">step 2</a>.</p>
 <div class="tabbed-block">
 <p>I. Install KServe:
 <code>--server-side</code> option is required as the InferenceService CRD is large, see <a href="https://github.com/kserve/kserve/issues/3487">this issue</a> for details.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.15.0/kserve.yaml
 </code></pre></div>
 <p>II. Install KServe default serving runtimes:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve-cluster-resources.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.15.0/kserve-cluster-resources.yaml
 </code></pre></div>
 <p>III. Change default deployment mode and ingress option</p>
 <p>First in the ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> from the <code>deploy</code> section to <code>RawDeployment</code>.</p>
@@ -1416,12 +1416,12 @@ created in <a href="#2-install-network-controller">step 2</a>.</p>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>I. Install KServe CRDs</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.14.1
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve-crd<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve-crd<span class="w"> </span>--version<span class="w"> </span>v0.15.0
 </code></pre></div>
 <p>II. Install KServe Resources</p>
 <p>Set the <code>kserve.controller.deploymentMode</code> to <code>RawDeployment</code> and <code>kserve.controller.gateway.ingressGateway.className</code> to point to the <code>IngressClass</code>
 name created in <a href="#2-install-network-controller">step 2</a>.</p>
-<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.14.1<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kserve<span class="w"> </span>oci://ghcr.io/kserve/charts/kserve<span class="w"> </span>--version<span class="w"> </span>v0.15.0<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.deploymentMode<span class="o">=</span>RawDeployment<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--set<span class="w"> </span>kserve.controller.gateway.ingressGateway.className<span class="o">=</span>your-ingress-class
 </code></pre></div>
@@ -1429,10 +1429,10 @@ name created in <a href="#2-install-network-controller">step 2</a>.</p>
 <div class="tabbed-block">
 <p>I. Install KServe:
 <code>--server-side</code> option is required as the InferenceService CRD is large, see <a href="https://github.com/kserve/kserve/issues/3487">this issue</a> for details.</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.15.0/kserve.yaml
 </code></pre></div>
 <p>II. Install KServe default serving runtimes:</p>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.14.1/kserve-cluster-resources.yaml
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>--server-side<span class="w"> </span>-f<span class="w"> </span>https://github.com/kserve/kserve/releases/download/v0.15.0/kserve-cluster-resources.yaml
 </code></pre></div>
 <p>III. Change default deployment mode and ingress option</p>
 <p>First in the ConfigMap <code>inferenceservice-config</code> modify the <code>defaultDeploymentMode</code> from the <code>deploy</code> section to <code>RawDeployment</code>,</p>
