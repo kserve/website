@@ -1,0 +1,7374 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="KServe Documentation" name="description"/>
+<link href="https://kserve.io/website/0.15/reference/api/" rel="canonical"/>
+<link href="../../images/favicon/favicon-32x32.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
+<title>Control Plane API - KServe Documentation Website</title>
+<link href="../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+</div>
+<div data-md-component="announce">
+<aside class="md-banner">
+<div class="md-banner__inner md-grid md-typeset">
+<h1>
+<b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
+</h1>
+</div>
+</aside>
+</div>
+<div data-md-component="outdated" hidden="">
+<aside class="md-banner md-banner--warning">
+</aside>
+</div>
+<header class="md-header md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../.." title="KServe Documentation Website">
+<img alt="logo" src="../../images/logo/kserve.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            KServe Documentation Website
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Control Plane API
+            
+          </span>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-tabs__inner md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+      Home
+    </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../get_started/">
+        Getting started
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../admin/serverless/serverless/">
+        Administration Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../modelserving/control_plane/">
+        User Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link md-tabs__link--active" href="./">
+        API Reference
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../developer/developer/">
+        Developer Guide
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../blog/articles/2024-12-13-KServe-0.14-release/">
+        Blog
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../community/get_involved/">
+        Community
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="KServe Documentation Website">
+<img alt="logo" src="../../images/logo/kserve.png"/>
+</a>
+    KServe Documentation Website
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+</div>
+<div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        Home
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Getting started" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          Getting started
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/">
+        KServe Quickstart
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/first_isvc/">
+        First InferenceService
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../get_started/swagger_ui/">
+        Interact with InferenceService Swagger UI
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3">
+          Administration Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Administration Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+          Administration Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" id="__nav_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_1">
+          Install KServe
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Install KServe" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Install KServe
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" id="__nav_3_1_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_1_1">
+          Serverless
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Serverless" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_1_1">
+<span class="md-nav__icon md-icon"></span>
+          Serverless
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/serverless/">
+        Serverless installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/servicemesh/">
+        Istio Service Mesh
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/serverless/kourier_networking/">
+        Kourier Networking Layer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/modelmesh/">
+        ModelMesh installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/kubernetes_deployment/">
+        Kubernetes deployment installation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/gatewayapi_migration/">
+        Gateway API migration
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../admin/ai-gateway_integration/">
+        AI Gateway Integration
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="User Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" id="__nav_4_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Concepts" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_1">
+<span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" id="__nav_4_1_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_1">
+          Control Plane
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Control Plane" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_1_1">
+<span class="md-nav__icon md-icon"></span>
+          Control Plane
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/control_plane/">
+        Model Serving Control Plane
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" id="__nav_4_1_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_2">
+          Data Plane
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Data Plane" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_1_2">
+<span class="md-nav__icon md-icon"></span>
+          Data Plane
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/data_plane/data_plane/">
+        Model Serving Data Plane
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/data_plane/v1_protocol/">
+        V1 Inference Protocol
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/data_plane/v2_protocol/">
+        Open Inference Protocol (V2 Inference Protocol)
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2_4" id="__nav_4_1_2_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_1_2_4">
+          Open Inference Protocol Extensions
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Open Inference Protocol Extensions" class="md-nav" data-md-level="4">
+<label class="md-nav__title" for="__nav_4_1_2_4">
+<span class="md-nav__icon md-icon"></span>
+          Open Inference Protocol Extensions
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/data_plane/binary_tensor_data_extension/">
+        Binary Tensor Data Extension
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/servingruntimes/">
+        Serving Runtimes
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2">
+          LLM Serving Runtime
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="LLM Serving Runtime" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_2">
+<span class="md-nav__icon md-icon"></span>
+          LLM Serving Runtime
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" id="__nav_4_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_2_1">
+          Hugging Face vLLM
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Hugging Face vLLM" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Hugging Face vLLM
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/text_generation/">
+        Text Generation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/text2text_generation/">
+        Text2Text Generation
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/token_classification/">
+        Token Classification
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/text_classification/">
+        Text Classification
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/fill_mask/">
+        Fill Mask
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/multi-node/">
+        Multi Node Inference
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/llm/huggingface/sdk_integration/">
+        SDK Integration
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3">
+          Model Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Serving Runtimes" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_3">
+<span class="md-nav__icon md-icon"></span>
+          Model Serving Runtimes
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" id="__nav_4_3_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3_1">
+          Supported Model Frameworks/Formats
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Supported Model Frameworks/Formats" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_3_1">
+<span class="md-nav__icon md-icon"></span>
+          Supported Model Frameworks/Formats
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/serving_runtime/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/tensorflow/">
+        Tensorflow
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/torchserve/">
+        PyTorch
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/sklearn/v2/">
+        Scikit-learn
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/xgboost/">
+        XGBoost
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/pmml/">
+        PMML
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/spark/">
+        Spark MLlib
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/lightgbm/">
+        LightGBM
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/paddle/">
+        Paddle
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/mlflow/v2/">
+        MLFlow
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/onnx/">
+        ONNX
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" id="__nav_4_3_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3_2">
+          Multi-Framework Serving Runtimes
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Multi-Framework Serving Runtimes" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_3_2">
+<span class="md-nav__icon md-icon"></span>
+          Multi-Framework Serving Runtimes
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_1" id="__nav_4_3_2_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_3_2_1">
+          Nvidia Triton
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Nvidia Triton" class="md-nav" data-md-level="4">
+<label class="md-nav__title" for="__nav_4_3_2_1">
+<span class="md-nav__icon md-icon"></span>
+          Nvidia Triton
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/triton/torchscript/">
+        Torchscript
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/triton/bert/">
+        Tensorflow
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/triton/huggingface/">
+        Hugging Face
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/amd/">
+        AMD
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/custom/custom_model/">
+        How to write a custom predictor
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4">
+          Multi Model Serving
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Multi Model Serving" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_4">
+<span class="md-nav__icon md-icon"></span>
+          Multi Model Serving
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" id="__nav_4_4_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_4_1">
+          Overview
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Overview" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_4_1">
+<span class="md-nav__icon md-icon"></span>
+          Overview
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/mms/multi-model-serving/">
+        The Scalability Problem
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/mms/modelmesh/overview/">
+        ModelMesh Overview
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_5">
+          Transformers
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Transformers" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_5">
+<span class="md-nav__icon md-icon"></span>
+          Transformers
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/transformer/feast/">
+        Feast
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+        How to write a custom transformer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/transformer/collocation/">
+        Collocate transformer and predictor
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6">
+          Inference Graph
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Inference Graph" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+          Inference Graph
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/inference_graph/">
+        Concept
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/inference_graph/image_pipeline/">
+        Image classification inference graph
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_7">
+          Model Storage
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Storage" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_7">
+<span class="md-nav__icon md-icon"></span>
+          Model Storage
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/storagecontainers/">
+        Storage Containers
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/certificate/kserve/">
+        Configure CA Certificate
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/azure/azure/">
+        Azure
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/pvc/pvc/">
+        PVC
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/s3/s3/">
+        S3
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/oci/">
+        OCI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/uri/uri/">
+        URI
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/gcs/gcs/">
+        GCS
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/huggingface/hf/">
+        Hugging Face
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/storage/modelcache/localmodel/">
+        Model Cache
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" id="__nav_4_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_8">
+          Model Explainability
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Explainability" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_8">
+<span class="md-nav__icon md-icon"></span>
+          Model Explainability
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/explainer/">
+        Concept
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/trustyai/">
+        TrustyAI Explainer
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8_3" id="__nav_4_8_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_8_3">
+          Alibi Explainer
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Alibi Explainer" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_4_8_3">
+<span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/alibi/cifar10/">
+        Image Explainer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/alibi/income/">
+        Income Explainer
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/alibi/moviesentiment/">
+        Text Explainer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/explainer/aix/mnist/aix/">
+        AIX Explainer
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" id="__nav_4_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_9">
+          Model Monitoring
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Model Monitoring" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_9">
+<span class="md-nav__icon md-icon"></span>
+          Model Monitoring
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/detect/alibi_detect/alibi_detect/">
+        Alibi Detector
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/detect/aif/germancredit/">
+        AIF Bias Detector
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/detect/art/mnist/">
+        ART Adversarial Detector
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" id="__nav_4_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_10">
+          Request Batching
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Request Batching" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_10">
+<span class="md-nav__icon md-icon"></span>
+          Request Batching
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/batcher/batcher/">
+        Inference Batcher
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" id="__nav_4_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_11">
+          Payload Logging
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Payload Logging" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_11">
+<span class="md-nav__icon md-icon"></span>
+          Payload Logging
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/logger/logger/">
+        Inference Logger
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_12">
+          Autoscaling
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Autoscaling" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_12">
+<span class="md-nav__icon md-icon"></span>
+          Autoscaling
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/autoscaling/autoscaling/">
+        Knative Autoscaler(KPA)
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/autoscaling/raw_deployment_autoscaling/">
+        Kubernetes Autoscaler(HPA)
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/autoscaling/keda/autoscaling_keda/">
+        KEDA Autoscaler
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" id="__nav_4_13" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_13">
+          Node Scheduling
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Node Scheduling" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_13">
+<span class="md-nav__icon md-icon"></span>
+          Node Scheduling
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/nodescheduling/overview/">
+        Overview
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+        InferenceService Node Scheduling
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" id="__nav_4_14" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_14">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Kafka" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_14">
+<span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/kafka/kafka/">
+        Inference with Kafka event source
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" id="__nav_4_15" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_15">
+          Rollout Strategies
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Rollout Strategies" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_15">
+<span class="md-nav__icon md-icon"></span>
+          Rollout Strategies
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/rollout/canary/">
+        Canary
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/v1beta1/rollout/canary-example/">
+        Canary Example
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" id="__nav_4_16" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_16">
+          Inference Observability
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Inference Observability" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_16">
+<span class="md-nav__icon md-icon"></span>
+          Inference Observability
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/observability/prometheus_metrics/">
+        Prometheus Metrics
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../modelserving/observability/grafana_dashboards/">
+        Grafana Dashboards
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5">
+          API Reference
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="API Reference" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+          API Reference
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
+        Control Plane API
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../swagger-ui/">
+        Open Inference Protocol API Spec
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../sdk_docs/sdk_doc/">
+        Python Client SDK
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../python_runtime_api/docs/">
+        Python Runtime Server SDK
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../inference_client/doc/">
+        Inference Python Client
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6">
+          Developer Guide
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Developer Guide" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+          Developer Guide
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../developer/developer/">
+        How to contribute
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../developer/debug/">
+        Debugging guide
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Blog" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1">
+          Releases
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Releases" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+          Releases
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2024-12-13-KServe-0.14-release/">
+        KServe 0.14 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2024-05-15-KServe-0.13-release/">
+        KServe 0.13 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2023-10-08-KServe-0.11-release/">
+        KServe 0.11 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2023-02-05-KServe-0.10-release/">
+        KServe 0.10 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2022-07-21-KServe-0.9-release/">
+        KServe 0.9 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2022-02-18-KServe-0.8-release/">
+        KServe 0.8 Release
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../blog/articles/2021-10-11-KServe-0.7-release/">
+        KServe 0.7 Release
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8">
+          Community
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-label="Community" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+          Community
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/get_involved/">
+        How to Get Involved
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/adopters/">
+        Adopters
+      </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../community/presentations/">
+        Demos and Presentations
+      </a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/reference/api.md" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+</a>
+<h1>Control Plane API</h1>
+<p>Packages:</p>
+<ul>
+<li>
+<a href="#serving.kserve.io/v1alpha1">serving.kserve.io/v1alpha1</a>
+</li>
+<li>
+<a href="#serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</a>
+</li>
+</ul>
+<h2 id="serving.kserve.io/v1alpha1">serving.kserve.io/v1alpha1</h2>
+<div>
+<p>Package v1alpha1 contains API Schema definitions for the serving v1alpha1 API group</p>
+</div>
+<p>Resource Types:</p>
+<ul></ul>
+<h3 id="serving.kserve.io/v1alpha1.BuiltInAdapter">BuiltInAdapter
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>serverType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServerType">
+ServerType
+</a>
+</em>
+</td>
+<td>
+<p>ServerType must be one of the supported built-in types such as “triton” or “mlserver”,
+and the runtime’s container must have the same name</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtimeManagementPort</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Port which the runtime server listens for model management requests</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>memBufferBytes</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Fixed memory overhead to subtract from runtime container’s memory allocation to determine model capacity</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelLoadingTimeoutMillis</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Timeout for model loading operations in milliseconds</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>env</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#envvar-v1-core">
+[]Kubernetes core/v1.EnvVar
+</a>
+</em>
+</td>
+<td>
+<p>Environment variables used to control other aspects of the built-in adapter’s behaviour (uncommon)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterLocalModel">ClusterLocalModel
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ClusterLocalModelSpec">
+ClusterLocalModelSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>sourceModelUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Original StorageUri</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelSize</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Model size to make sure it does not exceed the disk space reserved for local models. The limit is defined on the NodeGroup.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeGroup</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>group of nodes to cache the model on.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">
+ClusterLocalModelStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterLocalModelSpec">ClusterLocalModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModel">ClusterLocalModel</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sourceModelUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Original StorageUri</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelSize</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Model size to make sure it does not exceed the disk space reserved for local models. The limit is defined on the NodeGroup.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeGroup</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>group of nodes to cache the model on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModel">ClusterLocalModel</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodeStatus</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.NodeStatus">
+map[string]kserve.io/serving/pkg/apis/serving/v1alpha1.NodeStatus
+</a>
+</em>
+</td>
+<td>
+<p>Status of the model on a node, like NodeDownloaded or NodeNotReady</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>copies</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ModelCopies">
+ModelCopies
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>How many nodes have the model available locally</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>inferenceServices</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.NamespacedName">
+[]NamespacedName
+</a>
+</em>
+</td>
+<td>
+<p>Inference services using this local model</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime
+</h3>
+<div>
+<p>ClusterServingRuntime is the Schema for the servingruntimes API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">
+ServingRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>supportedModelFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedModelFormat">
+[]SupportedModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>Model formats and version supported by this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>multiModel</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Whether this ServingRuntime is intended for multi-model usage or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to disable use of this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersions</code><br/>
+<em>
+[]github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set WorkerSpec to enable multi-node/multi-gpu</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for internal model-management (implementing mmesh.ModelRuntime gRPC service)
+Assumed to be single-model runtime if omitted</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>httpDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the Deployment generated by this ServingRuntime
+If specified, this overrides the podsPerRuntime configuration value</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageHelper</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageHelper">
+StorageHelper
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configuration for this runtime’s use of the storage helper (model puller)
+It is enabled unless explicitly disabled</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>builtInAdapter</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">
+BuiltInAdapter
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Provide the details about built-in runtime adapter</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeStatus">
+ServingRuntimeStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ClusterStorageContainer">ClusterStorageContainer
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageContainerSpec">
+StorageContainerSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>container</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>Container spec for the storage initializer init container</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>supportedUriFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedUriFormat">
+[]SupportedUriFormat
+</a>
+</em>
+</td>
+<td>
+<p>List of URI formats that this container supports</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workloadType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkloadType">
+WorkloadType
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraph">InferenceGraph
+</h3>
+<div>
+<p>InferenceGraph is the Schema for the InferenceGraph API for multiple models</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceGraphSpec">
+InferenceGraphSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>nodes</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceRouter">
+map[string]kserve.io/serving/pkg/apis/serving/v1alpha1.InferenceRouter
+</a>
+</em>
+</td>
+<td>
+<p>Map of InferenceGraph router nodes
+Each node defines the router which can be different routing types</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resources</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcerequirements-v1-core">
+Kubernetes core/v1.ResourceRequirements
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>timeout</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TimeoutSeconds specifies the number of seconds to wait before timing out a request to the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>minReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Minimum number of replicas, defaults to 1 but can be set to 0 to enable scale-to-zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Maximum number of replicas for autoscaling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceGraphStatus">
+InferenceGraphStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraphSpec">InferenceGraphSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraph">InferenceGraph</a>)
+</p>
+<div>
+<p>InferenceGraphSpec defines the InferenceGraph spec</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodes</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceRouter">
+map[string]kserve.io/serving/pkg/apis/serving/v1alpha1.InferenceRouter
+</a>
+</em>
+</td>
+<td>
+<p>Map of InferenceGraph router nodes
+Each node defines the router which can be different routing types</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resources</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcerequirements-v1-core">
+Kubernetes core/v1.ResourceRequirements
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+<tr>
+<td>
+<code>timeout</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TimeoutSeconds specifies the number of seconds to wait before timing out a request to the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>minReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Minimum number of replicas, defaults to 1 but can be set to 0 to enable scale-to-zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Maximum number of replicas for autoscaling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraphStatus">InferenceGraphStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraph">InferenceGraph</a>)
+</p>
+<div>
+<p>InferenceGraphStatus defines the InferenceGraph conditions and status</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Status</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Status">
+knative.dev/pkg/apis/duck/v1.Status
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Status</code> are embedded into this type.)
+</p>
+<p>Conditions for InferenceGraph</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Url for the InferenceGraph</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceGraphValidator">InferenceGraphValidator
+</h3>
+<div>
+<p>InferenceGraphValidator is responsible for setting default values on the InferenceGraph resources
+when created or updated.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as it is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
+<h3 id="serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraphSpec">InferenceGraphSpec</a>)
+</p>
+<div>
+<p>InferenceRouter defines the router for each InferenceGraph node with one or multiple steps</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: canary-route
+spec:
+nodes:
+root:
+routerType: Splitter
+routes:
+- service: mymodel1
+weight: 20
+- service: mymodel2
+weight: 80
+</code></pre>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: abtest
+spec:
+nodes:
+mymodel:
+routerType: Switch
+routes:
+- service: mymodel1
+condition: "{ .input.userId == 1 }"
+- service: mymodel2
+condition: "{ .input.userId == 2 }"
+</code></pre>
+<p>Scoring a case using a model ensemble consists of scoring it using each model separately,
+then combining the results into a single scoring result using one of the pre-defined combination methods.</p>
+<p>Tree Ensemble constitutes a case where simple algorithms for combining results of either classification or regression trees are well known.
+Multiple classification trees, for example, are commonly combined using a “majority-vote” method.
+Multiple regression trees are often combined using various averaging techniques.
+e.g tagging models with segment identifiers and weights to be used for their combination in these ways.</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: ensemble
+spec:
+nodes:
+root:
+routerType: Sequence
+routes:
+- service: feast
+- nodeName: ensembleModel
+data: $response
+ensembleModel:
+routerType: Ensemble
+routes:
+- service: sklearn-model
+- service: xgboost-model
+</code></pre>
+<p>Scoring a case using a sequence, or chain of models allows the output of one model to be passed in as input to the subsequent models.</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: model-chainer
+spec:
+nodes:
+root:
+routerType: Sequence
+routes:
+- service: mymodel-s1
+- service: mymodel-s2
+data: $response
+- service: mymodel-s3
+data: $response
+</code></pre>
+<p>In the flow described below, the pre_processing node base64 encodes the image and passes it to two model nodes in the flow.
+The encoded data is available to both these nodes for classification. The second node i.e. dog-breed-classification takes the
+original input from the pre_processing node along-with the response from the cat-dog-classification node to do further classification
+of the dog breed if required.</p>
+<pre><code class="language-yaml">kind: InferenceGraph
+metadata:
+name: dog-breed-classification
+spec:
+nodes:
+root:
+routerType: Sequence
+routes:
+- service: cat-dog-classifier
+- nodeName: breed-classifier
+data: $request
+breed-classifier:
+routerType: Switch
+routes:
+- service: dog-breed-classifier
+condition: { .predictions.class == "dog" }
+- service: cat-breed-classifier
+condition: { .predictions.class == "cat" }
+</code></pre>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>routerType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceRouterType">
+InferenceRouterType
+</a>
+</em>
+</td>
+<td>
+<p>RouterType</p>
+<ul>
+<li><p><code>Sequence:</code> chain multiple inference steps with input/output from previous step</p></li>
+<li><p><code>Splitter:</code> randomly routes to the target service according to the weight</p></li>
+<li><p><code>Ensemble:</code> routes the request to multiple models and then merge the responses</p></li>
+<li><p><code>Switch:</code> routes the request to one of the steps based on condition</p></li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<code>steps</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceStep">
+[]InferenceStep
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Steps defines destinations for the current router node</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceRouterType">InferenceRouterType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter</a>)
+</p>
+<div>
+<p>InferenceRouterType constant for inference routing types</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"Ensemble"</p></td>
+<td><p>Ensemble router routes the requests to multiple models and then merge the responses</p>
+</td>
+</tr><tr><td><p>"Sequence"</p></td>
+<td><p>Sequence Default type only route to one destination</p>
+</td>
+</tr><tr><td><p>"Splitter"</p></td>
+<td><p>Splitter router randomly routes the requests to the named service according to the weight</p>
+</td>
+</tr><tr><td><p>"Switch"</p></td>
+<td><p>Switch routes the request to the model based on certain condition</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceStep">InferenceStep
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceRouter">InferenceRouter</a>)
+</p>
+<div>
+<p>InferenceStep defines the inference target of the current step with condition, weights and data.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Unique name for the step within this node</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>InferenceTarget</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceTarget">
+InferenceTarget
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>InferenceTarget</code> are embedded into this type.)
+</p>
+<p>Node or service used to process this step</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>data</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>request data sent to the next route with input/output from the previous step
+$request
+$response.predictions</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>weight</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>the weight for split of the traffic, only used for Split Router
+when weight is specified all the routing targets should be sum to 100</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>condition</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>routing based on the condition</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>dependency</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.InferenceStepDependencyType">
+InferenceStepDependencyType
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>to decide whether a step is a hard or a soft dependency in the Inference Graph</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceStepDependencyType">InferenceStepDependencyType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceStep">InferenceStep</a>)
+</p>
+<div>
+<p>InferenceStepDependencyType constant for inference step dependency</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"Hard"</p></td>
+<td><p>Hard</p>
+</td>
+</tr><tr><td><p>"Soft"</p></td>
+<td><p>Soft</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.InferenceTarget">InferenceTarget
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceStep">InferenceStep</a>)
+</p>
+<div>
+<p>Exactly one InferenceTarget field must be specified</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>nodeName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The node name for routing as next step</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>named reference for InferenceService</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceUrl</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>InferenceService URL, mutually exclusive with ServiceName</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.LocalModelNodeGroup">LocalModelNodeGroup
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroupSpec">
+LocalModelNodeGroupSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>storageLimit</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Max storage size per node in this node group</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumespec-v1-core">
+Kubernetes core/v1.PersistentVolumeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumes for downloading models and in inference service namespaces</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeClaimSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumeclaimspec-v1-core">
+Kubernetes core/v1.PersistentVolumeClaimSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumeClaims for download and in inference service namespaces</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroupStatus">
+LocalModelNodeGroupStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.LocalModelNodeGroupSpec">LocalModelNodeGroupSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroup">LocalModelNodeGroup</a>)
+</p>
+<div>
+<p>LocalModelNodeGroupSpec defines a group of nodes for to download the model to.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>storageLimit</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Max storage size per node in this node group</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumespec-v1-core">
+Kubernetes core/v1.PersistentVolumeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumes for downloading models and in inference service namespaces</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>persistentVolumeClaimSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#persistentvolumeclaimspec-v1-core">
+Kubernetes core/v1.PersistentVolumeClaimSpec
+</a>
+</em>
+</td>
+<td>
+<p>Used to create PersistentVolumeClaims for download and in inference service namespaces</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.LocalModelNodeGroupStatus">LocalModelNodeGroupStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.LocalModelNodeGroup">LocalModelNodeGroup</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>used</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Used storage space on any node for this node group</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>available</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Available storage space on any node for this node group</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ModelCopies">ModelCopies
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>available</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>total</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Total number of nodes that we expect the model to be downloaded. Including nodes that are not ready</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>failed</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>Download Failed</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ModelSpec">ModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.TrainedModelSpec">TrainedModelSpec</a>)
+</p>
+<div>
+<p>ModelSpec describes a TrainedModel</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>storageUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Storage URI for the model repository</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>framework</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Machine Learning <framework name="">
+The values could be: “tensorflow”,“pytorch”,“sklearn”,“onnx”,“xgboost”, “myawesomeinternalframework” etc.</framework></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>memory</code><br/>
+<em>
+k8s.io/apimachinery/pkg/api/resource.Quantity
+</em>
+</td>
+<td>
+<p>Maximum memory this model will consume, this field is used to decide if a model server has enough memory to load this model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.NamespacedName">NamespacedName
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>namespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.NodeStatus">NodeStatus
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterLocalModelStatus">ClusterLocalModelStatus</a>)
+</p>
+<div>
+<p>NodeStatus enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"NodeDeleted"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeDeleting"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeDeletionError"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeDownloadError"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeDownloadPending"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeDownloaded"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeDownloading"</p></td>
+<td></td>
+</tr><tr><td><p>"NodeNotReady"</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ScaleMetric">ScaleMetric
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.InferenceGraphSpec">InferenceGraphSpec</a>)
+</p>
+<div>
+<p>ScaleMetric enum</p>
+</div>
+<h3 id="serving.kserve.io/v1alpha1.ServerType">ServerType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">BuiltInAdapter</a>)
+</p>
+<div>
+<p>ServerType constant for specifying the runtime name</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"mlserver"</p></td>
+<td><p>Model server is MLServer</p>
+</td>
+</tr><tr><td><p>"ovms"</p></td>
+<td><p>Model server is OpenVino Model Server</p>
+</td>
+</tr><tr><td><p>"triton"</p></td>
+<td><p>Model server is Triton</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntime">ServingRuntime
+</h3>
+<div>
+<p>ServingRuntime is the Schema for the servingruntimes API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">
+ServingRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>supportedModelFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedModelFormat">
+[]SupportedModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>Model formats and version supported by this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>multiModel</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Whether this ServingRuntime is intended for multi-model usage or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to disable use of this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersions</code><br/>
+<em>
+[]github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set WorkerSpec to enable multi-node/multi-gpu</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for internal model-management (implementing mmesh.ModelRuntime gRPC service)
+Assumed to be single-model runtime if omitted</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>httpDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the Deployment generated by this ServingRuntime
+If specified, this overrides the podsPerRuntime configuration value</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageHelper</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageHelper">
+StorageHelper
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configuration for this runtime’s use of the storage helper (model puller)
+It is enabled unless explicitly disabled</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>builtInAdapter</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">
+BuiltInAdapter
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Provide the details about built-in runtime adapter</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeStatus">
+ServingRuntimeStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntimePodSpec">ServingRuntimePodSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>, <a href="#serving.kserve.io/v1alpha1.WorkerSpec">WorkerSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>containers</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+[]Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>List of containers belonging to the pod.
+Containers cannot currently be added or removed.
+There must be at least one container in a Pod.
+Cannot be updated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>volumes</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#volume-v1-core">
+[]Kubernetes core/v1.Volume
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>List of volumes that can be mounted by containers belonging to the pod.
+More info: <a href="https://kubernetes.io/docs/concepts/storage/volumes">https://kubernetes.io/docs/concepts/storage/volumes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeSelector</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>NodeSelector is a selector which must be true for the pod to fit on a node.
+Selector which must match a node’s labels for the pod to be scheduled on that node.
+More info: <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod’s scheduling constraints</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tolerations</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#toleration-v1-core">
+[]Kubernetes core/v1.Toleration
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod’s tolerations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Labels that will be add to the pod.
+More info: <a href="http://kubernetes.io/docs/user-guide/labels">http://kubernetes.io/docs/user-guide/labels</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>annotations</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Annotations that will be add to the pod.
+More info: <a href="http://kubernetes.io/docs/user-guide/annotations">http://kubernetes.io/docs/user-guide/annotations</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>imagePullSecrets</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#localobjectreference-v1-core">
+[]Kubernetes core/v1.LocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec.
+If specified, these secrets will be passed to individual puller implementations for them to use. For example,
+in the case of docker, only DockerConfig type secrets are honored.
+More info: <a href="https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod">https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostIPC</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Use the host’s ipc namespace.
+Optional: Default to false.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime</a>, <a href="#serving.kserve.io/v1alpha1.ServingRuntime">ServingRuntime</a>, <a href="#serving.kserve.io/v1alpha1.SupportedRuntime">SupportedRuntime</a>)
+</p>
+<div>
+<p>ServingRuntimeSpec defines the desired state of ServingRuntime. This spec is currently provisional
+and are subject to change as details regarding single-model serving and multi-model serving
+are hammered out.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>supportedModelFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedModelFormat">
+[]SupportedModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>Model formats and version supported by this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>multiModel</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Whether this ServingRuntime is intended for multi-model usage or not.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to disable use of this runtime</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersions</code><br/>
+<em>
+[]github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set WorkerSpec to enable multi-node/multi-gpu</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for internal model-management (implementing mmesh.ModelRuntime gRPC service)
+Assumed to be single-model runtime if omitted</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Grpc endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>httpDataEndpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HTTP endpoint for inferencing</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>replicas</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the Deployment generated by this ServingRuntime
+If specified, this overrides the podsPerRuntime configuration value</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storageHelper</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.StorageHelper">
+StorageHelper
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configuration for this runtime’s use of the storage helper (model puller)
+It is enabled unless explicitly disabled</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>builtInAdapter</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.BuiltInAdapter">
+BuiltInAdapter
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Provide the details about built-in runtime adapter</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.ServingRuntimeStatus">ServingRuntimeStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterServingRuntime">ClusterServingRuntime</a>, <a href="#serving.kserve.io/v1alpha1.ServingRuntime">ServingRuntime</a>)
+</p>
+<div>
+<p>ServingRuntimeStatus defines the observed state of ServingRuntime</p>
+</div>
+<h3 id="serving.kserve.io/v1alpha1.StorageContainerSpec">StorageContainerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ClusterStorageContainer">ClusterStorageContainer</a>)
+</p>
+<div>
+<p>StorageContainerSpec defines the container spec for the storage initializer init container, and the protocols it supports.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>container</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>Container spec for the storage initializer init container</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>supportedUriFormats</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.SupportedUriFormat">
+[]SupportedUriFormat
+</a>
+</em>
+</td>
+<td>
+<p>List of URI formats that this container supports</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workloadType</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.WorkloadType">
+WorkloadType
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.StorageHelper">StorageHelper
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>disabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.SupportedModelFormat">SupportedModelFormat
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name of the model format.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>version</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Version of the model format.
+Used in validating that a predictor is supported by a runtime.
+Can be “major”, “major.minor” or “major.minor.patch”.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>autoSelect</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set to true to allow the ServingRuntime to be used for automatic model placement if
+this model format is specified with no explicit runtime.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>priority</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Priority of this serving runtime for auto selection.
+This is used to select the serving runtime if more than one serving runtime supports the same model format.
+The value should be greater than zero.  The higher the value, the higher the priority.
+Priority is not considered if AutoSelect is either false or not specified.
+Priority can be overridden by specifying the runtime in the InferenceService.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.SupportedRuntime">SupportedRuntime
+</h3>
+<div>
+<p>SupportedRuntime is the schema for supported runtime result of automatic selection</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>Spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">
+ServingRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.SupportedUriFormat">SupportedUriFormat
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.StorageContainerSpec">StorageContainerSpec</a>)
+</p>
+<div>
+<p>SupportedUriFormat can be either prefix or regex. Todo: Add validation that only one of them is set.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>prefix</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>regex</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModel">TrainedModel
+</h3>
+<div>
+<p>TrainedModel is the Schema for the TrainedModel API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.TrainedModelSpec">
+TrainedModelSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>inferenceService</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>parent inference service to deploy to</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>model</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ModelSpec">
+ModelSpec
+</a>
+</em>
+</td>
+<td>
+<p>Predictor model spec</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.TrainedModelStatus">
+TrainedModelStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModelSpec">TrainedModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.TrainedModel">TrainedModel</a>)
+</p>
+<div>
+<p>TrainedModelSpec defines the TrainedModel spec</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>inferenceService</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>parent inference service to deploy to</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>model</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ModelSpec">
+ModelSpec
+</a>
+</em>
+</td>
+<td>
+<p>Predictor model spec</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModelStatus">TrainedModelStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.TrainedModel">TrainedModel</a>)
+</p>
+<div>
+<p>TrainedModelStatus defines the observed state of TrainedModel</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Status</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Status">
+knative.dev/pkg/apis/duck/v1.Status
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Status</code> are embedded into this type.)
+</p>
+<p>Conditions for trained model</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<p>URL holds the url that will distribute traffic over the provided traffic targets.
+For v1: http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}/v1/models/<trainedmodel>:predict
+For v2: http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}/v2/models/<trainedmodel>/infer</trainedmodel></trainedmodel></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>address</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable">
+knative.dev/pkg/apis/duck/v1.Addressable
+</a>
+</em>
+</td>
+<td>
+<p>Addressable endpoint for the deployed trained model
+http://<inferenceservice.metadata.name>/v1/models/<trainedmodel>.metadata.name</trainedmodel></inferenceservice.metadata.name></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.TrainedModelValidator">TrainedModelValidator
+</h3>
+<div>
+<p>TrainedModelValidator is responsible for setting default values on the TrainedModel resources
+when created or updated.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as it is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
+<h3 id="serving.kserve.io/v1alpha1.WorkerSpec">WorkerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.ServingRuntimeSpec">ServingRuntimeSpec</a>)
+</p>
+<div>
+<p>WorkerSpec is the schema for multi-node/multi-GPU feature</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ServingRuntimePodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1alpha1.ServingRuntimePodSpec">
+ServingRuntimePodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ServingRuntimePodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>size</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the worker set, each worker set represents the unit of scaling</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1alpha1.WorkloadType">WorkloadType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1alpha1.StorageContainerSpec">StorageContainerSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"initContainer"</p></td>
+<td></td>
+</tr><tr><td><p>"localModelDownloadJob"</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>7e436424</code>.
+</em></p>
+<h2 id="serving.kserve.io/v1beta1">serving.kserve.io/v1beta1</h2>
+<div>
+<p>Package v1beta1 contains API Schema definitions for the serving v1beta1 API group</p>
+</div>
+<p>Resource Types:</p>
+<ul></ul>
+<h3 id="serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>)
+</p>
+<div>
+<p>ARTExplainerType defines the arguments for configuring an ART Explanation Server</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>type</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ARTExplainerType">
+ARTExplainerType
+</a>
+</em>
+</td>
+<td>
+<p>The type of ART explainer</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ExplainerExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ExplainerExtensionSpec">
+ExplainerExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ExplainerExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all explainers</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ARTExplainerType">ARTExplainerType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"SquareAttack"</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.Batcher">Batcher
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">ComponentExtensionSpec</a>)
+</p>
+<div>
+<p>Batcher specifies optional payload batching available for all components</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>maxBatchSize</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the max number of requests to trigger a batch</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxLatency</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the max latency to trigger a batch</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>timeout</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the timeout of a batch</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.Component">Component
+</h3>
+<div>
+<p>Component interface is implemented by all specs that contain component implementations, e.g. PredictorSpec, ExplainerSpec, TransformerSpec.</p>
+</div>
+<h3 id="serving.kserve.io/v1beta1.ComponentExtensionSpec">ComponentExtensionSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>, <a href="#serving.kserve.io/v1beta1.TransformerSpec">TransformerSpec</a>)
+</p>
+<div>
+<p>ComponentExtensionSpec defines the deployment configuration for a given InferenceService component</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>minReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Minimum number of replicas, defaults to 1 but can be set to 0 to enable scale-to-zero.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>maxReplicas</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Maximum number of replicas for autoscaling.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleTarget</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleTarget specifies the integer target value of the metric type the Autoscaler watches for.
+concurrency and rps targets are supported by Knative Pod Autoscaler
+(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-targets/">https://knative.dev/docs/serving/autoscaling/autoscaling-targets/</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>scaleMetric</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ScaleMetric">
+ScaleMetric
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ScaleMetric defines the scaling metric type watched by autoscaler
+possible values are concurrency, rps, cpu, memory. concurrency, rps are supported via
+Knative Pod Autoscaler(<a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">https://knative.dev/docs/serving/autoscaling/autoscaling-metrics</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>containerConcurrency</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ContainerConcurrency specifies how many requests can be processed concurrently, this sets the hard limit of the container
+concurrency(<a href="https://knative.dev/docs/serving/autoscaling/concurrency">https://knative.dev/docs/serving/autoscaling/concurrency</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>timeout</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TimeoutSeconds specifies the number of seconds to wait before timing out a request to the component.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>canaryTrafficPercent</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>CanaryTrafficPercent defines the traffic split percentage between the candidate revision and the last ready revision</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>logger</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.LoggerSpec">
+LoggerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Activate request/response logging and logger configurations</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>batcher</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.Batcher">
+Batcher
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Activate request batching and batching configurations</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>labels</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Labels that will be added to the component pod.
+More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/">https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>annotations</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Annotations that will be added to the component pod.
+More info: <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/">https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>deploymentStrategy</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#deploymentstrategy-v1-apps">
+Kubernetes apps/v1.DeploymentStrategy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The deployment strategy to use to replace existing pods with new ones. Only applicable for raw deployment mode.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ComponentImplementation">ComponentImplementation
+</h3>
+<div>
+<p>ComponentImplementation interface is implemented by predictor, transformer, and explainer implementations</p>
+</div>
+<h3 id="serving.kserve.io/v1beta1.ComponentStatusSpec">ComponentStatusSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServiceStatus">InferenceServiceStatus</a>)
+</p>
+<div>
+<p>ComponentStatusSpec describes the state of the component</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>latestReadyRevision</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Latest revision name that is in ready state</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>latestCreatedRevision</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Latest revision name that is created</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>previousRolledoutRevision</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Previous revision name that is rolled out with 100 percent traffic</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>latestRolledoutRevision</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Latest revision name that is rolled out with 100 percent traffic</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>traffic</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/serving/pkg/apis/serving/v1#TrafficTarget">
+[]knative.dev/serving/pkg/apis/serving/v1.TrafficTarget
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Traffic holds the configured traffic distribution for latest ready revision and previous rolled out revision.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>URL holds the primary url that will distribute traffic over the provided traffic targets.
+This will be one the REST or gRPC endpoints that are available.
+It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>restUrl</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>REST endpoint of the component if available.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>grpcUrl</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>gRPC endpoint of the component if available.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>address</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable">
+knative.dev/pkg/apis/duck/v1.Addressable
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Addressable endpoint for the InferenceService</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ComponentType">ComponentType
+(<code>string</code> alias)</h3>
+<div>
+<p>ComponentType contains the different types of components of the service</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"explainer"</p></td>
+<td></td>
+</tr><tr><td><p>"predictor"</p></td>
+<td></td>
+</tr><tr><td><p>"transformer"</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.CustomExplainer">CustomExplainer
+</h3>
+<div>
+<p>CustomExplainer defines arguments for configuring a custom explainer.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podspec-v1-core">
+Kubernetes core/v1.PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.CustomPredictor">CustomPredictor
+</h3>
+<div>
+<p>CustomPredictor defines arguments for configuring a custom server.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podspec-v1-core">
+Kubernetes core/v1.PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.CustomTransformer">CustomTransformer
+</h3>
+<div>
+<p>CustomTransformer defines arguments for configuring a custom transformer.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podspec-v1-core">
+Kubernetes core/v1.PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.DeployConfig">DeployConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>defaultDeploymentMode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ExplainerConfig">ExplainerConfig
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainersConfig">ExplainersConfig</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>image</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>explainer docker image name</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>defaultImageVersion</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>default explainer docker image version</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ExplainerExtensionSpec">ExplainerExtensionSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">ARTExplainerSpec</a>)
+</p>
+<div>
+<p>ExplainerExtensionSpec defines configuration shared across all explainer frameworks</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>storageUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>The location of a trained explanation model</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtimeVersion</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Defaults to latest Explainer Version</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>config</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<p>Inline custom parameter settings for explainer</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>Container</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Container</code> are embedded into this type.)
+</p>
+<em>(Optional)</em>
+<p>Container enables overrides for the predictor.
+Each framework will have different defaults that are populated in the underlying container spec.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storage</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.StorageSpec">
+StorageSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Storage Spec for model location</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServiceSpec">InferenceServiceSpec</a>)
+</p>
+<div>
+<p>ExplainerSpec defines the container spec for a model explanation server,
+The following fields follow a “1-of” semantic. Users must specify exactly one spec.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>art</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ARTExplainerSpec">
+ARTExplainerSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for ART explainer</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PodSpec">
+PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+<p>This spec is dual purpose.
+1) Users may choose to provide a full PodSpec for their custom explainer.
+The field PodSpec.Containers is mutually exclusive with other explainers.
+2) Users may choose to provide a Explainer and specify PodSpec
+overrides in the PodSpec. They must not provide PodSpec.Containers in this case.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ComponentExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">
+ComponentExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ComponentExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Component extension defines the deployment configurations for explainer</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ExplainersConfig">ExplainersConfig
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServicesConfig">InferenceServicesConfig</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>art</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ExplainerConfig">
+ExplainerConfig
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.FailureInfo">FailureInfo
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>location</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Name of component to which the failure relates (usually Pod name)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>reason</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.FailureReason">
+FailureReason
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>High level class of failure</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>message</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Detailed error message</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelRevisionName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Internal Revision/ID of model, tied to specific Spec contents</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>time</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#time-v1-meta">
+Kubernetes meta/v1.Time
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Time failure occurred or was discovered</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>exitCode</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Exit status from the last termination of the container</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.FailureReason">FailureReason
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.FailureInfo">FailureInfo</a>)
+</p>
+<div>
+<p>FailureReason enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"InvalidPredictorSpec"</p></td>
+<td><p>The current Predictor Spec is invalid or unsupported</p>
+</td>
+</tr><tr><td><p>"ModelLoadFailed"</p></td>
+<td><p>The model failed to load within a ServingRuntime container</p>
+</td>
+</tr><tr><td><p>"NoSupportingRuntime"</p></td>
+<td><p>There are no ServingRuntime which support the specified model type</p>
+</td>
+</tr><tr><td><p>"RuntimeDisabled"</p></td>
+<td><p>The ServingRuntime is disabled</p>
+</td>
+</tr><tr><td><p>"RuntimeNotRecognized"</p></td>
+<td><p>There is no ServingRuntime defined with the specified runtime name</p>
+</td>
+</tr><tr><td><p>"RuntimeUnhealthy"</p></td>
+<td><p>Corresponding ServingRuntime containers failed to start or are unhealthy</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.HuggingFaceRuntimeSpec">HuggingFaceRuntimeSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>HuggingFaceRuntimeSpec defines arguments for configuring HuggingFace model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.InferenceService">InferenceService
+</h3>
+<div>
+<p>InferenceService is the Schema for the InferenceServices API</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.InferenceServiceSpec">
+InferenceServiceSpec
+</a>
+</em>
+</td>
+<td>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>predictor</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorSpec">
+PredictorSpec
+</a>
+</em>
+</td>
+<td>
+<p>Predictor defines the model serving spec</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>explainer</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ExplainerSpec">
+ExplainerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Explainer defines the model explanation service spec,
+explainer service calls to predictor or transformer if it is specified.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>transformer</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TransformerSpec">
+TransformerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Transformer defines the pre/post processing before and after the predictor call,
+transformer service calls to predictor service.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.InferenceServiceStatus">
+InferenceServiceStatus
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.InferenceServiceDefaulter">InferenceServiceDefaulter
+</h3>
+<div>
+<p>InferenceServiceDefaulter is responsible for setting default values on the InferenceService
+when created or updated.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as it is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
+<h3 id="serving.kserve.io/v1beta1.InferenceServiceSpec">InferenceServiceSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceService">InferenceService</a>)
+</p>
+<div>
+<p>InferenceServiceSpec is the top level type for this resource</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>predictor</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorSpec">
+PredictorSpec
+</a>
+</em>
+</td>
+<td>
+<p>Predictor defines the model serving spec</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>explainer</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ExplainerSpec">
+ExplainerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Explainer defines the model explanation service spec,
+explainer service calls to predictor or transformer if it is specified.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>transformer</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TransformerSpec">
+TransformerSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Transformer defines the pre/post processing before and after the predictor call,
+transformer service calls to predictor service.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.InferenceServiceStatus">InferenceServiceStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceService">InferenceService</a>)
+</p>
+<div>
+<p>InferenceServiceStatus defines the observed state of InferenceService</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>Status</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Status">
+knative.dev/pkg/apis/duck/v1.Status
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Status</code> are embedded into this type.)
+</p>
+<p>Conditions for the InferenceService <br/>
+- PredictorReady: predictor readiness condition; <br/>
+- TransformerReady: transformer readiness condition; <br/>
+- ExplainerReady: explainer readiness condition; <br/>
+- RoutesReady (serverless mode only): aggregated routing condition, i.e. endpoint readiness condition; <br/>
+- LatestDeploymentReady (serverless mode only): aggregated configuration condition, i.e. latest deployment readiness condition; <br/>
+- Ready: aggregated condition; <br/></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>address</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable">
+knative.dev/pkg/apis/duck/v1.Addressable
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Addressable endpoint for the InferenceService</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+<a href="https://pkg.go.dev/knative.dev/pkg/apis#URL">
+knative.dev/pkg/apis.URL
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>URL holds the url that will distribute traffic over the provided traffic targets.
+It generally has the form http[s]://{route-name}.{route-namespace}.{cluster-level-suffix}</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>components</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ComponentStatusSpec">
+map[kserve.io/serving/pkg/apis/serving/v1beta1.ComponentType]kserve.io/serving/pkg/apis/serving/v1beta1.ComponentStatusSpec
+</a>
+</em>
+</td>
+<td>
+<p>Statuses for the components of the InferenceService</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>modelStatus</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelStatus">
+ModelStatus
+</a>
+</em>
+</td>
+<td>
+<p>Model related statuses</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.InferenceServiceValidator">InferenceServiceValidator
+</h3>
+<div>
+<p>InferenceServiceValidator is responsible for validating the InferenceService resource
+when it is created, updated, or deleted.</p>
+<p>NOTE: The +kubebuilder:object:generate=false and +k8s:deepcopy-gen=false marker prevents controller-gen from generating DeepCopy methods,
+as this struct is used only for temporary operations and does not need to be deeply copied.</p>
+</div>
+<h3 id="serving.kserve.io/v1beta1.InferenceServicesConfig">InferenceServicesConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>explainers</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ExplainersConfig">
+ExplainersConfig
+</a>
+</em>
+</td>
+<td>
+<p>Explainer configurations</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.IngressConfig">IngressConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ingressGateway</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>knativeLocalGatewayService</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>localGateway</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>localGatewayService</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>ingressDomain</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>ingressClassName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>additionalIngressDomains</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>domainTemplate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>urlScheme</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>disableIstioVirtualHost</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>pathTemplate</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>disableIngressCreation</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>LightGBMSpec defines arguments for configuring LightGBMSpec model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.LocalModelConfig">LocalModelConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enabled</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>jobNamespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>defaultJobImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>fsGroup</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.LoggerSpec">LoggerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">ComponentExtensionSpec</a>)
+</p>
+<div>
+<p>LoggerSpec specifies optional payload logging available for all components</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>url</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>URL to send logging events</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mode</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.LoggerType">
+LoggerType
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the scope of the loggers. <br/>
+Valid values are: <br/>
+- “all” (default): log both request and response; <br/>
+- “request”: log only request; <br/>
+- “response”: log only response <br/></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>metadataHeaders</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Matched metadata HTTP headers for propagating to inference logger cloud events.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.LoggerType">LoggerType
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.LoggerSpec">LoggerSpec</a>)
+</p>
+<div>
+<p>LoggerType controls the scope of log publishing</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"all"</p></td>
+<td><p>LogAll Logger mode to log both request and response</p>
+</td>
+</tr><tr><td><p>"request"</p></td>
+<td><p>LogRequest Logger mode to log only request</p>
+</td>
+</tr><tr><td><p>"response"</p></td>
+<td><p>LogResponse Logger mode to log only response</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelCopies">ModelCopies
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>failedCopies</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>How many copies of this predictor’s models failed to load recently</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>totalCopies</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Total number copies of this predictor’s models that are currently loaded</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelFormat">ModelFormat
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelSpec">ModelSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name of the model format.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>version</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Version of the model format.
+Used in validating that a predictor is supported by a runtime.
+Can be “major”, “major.minor” or “major.minor.patch”.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelRevisionStates">ModelRevisionStates
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>activeModelState</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelState">
+ModelState
+</a>
+</em>
+</td>
+<td>
+<p>High level state string: Pending, Standby, Loading, Loaded, FailedToLoad</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>targetModelState</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelState">
+ModelState
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelSpec">ModelSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>modelFormat</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelFormat">
+ModelFormat
+</a>
+</em>
+</td>
+<td>
+<p>ModelFormat being served.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtime</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specific ClusterServingRuntime/ServingRuntime name to use for deployment.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelState">ModelState
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelRevisionStates">ModelRevisionStates</a>)
+</p>
+<div>
+<p>ModelState enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"FailedToLoad"</p></td>
+<td><p>All copies of the model failed to load</p>
+</td>
+</tr><tr><td><p>"Loaded"</p></td>
+<td><p>At least one copy of the model is loaded</p>
+</td>
+</tr><tr><td><p>"Loading"</p></td>
+<td><p>Model is loading</p>
+</td>
+</tr><tr><td><p>"Pending"</p></td>
+<td><p>Model is not yet registered</p>
+</td>
+</tr><tr><td><p>"Standby"</p></td>
+<td><p>Model is available but not loaded (will load when used)</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ModelStatus">ModelStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServiceStatus">InferenceServiceStatus</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>transitionStatus</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TransitionStatus">
+TransitionStatus
+</a>
+</em>
+</td>
+<td>
+<p>Whether the available predictor endpoints reflect the current Spec or is in transition</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>states</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelRevisionStates">
+ModelRevisionStates
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>State information of the predictor’s model.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>lastFailureInfo</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.FailureInfo">
+FailureInfo
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Details of last failure, when load of target model is failed or blocked.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>copies</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelCopies">
+ModelCopies
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Model copy information of the predictor’s model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>ONNXRuntimeSpec defines arguments for configuring ONNX model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.PMMLSpec">PMMLSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>PMMLSpec defines arguments for configuring PMML model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.PaddleServerSpec">PaddleServerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.PodSpec">PodSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerSpec">ExplainerSpec</a>, <a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>, <a href="#serving.kserve.io/v1beta1.TransformerSpec">TransformerSpec</a>, <a href="#serving.kserve.io/v1beta1.WorkerSpec">WorkerSpec</a>)
+</p>
+<div>
+<p>PodSpec is a description of a pod.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>volumes</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#volume-v1-core">
+[]Kubernetes core/v1.Volume
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>List of volumes that can be mounted by containers belonging to the pod.
+More info: <a href="https://kubernetes.io/docs/concepts/storage/volumes">https://kubernetes.io/docs/concepts/storage/volumes</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>initContainers</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+[]Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>List of initialization containers belonging to the pod.
+Init containers are executed in order prior to containers being started. If any
+init container fails, the pod is considered to have failed and is handled according
+to its restartPolicy. The name for an init container or normal container must be
+unique among all containers.
+Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes.
+The resourceRequirements of an init container are taken into account during scheduling
+by finding the highest request/limit for each resource type, and then using the max of
+of that value or the sum of the normal containers. Limits are applied to init containers
+in a similar fashion.
+Init containers cannot currently be added or removed.
+Cannot be updated.
+More info: <a href="https://kubernetes.io/docs/concepts/workloads/pods/init-containers/">https://kubernetes.io/docs/concepts/workloads/pods/init-containers/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>containers</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+[]Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>List of containers belonging to the pod.
+Containers cannot currently be added or removed.
+There must be at least one container in a Pod.
+Cannot be updated.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ephemeralContainers</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#ephemeralcontainer-v1-core">
+[]Kubernetes core/v1.EphemeralContainer
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing
+pod to perform user-initiated actions such as debugging. This list cannot be specified when
+creating a pod, and it cannot be modified by updating the pod spec. In order to add an
+ephemeral container to an existing pod, use the pod’s ephemeralcontainers subresource.
+This field is beta-level and available on clusters that haven’t disabled the EphemeralContainers feature gate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>restartPolicy</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#restartpolicy-v1-core">
+Kubernetes core/v1.RestartPolicy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Restart policy for all containers within the pod.
+One of Always, OnFailure, Never.
+Default to Always.
+More info: <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy">https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>terminationGracePeriodSeconds</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Optional duration in seconds the pod needs to terminate gracefully. May be decreased in delete request.
+Value must be non-negative integer. The value zero indicates stop immediately via
+the kill signal (no opportunity to shut down).
+If this value is nil, the default grace period will be used instead.
+The grace period is the duration in seconds after the processes running in the pod are sent
+a termination signal and the time when the processes are forcibly halted with a kill signal.
+Set this value longer than the expected cleanup time for your process.
+Defaults to 30 seconds.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>activeDeadlineSeconds</code><br/>
+<em>
+int64
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Optional duration in seconds the pod may be active on the node relative to
+StartTime before the system will actively try to mark it failed and kill associated containers.
+Value must be a positive integer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>dnsPolicy</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#dnspolicy-v1-core">
+Kubernetes core/v1.DNSPolicy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Set DNS policy for the pod.
+Defaults to “ClusterFirst”.
+Valid values are ‘ClusterFirstWithHostNet’, ‘ClusterFirst’, ‘Default’ or ‘None’.
+DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
+To have DNS options set along with hostNetwork, you have to specify DNS policy
+explicitly to ‘ClusterFirstWithHostNet’.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeSelector</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>NodeSelector is a selector which must be true for the pod to fit on a node.
+Selector which must match a node’s labels for the pod to be scheduled on that node.
+More info: <a href="https://kubernetes.io/docs/concepts/configuration/assign-pod-node/">https://kubernetes.io/docs/concepts/configuration/assign-pod-node/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceAccountName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ServiceAccountName is the name of the ServiceAccount to use to run this pod.
+More info: <a href="https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/">https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>serviceAccount</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>DeprecatedServiceAccount is a depreciated alias for ServiceAccountName.
+Deprecated: Use serviceAccountName instead.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>automountServiceAccountToken</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>AutomountServiceAccountToken indicates whether a service account token should be automatically mounted.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>nodeName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>NodeName is a request to schedule this pod onto a specific node. If it is non-empty,
+the scheduler simply schedules this pod onto that node, assuming that it fits resource
+requirements.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostNetwork</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Host networking requested for this pod. Use the host’s network namespace.
+If this option is set, the ports that will be used must be specified.
+Default to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostPID</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Use the host’s pid namespace.
+Optional: Default to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostIPC</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Use the host’s ipc namespace.
+Optional: Default to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>shareProcessNamespace</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Share a single process namespace between all of the containers in a pod.
+When this is set containers will be able to view and signal processes from other containers
+in the same pod, and the first process in each container will not be assigned PID 1.
+HostPID and ShareProcessNamespace cannot both be set.
+Optional: Default to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>securityContext</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podsecuritycontext-v1-core">
+Kubernetes core/v1.PodSecurityContext
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>SecurityContext holds pod-level security attributes and common container settings.
+Optional: Defaults to empty.  See type description for default values of each field.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>imagePullSecrets</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#localobjectreference-v1-core">
+[]Kubernetes core/v1.LocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec.
+If specified, these secrets will be passed to individual puller implementations for them to use. For example,
+in the case of docker, only DockerConfig type secrets are honored.
+More info: <a href="https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod">https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostname</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the hostname of the Pod
+If not specified, the pod’s hostname will be set to a system-defined value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subdomain</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the fully qualified Pod hostname will be “<hostname>.<subdomain>.<pod namespace="">.svc.<cluster domain="">”.
+If not specified, the pod will not have a domainname at all.</cluster></pod></subdomain></hostname></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>affinity</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#affinity-v1-core">
+Kubernetes core/v1.Affinity
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod’s scheduling constraints</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>schedulerName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod will be dispatched by specified scheduler.
+If not specified, the pod will be dispatched by default scheduler.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tolerations</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#toleration-v1-core">
+[]Kubernetes core/v1.Toleration
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, the pod’s tolerations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostAliases</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#hostalias-v1-core">
+[]Kubernetes core/v1.HostAlias
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>HostAliases is an optional list of hosts and IPs that will be injected into the pod’s hosts
+file if specified. This is only valid for non-hostNetwork pods.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>priorityClassName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, indicates the pod’s priority. “system-node-critical” and
+“system-cluster-critical” are two special keywords which indicate the
+highest priorities with the former being the highest priority. Any other
+name must be defined by creating a PriorityClass object with that name.
+If not specified, the pod priority will be default or zero if there is no
+default.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>priority</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The priority value. Various system components use this field to find the
+priority of the pod. When Priority Admission Controller is enabled, it
+prevents users from setting this field. The admission controller populates
+this field from PriorityClassName.
+The higher the value, the higher the priority.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>dnsConfig</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#poddnsconfig-v1-core">
+Kubernetes core/v1.PodDNSConfig
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the DNS parameters of a pod.
+Parameters specified here will be merged to the generated DNS
+configuration based on DNSPolicy.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>readinessGates</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podreadinessgate-v1-core">
+[]Kubernetes core/v1.PodReadinessGate
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If specified, all readiness gates will be evaluated for pod readiness.
+A pod is ready when all its containers are ready AND
+all conditions specified in the readiness gates have status equal to “True”
+More info: <a href="https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates">https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates</a></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtimeClassName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>RuntimeClassName refers to a RuntimeClass object in the node.k8s.io group, which should be used
+to run this pod.  If no RuntimeClass resource matches the named class, the pod will not be run.
+If unset or empty, the “legacy” RuntimeClass will be used, which is an implicit class with an
+empty definition that uses the default runtime handler.
+More info: <a href="https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class">https://git.k8s.io/enhancements/keps/sig-node/585-runtime-class</a>
+This is a beta feature as of Kubernetes v1.14.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableServiceLinks</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>EnableServiceLinks indicates whether information about services should be injected into pod’s
+environment variables, matching the syntax of Docker links.
+Optional: Defaults to true.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>preemptionPolicy</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#preemptionpolicy-v1-core">
+Kubernetes core/v1.PreemptionPolicy
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>PreemptionPolicy is the Policy for preempting pods with lower priority.
+One of Never, PreemptLowerPriority.
+Defaults to PreemptLowerPriority if unset.
+This field is beta-level, gated by the NonPreemptingPriority feature-gate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>overhead</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#resourcelist-v1-core">
+Kubernetes core/v1.ResourceList
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Overhead represents the resource overhead associated with running a pod for a given RuntimeClass.
+This field will be autopopulated at admission time by the RuntimeClass admission controller. If
+the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests.
+The RuntimeClass admission controller will reject Pod create requests which have the overhead already
+set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value
+defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero.
+More info: <a href="https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md">https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md</a>
+This field is beta-level as of Kubernetes v1.18, and is only honored by servers that enable the PodOverhead feature.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>topologySpreadConstraints</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#topologyspreadconstraint-v1-core">
+[]Kubernetes core/v1.TopologySpreadConstraint
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TopologySpreadConstraints describes how a group of pods ought to spread across topology
+domains. Scheduler will schedule pods in a way which abides by the constraints.
+All topologySpreadConstraints are ANDed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>setHostnameAsFQDN</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>If true the pod’s hostname will be configured as the pod’s FQDN, rather than the leaf name (the default).
+In Linux containers, this means setting the FQDN in the hostname field of the kernel (the nodename field of struct utsname).
+In Windows containers, this means setting the registry value of hostname for the registry key HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters to FQDN.
+If a pod does not have FQDN, this has no effect.
+Default to false.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>os</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podos-v1-core">
+Kubernetes core/v1.PodOS
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Specifies the OS of the containers in the pod.
+Some pod and container fields are restricted if this is set.</p>
+<p>If the OS field is set to linux, the following fields must be unset:
+-securityContext.windowsOptions</p>
+<p>If the OS field is set to windows, following fields must be unset:
+- spec.hostPID
+- spec.hostIPC
+- spec.securityContext.seLinuxOptions
+- spec.securityContext.seccompProfile
+- spec.securityContext.fsGroup
+- spec.securityContext.fsGroupChangePolicy
+- spec.securityContext.sysctls
+- spec.shareProcessNamespace
+- spec.securityContext.runAsUser
+- spec.securityContext.runAsGroup
+- spec.securityContext.supplementalGroups
+- spec.containers[<em>].securityContext.seLinuxOptions
+- spec.containers[</em>].securityContext.seccompProfile
+- spec.containers[<em>].securityContext.capabilities
+- spec.containers[</em>].securityContext.readOnlyRootFilesystem
+- spec.containers[<em>].securityContext.privileged
+- spec.containers[</em>].securityContext.allowPrivilegeEscalation
+- spec.containers[<em>].securityContext.procMount
+- spec.containers[</em>].securityContext.runAsUser
+- spec.containers[*].securityContext.runAsGroup
+This is an alpha field and requires the IdentifyPodOS feature</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>hostUsers</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Use the host’s user namespace.
+Optional: Default to true.
+If set to true or not present, the pod will be run in the host user namespace, useful
+for when the pod needs a feature only available to the host user namespace, such as
+loading a kernel module with CAP_SYS_MODULE.
+When set to false, a new userns is created for the pod. Setting false is useful for
+mitigating container breakout vulnerabilities even allowing users to run their
+containers as root without actually having root privileges on the host.
+This field is alpha-level and is only honored by servers that enable the UserNamespacesSupport feature.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>schedulingGates</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podschedulinggate-v1-core">
+[]Kubernetes core/v1.PodSchedulingGate
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>SchedulingGates is an opaque list of values that if specified will block scheduling the pod.
+If schedulingGates is not empty, the pod will stay in the SchedulingGated state and the
+scheduler will not attempt to schedule the pod.</p>
+<p>SchedulingGates can only be set at pod creation time, and be removed only afterwards.</p>
+<p>This is a beta feature enabled by the PodSchedulingReadiness feature gate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>resourceClaims</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#podresourceclaim-v1-core">
+[]Kubernetes core/v1.PodResourceClaim
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>ResourceClaims defines which ResourceClaims must be allocated
+and reserved before the Pod is allowed to start. The resources
+will be made available to those containers which consume them
+by name.</p>
+<p>This is an alpha field and requires enabling the
+DynamicResourceAllocation feature gate.</p>
+<p>This field is immutable.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.PredictorExtensionSpec">PredictorExtensionSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.HuggingFaceRuntimeSpec">HuggingFaceRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.LightGBMSpec">LightGBMSpec</a>, <a href="#serving.kserve.io/v1beta1.ModelSpec">ModelSpec</a>, <a href="#serving.kserve.io/v1beta1.ONNXRuntimeSpec">ONNXRuntimeSpec</a>, <a href="#serving.kserve.io/v1beta1.PMMLSpec">PMMLSpec</a>, <a href="#serving.kserve.io/v1beta1.PaddleServerSpec">PaddleServerSpec</a>, <a href="#serving.kserve.io/v1beta1.SKLearnSpec">SKLearnSpec</a>, <a href="#serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec</a>, <a href="#serving.kserve.io/v1beta1.TorchServeSpec">TorchServeSpec</a>, <a href="#serving.kserve.io/v1beta1.TritonSpec">TritonSpec</a>, <a href="#serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec</a>)
+</p>
+<div>
+<p>PredictorExtensionSpec defines configuration shared across all predictor frameworks</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>storageUri</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>This field points to the location of the trained model which is mounted onto the pod.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>runtimeVersion</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Runtime version of the predictor docker image</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>protocolVersion</code><br/>
+<em>
+github.com/kserve/kserve/pkg/constants.InferenceServiceProtocol
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>Container</code><br/>
+<em>
+<a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#container-v1-core">
+Kubernetes core/v1.Container
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>Container</code> are embedded into this type.)
+</p>
+<em>(Optional)</em>
+<p>Container enables overrides for the predictor.
+Each framework will have different defaults that are populated in the underlying container spec.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>storage</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.StorageSpec">
+StorageSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Storage Spec for model location</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.PredictorImplementation">PredictorImplementation
+</h3>
+<div>
+<p>PredictorImplementation defines common functions for all predictors e.g Tensorflow, Triton, etc</p>
+</div>
+<h3 id="serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServiceSpec">InferenceServiceSpec</a>)
+</p>
+<div>
+<p>PredictorSpec defines the configuration for a predictor,
+The following fields follow a “1-of” semantic. Users must specify exactly one spec.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sklearn</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.SKLearnSpec">
+SKLearnSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for SKLearn model server</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>xgboost</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.XGBoostSpec">
+XGBoostSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for XGBoost model server</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tensorflow</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TFServingSpec">
+TFServingSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for TFServing (<a href="https://github.com/tensorflow/serving">https://github.com/tensorflow/serving</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pytorch</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TorchServeSpec">
+TorchServeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for TorchServe (<a href="https://pytorch.org/serve">https://pytorch.org/serve</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>triton</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.TritonSpec">
+TritonSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for Triton Inference Server (<a href="https://github.com/triton-inference-server/server">https://github.com/triton-inference-server/server</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>onnx</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ONNXRuntimeSpec">
+ONNXRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for ONNX runtime (<a href="https://github.com/microsoft/onnxruntime">https://github.com/microsoft/onnxruntime</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>huggingface</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.HuggingFaceRuntimeSpec">
+HuggingFaceRuntimeSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for HuggingFace runtime (<a href="https://github.com/huggingface">https://github.com/huggingface</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pmml</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PMMLSpec">
+PMMLSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for PMML (<a href="http://dmg.org/pmml/v4-1/GeneralStructure.html">http://dmg.org/pmml/v4-1/GeneralStructure.html</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>lightgbm</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.LightGBMSpec">
+LightGBMSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for LightGBM model server</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>paddle</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PaddleServerSpec">
+PaddleServerSpec
+</a>
+</em>
+</td>
+<td>
+<p>Spec for Paddle model server (<a href="https://github.com/PaddlePaddle/Serving">https://github.com/PaddlePaddle/Serving</a>)</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>model</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ModelSpec">
+ModelSpec
+</a>
+</em>
+</td>
+<td>
+<p>Model spec for any arbitrary framework.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>workerSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.WorkerSpec">
+WorkerSpec
+</a>
+</em>
+</td>
+<td>
+<p>WorkerSpec for enabling multi-node/multi-gpu</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PodSpec">
+PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+<p>This spec is dual purpose. <br/>
+1) Provide a full PodSpec for custom predictor.
+The field PodSpec.Containers is mutually exclusive with other predictors (i.e. TFServing). <br/>
+2) Provide a predictor (i.e. TFServing) and specify PodSpec
+overrides, you must not provide PodSpec.Containers in this case. <br/></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ComponentExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">
+ComponentExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ComponentExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Component extension defines the deployment configurations for a predictor</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.SKLearnSpec">SKLearnSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>SKLearnSpec defines arguments for configuring SKLearn model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.ScaleMetric">ScaleMetric
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">ComponentExtensionSpec</a>)
+</p>
+<div>
+<p>ScaleMetric enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"cpu"</p></td>
+<td></td>
+</tr><tr><td><p>"concurrency"</p></td>
+<td></td>
+</tr><tr><td><p>"memory"</p></td>
+<td></td>
+</tr><tr><td><p>"rps"</p></td>
+<td></td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.SecurityConfig">SecurityConfig
+</h3>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>autoMountServiceAccountToken</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.StorageSpec">StorageSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ExplainerExtensionSpec">ExplainerExtensionSpec</a>, <a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">PredictorExtensionSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>path</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The path to the model object in the storage. It cannot co-exist
+with the storageURI.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>schemaPath</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The path to the model schema file in the storage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>parameters</code><br/>
+<em>
+map[string]string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Parameters to override the default storage credentials and config.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>key</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>The Storage Key in the secret for this model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.TFServingSpec">TFServingSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>TFServingSpec defines arguments for configuring Tensorflow model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.TorchServeSpec">TorchServeSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>TorchServeSpec defines arguments for configuring PyTorch model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.TransformerSpec">TransformerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.InferenceServiceSpec">InferenceServiceSpec</a>)
+</p>
+<div>
+<p>TransformerSpec defines transformer service for pre/post processing</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PodSpec">
+PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+<p>This spec is dual purpose. <br/>
+1) Provide a full PodSpec for custom transformer.
+The field PodSpec.Containers is mutually exclusive with other transformers. <br/>
+2) Provide a transformer and specify PodSpec
+overrides, you must not provide PodSpec.Containers in this case. <br/></p>
+</td>
+</tr>
+<tr>
+<td>
+<code>ComponentExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.ComponentExtensionSpec">
+ComponentExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>ComponentExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Component extension defines the deployment configurations for a transformer</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.TransitionStatus">TransitionStatus
+(<code>string</code> alias)</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.ModelStatus">ModelStatus</a>)
+</p>
+<div>
+<p>TransitionStatus enum</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr><td><p>"BlockedByFailedLoad"</p></td>
+<td><p>Target model failed to load</p>
+</td>
+</tr><tr><td><p>"InProgress"</p></td>
+<td><p>Waiting for target model to reach state of active model</p>
+</td>
+</tr><tr><td><p>"InvalidSpec"</p></td>
+<td><p>Target predictor spec failed validation</p>
+</td>
+</tr><tr><td><p>"UpToDate"</p></td>
+<td><p>Predictor is up-to-date (reflects current spec)</p>
+</td>
+</tr></tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.TritonSpec">TritonSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>TritonSpec defines arguments for configuring Triton model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.WorkerSpec">WorkerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PodSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PodSpec">
+PodSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PodSpec</code> are embedded into this type.)
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>size</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Configure the number of replicas in the worker set, each worker set represents the unit of scaling</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="serving.kserve.io/v1beta1.XGBoostSpec">XGBoostSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#serving.kserve.io/v1beta1.PredictorSpec">PredictorSpec</a>)
+</p>
+<div>
+<p>XGBoostSpec defines arguments for configuring XGBoost model serving.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>PredictorExtensionSpec</code><br/>
+<em>
+<a href="#serving.kserve.io/v1beta1.PredictorExtensionSpec">
+PredictorExtensionSpec
+</a>
+</em>
+</td>
+<td>
+<p>
+(Members of <code>PredictorExtensionSpec</code> are embedded into this type.)
+</p>
+<p>Contains fields shared across all predictors</p>
+</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<p><em>
+Generated with <code>gen-crd-api-reference-docs</code>
+on git commit <code>7e436424</code>.
+</em></p>
+</article>
+</div>
+</div>
+<a class="md-top md-icon" data-md-component="top" data-md-state="hidden" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path></svg>
+            Back to top
+          </a>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Grafana Dashboards" class="md-footer__link md-footer__link--prev" href="../../modelserving/observability/grafana_dashboards/" rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
+</div>
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Previous
+              </span>
+              Grafana Dashboards
+            </div>
+</div>
+</a>
+<a aria-label="Next: Open Inference Protocol API Spec" class="md-footer__link md-footer__link--next" href="../swagger-ui/" rel="next">
+<div class="md-footer__title">
+<div class="md-ellipsis">
+<span class="md-footer__direction">
+                Next
+              </span>
+              Open Inference Protocol API Spec
+            </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2021 The KServe Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/kserve" rel="noopener" target="_blank" title="KServe Community on Github">
+<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+</a>
+<a class="md-social__link" href="https://github.com/kserve/community/blob/main/README.md#questions-and-issues" rel="noopener" target="_blank" title="Join Slack">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+<script>document$.subscribe(() => {
+            window.update_swagger_ui_iframe_height = function (id) {
+                var iFrameID = document.getElementById(id);
+                if (iFrameID) {
+                    full_height = (iFrameID.contentWindow.document.body.scrollHeight + 80) + "px";
+                    iFrameID.height = full_height;
+                    iFrameID.style.height = full_height;
+                }
+            }
+        
+            let iframe_id_list = []
+            var iframes = document.getElementsByClassName("swagger-ui-iframe");
+            for (var i = 0; i < iframes.length; i++) { 
+                iframe_id_list.push(iframes[i].getAttribute("id"))
+            }
+        
+            let ticking = true;
+            
+            document.addEventListener('scroll', function(e) {
+                if (!ticking) {
+                    window.requestAnimationFrame(()=> {
+                        let half_vh = window.innerHeight/2;
+                        for(var i = 0; i < iframe_id_list.length; i++) {
+                            let element = document.getElementById(iframe_id_list[i])
+                            if(element==null){
+                                return
+                            }
+                            let diff = element.getBoundingClientRect().top
+                            if(element.contentWindow.update_top_val){
+                                element.contentWindow.update_top_val(half_vh - diff)
+                            }
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        
+            const dark_scheme_name = "slate"
+            
+            window.scheme = document.body.getAttribute("data-md-color-scheme")
+            const options = {
+                attributeFilter: ['data-md-color-scheme'],
+            };
+            function color_scheme_callback(mutations) {
+                for (let mutation of mutations) {
+                    if (mutation.attributeName === "data-md-color-scheme") {
+                        scheme = document.body.getAttribute("data-md-color-scheme")
+                        var iframe_list = document.getElementsByClassName("swagger-ui-iframe")
+                        for(var i = 0; i < iframe_list.length; i++) {
+                            var ele = iframe_list.item(i);
+                            if (ele) {
+                                if (scheme === dark_scheme_name) {
+                                    ele.contentWindow.enable_dark_mode();
+                                } else {
+                                    ele.contentWindow.disable_dark_mode();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            observer = new MutationObserver(color_scheme_callback);
+            observer.observe(document.body, options);
+            })</script></body>
+</html>

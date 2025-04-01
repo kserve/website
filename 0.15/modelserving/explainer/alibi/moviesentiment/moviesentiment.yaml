@@ -1,0 +1,33 @@
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "moviesentiment"
+spec:
+  predictor:
+    minReplicas: 1
+    sklearn:
+      storageUri: "gs://seldon-models/v1.16.0/sklearn/moviesentiment"
+      resources:
+        requests:
+          cpu: 0.1
+          memory: 1Gi       
+        limits:
+          cpu: 1
+          memory: 1Gi         
+  explainer:
+    minReplicas: 1
+    containers:
+        - name: kserve-container
+          image: kserve/alibi-explainer:v0.12.1
+          args:
+            - --model_name=moviesentiment
+            - --http_port=8080
+            - --predictor_host=moviesentiment-predictor.default
+            - AnchorText
+          resources:
+            requests:
+              cpu: 0.1
+              memory: 6Gi 
+            limits:
+              cpu: 1
+              memory: 10Gi
