@@ -36,11 +36,8 @@ from kserve.utils.utils import generate_uuid
 
 class AlexNetModel(Model):
     def __init__(self, name: str):
-       super().__init__(name, return_response_headers=True)
-       super().__init__(name, return_response_headers=True)
-       self.name = name
         super().__init__(name, return_response_headers=True)
-       self.name = name
+        self.name = name
         self.load()
         self.ready = False
 
