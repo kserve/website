@@ -1,1308 +1,3093 @@
 
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content=" KServe v0.8.0 Release Blog Post">
+      
+      
+      
+        <link rel="canonical" href="https://kserve.io/website/master/blog/articles/2022-02-18-KServe-0.8-release/">
+      
+      <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-8.0.5">
+    
+    
+      
+        <title>Announcing: KServe v0.8 - KServe Documentation Website</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a617204b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-<html class="no-js" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content=" KServe v0.8.0 Release Blog Post" name="description"/>
-<link href="https://kserve.io/website/master/blog/articles/2022-02-18-KServe-0.8-release/" rel="canonical"/>
-<link href="../../../images/favicon/favicon-32x32.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-8.0.5" name="generator"/>
-<title>Announcing: KServe v0.8 - KServe Documentation Website</title>
-<link href="../../../assets/stylesheets/main.a617204b.min.css" rel="stylesheet"/>
-<link href="../../../assets/stylesheets/palette.9204c3b2.min.css" rel="stylesheet"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&amp;display=fallback" rel="stylesheet"/>
-<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-<link href="../../../assets/_mkdocstrings.css" rel="stylesheet"/>
-<link href="../../../stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL("../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-</head>
-<body data-md-color-accent="none" data-md-color-primary="none" data-md-color-scheme="" dir="ltr">
-<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
-<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
-<label class="md-overlay" for="__drawer"></label>
-<div data-md-component="skip">
-<a class="md-skip" href="#authors">
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#authors" class="md-skip">
           Skip to content
         </a>
-</div>
-<div data-md-component="announce">
-<aside class="md-banner">
-<div class="md-banner__inner md-grid md-typeset">
-<h1>
-<b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
-</h1>
-</div>
-</aside>
-</div>
-<div data-md-component="outdated" hidden="">
-<aside class="md-banner md-banner--warning">
-</aside>
-</div>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+ <h1>
+   <b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
+ </h1>
+
+          </div>
+        </aside>
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      
+
+  
+
 <header class="md-header md-header--lifted" data-md-component="header">
-<nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="KServe Documentation Website" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../images/logo/kserve.png"/>
-</a>
-<label class="md-header__button md-icon" for="__drawer">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"></path></svg>
-</label>
-<div class="md-header__title" data-md-component="header-title">
-<div class="md-header__ellipsis">
-<div class="md-header__topic">
-<span class="md-ellipsis">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="KServe Documentation Website" class="md-header__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+      
+  <img src="../../../images/logo/kserve.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
             KServe Documentation Website
           </span>
-</div>
-<div class="md-header__topic" data-md-component="header-topic">
-<span class="md-ellipsis">
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
               Announcing: KServe v0.8
             
           </span>
-</div>
-</div>
-</div>
-<label class="md-header__button md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-</label>
-<div class="md-search" data-md-component="search" role="dialog">
-<label class="md-search__overlay" for="__search"></label>
-<div class="md-search__inner" role="search">
-<form class="md-search__form" name="search">
-<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
-<label class="md-search__icon md-icon" for="__search">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"></path></svg>
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</label>
-<nav aria-label="Search" class="md-search__options">
-<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" type="reset">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
-</button>
-</nav>
-</form>
-<div class="md-search__output">
-<div class="md-search__scrollwrap" data-md-scrollfix="">
-<div class="md-search-result" data-md-component="search-result">
-<div class="md-search-result__meta">
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
             Initializing search
           </div>
-<ol class="md-search-result__list"></ol>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="md-header__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/kserve/kserve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     GitHub
   </div>
 </a>
-</div>
-</nav>
-<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
-<div class="md-tabs__inner md-grid">
-<ul class="md-tabs__list">
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../..">
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
       Home
     </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../get_started/">
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../get_started/" class="md-tabs__link">
         Getting started
       </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../admin/serverless/serverless/">
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../admin/serverless/serverless/" class="md-tabs__link">
         Administration Guide
       </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../modelserving/control_plane/">
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../modelserving/control_plane/" class="md-tabs__link">
         User Guide
       </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../reference/api/">
+    </li>
+  
+
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../reference/api/" class="md-tabs__link">
         API Reference
       </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../developer/developer/">
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../developer/developer/" class="md-tabs__link">
         Developer Guide
       </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link md-tabs__link--active" href="../2024-12-13-KServe-0.14-release/">
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../2024-12-13-KServe-0.14-release/" class="md-tabs__link md-tabs__link--active">
         Blog
       </a>
-</li>
-<li class="md-tabs__item">
-<a class="md-tabs__link" href="../../../community/get_involved/">
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../community/get_involved/" class="md-tabs__link">
         Community
       </a>
-</li>
-</ul>
-</div>
+    </li>
+  
+
+      
+    </ul>
+  </div>
 </nav>
+    
+  
 </header>
-<div class="md-container" data-md-component="container">
-<main class="md-main" data-md-component="main">
-<div class="md-main__inner md-grid">
-<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
-<label class="md-nav__title" for="__drawer">
-<a aria-label="KServe Documentation Website" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="KServe Documentation Website">
-<img alt="logo" src="../../../images/logo/kserve.png"/>
-</a>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="KServe Documentation Website" class="md-nav__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+      
+  <img src="../../../images/logo/kserve.png" alt="logo">
+
+    </a>
     KServe Documentation Website
   </label>
-<div class="md-nav__source">
-<a class="md-source" data-md-component="source" href="https://github.com/kserve/kserve" title="Go to repository">
-<div class="md-source__icon md-icon">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
-</div>
-<div class="md-source__repository">
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/kserve/kserve" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
     GitHub
   </div>
 </a>
-</div>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../..">
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
         Home
       </a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" id="__nav_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2">
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
           Getting started
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Getting started" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_2">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Getting started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
           Getting started
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/" class="md-nav__link">
         KServe Quickstart
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/first_isvc/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/first_isvc/" class="md-nav__link">
         First InferenceService
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../get_started/swagger_ui/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get_started/swagger_ui/" class="md-nav__link">
         Interact with InferenceService Swagger UI
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" id="__nav_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
           Administration Guide
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Administration Guide" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_3">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Administration Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
           Administration Guide
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" id="__nav_3_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
           Install KServe
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Install KServe" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_3_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Install KServe" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
           Install KServe
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" id="__nav_3_1_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_3_1_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1" type="checkbox" id="__nav_3_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1_1">
           Serverless
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Serverless" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_3_1_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Serverless" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_1_1">
+          <span class="md-nav__icon md-icon"></span>
           Serverless
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/serverless/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/serverless/" class="md-nav__link">
         Serverless installation
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/servicemesh/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/servicemesh/" class="md-nav__link">
         Istio Service Mesh
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/serverless/kourier_networking/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/serverless/kourier_networking/" class="md-nav__link">
         Kourier Networking Layer
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/modelmesh/">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/modelmesh/" class="md-nav__link">
         ModelMesh installation
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/kubernetes_deployment/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/kubernetes_deployment/" class="md-nav__link">
         Kubernetes deployment installation
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/gatewayapi_migration/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/gatewayapi_migration/" class="md-nav__link">
         Gateway API migration
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../admin/ai-gateway_integration/">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../admin/ai-gateway_integration/" class="md-nav__link">
         AI Gateway Integration
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" id="__nav_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
           User Guide
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="User Guide" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_4">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
           User Guide
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" id="__nav_4_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
           Concepts
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Concepts" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Concepts" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
           Concepts
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" id="__nav_4_1_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_1_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" type="checkbox" id="__nav_4_1_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_1">
           Control Plane
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Control Plane" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_1_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Control Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_1">
+          <span class="md-nav__icon md-icon"></span>
           Control Plane
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/control_plane/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/control_plane/" class="md-nav__link">
         Model Serving Control Plane
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" id="__nav_4_1_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_1_2">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2" type="checkbox" id="__nav_4_1_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_2">
           Data Plane
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Data Plane" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_1_2">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Data Plane" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_2">
+          <span class="md-nav__icon md-icon"></span>
           Data Plane
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/data_plane/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/data_plane/data_plane/" class="md-nav__link">
         Model Serving Data Plane
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v1_protocol/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/data_plane/v1_protocol/" class="md-nav__link">
         V1 Inference Protocol
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/v2_protocol/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/data_plane/v2_protocol/" class="md-nav__link">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2_4" id="__nav_4_1_2_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_1_2_4">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_2_4" type="checkbox" id="__nav_4_1_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1_2_4">
           Open Inference Protocol Extensions
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Open Inference Protocol Extensions" class="md-nav" data-md-level="4">
-<label class="md-nav__title" for="__nav_4_1_2_4">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Open Inference Protocol Extensions" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_2_4">
+          <span class="md-nav__icon md-icon"></span>
           Open Inference Protocol Extensions
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/data_plane/binary_tensor_data_extension/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/data_plane/binary_tensor_data_extension/" class="md-nav__link">
         Binary Tensor Data Extension
       </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/servingruntimes/">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/servingruntimes/" class="md-nav__link">
         Serving Runtimes
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" id="__nav_4_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_2">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
           LLM Serving Runtime
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="LLM Serving Runtime" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_2">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LLM Serving Runtime" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
           LLM Serving Runtime
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" id="__nav_4_2_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_2_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_1">
           Hugging Face vLLM
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Hugging Face vLLM" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_2_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hugging Face vLLM" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_1">
+          <span class="md-nav__icon md-icon"></span>
           Hugging Face vLLM
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/" class="md-nav__link">
         Overview
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/text_generation/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/text_generation/" class="md-nav__link">
         Text Generation
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/text2text_generation/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/text2text_generation/" class="md-nav__link">
         Text2Text Generation
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/token_classification/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/token_classification/" class="md-nav__link">
         Token Classification
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/text_classification/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/text_classification/" class="md-nav__link">
         Text Classification
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/fill_mask/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/fill_mask/" class="md-nav__link">
         Fill Mask
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/multi-node/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/multi-node/" class="md-nav__link">
         Multi Node Inference
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/llm/huggingface/sdk_integration/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/sdk_integration/" class="md-nav__link">
         SDK Integration
       </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" id="__nav_4_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_3">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
           Model Serving Runtimes
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Model Serving Runtimes" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_3">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Serving Runtimes" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
           Model Serving Runtimes
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" id="__nav_4_3_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_3_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1">
           Supported Model Frameworks/Formats
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Supported Model Frameworks/Formats" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_3_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Supported Model Frameworks/Formats" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_1">
+          <span class="md-nav__icon md-icon"></span>
           Supported Model Frameworks/Formats
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/serving_runtime/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/serving_runtime/" class="md-nav__link">
         Overview
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/tensorflow/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/tensorflow/" class="md-nav__link">
         Tensorflow
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/torchserve/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/torchserve/" class="md-nav__link">
         PyTorch
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/sklearn/v2/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/sklearn/v2/" class="md-nav__link">
         Scikit-learn
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/xgboost/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/xgboost/" class="md-nav__link">
         XGBoost
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/pmml/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/pmml/" class="md-nav__link">
         PMML
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/spark/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/spark/" class="md-nav__link">
         Spark MLlib
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/lightgbm/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/lightgbm/" class="md-nav__link">
         LightGBM
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/paddle/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/paddle/" class="md-nav__link">
         Paddle
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/mlflow/v2/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/mlflow/v2/" class="md-nav__link">
         MLFlow
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/onnx/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/onnx/" class="md-nav__link">
         ONNX
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" id="__nav_4_3_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_3_2">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" type="checkbox" id="__nav_4_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2">
           Multi-Framework Serving Runtimes
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Multi-Framework Serving Runtimes" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_3_2">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
           Multi-Framework Serving Runtimes
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_1" id="__nav_4_3_2_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_3_2_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_1" type="checkbox" id="__nav_4_3_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_1">
           Nvidia Triton
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Nvidia Triton" class="md-nav" data-md-level="4">
-<label class="md-nav__title" for="__nav_4_3_2_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_2_1">
+          <span class="md-nav__icon md-icon"></span>
           Nvidia Triton
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/torchscript/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/triton/torchscript/" class="md-nav__link">
         Torchscript
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/bert/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/triton/bert/" class="md-nav__link">
         Tensorflow
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/triton/huggingface/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/triton/huggingface/" class="md-nav__link">
         Hugging Face
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/amd/">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/amd/" class="md-nav__link">
         AMD
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/custom/custom_model/">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/custom/custom_model/" class="md-nav__link">
         How to write a custom predictor
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" id="__nav_4_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_4">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
           Multi Model Serving
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Multi Model Serving" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_4">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Multi Model Serving" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
           Multi Model Serving
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" id="__nav_4_4_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_4_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4_1">
           Overview
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Overview" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_4_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Overview" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_4_1">
+          <span class="md-nav__icon md-icon"></span>
           Overview
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/multi-model-serving/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/mms/multi-model-serving/" class="md-nav__link">
         The Scalability Problem
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/mms/modelmesh/overview/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/mms/modelmesh/overview/" class="md-nav__link">
         ModelMesh Overview
       </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" id="__nav_4_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_5">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
           Transformers
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Transformers" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_5">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Transformers" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
           Transformers
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/feast/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/transformer/feast/" class="md-nav__link">
         Feast
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/torchserve_image_transformer/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/transformer/torchserve_image_transformer/" class="md-nav__link">
         How to write a custom transformer
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/transformer/collocation/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/transformer/collocation/" class="md-nav__link">
         Collocate transformer and predictor
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" id="__nav_4_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_6">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
           Inference Graph
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Inference Graph" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_6">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Graph" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
           Inference Graph
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/inference_graph/" class="md-nav__link">
         Concept
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/inference_graph/image_pipeline/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/inference_graph/image_pipeline/" class="md-nav__link">
         Image classification inference graph
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" id="__nav_4_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_7">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_7">
           Model Storage
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Model Storage" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_7">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Storage" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_7">
+          <span class="md-nav__icon md-icon"></span>
           Model Storage
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/storagecontainers/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/storagecontainers/" class="md-nav__link">
         Storage Containers
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/certificate/kserve/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/certificate/kserve/" class="md-nav__link">
         Configure CA Certificate
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/azure/azure/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/azure/azure/" class="md-nav__link">
         Azure
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/pvc/pvc/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/pvc/pvc/" class="md-nav__link">
         PVC
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/s3/s3/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/s3/s3/" class="md-nav__link">
         S3
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/oci/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/oci/" class="md-nav__link">
         OCI
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/uri/uri/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/uri/uri/" class="md-nav__link">
         URI
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/gcs/gcs/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/gcs/gcs/" class="md-nav__link">
         GCS
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/huggingface/hf/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/huggingface/hf/" class="md-nav__link">
         Hugging Face
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/storage/modelcache/localmodel/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/storage/modelcache/localmodel/" class="md-nav__link">
         Model Cache
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" id="__nav_4_8" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_8">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_8">
           Model Explainability
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Model Explainability" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_8">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Explainability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_8">
+          <span class="md-nav__icon md-icon"></span>
           Model Explainability
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/explainer/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/explainer/explainer/" class="md-nav__link">
         Concept
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/trustyai/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/explainer/trustyai/" class="md-nav__link">
         TrustyAI Explainer
       </a>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8_3" id="__nav_4_8_3" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_8_3">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8_3" type="checkbox" id="__nav_4_8_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_8_3">
           Alibi Explainer
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Alibi Explainer" class="md-nav" data-md-level="3">
-<label class="md-nav__title" for="__nav_4_8_3">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_8_3">
+          <span class="md-nav__icon md-icon"></span>
           Alibi Explainer
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/cifar10/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/explainer/alibi/cifar10/" class="md-nav__link">
         Image Explainer
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/income/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/explainer/alibi/income/" class="md-nav__link">
         Income Explainer
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/alibi/moviesentiment/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/explainer/alibi/moviesentiment/" class="md-nav__link">
         Text Explainer
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/explainer/aix/mnist/aix/">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/explainer/aix/mnist/aix/" class="md-nav__link">
         AIX Explainer
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" id="__nav_4_9" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_9">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_9">
           Model Monitoring
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Model Monitoring" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_9">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Monitoring" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_9">
+          <span class="md-nav__icon md-icon"></span>
           Model Monitoring
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/alibi_detect/alibi_detect/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/detect/alibi_detect/alibi_detect/" class="md-nav__link">
         Alibi Detector
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/aif/germancredit/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/detect/aif/germancredit/" class="md-nav__link">
         AIF Bias Detector
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/detect/art/mnist/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/detect/art/mnist/" class="md-nav__link">
         ART Adversarial Detector
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" id="__nav_4_10" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_10">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_10">
           Request Batching
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Request Batching" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_10">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Batching" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_10">
+          <span class="md-nav__icon md-icon"></span>
           Request Batching
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/batcher/batcher/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/batcher/batcher/" class="md-nav__link">
         Inference Batcher
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" id="__nav_4_11" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_11">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_11">
           Payload Logging
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Payload Logging" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_11">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Payload Logging" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_11">
+          <span class="md-nav__icon md-icon"></span>
           Payload Logging
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/logger/logger/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/logger/logger/" class="md-nav__link">
         Inference Logger
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" id="__nav_4_12" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_12">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_12">
           Autoscaling
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Autoscaling" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_12">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Autoscaling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_12">
+          <span class="md-nav__icon md-icon"></span>
           Autoscaling
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/autoscaling/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/autoscaling/autoscaling/" class="md-nav__link">
         Knative Autoscaler(KPA)
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/raw_deployment_autoscaling/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/autoscaling/raw_deployment_autoscaling/" class="md-nav__link">
         Kubernetes Autoscaler(HPA)
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/autoscaling/keda/autoscaling_keda/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/autoscaling/keda/autoscaling_keda/" class="md-nav__link">
         KEDA Autoscaler
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" id="__nav_4_13" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_13">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_13">
           Node Scheduling
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Node Scheduling" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_13">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Node Scheduling" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_13">
+          <span class="md-nav__icon md-icon"></span>
           Node Scheduling
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/overview/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/nodescheduling/overview/" class="md-nav__link">
         Overview
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/nodescheduling/inferenceservicenodescheduling/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/nodescheduling/inferenceservicenodescheduling/" class="md-nav__link">
         InferenceService Node Scheduling
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" id="__nav_4_14" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_14">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_14">
           Kafka
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Kafka" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_14">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kafka" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_14">
+          <span class="md-nav__icon md-icon"></span>
           Kafka
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/kafka/kafka/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/kafka/kafka/" class="md-nav__link">
         Inference with Kafka event source
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" id="__nav_4_15" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_15">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_15">
           Rollout Strategies
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Rollout Strategies" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_15">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Rollout Strategies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_15">
+          <span class="md-nav__icon md-icon"></span>
           Rollout Strategies
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/rollout/canary/" class="md-nav__link">
         Canary
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/v1beta1/rollout/canary-example/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/rollout/canary-example/" class="md-nav__link">
         Canary Example
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" id="__nav_4_16" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4_16">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" type="checkbox" id="__nav_4_16" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_16">
           Inference Observability
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Inference Observability" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_4_16">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Observability" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_16">
+          <span class="md-nav__icon md-icon"></span>
           Inference Observability
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/prometheus_metrics/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/observability/prometheus_metrics/" class="md-nav__link">
         Prometheus Metrics
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../modelserving/observability/grafana_dashboards/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../modelserving/observability/grafana_dashboards/" class="md-nav__link">
         Grafana Dashboards
       </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" id="__nav_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
           API Reference
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="API Reference" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_5">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
           API Reference
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../reference/api/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/api/" class="md-nav__link">
         Control Plane API
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../reference/swagger-ui/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reference/swagger-ui/" class="md-nav__link">
         Open Inference Protocol API Spec
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../sdk_docs/sdk_doc/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../sdk_docs/sdk_doc/" class="md-nav__link">
         Python Client SDK
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../python_runtime_api/docs/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../python_runtime_api/docs/" class="md-nav__link">
         Python Runtime Server SDK
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../inference_client/doc/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inference_client/doc/" class="md-nav__link">
         Inference Python Client
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" id="__nav_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_6">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
           Developer Guide
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Developer Guide" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_6">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Developer Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
           Developer Guide
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../developer/developer/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer/developer/" class="md-nav__link">
         How to contribute
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../developer/debug/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developer/debug/" class="md-nav__link">
         Debugging guide
       </a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
           Blog
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Blog" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_7">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Blog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
           Blog
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" id="__nav_7_1" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7_1">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
           Releases
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Releases" class="md-nav" data-md-level="2">
-<label class="md-nav__title" for="__nav_7_1">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Releases" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
           Releases
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2024-12-13-KServe-0.14-release/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2024-05-15-KServe-0.13-release/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2024-05-15-KServe-0.13-release/" class="md-nav__link">
         KServe 0.13 Release
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2023-10-08-KServe-0.11-release/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-10-08-KServe-0.11-release/" class="md-nav__link">
         KServe 0.11 Release
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2023-02-05-KServe-0.10-release/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2023-02-05-KServe-0.10-release/" class="md-nav__link">
         KServe 0.10 Release
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2022-07-21-KServe-0.9-release/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2022-07-21-KServe-0.9-release/" class="md-nav__link">
         KServe 0.9 Release
       </a>
-</li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" data-md-toggle="toc" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
           KServe 0.8 Release
           <span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         KServe 0.8 Release
       </a>
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#authors">
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#authors" class="md-nav__link">
     Authors
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#announcing-kserve-v08">
+      
+        <li class="md-nav__item">
+  <a href="#announcing-kserve-v08" class="md-nav__link">
     Announcing: KServe v0.8
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-changed">
+      
+        <li class="md-nav__item">
+  <a href="#whats-changed" class="md-nav__link">
     What’s changed?
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-new">
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
     What's new?
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servingruntimes-and-clusterservingruntimes">
+      
+        <li class="md-nav__item">
+  <a href="#servingruntimes-and-clusterservingruntimes" class="md-nav__link">
     ServingRuntimes and ClusterServingRuntimes
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#updated-inferenceservice-predictor-spec">
+      
+        <li class="md-nav__item">
+  <a href="#updated-inferenceservice-predictor-spec" class="md-nav__link">
     Updated InferenceService Predictor Spec
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmesh-updates">
+      
+        <li class="md-nav__item">
+  <a href="#modelmesh-updates" class="md-nav__link">
     ModelMesh Updates
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#join-the-community">
+      
+        <li class="md-nav__item">
+  <a href="#join-the-community" class="md-nav__link">
     Join the community
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../2021-10-11-KServe-0.7-release/">
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2021-10-11-KServe-0.7-release/" class="md-nav__link">
         KServe 0.7 Release
       </a>
-</li>
-</ul>
-</nav>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" id="__nav_8" type="checkbox"/>
-<label class="md-nav__link" for="__nav_8">
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
           Community
           <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-label="Community" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_8">
-<span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Community" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
           Community
         </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/get_involved/">
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/get_involved/" class="md-nav__link">
         How to Get Involved
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/adopters/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/adopters/" class="md-nav__link">
         Adopters
       </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../../community/presentations/">
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../community/presentations/" class="md-nav__link">
         Demos and Presentations
       </a>
-</li>
-</ul>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
 </nav>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-</div>
-<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
-<div class="md-sidebar__scrollwrap">
-<div class="md-sidebar__inner">
-<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#authors">
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#authors" class="md-nav__link">
     Authors
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#announcing-kserve-v08">
+      
+        <li class="md-nav__item">
+  <a href="#announcing-kserve-v08" class="md-nav__link">
     Announcing: KServe v0.8
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-changed">
+      
+        <li class="md-nav__item">
+  <a href="#whats-changed" class="md-nav__link">
     What’s changed?
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#whats-new">
+      
+        <li class="md-nav__item">
+  <a href="#whats-new" class="md-nav__link">
     What's new?
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#servingruntimes-and-clusterservingruntimes">
+      
+        <li class="md-nav__item">
+  <a href="#servingruntimes-and-clusterservingruntimes" class="md-nav__link">
     ServingRuntimes and ClusterServingRuntimes
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#updated-inferenceservice-predictor-spec">
+      
+        <li class="md-nav__item">
+  <a href="#updated-inferenceservice-predictor-spec" class="md-nav__link">
     Updated InferenceService Predictor Spec
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#modelmesh-updates">
+      
+        <li class="md-nav__item">
+  <a href="#modelmesh-updates" class="md-nav__link">
     ModelMesh Updates
   </a>
+  
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#join-the-community">
+      
+        <li class="md-nav__item">
+  <a href="#join-the-community" class="md-nav__link">
     Join the community
   </a>
+  
 </li>
-</ul>
+      
+    </ul>
+  
 </nav>
-</div>
-</div>
-</div>
-<div class="md-content" data-md-component="content">
-<article class="md-content__inner md-typeset">
-<a class="md-content__button md-icon" href="https://github.com/kserve/website/edit/main/docs/blog/articles/2022-02-18-KServe-0.8-release.md" title="Edit this page">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"></path></svg>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/kserve/website/edit/main/docs/blog/articles/2022-02-18-KServe-0.8-release.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
-<h1>KServe 0.8 Release</h1>
-<h3 id="authors">Authors<a class="headerlink" href="#authors" title="Permanent link">¶</a></h3>
+
+
+  <h1>KServe 0.8 Release</h1>
+
+<h3 id="authors">Authors<a class="headerlink" href="#authors" title="Permanent link">&para;</a></h3>
 <p><strong>Dan Sun</strong>, <strong>Paul Van Eck</strong>, <strong>Vedant Padwal</strong>, <strong>Andrews Arokiam</strong> on behalf of the KServe Working Group.</p>
-<h3 id="announcing-kserve-v08"><strong>Announcing: KServe v0.8</strong><a class="headerlink" href="#announcing-kserve-v08" title="Permanent link">¶</a></h3>
+<h3 id="announcing-kserve-v08"><strong>Announcing: KServe v0.8</strong><a class="headerlink" href="#announcing-kserve-v08" title="Permanent link">&para;</a></h3>
 <p><em>February 18, 2022</em></p>
 <p>Today, we are pleased to announce the v0.8.0 release of KServe! While the last release was focused on the
 <a href="https://blog.kubeflow.org/release/official/2021/09/27/kfserving-transition.html">transition</a> of KFServing to KServe,
@@ -1311,7 +3096,7 @@ this release was focused on unifying the InferenceService API for deploying mode
 <p><strong>Note</strong>: For current users of KFServing/KServe, please take a few minutes to answer this <a href="https://groups.google.com/g/kubeflow-discuss/c/B0trz3qZiJE">short survey</a> and provide your feedback!</p>
 </blockquote>
 <p>Now, let's take a look at some of the changes and additions to KServe.</p>
-<h3 id="whats-changed"><strong><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/26a0.svg" title=":warning:"> What’s changed?</img></strong><a class="headerlink" href="#whats-changed" title="Permanent link">¶</a></h3>
+<h3 id="whats-changed"><strong><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/26a0.svg" title=":warning:" /> What’s changed?</strong><a class="headerlink" href="#whats-changed" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>ONNX Runtime Server</strong> has been removed from the supported serving runtime list. KServe by default now uses the <strong>Triton Inference Server</strong> to serve ONNX models.</li>
 <li>KServe’s <strong>PyTorchServer</strong> has been removed from the supported serving runtime list. KServe by default now uses <strong>TorchServe</strong> to serve PyTorch models.</li>
@@ -1322,7 +3107,7 @@ this release was focused on unifying the InferenceService API for deploying mode
 </ul>
 </li>
 </ul>
-<h3 id="whats-new"><strong><img alt="🌈" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f308.svg" title=":rainbow:"> What's new?</img></strong><a class="headerlink" href="#whats-new" title="Permanent link">¶</a></h3>
+<h3 id="whats-new"><strong><img alt="🌈" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f308.svg" title=":rainbow:" /> What's new?</strong><a class="headerlink" href="#whats-new" title="Permanent link">&para;</a></h3>
 <p>Some notable updates are:</p>
 <ul>
 <li><strong>ClusterServingRuntime</strong> and <strong>ServingRuntime</strong> CRDs are introduced. Learn more <a href="#servingruntimes-and-clusterservingruntimes">below</a>.</li>
@@ -1333,7 +3118,7 @@ this release was focused on unifying the InferenceService API for deploying mode
 <li><strong>ModelMesh</strong> now has multi-namespace support, and users can now deploy GCS or HTTP(S) hosted models.</li>
 </ul>
 <p>To see all release updates, check out the KServe <a href="https://github.com/kserve/kserve/releases/tag/v0.8.0">release notes</a> and ModelMesh Serving <a href="https://github.com/kserve/modelmesh-serving/releases/tag/v0.8.0">release notes</a>!</p>
-<h3 id="servingruntimes-and-clusterservingruntimes"><strong>ServingRuntimes and ClusterServingRuntimes</strong><a class="headerlink" href="#servingruntimes-and-clusterservingruntimes" title="Permanent link">¶</a></h3>
+<h3 id="servingruntimes-and-clusterservingruntimes"><strong>ServingRuntimes and ClusterServingRuntimes</strong><a class="headerlink" href="#servingruntimes-and-clusterservingruntimes" title="Permanent link">&para;</a></h3>
 <p>This release introduces two new CRDs <em>ServingRuntimes</em> and <em>ClusterServingRuntimes</em> with the only difference between these two is that one is
 namespace-scoped and one is cluster-scoped. A ServingRuntime defines the templates for Pods that can serve one or more particular model formats.
 Each ServingRuntime defines key information such as the container image of the runtime and a list of the model formats that the runtime supports.</p>
@@ -1350,7 +3135,7 @@ any controller code or any resources in the controller namespace.</p>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">supportedModelFormats</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
-<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">      </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 <span class="w">      </span><span class="nt">autoSelect</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kserve-container</span>
@@ -1361,13 +3146,13 @@ any controller code or any resources in the controller namespace.</p>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--http_port=8080</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 <span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"1"</span>
+<span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 <span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
 </code></pre></div>
-<h3 id="updated-inferenceservice-predictor-spec"><strong>Updated InferenceService Predictor Spec</strong><a class="headerlink" href="#updated-inferenceservice-predictor-spec" title="Permanent link">¶</a></h3>
+<h3 id="updated-inferenceservice-predictor-spec"><strong>Updated InferenceService Predictor Spec</strong><a class="headerlink" href="#updated-inferenceservice-predictor-spec" title="Permanent link">&para;</a></h3>
 <p>A new Model spec was also introduced as a part of the Predictor spec for InferenceServices. One of the problems KServe was having was that the InferenceService CRD was
 becoming unwieldy with each model serving runtime being an object in the Predictor spec. This generated a lot of field duplication in the schema,
 bloating the overall size of the CRD. If a user wanted to introduce a new model serving framework for KServe to support, the CRD would have to be modified,
@@ -1375,7 +3160,7 @@ and subsequently the controller code.</p>
 <p>Now, with the Model spec, a user can specify a model format and optionally a corresponding version. The KServe control plane will automatically select and use the
 <em>ClusterServingRuntime</em> or <em>ServingRuntime</em> that supports the given format. Each <em>ServingRuntime</em> maintains a list of supported model formats and versions. If a format has
 <code>autoselect</code> as <code>true</code>, then that opens the <em>ServingRuntime</em> up for automatic model placement for that model format.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Previous Schema</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">New Schema</label><label for="__tabbed_1_2">Previous Schema</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
@@ -1402,15 +3187,15 @@ and subsequently the controller code.</p>
 </code></pre></div>
 </div>
 </div>
-</input></input></div>
+</div>
 <p>The previous way of defining predictors is still supported, however, the new approach will be the preferred one going forward. Eventually, the previous schema, with the framework names as keys in the predictor spec, will be removed.</p>
-<h3 id="modelmesh-updates"><strong>ModelMesh Updates</strong><a class="headerlink" href="#modelmesh-updates" title="Permanent link">¶</a></h3>
+<h3 id="modelmesh-updates"><strong>ModelMesh Updates</strong><a class="headerlink" href="#modelmesh-updates" title="Permanent link">&para;</a></h3>
 <p><a href="https://developer.ibm.com/blogs/kserve-and-watson-modelmesh-extreme-scale-model-inferencing-for-trusted-ai/">ModelMesh</a> has been in the process of integrating as KServe’s
 multi-model serving backend.  With the inclusion of the aforementioned ServingRuntime CRDs and the Predictor Model spec, the two projects are now much more aligned,
 with continual improvements underway.</p>
 <p>ModelMesh now supports multi-namespace reconciliation. Previously, the ModelMesh controller would only reconcile against resources deployed in the same namespace as the controller. Now, by default, ModelMesh will be able to handle InferenceService deployments in any "modelmesh-enabled" namespace. Learn more <a href="https://github.com/kserve/modelmesh-serving/blob/release-0.8/docs/install/install-script.md#setup-additional-namespaces">here</a>.</p>
 <p>Also, while ModelMesh previously only supported S3-based storage, we are happy to share that ModelMesh now works with models hosted using GCS and HTTP(S).</p>
-<h3 id="join-the-community"><strong>Join the community</strong><a class="headerlink" href="#join-the-community" title="Permanent link">¶</a></h3>
+<h3 id="join-the-community"><strong>Join the community</strong><a class="headerlink" href="#join-the-community" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Visit our <a href="https://kserve.github.io/website/">Website</a> or <a href="https://github.com/kserve">GitHub</a></li>
 <li>Join the Slack (<a href="https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#/">#kubeflow-kfserving</a>)</li>
@@ -1418,136 +3203,101 @@ with continual improvements underway.</p>
 <li>View our <a href="https://github.com/kserve/website/blob/main/docs/developer/developer.md">developer</a> and <a href="https://github.com/kserve/website/blob/main/docs/help/contributor/mkdocs-contributor-guide.md">doc</a> contribution guides to learn how to make contributions. We are excited to work with you to make KServe better and promote its adoption!</li>
 </ul>
 <p>Thank you for trying out KServe!</p>
-</article>
-</div>
-</div>
-<a class="md-top md-icon" data-md-component="top" data-md-state="hidden" href="#">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path></svg>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
             Back to top
           </a>
-</main>
-<footer class="md-footer">
-<nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: KServe 0.9 Release" class="md-footer__link md-footer__link--prev" href="../2022-07-21-KServe-0.9-release/" rel="prev">
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"></path></svg>
-</div>
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../2022-07-21-KServe-0.9-release/" class="md-footer__link md-footer__link--prev" aria-label="Previous: KServe 0.9 Release" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
                 Previous
               </span>
               KServe 0.9 Release
             </div>
-</div>
-</a>
-<a aria-label="Next: KServe 0.7 Release" class="md-footer__link md-footer__link--next" href="../2021-10-11-KServe-0.7-release/" rel="next">
-<div class="md-footer__title">
-<div class="md-ellipsis">
-<span class="md-footer__direction">
+          </div>
+        </a>
+      
+      
+        
+        <a href="../2021-10-11-KServe-0.7-release/" class="md-footer__link md-footer__link--next" aria-label="Next: KServe 0.7 Release" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
                 Next
               </span>
               KServe 0.7 Release
             </div>
-</div>
-<div class="md-footer__button md-icon">
-<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"></path></svg>
-</div>
-</a>
-</nav>
-<div class="md-footer-meta md-typeset">
-<div class="md-footer-meta__inner md-grid">
-<div class="md-copyright">
-<div class="md-copyright__highlight">
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
       Copyright © 2021 The KServe Authors
     </div>
   
   
     Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
       Material for MkDocs
     </a>
+  
 </div>
-<div class="md-social">
-<a class="md-social__link" href="https://github.com/kserve" rel="noopener" target="_blank" title="KServe Community on Github">
-<svg viewbox="0 0 496 512" xmlns="http://www.w3.org/2000/svg"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
-</a>
-<a class="md-social__link" href="https://github.com/kserve/community/blob/main/README.md#questions-and-issues" rel="noopener" target="_blank" title="Join Slack">
-<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"></path></svg>
-</a>
+      
+        <div class="md-social">
+  
+    
+    
+    <a href="https://github.com/kserve" target="_blank" rel="noopener" title="KServe Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/kserve/community/blob/main/README.md#questions-and-issues" target="_blank" rel="noopener" title="Join Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
 </div>
-</div>
-</div>
+      
+    </div>
+  </div>
 </footer>
-</div>
-<div class="md-dialog" data-md-component="dialog">
-<div class="md-dialog__inner md-typeset"></div>
-</div>
-<script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
-<script>document$.subscribe(() => {
-            window.update_swagger_ui_iframe_height = function (id) {
-                var iFrameID = document.getElementById(id);
-                if (iFrameID) {
-                    full_height = (iFrameID.contentWindow.document.body.scrollHeight + 80) + "px";
-                    iFrameID.height = full_height;
-                    iFrameID.style.height = full_height;
-                }
-            }
-        
-            let iframe_id_list = []
-            var iframes = document.getElementsByClassName("swagger-ui-iframe");
-            for (var i = 0; i < iframes.length; i++) { 
-                iframe_id_list.push(iframes[i].getAttribute("id"))
-            }
-        
-            let ticking = true;
-            
-            document.addEventListener('scroll', function(e) {
-                if (!ticking) {
-                    window.requestAnimationFrame(()=> {
-                        let half_vh = window.innerHeight/2;
-                        for(var i = 0; i < iframe_id_list.length; i++) {
-                            let element = document.getElementById(iframe_id_list[i])
-                            if(element==null){
-                                return
-                            }
-                            let diff = element.getBoundingClientRect().top
-                            if(element.contentWindow.update_top_val){
-                                element.contentWindow.update_top_val(half_vh - diff)
-                            }
-                        }
-                        ticking = false;
-                    });
-                    ticking = true;
-                }
-            });
-        
-            const dark_scheme_name = "slate"
-            
-            window.scheme = document.body.getAttribute("data-md-color-scheme")
-            const options = {
-                attributeFilter: ['data-md-color-scheme'],
-            };
-            function color_scheme_callback(mutations) {
-                for (let mutation of mutations) {
-                    if (mutation.attributeName === "data-md-color-scheme") {
-                        scheme = document.body.getAttribute("data-md-color-scheme")
-                        var iframe_list = document.getElementsByClassName("swagger-ui-iframe")
-                        for(var i = 0; i < iframe_list.length; i++) {
-                            var ele = iframe_list.item(i);
-                            if (ele) {
-                                if (scheme === dark_scheme_name) {
-                                    ele.contentWindow.enable_dark_mode();
-                                } else {
-                                    ele.contentWindow.disable_dark_mode();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            observer = new MutationObserver(color_scheme_callback);
-            observer.observe(document.body, options);
-            })</script></body>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      
+    
+  </body>
 </html>

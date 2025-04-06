@@ -1557,7 +1557,7 @@
 </a>
 <h1 id="open-inference-protocol-api-specification">Open Inference Protocol API Specification<a class="headerlink" href="#open-inference-protocol-api-specification" title="Permanent link">¶</a></h1>
 <h2 id="rest">REST<a class="headerlink" href="#rest" title="Permanent link">¶</a></h2>
-<p><iframe class="swagger-ui-iframe" frameborder="0" id="e8776513" src="swagger-e8776513.html" style="overflow:hidden;width:100%;" width="100%"></iframe></p>
+<p><iframe class="swagger-ui-iframe" frameborder="0" id="06c129e6" onload="this.style.display = 'block'; this.style.overflow = 'hidden'; this.style.width = '100%';" src="swagger-06c129e6.html" style="display:none;" width="100%"></iframe></p>
 <h2 id="grpc">GRPC<a class="headerlink" href="#grpc" title="Permanent link">¶</a></h2>
 <h3 id="serverlive">ServerLive<a class="headerlink" href="#serverlive" title="Permanent link">¶</a></h3>
 <p>The ServerLive API indicates if the inference server is able to receive 
@@ -2262,9 +2262,7 @@ because oneofs cannot contain repeated fields.</p>
             for (var i = 0; i < iframes.length; i++) { 
                 iframe_id_list.push(iframes[i].getAttribute("id"))
             }
-        
             let ticking = false;
-            
             document.addEventListener('scroll', function(e) {
                 if (!ticking) {
                     window.requestAnimationFrame(()=> {
@@ -2287,7 +2285,15 @@ because oneofs cannot contain repeated fields.</p>
         
             const dark_scheme_name = "slate"
             
-            window.scheme = document.body.getAttribute("data-md-color-scheme")
+            const schemeAttr = document.body.getAttribute("data-md-color-scheme");
+            const isMediaPrefersScheme = document.body.getAttribute("data-md-color-media") === "(prefers-color-scheme: dark)";
+
+            if (!isMediaPrefersScheme) {
+                window.__init_is_dark_mode = (schemeAttr === dark_scheme_name);
+            } else {
+                const computedScheme = window.getComputedStyle(document.body).getPropertyValue('color-scheme');
+                window.__init_is_dark_mode = computedScheme === "dark";
+            }
             const options = {
                 attributeFilter: ['data-md-color-scheme'],
             };
