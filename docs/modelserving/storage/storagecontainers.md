@@ -32,7 +32,9 @@ spec:
 
 In a _ClusterStorageContainer_ spec, you can specify container resource requests and limits, and a list of supported URI formats that this image supports. KServe can match the URI either with `prefix` or `regex` .
 
-`spec.container.name` field must be `storage-initializer` otherwise KServe can not recognize the initContainer which can cause duplicate value errors.
+!!! warning
+    `spec.container.name` field must be `storage-initializer` otherwise KServe can not recognize the initContainer 
+     which can cause duplicate value errors.
 
 !!! warning
 
