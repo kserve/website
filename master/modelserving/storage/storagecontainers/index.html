@@ -3089,6 +3089,11 @@
 <p>In a <em>ClusterStorageContainer</em> spec, you can specify container resource requests and limits, and a list of supported URI formats that this image supports. KServe can match the URI either with <code>prefix</code> or <code>regex</code> .</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
+<p><code>spec.container.name</code> field must be <code>storage-initializer</code> otherwise KServe can not recognize the Init Container
+ which can cause duplicate value errors.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>If a storage URI is supported by two or more <em>ClusterStorageContainer</em> CRs, there is no guarantee which one will be used. <strong>Please make sure that the URI format is only supported by one ClusterStorageContainer CR</strong>.</p>
 </div>
 <h2 id="custom-protocol-example">Custom Protocol Example<a class="headerlink" href="#custom-protocol-example" title="Permanent link">&para;</a></h2>
