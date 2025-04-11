@@ -363,3 +363,10 @@ time serializing and deserializing `3*32*32` shape tensor and with gRPC it is tr
 # from gPPC v2 predictor log
 2023-01-09 07:27:52.171 79711 root INFO [__call__():128] requestId: , preprocess_ms: 0.067949295, explain_ms: 0, predict_ms: 51.237106323, postprocess_ms: 0.049114227
 ```
+
+## Transformer Specific Commandline Arguments
+- `--predictor_protocol`: The protocol used to communicate with the predictor. The available values are "v1", "v2" and "grpc-v2". The default value is "v1".
+- `--predictor_use_ssl`: Whether to use secure SSL when communicating with the predictor. The default value is "false".
+- `--predictor_request_timeout_seconds`: The timeout seconds for the request sent to the predictor. The default value is 600 seconds.
+- `--predictor_request_retries`: The number of retries for the request sent to the predictor. The default value is 0.
+- `--enable_predictor_health_check`: The Transformer will perform readiness check for the predictor in addition to its health check. By default, it is disabled.
