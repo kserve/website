@@ -146,6 +146,48 @@ are executed in sequence: it first sends the image as request to `cat-dog-classi
   When the condition is not matched the graph short circuits and returns the response from the previous step. Refer to [gjson syntax](https://github.com/tidwall/gjson/blob/master/SYNTAX.md)
   for how to express the condition and currently KServe only supports this with REST protocol.
 
+### InferenceGraph router timeouts
+You can set custom timeout values for the `InferenceGraph` router.
+This is useful when `InferenceService`s are slow to start (e.g. when downloading / loading the model), or take a long time to complete.
+
+- `serverRead` specifies the number of seconds to wait before timing out a request read by the server (default is `60`).
+- `serverWrite` specifies the maximum duration in seconds before timing out writes of the response  (default is  `60`).
+- `serverIdle` specifies the maximum amount of time in seconds to wait for the next request when keep-alives are enabled (default is `180`).
+- `serviceClient` specifies a time limit in seconds for requests made to the graph components by HTTP client (uses Go's [DefaultTransport](https://pkg.go.dev/net/http#DefaultTransport) values by default).
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: "serving.kserve.io/v1alpha1"
+kind: "InferenceGraph"
+metadata:
+  name: "dog-breed-pipeline"
+spec:
+  routerTimeouts:
+    serverRead: 300
+    serverWrite: 300
+    serverIdle: 300
+    serviceClient: 150
+  nodes:
+    root:
+      routerType: Sequence
+      steps:
+      - serviceName: cat-dog-classifier
+        name: cat_dog_classifier # step name
+      - serviceName: dog-breed-classifier
+        name: dog_breed_classifier
+        data: $request
+        condition: "[@this].#(predictions.0==\"dog\")"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
+EOF
+```
+
 ## Test the InferenceGraph
 Before testing the `InferenceGraph`, first check if the graph is in the ready state and then get the router url for sending the request.
 ```bash
