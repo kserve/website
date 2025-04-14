@@ -35,6 +35,7 @@ nav:
                 - Fill Mask: modelserving/v1beta1/llm/huggingface/fill_mask/README.md
                 - Multi Node Inference: modelserving/v1beta1/llm/huggingface/multi-node/README.md
                 - SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
+                - Multi-Node Multi-GPU using Ray: modelserving/v1beta1/llm/huggingface/multi-node/README.md
           - Model Serving Runtimes:
               - Supported Model Frameworks/Formats:
                 - Overview: modelserving/v1beta1/serving_runtime.md
