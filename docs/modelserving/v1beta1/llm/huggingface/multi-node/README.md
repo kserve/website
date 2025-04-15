@@ -19,7 +19,7 @@ This guide provides step-by-step instructions on setting up multi-node and multi
       ~~~
       serving.kserve.io/gpu-resource-types: '["nvidia.com/mig-1g.5gb", "nvidia.com/mig-2g.10gb", "gpu-type3"]'
       ~~~
-    - For your information, the vllm distributed inference only support nccl for now.
+    > Note: vLLM distributed inference only supports nccl for now.
 - You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. **Then it can cause issues.**
 - The Autoscaler must be configured as `external`.
 - The only supported storage protocol for StorageURI is `PVC`.
