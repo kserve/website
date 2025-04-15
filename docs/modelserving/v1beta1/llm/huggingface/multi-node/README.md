@@ -2,7 +2,7 @@
 
 This guide provides step-by-step instructions on setting up multi-node and multi-GPU inference using Hugging Face's vLLM Serving Runtime. Before proceeding, please ensure you meet the following prerequisites and understand the limitations of this setup.
 
-## Prerequisites
+## Restrictions
 
 - Multi-node functionality is only supported in **RawDeployment** mode.
 - **Auto-scaling is not available** for multi-node setups. 
@@ -12,23 +12,17 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 ### Key Validations
 
 - `TENSOR_PARALLEL_SIZE` and `PIPELINE_PARALLEL_SIZE` cannot be set via environment variables. They must be configured through `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize` respectively.
-- In a ServingRuntime designed for multi-node, both `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize` must be set.
-- The minimum value for `workerSpec.tensorParallelSize` is **1**, and the minimum value for `workerSpec.pipelineParallelSize` is **2**.
+- In the `ServingRuntime`, default values for `workerSpec.tensorParallelSize` and `workerSpec.pipelineParallelSize` are `1` and `1` respectively.  
+  These values **can be overridden** by the InferenceService.
 - Currently, four GPU types are allowed: `nvidia.com/gpu` (*default*), `intel.com/gpu`, `amd.com/gpu`, and `habana.ai/gaudi`.
-- You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. Then it can cause issues.
+    - If you want to use other GPU types, you can set this in the annotations of ISVC as follows:
+      ~~~
+      serving.kserve.io/gpu-resource-types: '["nvidia.com/mig-1g.5gb", "nvidia.com/mig-2g.10gb", "gpu-type3"]'
+      ~~~
+    > Note: vLLM distributed inference only supports nccl for now.
+- You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. **Then it can cause issues.**
 - The Autoscaler must be configured as `external`.
 - The only supported storage protocol for StorageURI is `PVC`.
-- By default, the following 4 types of GPU resources are allowed:
-  ~~~ 
-  "nvidia.com/gpu"
-  "amd.com/gpu"
-  "intel.com/gpu"
-  "habana.ai/gaudi" 
-  ~~~
-  - If you want to use other GPU types, you can set this in the annotations of ISVC as follows:
-    ~~~
-    serving.kserve.io/gpu-resource-types: '["gpu-type1", "gpu-type2", "gpu-type3"]'
-    ~~~
 
 !!! note 
 
@@ -41,6 +35,8 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 Using the multi-node feature likely indicates that you are trying to deploy a very large model. In such cases, you should consider increasing the `initialDelaySeconds` for the `livenessProbe`, `readinessProbe`, and `startupProbe`. The default values may not be suitable for your specific needs. 
 
 You can set StartupProbe in ServingRuntime for your own situation.
+
+*default setup:*
 ~~~
 ..
       startupProbe:
@@ -48,7 +44,7 @@ You can set StartupProbe in ServingRuntime for your own situation.
         periodSeconds: 30
         successThreshold: 1
         timeoutSeconds: 30
-        initialDelaySeconds: 20
+        initialDelaySeconds: 60
 ..
 ~~~
 
@@ -96,15 +92,26 @@ To enable multi-node/multi-GPU inference,  `workerSpec` must be configured in bo
 
 ## Key Configurations
 
-When using the `huggingface-server-multinode` `ServingRuntime`, there are two critical configurations you need to understand:
+The `huggingface-server-multinode` `ServingRuntime` leverages the distributed inference capability provided by vLLM.  
+However, the official [vLLM documentation](https://docs.vllm.ai/en/latest/serving/distributed_serving.html) describes distributed inference based on a **physical environment**. In contrast, **Kubernetes** works quite differently. Therefore, it's important to understand how GPU allocation works in **KServe** when using this `ServingRuntime`.
 
-1. **`workerSpec.tensorParallelSize`**:    
-   This setting controls how many GPUs are used per node. The GPU type count in both the head and worker node deployment resources will be updated automatically.
+When using the `huggingface-server-multinode` `ServingRuntime`, there are two critical configurations to understand:
 
 
-2. **`workerSpec.pipelineParallelSize`**
-  This setting determines how many nodes are involved in the deployment. This variable represents the total number of nodes, including both the head and worker nodes.
+1. **`workerSpec.tensorParallelSize`**  
+   From the [vLLM documentation](https://docs.vllm.ai/en/latest/serving/distributed_serving.html):  
+   > The tensor parallel size is the number of GPUs you want to use in each node
 
+    In **KServe**, `tensorParallelSize` does **not** directly map to the number of GPUs.  
+    Instead, this value is **only** used to configure **tensor parallelism**—that is, how the model **weights** are sharded across GPUs.
+
+
+2. **`workerSpec.pipelineParallelSize`**  
+   From the [vLLM documentation](https://docs.vllm.ai/en/latest/serving/distributed_serving.html):  
+   > The pipeline parallel size is the number of nodes
+
+    In **KServe**, `pipelineParallelSize` also does **not** correspond 1:1 with the number of Kubernetes nodes.  
+    Instead, it is **only** used to configure **pipeline parallelism**—how the model **layers** are split across the GPUs.
 
 ### Example InferenceService
 
@@ -129,8 +136,92 @@ spec:
       pipelineParallelSize: 2
       tensorParallelSize: 1
     }  
+    
 ```
 
+!!! info "Mechanism: How to Set GPU Allocation per Node"
+
+    ```
+    Total GPUs = tensorParallelSize × pipelineParallelSize
+
+    Ray Node Count = ceil(Total GPUs / workerSpec.resources.requests.gpu)
+    Worker GPU Count = (Total GPUs / Ray Node Count) - 1
+    Head GPU Count = Total GPUs - 1
+
+    # If Total GPUs == workerSpec.resources.requests.gpu, only the head node will be deployed.
+    ```
+
+    **Environment**: 16 GPUs across 2 nodes (8 GPUs per node)
+    
+    ---
+
+      **Case 1: `pipelineParallelSize = 2`, `tensorParallelSize = 8`, `workerSpec.resources.requests.gpu = 8`**
+
+    ```bash
+    vllm serve /path/to/the/model/in/the/container \
+         --tensor-parallel-size 8 \
+         --pipeline-parallel-size 2
+    ```
+
+    According to the vLLM documentation, this configuration requires 16 GPUs.  
+    If all GPUs are available, it should assign 8 GPUs to each of 2 Pods.
+
+    Example configuration:
+
+    ```yaml
+    workerSpec:    
+      pipelineParallelSize: 2
+      tensorParallelSize: 8
+      containers:
+      - name: worker-container
+        resources: 
+          requests:
+            nvidia.com/gpu: "8"
+    ```
+
+    ---
+
+    **Case 2: No `pipelineParallelSize`, `tensorParallelSize = 16`, `workerSpec.resources.requests.gpu = 8`**
+
+    ```bash
+    vllm serve /path/to/the/model/in/the/container \
+         --tensor-parallel-size 16
+    ```
+
+    This also requires 16 GPUs. To meet this, KServe will internally set `pipelineParallelSize = 2` and `tensorParallelSize = 8`.
+
+    Example configuration:
+
+    ```yaml
+    workerSpec:    
+      pipelineParallelSize: 2
+      tensorParallelSize: 8
+      containers:
+      - name: worker-container
+        resources: 
+          requests:
+            nvidia.com/gpu: "8"
+    ```
+
+    ---
+
+    **Case 3: `pipelineParallelSize = 1`, `tensorParallelSize = 8`, `workerSpec.resources.requests.gpu = 8`**
+
+    ```yaml
+    workerSpec:    
+      pipelineParallelSize: 1     # default value is 1, so this field can be omitted
+      tensorParallelSize: 8
+      containers:
+      - name: worker-container
+        resources: 
+          requests:
+            nvidia.com/gpu: "8"
+    ```
+
+    In this case, only the **head node** will be deployed,  
+    because the required total GPU count matches the GPU requested per Pod.
+
+    You can find more use-cases from [here](https://github.com/kserve/kserve/pull/4356)
 ## Serve the Hugging Face vLLM Model Using 2 Nodes
 
 Follow these steps to serve the Hugging Face vLLM model using a multi-node setup.
@@ -198,7 +289,9 @@ spec:
       modelFormat:
         name: huggingface
       storageUri: pvc://llama-3-8b-pvc/hf/8b_instruction_tuned  
-    workerSpec: {}
+    workerSpec: 
+      pipelineParallelSize: 2
+      tensorParallelSize: 1
 EOF
 ```      
 
