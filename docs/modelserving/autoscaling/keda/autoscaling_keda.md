@@ -136,6 +136,38 @@ The setup leverages KServe with KEDA for autoscaling based on custom [Prometheus
 
 3. Prometheus configured to collect metrics from KServe.
 
+
+### Create Prometheus Authentication Secret and TriggerAuthentication (if needed)
+
+If your Prometheus server requires a bearer token or custom CA, create a Kubernetes Secret and a `TriggerAuthentication` resource:
+
+``` yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: keda-prom-secret
+  namespace: default
+data:
+  bearerToken: "BEARER_TOKEN"
+  ca: "CUSTOM_CA_CERT"
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: keda-prom-creds
+  namespace: default
+spec:
+  secretTargetRef:
+    - parameter: bearerToken
+      name: keda-prom-secret
+      key: bearerToken
+      # might be required if you're using a custom CA
+    - parameter: ca
+      name: keda-prom-secret
+      key: ca
+```
+
+
 ### Create `InferenceService`
 
 ``` yaml
@@ -177,6 +209,8 @@ spec:
               backend: "prometheus"
               serverAddress: "http://prometheus.istio-system.svc.cluster.local:9090"
               query: vllm:num_requests_running
+            authenticationRef:    # optional for secure access
+              name: keda-prom-creds
             target:
               type: Value
               value: "2"
