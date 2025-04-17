@@ -32,6 +32,7 @@ is provided as reference.
     kind: "InferenceService"
     metadata:
       name: "sklearn-iris"
+      namespace: kserve-test
     spec:
       predictor:
         model:
@@ -49,6 +50,7 @@ is provided as reference.
     kind: "InferenceService"
     metadata:
       name: "sklearn-iris"
+      namespace: kserve-test
     spec:
       predictor:
         sklearn:
