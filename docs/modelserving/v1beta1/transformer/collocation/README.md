@@ -13,14 +13,14 @@ KServe by default deploys the Transformer and Predictor as separate services, al
 2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 3. You can find the [code samples](https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/transformer/collocation) on kserve repository.
 
-## Collocation with custom container
+## Collocation with Custom Containers
 ### Deploy the InferenceService
 
 Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. `Transformer` is configured to listen on port 8080 (REST) and 8081 (GRPC) 
 while, `Predictor` listens on port 8085 (REST). `Transformer` calls `Predictor` on port 8085 via local socket. 
 Deploy the `Inferenceservice` using the below command.
 
-Note that, readiness probe is specified in the transformer container. This is due to the limitation of Knative. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
+Note that, HTTP readiness probe can be specified in the transformer container to override the default TCP readiness probe. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
 
 ```yaml
 cat <<EOF | kubectl apply -f -
@@ -100,7 +100,7 @@ EOF
 !!! Tip
     Check the [Transformer documentation](../torchserve_image_transformer/#transformer-specific-commandline-arguments) for list of arguments that can be passed to the transformer container.
 
-### Check InferenceService status
+### Check InferenceService Status
 ```bash
 kubectl get isvc custom-transformer-collocation
 ```
@@ -153,14 +153,14 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -d $I
     {"predictions":[2]}
     ```
 
-## Collocation with Runtime
+## Collocation with Model Serving Runtime
 ### Deploy the InferenceService
 
 Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. `Transformer` is configured to listen on port 8080 (REST) and 8081 (GRPC) 
-while, `Predictor` listens on port 8085 (REST). `Transformer` calls `Predictor` on port 8085 via local socket. 
+while `Predictor` listens on port 8085 (REST) and `Transformer` calls `Predictor` on port 8085 via local socket. Please review the default listening ports for each model serving runtimes to configure properly.
 Deploy the `Inferenceservice` using the following command:
 
-Note that, readiness probe is specified in the transformer container. This due to the limitation of Knative. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
+Note that, HTTP readiness probe is specified in the transformer container to override the default TCP readiness probe. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
 
 ```yaml
 cat <<EOF | kubectl apply -f -
@@ -215,7 +215,7 @@ EOF
     $ inferenceservice.serving.kserve.io/transformer-collocation created
     ```
 
-### Check InferenceService status
+### Check InferenceService Status
 ```bash
 kubectl get isvc custom-transformer-collocation
 ```
@@ -229,7 +229,7 @@ kubectl get isvc custom-transformer-collocation
     If your DNS contains `svc.cluster.local`, then `Inferenceservice` is not exposed through Ingress. You need to [configure DNS](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns) 
     or [use a custom domain](https://knative.dev/docs/serving/using-a-custom-domain/) in order to expose the `isvc`.
 
-### Run a prediction
+### Run a Prediction
 Prepare the [inputs](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/collocation/input.json) for the inference request. Copy the following Json into a file named `input.json`.
 
 Now, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
