@@ -20,7 +20,7 @@ Since, the predictor and the transformer are in the same pod, they need to liste
 while, `Predictor` listens on port 8085 (REST). `Transformer` calls `Predictor` on port 8085 via local socket. 
 Deploy the `Inferenceservice` using the below command.
 
-Note that, readiness probe is specified in the transformer container. This due to the limitation of Knative. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
+Note that, readiness probe is specified in the transformer container. This is due to the limitation of Knative. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
 
 ```yaml
 cat <<EOF | kubectl apply -f -
@@ -158,7 +158,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -d $I
 
 Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. `Transformer` is configured to listen on port 8080 (REST) and 8081 (GRPC) 
 while, `Predictor` listens on port 8085 (REST). `Transformer` calls `Predictor` on port 8085 via local socket. 
-Deploy the `Inferenceservice` using the below command.
+Deploy the `Inferenceservice` using the following command:
 
 Note that, readiness probe is specified in the transformer container. This due to the limitation of Knative. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
 
@@ -349,7 +349,7 @@ EOF
 
 !!! note
     Do not specify ports for predictor in the serving runtime for Serverless deployment. This is not supported by knative. 
-    For more info see, [knative discussion on multiple ports](https://github.com/knative/serving/issues/8471).
+    For more information, please take a look at [knative discussion on multiple ports](https://github.com/knative/serving/issues/8471).
 
 !!! success "Expected output"
     ```{ .bash .no-copy }
