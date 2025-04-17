@@ -156,7 +156,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -d $I
 ## Collocation with Model Serving Runtime
 ### Deploy the InferenceService
 
-Since, the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. `Transformer` is configured to listen on port 8080 (REST) and 8081 (GRPC) 
+Since the predictor and the transformer are in the same pod, they need to listen on different ports to avoid conflict. In this example `Transformer` is configured to listen on port 8080 (REST) and 8081 (GRPC) 
 while `Predictor` listens on port 8085 (REST) and `Transformer` calls `Predictor` on port 8085 via local socket. Please review the default listening ports for each model serving runtimes to configure properly.
 Deploy the `Inferenceservice` using the following command:
 
