@@ -26,112 +26,113 @@ You can set `--enable_predictor_health_check` argument to allow the transformer 
 
 Deploy the `Inferenceservice` using the below command:
 
-=== Model and Transformer Container
-```yaml
-cat <<EOF | kubectl apply -f -
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: transformer-collocation
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: pytorch
-      storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
-      resources:
-        requests:
-          cpu: 100m
-          memory: 256Mi
-        limits:
-          cpu: 1
-          memory: 1Gi
-    containers:
-      - name: transformer-container    # Do not change the container name
-        image: kserve/image-transformer:latest
-        args:
-          - --model_name=mnist
-          - --predictor_protocol=v1
-          - --http_port=8080
-          - --grpc_port=8081
-          - --predictor_host=localhost:8085      # predictor listening port
-          - --enable_predictor_health_check      # transformer checks for predictor health before marking itself as ready
-        ports:
-          - containerPort: 8080
-            protocol: TCP
-        readinessProbe:
-          httpGet:
-            path: /v1/models/mnist
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        resources:
-          requests:
-            cpu: 100m
-            memory: 256Mi
-          limits:
-           cpu: 1
-           memory: 1Gi
-EOF
-```
+=== "Model and Transformer Container"
 
-=== Custom Containers
-```yaml
-cat <<EOF | kubectl apply -f -
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: transformer-collocation
-spec:
-  predictor:
-    containers:
-      - name: kserve-container        # Do not change the name; This should be the predictor container
-        image: "pytorch/torchserve:0.9.0-cpu"
-        args:
-          - "torchserve"
-          - "--start"
-          - "--model-store=/mnt/models/model-store"
-          - "--ts-config=/mnt/models/config/config.properties"
-        env:
-          - name: TS_SERVICE_ENVELOPE
-            value: kserve
-          - name: STORAGE_URI    # This will trigger storage initializer; Should be only present in predictor container
-            value: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
-        resources:
-          requests:
-            cpu: 100m
-            memory: 256Mi
-          limits:
-            cpu: 1
-            memory: 1Gi
+    ```yaml
+    cat <<EOF | kubectl apply -f -
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: transformer-collocation
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: pytorch
+          storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
+        containers:
+          - name: transformer-container    # Do not change the container name
+            image: kserve/image-transformer:latest
+            args:
+              - --model_name=mnist
+              - --predictor_protocol=v1
+              - --http_port=8080
+              - --grpc_port=8081
+              - --predictor_host=localhost:8085      # predictor listening port
+             - --enable_predictor_health_check      # transformer checks for predictor health before marking itself as ready
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            readinessProbe:
+              httpGet:
+                path: /v1/models/mnist
+                port: 8080
+              initialDelaySeconds: 5
+              periodSeconds: 10
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 1
+               memory: 1Gi
+      EOF
+    ```
 
-      - name: transformer-container    # Do not change the container name
-        image: kserve/image-transformer:latest
-        args:
-          - --model_name=mnist
-          - --predictor_protocol=v1
-          - --http_port=8080
-          - --grpc_port=8081
-          - --predictor_host=localhost:8085      # predictor listening port
-          - --enable_predictor_health_check
-        ports:
-          - containerPort: 8080
-            protocol: TCP
-        readinessProbe:
-          httpGet:
-            path: /v1/models/mnist
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        resources:
-          requests:
-            cpu: 100m
-            memory: 256Mi
-          limits:
-            cpu: 1
-            memory: 1Gi
-EOF
-```
+=== "Custom Containers"
+
+    ```yaml
+    cat <<EOF | kubectl apply -f -
+    apiVersion: serving.kserve.io/v1beta1
+    kind: InferenceService
+    metadata:
+      name: transformer-collocation
+    spec:
+      predictor:
+        containers:
+          - name: kserve-container        # Do not change the name; This should be the predictor container
+            image: "pytorch/torchserve:0.9.0-cpu"
+            args:
+              - "torchserve"
+              - "--start"
+              - "--model-store=/mnt/models/model-store"
+              - "--ts-config=/mnt/models/config/config.properties"
+            env:
+              - name: TS_SERVICE_ENVELOPE
+                value: kserve
+              - name: STORAGE_URI    # This will trigger storage initializer; Should be only present in predictor container
+                value: "gs://kfserving-examples/models/torchserve/image_classifier/v1"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 1
+                memory: 1Gi
+          - name: transformer-container    # Do not change the container name
+            image: kserve/image-transformer:latest
+            args:
+              - --model_name=mnist
+              - --predictor_protocol=v1
+              - --http_port=8080
+              - --grpc_port=8081
+              - --predictor_host=localhost:8085      # predictor listening port
+              - --enable_predictor_health_check
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            readinessProbe:
+              httpGet:
+                path: /v1/models/mnist
+                port: 8080
+              initialDelaySeconds: 5
+              periodSeconds: 10
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: 1
+               memory: 1Gi
+    EOF
+    ```
 
 !!! success "Expected output"
 
