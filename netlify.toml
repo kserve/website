@@ -1,3 +1,4 @@
 [build]
 publish = "/"
 command = "sh build.sh"
+environment = { PYTHON_VERSION = "3.11" }
