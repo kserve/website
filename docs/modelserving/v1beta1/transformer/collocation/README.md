@@ -32,7 +32,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: custom-transformer-collocation
+  name: transformer-collocation
 spec:
   predictor:
     model:
@@ -81,7 +81,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
-  name: custom-transformer-collocation
+  name: transformer-collocation
 spec:
   predictor:
     containers:
@@ -136,7 +136,7 @@ EOF
 !!! success "Expected output"
 
     ```{ .bash .no-copy }
-    $ inferenceservice.serving.kserve.io/custom-transformer-collocation created
+    $ inferenceservice.serving.kserve.io/transformer-collocation created
     ```
 
 !!! Note
@@ -157,13 +157,13 @@ EOF
 
 ### Check InferenceService Status
 ```bash
-kubectl get isvc custom-transformer-collocation
+kubectl get isvc transformer-collocation
 ```
 !!! success "Expected output"
 
     ```{ .bash .no-copy }
     NAME                             URL                                                         READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                              AGE
-    custom-transformer-collocation   http://custom-transformer-collocation.default.example.com   True           100                              custom-transformer-collocation-predictor-00001   133m
+    transformer-collocation   http://transformer-collocation.default.example.com                 True           100                              transformer-collocation-predictor-00001   133m
     ```
 
 !!! Note
@@ -177,7 +177,7 @@ Prepare the [inputs](https://github.com/kserve/kserve/blob/master/docs/samples/v
 Now, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
-SERVICE_NAME=custom-transformer-collocation
+SERVICE_NAME=transformer-collocation
 MODEL_NAME=mnist
 INPUT_PATH=@./input.json
 SERVICE_HOSTNAME=$(kubectl get inferenceservice $SERVICE_NAME -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -193,7 +193,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" -d $I
     *   Trying 127.0.0.1:8080...
     * Connected to localhost (127.0.0.1) port 8080 (#0)
     > POST /v1/models/mnist:predict HTTP/1.1
-    > Host: custom-transformer-collocation.default.example.com
+    > Host: transformer-collocation.default.example.com
     > User-Agent: curl/7.85.0
     > Accept: */*
     > Content-Type: application/json
@@ -298,7 +298,7 @@ EOF
     ```{ .bash .no-copy }
     $ servingruntime.serving.kserve.io/pytorch-collocation created
     ```
-### Deploy InferenceService
+### Deploy the InferenceService
 
 ```yaml
 cat <<EOF | kubectl apply -f -
