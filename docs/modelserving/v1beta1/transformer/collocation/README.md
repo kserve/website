@@ -20,7 +20,8 @@ Since, the predictor and the transformer are in the same pod, they need to liste
 while, `Predictor` listens on port 8085 (REST). `Transformer` calls `Predictor` on port 8085 via local socket. 
 Deploy the `Inferenceservice` using the below command.
 
-Note that, HTTP readiness probe can be specified in the transformer container to override the default TCP readiness probe. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
+!!! note
+    HTTP readiness probe can be specified in the transformer container to override the default TCP readiness probe. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
 
 ```yaml
 cat <<EOF | kubectl apply -f -
@@ -114,7 +115,7 @@ kubectl get isvc custom-transformer-collocation
     If your DNS contains `svc.cluster.local`, then `Inferenceservice` is not exposed through Ingress. You need to [configure DNS](https://knative.dev/docs/install/yaml-install/serving/install-serving-with-yaml/#configure-dns) 
     or [use a custom domain](https://knative.dev/docs/serving/using-a-custom-domain/) in order to expose the `isvc`.
 
-## Run a prediction
+### Run a Prediction
 Prepare the [inputs](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/collocation/input.json) for the inference request. Copy the following Json into a file named `input.json`.
 
 Now, [determine the ingress IP and ports](../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
@@ -160,7 +161,8 @@ Since the predictor and the transformer are in the same pod, they need to listen
 while `Predictor` listens on port 8085 (REST) and `Transformer` calls `Predictor` on port 8085 via local socket. Please review the default listening ports for each model serving runtimes to configure properly.
 Deploy the `Inferenceservice` using the following command:
 
-Note that, HTTP readiness probe is specified in the transformer container to override the default TCP readiness probe. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
+!!! note
+    HTTP readiness probe can be specified in the transformer container to override the default TCP readiness probe. You can provide `--enable_predictor_health_check` argument to allow the transformer container to check the predictor health as well. This will make sure that both the containers are healthy before the isvc is marked as ready.
 
 ```yaml
 cat <<EOF | kubectl apply -f -
