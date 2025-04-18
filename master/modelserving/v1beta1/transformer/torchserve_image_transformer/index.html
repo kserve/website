@@ -1735,6 +1735,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#transformer-specific-commandline-arguments" class="md-nav__link">
+    Transformer Specific Commandline Arguments
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3164,6 +3171,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#transformer-specific-commandline-arguments" class="md-nav__link">
+    Transformer Specific Commandline Arguments
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3510,6 +3524,14 @@ time serializing and deserializing <code>3*32*32</code> shape tensor and with gR
 <span class="c1"># from gPPC v2 predictor log</span>
 <span class="m">2023</span>-01-09<span class="w"> </span><span class="m">07</span>:27:52.171<span class="w"> </span><span class="m">79711</span><span class="w"> </span>root<span class="w"> </span>INFO<span class="w"> </span><span class="o">[</span>__call__<span class="o">()</span>:128<span class="o">]</span><span class="w"> </span>requestId:<span class="w"> </span>,<span class="w"> </span>preprocess_ms:<span class="w"> </span><span class="m">0</span>.067949295,<span class="w"> </span>explain_ms:<span class="w"> </span><span class="m">0</span>,<span class="w"> </span>predict_ms:<span class="w"> </span><span class="m">51</span>.237106323,<span class="w"> </span>postprocess_ms:<span class="w"> </span><span class="m">0</span>.049114227
 </code></pre></div>
+<h2 id="transformer-specific-commandline-arguments">Transformer Specific Commandline Arguments<a class="headerlink" href="#transformer-specific-commandline-arguments" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>--predictor_protocol</code>: The protocol used to communicate with the predictor. The available values are "v1", "v2" and "grpc-v2". The default value is "v1".</li>
+<li><code>--predictor_use_ssl</code>: Whether to use secure SSL when communicating with the predictor. The default value is "false".</li>
+<li><code>--predictor_request_timeout_seconds</code>: The timeout seconds for the request sent to the predictor. The default value is 600 seconds.</li>
+<li><code>--predictor_request_retries</code>: The number of retries for the request sent to the predictor. The default value is 0.</li>
+<li><code>--enable_predictor_health_check</code>: The Transformer will perform readiness check for the predictor in addition to its health check. By default, it is disabled.</li>
+</ul>
 
               
             </article>
