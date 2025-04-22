@@ -73,7 +73,7 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    infrastructure:
+  infrastructure:
     labels:
       serving.kserve.io/gateway: kserve-ingress-gateway
 ```
