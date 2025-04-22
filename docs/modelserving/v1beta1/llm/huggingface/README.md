@@ -20,9 +20,12 @@ For information on the models supported by the vLLM backend, please visit [vLLM'
 
 
 ## API Endpoints
-Both of the backends support serving generative models (text generation and text2text generation) using [OpenAI's Completion](https://platform.openai.com/docs/api-reference/completions) and [Chat Completion](https://platform.openai.com/docs/api-reference/chat) API.
+Both of the backends support serving generative models (text generation and text2text generation) using [OpenAI's Completion](https://platform.openai.com/docs/api-reference/completions), [Chat Completion](https://platform.openai.com/docs/api-reference/chat) and [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) API.
 
 The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's [Open Inference Protocol](../../../data_plane/v2_protocol.md) or [V1 API](../../../data_plane/v1_protocol.md).
+
+!!! Tip
+    KServe prefixes OpenAI API endpoints with 'openai' to prevent confusion with the [V1 API](../../../data_plane/v1_protocol.md). For instance, the endpoint for text generation via OpenAI's Completion API becomes `openai/v1/completions`, while the Chat Completion API is accessed at `openai/v1/chat/completions`. You can remove this prefix by setting the `KSERVE_OPENAI_ROUTE_PREFIX` environment variable to an empty string (""), or specify a custom prefix by assigning a different value to the variable.
 
 ## Examples
 The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:
