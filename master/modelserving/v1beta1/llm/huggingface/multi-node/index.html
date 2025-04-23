@@ -1104,11 +1104,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    Prerequisites
+  <a href="#restrictions" class="md-nav__link">
+    Restrictions
   </a>
   
-    <nav class="md-nav" aria-label="Prerequisites">
+    <nav class="md-nav" aria-label="Restrictions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3099,11 +3099,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    Prerequisites
+  <a href="#restrictions" class="md-nav__link">
+    Restrictions
   </a>
   
-    <nav class="md-nav" aria-label="Prerequisites">
+    <nav class="md-nav" aria-label="Restrictions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3253,7 +3253,7 @@
 
 <h1 id="multi-nodemulti-gpu-inference-with-hugging-face-vllm-serving-runtime">Multi-node/Multi-GPU Inference with Hugging Face vLLM Serving Runtime<a class="headerlink" href="#multi-nodemulti-gpu-inference-with-hugging-face-vllm-serving-runtime" title="Permanent link">&para;</a></h1>
 <p>This guide provides step-by-step instructions on setting up multi-node and multi-GPU inference using Hugging Face's vLLM Serving Runtime. Before proceeding, please ensure you meet the following prerequisites and understand the limitations of this setup.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h2 id="restrictions">Restrictions<a class="headerlink" href="#restrictions" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Multi-node functionality is only supported in <strong>RawDeployment</strong> mode.</li>
 <li><strong>Auto-scaling is not available</strong> for multi-node setups. </li>
@@ -3262,21 +3262,20 @@
 <h3 id="key-validations">Key Validations<a class="headerlink" href="#key-validations" title="Permanent link">&para;</a></h3>
 <ul>
 <li><code>TENSOR_PARALLEL_SIZE</code> and <code>PIPELINE_PARALLEL_SIZE</code> cannot be set via environment variables. They must be configured through <code>workerSpec.tensorParallelSize</code> and <code>workerSpec.pipelineParallelSize</code> respectively.</li>
-<li>In a ServingRuntime designed for multi-node, both <code>workerSpec.tensorParallelSize</code> and <code>workerSpec.pipelineParallelSize</code> must be set.</li>
-<li>The minimum value for <code>workerSpec.tensorParallelSize</code> is <strong>1</strong>, and the minimum value for <code>workerSpec.pipelineParallelSize</code> is <strong>2</strong>.</li>
-<li>Currently, four GPU types are allowed: <code>nvidia.com/gpu</code> (<em>default</em>), <code>intel.com/gpu</code>, <code>amd.com/gpu</code>, and <code>habana.ai/gaudi</code>.</li>
-<li>You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. Then it can cause issues.</li>
+<li>In the <code>ServingRuntime</code>, default values for <code>workerSpec.tensorParallelSize</code> and <code>workerSpec.pipelineParallelSize</code> are <code>1</code> and <code>1</code> respectively.<br />
+  These values <strong>can be overridden</strong> by the InferenceService.</li>
+<li>Currently, four GPU types are allowed: <code>nvidia.com/gpu</code> (<em>default</em>), <code>intel.com/gpu</code>, <code>amd.com/gpu</code>, and <code>habana.ai/gaudi</code>.<ul>
+<li>If you want to use other GPU types, you can set this in the annotations of ISVC as follows:
+  <div class="highlight"><pre><span></span><code>serving.kserve.io/gpu-resource-types: &#39;[&quot;nvidia.com/mig-1g.5gb&quot;, &quot;nvidia.com/mig-2g.10gb&quot;, &quot;gpu-type3&quot;]&#39;
+</code></pre></div><blockquote>
+<p>Note: vLLM distributed inference only supports nccl for now.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. <strong>Then it can cause issues.</strong></li>
 <li>The Autoscaler must be configured as <code>external</code>.</li>
 <li>The only supported storage protocol for StorageURI is <code>PVC</code>.</li>
-<li>By default, the following 4 types of GPU resources are allowed:
-  <div class="highlight"><pre><span></span><code>&quot;nvidia.com/gpu&quot;
-&quot;amd.com/gpu&quot;
-&quot;intel.com/gpu&quot;
-&quot;habana.ai/gaudi&quot; 
-</code></pre></div></li>
-<li>If you want to use other GPU types, you can set this in the annotations of ISVC as follows:
-    <div class="highlight"><pre><span></span><code>serving.kserve.io/gpu-resource-types: &#39;[&quot;gpu-type1&quot;, &quot;gpu-type2&quot;, &quot;gpu-type3&quot;]&#39;
-</code></pre></div></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -3285,14 +3284,15 @@
 </div>
 <h3 id="consideration">Consideration<a class="headerlink" href="#consideration" title="Permanent link">&para;</a></h3>
 <p>Using the multi-node feature likely indicates that you are trying to deploy a very large model. In such cases, you should consider increasing the <code>initialDelaySeconds</code> for the <code>livenessProbe</code>, <code>readinessProbe</code>, and <code>startupProbe</code>. The default values may not be suitable for your specific needs. </p>
-<p>You can set StartupProbe in ServingRuntime for your own situation.
+<p>You can set StartupProbe in ServingRuntime for your own situation.</p>
+<p><em>default setup:</em>
 <div class="highlight"><pre><span></span><code>..
       startupProbe:
         failureThreshold: 40
         periodSeconds: 30
         successThreshold: 1
         timeoutSeconds: 30
-        initialDelaySeconds: 20
+        initialDelaySeconds: 60
 ..
 </code></pre></div></p>
 <p>Multi-node setups typically use the <code>RollingUpdate</code> deployment strategy, which ensures that the existing service remains operational until the new service becomes Ready. However, this approach requires more than twice the resources to function effectively. Therefore, during the development phase, it is more appropriate to use the <code>Recreate</code> strategy.</p>
@@ -3329,15 +3329,27 @@ Additionally, modifying the <code>PipelineParallelSize</code> (either increasing
     workerSpec: {} # Specifying workerSpec indicates that multi-node functionality will be used     
 </code></pre></div>
 <h2 id="key-configurations">Key Configurations<a class="headerlink" href="#key-configurations" title="Permanent link">&para;</a></h2>
-<p>When using the <code>huggingface-server-multinode</code> <code>ServingRuntime</code>, there are two critical configurations you need to understand:</p>
+<p>The <code>huggingface-server-multinode</code> <code>ServingRuntime</code> leverages the distributed inference capability provided by vLLM.<br />
+However, the official <a href="https://docs.vllm.ai/en/latest/serving/distributed_serving.html">vLLM documentation</a> describes distributed inference based on a <strong>physical environment</strong>. In contrast, <strong>Kubernetes</strong> works quite differently. Therefore, it's important to understand how GPU allocation works in <strong>KServe</strong> when using this <code>ServingRuntime</code>.</p>
+<p>When using the <code>huggingface-server-multinode</code> <code>ServingRuntime</code>, there are two critical configurations to understand:</p>
 <ol>
 <li>
-<p><strong><code>workerSpec.tensorParallelSize</code></strong>:  <br />
-   This setting controls how many GPUs are used per node. The GPU type count in both the head and worker node deployment resources will be updated automatically.</p>
+<p><strong><code>workerSpec.tensorParallelSize</code></strong><br />
+   From the <a href="https://docs.vllm.ai/en/latest/serving/distributed_serving.html">vLLM documentation</a>:  </p>
+<blockquote>
+<p>The tensor parallel size is the number of GPUs you want to use in each node</p>
+</blockquote>
+<p>In <strong>KServe</strong>, <code>tensorParallelSize</code> does <strong>not</strong> directly map to the number of GPUs.<br />
+Instead, this value is <strong>only</strong> used to configure <strong>tensor parallelism</strong>—that is, how the model <strong>weights</strong> are sharded across GPUs.</p>
 </li>
 <li>
-<p><strong><code>workerSpec.pipelineParallelSize</code></strong>
-  This setting determines how many nodes are involved in the deployment. This variable represents the total number of nodes, including both the head and worker nodes.</p>
+<p><strong><code>workerSpec.pipelineParallelSize</code></strong><br />
+   From the <a href="https://docs.vllm.ai/en/latest/serving/distributed_serving.html">vLLM documentation</a>:  </p>
+<blockquote>
+<p>The pipeline parallel size is the number of nodes</p>
+</blockquote>
+<p>In <strong>KServe</strong>, <code>pipelineParallelSize</code> also does <strong>not</strong> correspond 1:1 with the number of Kubernetes nodes.<br />
+Instead, it is <strong>only</strong> used to configure <strong>pipeline parallelism</strong>—how the model <strong>layers</strong> are split across the GPUs.</p>
 </li>
 </ol>
 <h3 id="example-inferenceservice">Example InferenceService<a class="headerlink" href="#example-inferenceservice" title="Permanent link">&para;</a></h3>
@@ -3361,6 +3373,66 @@ Additionally, modifying the <code>PipelineParallelSize</code> (either increasing
 <span class="w">      </span><span class="nv">tensorParallelSize</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="nv">1</span>
 <span class="w">    </span><span class="p p-Indicator">}</span><span class="w">  </span>
 </code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Mechanism: How to Set GPU Allocation per Node</p>
+<div class="highlight"><pre><span></span><code>Total GPUs = tensorParallelSize × pipelineParallelSize
+
+Ray Node Count = ceil(Total GPUs / workerSpec.resources.requests.gpu)
+Worker GPU Count = (Total GPUs / Ray Node Count) - 1
+Head GPU Count = Total GPUs - 1
+
+# If Total GPUs == workerSpec.resources.requests.gpu, only the head node will be deployed.
+</code></pre></div>
+<p><strong>Environment</strong>: 16 GPUs across 2 nodes (8 GPUs per node)</p>
+<hr />
+<p><strong>Case 1: <code>pipelineParallelSize = 2</code>, <code>tensorParallelSize = 8</code>, <code>workerSpec.resources.requests.gpu = 8</code></strong></p>
+<div class="highlight"><pre><span></span><code>vllm<span class="w"> </span>serve<span class="w"> </span>/path/to/the/model/in/the/container<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--tensor-parallel-size<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--pipeline-parallel-size<span class="w"> </span><span class="m">2</span>
+</code></pre></div>
+<p>According to the vLLM documentation, this configuration requires 16 GPUs.<br />
+If all GPUs are available, it should assign 8 GPUs to each of 2 Pods.</p>
+<p>Example configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">workerSpec</span><span class="p">:</span><span class="w">    </span>
+<span class="w">  </span><span class="nt">pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">tensorParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worker-container</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8&quot;</span>
+</code></pre></div>
+<hr />
+<p><strong>Case 2: No <code>pipelineParallelSize</code>, <code>tensorParallelSize = 16</code>, <code>workerSpec.resources.requests.gpu = 8</code></strong></p>
+<div class="highlight"><pre><span></span><code>vllm<span class="w"> </span>serve<span class="w"> </span>/path/to/the/model/in/the/container<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--tensor-parallel-size<span class="w"> </span><span class="m">16</span>
+</code></pre></div>
+<p>This also requires 16 GPUs. To meet this, KServe will internally set <code>pipelineParallelSize = 2</code> and <code>tensorParallelSize = 8</code>.</p>
+<p>Example configuration:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">workerSpec</span><span class="p">:</span><span class="w">    </span>
+<span class="w">  </span><span class="nt">pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">tensorParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worker-container</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8&quot;</span>
+</code></pre></div>
+<hr />
+<p><strong>Case 3: <code>pipelineParallelSize = 1</code>, <code>tensorParallelSize = 8</code>, <code>workerSpec.resources.requests.gpu = 8</code></strong></p>
+<div class="highlight"><pre><span></span><code><span class="nt">workerSpec</span><span class="p">:</span><span class="w">    </span>
+<span class="w">  </span><span class="nt">pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">     </span><span class="c1"># default value is 1, so this field can be omitted</span>
+<span class="w">  </span><span class="nt">tensorParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8</span>
+<span class="w">  </span><span class="nt">containers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">worker-container</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8&quot;</span>
+</code></pre></div>
+<p>In this case, only the <strong>head node</strong> will be deployed,<br />
+because the required total GPU count matches the GPU requested per Pod.</p>
+<p>You can find more use-cases from <a href="https://github.com/kserve/kserve/pull/4356">here</a></p>
+</div>
 <h2 id="serve-the-hugging-face-vllm-model-using-2-nodes">Serve the Hugging Face vLLM Model Using 2 Nodes<a class="headerlink" href="#serve-the-hugging-face-vllm-model-using-2-nodes" title="Permanent link">&para;</a></h2>
 <p>Follow these steps to serve the Hugging Face vLLM model using a multi-node setup.</p>
 <h3 id="1-create-a-persistent-volume-claim-pvc">1. Create a Persistent Volume Claim (PVC)<a class="headerlink" href="#1-create-a-persistent-volume-claim-pvc" title="Permanent link">&para;</a></h3>
@@ -3409,7 +3481,9 @@ Additionally, modifying the <code>PipelineParallelSize</code> (either increasing
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc://llama-3-8b-pvc/hf/8b_instruction_tuned</span><span class="w">  </span>
-<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span><span class="w"> </span>
+<span class="w">      </span><span class="nt">pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">tensorParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="l l-Scalar l-Scalar-Plain">EOF</span>
 </code></pre></div>
 <h2 id="check-inferenceservice-status">Check <code>InferenceService</code> status.<a class="headerlink" href="#check-inferenceservice-status" title="Permanent link">&para;</a></h2>
