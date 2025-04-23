@@ -222,6 +222,7 @@ spec:
               backend: "prometheus"
               serverAddress: "http://prometheus.istio-system.svc.cluster.local:9090"
               query: vllm:num_requests_running
+              authModes: "bearer" # optional for secure access
             authenticationRef:    # optional for secure access
               name: keda-prom-creds
             target:
