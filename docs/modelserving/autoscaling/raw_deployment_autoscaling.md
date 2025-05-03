@@ -46,7 +46,7 @@ Concurrency and RPS are supported via Knative Pod Autoscaler, you can refer to [
 
 ### Disable HPA in Raw Deployment
 
-If you want to control the scaling of the deployment created by KServe inference service with an external tool like [`KEDA`](https://keda.sh/), or prefer to define your own Horizontal Pod Autoscaler (HPA), you can disable KServe's automatic HPA creation.
+If you want to control the scaling of the deployment created by KServe inference service using an external tool or your own Horizontal Pod Autoscaler (HPA), you can disable KServe's automatic HPA creation.
 
 To do this, set the autoscaler class annotation to `external`, which instructs KServe not to create an HPA for the InferenceService.
 
