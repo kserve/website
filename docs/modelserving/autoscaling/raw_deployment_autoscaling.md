@@ -46,27 +46,27 @@ Concurrency and RPS are supported via Knative Pod Autoscaler, you can refer to [
 
 ### Disable HPA in Raw Deployment
 
-If you want to control the scaling of the deployment created by KServe inference service using an external tool or your own Horizontal Pod Autoscaler (HPA), you can disable KServe's automatic HPA creation.
+If you want to use external autoscaler tools or manage scaling manually, you can disable the Horizontal Pod Autoscaler (HPA) that KServe creates.
 
-To do this, set the autoscaler class annotation to `external`, which instructs KServe not to create an HPA for the InferenceService.
+KServe supports two values for the `autoscaler.kserve.io/class` annotation for disabling HPA:
 
-=== "New Schema"
+- **`none`**: This is the recommended value if you want to **completely disable** HPA creation. KServe will neither create nor manage any HPA object for the deployment.
+- **`external`**: This value indicates that you are using an external autoscaler. KServe will delete the HPA it created (if any), but it may still allow external HPA objects to be managed separately.
 
-    ```yaml
-    kubectl apply -f - <<EOF
-    apiVersion: "serving.kserve.io/v1beta1"
-    kind: "InferenceService"
-    metadata:
-      annotations:
-        serving.kserve.io/deploymentMode: RawDeployment
-        serving.kserve.io/autoscalerClass: external
-      name: "sklearn-iris"
-    spec:
-      predictor:
-        model:
-          modelFormat:
-            name: sklearn
-          storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
-    EOF
-    ```
+#### Example: Disable HPA completely
 
+```yaml
+metadata:
+  annotations:
+    autoscaler.kserve.io/class: "none"
+```
+
+#### Example: Use an external autoscaler tool
+
+```yaml
+metadata:
+  annotations:
+    autoscaler.kserve.io/class: "external"
+```
+
+> ✅ **Recommendation**: Prefer `"none"` when disabling KServe-managed autoscaling entirely. Use `"external"` only when another controller will manage the HPA.
