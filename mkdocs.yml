@@ -13,7 +13,6 @@ nav:
                 - ModelMesh installation: admin/modelmesh.md
                 - Kubernetes deployment installation: admin/kubernetes_deployment.md
                 - Gateway API migration: admin/gatewayapi_migration.md
-          - AI Gateway Integration: admin/ai-gateway_integration.md
     - User Guide:
           - Concepts:
                 - Control Plane:
@@ -26,10 +25,13 @@ nav:
                     - Binary Tensor Data Extension: modelserving/data_plane/binary_tensor_data_extension.md
                 - Serving Runtimes: modelserving/servingruntimes.md
           - Generative Inference:
-              - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
-              - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
+              - vLLM Serving Runtime:
+                  - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
+                  - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
               - Multi Node Inference: modelserving/v1beta1/llm/huggingface/multi-node/README.md
               - Model Cache: modelserving/storage/modelcache/localmodel.md
+              - LLM Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
+              - AI Gateway Integration: admin/ai-gateway_integration.md
           - Predictive Inference:
               - Model Serving Runtimes:
                   - Supported Model Frameworks/Formats:
@@ -79,6 +81,11 @@ nav:
                   - ART Adversarial Detector: modelserving/detect/art/mnist/README.md
               - Request Batching:
                   - Inference Batcher: modelserving/batcher/batcher.md
+              - Kafka:
+                  - Inference with Kafka event source: modelserving/kafka/kafka.md
+              - Rollout Strategies:
+                  - Canary: modelserving/v1beta1/rollout/canary.md
+                  - Canary Example: modelserving/v1beta1/rollout/canary-example.md
           - Inference Graph:
                 - Concept: modelserving/inference_graph/README.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
@@ -94,21 +101,16 @@ nav:
                 - Hugging Face: modelserving/storage/huggingface/hf.md
           - Payload Logging:
                 - Inference Logger: modelserving/logger/logger.md
-          - Kafka:
-                - Inference with Kafka event source: modelserving/kafka/kafka.md
-          - Rollout Strategies:
-                - Canary:  modelserving/v1beta1/rollout/canary.md
-                - Canary Example: modelserving/v1beta1/rollout/canary-example.md
-    - Autoscaling:
-          - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
-          - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
-          - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
-    - Node Scheduling:
-          - Overview: modelserving/nodescheduling/overview.md
-          - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
-    - Inference Observability:
-          - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
-          - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
+          - Autoscaling:
+                - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
+                - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
+                - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
+          - Node Scheduling:
+                - Overview: modelserving/nodescheduling/overview.md
+                - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
+          - Inference Observability:
+                - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
+                - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
