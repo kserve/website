@@ -58,7 +58,7 @@ KServe supports two values for the `autoscaler.kserve.io/class` annotation for d
 ```yaml
 metadata:
   annotations:
-    autoscaler.kserve.io/class: "none"
+    serving.kserve.io/autoscalerClass: none
 ```
 
 #### Example: Use an external autoscaler tool
@@ -66,7 +66,7 @@ metadata:
 ```yaml
 metadata:
   annotations:
-    autoscaler.kserve.io/class: "external"
+    serving.kserve.io/autoscalerClass: external
 ```
 
 > ✅ **Recommendation**: Prefer `"none"` when disabling KServe-managed autoscaling entirely. Use `"external"` only when another controller will manage the HPA.
