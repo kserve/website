@@ -86,6 +86,10 @@ nav:
               - Rollout Strategies:
                   - Canary: modelserving/v1beta1/rollout/canary.md
                   - Canary Example: modelserving/v1beta1/rollout/canary-example.md
+              - Autoscaling:
+                  - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
+                  - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
+                  - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
           - Inference Graph:
                 - Concept: modelserving/inference_graph/README.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
@@ -101,16 +105,9 @@ nav:
                 - Hugging Face: modelserving/storage/huggingface/hf.md
           - Payload Logging:
                 - Inference Logger: modelserving/logger/logger.md
-          - Autoscaling:
-                - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
-                - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
-                - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
           - Node Scheduling:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
-          - Inference Observability:
-                - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
-                - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
     - API Reference:
           - Control Plane API: reference/api.md
           - Open Inference Protocol API Spec: reference/swagger-ui.md
