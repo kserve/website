@@ -2277,6 +2277,26 @@
     Disable HPA in Raw Deployment
   </a>
   
+    <nav class="md-nav" aria-label="Disable HPA in Raw Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-disable-hpa-completely" class="md-nav__link">
+    Example: Disable HPA completely
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-use-an-external-autoscaler-tool" class="md-nav__link">
+    Example: Use an external autoscaler tool
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -3001,6 +3021,26 @@
     Disable HPA in Raw Deployment
   </a>
   
+    <nav class="md-nav" aria-label="Disable HPA in Raw Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-disable-hpa-completely" class="md-nav__link">
+    Example: Disable HPA completely
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-use-an-external-autoscaler-tool" class="md-nav__link">
+    Example: Use an external autoscaler tool
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -3069,29 +3109,25 @@
 </ul>
 <p>Concurrency and RPS are supported via Knative Pod Autoscaler, you can refer to <a href="https://knative.dev/docs/serving/autoscaling/autoscaling-metrics">Knative Autoscaler Metrics</a> documentation.</p>
 <h3 id="disable-hpa-in-raw-deployment">Disable HPA in Raw Deployment<a class="headerlink" href="#disable-hpa-in-raw-deployment" title="Permanent link">&para;</a></h3>
-<p>If you want to control the scaling of the deployment created by KServe inference service with an external tool like <a href="https://keda.sh/"><code>KEDA</code></a>, you can disable KServe's creation of the <strong>HPA</strong> by replacing <strong>external</strong> value with autoscaler class annotation which should disable the creation of HPA.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">New Schema</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="l l-Scalar l-Scalar-Plain">kubectl apply -f - &lt;&lt;EOF</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;InferenceService&quot;</span>
-<span class="nt">metadata</span><span class="p">:</span>
+<p>If you want to use external autoscaler tools or manage scaling manually, you can disable the Horizontal Pod Autoscaler (HPA) that KServe creates.</p>
+<p>KServe supports two values for the <code>autoscaler.kserve.io/class</code> annotation for disabling HPA:</p>
+<ul>
+<li><strong><code>none</code></strong>: This is the recommended value if you want to <strong>completely disable</strong> HPA creation. KServe will neither create nor manage any HPA object for the deployment.</li>
+<li><strong><code>external</code></strong>: This value indicates that you are using an external autoscaler. KServe will delete the HPA it created (if any), but it may still allow external HPA objects to be managed separately.</li>
+</ul>
+<h4 id="example-disable-hpa-completely">Example: Disable HPA completely<a class="headerlink" href="#example-disable-hpa-completely" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
-<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;sklearn-iris&quot;</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
-<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;gs://kfserving-examples/models/sklearn/1.0/model&quot;</span>
-<span class="l l-Scalar l-Scalar-Plain">EOF</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
 </code></pre></div>
-</div>
-</div>
-</div>
+<h4 id="example-use-an-external-autoscaler-tool">Example: Use an external autoscaler tool<a class="headerlink" href="#example-use-an-external-autoscaler-tool" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+</code></pre></div>
+<blockquote>
+<p>✅ <strong>Recommendation</strong>: Prefer <code>"none"</code> when disabling KServe-managed autoscaling entirely. Use <code>"external"</code> only when another controller will manage the HPA.</p>
+</blockquote>
 
               
             </article>

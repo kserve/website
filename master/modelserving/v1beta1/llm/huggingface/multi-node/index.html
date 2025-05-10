@@ -3274,7 +3274,7 @@
 </ul>
 </li>
 <li>You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. <strong>Then it can cause issues.</strong></li>
-<li>The Autoscaler must be configured as <code>external</code>.</li>
+<li>The Autoscaler must be configured as <code>none</code>.</li>
 <li>The only supported storage protocol for StorageURI is <code>PVC</code>.</li>
 </ul>
 <div class="admonition note">
@@ -3360,7 +3360,7 @@ Instead, it is <strong>only</strong> used to configure <strong>pipeline parallel
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
-<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
 
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
@@ -3472,7 +3472,7 @@ because the required total GPU count matches the GPU requested per Pod.</p>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
-<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
