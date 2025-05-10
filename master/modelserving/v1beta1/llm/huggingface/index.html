@@ -3053,8 +3053,12 @@ If the model is not supported by the vLLM engine, KServe falls back to the Huggi
 </ul>
 <p>For information on the models supported by the vLLM backend, please visit <a href="https://docs.vllm.ai/en/stable/models/supported_models.html">vLLM's documentation</a>.</p>
 <h2 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">&para;</a></h2>
-<p>Both of the backends support serving generative models (text generation and text2text generation) using <a href="https://platform.openai.com/docs/api-reference/completions">OpenAI's Completion</a> and <a href="https://platform.openai.com/docs/api-reference/chat">Chat Completion</a> API.</p>
+<p>Both of the backends support serving generative models (text generation and text2text generation) using <a href="https://platform.openai.com/docs/api-reference/completions">OpenAI's Completion</a>, <a href="https://platform.openai.com/docs/api-reference/chat">Chat Completion</a> and <a href="https://platform.openai.com/docs/api-reference/embeddings">Embeddings</a> API.</p>
 <p>The other types of tasks like token classification, sequence classification, and fill mask are served using KServe's <a href="../../../data_plane/v2_protocol/">Open Inference Protocol</a> or <a href="../../../data_plane/v1_protocol/">V1 API</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>KServe prefixes OpenAI API endpoints with 'openai' to prevent confusion with the <a href="../../../data_plane/v1_protocol/">V1 API</a>. For instance, the endpoint for text generation via OpenAI's Completion API becomes <code>openai/v1/completions</code>, while the Chat Completion API is accessed at <code>openai/v1/chat/completions</code>. You can remove this prefix by setting the <code>KSERVE_OPENAI_ROUTE_PREFIX</code> environment variable to an empty string (""), or specify a custom prefix by assigning a different value to the variable.</p>
+</div>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <p>The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:</p>
 <ul>
