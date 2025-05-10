@@ -21,7 +21,7 @@ This guide provides step-by-step instructions on setting up multi-node and multi
       ~~~
     > Note: vLLM distributed inference only supports nccl for now.
 - You can specify the GPU type via InferenceService, but if it differs from what is set in the ServingRuntime, both GPU types will be assigned to the resource. **Then it can cause issues.**
-- The Autoscaler must be configured as `external`.
+- The Autoscaler must be configured as `none`.
 - The only supported storage protocol for StorageURI is `PVC`.
 
 !!! note 
@@ -124,7 +124,7 @@ metadata:
   name: huggingface-llama3
   annotations:
     serving.kserve.io/deploymentMode: RawDeployment
-    serving.kserve.io/autoscalerClass: external
+    serving.kserve.io/autoscalerClass: none
 
 spec:
   predictor:
@@ -280,7 +280,7 @@ kind: InferenceService
 metadata:
   annotations:
     serving.kserve.io/deploymentMode: RawDeployment
-    serving.kserve.io/autoscalerClass: external
+    serving.kserve.io/autoscalerClass: none
   name: huggingface-llama3
 spec:
   predictor:
