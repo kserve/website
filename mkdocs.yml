@@ -28,6 +28,7 @@ nav:
               - LLM Serving Runtime:
                   - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
                   - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
+                  - OpenAI SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
               - Multi Node Inference: modelserving/v1beta1/llm/huggingface/multi-node/README.md
               - Model Cache: modelserving/storage/modelcache/localmodel.md
               - LLM Autoscaler: modelserving/autoscaling/keda/autoscaling_llm.md
@@ -51,7 +52,6 @@ nav:
                          - Token Classification: modelserving/v1beta1/llm/huggingface/token_classification/README.md
                          - Text Classification: modelserving/v1beta1/llm/huggingface/text_classification/README.md
                          - Fill Mask: modelserving/v1beta1/llm/huggingface/fill_mask/README.md
-                      - SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
                   - Multi-Framework Serving Runtimes:
                       - Nvidia Triton:
                         - TorchScript: modelserving/v1beta1/triton/torchscript/README.md

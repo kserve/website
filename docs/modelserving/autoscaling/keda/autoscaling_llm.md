@@ -153,7 +153,7 @@ Status code distribution:
   [200]	23 responses
 ```
 
-Check the number of running pods now, As the scaling target threshold is set to 2 and the `vllm:num_requests_running` metric is monitored, the autoscaler triggers when the number of running requests exceeds 2. The Prometheus server, running at `http://prometheus.istio-system.svc.cluster.local:9090`, provides near real-time metrics for scaling decisions. For instance, when the service handles more than 2 concurrent requests, KEDA scales up the number of pods to manage the increased load.
+Check the number of running pods now, as the scaling target threshold is set to 2 and the `vllm:num_requests_running` metric is monitored, the autoscaler triggers when the number of running requests exceeds 2. The Prometheus server, running at `http://prometheus.istio-system.svc.cluster.local:9090`, provides near real-time metrics for scaling decisions. For instance, when the service handles more than 2 concurrent requests, KEDA scales up the number of pods to manage the increased load.
 
 The period to wait after the last trigger reports active before scaling the resource back to 0 in 5 minutes (300 seconds) by default.
 
@@ -229,7 +229,7 @@ spec:
 EOF
 ```
 
-The `sidecar.opentelemetry.io/inject` annotation ensures that an OpenTelemetry Collector runs as a sidecar container within the InferenceService pod. This collector is responsible for gathering pod-level metrics and forwarding them to the `otel-add-on` GRPC endpoint, which in turn enables KEDA's `scaledobject` to use these metrics for autoscaling decisions. The annotation must follow the pattern `<inferenceservice-name>-predictor`
+The `sidecar.opentelemetry.io/inject` annotation ensures that an OpenTelemetry Collector runs as a sidecar container within the InferenceService pod. This collector is responsible for gathering pod-level metrics and forwarding them to the `otel-add-on` GRPC endpoint, which in turn enables KEDA's `scaledObject` to use these metrics for autoscaling decisions. The annotation must follow the pattern `<inferenceservice-name>-predictor`
 
 !!! success "Expected Output"
 
