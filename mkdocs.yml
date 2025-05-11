@@ -13,6 +13,7 @@ nav:
                   - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
                 - Generative Inference:
                   - Kubernetes deployment installation: admin/kubernetes_deployment.md
+                  - AI Gateway Integration: admin/ai-gateway_integration.md
                 - Istio Service Mesh: admin/serverless/servicemesh/README.md
                 - Gateway API migration: admin/gatewayapi_migration.md
     - User Guide:

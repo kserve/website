@@ -1,7 +1,7 @@
 # Kubernetes Deployment Installation Guide
 KServe supports `RawDeployment` mode to enable `InferenceService` deployment with Kubernetes resources [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale). Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `RawDeployment` mode.
 
-Kubernetes 1.28 is the minimally required version and please check the following recommended Istio versions for the corresponding
+Kubernetes 1.30 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.
 
 !!! note
