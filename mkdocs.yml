@@ -64,9 +64,25 @@ nav:
                   - The Scalability Problem: modelserving/mms/multi-model-serving.md
                   - ModelMesh Overview: modelserving/mms/modelmesh/overview.md
               - Transformers(pre/post processing):
-                - Feast: modelserving/v1beta1/transformer/feast/README.md
                 - How to write a custom transformer: modelserving/v1beta1/transformer/torchserve_image_transformer/README.md
                 - Collocate transformer and predictor: modelserving/v1beta1/transformer/collocation/README.md
+                - Feast: modelserving/v1beta1/transformer/feast/README.md
+              - Rollout Strategies:
+                  - Canary: modelserving/v1beta1/rollout/canary.md
+                  - Canary Example: modelserving/v1beta1/rollout/canary-example.md
+              - Autoscaling:
+                  - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
+                  - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
+                  - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
+              - Request Batching:
+                  - Inference Batcher: modelserving/batcher/batcher.md
+              - Payload Logging:
+                  - Inference Logger: modelserving/logger/logger.md
+              - Kafka:
+                  - Inference with Kafka Event Source: modelserving/kafka/kafka.md
+              - Inference Observability:
+                 - Prometheus Metrics:  modelserving/observability/prometheus_metrics.md
+                 - Grafana Dashboards:  modelserving/observability/grafana_dashboards.md
               - Model Explainability:
                   - Concept: modelserving/explainer/explainer.md
                   - TrustyAI Explainer: modelserving/explainer/trustyai/README.md
@@ -79,17 +95,6 @@ nav:
                   - Alibi Detector: modelserving/detect/alibi_detect/alibi_detect.md
                   - AIF Bias Detector: modelserving/detect/aif/germancredit/README.md
                   - ART Adversarial Detector: modelserving/detect/art/mnist/README.md
-              - Request Batching:
-                  - Inference Batcher: modelserving/batcher/batcher.md
-              - Kafka:
-                  - Inference with Kafka event source: modelserving/kafka/kafka.md
-              - Rollout Strategies:
-                  - Canary: modelserving/v1beta1/rollout/canary.md
-                  - Canary Example: modelserving/v1beta1/rollout/canary-example.md
-              - Autoscaling:
-                  - Knative Autoscaler(KPA): modelserving/autoscaling/autoscaling.md
-                  - Kubernetes Autoscaler(HPA): modelserving/autoscaling/raw_deployment_autoscaling.md
-                  - KEDA Autoscaler: modelserving/autoscaling/keda/autoscaling_keda.md
           - Inference Graph:
                 - Concept: modelserving/inference_graph/README.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
@@ -103,8 +108,6 @@ nav:
                 - URI: modelserving/storage/uri/uri.md
                 - GCS: modelserving/storage/gcs/gcs.md
                 - Hugging Face: modelserving/storage/huggingface/hf.md
-          - Payload Logging:
-                - Inference Logger: modelserving/logger/logger.md
           - Node Scheduling:
                 - Overview: modelserving/nodescheduling/overview.md
                 - InferenceService Node Scheduling: modelserving/nodescheduling/inferenceservicenodescheduling.md
