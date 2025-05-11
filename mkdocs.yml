@@ -6,12 +6,14 @@ nav:
           - Interact with InferenceService Swagger UI: get_started/swagger_ui.md
     - Administration Guide:
           - Install KServe:
-                - Serverless:
+                - Predictive Inference:
                   - Serverless installation: admin/serverless/serverless.md
-                  - Istio Service Mesh: admin/serverless/servicemesh/README.md
+                  - Kubernetes deployment installation: admin/kubernetes_deployment.md
+                  - ModelMesh installation: admin/modelmesh.md
                   - Kourier Networking Layer: admin/serverless/kourier_networking/README.md
-                - ModelMesh installation: admin/modelmesh.md
-                - Kubernetes deployment installation: admin/kubernetes_deployment.md
+                - Generative Inference:
+                  - Kubernetes deployment installation: admin/kubernetes_deployment.md
+                - Istio Service Mesh: admin/serverless/servicemesh/README.md
                 - Gateway API migration: admin/gatewayapi_migration.md
     - User Guide:
           - Concepts:

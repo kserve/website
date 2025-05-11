@@ -9,10 +9,10 @@ Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version |
-| :----------------- | :------------------------ |
-| 1.28               | 1.22                      |
-| 1.29               | 1.22, 1.23                |
+|:-------------------|:--------------------------|
 | 1.30               | 1.22, 1.23                |
+| 1.31               | 1.24, 1.25                |
+| 1.32               | 1.25, 1.26                |
 
 ## 1. Install Cert Manager
 The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert Manager installation guide](https://cert-manager.io/docs/installation/).
