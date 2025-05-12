@@ -10,21 +10,21 @@
       
       
       
-        <link rel="canonical" href="https://kserve.io/website/master/modelserving/v1beta1/llm/huggingface/fill_mask/">
+        <link rel="canonical" href="https://kserve.io/website/master/modelserving/v1beta1/huggingface/text_classification/">
       
-      <link rel="icon" href="../../../../../images/favicon/favicon-32x32.png">
+      <link rel="icon" href="../../../../images/favicon/favicon-32x32.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-8.0.5">
     
     
       
-        <title>Fill Mask - KServe Documentation Website</title>
+        <title>Text Classification - KServe Documentation Website</title>
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.a617204b.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.a617204b.min.css">
       
         
-        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.9204c3b2.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.9204c3b2.min.css">
         
       
     
@@ -38,11 +38,11 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#deploy-the-bert-model-for-fill-mask-task-with-hugging-face-llm-serving-runtime" class="md-skip">
+        <a href="#deploy-the-bert-model-for-text-classification-task-with-hugging-face-llm-serving-runtime" class="md-skip">
           Skip to content
         </a>
       
@@ -98,9 +98,9 @@
 
 <header class="md-header md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../../.." title="KServe Documentation Website" class="md-header__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+    <a href="../../../.." title="KServe Documentation Website" class="md-header__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
       
-  <img src="../../../../../images/logo/kserve.png" alt="logo">
+  <img src="../../../../images/logo/kserve.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fill Mask
+              Text Classification
             
           </span>
         </div>
@@ -185,7 +185,7 @@
 
 
   <li class="md-tabs__item">
-    <a href="../../../../.." class="md-tabs__link">
+    <a href="../../../.." class="md-tabs__link">
       Home
     </a>
   </li>
@@ -200,7 +200,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../get_started/" class="md-tabs__link">
+      <a href="../../../../get_started/" class="md-tabs__link">
         Getting started
       </a>
     </li>
@@ -226,7 +226,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../admin/serverless/serverless/" class="md-tabs__link">
+      <a href="../../../../admin/serverless/serverless/" class="md-tabs__link">
         Administration Guide
       </a>
     </li>
@@ -258,7 +258,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../control_plane/" class="md-tabs__link md-tabs__link--active">
+      <a href="../../../control_plane/" class="md-tabs__link md-tabs__link--active">
         User Guide
       </a>
     </li>
@@ -278,7 +278,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../reference/api/" class="md-tabs__link">
+      <a href="../../../../reference/api/" class="md-tabs__link">
         API Reference
       </a>
     </li>
@@ -294,7 +294,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../developer/developer/" class="md-tabs__link">
+      <a href="../../../../developer/developer/" class="md-tabs__link">
         Developer Guide
       </a>
     </li>
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-tabs__link">
+      <a href="../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-tabs__link">
         Blog
       </a>
     </li>
@@ -333,7 +333,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../community/get_involved/" class="md-tabs__link">
+      <a href="../../../../community/get_involved/" class="md-tabs__link">
         Community
       </a>
     </li>
@@ -367,9 +367,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../../.." title="KServe Documentation Website" class="md-nav__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
+    <a href="../../../.." title="KServe Documentation Website" class="md-nav__button md-logo" aria-label="KServe Documentation Website" data-md-component="logo">
       
-  <img src="../../../../../images/logo/kserve.png" alt="logo">
+  <img src="../../../../images/logo/kserve.png" alt="logo">
 
     </a>
     KServe Documentation Website
@@ -397,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -438,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../get_started/" class="md-nav__link">
+      <a href="../../../../get_started/" class="md-nav__link">
         KServe Quickstart
       </a>
     </li>
@@ -452,7 +452,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../get_started/first_isvc/" class="md-nav__link">
+      <a href="../../../../get_started/first_isvc/" class="md-nav__link">
         First InferenceService
       </a>
     </li>
@@ -466,7 +466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../get_started/swagger_ui/" class="md-nav__link">
+      <a href="../../../../get_started/swagger_ui/" class="md-nav__link">
         Interact with InferenceService Swagger UI
       </a>
     </li>
@@ -549,14 +549,14 @@
       
       
         <label class="md-nav__link" for="__nav_3_1_1">
-          Serverless
+          Predictive Inference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Serverless" data-md-level="3">
+      <nav class="md-nav" aria-label="Predictive Inference" data-md-level="3">
         <label class="md-nav__title" for="__nav_3_1_1">
           <span class="md-nav__icon md-icon"></span>
-          Serverless
+          Predictive Inference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -566,7 +566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../admin/serverless/serverless/" class="md-nav__link">
+      <a href="../../../../admin/serverless/serverless/" class="md-nav__link">
         Serverless installation
       </a>
     </li>
@@ -580,8 +580,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../admin/serverless/servicemesh/" class="md-nav__link">
-        Istio Service Mesh
+      <a href="../../../../admin/kubernetes_deployment/" class="md-nav__link">
+        Kubernetes deployment installation
       </a>
     </li>
   
@@ -594,7 +594,21 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../admin/serverless/kourier_networking/" class="md-nav__link">
+      <a href="../../../../admin/modelmesh/" class="md-nav__link">
+        ModelMesh installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../admin/serverless/kourier_networking/" class="md-nav__link">
         Kourier Networking Layer
       </a>
     </li>
@@ -614,14 +628,26 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../../../../admin/modelmesh/" class="md-nav__link">
-        ModelMesh installation
-      </a>
-    </li>
-  
-
-            
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2" type="checkbox" id="__nav_3_1_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1_2">
+          Generative Inference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generative Inference" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          Generative Inference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
             
               
@@ -629,7 +655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../admin/kubernetes_deployment/" class="md-nav__link">
+      <a href="../../../../admin/kubernetes_deployment/" class="md-nav__link">
         Kubernetes deployment installation
       </a>
     </li>
@@ -643,8 +669,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../admin/gatewayapi_migration/" class="md-nav__link">
-        Gateway API migration
+      <a href="../../../../admin/ai-gateway_integration/" class="md-nav__link">
+        AI Gateway Integration
       </a>
     </li>
   
@@ -664,9 +690,30 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../admin/ai-gateway_integration/" class="md-nav__link">
-        AI Gateway Integration
+      <a href="../../../../admin/serverless/servicemesh/" class="md-nav__link">
+        Istio Service Mesh
       </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../admin/gatewayapi_migration/" class="md-nav__link">
+        Gateway API migration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -766,7 +813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../control_plane/" class="md-nav__link">
+      <a href="../../../control_plane/" class="md-nav__link">
         Model Serving Control Plane
       </a>
     </li>
@@ -813,7 +860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../data_plane/data_plane/" class="md-nav__link">
+      <a href="../../../data_plane/data_plane/" class="md-nav__link">
         Model Serving Data Plane
       </a>
     </li>
@@ -827,7 +874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../data_plane/v1_protocol/" class="md-nav__link">
+      <a href="../../../data_plane/v1_protocol/" class="md-nav__link">
         V1 Inference Protocol
       </a>
     </li>
@@ -841,7 +888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../data_plane/v2_protocol/" class="md-nav__link">
+      <a href="../../../data_plane/v2_protocol/" class="md-nav__link">
         Open Inference Protocol (V2 Inference Protocol)
       </a>
     </li>
@@ -881,7 +928,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../data_plane/binary_tensor_data_extension/" class="md-nav__link">
+      <a href="../../../data_plane/binary_tensor_data_extension/" class="md-nav__link">
         Binary Tensor Data Extension
       </a>
     </li>
@@ -909,8 +956,186 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../servingruntimes/" class="md-nav__link">
+      <a href="../../../servingruntimes/" class="md-nav__link">
         Serving Runtimes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          Generative Inference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Generative Inference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          Generative Inference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2_1">
+          Serving Runtime
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Serving Runtime" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Serving Runtime
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../llm/huggingface/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../llm/huggingface/text_generation/" class="md-nav__link">
+        Text Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../llm/huggingface/text2text_generation/" class="md-nav__link">
+        Text2Text Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../llm/huggingface/sdk_integration/" class="md-nav__link">
+        OpenAI SDK Integration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../llm/huggingface/multi-node/" class="md-nav__link">
+        Multi Node Inference
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/modelcache/localmodel/" class="md-nav__link">
+        Model Cache
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autoscaling/keda/autoscaling_llm/" class="md-nav__link">
+        LLM Autoscaler
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../admin/ai-gateway_integration/" class="md-nav__link">
+        AI Gateway Integration
       </a>
     </li>
   
@@ -935,20 +1160,20 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_2">
-          LLM Serving Runtime
+        <label class="md-nav__link" for="__nav_4_3">
+          Predictive Inference
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="LLM Serving Runtime" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_2">
+      <nav class="md-nav" aria-label="Predictive Inference" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
           <span class="md-nav__icon md-icon"></span>
-          LLM Serving Runtime
+          Predictive Inference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -963,20 +1188,48 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2_1" type="checkbox" id="__nav_4_2_1" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" checked>
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_2_1">
-          Hugging Face vLLM
+        <label class="md-nav__link" for="__nav_4_3_1">
+          Model Serving Runtimes
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Hugging Face vLLM" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_2_1">
+      <nav class="md-nav" aria-label="Model Serving Runtimes" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_1">
           <span class="md-nav__icon md-icon"></span>
-          Hugging Face vLLM
+          Model Serving Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1_1" type="checkbox" id="__nav_4_3_1_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1_1">
+          Supported Model Frameworks/Formats
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Supported Model Frameworks/Formats" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          Supported Model Frameworks/Formats
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -986,7 +1239,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../serving_runtime/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -1000,8 +1253,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../text_generation/" class="md-nav__link">
-        Text Generation
+      <a href="../../tensorflow/" class="md-nav__link">
+        Tensorflow
       </a>
     </li>
   
@@ -1014,8 +1267,162 @@
   
   
     <li class="md-nav__item">
-      <a href="../text2text_generation/" class="md-nav__link">
-        Text2Text Generation
+      <a href="../../torchserve/" class="md-nav__link">
+        PyTorch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../sklearn/v2/" class="md-nav__link">
+        Scikit-learn
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../xgboost/" class="md-nav__link">
+        XGBoost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pmml/" class="md-nav__link">
+        PMML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../spark/" class="md-nav__link">
+        Spark MLlib
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lightgbm/" class="md-nav__link">
+        LightGBM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../paddle/" class="md-nav__link">
+        Paddle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mlflow/v2/" class="md-nav__link">
+        MLFlow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../onnx/" class="md-nav__link">
+        ONNX
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1_1_12" type="checkbox" id="__nav_4_3_1_1_12" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_1_1_12">
+          Hugging Face
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Hugging Face" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_1_1_12">
+          <span class="md-nav__icon md-icon"></span>
+          Hugging Face
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Overview
       </a>
     </li>
   
@@ -1040,20 +1447,6 @@
               
   
   
-  
-    <li class="md-nav__item">
-      <a href="../text_classification/" class="md-nav__link">
-        Text Classification
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
   
@@ -1066,12 +1459,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Fill Mask
+          Text Classification
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Fill Mask
+        Text Classification
       </a>
       
         
@@ -1158,22 +1551,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../multi-node/" class="md-nav__link">
-        Multi Node Inference
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdk_integration/" class="md-nav__link">
-        SDK Integration
+      <a href="../fill_mask/" class="md-nav__link">
+        Fill Mask
       </a>
     </li>
   
@@ -1203,20 +1582,20 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1_2" type="checkbox" id="__nav_4_3_1_2" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_3">
-          Model Serving Runtimes
+        <label class="md-nav__link" for="__nav_4_3_1_2">
+          Multi-Framework Serving Runtimes
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Model Serving Runtimes" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_3">
+      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_1_2">
           <span class="md-nav__icon md-icon"></span>
-          Model Serving Runtimes
+          Multi-Framework Serving Runtimes
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1229,20 +1608,20 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1" type="checkbox" id="__nav_4_3_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_1_2_1" type="checkbox" id="__nav_4_3_1_2_1" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_3_1">
-          Supported Model Frameworks/Formats
+        <label class="md-nav__link" for="__nav_4_3_1_2_1">
+          Nvidia Triton
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Supported Model Frameworks/Formats" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_3_1">
+      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_1_2_1">
           <span class="md-nav__icon md-icon"></span>
-          Supported Model Frameworks/Formats
+          Nvidia Triton
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1252,8 +1631,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../serving_runtime/" class="md-nav__link">
-        Overview
+      <a href="../../triton/torchscript/" class="md-nav__link">
+        TorchScript
       </a>
     </li>
   
@@ -1266,7 +1645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tensorflow/" class="md-nav__link">
+      <a href="../../triton/bert/" class="md-nav__link">
         Tensorflow
       </a>
     </li>
@@ -1280,9 +1659,16 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../torchserve/" class="md-nav__link">
-        PyTorch
+      <a href="../../triton/huggingface/" class="md-nav__link">
+        Hugging Face
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1294,9 +1680,16 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../sklearn/v2/" class="md-nav__link">
-        Scikit-learn
+      <a href="../../amd/" class="md-nav__link">
+        AMD
       </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -1308,92 +1701,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../xgboost/" class="md-nav__link">
-        XGBoost
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../pmml/" class="md-nav__link">
-        PMML
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../spark/" class="md-nav__link">
-        Spark MLlib
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../lightgbm/" class="md-nav__link">
-        LightGBM
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../paddle/" class="md-nav__link">
-        Paddle
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../mlflow/v2/" class="md-nav__link">
-        MLFlow
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../onnx/" class="md-nav__link">
-        ONNX
+      <a href="../../custom/custom_model/" class="md-nav__link">
+        How to write a custom predictor
       </a>
     </li>
   
@@ -1422,14 +1731,14 @@
       
       
         <label class="md-nav__link" for="__nav_4_3_2">
-          Multi-Framework Serving Runtimes
+          Multi Model Serving
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Multi-Framework Serving Runtimes" data-md-level="3">
+      <nav class="md-nav" aria-label="Multi Model Serving" data-md-level="3">
         <label class="md-nav__title" for="__nav_4_3_2">
           <span class="md-nav__icon md-icon"></span>
-          Multi-Framework Serving Runtimes
+          Multi Model Serving
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1448,156 +1757,13 @@
       
       
         <label class="md-nav__link" for="__nav_4_3_2_1">
-          Nvidia Triton
+          Overview
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Nvidia Triton" data-md-level="4">
+      <nav class="md-nav" aria-label="Overview" data-md-level="4">
         <label class="md-nav__title" for="__nav_4_3_2_1">
           <span class="md-nav__icon md-icon"></span>
-          Nvidia Triton
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../triton/torchscript/" class="md-nav__link">
-        Torchscript
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../triton/bert/" class="md-nav__link">
-        Tensorflow
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../triton/huggingface/" class="md-nav__link">
-        Hugging Face
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../amd/" class="md-nav__link">
-        AMD
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../custom/custom_model/" class="md-nav__link">
-        How to write a custom predictor
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_4">
-          Multi Model Serving
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Multi Model Serving" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_4">
-          <span class="md-nav__icon md-icon"></span>
-          Multi Model Serving
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_4_1">
-          Overview
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Overview" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_4_1">
-          <span class="md-nav__icon md-icon"></span>
           Overview
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
@@ -1608,7 +1774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../mms/multi-model-serving/" class="md-nav__link">
+      <a href="../../../mms/multi-model-serving/" class="md-nav__link">
         The Scalability Problem
       </a>
     </li>
@@ -1622,7 +1788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../mms/modelmesh/overview/" class="md-nav__link">
+      <a href="../../../mms/modelmesh/overview/" class="md-nav__link">
         ModelMesh Overview
       </a>
     </li>
@@ -1653,20 +1819,20 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_4_5">
-          Transformers
+        <label class="md-nav__link" for="__nav_4_3_3">
+          Transformers(pre/post processing)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" aria-label="Transformers" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_5">
+      <nav class="md-nav" aria-label="Transformers(pre/post processing)" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_3">
           <span class="md-nav__icon md-icon"></span>
-          Transformers
+          Transformers(pre/post processing)
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1676,21 +1842,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../transformer/feast/" class="md-nav__link">
-        Feast
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../transformer/torchserve_image_transformer/" class="md-nav__link">
+      <a href="../../transformer/torchserve_image_transformer/" class="md-nav__link">
         How to write a custom transformer
       </a>
     </li>
@@ -1704,8 +1856,812 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../transformer/collocation/" class="md-nav__link">
+      <a href="../../transformer/collocation/" class="md-nav__link">
         Collocate transformer and predictor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transformer/feast/" class="md-nav__link">
+        Feast
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_4" type="checkbox" id="__nav_4_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_4">
+          Rollout Strategies
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Rollout Strategies" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Rollout Strategies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rollout/canary/" class="md-nav__link">
+        Canary
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rollout/canary-example/" class="md-nav__link">
+        Canary Example
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_5" type="checkbox" id="__nav_4_3_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_5">
+          Autoscaling
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Autoscaling" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Autoscaling
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autoscaling/autoscaling/" class="md-nav__link">
+        Knative Autoscaler(KPA)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autoscaling/raw_deployment_autoscaling/" class="md-nav__link">
+        Kubernetes Autoscaler(HPA)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../autoscaling/keda/autoscaling_keda/" class="md-nav__link">
+        KEDA Autoscaler
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_6" type="checkbox" id="__nav_4_3_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_6">
+          Request Batching
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Request Batching" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          Request Batching
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../batcher/batcher/" class="md-nav__link">
+        Inference Batcher
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_7" type="checkbox" id="__nav_4_3_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_7">
+          Payload Logging
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Payload Logging" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_7">
+          <span class="md-nav__icon md-icon"></span>
+          Payload Logging
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../logger/logger/" class="md-nav__link">
+        Inference Logger
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_8" type="checkbox" id="__nav_4_3_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_8">
+          Kafka
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Kafka" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_8">
+          <span class="md-nav__icon md-icon"></span>
+          Kafka
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../kafka/kafka/" class="md-nav__link">
+        Inference with Kafka Event Source
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_9" type="checkbox" id="__nav_4_3_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_9">
+          Inference Observability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Observability" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_9">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Observability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../observability/prometheus_metrics/" class="md-nav__link">
+        Prometheus Metrics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../observability/grafana_dashboards/" class="md-nav__link">
+        Grafana Dashboards
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_10" type="checkbox" id="__nav_4_3_10" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_10">
+          Model Explainability
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Explainability" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_10">
+          <span class="md-nav__icon md-icon"></span>
+          Model Explainability
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../explainer/explainer/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../explainer/trustyai/" class="md-nav__link">
+        TrustyAI Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_10_3" type="checkbox" id="__nav_4_3_10_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_10_3">
+          Alibi Explainer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_10_3">
+          <span class="md-nav__icon md-icon"></span>
+          Alibi Explainer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../explainer/alibi/cifar10/" class="md-nav__link">
+        Image Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../explainer/alibi/income/" class="md-nav__link">
+        Income Explainer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../explainer/alibi/moviesentiment/" class="md-nav__link">
+        Text Explainer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../explainer/aix/mnist/aix/" class="md-nav__link">
+        AIX Explainer
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_11" type="checkbox" id="__nav_4_3_11" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_11">
+          Model Monitoring
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Monitoring" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_11">
+          <span class="md-nav__icon md-icon"></span>
+          Model Monitoring
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../detect/alibi_detect/alibi_detect/" class="md-nav__link">
+        Alibi Detector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../detect/aif/germancredit/" class="md-nav__link">
+        AIF Bias Detector
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../detect/art/mnist/" class="md-nav__link">
+        ART Adversarial Detector
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          Inference Graph
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Inference Graph" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          Inference Graph
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inference_graph/" class="md-nav__link">
+        Concept
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inference_graph/image_pipeline/" class="md-nav__link">
+        Image classification inference graph
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          Model Storage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Model Storage" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          Model Storage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/storagecontainers/" class="md-nav__link">
+        Storage Containers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certificate/kserve/" class="md-nav__link">
+        Configure CA Certificate
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/azure/azure/" class="md-nav__link">
+        Azure
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/pvc/pvc/" class="md-nav__link">
+        PVC
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/s3/s3/" class="md-nav__link">
+        S3
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/oci/" class="md-nav__link">
+        OCI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/uri/uri/" class="md-nav__link">
+        URI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/gcs/gcs/" class="md-nav__link">
+        GCS
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../storage/huggingface/hf/" class="md-nav__link">
+        Hugging Face
       </a>
     </li>
   
@@ -1734,640 +2690,12 @@
       
       
         <label class="md-nav__link" for="__nav_4_6">
-          Inference Graph
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Inference Graph" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_6">
-          <span class="md-nav__icon md-icon"></span>
-          Inference Graph
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../inference_graph/" class="md-nav__link">
-        Concept
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../inference_graph/image_pipeline/" class="md-nav__link">
-        Image classification inference graph
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_7" type="checkbox" id="__nav_4_7" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_7">
-          Model Storage
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Model Storage" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_7">
-          <span class="md-nav__icon md-icon"></span>
-          Model Storage
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/storagecontainers/" class="md-nav__link">
-        Storage Containers
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../certificate/kserve/" class="md-nav__link">
-        Configure CA Certificate
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/azure/azure/" class="md-nav__link">
-        Azure
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/pvc/pvc/" class="md-nav__link">
-        PVC
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/s3/s3/" class="md-nav__link">
-        S3
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/oci/" class="md-nav__link">
-        OCI
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/uri/uri/" class="md-nav__link">
-        URI
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/gcs/gcs/" class="md-nav__link">
-        GCS
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/huggingface/hf/" class="md-nav__link">
-        Hugging Face
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../storage/modelcache/localmodel/" class="md-nav__link">
-        Model Cache
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8" type="checkbox" id="__nav_4_8" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_8">
-          Model Explainability
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Model Explainability" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_8">
-          <span class="md-nav__icon md-icon"></span>
-          Model Explainability
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../explainer/explainer/" class="md-nav__link">
-        Concept
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../explainer/trustyai/" class="md-nav__link">
-        TrustyAI Explainer
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_8_3" type="checkbox" id="__nav_4_8_3" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_8_3">
-          Alibi Explainer
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Alibi Explainer" data-md-level="3">
-        <label class="md-nav__title" for="__nav_4_8_3">
-          <span class="md-nav__icon md-icon"></span>
-          Alibi Explainer
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../explainer/alibi/cifar10/" class="md-nav__link">
-        Image Explainer
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../explainer/alibi/income/" class="md-nav__link">
-        Income Explainer
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../explainer/alibi/moviesentiment/" class="md-nav__link">
-        Text Explainer
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../explainer/aix/mnist/aix/" class="md-nav__link">
-        AIX Explainer
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_9" type="checkbox" id="__nav_4_9" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_9">
-          Model Monitoring
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Model Monitoring" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_9">
-          <span class="md-nav__icon md-icon"></span>
-          Model Monitoring
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../detect/alibi_detect/alibi_detect/" class="md-nav__link">
-        Alibi Detector
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../detect/aif/germancredit/" class="md-nav__link">
-        AIF Bias Detector
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../detect/art/mnist/" class="md-nav__link">
-        ART Adversarial Detector
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_10" type="checkbox" id="__nav_4_10" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_10">
-          Request Batching
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Request Batching" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_10">
-          <span class="md-nav__icon md-icon"></span>
-          Request Batching
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../batcher/batcher/" class="md-nav__link">
-        Inference Batcher
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_11" type="checkbox" id="__nav_4_11" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_11">
-          Payload Logging
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Payload Logging" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_11">
-          <span class="md-nav__icon md-icon"></span>
-          Payload Logging
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../logger/logger/" class="md-nav__link">
-        Inference Logger
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_12" type="checkbox" id="__nav_4_12" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_12">
-          Autoscaling
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Autoscaling" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_12">
-          <span class="md-nav__icon md-icon"></span>
-          Autoscaling
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../autoscaling/autoscaling/" class="md-nav__link">
-        Knative Autoscaler(KPA)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../autoscaling/raw_deployment_autoscaling/" class="md-nav__link">
-        Kubernetes Autoscaler(HPA)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../autoscaling/keda/autoscaling_keda/" class="md-nav__link">
-        KEDA Autoscaler
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_13" type="checkbox" id="__nav_4_13" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_13">
           Node Scheduling
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Node Scheduling" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_13">
+        <label class="md-nav__title" for="__nav_4_6">
           <span class="md-nav__icon md-icon"></span>
           Node Scheduling
         </label>
@@ -2379,7 +2707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../nodescheduling/overview/" class="md-nav__link">
+      <a href="../../../nodescheduling/overview/" class="md-nav__link">
         Overview
       </a>
     </li>
@@ -2393,177 +2721,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../nodescheduling/inferenceservicenodescheduling/" class="md-nav__link">
+      <a href="../../../nodescheduling/inferenceservicenodescheduling/" class="md-nav__link">
         InferenceService Node Scheduling
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_14" type="checkbox" id="__nav_4_14" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_14">
-          Kafka
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Kafka" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_14">
-          <span class="md-nav__icon md-icon"></span>
-          Kafka
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../kafka/kafka/" class="md-nav__link">
-        Inference with Kafka event source
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_15" type="checkbox" id="__nav_4_15" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_15">
-          Rollout Strategies
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Rollout Strategies" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_15">
-          <span class="md-nav__icon md-icon"></span>
-          Rollout Strategies
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../rollout/canary/" class="md-nav__link">
-        Canary
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../rollout/canary-example/" class="md-nav__link">
-        Canary Example
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_16" type="checkbox" id="__nav_4_16" >
-      
-      
-      
-      
-        <label class="md-nav__link" for="__nav_4_16">
-          Inference Observability
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" aria-label="Inference Observability" data-md-level="2">
-        <label class="md-nav__title" for="__nav_4_16">
-          <span class="md-nav__icon md-icon"></span>
-          Inference Observability
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../observability/prometheus_metrics/" class="md-nav__link">
-        Prometheus Metrics
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../../../observability/grafana_dashboards/" class="md-nav__link">
-        Grafana Dashboards
       </a>
     </li>
   
@@ -2617,7 +2776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../reference/api/" class="md-nav__link">
+      <a href="../../../../reference/api/" class="md-nav__link">
         Control Plane API
       </a>
     </li>
@@ -2631,7 +2790,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../reference/swagger-ui/" class="md-nav__link">
+      <a href="../../../../reference/swagger-ui/" class="md-nav__link">
         Open Inference Protocol API Spec
       </a>
     </li>
@@ -2645,7 +2804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../sdk_docs/sdk_doc/" class="md-nav__link">
+      <a href="../../../../sdk_docs/sdk_doc/" class="md-nav__link">
         Python Client SDK
       </a>
     </li>
@@ -2659,7 +2818,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../python_runtime_api/docs/" class="md-nav__link">
+      <a href="../../../../python_runtime_api/docs/" class="md-nav__link">
         Python Runtime Server SDK
       </a>
     </li>
@@ -2673,7 +2832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../inference_client/doc/" class="md-nav__link">
+      <a href="../../../../inference_client/doc/" class="md-nav__link">
         Inference Python Client
       </a>
     </li>
@@ -2721,7 +2880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../developer/developer/" class="md-nav__link">
+      <a href="../../../../developer/developer/" class="md-nav__link">
         How to contribute
       </a>
     </li>
@@ -2735,7 +2894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../developer/debug/" class="md-nav__link">
+      <a href="../../../../developer/debug/" class="md-nav__link">
         Debugging guide
       </a>
     </li>
@@ -2809,7 +2968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
     </li>
@@ -2823,7 +2982,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2024-05-15-KServe-0.13-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2024-05-15-KServe-0.13-release/" class="md-nav__link">
         KServe 0.13 Release
       </a>
     </li>
@@ -2837,7 +2996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2023-10-08-KServe-0.11-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2023-10-08-KServe-0.11-release/" class="md-nav__link">
         KServe 0.11 Release
       </a>
     </li>
@@ -2851,7 +3010,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2023-02-05-KServe-0.10-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2023-02-05-KServe-0.10-release/" class="md-nav__link">
         KServe 0.10 Release
       </a>
     </li>
@@ -2865,7 +3024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2022-07-21-KServe-0.9-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2022-07-21-KServe-0.9-release/" class="md-nav__link">
         KServe 0.9 Release
       </a>
     </li>
@@ -2879,7 +3038,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2022-02-18-KServe-0.8-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2022-02-18-KServe-0.8-release/" class="md-nav__link">
         KServe 0.8 Release
       </a>
     </li>
@@ -2893,7 +3052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../blog/articles/2021-10-11-KServe-0.7-release/" class="md-nav__link">
+      <a href="../../../../blog/articles/2021-10-11-KServe-0.7-release/" class="md-nav__link">
         KServe 0.7 Release
       </a>
     </li>
@@ -2948,7 +3107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../community/get_involved/" class="md-nav__link">
+      <a href="../../../../community/get_involved/" class="md-nav__link">
         How to Get Involved
       </a>
     </li>
@@ -2962,7 +3121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../community/adopters/" class="md-nav__link">
+      <a href="../../../../community/adopters/" class="md-nav__link">
         Adopters
       </a>
     </li>
@@ -2976,7 +3135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../../community/presentations/" class="md-nav__link">
+      <a href="../../../../community/presentations/" class="md-nav__link">
         Demos and Presentations
       </a>
     </li>
@@ -3082,15 +3241,15 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/llm/huggingface/fill_mask/README.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/kserve/website/edit/main/docs/modelserving/v1beta1/huggingface/text_classification/README.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="deploy-the-bert-model-for-fill-mask-task-with-hugging-face-llm-serving-runtime">Deploy the BERT model for fill mask task with Hugging Face LLM Serving Runtime<a class="headerlink" href="#deploy-the-bert-model-for-fill-mask-task-with-hugging-face-llm-serving-runtime" title="Permanent link">&para;</a></h1>
-<p>In this example, We demonstrate how to deploy <code>BERT model</code> for fill mask task from Hugging Face by deploying the <code>InferenceService</code> with <a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">Hugging Face Serving runtime</a>. </p>
+<h1 id="deploy-the-bert-model-for-text-classification-task-with-hugging-face-llm-serving-runtime">Deploy the BERT model for text classification task with Hugging Face LLM Serving Runtime<a class="headerlink" href="#deploy-the-bert-model-for-text-classification-task-with-hugging-face-llm-serving-runtime" title="Permanent link">&para;</a></h1>
+<p>In this example, We demonstrate how to deploy <code>distilBERT model</code> for sequence classification (a.k.a. text classification) task from Hugging Face by deploying the <code>InferenceService</code> with <a href="https://github.com/kserve/kserve/tree/master/python/huggingfaceserver">Hugging Face Serving runtime</a>. </p>
 <h2 id="serve-the-hugging-face-llm-model-using-v1-protocol">Serve the Hugging Face LLM model using V1 Protocol<a class="headerlink" href="#serve-the-hugging-face-llm-model-using-v1-protocol" title="Permanent link">&para;</a></h2>
-<p>First, We will deploy the <code>BERT model</code> using the Hugging Face backend with V1 Protocol.</p>
+<p>First, We will deploy the <code>distilBERT model</code> using the Hugging Face backend with V1 Protocol.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -3098,19 +3257,19 @@
 <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-bert</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-distilbert</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=bert</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=google-bert/bert-base-uncased</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=distilbert</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=distilbert/distilbert-base-uncased-finetuned-sst-2-english</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
 <span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
@@ -3122,30 +3281,30 @@
 </div>
 </div>
 <h3 id="check-inferenceservice-status">Check <code>InferenceService</code> status.<a class="headerlink" href="#check-inferenceservice-status" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-bert
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-distilbert
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                 </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
-huggingface-bert<span class="w">   </span>http://huggingface-bert.default.example.com<span class="w">             </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>huggingface-bert-predictor-default-47q2g<span class="w">   </span>7d23h
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                     </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
+huggingface-distilbert<span class="w">   </span>http://huggingface-distilbert.default.example.com<span class="w">             </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>huggingface-distilbert-predictor-default-47q2g<span class="w">   </span>7d23h
 </code></pre></div>
 </div>
 <h3 id="perform-model-inference">Perform Model Inference<a class="headerlink" href="#perform-model-inference" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>bert
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-bert<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+<p>The first step is to <a href="../../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>distilbert
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-distilbert<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v1/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>:predict<span class="w"> </span><span class="se">\</span>
 -H<span class="w"> </span><span class="s2">&quot;content-type: application/json&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="s1">&#39;{&quot;instances&quot;: [&quot;The capital of France is [MASK].&quot;, &quot;The capital of [MASK] is paris.&quot;]}&#39;</span>
+-d<span class="w"> </span><span class="s1">&#39;{&quot;instances&quot;: [&quot;Hello, my dog is cute&quot;, &quot;I am feeling sad&quot;]}&#39;</span>
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy select highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;predictions&quot;</span><span class="p">:[</span><span class="s2">&quot;paris&quot;</span><span class="p">,</span><span class="s2">&quot;france&quot;</span><span class="p">]}</span>
+<div class="no-copy select highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;predictions&quot;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]}</span>
 </code></pre></div>
 </div>
 <h2 id="serve-the-hugging-face-llm-model-using-open-inference-protocolv2-protocol">Serve the Hugging Face LLM model using Open Inference Protocol(V2 Protocol)<a class="headerlink" href="#serve-the-hugging-face-llm-model-using-open-inference-protocolv2-protocol" title="Permanent link">&para;</a></h2>
-<p>First, We will deploy the <code>BERT model</code> using the Hugging Face backend with Open Inference Protocol(V2 Protocol).
+<p>First, We will deploy the <code>distilBERT model</code> using the Hugging Face backend with Open Inference Protocol(V2 Protocol).
 For this, We need to set the <strong><code>protocolVersion</code> field to <code>v2</code></strong>.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Yaml</label></div>
 <div class="tabbed-content">
@@ -3154,7 +3313,7 @@ For this, We need to set the <strong><code>protocolVersion</code> field to <code
 <span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-bert</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-distilbert</span>
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
@@ -3162,12 +3321,12 @@ For this, We need to set the <strong><code>protocolVersion</code> field to <code
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
 <span class="w">      </span><span class="nt">protocolVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v2</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=bert</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=google-bert/bert-base-uncased</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=distilbert</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=distilbert/distilbert-base-uncased-finetuned-sst-2-english</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
-<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2Gi</span>
+<span class="w">          </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4Gi</span>
 <span class="w">          </span><span class="nt">nvidia.com/gpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
 <span class="w">        </span><span class="nt">requests</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
@@ -3179,37 +3338,37 @@ For this, We need to set the <strong><code>protocolVersion</code> field to <code
 </div>
 </div>
 <h3 id="check-inferenceservice-status_1">Check <code>InferenceService</code> status.<a class="headerlink" href="#check-inferenceservice-status_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-bert
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservices<span class="w"> </span>huggingface-distilbert
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
-<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                 </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
-huggingface-bert<span class="w">   </span>http://huggingface-bert.default.example.com<span class="w">             </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>huggingface-bert-predictor-default-47q2g<span class="w">   </span>7d23h
+<div class="no-copy highlight"><pre><span></span><code>NAME<span class="w">                     </span>URL<span class="w">                                                   </span>READY<span class="w">   </span>PREV<span class="w">   </span>LATEST<span class="w">   </span>PREVROLLEDOUTREVISION<span class="w">   </span>LATESTREADYREVISION<span class="w">                          </span>AGE
+huggingface-distilbert<span class="w">   </span>http://huggingface-distilbert.default.example.com<span class="w">             </span>True<span class="w">           </span><span class="m">100</span><span class="w">                              </span>huggingface-distilbert-predictor-default-47q2g<span class="w">   </span>7d23h
 </code></pre></div>
 </div>
 <h3 id="perform-model-inference_1">Perform Model Inference<a class="headerlink" href="#perform-model-inference_1" title="Permanent link">&para;</a></h3>
-<p>The first step is to <a href="../../../../../get_started/first_isvc/#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>bert
-<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-bert<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
+<p>The first step is to <a href="../../../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports">determine the ingress IP and ports</a> and set <code>INGRESS_HOST</code> and <code>INGRESS_PORT</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">MODEL_NAME</span><span class="o">=</span>distilbert
+<span class="nv">SERVICE_HOSTNAME</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>get<span class="w"> </span>inferenceservice<span class="w"> </span>huggingface-distilbert<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status.url}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;/&quot;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">3</span><span class="k">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>http://<span class="si">${</span><span class="nv">INGRESS_HOST</span><span class="si">}</span>:<span class="si">${</span><span class="nv">INGRESS_PORT</span><span class="si">}</span>/v2/models/<span class="si">${</span><span class="nv">MODEL_NAME</span><span class="si">}</span>/infer<span class="w"> </span><span class="se">\</span>
 -H<span class="w"> </span><span class="s2">&quot;content-type: application/json&quot;</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Host: </span><span class="si">${</span><span class="nv">SERVICE_HOSTNAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
--d<span class="w"> </span><span class="s1">&#39;{&quot;inputs&quot;: [{&quot;name&quot;: &quot;input-0&quot;, &quot;shape&quot;: [2], &quot;datatype&quot;: &quot;BYTES&quot;, &quot;data&quot;: [&quot;The capital of France is [MASK].&quot;, &quot;The capital of [MASK] is paris.&quot;]}]}&#39;</span>
+-d<span class="w"> </span><span class="s1">&#39;{&quot;inputs&quot;: [{&quot;name&quot;: &quot;input-0&quot;, &quot;shape&quot;: [2], &quot;datatype&quot;: &quot;BYTES&quot;, &quot;data&quot;: [&quot;Hello, my dog is cute&quot;, &quot;I am feeling sad&quot;]}]}&#39;</span>
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Expected Output</p>
 <div class="no-copy highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bert&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;distilbert&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fd206443-f58c-4c5f-a04b-e6babcf6c854&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;e4bcfc28-e9f2-4c2a-b61f-c491e7346528&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;outputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;output-0&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;shape&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
-<span class="w">      </span><span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BYTES&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;datatype&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;INT64&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;parameters&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;paris&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;france&quot;</span><span class="p">]</span>
+<span class="w">      </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">]</span>
 <span class="p">}</span>
@@ -3233,7 +3392,7 @@ huggingface-bert<span class="w">   </span>http://huggingface-bert.default.exampl
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../text_classification/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Text Classification" rel="prev">
+        <a href="../token_classification/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Token Classification" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -3242,20 +3401,20 @@ huggingface-bert<span class="w">   </span>http://huggingface-bert.default.exampl
               <span class="md-footer__direction">
                 Previous
               </span>
-              Text Classification
+              Token Classification
             </div>
           </div>
         </a>
       
       
         
-        <a href="../multi-node/" class="md-footer__link md-footer__link--next" aria-label="Next: Multi Node Inference" rel="next">
+        <a href="../fill_mask/" class="md-footer__link md-footer__link--next" aria-label="Next: Fill Mask" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Multi Node Inference
+              Fill Mask
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -3305,10 +3464,10 @@ huggingface-bert<span class="w">   </span>http://huggingface-bert.default.exampl
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.cefbb252.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.a5f8ea78.min.js"></script>
       
     
   </body>
