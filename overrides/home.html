@@ -75,7 +75,7 @@
       </div>
       <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
+          <div id="predictive-inference" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--picture">
               <a href="./modelserving/v1beta1/serving_runtime">
                 <img src="./images/Model Serving.svg" alt="Predictive Inference">
@@ -100,7 +100,7 @@
             </div>
           </div>
         </div>
-	<div id="" class="org-card--front" aria-labelledby="org-card-heading">
+	    <div class="card org-card" aria-labelledby="org-card--heading">
             <div class="org-card--picture">
               <a href="./modelserving/v1beta1/serving_runtime">
                 <img src="./images/kserve_generative_inference.png" alt="Generative Inference">
@@ -119,9 +119,10 @@
               </div>
             </div>
           </div>
-        </div>
+      </div>
+      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
+          <div id="modelmesh" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--picture">
               <a href="./modelserving/mms/multi-model-serving/">
                 <img src="./images/ModelMesh-Serving.png" alt="ModelMesh Serving">
@@ -142,27 +143,31 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-            <div class="org-card--body">
-              <div class="org-card--body-heading">
-                <h5 class="org-card--heading" id="org-card--heading">
-                  <a href="modelserving/explainer/explainer">Model Explainability</a>
-                </h5>
+            <div id="" class="org-card--front" aria-labelledby="org-card-heading">
+              <div class="org-card--picture">
+                <a href="modelserving/inference_graph">
+                  <img src="./images/Advanced deployments.png" alt="Advanced Deployments">
+                </a>
               </div>
-              <div class="org-card--body-content">
-                <div class="org-card--body-content-wrapper">
-                  Provides ML model inspection and interpretation, KServe integrates <a href="https://captum.ai/">Captum</a> 
-		  to help explain the predictions and gauge the confidence of those predictions.
+              <div class="org-card--body">
+                <div class="org-card--body-heading">
+                  <h5 class="org-card--heading" id="org-card--heading">
+                    <a href="modelserving/inference_graph">Advanced deployments</a>
+                  </h5>
+                </div>
+                <div class="org-card--body-content">
+                  <div class="org-card--body-content-wrapper">
+                    KServe inference graph supports four types of routing node: Sequence, Switch, Ensemble, Splitter.
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+      </div>
+      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
+          <div id="model-monitoring" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--body">
               <div class="org-card--body-heading">
                 <h5 class="org-card--heading" id="org-card--heading">
@@ -179,33 +184,25 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-            <div class="org-card--picture">
-              <a href="modelserving/inference_graph">
-                <img src="./images/Advanced deployments.png" alt="Advanced Deployments">
-              </a>
-            </div>
+          <div id="model-explaination" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--body">
               <div class="org-card--body-heading">
                 <h5 class="org-card--heading" id="org-card--heading">
-                  <a href="modelserving/inference_graph">Advanced deployments</a>
+                  <a href="modelserving/explainer/explainer">Model Explainability</a>
                 </h5>
               </div>
               <div class="org-card--body-content">
                 <div class="org-card--body-content-wrapper">
-                  KServe inference graph supports four types of routing node: Sequence, Switch, Ensemble, Splitter.
+                  Provides ML model inspection and interpretation, KServe integrates <a href="https://captum.ai/">Captum</a>
+                  to help explain the predictions and gauge the confidence of those predictions.
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-</div>
 </section>
 <hr>
 
