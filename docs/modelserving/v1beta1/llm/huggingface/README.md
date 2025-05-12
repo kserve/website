@@ -1,12 +1,12 @@
-# Hugging Face LLM Serving Runtime
+# GenAI Serving Runtime
 The Hugging Face serving runtime implements two backends namely `Hugging Face` and `vLLM` that can serve Hugging Face models out of the box.
 
 KServe Hugging Face runtime by default uses [`vLLM`](https://github.com/vllm-project/vllm) backend to serve `text generation` and `text2text generation` LLM models for faster time-to-first-token (TTFT) and higher token generation throughput than the Hugging Face API.
 vLLM is implemented with common inference optimization techniques, such as [PagedAttention](https://vllm.ai), [continuous batching](https://www.anyscale.com/blog/continuous-batching-llm-inference) and an optimized CUDA kernel.
 If the model is not supported by the vLLM engine, KServe falls back to the Hugging Face backend as a failsafe.
 
-## Supported ML Tasks
-The Hugging Face runtime supports the following ML tasks:
+## Supported Generative Tasks
+The Hugging Face runtime supports the following generative tasks:
 
 - Text Generation
 - Text2Text Generation

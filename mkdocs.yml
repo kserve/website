@@ -29,7 +29,7 @@ nav:
                 - Serving Runtimes: modelserving/servingruntimes.md
           - Generative Inference:
               - Serving Runtime:
-                  - Overview: modelserving/v1beta1/huggingface/README.md
+                  - Overview: modelserving/v1beta1/llm/README.md
                   - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
                   - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
                   - OpenAI SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
