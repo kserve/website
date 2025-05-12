@@ -1,7 +1,7 @@
 # Kubernetes Deployment Installation Guide
 KServe supports `RawDeployment` mode to enable `InferenceService` deployment with Kubernetes resources [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale). Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `RawDeployment` mode.
 
-Kubernetes 1.28 is the minimally required version and please check the following recommended Istio versions for the corresponding
+Kubernetes 1.30 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.
 
 !!! note
@@ -9,10 +9,10 @@ Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version |
-| :----------------- | :------------------------ |
-| 1.28               | 1.22                      |
-| 1.29               | 1.22, 1.23                |
+|:-------------------|:--------------------------|
 | 1.30               | 1.22, 1.23                |
+| 1.31               | 1.24, 1.25                |
+| 1.32               | 1.25, 1.26                |
 
 ## 1. Install Cert Manager
 The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert Manager installation guide](https://cert-manager.io/docs/installation/).

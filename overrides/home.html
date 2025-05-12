@@ -34,8 +34,8 @@
         <li class="task-list-item">
           <input type="checkbox" checked disabled />
           <span class="task-list-indicator"></span>
-          KServe is a standard Model Inference Platform on Kubernetes, built for highly 
-            scalable use cases.
+          KServe is a standard Model Inference Platform on Kubernetes, built for highly
+            scalable predictive and generative inference.
         </li>
         <li class="task-list-item">
           <input type="checkbox" checked disabled /><span class="task-list-indicator"></span>Provides performant,
@@ -75,44 +75,61 @@
       </div>
       <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-
+          <div id="predictive-inference" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--picture">
               <a href="./modelserving/v1beta1/serving_runtime">
-                <img src="./images/Model Serving.svg" alt="Model Serving">
+                <img src="./images/Model Serving.svg" alt="Predictive Inference">
               </a>
             </div>
-
             <div class="org-card--body">
               <div class="org-card--body-heading">
                 <h5 class="org-card--heading" id="org-card--heading">
-                  <a href="./modelserving/v1beta1/serving_runtime">Model Serving</a>
+                  <a href="./modelserving/v1beta1/serving_runtime">Predictive Inference</a>
                 </h5>
               </div>
               <div class="org-card--body-content">
                 <div class="org-card--body-content-wrapper">
                   Provides Serverless deployment for model inference on CPU/GPU with common ML frameworks
-                  <a href="https://scikit-learn.org/">Scikit-Learn</a>, <a
-                    href="https://xgboost.readthedocs.io/">XGBoost</a>, <a
-                    href="https://www.tensorflow.org/">Tensorflow</a>, <a href="https://pytorch.org/">PyTorch</a> as
-                  well as pluggable custom model runtime.
+                  <a href="https://scikit-learn.org/">Scikit-Learn</a>,
+                  <a href="https://xgboost.readthedocs.io/">XGBoost</a>,
+                  <a href="https://www.tensorflow.org/">Tensorflow</a>,
+                  <a href="https://pytorch.org/">PyTorch</a>,
+                  <a href="https://huggingface.co/">Hugging Face</a> as well as pluggable custom model runtime.
                 </div>
               </div>
             </div>
           </div>
         </div>
+	    <div class="card org-card" aria-labelledby="org-card--heading">
+          <div id="generative-inference" class="org-card--front" aria-labelledby="org-card-heading">
+            <div class="org-card--picture">
+              <a href="./modelserving/v1beta1/serving_runtime">
+                <img src="./images/kserve_generative_inference.png" alt="Generative Inference">
+              </a>
+            </div>
+            <div class="org-card--body">
+              <div class="org-card--body-heading">
+                <h5 class="org-card--heading" id="org-card--heading">
+                  <a href="./modelserving/v1beta1/llm">Generative Inference</a>
+                </h5>
+              </div>
+              <div class="org-card--body-content">
+                <div class="org-card--body-content-wrapper">
+                  Provides scalable, low latency serving for large language models through <a href="">vLLM</a> integration, distributed KV cache and LLM metrics based autoscaling.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-
+          <div id="modelmesh" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--picture">
               <a href="./modelserving/mms/multi-model-serving/">
                 <img src="./images/ModelMesh-Serving.png" alt="ModelMesh Serving">
               </a>
-
             </div>
-
             <div class="org-card--body">
               <div class="org-card--body-heading">
                 <h5 class="org-card--heading" id="org-card--heading">
@@ -128,31 +145,31 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-
-            <div class="org-card--body">
-              <div class="org-card--body-heading">
-                <h5 class="org-card--heading" id="org-card--heading">
-                  <a href="modelserving/explainer/explainer">Model Explainability</a>
-                </h5>
+            <div id="" class="org-card--front" aria-labelledby="org-card-heading">
+              <div class="org-card--picture">
+                <a href="modelserving/inference_graph">
+                  <img src="./images/Advanced deployments.png" alt="Advanced Deployments">
+                </a>
               </div>
-              <div class="org-card--body-content">
-                <div class="org-card--body-content-wrapper">
-                  Provides ML model inspection and interpretation, KServe integrates <a href="https://captum.ai/">Captum</a> 
-		  to help explain the predictions and gauge the confidence of those predictions.
+              <div class="org-card--body">
+                <div class="org-card--body-heading">
+                  <h5 class="org-card--heading" id="org-card--heading">
+                    <a href="modelserving/inference_graph">Advanced deployments</a>
+                  </h5>
+                </div>
+                <div class="org-card--body-content">
+                  <div class="org-card--body-content-wrapper">
+                    KServe inference graph supports four types of routing node: Sequence, Switch, Ensemble, Splitter.
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+      </div>
+      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-
+          <div id="model-monitoring" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--body">
               <div class="org-card--body-heading">
                 <h5 class="org-card--heading" id="org-card--heading">
@@ -161,44 +178,33 @@
               </div>
               <div class="org-card--body-content">
                 <div class="org-card--body-content-wrapper">
-                  Enables payload logging, outlier, adversarial and drift detection, KServe integrates <a href="https://aif360.mybluemix.net/">AI Fairness 360</a>,
-		  <a href="https://github.com/Trusted-AI/adversarial-robustness-toolbox">Adversarial Robustness Toolbox (ART)</a> to help monitor the ML models on production.
+                  Enables payload logging, outlier, adversarial and drift detection, KServe integrates
+                  <a href="https://aif360.mybluemix.net/">AI Fairness 360</a>,
+		          <a href="https://github.com/Trusted-AI/adversarial-robustness-toolbox">Adversarial Robustness Toolbox (ART)</a> to help monitor the ML models on production.
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="demo-container org-card--rows">
         <div class="card org-card" aria-labelledby="org-card--heading">
-
-          <div id="" class="org-card--front" aria-labelledby="org-card-heading">
-
-            <div class="org-card--picture">
-              <a href="modelserving/inference_graph">
-                <img src="./images/Advanced deployments.png" alt="Advanced Deployments">
-              </a>
-
-            </div>
-
+          <div id="model-explaination" class="org-card--front" aria-labelledby="org-card-heading">
             <div class="org-card--body">
               <div class="org-card--body-heading">
                 <h5 class="org-card--heading" id="org-card--heading">
-                  <a href="modelserving/inference_graph">Advanced deployments</a>
+                  <a href="modelserving/explainer/explainer">Model Explainability</a>
                 </h5>
               </div>
               <div class="org-card--body-content">
                 <div class="org-card--body-content-wrapper">
-                  KServe inference graph supports four types of routing node: Sequence, Switch, Ensemble, Splitter.
+                  Provides ML model inspection and interpretation, KServe integrates <a href="https://captum.ai/">Captum</a>
+                  to help explain the predictions and gauge the confidence of those predictions.
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
-</div>
 </section>
 <hr>
 

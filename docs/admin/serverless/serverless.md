@@ -2,15 +2,15 @@
 KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
-Kubernetes 1.28 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
+Kubernetes 1.30 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
 |:-------------------|:--------------------------|:----------------------------|
-| 1.28               | 1.22                      | 1.15                        |
-| 1.29               | 1.22,1.23                 | 1.15,1.16                   |
 | 1.30               | 1.22,1.23                 | 1.15,1.16                   |
+| 1.31               | 1.24,1.25                 | 1.16,1.17                   |
+| 1.32               | 1.25,1.26                 | 1.17,1.18                   |
 
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).
