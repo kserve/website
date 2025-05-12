@@ -29,7 +29,7 @@ nav:
                 - Serving Runtimes: modelserving/servingruntimes.md
           - Generative Inference:
               - Serving Runtime:
-                  - Overview: modelserving/v1beta1/llm/README.md
+                  - Overview: modelserving/v1beta1/llm/huggingface/README.md
                   - Text Generation: modelserving/v1beta1/llm/huggingface/text_generation/README.md
                   - Text2Text Generation: modelserving/v1beta1/llm/huggingface/text2text_generation/README.md
                   - OpenAI SDK Integration: modelserving/v1beta1/llm/huggingface/sdk_integration/README.md
@@ -53,9 +53,9 @@ nav:
                       - ONNX: modelserving/v1beta1/onnx/README.md
                       - Hugging Face:
                          - Overview: modelserving/v1beta1/huggingface/README.md
-                         - Token Classification: modelserving/v1beta1/llm/huggingface/token_classification/README.md
-                         - Text Classification: modelserving/v1beta1/llm/huggingface/text_classification/README.md
-                         - Fill Mask: modelserving/v1beta1/llm/huggingface/fill_mask/README.md
+                         - Token Classification: modelserving/v1beta1/huggingface/token_classification/README.md
+                         - Text Classification: modelserving/v1beta1/huggingface/text_classification/README.md
+                         - Fill Mask: modelserving/v1beta1/huggingface/fill_mask/README.md
                   - Multi-Framework Serving Runtimes:
                       - Nvidia Triton:
                         - TorchScript: modelserving/v1beta1/triton/torchscript/README.md
