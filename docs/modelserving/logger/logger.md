@@ -180,6 +180,34 @@ predictor:
     storageUri: gs://kfserving-examples/models/sklearn/1.0/model
 ```
 
+## Inference Logger with Inference Service Annotation
+
+The inference service annotations can be included in the log message by specifying the annotation keys in the `metadataAnnotations` field 
+of the InferenceService CRD. These annotations are included in the CloudEvent extension attribute `annotations`.
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: sklearn-iris
+  annotations:
+    model-version: "4"
+    api-standard: "oip"
+    created-by: "worker-n"
+spec:
+predictor:
+  logger:
+    mode: all
+    url: http://message-dumper.default/
+    metadataAnnotations:
+      - "model-version"
+      - "api-standard"
+      - "created-by"
+  model:
+    modelFormat:
+      name: sklearn
+    storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+```
 ## Inference Logger with TLS
 
 The InferenceService logger can be configured to use TLS for secure communication. The logger can be configured to use TLS by configuring the logger configuration in the `inferenceservice-config` ConfigMap.
