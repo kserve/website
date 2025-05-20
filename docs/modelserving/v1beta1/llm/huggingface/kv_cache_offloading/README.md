@@ -25,6 +25,9 @@ Support for LMCache with vLLM backend was added in [KServe PR #4320](https://git
 
 Below is a step-by-step guide with example Kubernetes YAML manifests to set up LMCache with the Huggingface vLLM backend in KServe. You can use either Redis or an LMCache server as the remote storage backend for the KV cache. This setup enables distributed and persistent KV cache offloading across multiple inference service instances, improving efficiency for multi-turn and high-throughput LLM workloads.
 
+### LMCache Configuration Options
+LMCache can be configured via environment variables (prefixed with `LMCACHE_`) or through a YAML config file. If both are present, the config file takes precedence. For a full list of configuration options, see the [LMCache Configuration Documentation](https://docs.lmcache.ai/api_reference/configurations.html).
+
 ### Using Redis as Remote Backend
 The LMCache configuration is stored in a Kubernetes ConfigMap. This config enables local CPU caching and sets Redis as the remote backend for offloading KV cache. Adjust `chunk_size` and `max_local_cpu_size` as needed for your workload and hardware.
 
@@ -66,7 +69,7 @@ kubectl apply -f hf_secret.yaml
 ### Step 3: Deploy Redis Backend
 Redis is used as the remote, persistent backend for LMCache. The following manifest deploys a single Redis instance and exposes it as a Kubernetes service.
 
-```yaml
+```yaml title="redis_deployment.yaml"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -106,11 +109,21 @@ Apply the Redis deployment and service:
 kubectl apply -f redis_deployment.yaml
 ```
 
+Wait for the Redis pod to be ready:
+```sh
+kubectl get pods -l app=redis
+```
+!!! success "Expected Output"
+    ```sh
+    NAME                     READY   STATUS    RESTARTS   AGE
+    redis-ajlfsf             1/1     Running   0          5m
+    ```
+
 ### Step 3 Alternative: Using LMCache Server as Remote Backend
 Alternatively, you can deploy an LMCache server as the remote backend. This is useful if you want to avoid Redis and use LMCache's own server implementation for remote KV cache storage.
 
 #### Deploy the LMCache server:
-```yaml
+```yaml title="lmcache_server.yaml"
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -129,11 +142,11 @@ spec:
     spec:
       containers:
         - name: lmcache-server
-          image: kserve/huggingfaceserver:v0.15.1
-          command:
-            - lmcache_experimental_server
+          image: kserve/huggingfaceserver:v0.15.1-gpu
+          command: ["lmcache_experimental_server"]
+          args:
             - "0.0.0.0"
-            - 8080
+            - "8080"
           ports:
             - containerPort: 8080
 ---
@@ -154,6 +167,16 @@ Apply the LMCache server deployment and service:
 kubectl apply -f lmcache_server.yaml
 ```
 
+Wait for the LMCache server pod to be ready:
+```sh
+kubectl get pods -l app=lmcache-server
+```
+!!! success "Expected Output"
+    ```sh
+    NAME                     READY   STATUS    RESTARTS   AGE
+    lmcache-server-abc123    1/1     Running   0          5m
+    ```
+
 #### Update the LMCache ConfigMap:
 Change the `remote_url` in your LMCache config to point to the LMCache server:
 ```yaml
@@ -163,7 +186,8 @@ remote_url: "lm://lmcache-server.default.svc.cluster.local:8080"
 ### Step 4: Deploy Huggingface vLLM InferenceService with LMCache
 This manifest configures the KServe InferenceService to use the Huggingface vLLM backend, with LMCache enabled for KV cache offloading. The LMCache config is mounted as a volume, and relevant environment variables are set for integration. The `--kv-transfer-config` argument enables LMCache as the connector for both local and remote cache roles.
 
-```yaml
+```yaml title="lmcache_isvc.yaml"
+apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   name: huggingface-llama3
@@ -177,7 +201,8 @@ spec:
         - --model_name=llama3
         - --model_id=meta-llama/Llama-3.2-1B-Instruct
         - --max-model-len=10000
-        - --kv-transfer-config='{"kv_connector":"LMCacheConnectorV1", "kv_role":"kv_both"}'
+        - --kv-transfer-config
+        - '{"kv_connector":"LMCacheConnectorV1", "kv_role":"kv_both"}'
         - --enable-chunked-prefill
       env:
         - name: HF_TOKEN
@@ -190,6 +215,19 @@ spec:
           value: "True"
         - name: LMCACHE_CONFIG_FILE
           value: /lmcache/lmcache_config.yaml
+        # Uncomment the following lines and comment the above env variable to provide configuration via env variables instead of ConfigMap.
+        # - name: LMCACHE_REMOTE_URL
+        #   value: redis://redis.default.svc.cluster.local:6379
+        # - name: LMCACHE_REMOTE_SERDE
+        #   value: naive
+        # - name: LMCACHE_LOCAL_CPU
+        #   value: "True"
+        # - name: LMCACHE_CHUNK_SIZE
+        #   value: "256"
+        # - name: LMCACHE_MAX_LOCAL_CPU_SIZE
+        #   value: "2.0"
+        - name: LMCACHE_LOG_LEVEL
+          value: "INFO"
       resources:
         limits:
           cpu: 6
@@ -216,6 +254,17 @@ Apply the InferenceService:
 kubectl apply -f lmcache_isvc.yaml
 ```
 
+Wait for the InferenceService to be ready:
+```sh
+kubectl get isvc huggingface-llama3
+```
+
+!!! success "Expected Output"
+    ```sh
+    NAME                  URL                                                 READY   REASON
+    huggingface-llama3   http://huggingface-llama3.default.example.com   True
+    ```
+
 ### Step 5: Verify the Setup with an Inference Request
 Once all resources are deployed and running, you can test the end-to-end setup by sending a sample inference request to your KServe endpoint. This example uses the OpenAI-compatible API route:
 
@@ -224,6 +273,7 @@ curl -X 'POST' \
 'http://localhost:8000/openai/v1/chat/completions' \
 -H 'accept: application/json' \
 -H 'Content-Type: application/json' \
+-H 'Host: huggingface-llama3.default.example.com' \
 -d '{
       "model": "llama3",
       "messages": [
@@ -236,8 +286,65 @@ curl -X 'POST' \
 
 If the setup is correct, you should receive a model-generated response, and the KV cache will be shared and offloaded via LMCache and Redis.
 
-### LMCache Configuration Options
-LMCache can be configured via environment variables (prefixed with `LMCACHE_`) or through a YAML config file. If both are present, the config file takes precedence. For a full list of configuration options, see the [LMCache Configuration Documentation](https://docs.lmcache.ai/api_reference/configurations.html).
+!!! success "Expected Output"
+    ```json
+    {
+      "id": "chatcmpl-cb8006bc-928e-4d16-b129-6fa84b3e1772",
+      "object": "chat.completion",
+      "created": 1747385160,
+      "model": "llama3",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "reasoning_content": null,
+            "content": "**Segment Tree Implementation in Python**\n=====================================================\n\nA segment tree is a data structure used for efficient range queries on a set of elements. Here's a Python implementation of a segment tree using the in-order traversal approach.\n\n**Code**\n--------\n\n```python\nclass Node:\n    \"\"\"Represents a node in the segment tree.\"\"\"\n    def __init__(self, value, left=None, right=None, parent=None):\n        self.value = value\n        self.left = left\n        self.right = right\n        self.parent = parent\n\nclass SegmentTree:\n    \"\"\"Represents a segment tree with in-order traversal.\"\"\"\n    def __init__(self, arr, id):\n        \"\"\"\n        Initializes the segment tree with the given array and ID.\n\n        :",
+            "tool_calls": []
+          },
+          "logprobs": null,
+          "finish_reason": "length",
+          "stop_reason": null
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 50,
+        "total_tokens": 200,
+        "completion_tokens": 150,
+        "prompt_tokens_details": null
+      },
+      "prompt_logprobs": null
+    }
+    ```
+
+You can also check the Redis instance to see the cached KV pairs. Use a Redis client or CLI to connect to the Redis service and run commands like `KEYS *` or `GET <key>` to inspect the cache.
+
+```sh
+kubectl exec deploy/redis -it -- redis-cli
+```
+
+```sh
+# Show all keys
+localhost:6379> KEYS *
+1) "vllm@meta-llama/Llama-3.2-1B-Instruct@1@0@02783dafec...kv_bytes"
+2) "vllm@meta-llama/Llama-3.2-1B-Instruct@1@0@02783dafec...metadata"
+```
+
+If you look at the logs of your Huggingface server, you should see the cache store/hit logs (the logs are truncated for cleanliness):
+```sh
+kubectl logs -f <pod-name> -c kserve-container
+```
+!!! success "Expected Output"
+    ```
+    # Cold LMCache Miss and then Store
+    
+    [2025-05-16 08:46:00,417] LMCache INFO: Reqid: chatcmpl-cb8006bc-928e-4d16-b129-6fa84b3e1772, Total tokens 50, LMCache hit tokens: 0, need to load: 0 (vllm_v1_adapter.py:543:lmcache.integration.vllm.vllm_v1_adapter)
+    [2025-05-16 08:46:00,450] LMCache INFO: Storing KV cache for 50 out of 50 tokens for request chatcmpl-cb8006bc-928e-4d16-b129-6fa84b3e1772 (vllm_v1_adapter.py:497:lmcache.integration.vllm.vllm_v1_adapter)
+    
+    # Warm LMCache Hit!!
+    
+    [2025-05-16 09:09:09,550] LMCache INFO: Reqid: chatcmpl-fabe706e-f030-4af3-b562-38712d9b86a9, Total tokens 50, LMCache hit tokens: 49, need to load: 49 (vllm_v1_adapter.py:543:lmcache.integration.vllm.vllm_v1_adapter)
+    ```
 
 ### Other Supported Storage Backends
 LMCache supports additional remote storage backends such as MoonCake, InfiniStore, ValKey, Redis Sentinel, and more. For details and configuration examples, refer to the [official documentation](https://docs.lmcache.ai/api_reference/configurations.html) and the following links:
