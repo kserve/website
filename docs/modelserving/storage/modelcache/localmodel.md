@@ -7,7 +7,7 @@ the local persistent volume can serve multiple pods with the warmed up model cac
 - `LocalModelNodeGroup` is a KServe custom resource to manage the node group for caching the models and the local persistent storage.
 - `LocalModelNode` is a KServe custom resource to track the status of the models cached on given local node.
 
-In this example, we demonstrate how you can cache the models using Kubernetes node's local disk NVMe volumes from HF hub.
+In this example, we demonstrate how you can cache the models using Kubernetes nodes' local disk NVMe volumes from HF hub.
 
 ## Enable Local Model Cache
 By default, the model caching is disabled in KServe. To enable it, you need to set the `enabled` field to `true` in the `localModel` section of `inferenceservice-config` ConfigMap.
