@@ -123,7 +123,7 @@ kubectl get pods -l app=redis
 ### Using LMCache Server as Remote Backend
 Alternatively, you can deploy an LMCache server as the remote backend. This is useful if you want to avoid Redis and use LMCache's own server implementation for remote KV cache storage.
 
-#### Deploy the LMCache Server:
+#### Deploy LMCache Server
 ```yaml title="lmcache_server.yaml"
 apiVersion: apps/v1
 kind: Deployment
@@ -179,7 +179,6 @@ kubectl get pods -l app=lmcache-server
     lmcache-server-abc123    1/1     Running   0          5m
     ```
 
-#### Update the LMCache ConfigMap:
 Change the `remote_url` in your LMCache config to point to the LMCache server:
 ```yaml
 remote_url: "lm://lmcache-server.default.svc.cluster.local:8080"
@@ -265,7 +264,7 @@ kubectl get isvc huggingface-llama3
 
     ```sh
     NAME                  URL                                                 READY   REASON
-    huggingface-llama3   http://huggingface-llama3.default.example.com   True
+    huggingface-llama3   http://huggingface-llama3.default.example.com        True
     ```
 
 ### Verify the Setup with an Inference Request
