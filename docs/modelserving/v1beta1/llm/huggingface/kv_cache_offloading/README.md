@@ -25,6 +25,23 @@ Support for LMCache with vLLM backend was added in [KServe PR #4320](https://git
 
 Below is a step-by-step guide with example Kubernetes YAML manifests to set up LMCache with the Huggingface vLLM backend in KServe. You can use either Redis or an LMCache server as the remote storage backend for the KV cache. This setup enables distributed and persistent KV cache offloading across multiple inference service instances, improving efficiency for multi-turn and high-throughput LLM workloads.
 
+### Create Huggingface Secret (HF_TOKEN)
+If your model requires authentication (e.g., downloading from Huggingface Hub), create a Kubernetes Secret for your Huggingface token. This secret will be mounted as an environment variable in the inference container.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hf-secret
+  # namespace: kserve
+stringData:
+  HF_TOKEN: xxxxxx  # Replace with your actual Huggingface token
+```
+Apply the secret:
+```sh
+kubectl apply -f hf_secret.yaml
+```
+
 ### LMCache Configuration Options
 LMCache can be configured via environment variables (prefixed with `LMCACHE_`) or through a YAML config file. If both are present, the config file takes precedence. For a full list of configuration options, see the [LMCache Configuration Documentation](https://docs.lmcache.ai/api_reference/configurations.html).
 
@@ -49,24 +66,7 @@ Apply the ConfigMap:
 kubectl apply -f lmcache_config.yaml
 ```
 
-### Step 2: Create Huggingface Secret (HF_TOKEN)
-If your model requires authentication (e.g., downloading from Huggingface Hub), create a Kubernetes Secret for your Huggingface token. This secret will be mounted as an environment variable in the inference container.
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: hf-secret
-  # namespace: kserve
-stringData:
-  HF_TOKEN: xxxxxx  # Replace with your actual Huggingface token
-```
-Apply the secret:
-```sh
-kubectl apply -f hf_secret.yaml
-```
-
-### Step 3: Deploy Redis Backend
+#### Deploy Redis Backend
 Redis is used as the remote, persistent backend for LMCache. The following manifest deploys a single Redis instance and exposes it as a Kubernetes service.
 
 ```yaml title="redis_deployment.yaml"
@@ -114,15 +114,16 @@ Wait for the Redis pod to be ready:
 kubectl get pods -l app=redis
 ```
 !!! success "Expected Output"
+
     ```sh
     NAME                     READY   STATUS    RESTARTS   AGE
     redis-ajlfsf             1/1     Running   0          5m
     ```
 
-### Step 3 Alternative: Using LMCache Server as Remote Backend
+### Using LMCache Server as Remote Backend
 Alternatively, you can deploy an LMCache server as the remote backend. This is useful if you want to avoid Redis and use LMCache's own server implementation for remote KV cache storage.
 
-#### Deploy the LMCache server:
+#### Deploy the LMCache Server:
 ```yaml title="lmcache_server.yaml"
 apiVersion: apps/v1
 kind: Deployment
@@ -172,6 +173,7 @@ Wait for the LMCache server pod to be ready:
 kubectl get pods -l app=lmcache-server
 ```
 !!! success "Expected Output"
+
     ```sh
     NAME                     READY   STATUS    RESTARTS   AGE
     lmcache-server-abc123    1/1     Running   0          5m
@@ -183,7 +185,7 @@ Change the `remote_url` in your LMCache config to point to the LMCache server:
 remote_url: "lm://lmcache-server.default.svc.cluster.local:8080"
 ```
 
-### Step 4: Deploy Huggingface vLLM InferenceService with LMCache
+### Deploy Huggingface vLLM InferenceService with LMCache
 This manifest configures the KServe InferenceService to use the Huggingface vLLM backend, with LMCache enabled for KV cache offloading. The LMCache config is mounted as a volume, and relevant environment variables are set for integration. The `--kv-transfer-config` argument enables LMCache as the connector for both local and remote cache roles.
 
 ```yaml title="lmcache_isvc.yaml"
@@ -260,12 +262,13 @@ kubectl get isvc huggingface-llama3
 ```
 
 !!! success "Expected Output"
+
     ```sh
     NAME                  URL                                                 READY   REASON
     huggingface-llama3   http://huggingface-llama3.default.example.com   True
     ```
 
-### Step 5: Verify the Setup with an Inference Request
+### Verify the Setup with an Inference Request
 Once all resources are deployed and running, you can test the end-to-end setup by sending a sample inference request to your KServe endpoint. This example uses the OpenAI-compatible API route:
 
 ```sh
@@ -287,6 +290,7 @@ curl -X 'POST' \
 If the setup is correct, you should receive a model-generated response, and the KV cache will be shared and offloaded via LMCache and Redis.
 
 !!! success "Expected Output"
+
     ```json
     {
       "id": "chatcmpl-cb8006bc-928e-4d16-b129-6fa84b3e1772",
@@ -335,6 +339,7 @@ If you look at the logs of your Huggingface server, you should see the cache sto
 kubectl logs -f <pod-name> -c kserve-container
 ```
 !!! success "Expected Output"
+
     ```
     # Cold LMCache Miss and then Store
     
