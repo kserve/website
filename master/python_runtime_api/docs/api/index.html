@@ -1130,6 +1130,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../modelserving/v1beta1/llm/huggingface/kv_cache_offloading/" class="md-nav__link">
+        KV Cache Offloading
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../admin/ai-gateway_integration/" class="md-nav__link">
         AI Gateway Integration
       </a>
@@ -3951,7 +3965,9 @@
 <span class="normal">415</span>
 <span class="normal">416</span>
 <span class="normal">417</span>
-<span class="normal">418</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ModelServer</span><span class="p">:</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ModelServer</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
@@ -4143,16 +4159,19 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;message: </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">loop</span><span class="o">.</span><span class="n">default_exception_handler</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a model to the model server.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            model: The model object.</span>
+<span class="sd">            name: The name of the model. If not provided, the model&#39;s name will be used. This can be used to provide</span>
+<span class="sd">                additional names for the same model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to register model, model.name must be provided.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Registering model: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Failed to register model, model.name must be provided.&quot;</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Registering model: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_register_and_check_atleast_one_model_is_ready</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseKServeModel</span><span class="p">]</span>
@@ -4168,8 +4187,7 @@
                         <span class="n">model</span><span class="o">.</span><span class="n">enable_latency_logging</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_latency_logging</span>
                     <span class="n">model</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
                     <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">engine</span><span class="p">:</span>
-                        <span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
-                        <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">start_engine</span><span class="p">())</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">servers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">start_engine</span><span class="p">())</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Model type should be &#39;BaseKServeModel&#39;&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">at_least_one_model_ready</span> <span class="ow">and</span> <span class="n">models</span><span class="p">:</span>
@@ -4654,7 +4672,7 @@ documentation for details about context).</p>
 
 
 <h3 id="kserve.model_server.ModelServer.register_model" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">register_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="n">register_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#kserve.model_server.ModelServer.register_model" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -4691,6 +4709,23 @@ documentation for details about context).</p>
                 <em>required</em>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>name</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<span title="str">str</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The name of the model. If not provided, the model's name will be used. This can be used to provide
+additional names for the same model.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
       </tbody>
     </table>
 
@@ -4706,16 +4741,22 @@ documentation for details about context).</p>
 <span class="normal">392</span>
 <span class="normal">393</span>
 <span class="normal">394</span>
-<span class="normal">395</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">):</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a model to the model server.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model: The model object.</span>
+<span class="sd">        name: The name of the model. If not provided, the model&#39;s name will be used. This can be used to provide</span>
+<span class="sd">            additional names for the same model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to register model, model.name must be provided.&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Registering model: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Failed to register model, model.name must be provided.&quot;</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Registering model: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
