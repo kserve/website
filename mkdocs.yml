@@ -36,6 +36,7 @@ nav:
               - Multi Node Inference: modelserving/v1beta1/llm/huggingface/multi-node/README.md
               - Model Cache: modelserving/storage/modelcache/localmodel.md
               - LLM Autoscaler: modelserving/autoscaling/keda/autoscaling_llm.md
+              - KV Cache Offloading: modelserving/v1beta1/llm/huggingface/kv_cache_offloading/README.md
               - AI Gateway Integration: admin/ai-gateway_integration.md
           - Predictive Inference:
               - Model Serving Runtimes:
