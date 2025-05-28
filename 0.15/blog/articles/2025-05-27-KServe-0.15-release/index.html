@@ -10,14 +10,14 @@
       
       
       
-        <link rel="canonical" href="https://kserve.io/website/0.15/sdk_docs/docs/V1beta1ARTExplainerSpec/">
+        <link rel="canonical" href="https://kserve.io/website/0.15/blog/articles/2025-05-27-KServe-0.15-release/">
       
       <link rel="icon" href="../../../images/favicon/favicon-32x32.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-8.0.5">
     
     
       
-        <title>V1beta1ARTExplainerSpec - KServe Documentation Website</title>
+        <title>KServe 0.15 Release - KServe Documentation Website</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v1beta1artexplainerspec" class="md-skip">
+        <a href="#announcing-kserve-v015-advancing-generative-ai-model-serving" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              V1beta1ARTExplainerSpec
+              KServe 0.15 Release
             
           </span>
         </div>
@@ -302,6 +302,8 @@
         
   
   
+    
+  
 
 
   
@@ -313,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-tabs__link">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
         Blog
       </a>
     </li>
@@ -2718,7 +2720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../sdk_doc/" class="md-nav__link">
+      <a href="../../../sdk_docs/sdk_doc/" class="md-nav__link">
         Python Client SDK
       </a>
     </li>
@@ -2828,12 +2830,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
       
       
       
@@ -2854,12 +2858,14 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" checked>
       
       
       
@@ -2880,11 +2886,121 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          KServe 0.15 Release
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         KServe 0.15 Release
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embracing-generative-ai-workloads" class="md-nav__link">
+    Embracing Generative AI Workloads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-generative-ai-features-in-v015" class="md-nav__link">
+    Key Generative AI Features in v0.15
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Generative AI Features in v0.15">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#envoy-ai-gateway-support" class="md-nav__link">
+    Envoy AI Gateway Support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-node-inference" class="md-nav__link">
+    Multi-Node Inference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-autoscaler-with-keda-kubernetes-event-driven-autoscaling" class="md-nav__link">
+    LLM Autoscaler with KEDA (Kubernetes Event-driven Autoscaling)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-model-caching-mechanisms" class="md-nav__link">
+    Advanced Model Caching Mechanisms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-vllm-backend-support" class="md-nav__link">
+    Enhanced vLLM Backend Support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-improvements" class="md-nav__link">
+    Additional Improvements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-the-community" class="md-nav__link">
+    Join the Community
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2896,7 +3012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
+      <a href="../2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
     </li>
@@ -2910,7 +3026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2024-05-15-KServe-0.13-release/" class="md-nav__link">
+      <a href="../2024-05-15-KServe-0.13-release/" class="md-nav__link">
         KServe 0.13 Release
       </a>
     </li>
@@ -2924,7 +3040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2023-10-08-KServe-0.11-release/" class="md-nav__link">
+      <a href="../2023-10-08-KServe-0.11-release/" class="md-nav__link">
         KServe 0.11 Release
       </a>
     </li>
@@ -2938,7 +3054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2023-02-05-KServe-0.10-release/" class="md-nav__link">
+      <a href="../2023-02-05-KServe-0.10-release/" class="md-nav__link">
         KServe 0.10 Release
       </a>
     </li>
@@ -2952,7 +3068,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2022-07-21-KServe-0.9-release/" class="md-nav__link">
+      <a href="../2022-07-21-KServe-0.9-release/" class="md-nav__link">
         KServe 0.9 Release
       </a>
     </li>
@@ -2966,7 +3082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2022-02-18-KServe-0.8-release/" class="md-nav__link">
+      <a href="../2022-02-18-KServe-0.8-release/" class="md-nav__link">
         KServe 0.8 Release
       </a>
     </li>
@@ -2980,7 +3096,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../blog/articles/2021-10-11-KServe-0.7-release/" class="md-nav__link">
+      <a href="../2021-10-11-KServe-0.7-release/" class="md-nav__link">
         KServe 0.7 Release
       </a>
     </li>
@@ -3104,8 +3220,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
-    Properties
+  <a href="#_1" class="md-nav__link">
+    
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embracing-generative-ai-workloads" class="md-nav__link">
+    Embracing Generative AI Workloads
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-generative-ai-features-in-v015" class="md-nav__link">
+    Key Generative AI Features in v0.15
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Generative AI Features in v0.15">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#envoy-ai-gateway-support" class="md-nav__link">
+    Envoy AI Gateway Support
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multi-node-inference" class="md-nav__link">
+    Multi-Node Inference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-autoscaler-with-keda-kubernetes-event-driven-autoscaling" class="md-nav__link">
+    LLM Autoscaler with KEDA (Kubernetes Event-driven Autoscaling)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-model-caching-mechanisms" class="md-nav__link">
+    Advanced Model Caching Mechanisms
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enhanced-vllm-backend-support" class="md-nav__link">
+    Enhanced vLLM Backend Support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-improvements" class="md-nav__link">
+    Additional Improvements
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#join-the-community" class="md-nav__link">
+    Join the Community
   </a>
   
 </li>
@@ -3122,189 +3307,158 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/kserve/website/edit/main/docs/sdk_docs/docs/V1beta1ARTExplainerSpec.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/kserve/website/edit/main/docs/blog/articles/2025-05-27-KServe-0.15-release.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
 
-<h1 id="v1beta1artexplainerspec">V1beta1ARTExplainerSpec<a class="headerlink" href="#v1beta1artexplainerspec" title="Permanent link">&para;</a></h1>
-<p>ARTExplainerType defines the arguments for configuring an ART Explanation Server</p>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>args</strong></td>
-<td><strong>list[str]</strong></td>
-<td>Arguments to the entrypoint. The docker image&#39;s CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container&#39;s environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. &amp;quot;$$(VAR_NAME)&amp;quot; will produce the string literal &amp;quot;$(VAR_NAME)&amp;quot;. Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>command</strong></td>
-<td><strong>list[str]</strong></td>
-<td>Entrypoint array. Not executed within a shell. The docker image&#39;s ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container&#39;s environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. &amp;quot;$$(VAR_NAME)&amp;quot; will produce the string literal &amp;quot;$(VAR_NAME)&amp;quot;. Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>config</strong></td>
-<td><strong>dict(str, str)</strong></td>
-<td>Inline custom parameter settings for explainer</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>env</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1EnvVar.md"><strong>list[V1EnvVar]</strong></a></td>
-<td>List of environment variables to set in the container. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>env_from</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1EnvFromSource.md"><strong>list[V1EnvFromSource]</strong></a></td>
-<td>List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>image</strong></td>
-<td><strong>str</strong></td>
-<td>Docker image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>image_pull_policy</strong></td>
-<td><strong>str</strong></td>
-<td>Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>lifecycle</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Lifecycle.md"><strong>V1Lifecycle</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>liveness_probe</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Probe.md"><strong>V1Probe</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>name</strong></td>
-<td><strong>str</strong></td>
-<td>Name of the container specified as a DNS_LABEL. Each container in a pod must have a unique name (DNS_LABEL). Cannot be updated.</td>
-<td>[default to '']</td>
-</tr>
-<tr>
-<td><strong>ports</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1ContainerPort.md"><strong>list[V1ContainerPort]</strong></a></td>
-<td>List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default &amp;quot;0.0.0.0&amp;quot; address inside a container will be accessible from the network. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>readiness_probe</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Probe.md"><strong>V1Probe</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>resources</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1ResourceRequirements.md"><strong>V1ResourceRequirements</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>runtime_version</strong></td>
-<td><strong>str</strong></td>
-<td>Defaults to latest Explainer Version</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>security_context</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1SecurityContext.md"><strong>V1SecurityContext</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>startup_probe</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1Probe.md"><strong>V1Probe</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>stdin</strong></td>
-<td><strong>bool</strong></td>
-<td>Whether this container should allocate a buffer for stdin in the container runtime. If this is not set, reads from stdin in the container will always result in EOF. Default is false.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>stdin_once</strong></td>
-<td><strong>bool</strong></td>
-<td>Whether the container runtime should close the stdin channel after it has been opened by a single attach. When stdin is true the stdin stream will remain open across multiple attach sessions. If stdinOnce is set to true, stdin is opened on container start, is empty until the first client attaches to stdin, and then remains open and accepts data until the client disconnects, at which time stdin is closed and remains closed until the container is restarted. If this flag is false, a container processes that reads from stdin will never receive an EOF. Default is false</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>storage</strong></td>
-<td><a href="../V1beta1StorageSpec/"><strong>V1beta1StorageSpec</strong></a></td>
-<td></td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>storage_uri</strong></td>
-<td><strong>str</strong></td>
-<td>The location of a trained explanation model</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>termination_message_path</strong></td>
-<td><strong>str</strong></td>
-<td>Optional: Path at which the file to which the container&#39;s termination message will be written is mounted into the container&#39;s filesystem. Message written is intended to be brief final status, such as an assertion failure message. Will be truncated by the node if greater than 4096 bytes. The total message length across all containers will be limited to 12kb. Defaults to /dev/termination-log. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>termination_message_policy</strong></td>
-<td><strong>str</strong></td>
-<td>Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>tty</strong></td>
-<td><strong>bool</strong></td>
-<td>Whether this container should allocate a TTY for itself, also requires &#39;stdin&#39; to be true. Default is false.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>type</strong></td>
-<td><strong>str</strong></td>
-<td>The type of ART explainer</td>
-<td>[default to '']</td>
-</tr>
-<tr>
-<td><strong>volume_devices</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1VolumeDevice.md"><strong>list[V1VolumeDevice]</strong></a></td>
-<td>volumeDevices is the list of block devices to be used by the container.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>volume_mounts</strong></td>
-<td><a href="https://github.com/kubernetes-client/python/blob/master/kubernetes/docs/V1VolumeMount.md"><strong>list[V1VolumeMount]</strong></a></td>
-<td>Pod volumes to mount into the container&#39;s filesystem. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-<tr>
-<td><strong>working_dir</strong></td>
-<td><strong>str</strong></td>
-<td>Container&#39;s working directory. If not specified, the container runtime&#39;s default will be used, which might be configured in the container image. Cannot be updated.</td>
-<td>[optional]</td>
-</tr>
-</tbody>
-</table>
-<p><a href="../../sdk_doc/#documentation-for-models">[Back to Model list]</a> <a href="../../sdk_doc/#documentation-for-api-endpoints">[Back to API list]</a> <a href="../../sdk_doc/">[Back to README]</a></p>
+<h1 id="announcing-kserve-v015-advancing-generative-ai-model-serving">Announcing: KServe v0.15： Advancing Generative AI Model Serving<a class="headerlink" href="#announcing-kserve-v015-advancing-generative-ai-model-serving" title="Permanent link">&para;</a></h1>
+<p>Authors: Alexa Griffith, Dan Sun, Yuan Tang, Johnu George, Lize Cai</p>
+<p>We are thrilled to announce the release of <strong>KServe v0.15</strong>, marking a significant leap forward in serving both predictive and generative AI models. This release introduces enhanced support for generative AI workloads, including advanced features for serving large language models (LLMs), improved model and KV caching mechanisms, and integration with Envoy AI Gateway.</p>
+<h2 id="_1"><img alt="!generative_inference" src="../../../images/kserve_generative_inference.png" /><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="embracing-generative-ai-workloads">Embracing Generative AI Workloads<a class="headerlink" href="#embracing-generative-ai-workloads" title="Permanent link">&para;</a></h2>
+<p>KServe v0.15 brings first-class support for generative AI workloads, marking a key evolution beyond traditional predictive AI. Unlike predictive models that infer outcomes from existing data, generative models like large language models (LLMs) create new content from prompts. This fundamental difference introduces new serving challenges. KServe now provides the infrastructure and optimizations needed to serve these models efficiently at scale.</p>
+<p>To support these workloads, we've introduced a dedicated <strong>Generative AI</strong> section in our documentation, detailing the new capabilities and configurations tailored for generative models.</p>
+<p>KServe now offers a <strong>lightweight</strong> installation for hosting LLMs on Kubernetes, please follow <a href="https://kserve.github.io/website/0.15/admin/kubernetes_deployment">generative inference installation guide</a> to get started. KEDA is an optional component for scaling based on LLM specific metrics and Envoy AI gateway is integrated for advanced traffic management capabilities with token rate limiting, unified API and intelligent routing.</p>
+<hr />
+<h2 id="key-generative-ai-features-in-v015">Key Generative AI Features in v0.15<a class="headerlink" href="#key-generative-ai-features-in-v015" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Envoy AI Gateway Integration</strong></li>
+<li><strong>Multi Node Inference</strong></li>
+<li><strong>LLM Autoscaler with KEDA</strong></li>
+<li><strong>Distributed KV Cache with LMCache</strong></li>
+</ul>
+<hr />
+<h3 id="envoy-ai-gateway-support">Envoy AI Gateway Support<a class="headerlink" href="#envoy-ai-gateway-support" title="Permanent link">&para;</a></h3>
+<p>KServe v0.15 adds initial support for <a href="https://aigateway.envoyproxy.io"><strong>Envoy AI Gateway</strong></a>, a CNCF open source project built on top of <a href="https://gateway.envoyproxy.io">Envoy Gateway</a> and designed specifically for managing generative AI traffic at scale.</p>
+<p><a href="https://gateway.envoyproxy.io">Envoy Gateway</a> is also now supported in KServe along with <a href="https://gateway-api.sigs.k8s.io">Kubernetes Gateway API</a>. Unlike traditional gateway solutions, Envoy AI Gateway provides advanced capabilities tailored to AI serving, including:</p>
+<ul>
+<li>Dynamic model routing based on request content, model metadata, or user context.</li>
+<li>Built-in support for multi-tenant inference, with fine-grained access controls and authentication.</li>
+<li>Unified API for routing and managing LLM/AI traffic easily.</li>
+<li>Integrated observability for model-level performance insights.</li>
+<li>Extensibility for inference-specific policies like rate-limiting by token, and model lifecycle management.</li>
+<li>Automatic failover mechanisms to ensure service reliability.</li>
+</ul>
+<p>This integration enables a unified, intelligent entrypoint for both predictive and generative workloads—scaling from traditional models to complex LLMs—all while abstracting infrastructure complexity from the user. Please refer to <a href="https://kserve.github.io/website/0.15/admin/ai-gateway_integration">Envoy AI Gateway integration doc</a> for more details.</p>
+<hr />
+<h3 id="multi-node-inference">Multi-Node Inference<a class="headerlink" href="#multi-node-inference" title="Permanent link">&para;</a></h3>
+<p>To support LLMs too large for a single node (e.g., Llama 3.1 405B), KServe v0.15 introduces multi-node inference across distributed GPUs, unlocking large model serving at scale. As models continue increase in size, multi-node inference capabilities are increasingly important for production deployments that require real-time user experience. Please refer to the <a href="https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/multi-node">Multi Node inference doc</a> for more details.</p>
+<p>The community is also working on a <a href="https://github.com/kserve/kserve/issues/4433">new distributed inference API</a> to allow scaling Multi Node Inference and support Disaggregatd Prefilling which is targeted for large LLM deployments. </p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc://llama-3-8b-pvc/hf/8b_instruction_tuned</span>
+<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">tensorParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div>
+<hr />
+<h3 id="llm-autoscaler-with-keda-kubernetes-event-driven-autoscaling">LLM Autoscaler with KEDA <a href="https://keda.sh/">(Kubernetes Event-driven Autoscaling)</a><a class="headerlink" href="#llm-autoscaler-with-keda-kubernetes-event-driven-autoscaling" title="Permanent link">&para;</a></h3>
+<p>Autoscaling LLMs is challenging due to their high resource demands and variable inference traffic patterns. The dynamic nature of LLM inference, with varying input lengths and token generation speeds, further complicates the prediction of resource needs, demanding sophisticated and adaptive autoscaling solutions. KServe now integrates with <a href="https://keda.sh"><strong>KEDA</strong></a> (Kubernetes Event-Driven Autoscaling) offers a powerful solution to many of the challenges associated with LLM autoscaling by extending Kubernetes' native Horizontal Pod Autoscaler (HPA) capabilities. KEDA can monitor custom metrics which means you can expose LLM metrics from your LLM inference servers and use KEDA to scale based on these precise indicators.</p>
+<p>This empowers users to efficiently manage LLM workloads with more intelligent scaling decisions based on workload characteristics for improved performance and cost optimization. Please follow the <a href="https://kserve.github.io/website/0.15/modelserving/autoscaling/keda/autoscaling_llm">tutorial doc</a> for how to autoscale based on vLLM metrics.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3-keda</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;keda&quot;</span>
+<span class="w">    </span><span class="nt">sidecar.opentelemetry.io/inject</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;huggingface-llama3-keda&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=meta-llama/meta-llama-3-70b</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">maxReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">    </span><span class="nt">autoScaling</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">metrics</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PodMetric</span>
+<span class="w">          </span><span class="nt">podmetric</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">metric</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">backend</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;opentelemetry&quot;</span>
+<span class="w">              </span><span class="nt">metricNames</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vllm:num_requests_running</span>
+<span class="w">              </span><span class="nt">query</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vllm:num_requests_running&quot;</span>
+<span class="w">            </span><span class="nt">target</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Value</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4&quot;</span>
+<span class="w w-Error"> </span><span class="err">```</span>
+
+<span class="nn">---</span>
+
+<span class="c1">### Distributed KV Cache with [LMCache](https://lmcache.ai)</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Key-Value (KV) cache offloading is a technique used in large language model (LLM) serving to store and reuse the intermediate key and value tensors generated during model inference. In transformer-based models, these KV caches represent the context for each token processed, and reusing them allows the model to avoid redundant computations for repeated or similar prompts.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">Enabling KV cache offloading across multiple requests and serving instances can achieve reduced Time To First Token(TTFT), improve scalablity for shared cache across replicas, and improve user experience for multi-turn QA or RAG.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">KServe integrates [LMCache](https://lmcache.ai), the-state-of-art KV cache layer library developped by LMCache Lab to reduce inference costs and ensure SLOs for both latency and throughput at scale. Please follow the [LMCache integration doc](https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/kv_cache_offloading/#overview) to optimize your GenAI inference workload.</span>
+
+<span class="l l-Scalar l-Scalar-Plain">```yaml</span>
+<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3-lmcache</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">minReplicas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
+<span class="w">      </span><span class="nt">args</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=meta-llama/meta-llama-3-70b</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--kv-transfer-config</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;{&quot;kv_connector&quot;:&quot;LMCacheConnectorV1&quot;,</span><span class="nv"> </span><span class="s">&quot;kv_role&quot;:&quot;kv_both&quot;}&#39;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--enable-chunked-prefill</span>
+</code></pre></div>
+<hr />
+<h3 id="advanced-model-caching-mechanisms">Advanced Model Caching Mechanisms<a class="headerlink" href="#advanced-model-caching-mechanisms" title="Permanent link">&para;</a></h3>
+<p>To reduce model loading times and improve overall efficiency of serving large models, KServe v0.15 introduces advanced model caching features:</p>
+<ul>
+<li><strong>LocalModelCache Enhancements:</strong> Improved the LocalModelCache custom resource to support multiple node groups, providing greater flexibility in model placement and caching strategies.</li>
+<li><strong>Node Agent Improvements:</strong> Enhanced the local model node agent for better performance and reliability.</li>
+</ul>
+<hr />
+<h3 id="enhanced-vllm-backend-support">Enhanced vLLM Backend Support<a class="headerlink" href="#enhanced-vllm-backend-support" title="Permanent link">&para;</a></h3>
+<p>The vLLM backend has been significantly upgraded to better serve generative AI models:</p>
+<ul>
+<li><strong>Version Upgrade:</strong> Updated to vLLM 0.8.5, bringing performance improvements with v1 backend and new features.</li>
+<li><strong>Qwen3 &amp; Llama4:</strong> Added support for Qwen3 and Llama4 model.</li>
+<li><strong>Reranking Support:</strong> Added support for reranking models.</li>
+<li><strong>Embedding Support:</strong> Added support for OpenAI-compatible embeddings API, enabling a broader range of applications.</li>
+</ul>
+<hr />
+<h2 id="additional-improvements">Additional Improvements<a class="headerlink" href="#additional-improvements" title="Permanent link">&para;</a></h2>
+<p>This release also includes several other enhancements:</p>
+<ul>
+<li>Support Deep Health Checks <a href="https://github.com/kserve/kserve/pull/3348">#3348</a></li>
+<li>Collocated Transformer &amp; Predictor Feature <a href="https://github.com/kserve/kserve/pull/4255">#4255</a></li>
+<li>Kubernetes Gateway API support <a href="https://github.com/kserve/kserve/pull/3952">#3952</a></li>
+<li>Security Updates</li>
+</ul>
+<p>For a complete list of changes and updates, please refer to the official release notes.</p>
+<hr />
+<h2 id="join-the-community">Join the Community<a class="headerlink" href="#join-the-community" title="Permanent link">&para;</a></h2>
+<p>We invite you to explore the new features in KServe v0.15 and contribute to the ongoing development of the project:</p>
+<ul>
+<li>Visit <a href="https://kserve.github.io/website/master/">KServe Website</a></li>
+<li>Explore <a href="https://github.com/kserve/kserve">KServe GitHub Repository</a></li>
+<li>Join the conversation on CNCF Slack <a href="https://cloud-native.slack.com/archives/C06AH2C3K8B">#kserve</a></li>
+<li>Attend our community meetings by subscribing to the <a href="https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month">KServe calendar</a></li>
+</ul>
+<p>We extend our gratitude to all the contributors who made this release possible. Your efforts continue to drive the advancement of KServe as a leading platform for serving machine learning models.</p>
+<p><strong>Happy serving!</strong></p>
 
               
             </article>
@@ -3319,6 +3473,41 @@
       </main>
       
         <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../../developer/debug/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Debugging guide" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Debugging guide
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../2024-12-13-KServe-0.14-release/" class="md-footer__link md-footer__link--next" aria-label="Next: KServe 0.14 Release" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              KServe 0.14 Release
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">

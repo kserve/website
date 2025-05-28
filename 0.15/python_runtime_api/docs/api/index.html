@@ -77,7 +77,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-   <b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
+   <b>KServe v0.15 is Released</b>, <a href="/website/0.15/blog/articles/2025-05-27-KServe-0.15-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -313,7 +313,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-tabs__link">
+      <a href="../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-tabs__link">
         Blog
       </a>
     </li>
@@ -2882,6 +2882,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-nav__link">
+        KServe 0.15 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
@@ -3967,7 +3981,11 @@
 <span class="normal">417</span>
 <span class="normal">418</span>
 <span class="normal">419</span>
-<span class="normal">420</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ModelServer</span><span class="p">:</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ModelServer</span><span class="p">:</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
@@ -3981,6 +3999,7 @@
         <span class="n">enable_latency_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span>
         <span class="n">access_log_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
         <span class="n">grace_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+        <span class="n">predictor_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PredictorConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;KServe ModelServer Constructor</span>
 
@@ -4001,6 +4020,7 @@
 <span class="sd">                               (please refer to this Uvicorn</span>
 <span class="sd">                               [github issue](https://github.com/encode/uvicorn/issues/527) for more info).</span>
 <span class="sd">            grace_period: The grace period in seconds to wait for the server to stop. Default: ``30``.</span>
+<span class="sd">            predictor_config: Optional configuration for the predictor. Default: ``None``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">ModelRepository</span><span class="p">()</span> <span class="k">if</span> <span class="n">registered_models</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">registered_models</span>
@@ -4013,7 +4033,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_grpc</span> <span class="o">=</span> <span class="n">enable_grpc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_docs_url</span> <span class="o">=</span> <span class="n">enable_docs_url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_latency_logging</span> <span class="o">=</span> <span class="n">enable_latency_logging</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span> <span class="o">=</span> <span class="n">DataPlane</span><span class="p">(</span><span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span> <span class="o">=</span> <span class="n">ModelRepositoryExtension</span><span class="p">(</span>
             <span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span>
         <span class="p">)</span>
@@ -4025,16 +4044,19 @@
                 <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span> <span class="o">=</span> <span class="n">access_log_format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">predictor_config</span> <span class="o">=</span> <span class="n">PredictorConfig</span><span class="p">(</span>
-            <span class="n">predictor_host</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_host</span><span class="p">,</span>
-            <span class="n">predictor_protocol</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_protocol</span><span class="p">,</span>
-            <span class="n">predictor_use_ssl</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_use_ssl</span><span class="p">,</span>
-            <span class="n">predictor_request_timeout_seconds</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_timeout_seconds</span><span class="p">,</span>
-            <span class="n">predictor_request_retries</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_retries</span><span class="p">,</span>
-            <span class="n">predictor_health_check</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_predictor_health_check</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">predictor_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_predictor_config</span> <span class="o">=</span> <span class="n">predictor_config</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_predictor_config</span> <span class="o">=</span> <span class="n">PredictorConfig</span><span class="p">(</span>
+                <span class="n">predictor_host</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_host</span><span class="p">,</span>
+                <span class="n">predictor_protocol</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_protocol</span><span class="p">,</span>
+                <span class="n">predictor_use_ssl</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_use_ssl</span><span class="p">,</span>
+                <span class="n">predictor_request_timeout_seconds</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_timeout_seconds</span><span class="p">,</span>
+                <span class="n">predictor_request_retries</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_retries</span><span class="p">,</span>
+                <span class="n">predictor_health_check</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_predictor_health_check</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span> <span class="o">=</span> <span class="n">DataPlane</span><span class="p">(</span>
-            <span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="p">,</span> <span class="n">predictor_config</span><span class="o">=</span><span class="n">predictor_config</span>
+            <span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="p">,</span> <span class="n">predictor_config</span><span class="o">=</span><span class="n">_predictor_config</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rest_multiprocess_server</span> <span class="o">=</span> <span class="kc">None</span>
@@ -4213,7 +4235,7 @@
 
 
 <h3 id="kserve.model_server.ModelServer.__init__" class="doc doc-heading">
-            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">http_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span> <span class="n">grpc_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_threads</span><span class="p">,</span> <span class="n">max_asyncio_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_asyncio_workers</span><span class="p">,</span> <span class="n">registered_models</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">enable_grpc</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_grpc</span><span class="p">,</span> <span class="n">enable_docs_url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span> <span class="n">enable_latency_logging</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span> <span class="n">access_log_format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span> <span class="n">grace_period</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span></code>
+            <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="n">http_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span> <span class="n">grpc_port</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">workers</span><span class="p">,</span> <span class="n">max_threads</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_threads</span><span class="p">,</span> <span class="n">max_asyncio_workers</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_asyncio_workers</span><span class="p">,</span> <span class="n">registered_models</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">enable_grpc</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_grpc</span><span class="p">,</span> <span class="n">enable_docs_url</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_docs_url</span><span class="p">,</span> <span class="n">enable_latency_logging</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span> <span class="n">access_log_format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span> <span class="n">grace_period</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">predictor_config</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#kserve.model_server.ModelServer.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
 
@@ -4415,6 +4437,22 @@
                   <code>30</code>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>predictor_config</code>
+            </td>
+            <td>
+                  <code><span title="typing.Optional">Optional</span>[<a class="autorefs autorefs-internal" title="PredictorConfig (kserve.model.PredictorConfig)" href="#kserve.model.PredictorConfig">PredictorConfig</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional configuration for the predictor. Default: <code>None</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
       </tbody>
     </table>
 
@@ -4492,7 +4530,11 @@
 <span class="normal">263</span>
 <span class="normal">264</span>
 <span class="normal">265</span>
-<span class="normal">266</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">http_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">http_port</span><span class="p">,</span>
     <span class="n">grpc_port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">grpc_port</span><span class="p">,</span>
@@ -4505,6 +4547,7 @@
     <span class="n">enable_latency_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">enable_latency_logging</span><span class="p">,</span>
     <span class="n">access_log_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">access_log_format</span><span class="p">,</span>
     <span class="n">grace_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="n">predictor_config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PredictorConfig</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;KServe ModelServer Constructor</span>
 
@@ -4525,6 +4568,7 @@
 <span class="sd">                           (please refer to this Uvicorn</span>
 <span class="sd">                           [github issue](https://github.com/encode/uvicorn/issues/527) for more info).</span>
 <span class="sd">        grace_period: The grace period in seconds to wait for the server to stop. Default: ``30``.</span>
+<span class="sd">        predictor_config: Optional configuration for the predictor. Default: ``None``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">ModelRepository</span><span class="p">()</span> <span class="k">if</span> <span class="n">registered_models</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">registered_models</span>
@@ -4537,7 +4581,6 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">enable_grpc</span> <span class="o">=</span> <span class="n">enable_grpc</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">enable_docs_url</span> <span class="o">=</span> <span class="n">enable_docs_url</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">enable_latency_logging</span> <span class="o">=</span> <span class="n">enable_latency_logging</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span> <span class="o">=</span> <span class="n">DataPlane</span><span class="p">(</span><span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">model_repository_extension</span> <span class="o">=</span> <span class="n">ModelRepositoryExtension</span><span class="p">(</span>
         <span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span>
     <span class="p">)</span>
@@ -4549,16 +4592,19 @@
             <span class="n">logging</span><span class="o">.</span><span class="n">configure_logging</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">log_config_file</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">access_log_format</span> <span class="o">=</span> <span class="n">access_log_format</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_custom_exception_handler</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">predictor_config</span> <span class="o">=</span> <span class="n">PredictorConfig</span><span class="p">(</span>
-        <span class="n">predictor_host</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_host</span><span class="p">,</span>
-        <span class="n">predictor_protocol</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_protocol</span><span class="p">,</span>
-        <span class="n">predictor_use_ssl</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_use_ssl</span><span class="p">,</span>
-        <span class="n">predictor_request_timeout_seconds</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_timeout_seconds</span><span class="p">,</span>
-        <span class="n">predictor_request_retries</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_retries</span><span class="p">,</span>
-        <span class="n">predictor_health_check</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_predictor_health_check</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">predictor_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_predictor_config</span> <span class="o">=</span> <span class="n">predictor_config</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_predictor_config</span> <span class="o">=</span> <span class="n">PredictorConfig</span><span class="p">(</span>
+            <span class="n">predictor_host</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_host</span><span class="p">,</span>
+            <span class="n">predictor_protocol</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_protocol</span><span class="p">,</span>
+            <span class="n">predictor_use_ssl</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_use_ssl</span><span class="p">,</span>
+            <span class="n">predictor_request_timeout_seconds</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_timeout_seconds</span><span class="p">,</span>
+            <span class="n">predictor_request_retries</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">predictor_request_retries</span><span class="p">,</span>
+            <span class="n">predictor_health_check</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">enable_predictor_health_check</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">dataplane</span> <span class="o">=</span> <span class="n">DataPlane</span><span class="p">(</span>
-        <span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="p">,</span> <span class="n">predictor_config</span><span class="o">=</span><span class="n">predictor_config</span>
+        <span class="n">model_registry</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">registered_models</span><span class="p">,</span> <span class="n">predictor_config</span><span class="o">=</span><span class="n">_predictor_config</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_rest_server</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_rest_multiprocess_server</span> <span class="o">=</span> <span class="kc">None</span>
@@ -4588,18 +4634,18 @@ This can be called by a custom exception handler that wants to defer to the defa
 
             <details class="quote">
               <summary>Source code in <code>kserve/model_server.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">373</span>
-<span class="normal">374</span>
-<span class="normal">375</span>
-<span class="normal">376</span>
-<span class="normal">377</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">377</span>
 <span class="normal">378</span>
 <span class="normal">379</span>
 <span class="normal">380</span>
 <span class="normal">381</span>
 <span class="normal">382</span>
 <span class="normal">383</span>
-<span class="normal">384</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">default_exception_handler</span><span class="p">(</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">default_exception_handler</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Default exception handler for event loop.</span>
@@ -4637,11 +4683,7 @@ documentation for details about context).</p>
 
             <details class="quote">
               <summary>Source code in <code>kserve/model_server.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">359</span>
-<span class="normal">360</span>
-<span class="normal">361</span>
-<span class="normal">362</span>
-<span class="normal">363</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">363</span>
 <span class="normal">364</span>
 <span class="normal">365</span>
 <span class="normal">366</span>
@@ -4649,7 +4691,11 @@ documentation for details about context).</p>
 <span class="normal">368</span>
 <span class="normal">369</span>
 <span class="normal">370</span>
-<span class="normal">371</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_exception_handler</span><span class="p">(</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_exception_handler</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">handler</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">asyncio</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">):</span>
@@ -4732,11 +4778,7 @@ additional names for the same model.</p>
 
             <details class="quote">
               <summary>Source code in <code>kserve/model_server.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">386</span>
-<span class="normal">387</span>
-<span class="normal">388</span>
-<span class="normal">389</span>
-<span class="normal">390</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">390</span>
 <span class="normal">391</span>
 <span class="normal">392</span>
 <span class="normal">393</span>
@@ -4744,7 +4786,11 @@ additional names for the same model.</p>
 <span class="normal">395</span>
 <span class="normal">396</span>
 <span class="normal">397</span>
-<span class="normal">398</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">register_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseKServeModel</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a model to the model server.</span>
 
 <span class="sd">    Args:</span>
@@ -4810,11 +4856,7 @@ additional names for the same model.</p>
 
             <details class="quote">
               <summary>Source code in <code>kserve/model_server.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">295</span>
-<span class="normal">296</span>
-<span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">299</span>
 <span class="normal">300</span>
 <span class="normal">301</span>
 <span class="normal">302</span>
@@ -4851,7 +4893,11 @@ additional names for the same model.</p>
 <span class="normal">333</span>
 <span class="normal">334</span>
 <span class="normal">335</span>
-<span class="normal">336</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseKServeModel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">models</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseKServeModel</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Start the model server with a set of registered models.</span>
 
 <span class="sd">    Args:</span>
@@ -4946,11 +4992,7 @@ additional names for the same model.</p>
 
             <details class="quote">
               <summary>Source code in <code>kserve/model_server.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">338</span>
-<span class="normal">339</span>
-<span class="normal">340</span>
-<span class="normal">341</span>
-<span class="normal">342</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">342</span>
 <span class="normal">343</span>
 <span class="normal">344</span>
 <span class="normal">345</span>
@@ -4965,7 +5007,11 @@ additional names for the same model.</p>
 <span class="normal">354</span>
 <span class="normal">355</span>
 <span class="normal">356</span>
-<span class="normal">357</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sig</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Stop the instances of REST and gRPC model servers.</span>
 
 <span class="sd">    Args:</span>
