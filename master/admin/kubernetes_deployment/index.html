@@ -77,7 +77,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-   <b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
+   <b>KServe v0.15 is Released</b>, <a href="/website/0.15/blog/articles/2025-05-27-KServe-0.15-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-tabs__link">
+      <a href="../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-tabs__link">
         Blog
       </a>
     </li>
@@ -3014,6 +3014,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-nav__link">
+        KServe 0.15 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
@@ -3267,7 +3281,8 @@
 
 
 <h1 id="kubernetes-deployment-installation-guide">Kubernetes Deployment Installation Guide<a class="headerlink" href="#kubernetes-deployment-installation-guide" title="Permanent link">&para;</a></h1>
-<p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment with Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> / <a href="https://kubernetes.io/docs/concepts/services-networking/gateway/"><code>Gateway API</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand <code>Scale down and from Zero</code> is not supported in <code>RawDeployment</code> mode.</p>
+<p>KServe supports <code>RawDeployment</code> mode to enable <code>InferenceService</code> deployment for both <strong>Predictive Inference</strong> and <strong>Generative Inference</strong> workload with <strong>minimal dependencies</strong> on Kubernetes resources <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment"><code>Deployment</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/service"><code>Service</code></a>, <a href="https://kubernetes.io/docs/concepts/services-networking/ingress"><code>Ingress</code></a> / <a href="https://kubernetes.io/docs/concepts/services-networking/gateway/"><code>Gateway API</code></a> and <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale"><code>Horizontal Pod Autoscaler</code></a>. </p>
+<p>Comparing to <code>Serverless</code> mode which depends on Knative for request driven Autoscaling, in <code>RawDeployment</code> mode <a href="https://keda.sh">KEDA</a> can be installed optionally to enable Autoscaling based on any custom metrics. <code>Scale from Zero</code> is currently not supported in <code>RawDeployment</code> mode for HTTP requests.</p>
 <p>Kubernetes 1.30 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.</p>
 <div class="admonition note">

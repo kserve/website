@@ -77,7 +77,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-   <b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
+   <b>KServe v0.15 is Released</b>, <a href="/website/0.15/blog/articles/2025-05-27-KServe-0.15-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-tabs__link">
+      <a href="../../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-tabs__link">
         Blog
       </a>
     </li>
@@ -1142,8 +1142,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-the-localmodelnodegroup" class="md-nav__link">
-    Create the LocalModelNodeGroup
+  <a href="#enable-local-model-cache" class="md-nav__link">
+    Enable Local Model Cache
   </a>
   
 </li>
@@ -1151,6 +1151,13 @@
         <li class="md-nav__item">
   <a href="#configure-local-model-download-job-namespace" class="md-nav__link">
     Configure Local Model Download Job Namespace
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-localmodelnodegroup" class="md-nav__link">
+    Create the LocalModelNodeGroup
   </a>
   
 </li>
@@ -2957,6 +2964,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-nav__link">
+        KServe 0.15 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
@@ -3165,8 +3186,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#create-the-localmodelnodegroup" class="md-nav__link">
-    Create the LocalModelNodeGroup
+  <a href="#enable-local-model-cache" class="md-nav__link">
+    Enable Local Model Cache
   </a>
   
 </li>
@@ -3174,6 +3195,13 @@
         <li class="md-nav__item">
   <a href="#configure-local-model-download-job-namespace" class="md-nav__link">
     Configure Local Model Download Job Namespace
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-localmodelnodegroup" class="md-nav__link">
+    Create the LocalModelNodeGroup
   </a>
   
 </li>
@@ -3220,48 +3248,28 @@
 <p>By caching LLM models locally, the <code>InferenceService</code> startup time can be greatly improved. For deployments with more than one replica,
 the local persistent volume can serve multiple pods with the warmed up model cache.</p>
 <ul>
-<li><code>LocalModelCache</code> is a KServe custom resource to specify which model from persistent storage to cache on local storage of the kubernetes node. </li>
+<li><code>LocalModelCache</code> is a KServe custom resource to specify which model from persistent storage to cache on local storage of the Kubernetes node. </li>
 <li><code>LocalModelNodeGroup</code> is a KServe custom resource to manage the node group for caching the models and the local persistent storage.</li>
 <li><code>LocalModelNode</code> is a KServe custom resource to track the status of the models cached on given local node.</li>
 </ul>
 <p>In this example, we demonstrate how you can cache the models using Kubernetes nodes' local disk NVMe volumes from HF hub.</p>
-<h2 id="create-the-localmodelnodegroup">Create the LocalModelNodeGroup<a class="headerlink" href="#create-the-localmodelnodegroup" title="Permanent link">&para;</a></h2>
-<p>Create the <code>LocalModelNodeGroup</code> using the local persistent volume with specified local NVMe volume path.</p>
-<ul>
-<li>The <code>storageClassName</code> should be set to <code>local-storage</code>.</li>
-<li>The <code>nodeAffinity</code> should be specified which nodes to cache the model using node selector.</li>
-<li>Local path should be specified on PV as the local storage to cache the models.
-<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
-<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalModelNodeGroup</span>
-<span class="nt">metadata</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workers</span>
-<span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">storageLimit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.7T</span>
-<span class="w">  </span><span class="nt">persistentVolumeClaimSpec</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1700G</span>
-<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-storage</span>
-<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
-<span class="w">    </span><span class="nt">volumeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models</span>
-<span class="w">  </span><span class="nt">persistentVolumeSpec</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
-<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
-<span class="w">    </span><span class="nt">capacity</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1700G</span>
-<span class="w">    </span><span class="nt">local</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models</span>
-<span class="w">    </span><span class="nt">nodeAffinity</span><span class="p">:</span>
-<span class="w">       </span><span class="nt">required</span><span class="p">:</span>
-<span class="w">         </span><span class="nt">nodeSelectorTerms</span><span class="p">:</span>
-<span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia.com/gpu-product</span>
-<span class="w">             </span><span class="nt">values</span><span class="p">:</span>
-<span class="w">               </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA-A100-SXM4-80GB</span>
-</code></pre></div></li>
-</ul>
+<h2 id="enable-local-model-cache">Enable Local Model Cache<a class="headerlink" href="#enable-local-model-cache" title="Permanent link">&para;</a></h2>
+<p>By default, the model caching is disabled in KServe. To enable it, you need to set the <code>enabled</code> field to <code>true</code> in the <code>localModel</code> section of <code>inferenceservice-config</code> ConfigMap.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>edit<span class="w"> </span>configmap<span class="w"> </span>inferenceservice-config<span class="w"> </span>-n<span class="w"> </span>kserve
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">localModel</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">    </span><span class="no">{</span>
+<span class="hll"><span class="w">      </span><span class="no">&quot;enabled&quot;: true,</span>
+</span><span class="w">      </span><span class="no">&quot;jobNamespace&quot;: &quot;kserve-localmodel-jobs&quot;,</span>
+<span class="w">      </span><span class="no">&quot;defaultJobImage&quot; : &quot;kserve/storage-initializer:latest&quot;,</span>
+<span class="w">      </span><span class="no">&quot;fsGroup&quot;: 1000,</span>
+<span class="w">      </span><span class="no">&quot;localModelAgentImage&quot;: &quot;kserve/kserve-localmodelnode-agent:latest&quot;,</span>
+<span class="w">      </span><span class="no">&quot;localModelAgentCpuRequest&quot;: &quot;100m&quot;,</span>
+<span class="w">      </span><span class="no">&quot;localModelAgentMemoryRequest&quot;: &quot;200Mi&quot;,</span>
+<span class="w">      </span><span class="no">&quot;localModelAgentCpuLimit&quot;: &quot;100m&quot;,</span>
+<span class="w">      </span><span class="no">&quot;localModelAgentMemoryLimit&quot;: &quot;300Mi&quot;</span>
+<span class="w">    </span><span class="no">}</span>
+</code></pre></div>
 <h2 id="configure-local-model-download-job-namespace">Configure Local Model Download Job Namespace<a class="headerlink" href="#configure-local-model-download-job-namespace" title="Permanent link">&para;</a></h2>
 <p>Before creating the <code>LocalModelCache</code> resource to cache the models, you need to make sure the credentials are configured in the download job namespace.
 The download jobs are created in the configured namespace <code>kserve-localmodel-jobs</code>. In this example we are caching the models from HF hub, so the HF token secret should be created pre-hand in the same namespace
@@ -3276,6 +3284,11 @@ along with the storage container configurations.</p>
 <span class="nt">stringData</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">HF_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xxxx</span><span class="w"> </span><span class="c1"># fill in the hf hub token</span>
 </code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Model download job namespace can be configured in the <code>inferenceservice-config</code> ConfigMap by editing the <code>jobNamespace</code> value in the <code>localModel</code> section.
+The default namespace is <code>kserve-localmodel-jobs</code>.</p>
+</div>
 <p>Create the HF Hub cluster storage container to refer to the HF Hub secret.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1alpha1&quot;</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ClusterStorageContainer</span>
@@ -3303,6 +3316,55 @@ along with the storage container configurations.</p>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://</span>
 <span class="w">  </span><span class="nt">workloadType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localModelDownloadJob</span>
 </code></pre></div>
+<h2 id="create-the-localmodelnodegroup">Create the LocalModelNodeGroup<a class="headerlink" href="#create-the-localmodelnodegroup" title="Permanent link">&para;</a></h2>
+<p>Create the <code>LocalModelNodeGroup</code> using the local persistent volume with specified local NVMe volume path.</p>
+<ul>
+<li>The <code>storageClassName</code> should be set to <code>local-storage</code>.</li>
+<li>The <code>nodeAffinity</code> should be specified which nodes to cache the model using node selector.</li>
+<li>Local path should be specified on PV as the local storage to cache the models.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalModelNodeGroup</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workers</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">storageLimit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.7T</span>
+<span class="w">  </span><span class="nt">persistentVolumeClaimSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1700G</span>
+<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-storage</span>
+<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
+<span class="w">    </span><span class="nt">volumeName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models</span>
+<span class="w">  </span><span class="nt">persistentVolumeSpec</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">accessModes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ReadWriteOnce</span>
+<span class="w">    </span><span class="nt">volumeMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Filesystem</span>
+<span class="w">    </span><span class="nt">capacity</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">storage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1700G</span>
+<span class="w">    </span><span class="nt">local</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/models</span>
+<span class="w">    </span><span class="nt">storageClassName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local-storage</span>
+<span class="w">    </span><span class="nt">nodeAffinity</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nodeSelectorTerms</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">matchExpressions</span><span class="p">:</span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia.com/gpu-product</span>
+<span class="w">                </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">In</span>
+<span class="w">                </span><span class="nt">values</span><span class="p">:</span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NVIDIA-A100-SXM4-80GB</span>
+</code></pre></div>
+<p>After the <code>LocalModelNodeGroup</code> is created, KServe creates an agent DaemonSet on each node (nodes matching the <code>nodeAffinity</code> specified in LocalModelNodeGroup) in the <code>kserve</code> namespace to monitor the local model cache lifecycle.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>daemonset<span class="w"> </span>-n<span class="w"> </span>kserve<span class="w"> </span>workers-agent
+</code></pre></div>
+<div class="admonition success expected output">
+<p class="admonition-title">Success</p>
+<div class="highlight"><pre><span></span><code>NAME<span class="w">            </span>DESIRED<span class="w">   </span>CURRENT<span class="w">   </span>READY<span class="w">   </span>UP-TO-DATE<span class="w">   </span>AVAILABLE<span class="w">   </span>NODE<span class="w"> </span>SELECTOR<span class="w">        </span>AGE
+workers-agent<span class="w">   </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">         </span><span class="m">1</span><span class="w">       </span><span class="m">1</span><span class="w">            </span><span class="m">1</span><span class="w">           </span>&lt;none&gt;<span class="w">               </span>5d17h
+</code></pre></div>
+</div>
 <h2 id="create-the-localmodelcache">Create the LocalModelCache<a class="headerlink" href="#create-the-localmodelcache" title="Permanent link">&para;</a></h2>
 <p>Create the <code>LocalModelCache</code> to specify the source model storage URI to pre-download the models to local NVMe volumes for warming up the cache.</p>
 <ul>
@@ -3314,21 +3376,29 @@ along with the storage container configurations.</p>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meta-llama3-8b-instruct</span>
 <span class="nt">spec</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">sourceModelUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
+<span class="w">  </span><span class="nt">sourceModelUri</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hf://meta-llama/meta-llama-3-8b-instruct&#39;</span>
 <span class="w">  </span><span class="nt">modelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10Gi</span>
-<span class="w">  </span><span class="nt">nodeGroups</span><span class="p">:</span><span class="w"> </span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workers</span>
+<span class="w">  </span><span class="nt">nodeGroups</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workers</span>
 </code></pre></div>
 <p>After <code>LocalModelCache</code> is created, KServe creates the download jobs on each node in the group to cache the model in local storage.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>meta-llama3-8b-instruct-kind-worker<span class="w">  </span>-n<span class="w"> </span>kserve-localmodel-jobs
-NAME<span class="w">                                       </span>STATUS<span class="w">     </span>COMPLETIONS<span class="w">   </span>DURATION<span class="w">   </span>AGE
-meta-llama3-8b-instruct-gptq-kind-worker<span class="w">   </span>Complete<span class="w">   </span><span class="m">1</span>/1<span class="w">           </span>4m21s<span class="w">      </span>5d17h
 </code></pre></div>
+<div class="admonition success expected output">
+<p class="admonition-title">Success</p>
+<div class="highlight"><pre><span></span><code><span class="w">   </span>NAME<span class="w">                                       </span>STATUS<span class="w">     </span>COMPLETIONS<span class="w">   </span>DURATION<span class="w">   </span>AGE
+<span class="w">   </span>meta-llama3-8b-instruct-gptq-kind-worker<span class="w">   </span>Complete<span class="w">   </span><span class="m">1</span>/1<span class="w">           </span>4m21s<span class="w">      </span>5d17h
+</code></pre></div>
+</div>
 <p>The download job is created using the provisioned PV/PVC.
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pvc<span class="w"> </span>meta-llama3-8b-instruct<span class="w">  </span>-n<span class="w"> </span>kserve-localmodel-jobs<span class="w"> </span>
-NAME<span class="w">                      </span>STATUS<span class="w">   </span>VOLUME<span class="w">                             </span>CAPACITY<span class="w">   </span>ACCESS<span class="w"> </span>MODES<span class="w">   </span>STORAGECLASS<span class="w">    </span>VOLUMEATTRIBUTESCLASS<span class="w">   </span>AGE
-meta-llama3-8b-instruct<span class="w">   </span>Bound<span class="w">    </span>meta-llama3-8b-instruct-download<span class="w">   </span>10Gi<span class="w">       </span>RWO<span class="w">            </span>local-storage<span class="w">   </span>&lt;unset&gt;<span class="w">                 </span>9h
 </code></pre></div></p>
+<div class="admonition success expected output">
+<p class="admonition-title">Success</p>
+<div class="highlight"><pre><span></span><code>NAME                      STATUS   VOLUME                             CAPACITY   ACCESS MODES   STORAGECLASS    VOLUMEATTRIBUTESCLASS   AGE
+meta-llama3-8b-instruct   Bound    meta-llama3-8b-instruct-download   10Gi       RWO            local-storage   &lt;unset&gt;                 9h
+</code></pre></div>
+</div>
 <h2 id="check-the-localmodelcache-status">Check the LocalModelCache Status<a class="headerlink" href="#check-the-localmodelcache-status" title="Permanent link">&para;</a></h2>
 <p><code>LocalModelCache</code> shows the model download status for each node in the group.</p>
 <p><div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>localmodelcache<span class="w"> </span>meta-llama3-8b-instruct<span class="w"> </span>-oyaml
@@ -3351,6 +3421,8 @@ meta-llama3-8b-instruct<span class="w">   </span>Bound<span class="w">    </span
 <p><code>LocalModelNode</code> shows the model download status of each model expected to cache on the given node.</p>
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>localmodelnode<span class="w"> </span>kind-worker<span class="w"> </span>-oyaml
 </code></pre></div>
+<div class="admonition success expected output">
+<p class="admonition-title">Success</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1alpha1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">LocalModelNode</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3363,10 +3435,10 @@ meta-llama3-8b-instruct<span class="w">   </span>Bound<span class="w">    </span
 <span class="w">  </span><span class="nt">modelStatus</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">meta-llama3-8b-instruct</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ModelDownloaded</span>
 </code></pre></div>
+</div>
 <h2 id="deploy-inferenceservice-using-the-localmodelcache">Deploy InferenceService using the LocalModelCache<a class="headerlink" href="#deploy-inferenceservice-using-the-localmodelcache" title="Permanent link">&para;</a></h2>
 <p>Finally you can deploy the LLMs with <code>InferenceService</code> using the local model cache if the model has been previously cached
 using the <code>LocalModelCache</code> resource by matching the model storage URI.</p>
-<p>The model cache is currently disabled by default. To enable, you need to modify the <code>localmodel.enabled</code> field on the <code>inferenceservice-config</code> ConfigMap.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Yaml</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -3382,7 +3454,6 @@ using the <code>LocalModelCache</code> resource by matching the model storage UR
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
 <span class="w">      </span><span class="nt">args</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_name=llama3</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">--model_id=meta-llama/meta-llama-3-8b-instruct</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hf://meta-llama/meta-llama-3-8b-instruct</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">limits</span><span class="p">:</span>

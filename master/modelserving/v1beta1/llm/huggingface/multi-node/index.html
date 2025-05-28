@@ -77,7 +77,7 @@
           <div class="md-banner__inner md-grid md-typeset">
             
  <h1>
-   <b>KServe v0.14 is Released</b>, <a href="/website/0.14/blog/articles/2024-12-13-KServe-0.14-release/">Read blog &gt;&gt;</a>
+   <b>KServe v0.15 is Released</b>, <a href="/website/0.15/blog/articles/2025-05-27-KServe-0.15-release/">Read blog &gt;&gt;</a>
  </h1>
 
           </div>
@@ -315,7 +315,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-tabs__link">
+      <a href="../../../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-tabs__link">
         Blog
       </a>
     </li>
@@ -3058,6 +3058,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../../../blog/articles/2025-05-27-KServe-0.15-release/" class="md-nav__link">
+        KServe 0.15 Release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../../../blog/articles/2024-12-13-KServe-0.14-release/" class="md-nav__link">
         KServe 0.14 Release
       </a>
@@ -3528,17 +3542,15 @@ Instead, it is <strong>only</strong> used to configure <strong>pipeline parallel
 <span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">serving.kserve.io/deploymentMode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RawDeployment</span>
 <span class="w">    </span><span class="nt">serving.kserve.io/autoscalerClass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">none</span>
-
 <span class="nt">spec</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">predictor</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">model</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">modelFormat</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface</span>
 <span class="w">      </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pvc://llama-3-8b-pvc/hf/8b_instruction_tuned</span>
-<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span>
-<span class="nt">      pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="nv">2</span>
-<span class="w">      </span><span class="nv">tensorParallelSize</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="nv">1</span>
-<span class="w">    </span><span class="p p-Indicator">}</span><span class="w">  </span>
+<span class="w">    </span><span class="nt">workerSpec</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">pipelineParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">tensorParallelSize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Mechanism: How to Set GPU Allocation per Node</p>
