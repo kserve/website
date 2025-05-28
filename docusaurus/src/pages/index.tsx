@@ -3,12 +3,10 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
 
 import HomepageCallToAction from '@site/src/components/HomepageCallToAction';
 import HomepageShowcase from '@site/src/components/HomepageShowcase';
 import HomepageArchitecture from '@site/src/components/HomepageArchitecture';
-import HomepageGenerativeAI from '@site/src/components/HomepageGenerativeAI';
 import HomepageAdopters from '@site/src/components/HomepageAdopters';
 import HomepageQuickStart from '@site/src/components/HomepageQuickStart';
 import Heading from '@theme/Heading';
@@ -60,9 +58,7 @@ export default function Home(): ReactNode {
                   Why KServe?
                 </Heading>
                 <p className={styles.sectionDescription}>
-                  KServe is a standard, cloud agnostic Model Inference Platform for serving predictive and generative AI models on Kubernetes, built for highly scalable use cases.
-                  It provides performant, standardized inference protocol across ML frameworks including OpenAI specification for generative models.
-                  KServe supports modern serverless inference workloads with request-based autoscaling including scale-to-zero on both CPU and GPU resources.
+                  A standard, cloud agnostic Model Inference Platform for serving predictive and generative AI models on Kubernetes
                 </p>
                 
                 <div className={styles.benefitsContainer}>
@@ -78,6 +74,18 @@ export default function Home(): ReactNode {
                       <div className={styles.benefitCard}>
                         <h4>🚅 GPU Acceleration</h4>
                         <p>High-performance serving with GPU support and optimized memory management for large models</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>💾 Model Caching</h4>
+                        <p>Intelligent model caching to reduce loading times and improve response latency for frequently used models</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>🗂️ KV Cache Offloading</h4>
+                        <p>Advanced memory management with KV cache offloading to CPU/disk for handling longer sequences efficiently</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>📈 Autoscaling</h4>
+                        <p>Request-based autoscaling with scale-to-zero capabilities optimized for generative workload patterns</p>
                       </div>
                       <div className={styles.benefitCard}>
                         <h4>💰 Cost Efficient</h4>
@@ -111,6 +119,14 @@ export default function Home(): ReactNode {
                         <h4>⚡ Auto-scaling</h4>
                         <p>Request-based autoscaling with intelligent resource allocation for predictive workloads</p>
                       </div>
+                      <div className={styles.benefitCard}>
+                        <h4>🔍 Model Explainability</h4>
+                        <p>Built-in support for model explanations and feature attribution to understand prediction reasoning</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>📊 Advanced Monitoring</h4>
+                        <p>Enables payload logging, outlier detection, adversarial detection, and drift detection with AI Fairness 360 and ART integration</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -119,9 +135,7 @@ export default function Home(): ReactNode {
           </div>
         </div>
         <HomepageShowcase />
-        <HomepageGenerativeAI />
         <HomepageArchitecture />
-        <HomepageFeatures />
         <HomepageQuickStart />
         <HomepageAdopters />
         <HomepageCallToAction />
