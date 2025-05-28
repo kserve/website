@@ -2965,6 +2965,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#distributed-kv-cache-with-lmcache" class="md-nav__link">
+    Distributed KV Cache with LMCache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#advanced-model-caching-mechanisms" class="md-nav__link">
     Advanced Model Caching Mechanisms
   </a>
@@ -3263,6 +3270,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#distributed-kv-cache-with-lmcache" class="md-nav__link">
+    Distributed KV Cache with LMCache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#advanced-model-caching-mechanisms" class="md-nav__link">
     Advanced Model Caching Mechanisms
   </a>
@@ -3392,20 +3406,13 @@
 <span class="w">            </span><span class="nt">target</span><span class="p">:</span>
 <span class="w">              </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Value</span>
 <span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4&quot;</span>
-<span class="w w-Error"> </span><span class="err">```</span>
-
-<span class="nn">---</span>
-
-<span class="c1">### Distributed KV Cache with [LMCache](https://lmcache.ai)</span>
-
-<span class="l l-Scalar l-Scalar-Plain">Key-Value (KV) cache offloading is a technique used in large language model (LLM) serving to store and reuse the intermediate key and value tensors generated during model inference. In transformer-based models, these KV caches represent the context for each token processed, and reusing them allows the model to avoid redundant computations for repeated or similar prompts.</span>
-
-<span class="l l-Scalar l-Scalar-Plain">Enabling KV cache offloading across multiple requests and serving instances can achieve reduced Time To First Token(TTFT), improve scalablity for shared cache across replicas, and improve user experience for multi-turn QA or RAG.</span>
-
-<span class="l l-Scalar l-Scalar-Plain">KServe integrates [LMCache](https://lmcache.ai), the-state-of-art KV cache layer library developped by LMCache Lab to reduce inference costs and ensure SLOs for both latency and throughput at scale. Please follow the [LMCache integration doc](https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/kv_cache_offloading/#overview) to optimize your GenAI inference workload.</span>
-
-<span class="l l-Scalar l-Scalar-Plain">```yaml</span>
-<span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+</code></pre></div>
+<hr />
+<h3 id="distributed-kv-cache-with-lmcache">Distributed KV Cache with <a href="https://lmcache.ai">LMCache</a><a class="headerlink" href="#distributed-kv-cache-with-lmcache" title="Permanent link">&para;</a></h3>
+<p>Key-Value (KV) cache offloading is a technique used in large language model (LLM) serving to store and reuse the intermediate key and value tensors generated during model inference. In transformer-based models, these KV caches represent the context for each token processed, and reusing them allows the model to avoid redundant computations for repeated or similar prompts.</p>
+<p>Enabling KV cache offloading across multiple requests and serving instances can achieve reduced Time To First Token(TTFT), improve scalablity for shared cache across replicas, and improve user experience for multi-turn QA or RAG.</p>
+<p>KServe integrates <a href="https://lmcache.ai">LMCache</a>, the-state-of-art KV cache layer library developped by LMCache Lab to reduce inference costs and ensure SLOs for both latency and throughput at scale. Please follow the <a href="https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/kv_cache_offloading/#overview">LMCache integration doc</a> to optimize your GenAI inference workload.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">huggingface-llama3-lmcache</span>
