@@ -2,46 +2,118 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Welcome to KServe
 
-Let's discover **Docusaurus in less than 5 minutes**.
+**KServe** is a standard Model Inference Platform on Kubernetes, built for highly scalable predictive and generative inference workloads.
 
-## Getting Started
+## What is KServe?
 
-Get started by **creating a new site**.
+KServe provides a Kubernetes [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for serving machine learning (ML) models on arbitrary frameworks. It aims to solve production model serving use cases by providing performant, standardized inference protocol across ML frameworks.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### Key Benefits
 
-### What you'll need
+✅ **Multi-framework Model Serving** - Deploy models from TensorFlow, PyTorch, Scikit-Learn, XGBoost, Hugging Face, and more  
+✅ **Serverless Inference Workloads** - Automatic scaling including scale-to-zero on both CPU and GPU  
+✅ **High Scalability & Density** - Intelligent routing and density packing using ModelMesh  
+✅ **Advanced Deployments** - Canary rollouts, experiments, ensembles, and transformers  
+✅ **Production ML Serving** - Prediction, pre/post processing, monitoring, and explainability  
+✅ **Standard Inference Protocol** - Support for Open Inference Protocol (V1/V2) across frameworks
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## Architecture Overview
 
-## Generate a new site
+KServe consists of two main components:
 
-Generate a new Docusaurus site using the **classic template**.
+### Control Plane
+- **InferenceService CRD** - Manages model serving lifecycle
+- **Serving Runtime** - Pluggable model runtime implementations  
+- **Model Storage** - Support for various storage systems (S3, GCS, PVC, etc.)
 
-The classic template will automatically be added to your project after you run the command:
+### Data Plane  
+- **Predictor** - Serves model predictions
+- **Transformer** - Pre/post processing logic
+- **Explainer** - Model explanations and interpretability
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+## Quick Start
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+Ready to deploy your first model? Choose your path:
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+### 🚀 [Get Started with KServe](./get_started/first_isvc.md)
+Deploy your first scikit-learn model in minutes
 
-## Start your site
+### 🏗️ [Installation Guide](./admin/serverless/serverless.md)  
+Set up KServe on your Kubernetes cluster
 
-Run the development server:
+### 📚 [Model Serving Guide](./modelserving/control_plane.md)
+Learn about different serving patterns and frameworks
 
-```bash
-cd my-website
-npm run start
-```
+## Supported Model Frameworks
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+### Predictive Inference
+- **Scikit-Learn** - Python-based ML models
+- **XGBoost** - Gradient boosting framework  
+- **TensorFlow** - Deep learning models
+- **PyTorch** - PyTorch models via TorchServe
+- **ONNX** - Open Neural Network Exchange models
+- **Hugging Face** - Transformers and NLP models
+- **MLflow** - MLflow packaged models
+- **Custom Runtimes** - Bring your own serving logic
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+### Generative Inference  
+- **Large Language Models (LLMs)** - Text generation via vLLM
+- **Hugging Face Transformers** - Text2Text generation
+- **Multi-node Inference** - Distributed LLM serving
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+### Multi-Framework Support
+- **NVIDIA Triton** - High-performance inference server
+- **AMD** - Optimized inference on AMD hardware
+
+## Use Cases
+
+### Real-time Inference
+Serve models with low latency for real-time applications like recommendation systems, fraud detection, and image recognition.
+
+### Batch Processing  
+Process large volumes of data efficiently with batch inference capabilities.
+
+### A/B Testing
+Compare model performance with traffic splitting and canary deployments.
+
+### Multi-Model Serving
+Deploy multiple models efficiently with ModelMesh for high-density scenarios.
+
+## What's Next?
+
+- 📖 **[First InferenceService](./get_started/first_isvc.md)** - Deploy your first model
+- 🔧 **[Administration Guide](./admin/serverless/serverless.md)** - Install and configure KServe  
+- 🎯 **[Model Serving](./modelserving/control_plane.md)** - Learn serving patterns
+- 🌐 **[API Reference](./reference/api.md)** - Explore the complete API
+- 👥 **[Community](./community/adopters.md)** - Join the KServe community
+
+## Community & Support
+
+- **GitHub**: [github.com/kserve/kserve](https://github.com/kserve/kserve)
+- **Slack**: [Kubeflow Slack #kserve](https://kubeflow.slack.com/archives/C06982X42KC)  
+- **Mailing List**: [kserve-dev@lists.lfaidata.foundation](mailto:kserve-dev@lists.lfaidata.foundation)
+- **Community Meetings**: [Monthly meetings calendar](https://github.com/kserve/community)
+
+- **InferenceService**: The main resource for deploying ML models
+- **ClusterServingRuntime**: Define cluster-wide model runtimes
+- **ServingRuntime**: Namespace-scoped runtime definitions
+
+## Learning Path
+
+1. **Start Here**: [Deploy your first model](/docs/get_started/first_isvc)
+2. **Learn the Basics**: [Model Serving Guide](/docs/modelserving/control_plane)
+3. **API Reference**: [Complete API documentation](/docs/reference/api)
+4. **Join the Community**: [See who's using KServe](/docs/community/adopters)
+
+## Need Help?
+
+- 💬 Join our [Slack community](https://kubeflow.slack.com/)
+- 🐛 Report issues on [GitHub](https://github.com/kserve/kserve/issues)
+- 📖 Browse the [API reference](/docs/reference/api)
+- 🎯 Check out [real-world examples](https://github.com/kserve/kserve/tree/master/docs/samples)
+
+---
+
+*KServe is a [CNCF](https://cncf.io) incubating project and part of the [Kubeflow](https://kubeflow.org) ecosystem.*

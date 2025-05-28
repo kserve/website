@@ -1,0 +1,60 @@
+.showcase {
+  padding: 4rem 0;
+  background-color: #f8f9fa;
+}
+
+.showcaseTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+}
+
+.showcaseContent {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.showcaseText {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.showcaseCode {
+  flex: 1;
+}
+
+.showcasePoints {
+  margin-top: 2rem;
+}
+
+.showcasePoint {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.pointIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  margin-right: 0.75rem;
+  font-weight: bold;
+}
+
+@media (max-width: 996px) {
+  .showcaseContent {
+    flex-direction: column;
+  }
+
+  .showcaseCode {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}

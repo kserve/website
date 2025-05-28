@@ -1,24 +1,22 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  favicon: 'img/favicon.ico',
+  title: 'KServe',
+  tagline: 'A Kubernetes Custom Resource for serving predictive and generative ML models with standardized inference protocols',
+  favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://kserve.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'kserve', // Usually your GitHub org/user name.
+  projectName: 'kserve', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -40,7 +38,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/kserve/website/tree/main/docusaurus/',
         },
         blog: {
           showReadingTime: true,
@@ -51,7 +49,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/kserve/website/tree/main/docusaurus/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -66,23 +64,27 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/kserve-logo.png',
+    metadata: [
+      { name: 'keywords', content: 'machine learning, kubernetes, model serving, inference, AI, ML, serverless, MLOps, model inference, generative AI, LLM, AI model deployment' },
+      { name: 'description', content: 'KServe: A Kubernetes Custom Resource for serving ML models on Kubernetes with autoscaling and standardized inference protocols for both predictive and generative AI models' }
+    ],
     navbar: {
-      title: 'My Site',
+      title: 'KServe',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'KServe Logo',
+        src: 'img/kserve-logo.png',
       },
       items: [
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Documentation',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/kserve/kserve',
           label: 'GitHub',
           position: 'right',
         },
@@ -92,11 +94,19 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Documentation',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Get Started',
+              to: '/docs/get_started/first_isvc',
+            },
+            {
+              label: 'API Reference',
+              to: '/docs/reference/api',
+            },
+            {
+              label: 'Model Serving Guide',
+              to: '/docs/modelserving/control_plane',
             },
           ],
         },
@@ -104,16 +114,16 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Slack',
+              href: 'https://kubeflow.slack.com/',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              label: 'Twitter',
+              href: 'https://twitter.com/kubeflow',
             },
             {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Adopters',
+              to: '/docs/community/adopters',
             },
           ],
         },
@@ -126,12 +136,16 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/kserve/kserve',
+            },
+            {
+              label: 'Community Meetings',
+              href: 'https://github.com/kserve/website/tree/main/docs/community',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} The KServe Authors. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page.`,
     },
     prism: {
       theme: prismThemes.github,

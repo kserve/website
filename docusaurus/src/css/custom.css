@@ -6,25 +6,62 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #3371e3;
+  --ifm-color-primary-dark: #2561dc;
+  --ifm-color-primary-darker: #235bd0;
+  --ifm-color-primary-darkest: #1d4bab;
+  --ifm-color-primary-light: #4b81e6;
+  --ifm-color-primary-lighter: #588be8;
+  --ifm-color-primary-lightest: #7ea4ed;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* Custom colors for KServe */
+  --kserve-gray-light: #f5f7f9;
+  --kserve-gray: #eaecef;
+  --kserve-gray-dark: #646464;
+  --kserve-highlight: #61dafb;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+[data-theme="dark"] {
+  --ifm-color-primary: #4f84e9;
+  --ifm-color-primary-dark: #3371e3;
+  --ifm-color-primary-darker: #2c67d5;
+  --ifm-color-primary-darkest: #235bd0;
+  --ifm-color-primary-light: #6b97ec;
+  --ifm-color-primary-lighter: #87aaef;
+  --ifm-color-primary-lightest: #a3bef2;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  /* Custom colors for KServe - dark mode */
+  --kserve-gray-light: #2d2d2d;
+  --kserve-gray: #444444;
+  --kserve-gray-dark: #aaaaaa;
+  --kserve-highlight: #61dafb;
+}
+
+/* Global styles */
+.container {
+  padding: 0 1rem;
+}
+
+.section-title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-description {
+  margin-bottom: 3rem;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 996px) {
+  .container {
+    padding: 0 1.5rem;
+  }
 }
