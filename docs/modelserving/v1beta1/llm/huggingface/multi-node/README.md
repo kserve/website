@@ -125,18 +125,15 @@ metadata:
   annotations:
     serving.kserve.io/deploymentMode: RawDeployment
     serving.kserve.io/autoscalerClass: none
-
 spec:
   predictor:
     model:
       modelFormat:
         name: huggingface
       storageUri: pvc://llama-3-8b-pvc/hf/8b_instruction_tuned
-    workerSpec: {
+    workerSpec:
       pipelineParallelSize: 2
       tensorParallelSize: 1
-    }  
-    
 ```
 
 !!! info "Mechanism: How to Set GPU Allocation per Node"
