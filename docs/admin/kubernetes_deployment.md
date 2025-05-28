@@ -1,5 +1,8 @@
 # Kubernetes Deployment Installation Guide
-KServe supports `RawDeployment` mode to enable `InferenceService` deployment with Kubernetes resources [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale). Comparing to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `RawDeployment` mode.
+
+KServe supports `RawDeployment` mode to enable `InferenceService` deployment for both **Predictive Inference** and **Generative Inference** workload with **minimal dependencies** on Kubernetes resources [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale). 
+
+Comparing to `Serverless` mode which depends on Knative for request driven Autoscaling, in `RawDeployment` mode [KEDA](https://keda.sh) can be installed optionally to enable Autoscaling based on any custom metrics. `Scale from Zero` is currently not supported in `RawDeployment` mode for HTTP requests.
 
 Kubernetes 1.30 is the minimally required version and please check the following recommended Istio versions for the corresponding
 Kubernetes version.
