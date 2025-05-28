@@ -38,8 +38,8 @@ export default function HomepageArchitecture() {
                 <p>Standardized inference protocol for model servers with request/response APIs, supporting both predictive and generative models</p>
               </div>
               <div className={styles.archFeature}>
-                <h3>ModelMesh</h3>
-                <p>Provides high scalability, density packing and intelligent routing for efficient model serving</p>
+                <h3>InferenceService</h3>
+                <p>Core Kubernetes custom resource that simplifies ML model deployment with automatic scaling, networking, and health checks</p>
               </div>
               <div className={styles.archFeature}>
                 <h3>Inference Graph</h3>
