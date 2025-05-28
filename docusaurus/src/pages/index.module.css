@@ -49,6 +49,23 @@
   .logo {
     height: 70px;
   }
+
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .benefitsTitle {
+    font-size: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .sectionDescription {
+    font-size: 1.1rem;
+  }
 }
 
 .buttons {
@@ -100,7 +117,58 @@
   line-height: 1.7;
   color: var(--ifm-color-emphasis-700);
   max-width: 900px;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 3rem;
+}
+
+.benefitsContainer {
+  margin-top: 3rem;
+}
+
+.benefitsSection {
+  margin-bottom: 3rem;
+}
+
+.benefitsTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: var(--ifm-color-primary-dark);
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.benefitCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.benefitCard h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: var(--ifm-color-primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.benefitCard p {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  margin: 0;
 }
 
 .whyKServe {

@@ -254,6 +254,6 @@ kubectl describe inferenceservice <name>
 
 ## Next Steps
 
-- [Deploy models with ModelMesh](../modelserving/mms/multi-model-serving.md)
-- [Monitor ModelMesh performance](../modelserving/observability/prometheus_metrics.md)
-- [Scale ModelMesh deployments](../modelserving/mms/modelmesh/overview.md)
+- [Deploy models with ModelMesh](../modelserving/mms/multi-model-serving)
+- [Monitor ModelMesh performance](../modelserving/observability/prometheus_metrics)
+- [Scale ModelMesh deployments](../modelserving/mms/modelmesh/overview)

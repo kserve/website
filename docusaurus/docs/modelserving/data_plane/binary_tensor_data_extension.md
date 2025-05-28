@@ -1,354 +1,274 @@
 # Binary Tensor Data Extension
 
-The Binary Tensor Data Extension enables efficient transmission of large tensor data by encoding it in binary format rather than JSON. This extension significantly improves performance for models that work with large arrays, such as image processing or high-dimensional data.
+The Binary Tensor Data Extension allows clients to send and receive tensor data in a binary format in 
+the body of an HTTP/REST request. This extension is particularly useful for sending and receiving FP16 data as 
+there is no specific data type for a 16-bit float type in the Open Inference Protocol and large tensors 
+for high-throughput scenarios.
 
 ## Overview
 
-When working with large tensors (images, audio, video, or high-dimensional arrays), JSON encoding becomes inefficient due to:
-- **Size overhead**: JSON arrays are verbose compared to binary representation
-- **Parsing cost**: JSON parsing is computationally expensive for large arrays
-- **Memory usage**: JSON requires more memory during serialization/deserialization
+Tensor data represented as binary data is organized in little-endian byte order, row major, without stride or 
+padding between elements. All tensor data types are representable as binary data in the native size of the data type. 
+For BOOL type element true is a single byte with value 1 and false is a single byte with value 0. 
+For BYTES type an element is represented by a 4-byte unsigned integer giving the length followed by the actual bytes. 
+The binary data for a tensor is delivered in the HTTP body after the JSON object (see Examples).
 
-The binary extension solves these issues by:
-- Encoding tensor data in native binary format
-- Reducing payload size by 50-75% for typical use cases
-- Improving parsing performance significantly
+The binary tensor data extension uses parameters to indicate that an input or output tensor is communicated as binary data. 
 
-## Protocol Specification
+The `binary_data_size` parameter is used in `$request_input` and `$response_output` to indicate that the input or output tensor is communicated as binary data:
 
-### Request Format
+- "binary_data_size" : int64 parameter indicating the size of the tensor binary data, in bytes.
 
-When using binary encoding, the HTTP request consists of:
-1. **JSON Header**: Contains metadata about tensors
-2. **Binary Payload**: Raw tensor data in binary format
+The `binary_data` parameter is used in `$request_output` to indicate that the output should be returned from KServe runtime 
+as binary data.
 
-```
-POST /v2/models/mymodel/infer
-Content-Type: application/json
-Content-Length: <total_length>
+- "binary_data" : bool parameter that is true if the output should be returned as binary data and false (or not given) if the 
+  tensor should be returned as JSON.
 
-{JSON_METADATA}
-<BINARY_DATA>
-```
+The `binary_data_output` parameter is used in `$inference_request` to indicate that all outputs should be returned from KServe runtime as binary data, unless overridden by "binary_data" on a specific output.
 
-### JSON Metadata Structure
+- "binary_data_output" : bool parameter that is true if all outputs should be returned as binary data and false 
+  (or not given) if the outputs should be returned as JSON. If "binary_data" is specified on an output it overrides this setting. 
 
-```json
+When one or more tensors are communicated as binary data, the HTTP body of the request or response 
+will contain the JSON inference request or response object followed by the binary tensor data in the same order as the 
+order of the input or output tensors are specified in the JSON. 
+
+- If any binary data is present in the request or response the `Inference-Header-Content-Length` header must be provided to 
+  give the length of the JSON object, and Content-Length continues to give the full body length (as HTTP requires).
+
+
+## Examples
+
+### Sending and Receiving Binary Data
+
+For the following request the input tensors `input0` and `input2` are sent as binary data while `input1` is sent as non-binary data. Note that the `input0` and `input2` input tensors have a parameter `binary_data_size` which represents the size of the binary data. 
+
+The output tensor `output0` must be returned as binary data as that is what is requested by setting the `binary_data` parameter to true. Also note that the size of the JSON part is provided in the `Inference-Header-Content-Length` and the total size of the binary data is reflected in the `Content-Length` header.
+
+```shell
+POST /v2/models/mymodel/infer HTTP/1.1
+Host: localhost:8000
+Content-Type: application/octet-stream
+Inference-Header-Content-Length: <xx> # Json length
+Content-Length: <xx+19>     # Json length + binary data length (In this case 16 + 3 = 19)
 {
+  "model_name" : "mymodel",
+  "inputs" : [
+    {
+      "name" : "input0",
+      "shape" : [ 2, 2 ],
+      "datatype" : "FP16",
+      "parameters" : {
+        "binary_data_size" : 16
+      }
+    },
+    {
+      "name" : "input1",
+      "shape" : [ 2, 2 ],
+      "datatype" : "UINT32",
+      "data": [[1, 2], [3, 4]]
+    },
+    {
+      "name" : "input2",
+      "shape" : [ 3 ],
+      "datatype" : "BOOL",
+      "parameters" : {
+        "binary_data_size" : 3
+      }
+    }
+  ],
+  "outputs" : [
+    {
+      "name" : "output0",
+      "parameters" : {
+        "binary_data" : true
+      }
+    },
+    {
+      "name" : "output1"
+    }
+  ]
+}
+<16 bytes of data for input0 tensor>
+<3 bytes of data for input2 tensor>
+```
+
+Assuming the model returns a [ 3, 2 ] tensor of data type FP16 and a [2, 2] tensor of data type FP32 the following response would be returned.
+
+```shell
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Inference-Header-Content-Length: <yy>  # Json length
+Content-Length: <yy+16>   # Json length + binary data length (In this case 16)
+{
+  "outputs" : [
+    {
+      "name" : "output0",
+      "shape" : [ 3, 2 ],
+      "datatype"  : "FP16",
+      "parameters" : {
+        "binary_data_size" : 16
+      }
+    },
+    {
+      "name" : "output1",
+      "shape" : [ 2, 2 ],
+      "datatype"  : "FP32",
+      "data" : [[1.203, 5.403], [3.434, 34.234]]
+    }
+  ]
+}
+<16 bytes of data for output0 tensor>
+```
+
+=== "Inference Client Example"
+
+```python
+from kserve import ModelServer, InferenceRESTClient, InferRequest, InferInput
+from kserve.protocol.infer_type import RequestedOutput
+from kserve.inference_client import RESTConfig
+
+fp16_data = np.array([[1.1, 2.22], [3.345, 4.34343]], dtype=np.float16)
+uint32_data = np.array([[1, 2], [3, 4]], dtype=np.uint32)
+bool_data = np.array([True, False, True], dtype=np.bool)
+
+# Create input tensor with binary data
+input_0 = InferInput(name="input_0", datatype="FP16", shape=[2, 2])
+input_0.set_data_from_numpy(fp16_data, binary_data=True)
+input_1 = InferInput(name="input_1", datatype="UINT32", shape=[2, 2])
+input_1.set_data_from_numpy(uint32_data, binary_data=False)
+input_2 = InferInput(name="input_2", datatype="BOOL", shape=[3])
+input_2.set_data_from_numpy(bool_data, binary_data=True)
+
+# Create request output
+output_0 = RequestedOutput(name="output_0", binary_data=True)
+output_1 = RequestedOutput(name="output_1", binary_data=False)
+
+# Create inference request
+infer_request = InferRequest(
+    model_name="mymodel",
+    request_id="2ja0ls9j1309",
+    infer_inputs=[input_0, input_1, input_2],
+    requested_outputs=[output_0, output_1],
+)
+
+# Create the REST client
+config = RESTConfig(verbose=True, protocol="v2")
+rest_client = InferenceRESTClient(config=config)
+
+# Send the request
+infer_response = await rest_client.infer(
+          "http://localhost:8000",
+          model_name="TestModel",
+          data=infer_request,
+          headers={"Host": "test-server.com"},
+          timeout=2,
+      )
+
+# Read the binary data from the response
+output_0 = infer_response.outputs[0]
+fp16_output = output_0.as_numpy()
+
+# Read the non-binary data from the response
+output_1 = infer_response.outputs[1]
+fp32_output = output_1.data # This will return the data as a list
+fp32_output_arr = output_1.as_numpy()
+```
+
+### Requesting All The Outputs To Be In Binary Format
+
+For the following request, `binary_data_output` is set to true to receive all the outputs as binary data. Note that the 
+`binary_data_output` is set in the `$inference_request` parameters field, not in the `$inference_input` parameters field. This parameter can be overridden for a specific output by setting `binary_data` parameter to false in the `$request_output`.
+
+```shell
+POST /v2/models/mymodel/infer HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+Content-Length: 75
+{
+  "model_name": "my_model",
   "inputs": [
     {
-      "name": "image_tensor",
-      "shape": [1, 3, 224, 224],
+      "name": "input_tensor",
       "datatype": "FP32",
+      "shape": [1, 2],
+      "data": [[32.045, 399.043]],
+    }
+  ],
+  "parameters": {
+     "binary_data_output": true
+  }
+}
+```
+Assuming the model returns a [ 3, 2 ] tensor of data type FP16 and a [2, 2] tensor of data type FP32 the following response would be returned.
+
+```shell
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Inference-Header-Content-Length: <yy>  # Json length
+Content-Length: <yy+48>   # Json length + binary data length (In this case 16 + 32)
+{
+  "outputs" : [
+    {
+      "name" : "output_tensor0",
+      "shape" : [ 3, 2 ],
+      "datatype"  : "FP16",
+      "parameters" : {
+        "binary_data_size" : 16
+      }
+    },
+    {
+      "name" : "output_tensor1",
+      "shape" : [ 2, 2 ],
+      "datatype"  : "FP32",
       "parameters": {
-        "binary_data_size": 602112
+        "binary_data_size": 32
       }
     }
   ]
 }
+<16 bytes of data for output_tensor0 tensor>
+<32 bytes of data for output_tensor1 tensor>
 ```
 
-The `binary_data_size` parameter indicates the size of binary data for this tensor in bytes.
-
-### Binary Data Layout
-
-Binary data is appended to the JSON payload in the order tensors appear in the `inputs` array:
-
-```
-[JSON_BYTES][TENSOR_1_BYTES][TENSOR_2_BYTES]...[TENSOR_N_BYTES]
-```
-
-Each tensor's binary data is encoded in:
-- **Little-endian** byte order
-- **Row-major** (C-style) array layout
-- Native data type format (IEEE 754 for floats)
-
-## Data Type Encoding
-
-### Floating Point Types
-- `FP16`: 2 bytes per element (IEEE 754 half precision)
-- `FP32`: 4 bytes per element (IEEE 754 single precision)  
-- `FP64`: 8 bytes per element (IEEE 754 double precision)
-
-### Integer Types
-- `INT8`/`UINT8`: 1 byte per element
-- `INT16`/`UINT16`: 2 bytes per element
-- `INT32`/`UINT32`: 4 bytes per element
-- `INT64`/`UINT64`: 8 bytes per element
-
-### Boolean Type
-- `BOOL`: 1 byte per element (0x00 = false, 0x01 = true)
-
-## Implementation Examples
-
-### Python Client
+=== "Inference Client Example"
 
 ```python
-import requests
-import numpy as np
-import json
+from kserve import ModelServer, InferenceRESTClient, InferRequest, InferInput
+from kserve.protocol.infer_type import RequestedOutput
+from kserve.inference_client import RESTConfig
 
-def send_binary_request(url, tensors):
-    """Send inference request with binary tensor data."""
-    
-    # Prepare JSON metadata
-    inputs = []
-    binary_data = b""
-    
-    for name, tensor in tensors.items():
-        # Convert to binary
-        tensor_bytes = tensor.astype(tensor.dtype).tobytes()
-        binary_data += tensor_bytes
-        
-        # Add metadata
-        inputs.append({
-            "name": name,
-            "shape": list(tensor.shape),
-            "datatype": numpy_to_kserve_dtype(tensor.dtype),
-            "parameters": {
-                "binary_data_size": len(tensor_bytes)
-            }
-        })
-    
-    # Create request payload
-    json_data = {"inputs": inputs}
-    json_bytes = json.dumps(json_data).encode('utf-8')
-    
-    # Combine JSON + binary data
-    payload = json_bytes + binary_data
-    
-    # Send request
-    response = requests.post(
-        url,
-        data=payload,
-        headers={
-            "Content-Type": "application/json",
-            "Content-Length": str(len(payload))
-        }
-    )
-    
-    return response.json()
+fp32_data = np.array([[32.045, 399.043]], dtype=np.float32)
 
-def numpy_to_kserve_dtype(np_dtype):
-    """Convert NumPy dtype to KServe datatype string."""
-    mapping = {
-        np.float16: "FP16",
-        np.float32: "FP32", 
-        np.float64: "FP64",
-        np.int8: "INT8",
-        np.int16: "INT16",
-        np.int32: "INT32",
-        np.int64: "INT64",
-        np.uint8: "UINT8",
-        np.uint16: "UINT16",
-        np.uint32: "UINT32", 
-        np.uint64: "UINT64",
-        np.bool_: "BOOL"
-    }
-    return mapping.get(np_dtype.type, "FP32")
+# Create the input tensor
+input_0 = InferInput(name="input_0", datatype="FP32", shape=[1, 2])
+input_0.set_data_from_numpy(fp16_data, binary_data=False)
 
-# Example usage
-image = np.random.rand(1, 3, 224, 224).astype(np.float32)
-tensors = {"image_input": image}
-
-result = send_binary_request(
-    "https://resnet.example.com/v2/models/resnet/infer",
-    tensors
-)
-```
-
-### Go Client
-
-```go
-package main
-
-import (
-    "bytes"
-    "encoding/binary"
-    "encoding/json"
-    "fmt"
-    "net/http"
+# Create inference request with binary_data_output set to True
+infer_request = InferRequest(
+    model_name="mymodel",
+    request_id="2ja0ls9j1309",
+    infer_inputs=[input_0],
+    parameters={"binary_data_output": True}
 )
 
-type TensorInput struct {
-    Name       string                 `json:"name"`
-    Shape      []int                  `json:"shape"`
-    Datatype   string                 `json:"datatype"`
-    Parameters map[string]interface{} `json:"parameters"`
-}
+# Create the REST client
+config = RESTConfig(verbose=True, protocol="v2")
+rest_client = InferenceRESTClient(config=config)
 
-type InferenceRequest struct {
-    Inputs []TensorInput `json:"inputs"`
-}
+# Send the request
+infer_response = await rest_client.infer(
+                      "http://localhost:8000",
+                      model_name="TestModel",
+                      data=infer_request,
+                      headers={"Host": "test-server.com"},
+                      timeout=2,
+                 )
 
-func sendBinaryRequest(url string, tensors map[string][]float32, shapes map[string][]int) error {
-    var inputs []TensorInput
-    var binaryData bytes.Buffer
-    
-    for name, tensor := range tensors {
-        // Convert to binary
-        for _, val := range tensor {
-            binary.Write(&binaryData, binary.LittleEndian, val)
-        }
-        
-        // Add metadata
-        inputs = append(inputs, TensorInput{
-            Name:     name,
-            Shape:    shapes[name],
-            Datatype: "FP32",
-            Parameters: map[string]interface{}{
-                "binary_data_size": len(tensor) * 4, // 4 bytes per float32
-            },
-        })
-    }
-    
-    // Create JSON metadata
-    request := InferenceRequest{Inputs: inputs}
-    jsonData, _ := json.Marshal(request)
-    
-    // Combine JSON + binary
-    var payload bytes.Buffer
-    payload.Write(jsonData)
-    payload.Write(binaryData.Bytes())
-    
-    // Send request
-    resp, err := http.Post(url, "application/json", &payload)
-    if err != nil {
-        return err
-    }
-    defer resp.Body.Close()
-    
-    // Process response...
-    return nil
-}
+# Read the binary data from the response
+output_0 = infer_response.outputs[0]
+fp16_output = output_0.as_numpy()
+output_1 = infer_response.outputs[1]
+fp32_output_arr = output_1.as_numpy()
 ```
-
-### JavaScript Client
-
-```javascript
-async function sendBinaryRequest(url, tensors) {
-    const inputs = [];
-    const binaryChunks = [];
-    
-    for (const [name, tensorData] of Object.entries(tensors)) {
-        const { data, shape, dtype } = tensorData;
-        
-        // Convert to binary
-        const buffer = new ArrayBuffer(data.length * 4); // Assuming FP32
-        const view = new Float32Array(buffer);
-        view.set(data);
-        
-        binaryChunks.push(buffer);
-        
-        // Add metadata
-        inputs.push({
-            name: name,
-            shape: shape,
-            datatype: "FP32",
-            parameters: {
-                binary_data_size: buffer.byteLength
-            }
-        });
-    }
-    
-    // Create request payload
-    const jsonData = JSON.stringify({ inputs });
-    const jsonBytes = new TextEncoder().encode(jsonData);
-    
-    // Combine JSON + binary data
-    const totalLength = jsonBytes.length + 
-        binaryChunks.reduce((sum, chunk) => sum + chunk.byteLength, 0);
-    
-    const payload = new Uint8Array(totalLength);
-    let offset = 0;
-    
-    // Copy JSON
-    payload.set(jsonBytes, offset);
-    offset += jsonBytes.length;
-    
-    // Copy binary data
-    for (const chunk of binaryChunks) {
-        payload.set(new Uint8Array(chunk), offset);
-        offset += chunk.byteLength;
-    }
-    
-    // Send request
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': payload.length.toString()
-        },
-        body: payload
-    });
-    
-    return await response.json();
-}
-```
-
-## Performance Benefits
-
-### Size Reduction Examples
-
-| Data Type | Array Size | JSON Size | Binary Size | Reduction |
-|-----------|------------|-----------|-------------|-----------|
-| FP32      | 224×224×3  | ~4.5 MB   | ~600 KB     | 87%       |
-| INT64     | 512×512    | ~3.2 MB   | ~2 MB       | 37%       |
-| UINT8     | 1024×1024  | ~8.5 MB   | ~1 MB       | 88%       |
-
-### Latency Improvements
-
-- **Parsing**: 5-10x faster than JSON for large arrays
-- **Network**: Reduced transfer time due to smaller payloads
-- **Memory**: Lower memory footprint during processing
-
-## Best Practices
-
-### When to Use Binary Encoding
-
-**Use binary encoding for:**
-- Image data (typically > 50KB)
-- Audio/video tensors
-- High-dimensional feature vectors
-- Large batch requests
-
-**Use JSON encoding for:**
-- Small tensors (< 1KB)
-- Sparse data
-- Text/string inputs
-- Simple scalar values
-
-### Optimization Tips
-
-1. **Batch Processing**: Combine multiple samples into single tensors
-2. **Data Type Selection**: Use appropriate precision (FP16 vs FP32)
-3. **Compression**: Consider gzip compression for network transport
-4. **Memory Management**: Stream large tensors when possible
-
-### Error Handling
-
-Common issues and solutions:
-
-```python
-# Validate tensor size matches binary_data_size
-expected_size = np.prod(shape) * dtype_size
-if len(binary_data) != expected_size:
-    raise ValueError(f"Binary data size mismatch: expected {expected_size}, got {len(binary_data)}")
-
-# Handle endianness
-if sys.byteorder != 'little':
-    tensor = tensor.byteswap().newbyteorder()
-```
-
-## Limitations
-
-1. **Streaming**: Binary extension doesn't support streaming responses
-2. **Debugging**: Binary data is not human-readable
-3. **Middleware**: Some proxies may not handle binary payloads correctly
-4. **Caching**: HTTP caches may not work optimally with binary data
-
-## Next Steps
-
-- Learn about [V2 Inference Protocol](./v2_protocol.md) fundamentals
-- Explore [Request Batching](../batcher/batcher.md) for performance optimization
-- Configure [Model Storage](../storage/storagecontainers.md) for large models

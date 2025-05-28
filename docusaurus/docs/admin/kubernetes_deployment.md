@@ -101,6 +101,6 @@ kubectl get crd | grep serving.kserve.io
 
 ## Next Steps
 
-- [Deploy your first model](../get_started/first_isvc.md)
-- [Configure auto-scaling](../modelserving/autoscaling/raw_deployment_autoscaling.md)
-- [Set up monitoring](../modelserving/observability/prometheus_metrics.md)
+- [Deploy your first model](../get_started/first_isvc)
+- [Configure auto-scaling](../modelserving/autoscaling/raw_deployment_autoscaling)
+- [Set up monitoring](../modelserving/observability/prometheus_metrics)

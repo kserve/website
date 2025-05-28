@@ -1,131 +1,24 @@
-# Model Serving Data Plane
+# KServe Data Plane
 
-The KServe data plane is responsible for serving machine learning models and handling inference requests. It provides a standardized interface for model serving across different frameworks and deployment environments.
+KServe's inference data plane supports multiple protocols for serving predictions from machine learning models.
 
-## Overview
+![Data Plane](../../images/dataplane.jpg)
 
-The data plane consists of the following components:
+**Note:** Protocol V2 uses /infer instead of :predict
 
-- **Predictor**: The core component that hosts the ML model and serves inference requests
-- **Transformer** (optional): Pre/post-processing component for data transformation
-- **Explainer** (optional): Component that provides model explanations and interpretability
+## Concepts
 
-## Inference Protocols
+**Component**: Each endpoint is composed of multiple components: "predictor", "explainer", and "transformer". The only required component is the predictor, which is the core of the system.
 
-KServe supports multiple inference protocols to accommodate different use cases and client requirements:
+**Predictor**: The predictor is the core component which is responsible for running inference against a machine learning model.
 
-### V1 Inference Protocol (REST)
-The V1 protocol provides a simple REST API for model inference with the following endpoints:
+**Transformer**: The transformer is responsible for pre/post processing alongside the predictor.
 
-- `GET /v1/models/<model_name>` - Get model metadata
-- `POST /v1/models/<model_name>:predict` - Run inference
+**Explainer**: The explainer enables an optional alternate data plane that can be used to provide model explanations in addition to predictions.
 
-### Open Inference Protocol (V2)
-The V2 protocol is based on the KServe/Triton inference protocol and provides:
+## Protocols
 
-- Enhanced metadata support
-- Batch inference capabilities
-- Binary tensor support
-- Better error handling
+KServe supports multiple inference protocols:
 
-Key endpoints include:
-- `GET /v2/models/<model_name>` - Get model metadata
-- `POST /v2/models/<model_name>/infer` - Run inference
-- `GET /v2/models/<model_name>/ready` - Check model readiness
-
-## Request/Response Format
-
-### V1 Protocol Example
-
-**Request:**
-```json
-{
-  "instances": [
-    [1, 2, 3, 4],
-    [5, 6, 7, 8]
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "predictions": [
-    [0.1, 0.9],
-    [0.8, 0.2]
-  ]
-}
-```
-
-### V2 Protocol Example
-
-**Request:**
-```json
-{
-  "inputs": [
-    {
-      "name": "input",
-      "shape": [2, 4],
-      "datatype": "FP32",
-      "data": [1, 2, 3, 4, 5, 6, 7, 8]
-    }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "outputs": [
-    {
-      "name": "output",
-      "shape": [2, 2],
-      "datatype": "FP32",
-      "data": [0.1, 0.9, 0.8, 0.2]
-    }
-  ]
-}
-```
-
-## Model Serving Components
-
-### Predictor
-The predictor is the main component that loads and serves the ML model. It handles:
-- Model loading and initialization
-- Inference request processing
-- Response formatting
-- Health checks
-
-### Transformer
-Transformers enable data preprocessing and postprocessing:
-- **Pre-processing**: Data validation, normalization, feature engineering
-- **Post-processing**: Response formatting, data aggregation, filtering
-
-### Explainer
-Explainers provide model interpretability:
-- Feature importance analysis
-- Prediction explanations
-- Model behavior analysis
-
-## Performance Considerations
-
-### Batching
-- Configure request batching for improved throughput
-- Balance batch size with latency requirements
-- Consider model-specific batching capabilities
-
-### Caching
-- Enable model caching for faster startup times
-- Use appropriate storage backends for model artifacts
-- Configure cache eviction policies
-
-### Resource Management
-- Set appropriate CPU and memory limits
-- Configure GPU resources for accelerated inference
-- Use node affinity for optimal hardware utilization
-
-## Next Steps
-
-- Learn about [V1 Inference Protocol](./v1_protocol.md) in detail
-- Explore [V2 Inference Protocol](./v2_protocol.md) features
-- Configure [Binary Tensor Data Extension](./binary_tensor_data_extension.md)
+- [V1 Protocol](v1_protocol) - TensorFlow Serving API compatible
+- [V2 Protocol](v2_protocol) - Open Inference Protocol (Triton/NVIDIA)

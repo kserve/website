@@ -249,7 +249,7 @@ spec:
 
 ## Next Steps
 
-- Choose a [specific runtime guide](../v1beta1/serving_runtime.md) for your framework
-- Learn about [custom predictors](../v1beta1/custom/custom_model/README.md)
-- Explore [multi-model serving](../mms/multi-model-serving.md) options
-- Configure [autoscaling](../autoscaling/autoscaling.md) for your workload
+- Choose a [specific runtime guide](./serving_runtime) for your framework
+- Learn about [custom predictors](/docs/modelserving/v1beta1/custom/custom_model/)
+- Explore [multi-model serving](../mms/multi-model-serving) options
+- Configure [autoscaling](/docs/modelserving/autoscaling/autoscaling.md) for your workload

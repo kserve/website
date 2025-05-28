@@ -492,6 +492,6 @@ Browse complete runtime implementations:
 
 ## Next Steps
 
-- [Explore specific framework examples](../modelserving/v1beta1/serving_runtime.md)
-- [Learn about multi-model serving](../modelserving/mms/multi-model-serving.md)
-- [Set up runtime monitoring](../modelserving/observability/prometheus_metrics.md)
+- [Explore specific framework examples](./v1beta1/serving_runtime)
+- [Learn about multi-model serving](./mms/multi-model-serving)
+- [Set up runtime monitoring](./observability/prometheus_metrics)

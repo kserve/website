@@ -301,6 +301,6 @@ http POST http://model-url/v1/models/model-name:predict \
 
 ## Next Steps
 
-- [Learn about KServe's inference protocols](../modelserving/data_plane/v1_protocol.md)
-- [Explore model serving examples](../get_started/first_isvc.md)
-- [Set up monitoring and observability](../modelserving/observability/prometheus_metrics.md)
+- [Learn about KServe's inference protocols](../modelserving/data_plane/v1_protocol)
+- [Explore model serving examples](../get_started/first_isvc)
+- [Set up monitoring and observability](../modelserving/observability/prometheus_metrics)

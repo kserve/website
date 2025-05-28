@@ -4,12 +4,11 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
-import HomepageKeyHighlights from '@site/src/components/HomepageKeyHighlights';
+
 import HomepageCallToAction from '@site/src/components/HomepageCallToAction';
 import HomepageShowcase from '@site/src/components/HomepageShowcase';
 import HomepageArchitecture from '@site/src/components/HomepageArchitecture';
 import HomepageGenerativeAI from '@site/src/components/HomepageGenerativeAI';
-import HomepageUseCases from '@site/src/components/HomepageUseCases';
 import HomepageAdopters from '@site/src/components/HomepageAdopters';
 import HomepageQuickStart from '@site/src/components/HomepageQuickStart';
 import Heading from '@theme/Heading';
@@ -56,7 +55,7 @@ export default function Home(): ReactNode {
         <div className={styles.whyKServe}>
           <div className="container">
             <div className="row">
-              <div className="col col--8 col--offset-2">
+              <div className="col col--10 col--offset-1">
                 <Heading as="h2" className={styles.sectionTitle}>
                   Why KServe?
                 </Heading>
@@ -65,17 +64,65 @@ export default function Home(): ReactNode {
                   It provides performant, standardized inference protocol across ML frameworks including OpenAI specification for generative models.
                   KServe supports modern serverless inference workloads with request-based autoscaling including scale-to-zero on both CPU and GPU resources.
                 </p>
+                
+                <div className={styles.benefitsContainer}>
+                  <div className={styles.benefitsSection}>
+                    <Heading as="h3" className={styles.benefitsTitle}>
+                      🤖 For Generative AI
+                    </Heading>
+                    <div className={styles.benefitsGrid}>
+                      <div className={styles.benefitCard}>
+                        <h4>🧠 LLM-Optimized</h4>
+                        <p>OpenAI-compatible inference protocol for seamless integration with large language models</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>🚅 GPU Acceleration</h4>
+                        <p>High-performance serving with GPU support and optimized memory management for large models</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>💰 Cost Efficient</h4>
+                        <p>Scale-to-zero on expensive GPU resources when not in use, reducing infrastructure costs</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>🔧 Hugging Face Ready</h4>
+                        <p>Native support for Hugging Face models with streamlined deployment workflows</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles.benefitsSection}>
+                    <Heading as="h3" className={styles.benefitsTitle}>
+                      📊 For Predictive AI
+                    </Heading>
+                    <div className={styles.benefitsGrid}>
+                      <div className={styles.benefitCard}>
+                        <h4>🧮 Multi-Framework</h4>
+                        <p>Support for TensorFlow, PyTorch, scikit-learn, XGBoost, ONNX, and more</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>📊 ModelMesh Integration</h4>
+                        <p>High scalability, density packing, and intelligent routing for efficient model serving</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>🔄 Advanced Deployments</h4>
+                        <p>Canary rollouts, inference pipelines, and ensembles with InferenceGraph</p>
+                      </div>
+                      <div className={styles.benefitCard}>
+                        <h4>⚡ Auto-scaling</h4>
+                        <p>Request-based autoscaling with intelligent resource allocation for predictive workloads</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <HomepageKeyHighlights />
         <HomepageShowcase />
         <HomepageGenerativeAI />
         <HomepageArchitecture />
         <HomepageFeatures />
         <HomepageQuickStart />
-        <HomepageUseCases />
         <HomepageAdopters />
         <HomepageCallToAction />
       </main>

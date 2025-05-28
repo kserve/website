@@ -143,8 +143,8 @@ Experienced contributors can help newcomers:
 ### Documentation
 
 - **[Developer Guide](../developer/developer.md)**: Development setup and guidelines
-- **[API Reference](../reference/api.md)**: Complete API documentation
-- **[Architecture Guide](../modelserving/control_plane.md)**: Understanding KServe architecture
+- **[API Reference](../reference/api)**: Complete API documentation
+- **[Architecture Guide](../modelserving/control_plane)**: Understanding KServe architecture
 
 ### Tools and Infrastructure
 

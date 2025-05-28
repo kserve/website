@@ -1,111 +1,67 @@
-# ONNX Runtime
 
-KServe's ONNX Runtime provides high-performance inference for ONNX (Open Neural Network Exchange) models with cross-platform optimization.
+# Deploy InferenceService with ONNX model
+## Setup
+1. Your ~/.kube/config should point to a cluster with [KServe installed](https://github.com/kserve/kserve#installation).
+2. Your cluster's Istio Ingress gateway must be [network accessible](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/).
 
-## Overview
+## Create the InferenceService
 
-ONNX Runtime supports:
-- **Cross-Framework**: Models from TensorFlow, PyTorch, scikit-learn
-- **High Performance**: Optimized inference engine
-- **Hardware Acceleration**: CPU, GPU, and specialized hardware
-- **Model Optimization**: Graph optimization and quantization
-- **Execution Providers**: Multiple backend options
+=== "New Schema"
 
-## Quick Start
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "style-sample"
+    spec:
+      predictor:
+        model:
+          protocolVersion: v2
+          modelFormat:
+            name: onnx
+          storageUri: "gs://kfserving-examples/models/onnx"
+    ```
 
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "onnx-resnet"
-spec:
-  predictor:
-    onnx:
-      storageUri: "gs://kfserving-examples/models/onnx/resnet"
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "style-sample"
+    spec:
+      predictor:
+        onnx:
+          storageUri: "gs://kfserving-examples/models/onnx"
+    ```
+!!! Note
+    For the default kserve installation, While using new schema, you must specify **protocolVersion** as v2 for onnx. Otherwise, you will get a no runtime found error.
+Expected Output
+```
+$ inferenceservice.serving.kserve.io/style-sample configured
 ```
 
-## Model Conversion
+## Run a sample inference
 
-### From PyTorch
-```python
-import torch
-import torch.onnx
+1. Setup env vars
+The first step is to [determine the ingress IP and ports](https://kserve.github.io/website/master/get_started/first_isvc/#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
-# Convert PyTorch model to ONNX
-torch.onnx.export(
-    model,
-    dummy_input,
-    "model.onnx",
-    export_params=True,
-    opset_version=11,
-    input_names=['input'],
-    output_names=['output']
-)
+```
+export ISVC_NAME=style-sample
+export SERVICE_HOSTNAME=$(kubectl get inferenceservice ${ISVC_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+```
+2. Verify the service is healthy
+```
+curl -v -H "Host:${SERVICE_HOSTNAME}" http://localhost:8080//v2/health/ready
+```
+3. Install dependencies
+```
+pip install -r requirements.txt
+```
+4. Run the [sample notebook](mosaic-onnx.ipynb) in jupyter
+```
+jupyter notebook
 ```
 
-### From TensorFlow
-```python
-import tf2onnx
-
-# Convert TensorFlow SavedModel to ONNX
-python -m tf2onnx.convert \
-    --saved-model /path/to/saved_model \
-    --output model.onnx \
-    --opset 11
-```
-
-## Configuration Examples
-
-### CPU Optimized
-```yaml
-spec:
-  predictor:
-    onnx:
-      storageUri: "s3://my-bucket/onnx-model"
-      env:
-      - name: OMP_NUM_THREADS
-        value: "4"
-```
-
-### GPU Accelerated
-```yaml
-spec:
-  predictor:
-    onnx:
-      storageUri: "s3://my-bucket/model"
-      resources:
-        limits:
-          nvidia.com/gpu: 1
-      env:
-      - name: CUDA_VISIBLE_DEVICES
-        value: "0"
-```
-
-## Performance Optimization
-
-### Execution Providers
-- **CPUExecutionProvider**: CPU inference
-- **CUDAExecutionProvider**: NVIDIA GPU
-- **TensorrtExecutionProvider**: TensorRT optimization
-- **OpenVINOExecutionProvider**: Intel hardware
-
-### Graph Optimization
-```python
-# Optimize ONNX model
-import onnxruntime as ort
-
-session_options = ort.SessionOptions()
-session_options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
-```
-
-## Best Practices
-
-1. **Model Validation**: Verify ONNX model before deployment
-2. **Optimization**: Use appropriate execution providers
-3. **Batch Size**: Optimize for your workload
-4. **Memory Management**: Set appropriate resource limits
-
-## Next Steps
-
-- Learn about [Hugging Face Runtime](../huggingface/README.md)
-- Explore [Triton Multi-Framework](../triton/torchscript/README.md)
+## Uploading your own model
+The sample model for the example in this readme is already uploaded and available for use. However if you would like to modify the example to use your own ONNX model, all you need to do is to upload your model as `model.onnx` to S3, GCS or an Azure Blob.

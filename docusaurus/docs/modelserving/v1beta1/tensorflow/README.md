@@ -1,438 +1,272 @@
-# TensorFlow Serving Runtime
+# Deploy Tensorflow Model with InferenceService
 
-KServe's TensorFlow serving runtime provides production-ready deployment for TensorFlow SavedModel format with optimized performance and scalability.
+## Create the HTTP InferenceService 
+ 
+Create an `InferenceService` yaml which specifies the framework `tensorflow` and `storageUri` that is pointed to a
+[saved tensorflow model](https://www.tensorflow.org/guide/saved_model), and name it as `tensorflow.yaml`.
 
-## Overview
+=== "New Schema"
 
-The TensorFlow runtime is built on [TensorFlow Serving](https://www.tensorflow.org/tfx/guide/serving) and provides:
-- **High Performance**: Optimized C++ serving engine
-- **Model Versioning**: Support for multiple model versions
-- **Batching**: Automatic request batching for throughput
-- **GPU Support**: CUDA and TensorRT acceleration
-- **Multi-Model**: Serve multiple models in single container
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-sample"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+    ```
 
-## Supported Formats
+=== "Old Schema"
 
-| Format          | Extension            | Description                  |
-|-----------------|----------------------|------------------------------|
-| SavedModel      | `.pb` + `variables/` | TensorFlow's standard format |
-| TensorFlow Lite | `.tflite`            | Mobile/edge optimized models |
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-sample"
+    spec:
+      predictor:
+        tensorflow:
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+    ```
 
-## Quick Start
+Apply the [tensorflow.yaml](./tensorflow.yaml) to create the `InferenceService`, by default it exposes a HTTP/REST endpoint.
 
-### Simple Deployment
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-flowers"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+=== "kubectl"
+```bash
+kubectl apply -f tensorflow.yaml 
 ```
 
-### Test the Deployment
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/flower-sample created
+    ```
+
+Wait for the `InferenceService` to be in ready state
+```shell
+kubectl get isvc flower-sample
+NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION        LATESTREADYREVISION                     AGE
+flower-sample   http://flower-sample.default.example.com   True           100                                   flower-sample-predictor-default-n9zs6   7m15s
+```
+ 
+### Run a prediction
+The first step is to [determine the ingress IP and ports](../../../get_started/first_isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`, the inference request input
+file can be downloaded [here](./input.json).
 
 ```bash
-# Wait for ready status
-kubectl wait --for=condition=Ready inferenceservice tensorflow-flowers
-
-# Get the endpoint
-SERVICE_HOSTNAME=$(kubectl get inferenceservice tensorflow-flowers -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-
-# Make a prediction
-curl -X POST https://$SERVICE_HOSTNAME/v1/models/tensorflow-flowers:predict \
-  -H "Content-Type: application/json" \
-  -d @./flower-input.json
+MODEL_NAME=flower-sample
+INPUT_PATH=@./input.json
+SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/$MODEL_NAME:predict -d $INPUT_PATH
 ```
 
-## Model Format Requirements
-
-### SavedModel Structure
-```
-model/
-├── saved_model.pb              # Model graph definition
-├── variables/
-│   ├── variables.data-00000-of-00001  # Model weights
-│   └── variables.index         # Variable index
-└── assets/ (optional)          # Additional files
-    └── vocab.txt
-```
-
-### Creating a SavedModel
-
-```python
-import tensorflow as tf
-
-# Create and train your model
-model = tf.keras.Sequential([
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(10, activation='softmax')
-])
-
-# Compile and train
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy')
-model.fit(x_train, y_train, epochs=5)
-
-# Save as SavedModel
-model.save('/path/to/saved_model/1/')  # Version 1
-```
-
-### Model Signatures
-
-Ensure your model has proper signatures:
-
-```python
-# Define input signature
-@tf.function
-def serve_fn(x):
-    return model(x)
-
-# Create signature
-signatures = {
-    'serving_default': serve_fn.get_concrete_function(
-        x=tf.TensorSpec(shape=[None, 784], dtype=tf.float32, name='input')
-    )
-}
-
-# Save with signature
-tf.saved_model.save(model, '/path/to/saved_model/1/', signatures=signatures)
-```
-
-## Configuration Options
-
-### Basic Configuration
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-model"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "s3://my-bucket/tensorflow-model"
-      resources:
-        limits:
-          cpu: 1000m
-          memory: 2Gi
-        requests:
-          cpu: 500m
-          memory: 1Gi
-```
-
-### GPU Configuration
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-gpu"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "s3://my-bucket/tensorflow-model"
-      resources:
-        limits:
-          nvidia.com/gpu: 1
-          memory: 4Gi
-        requests:
-          memory: 2Gi
-```
-
-### Advanced Configuration
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-advanced"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "s3://my-bucket/tensorflow-model"
-      env:
-      - name: TF_CPP_MIN_LOG_LEVEL
-        value: "2"
-      - name: TENSORFLOW_SERVING_GRPC_PORT
-        value: "9000"
-      - name: TENSORFLOW_SERVING_REST_PORT  
-        value: "8501"
-      resources:
-        limits:
-          cpu: 4000m
-          memory: 8Gi
-```
-
-## Environment Variables
-
-| Variable                       | Description              | Default       |
-|--------------------------------|--------------------------|---------------|
-| `STORAGE_URI`                  | Model storage location   | Required      |
-| `TF_CPP_MIN_LOG_LEVEL`         | TensorFlow logging level | `0`           |
-| `TENSORFLOW_SERVING_GRPC_PORT` | gRPC server port         | `9000`        |
-| `TENSORFLOW_SERVING_REST_PORT` | REST server port         | `8501`        |
-| `MODEL_NAME`                   | Model name for serving   | Inferred      |
-| `MODEL_BASE_PATH`              | Base path for models     | `/mnt/models` |
-
-## Request/Response Examples
-
-### Image Classification
-
-**Input:**
-```json
-{
-  "instances": [
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    * Connected to localhost (::1) port 8080 (#0)
+    > POST /v1/models/tensorflow-sample:predict HTTP/1.1
+    > Host: tensorflow-sample.default.example.com
+    > User-Agent: curl/7.73.0
+    > Accept: */*
+    > Content-Length: 16201
+    > Content-Type: application/x-www-form-urlencoded
+    > 
+    * upload completely sent off: 16201 out of 16201 bytes
+    * Mark bundle as not supporting multiuse
+    < HTTP/1.1 200 OK
+    < content-length: 222
+    < content-type: application/json
+    < date: Sun, 31 Jan 2021 01:01:50 GMT
+    < x-envoy-upstream-service-time: 280
+    < server: istio-envoy
+    < 
     {
-      "image_bytes": {
-        "b64": "iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAYAAAA+s9J6..."
+        "predictions": [
+            {
+                "scores": [0.999114931, 9.20987877e-05, 0.000136786213, 0.000337257545, 0.000300532585, 1.84813616e-05],
+                "prediction": 0,
+                "key": "   1"
+            }
+        ]
+    }
+    ```
+
+## Canary Rollout
+
+Canary rollout is a great way to control the risk of rolling out a new model by first moving a small percent of the traffic to it and then gradually increase the percentage. 
+To run a canary rollout, you can apply the `canary.yaml` with the `canaryTrafficPercent` field specified.
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-sample"
+    spec:
+      predictor:
+        canaryTrafficPercent: 20
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-sample"
+    spec:
+      predictor:
+        canaryTrafficPercent: 20
+        tensorflow:
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers-2"
+    ```
+
+Apply the [canary.yaml](./canary.yaml) to create the Canary InferenceService.
+
+=== "kubectl"
+```bash
+kubectl apply -f canary.yaml 
+```
+
+To verify if the traffic split percentage is applied correctly, you can run the following command:
+
+=== "kubectl"
+```bash
+kubectl get isvc flower-sample
+NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION                   LATESTREADYREVISION                     AGE
+flower-sample   http://flower-sample.default.example.com   True    80     20       flower-sample-predictor-default-n9zs6   flower-sample-predictor-default-2kwtr   7m15s
+```
+
+As you can see the traffic is split between the last rolled out revision and the current latest ready revision, KServe automatically tracks the last rolled out(stable) revision for you so you
+do not need to maintain both default and canary on the `InferenceService` as in v1alpha2.
+
+
+## Create the gRPC InferenceService 
+Create `InferenceService` which exposes the gRPC port and by default it listens on port 9000.
+
+=== "New Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-grpc"
+    spec:
+      predictor:
+        model:
+          modelFormat:
+            name: tensorflow
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+          ports:
+            - containerPort: 9000
+              name: h2c
+              protocol: TCP
+    ```
+
+=== "Old Schema"
+
+    ```yaml
+    apiVersion: "serving.kserve.io/v1beta1"
+    kind: "InferenceService"
+    metadata:
+      name: "flower-grpc"
+    spec:
+      predictor:
+        tensorflow:
+          storageUri: "gs://kfserving-examples/models/tensorflow/flowers"
+          ports:
+            - containerPort: 9000
+              name: h2c
+              protocol: TCP
+    ```
+
+Apply [grpc.yaml](./grpc.yaml) to create the gRPC InferenceService.
+
+=== "kubectl"
+```bash
+kubectl apply -f grpc.yaml 
+```
+
+!!! success "Expected Output"
+    ```{ .bash .no-copy }
+    $ inferenceservice.serving.kserve.io/flower-grpc created
+    ```
+
+### Run a prediction
+We use a python gRPC client for the prediction, so you need to create a python virtual environment and
+install the `tensorflow-serving-api`. 
+```shell
+# The prediction script is written in TensorFlow 1.x
+pip install tensorflow-serving-api>=1.14.0,<2.0.0
+```
+
+Run the [gRPC prediction script](./grpc_client.py).
+
+```shell
+MODEL_NAME=flower-grpc
+INPUT_PATH=./input.json
+SERVICE_HOSTNAME=$(kubectl get inferenceservice ${MODEL_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+python grpc_client.py --host $INGRESS_HOST --port $INGRESS_PORT --model $MODEL_NAME --hostname $SERVICE_HOSTNAME --input_path $INPUT_PATH
+```
+
+!!! success "Expected Output"
+    ```{ .json .no-copy }
+    outputs {
+      key: "key"
+      value {
+        dtype: DT_STRING
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        string_val: "   1"
       }
     }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "predictions": [
-    [0.1, 0.2, 0.7, 0.0, 0.0]
-  ]
-}
-```
-
-### Text Classification
-
-**Input:**
-```json
-{
-  "instances": [
-    "This movie was fantastic!",
-    "I didn't like this film at all."
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "predictions": [
-    [0.9, 0.1],
-    [0.2, 0.8]
-  ]
-}
-```
-
-### Structured Data
-
-**Input:**
-```json
-{
-  "instances": [
-    {
-      "feature1": 1.5,
-      "feature2": 2.3,
-      "feature3": "category_a"
+    outputs {
+      key: "prediction"
+      value {
+        dtype: DT_INT64
+        tensor_shape {
+          dim {
+            size: 1
+          }
+        }
+        int64_val: 0
+      }
     }
-  ]
-}
-```
-
-## Performance Optimization
-
-### Batching Configuration
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-batched"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "s3://my-bucket/model"
-      env:
-      - name: ENABLE_BATCHING
-        value: "true"
-      - name: MAX_BATCH_SIZE
-        value: "32"
-      - name: BATCH_TIMEOUT_MICROS
-        value: "1000"
-```
-
-### TensorRT Optimization
-
-For GPU models, enable TensorRT:
-
-```yaml
-env:
-- name: USE_TENSORRT
-  value: "true"
-- name: TENSORRT_PRECISION_MODE
-  value: "FP16"  # Options: FP32, FP16, INT8
-```
-
-### Memory Optimization
-
-```yaml
-env:
-- name: TF_GPU_MEMORY_GROWTH
-  value: "true"
-- name: TF_FORCE_GPU_ALLOW_GROWTH
-  value: "true"
-```
-
-## Model Versioning
-
-### Multiple Versions
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-versions"
-spec:
-  predictor:
-    tensorflow:
-      storageUri: "s3://my-bucket/tensorflow-model"
-      env:
-      - name: MODEL_VERSION_POLICY
-        value: '{"all": {}}'  # Serve all versions
-```
-
-### Version-Specific Requests
-
-```bash
-# Default version
-curl -X POST https://$SERVICE_HOSTNAME/v1/models/my-model:predict
-
-# Specific version
-curl -X POST https://$SERVICE_HOSTNAME/v1/models/my-model/versions/2:predict
-```
-
-## Monitoring and Debugging
-
-### Health Checks
-
-```bash
-# Model status
-curl https://$SERVICE_HOSTNAME/v1/models/my-model
-
-# Server status
-curl https://$SERVICE_HOSTNAME/v1/models
-```
-
-### Metrics
-
-TensorFlow Serving exposes metrics at `/monitoring/prometheus/metrics`:
-
-```bash
-curl https://$SERVICE_HOSTNAME/monitoring/prometheus/metrics
-```
-
-Key metrics include:
-- `tensorflow_serving_request_count`
-- `tensorflow_serving_request_latency`
-- `tensorflow_serving_model_warmup_latency`
-
-### Debug Mode
-
-Enable verbose logging:
-
-```yaml
-env:
-- name: TF_CPP_MIN_LOG_LEVEL
-  value: "0"
-- name: TENSORFLOW_SERVING_ENABLE_PROFILER
-  value: "true"
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**Model Loading Errors:**
-```bash
-# Check model format
-saved_model_cli show --dir /path/to/model --all
-
-# Validate signatures
-saved_model_cli show --dir /path/to/model --tag_set serve --signature_def serving_default
-```
-
-**Memory Issues:**
-```yaml
-# Increase memory limits
-resources:
-  limits:
-    memory: 8Gi
-env:
-- name: TF_GPU_MEMORY_GROWTH
-  value: "true"
-```
-
-**Performance Issues:**
-```yaml
-# Enable batching
-env:
-- name: ENABLE_BATCHING
-  value: "true"
-- name: MAX_BATCH_SIZE
-  value: "64"
-```
-
-## Best Practices
-
-1. **Model Optimization**: Use TensorFlow Lite for mobile/edge deployment
-2. **Signature Definition**: Always define clear input/output signatures
-3. **Resource Limits**: Set appropriate CPU/GPU/memory limits
-4. **Batching**: Enable batching for high-throughput scenarios
-5. **Monitoring**: Monitor key metrics for performance insights
-6. **Versioning**: Use semantic versioning for model updates
-
-## Integration Examples
-
-### With Transformers
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "tensorflow-pipeline"
-spec:
-  transformer:
-    containers:
-    - image: my-registry/image-preprocessor:latest
-      name: kserve-container
-  predictor:
-    tensorflow:
-      storageUri: "s3://my-bucket/tensorflow-model"
-```
-
-### Custom Container
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "custom-tensorflow"
-spec:
-  predictor:
-    containers:
-    - name: kserve-container
-      image: tensorflow/serving:2.8.0-gpu
-      env:
-      - name: MODEL_NAME
-        value: my-model
-      - name: MODEL_BASE_PATH
-        value: s3://my-bucket/model
-```
-
-## Next Steps
-
-- Learn about [PyTorch Runtime](./torchserve/README.md)
-- Explore [Multi-Framework Triton](./triton/torchscript/README.md)
-- Configure [Request Batching](../batcher/batcher.md)
-- Set up [Model Monitoring](../observability/prometheus_metrics.md)
+    outputs {
+      key: "scores"
+      value {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 6
+          }
+        }
+        float_val: 0.9991149306297302
+        float_val: 9.209887502947822e-05
+        float_val: 0.00013678647519554943
+        float_val: 0.0003372581850271672
+        float_val: 0.0003005331673193723
+        float_val: 1.848137799242977e-05
+      }
+    }
+    model_spec {
+      name: "flowers-sample"
+      version {
+        value: 1
+      }
+      signature_name: "serving_default"
+    }
+    ```
