@@ -2,38 +2,38 @@
 
 This page contains a list of organizations who are using KServe either in production, or providing integrations or deployment options with their Cloud or product offerings. If you'd like to be included here, please send a pull request which modifies this file. Please keep the list in alphabetical order.
 
-| Organization                                                            | Contact                                              |
-|-------------------------------------------------------------------------|------------------------------------------------------|
-| [Advanced Micro Devices](https://www.amd.com)                           | [Varun Sharma](https://github.com/varunsh-xilinx)    |
-| [Alauda](https://www.alauda.io)                                         | [Wu Yi](https://github.com/typhoonzero)              |
-| [Amazon Web Services](https://aws.amazon.com/)                          | [Ellis Tarn](https://github.com/ellistarn)           |
-| [Bloomberg](https://www.bloomberg.com/)                                 | [Dan Sun](https://github.com/yuzisun)                |
-| [Cars24](https://www.cars24.com/)                                       | [Swapnesh Khare](https://github.com/swapkh91)        |
-| [Charmed Kubeflow from Canonical](https://charmed-kubeflow.io/)         | [Daniela Plasencia](https://github.com/dnplas)       |
-| [Cisco](https://www.cisco.com/)                                         | [Krishna Durai](https://github.com/krishnadurai)     |
-| [Cloudera](https://www.cloudera.com/)                                   | [Zoram Thanga](https://github.com/zoramt)            |
-| [CoreWeave](https://coreweave.com/)                                     | [Peter Salanki](https://github.com/salanki)          |
-| [Deeploy](https://deeploy.ml)                                           | [Tim Kleinloog](https://github.com/TimKleinloog)     |
-| [Gojek](https://www.gojek.com/)                                         | [Willem Pienaar](https://github.com/woop)            |
-| [Halodoc ID](https://halodoc.com/)                                      | [Joinal Ahmed](https://github.com/joinal-ahmed)      |
-| [Hewlett Packard Enterprise (HPE)](https://www.hpe.com/)                | [Jerry Harrow](https://github.com/jerryharrow)       |
-| [Hypermode](https://hypermode.com/)                                     | [Kevin Mingtarja](https://github.com/kevinmingtarja) |
-| [IBM](https://www.ibm.com/)                                             | [Nick Hill](https://github.com/njhill)               |
-| [Inspur](https://www.inspur.com/)                                       | [Qingshan Chen](https://github.com/iamlovingit)      |
-| [Intuit](https://www.intuit.com/)                                       | [Rachit Chauhan](https://github.com/rachitchauhan43) |
-| [Kubeflow](https://www.kubeflow.org/)                                   | [Yuan Tang](https://github.com/terrytangyuan)        |
-| [Google Cloud](https://www.kubeflow.org/docs/distributions/gke/)        | [James Liu](https://github.com/zijianjoy)            |
-| [Max Kelsen](https://www.maxkelsen.com/)                                | [Jacob O'Farrell](https://github.com/ofaz)           |
-| [Naver](https://www.navercorp.com/en)                                   | [Mark Winter](https://github.com/markwinter)         |
-| [Nuance](https://www.nuance.com/)                                       | [Jeff Griffith](https://github.com/jeffgriffith)     |
-| [NVIDIA](https://www.nvidia.com/en-us/)                                 | [David Goodwin](https://github.com/deadeyegoodwin)   |
-| [One Convergence](https://dkube.io/)                                    | [Subra Ongole](https://github.com/songole)           |
-| [PITS Global Data Recovery Services](https://www.pitsdatarecovery.net/) | [Pheianox](https://github.com/pheianox)              |
-| [Red Hat](https://www.redhat.com/)                                      | [Taneem Ibrahim](https://github.com/taneem-ibrahim)  |
-| [Seldon](https://www.seldon.io/)                                        | [Alex Housley](https://github.com/ahousley)          |
-| [Patterson Consulting](http://www.pattersonconsultingtn.com/)           | [Josh Patterson](https://github.com/jpatanooga)      |
-| [Samsung SDS](https://www.samsungsds.com/)                              | [Hanbae Seo](https://github.com/jazzsir)             |
-| [Striveworks](https://striveworks.us/)                                  | [Jordan Yono](https://github.com/jyono)              |
-| [Upstage](https://www.upstage.ai/)                                      | [JuHyung Son](https://github.com/JuHyung-Son)        |
-| [Zillow](https://www.zillow.com/)                                       | [Peilun Li](https://github.com/Peilun-Li)            |
-
+| Organization                                                            | Contact                                              | References | Adoption Level | 
+|-------------------------------------------------------------------------|------------------------------------------------------|------------|----------------|
+| [Advanced Micro Devices](https://www.amd.com)                           | [Varun Sharma](https://github.com/varunsh-xilinx)    |------------|----------------|
+| [Alauda](https://www.alauda.io)                                         | [Wu Yi](https://github.com/typhoonzero)              |------------|----------------|
+| [Amazon Web Services](https://aws.amazon.com/)                          | [Ellis Tarn](https://github.com/ellistarn)           |------------|----------------|
+| [Bloomberg](https://www.bloomberg.com/)                                 | [Dan Sun](https://github.com/yuzisun)                |[Bloomberg Inference Platform](https://www.bloomberg.com/company/stories/the-journey-to-build-bloombergs-ml-inference-platform-using-kserve-formerly-kfserving/)|Production|
+| [Cars24](https://www.cars24.com/)                                       | [Swapnesh Khare](https://github.com/swapkh91)        |------------|----------------|
+| [Charmed Kubeflow from Canonical](https://charmed-kubeflow.io/)         | [Daniela Plasencia](https://github.com/dnplas)       |------------|----------------|
+| [Cisco](https://www.cisco.com/)                                         | [Krishna Durai](https://github.com/krishnadurai)     |------------|----------------|
+| [Cloudera](https://www.cloudera.com/)                                   | [Zoram Thanga](https://github.com/zoramt)            |------------|----------------|
+| [CoreWeave](https://coreweave.com/)                                     | [Peter Salanki](https://github.com/salanki)          |------------|----------------|
+| [Deeploy](https://deeploy.ml)                                           | [Tim Kleinloog](https://github.com/TimKleinloog)     |------------|----------------|
+| [Gojek](https://www.gojek.com/)                                         | [Willem Pienaar](https://github.com/woop)            |------------|----------------|
+| [Halodoc ID](https://halodoc.com/)                                      | [Joinal Ahmed](https://github.com/joinal-ahmed)      |------------|----------------|
+| [Hewlett Packard Enterprise (HPE)](https://www.hpe.com/)                | [Jerry Harrow](https://github.com/jerryharrow)       |------------|----------------|
+| [Hypermode](https://hypermode.com/)                                     | [Kevin Mingtarja](https://github.com/kevinmingtarja) |------------|----------------|
+| [IBM](https://www.ibm.com/)                                             | [Nick Hill](https://github.com/njhill)               |[IBM Watson](https://www.ibm.com/docs/en/watson-libraries?topic=containers-run-kubernetes-kserve-modelmesh-serving)|Production|
+| [Inspur](https://www.inspur.com/)                                       | [Qingshan Chen](https://github.com/iamlovingit)      |------------|----------------|
+| [Intuit](https://www.intuit.com/)                                       | [Rachit Chauhan](https://github.com/rachitchauhan43) |------------|----------------|
+| [Kubeflow](https://www.kubeflow.org/)                                   | [Yuan Tang](https://github.com/terrytangyuan)        |[KServe Integration](https://www.kubeflow.org/docs/external-add-ons/kserve/)|Production|
+| [Google Cloud](https://www.kubeflow.org/docs/distributions/gke/)        | [James Liu](https://github.com/zijianjoy)            |------------|----------------|
+| [Max Kelsen](https://www.maxkelsen.com/)                                | [Jacob O'Farrell](https://github.com/ofaz)           |------------|----------------|
+| [Naver](https://www.navercorp.com/en)                                   | [Mark Winter](https://github.com/markwinter)         |[Integration](https://sourceforge.net/software/ml-model-deployment/integrates-with-naver/)|----------------|
+| [Nuance](https://www.nuance.com/)                                       | [Jeff Griffith](https://github.com/jeffgriffith)     |------------|----------------|
+| [NVIDIA](https://www.nvidia.com/en-us/)                                 | [David Goodwin](https://github.com/deadeyegoodwin)   |[NVIDIA NIM](https://blogs.nvidia.com/blog/kserve-nim-inference/)|Production|
+| [One Convergence](https://dkube.io/)                                    | [Subra Ongole](https://github.com/songole)           |------------|----------------|
+| [PITS Global Data Recovery Services](https://www.pitsdatarecovery.net/) | [Pheianox](https://github.com/pheianox)              |------------|----------------|
+| [Red Hat](https://www.redhat.com/)                                      | [Yuan Tang](https://github.com/terrytangyuan)  |[Red Hat OpenShift AI](https://developers.redhat.com/articles/2024/03/15/empower-conversational-ai-scale-kserve)|Production|
+| [Seldon](https://www.seldon.io/)                                        | [Alex Housley](https://github.com/ahousley)          |------------|----------------|
+| [Patterson Consulting](http://www.pattersonconsultingtn.com/)           | [Josh Patterson](https://github.com/jpatanooga)      |------------|----------------|
+| [Samsung SDS](https://www.samsungsds.com/)                              | [Hanbae Seo](https://github.com/jazzsir)             |------------|----------------|
+| [Striveworks](https://striveworks.us/)                                  | [Jordan Yono](https://github.com/jyono)              |------------|----------------|
+| [Upstage](https://www.upstage.ai/)                                      | [JuHyung Son](https://github.com/JuHyung-Son)        |------------|----------------|
+| [ZenML](https://www.zenml.io/) |  | [ZenML Integration](https://www.zenml.io/blog/deploy-your-ml-models-with-kserve-and-zenml) |  |
+| [Zillow](https://www.zillow.com/)                                       | [Peilun Li](https://github.com/Peilun-Li)            |[ML Model Serving](https://www.zillow.com/tech/serving-machine-learning-models-efficiently-at-scale-at-zillow/)|Production|
