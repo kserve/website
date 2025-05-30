@@ -3357,7 +3357,7 @@
 <p>This integration enables a unified, intelligent entrypoint for both predictive and generative workloads—scaling from traditional models to complex LLMs—all while abstracting infrastructure complexity from the user. Please refer to <a href="https://kserve.github.io/website/0.15/admin/ai-gateway_integration">Envoy AI Gateway integration doc</a> for more details.</p>
 <hr />
 <h3 id="multi-node-inference">Multi-Node Inference<a class="headerlink" href="#multi-node-inference" title="Permanent link">&para;</a></h3>
-<p>To support LLMs too large for a single node (e.g., Llama 3.1 405B), KServe v0.15 introduces multi-node inference across distributed GPUs, unlocking large model serving at scale. As models continue increase in size, multi-node inference capabilities are increasingly important for production deployments that require real-time user experience. Please refer to the <a href="https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/multi-node">Multi Node inference doc</a> for more details.</p>
+<p>To support LLMs too large for a single node (e.g., Llama 3.1 405B), KServe v0.15 introduces multi-node inference across distributed GPUs, unlocking large model serving at scale. As models continue to increase in size, multi-node inference capabilities are increasingly important for production deployments that require real-time user experience. Please refer to the <a href="https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/multi-node">Multi Node inference doc</a> for more details.</p>
 <p>The community is also working on a <a href="https://github.com/kserve/kserve/issues/4433">new distributed inference API</a> to allow scaling Multi Node Inference and support Disaggregatd Prefilling which is targeted for large LLM deployments. </p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
@@ -3410,8 +3410,8 @@
 <hr />
 <h3 id="distributed-kv-cache-with-lmcache">Distributed KV Cache with <a href="https://lmcache.ai">LMCache</a><a class="headerlink" href="#distributed-kv-cache-with-lmcache" title="Permanent link">&para;</a></h3>
 <p>Key-Value (KV) cache offloading is a technique used in large language model (LLM) serving to store and reuse the intermediate key and value tensors generated during model inference. In transformer-based models, these KV caches represent the context for each token processed, and reusing them allows the model to avoid redundant computations for repeated or similar prompts.</p>
-<p>Enabling KV cache offloading across multiple requests and serving instances can achieve reduced Time To First Token(TTFT), improve scalablity for shared cache across replicas, and improve user experience for multi-turn QA or RAG.</p>
-<p>KServe integrates <a href="https://lmcache.ai">LMCache</a>, the-state-of-art KV cache layer library developped by LMCache Lab to reduce inference costs and ensure SLOs for both latency and throughput at scale. Please follow the <a href="https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/kv_cache_offloading/#overview">LMCache integration doc</a> to optimize your GenAI inference workload.</p>
+<p>Enabling KV cache offloading across multiple requests and serving instances can achieve reduced Time To First Token(TTFT), improve scalability for shared cache across replicas, and improve user experience for multi-turn QA or RAG.</p>
+<p>KServe integrates <a href="https://lmcache.ai">LMCache</a>, the-state-of-art KV cache layer library developed by LMCache Lab to reduce inference costs and ensure SLOs for both latency and throughput at scale. Please follow the <a href="https://kserve.github.io/website/0.15/modelserving/v1beta1/llm/huggingface/kv_cache_offloading/#overview">LMCache integration doc</a> to optimize your GenAI inference workload.</p>
 <div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
 <span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
 <span class="nt">metadata</span><span class="p">:</span>
@@ -3441,7 +3441,7 @@
 <p>The vLLM backend has been significantly upgraded to better serve generative AI models:</p>
 <ul>
 <li><strong>Version Upgrade:</strong> Updated to vLLM 0.8.5, bringing performance improvements with v1 backend and new features.</li>
-<li><strong>Qwen3 &amp; Llama4:</strong> Added support for Qwen3 and Llama4 model.</li>
+<li><strong>Qwen3 &amp; Llama4:</strong> Added support for Qwen3 and Llama4 models.</li>
 <li><strong>Reranking Support:</strong> Added support for reranking models.</li>
 <li><strong>Embedding Support:</strong> Added support for OpenAI-compatible embeddings API, enabling a broader range of applications.</li>
 </ul>
