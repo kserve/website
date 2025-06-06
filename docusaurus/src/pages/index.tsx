@@ -19,7 +19,7 @@ function HomepageHeader() {
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <div className={styles.logoContainer}>
-          <img src="/img/kserve-logo.png" alt="KServe Logo" className={styles.logo} />
+          <img src="img/kserve-logo.png" alt="KServe Logo" className={styles.logo} />
         </div>
         <Heading as="h1" className="hero__title">
           {siteConfig.title}

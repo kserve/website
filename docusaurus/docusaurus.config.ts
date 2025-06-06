@@ -10,16 +10,17 @@ const config: Config = {
   favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
-  url: 'https://sivanantha321.github.io/KServe-New-Website/',
+  url: 'https://sivanantha321.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
-  baseUrl: '/',
+  baseUrl: '/KServe-New-Website/',
 
   // GitHub pages deployment config.
   organizationName: 'kserve', // Usually your GitHub org/user name.
-  projectName: 'kserve', // Usually your repo name.
+  projectName: 'KServe-New-Website', // Usually your repo name.
+  trailingSlash: false,
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'warn',   // TODO: Change to 'throw' in production
+  onBrokenMarkdownLinks: 'warn', // TODO: Change to 'throw' in production
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
