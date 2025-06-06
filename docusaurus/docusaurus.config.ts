@@ -10,7 +10,7 @@ const config: Config = {
   favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
-  url: 'https://kserve.io',
+  url: 'https://sivanantha321.github.io/KServe-New-Website/',
   // Set the /<baseUrl>/ pathname under which your site is served
   baseUrl: '/',
 
