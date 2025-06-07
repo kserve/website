@@ -3,6 +3,11 @@
   background-color: #f8f9fa;
 }
 
+/* Dark mode styles */
+:global([data-theme="dark"]) .showcase {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
 .showcaseTitle {
   text-align: center;
   margin-bottom: 3rem;

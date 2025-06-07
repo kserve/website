@@ -3,6 +3,11 @@
   background-color: #f8f9fa;
 }
 
+/* Dark mode styles */
+:global([data-theme="dark"]) .adopters {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
 .adoptersTitle {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -49,6 +54,16 @@
 
 .adopterCard:hover {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles for adopter cards */
+:global([data-theme="dark"]) .adopterCard {
+  background-color: var(--ifm-background-color);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .adopterCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .adopterLogo {

@@ -252,6 +252,16 @@
   margin-bottom: 4rem;
 }
 
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .benefitsTitle {
   text-align: center;
   font-size: 2rem;
@@ -269,16 +279,6 @@
   background: linear-gradient(90deg, #3b82f6, #60a5fa);
   margin: 0.75rem auto 0;
   border-radius: 2px;
-}
-
-.benefitsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.8rem;
-  margin-bottom: 3rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .benefitCard {
@@ -307,6 +307,18 @@
   transform: translateY(-8px);
   box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
   border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Dark mode styles for benefit cards */
+:global([data-theme="dark"]) .benefitCard {
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .benefitCard:hover {
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+  border-color: var(--ifm-color-primary);
 }
 
 .benefitCard h4 {
@@ -349,9 +361,32 @@
   pointer-events: none;
 }
 
+/* Dark mode styles */
+:global([data-theme="dark"]) .whyKServe {
+  background-color: var(--ifm-background-color);
+  background: linear-gradient(
+    180deg,
+    var(--ifm-color-emphasis-100) 0%,
+    var(--ifm-background-color) 100%
+  );
+}
+
+:global([data-theme="dark"]) .whyKServe::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    var(--ifm-background-color) 100%
+  );
+}
+
 .adoptersSection {
   padding: 3rem 0;
   background-color: white;
+}
+
+/* Dark mode styles for adopters section */
+:global([data-theme="dark"]) .adoptersSection {
+  background-color: var(--ifm-background-color);
 }
 
 .adoptersGrid {

@@ -3,6 +3,11 @@
   background-color: white;
 }
 
+/* Dark mode styles */
+:global([data-theme="dark"]) .architecture {
+  background-color: var(--ifm-background-color);
+}
+
 .architectureTitle {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -47,6 +52,15 @@
 .archFeature:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles for architecture features */
+:global([data-theme="dark"]) .archFeature {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+:global([data-theme="dark"]) .archFeature:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .archFeature h3 {
