@@ -22,7 +22,7 @@ export default function HomepageArchitecture() {
             
             <div className={styles.architectureImage}>
               <img 
-                src="/img/kserve_new.png" 
+                src="img/kserve_new.png" 
                 alt="KServe Architecture" 
                 className={styles.archImage}
               />
