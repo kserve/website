@@ -64,7 +64,7 @@ export default function Home(): ReactNode {
                 <div className={styles.benefitsContainer}>
                   <div className={styles.benefitsSection}>
                     <Heading as="h3" className={styles.benefitsTitle}>
-                      🤖 For Generative AI
+                      🤖 Generative AI
                     </Heading>
                     <div className={styles.benefitsGrid}>
                       <div className={styles.benefitCard}>
@@ -100,7 +100,7 @@ export default function Home(): ReactNode {
 
                   <div className={styles.benefitsSection}>
                     <Heading as="h3" className={styles.benefitsTitle}>
-                      📊 For Predictive AI
+                      📊 Predictive AI
                     </Heading>
                     <div className={styles.benefitsGrid}>
                       <div className={styles.benefitCard}>
