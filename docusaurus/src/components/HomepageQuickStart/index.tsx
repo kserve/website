@@ -41,11 +41,18 @@ export default function HomepageQuickStart() {
                     {`apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "sklearn-iris"
+  name: "llama3-8b-instruct"
 spec:
   predictor:
-    sklearn:
-      storageUri: "gs://kserve-examples/models/sklearn/iris"`}
+    model:
+      modelFormat:
+        name: huggingface
+      resources:
+        requests:
+          cpu: "6"
+          memory: 24Gi
+          nvidia.com/gpu: "1"
+      storageUri: "hf://meta-llama/Llama-3.1-8B-Instruct"`}
                   </CodeBlock>
                 </div>
               </div>
@@ -56,8 +63,8 @@ spec:
                   <h3>Send Inference Requests</h3>
                   <p>Make predictions using the deployed model:</p>
                   <CodeBlock language="bash">
-                    {`curl -v -H "Host: sklearn-iris.default.example.com" \\
-  http://localhost:8080/v1/models/sklearn-iris:predict -d @./iris-input.json`}
+                    {`curl -v -H "Host: llama3-8b-instruct.default.example.com" \\
+  http://localhost:8080/openai/v1/chat/completions -d @./prompt.json`}
                   </CodeBlock>
                 </div>
               </div>
@@ -67,7 +74,7 @@ spec:
               <Link
                 className="button button--primary button--lg"
                 to="/docs/get_started/first_isvc">
-                Detailed Installation Guide
+                Detailed Guide
               </Link>
             </div>
           </div>

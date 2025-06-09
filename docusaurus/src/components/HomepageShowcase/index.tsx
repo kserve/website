@@ -53,11 +53,10 @@ spec:
         name: huggingface
       resources:
         limits:
-          cpu: "4"
-          memory: 8Gi
+          cpu: "6"
+          memory: 24Gi
           nvidia.com/gpu: "1"
-      runtime: HuggingFaceRuntime
-      storageUri: "s3://models/mistral-7b"`}
+      storageUri: "hf://meta-llama/Llama-3.1-8B-Instruct"`}
                 </CodeBlock>
               </div>
             </div>

@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'KServe',
-  tagline: 'A Kubernetes Custom Resource for serving predictive and generative ML models with standardized inference protocols',
+  tagline: 'Standardized Distributed Generative and Predictive AI Inference Platform for Scalable, Multi-Framework Deployment on Kubernetes',
   favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
@@ -81,7 +81,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Documentation',
+          label: 'Docs',
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
