@@ -87,6 +87,8 @@
   align-items: center;
   justify-content: center;
   width: 60px;
+  min-width: 60px;
+  flex-shrink: 0;
   background: linear-gradient(
     135deg,
     var(--ifm-color-primary),
@@ -95,6 +97,9 @@
   color: white;
   font-size: 1.5rem;
   font-weight: bold;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .stepContent {
@@ -124,6 +129,15 @@
 }
 
 /* Responsive adjustments */
+@media screen and (max-width: 1200px) and (min-width: 768px) {
+  /* Tablet specific adjustments */
+  .stepNumber {
+    min-width: 60px;
+    width: 60px;
+    flex-shrink: 0;
+  }
+}
+
 @media screen and (max-width: 996px) {
   .quickStart {
     padding: 4rem 0;
