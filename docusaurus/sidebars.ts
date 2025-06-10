@@ -20,9 +20,9 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Getting Started',
       items: [
-        'get_started/README',
-        'get_started/first_isvc',
-        'get_started/swagger_ui'
+        'getting-started/quickstart-guide',
+        'getting-started/first_isvc',
+        'getting-started/swagger_ui'
       ],
     },
     {
