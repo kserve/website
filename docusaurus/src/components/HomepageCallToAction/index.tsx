@@ -20,7 +20,7 @@ export default function HomepageCallToAction() {
             <div className={styles.ctaButtons}>
               <Link
                 className={clsx('button button--primary button--lg', styles.ctaButton)}
-                to="/docs/get_started/first_isvc">
+                to="/docs/getting-started/first-isvc">
                 Get Started
               </Link>
               <Link

@@ -73,7 +73,7 @@ spec:
             <div className={styles.quickStartCTA}>
               <Link
                 className="button button--primary button--lg"
-                to="/docs/get_started/first_isvc">
+                to="/docs/getting-started/first-isvc">
                 Detailed Guide
               </Link>
             </div>

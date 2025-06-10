@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# KServe Quickstart Guide
+# Quickstart Guide
 Welcome to the KServe Quickstart Guide! This guide will help you set up a KServe Quickstart environment for testing and experimentation. KServe Quickstart is designed to provide a simple and quick way to get started with KServe, allowing you to deploy and test machine learning models on Kubernetes with minimal setup.
 This guide will walk you through the prerequisites, installation steps, and how to verify your KServe Quickstart environment is up and running. By the end of this guide, you will have a fully functional KServe Quickstart environment ready for experimentation.
 
@@ -114,3 +114,7 @@ You should see the KServe controller up and running:
 NAME                                         READY   STATUS    RESTARTS   AGE
 kserve-controller-manager-7f5b6c4d8f-abcde   1/1     Running   0          2m
 ```
+
+## Next Steps
+Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models. Here are some recommended next steps:
+- 📖 **[First InferenceService](./getting-started/first-isvc.md)** - Deploy your first model using InferenceService.

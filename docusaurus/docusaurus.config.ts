@@ -157,7 +157,7 @@ const config: Config = {
           items: [
             {
               label: 'Get Started',
-              to: '/docs/get_started/first_isvc',
+              to: '/docs/getting-started/first-isvc',
             },
             {
               label: 'API Reference',

@@ -37,7 +37,7 @@ KServe consists of two main components:
 
 Ready to deploy your first model? Choose your path:
 
-### 🚀 [Get Started with KServe](./get_started/first_isvc.md)
+### 🚀 [Get Started with KServe](./getting-started/first-isvc.md)
 Deploy your first scikit-learn model in minutes
 
 ### 🏗️ [Installation Guide](./admin/serverless/serverless.md)  
@@ -83,7 +83,7 @@ Deploy multiple models efficiently with ModelMesh for high-density scenarios.
 
 ## What's Next?
 
-- 📖 **[First InferenceService](./get_started/first_isvc.md)** - Deploy your first model
+- 📖 **[First InferenceService](./getting-started/first-isvc.md)** - Deploy your first model
 - 🔧 **[Administration Guide](./admin/serverless/serverless.md)** - Install and configure KServe  
 - 🎯 **[Model Serving](./modelserving/control_plane.md)** - Learn serving patterns
 - 🌐 **[API Reference](./reference/api.md)** - Explore the complete API
@@ -102,7 +102,7 @@ Deploy multiple models efficiently with ModelMesh for high-density scenarios.
 
 ## Learning Path
 
-1. **Start Here**: [Deploy your first model](/docs/get_started/first_isvc)
+1. **Start Here**: [Deploy your first model](/docs/getting-started/first-isvc)
 2. **Learn the Basics**: [Model Serving Guide](/docs/modelserving/control_plane)
 3. **API Reference**: [Complete API documentation](/docs/reference/api)
 4. **Join the Community**: [See who's using KServe](/docs/community/adopters)

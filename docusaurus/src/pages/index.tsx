@@ -29,7 +29,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/get_started/first_isvc">
+            to="/docs/getting-started/first-isvc">
             Get Started
           </Link>
           <Link
