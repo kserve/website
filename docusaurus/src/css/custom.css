@@ -21,6 +21,15 @@
   --kserve-gray: #eaecef;
   --kserve-gray-dark: #646464;
   --kserve-highlight: #61dafb;
+
+  /* Font styles */
+  --ifm-code-font-family: "Nunito", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ifm-heading-font-family: "Nunito", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --ifm-font-family-base: "Nunito", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Custom Container widths */
+  --ifm-container-width: 1340px;
+  --ifm-container-width-xl: 1520px;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -42,26 +51,26 @@
 }
 
 /* Global styles */
-.container {
+/* .container {
   padding: 0 1rem;
-}
+} */
 
-.section-title {
+/* .section-title {
   margin-bottom: 2rem;
   text-align: center;
-}
+} */
 
-.section-description {
+/* .section-description {
   margin-bottom: 3rem;
   text-align: center;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-}
+} */
 
 /* Responsive adjustments */
-@media screen and (max-width: 996px) {
+/* @media screen and (max-width: 996px) {
   .container {
     padding: 0 1.5rem;
   }
-}
+}  */
