@@ -4,7 +4,7 @@ KServe is trusted by organizations worldwide for production machine learning mod
 
 ## Enterprise Adopters
 
-### Technology Companies
+<!-- ### Technology Companies
 
 **Bloomberg**
 - Uses KServe for serving financial data models at scale
@@ -238,7 +238,7 @@ Large e-commerce platform leveraging KServe:
 - Personalized product recommendations
 - Dynamic pricing models
 - Inventory optimization
-- A/B testing for model versions
+- A/B testing for model versions -->
 
 ## Getting Started
 
