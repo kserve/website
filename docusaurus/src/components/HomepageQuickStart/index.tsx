@@ -41,18 +41,18 @@ export default function HomepageQuickStart() {
                     {`apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "llama3-8b-instruct"
+  name: "qwen-llm"
 spec:
   predictor:
     model:
       modelFormat:
         name: huggingface
+      storageUri: "hf://Qwen/Qwen2.5-0.5B-Instruct"
       resources:
         requests:
-          cpu: "6"
-          memory: 24Gi
-          nvidia.com/gpu: "1"
-      storageUri: "hf://meta-llama/Llama-3.1-8B-Instruct"`}
+          cpu: "1"
+          memory: 4Gi
+          nvidia.com/gpu: "1"`}
                   </CodeBlock>
                 </div>
               </div>
@@ -63,7 +63,7 @@ spec:
                   <h3>Send Inference Requests</h3>
                   <p>Make predictions using the deployed model:</p>
                   <CodeBlock language="bash">
-                    {`curl -v -H "Host: llama3-8b-instruct.default.example.com" \\
+                    {`curl -v -H "Host: qwen-llm.default.example.com" \\
   http://localhost:8080/openai/v1/chat/completions -d @./prompt.json`}
                   </CodeBlock>
                 </div>
