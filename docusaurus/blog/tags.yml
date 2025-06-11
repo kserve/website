@@ -3,6 +3,11 @@ releases:
   permalink: /releases
   description: Project Releases
 
+announcements:
+  label: Announcements
+  permalink: /announcements
+  description: Project Announcements
+
 presentations:
   label: Presentations
   permalink: /presentations

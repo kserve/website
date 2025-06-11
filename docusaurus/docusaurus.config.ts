@@ -4,6 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+// TODO: Automatically update this version when releasing a new version
 const announcedVersion = '0.15';
 
 const config: Config = {
@@ -77,7 +78,7 @@ const config: Config = {
     ],
     announcementBar: {
       id: `announcementBar-v${announcedVersion}`,
-      content: `🎉️ <b><a target="_blank" href="https://kserve.github.io/blog/releases/${announcedVersion}">KServe v${announcedVersion}</a> is out!</b> 🥳️`,
+      content: `🎉️ <b><a target="_blank" href="https://sivanantha321.github.io/KServe-New-Website/blog/kserve-${announcedVersion}-release">KServe v${announcedVersion}</a> is out!</b> 🥳️`,
       backgroundColor: '#588be8',
       textColor: '#ffffff',
     },
