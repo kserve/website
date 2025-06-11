@@ -1,23 +1,47 @@
-yangshun:
-  name: Yangshun Tay
-  title: Front End Engineer @ Facebook
-  url: https://github.com/yangshun
-  image_url: https://github.com/yangshun.png
-  page: true
+yuzisun:
+  name: Dan Sun
+  title: Co-Founder, KServe
+  url: https://github.com/yuzisun
+  image_url: https://github.com/yuzisun.png
   socials:
-    x: yangshunz
-    github: yangshun
+    github: https://github.com/yuzisun
 
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
-  page:
-    # customize the url of the author page at /blog/authors/<permalink>
-    permalink: '/all-sebastien-lorber-articles'
+israel-hdez:
+  name: Edgar Hernández
+  title: KServe Maintainer
+  url: https://github.com/israel-hdez
+  image_url: https://github.com/israel-hdez.png
   socials:
-    x: sebastienlorber
-    linkedin: sebastienlorber
-    github: slorber
-    newsletter: https://thisweekinreact.com
+    github: https://github.com/israel-hdez
+
+alexagriffith:
+  name: Alexa Griffith
+  title: Software Engineer @ Bloomberg
+  url: https://github.com/alexagriffith
+  image_url: https://github.com/alexagriffith.png
+  socials:
+    github: https://github.com/alexagriffith
+
+terrytangyuan:
+  name: Yuan Tang
+  title: Maintainer, KServe
+  url: https://github.com/terrytangyuan
+  image_url: https://github.com/terrytangyuan.png
+  socials:
+    github: https://github.com/terrytangyuan
+
+johnugeorge:
+  name: Johnu George
+  title: Reviewer, KServe
+  url: https://github.com/johnugeorge
+  image_url: https://github.com/johnugeorge.png
+  socials:
+    github: https://github.com/johnugeorge
+
+lizzzcai:
+  name: Lize Cai
+  title: Approver, KServe
+  url: https://github.com/lizzzcai
+  image_url: https://github.com/lizzzcai.png
+  socials:
+    github: https://github.com/lizzzcai
