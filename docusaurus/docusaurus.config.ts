@@ -78,6 +78,8 @@ const config: Config = {
     announcementBar: {
       id: `announcementBar-v${announcedVersion}`,
       content: `🎉️ <b><a target="_blank" href="https://kserve.github.io/blog/releases/${announcedVersion}">KServe v${announcedVersion}</a> is out!</b> 🥳️`,
+      backgroundColor: '#588be8',
+      textColor: '#ffffff',
     },
 
     navbar: {

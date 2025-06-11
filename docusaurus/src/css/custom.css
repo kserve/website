@@ -51,6 +51,13 @@
 }
 
 /* Global styles */
+
+/* Version Dropdown Hover */
+.dropdown__link:hover {
+  background-color: rgba(51, 113, 227, 0.1);
+  color: var(--ifm-color-primary);
+}
+
 /* .container {
   padding: 0 1rem;
 } */
