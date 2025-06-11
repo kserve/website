@@ -117,4 +117,4 @@ kserve-controller-manager-7f5b6c4d8f-abcde   1/1     Running   0          2m
 
 ## Next Steps
 Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models. Here are some recommended next steps:
-- 📖 **[First InferenceService](./getting-started/first-isvc.md)** - Deploy your first model using InferenceService.
+- 📖 **[First InferenceService](first-isvc.md)** - Deploy your first model using InferenceService.

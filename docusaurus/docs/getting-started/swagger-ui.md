@@ -18,7 +18,7 @@ Currently, `POST` request only work for `v2` endpoints in the UI.
 :::
 
 
-To enable, simply add an extra argument to the InferenceService YAML example from [First Inference](first_isvc.md) chapter:
+To enable, simply add an extra argument to the InferenceService YAML example from [First Inference](first-isvc.md) chapter:
 
 ```bash
 kubectl apply -n kserve-test -f - <<EOF

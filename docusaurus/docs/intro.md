@@ -4,20 +4,65 @@ sidebar_position: 1
 
 # Welcome to KServe
 
-**KServe** is a standard Model Inference Platform on Kubernetes, built for highly scalable predictive and generative inference workloads.
+**Deploy and scale AI models effortlessly** - from cutting-edge Large Language Models to traditional ML models - with enterprise-grade reliability across any cloud or on-premises environment.
 
-## What is KServe?
+## Why KServe?
 
-KServe provides a Kubernetes [Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) for serving machine learning (ML) models on arbitrary frameworks. It aims to solve production model serving use cases by providing performant, standardized inference protocol across ML frameworks.
+KServe eliminates the complexity of productionizing AI models. Whether you're a data scientist wanting to deploy your latest LLM experiment, a DevOps engineer building scalable ML infrastructure, or a decision maker evaluating AI platforms, KServe provides a unified solution that works across clouds and scales with your needs.
+
+**🚀 From Experiment to Production in Minutes** - Deploy GenAI services and ML models with simple YAML configurations, no complex infrastructure setup required.
+
+**☁️ Cloud-Agnostic by Design** - Run anywhere: AWS, Azure, GCP, on-premises, or hybrid environments with consistent behavior.
+
+**📈 Enterprise-Scale Ready** - Automatically handle traffic spikes, scale to zero when idle, and manage hundreds of models efficiently.
+
+## What Makes KServe Different?
+
+### **GenAI-First Platform** 
+Deploy Large Language Models with **OpenAI-compatible APIs** out of the box. Chat completions, streaming responses, embeddings - all just work with your existing tools and SDKs.
+
+### **Universal ML Support**
+Beyond GenAI, serve any ML framework: TensorFlow, PyTorch, Scikit-Learn, XGBoost, and more. One platform for all your AI workloads.
+
+### **Zero Infrastructure Overhead**
+Focus on your models, not infrastructure. KServe handles load balancing, autoscaling, canary deployments, and monitoring automatically.
+
+### **Production-Ready Security**
+Enterprise authentication, network policies, and compliance features built-in. Deploy with confidence in regulated environments.
 
 ### Key Benefits
 
-✅ **Multi-framework Model Serving** - Deploy models from TensorFlow, PyTorch, Scikit-Learn, XGBoost, Hugging Face, and more  
+#### Generative Inference Benefits
+✅ **LLM Multi-framework Support** - Deploy LLMs from Hugging Face, vLLM, and custom generative models  
+✅ **OpenAI-Compatible APIs** - Chat completion, completion, streaming, and embedding endpoints  
+✅ **LocalModelCache for LLMs** - Cache large models locally to reduce startup time from 15-20 minutes to ~1 minute  
+✅ **KV Cache Offloading** - Optimized memory management for long conversations and large contexts  
+✅ **Multi-node Inference** - Distributed LLM serving
+✅ **Envoy AI Gateway Integration** - Enterprise-grade API management and routing for AI workloads  
+✅ **Metric-based Autoscaling** - Scale based on token throughput, queue depth, and GPU utilization  
+✅ **Advanced Generative Deployments** - Canary rollouts and A/B testing for LLM experiments
+
+#### Predictive Inference Benefits  
+✅ **Multi-framework Model Serving** - Deploy models from TensorFlow, PyTorch, Scikit-Learn, XGBoost, and more  
+✅ **InferenceGraph for Model Ensembles** - Chain and ensemble multiple models together for complex workflows  
+✅ **Batch Prediction Support** - Efficient processing of large datasets with batch inference capabilities  
+✅ **Preprocessing & Postprocessing** - Built-in data transformation pipelines and feature engineering  
+✅ **Real-time Scoring** - Low-latency prediction serving for real-time applications  
+✅ **Production ML Monitoring** - Comprehensive observability, drift detection, and explainability  
+✅ **Standard Inference Protocols** - Support for Open Inference Protocol (V1/V2) across frameworks
+
+#### Universal Benefits (Both Inference Types)
 ✅ **Serverless Inference Workloads** - Automatic scaling including scale-to-zero on both CPU and GPU  
 ✅ **High Scalability & Density** - Intelligent routing and density packing using ModelMesh  
-✅ **Advanced Deployments** - Canary rollouts, experiments, ensembles, and transformers  
-✅ **Production ML Serving** - Prediction, pre/post processing, monitoring, and explainability  
-✅ **Standard Inference Protocol** - Support for Open Inference Protocol (V1/V2) across frameworks
+✅ **Enterprise-Ready Operations** - Production monitoring, logging, and observability out of the box
+
+## How It Works
+
+**Simple Deployment Model**: Describe your model requirements in a simple configuration file, and KServe handles the rest - from container orchestration to load balancing.
+
+**Built on Kubernetes**: KServe extends Kubernetes with custom resources specifically designed for AI/ML workloads, providing cloud-native scalability and reliability while abstracting away the complexity.
+
+**Pluggable Architecture**: Support for multiple serving runtimes means you can use the best inference engine for your specific model type - whether that's vLLM for LLMs, TorchServe for PyTorch models, or custom containers for specialized needs.
 
 ## Architecture Overview
 
@@ -25,8 +70,11 @@ KServe consists of two main components:
 
 ### Control Plane
 - **InferenceService CRD** - Manages model serving lifecycle
-- **Serving Runtime** - Pluggable model runtime implementations  
-- **Model Storage** - Support for various storage systems (S3, GCS, PVC, etc.)
+- **InferenceGraph CRD** - Orchestrates model ensembles and chaining workflows
+- **Serving Runtime** - Pluggable model runtime implementations
+- **ClusterServingRuntime**: Define cluster-wide model runtimes
+- **LocalModelCache CRD** - Cache large models locally on nodes for faster startup and scaling
+- **Model Storage** - Support for various storage systems (Huggingface, S3, GCS, Azure, PVC, etc.)
 
 ### Data Plane  
 - **Predictor** - Serves model predictions
@@ -38,7 +86,7 @@ KServe consists of two main components:
 Ready to deploy your first model? Choose your path:
 
 ### 🚀 [Get Started with KServe](./getting-started/first-isvc.md)
-Deploy your first scikit-learn model in minutes
+Deploy your first GenAI service with Qwen LLM in minutes
 
 ### 🏗️ [Installation Guide](./admin/serverless/serverless.md)  
 Set up KServe on your Kubernetes cluster
@@ -52,8 +100,9 @@ Learn about different serving patterns and frameworks
 - **Scikit-Learn** - Python-based ML models
 - **XGBoost** - Gradient boosting framework  
 - **TensorFlow** - Deep learning models
-- **PyTorch** - PyTorch models via TorchServe
+- **PyTorch** - PyTorch models via Triton
 - **ONNX** - Open Neural Network Exchange models
+- **TRT** - TensorRT optimized models
 - **Hugging Face** - Transformers and NLP models
 - **MLflow** - MLflow packaged models
 - **Custom Runtimes** - Bring your own serving logic
@@ -61,25 +110,11 @@ Learn about different serving patterns and frameworks
 ### Generative Inference  
 - **Large Language Models (LLMs)** - Text generation via vLLM
 - **Hugging Face Transformers** - Text2Text generation
-- **Multi-node Inference** - Distributed LLM serving
+- **OpenAI-Compatible APIs** - Chat completions, embeddings, and more
 
 ### Multi-Framework Support
 - **NVIDIA Triton** - High-performance inference server
 - **AMD** - Optimized inference on AMD hardware
-
-## Use Cases
-
-### Real-time Inference
-Serve models with low latency for real-time applications like recommendation systems, fraud detection, and image recognition.
-
-### Batch Processing  
-Process large volumes of data efficiently with batch inference capabilities.
-
-### A/B Testing
-Compare model performance with traffic splitting and canary deployments.
-
-### Multi-Model Serving
-Deploy multiple models efficiently with ModelMesh for high-density scenarios.
 
 ## What's Next?
 
@@ -92,26 +127,22 @@ Deploy multiple models efficiently with ModelMesh for high-density scenarios.
 ## Community & Support
 
 - **GitHub**: [github.com/kserve/kserve](https://github.com/kserve/kserve)
-- **Slack**: [Kubeflow Slack #kserve](https://kubeflow.slack.com/archives/C06982X42KC)  
-- **Mailing List**: [kserve-dev@lists.lfaidata.foundation](mailto:kserve-dev@lists.lfaidata.foundation)
+- **Slack**: [CNCF Slack #kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B)  
 - **Community Meetings**: [Monthly meetings calendar](https://github.com/kserve/community)
-
-- **InferenceService**: The main resource for deploying ML models
-- **ClusterServingRuntime**: Define cluster-wide model runtimes
-- **ServingRuntime**: Namespace-scoped runtime definitions
 
 ## Learning Path
 
-1. **Start Here**: [Deploy your first model](/docs/getting-started/first-isvc)
-2. **Learn the Basics**: [Model Serving Guide](/docs/modelserving/control_plane)
-3. **API Reference**: [Complete API documentation](/docs/reference/api)
-4. **Join the Community**: [See who's using KServe](/docs/community/adopters)
+1. **Start Here**: [Deploy your first model](getting-started/first-isvc)
+2. **Learn the Basics**: [Model Serving Guide](modelserving/control_plane)
+3. **API Reference**: [Complete API documentation](reference/api)
+4. **Join the Community**: [See who's using KServe](community/adopters)
 
 ## Need Help?
 
-- 💬 Join our [Slack community](https://kubeflow.slack.com/)
+- 💬 Join our [Slack community](https://slack.cncf.io/)
 - 🐛 Report issues on [GitHub](https://github.com/kserve/kserve/issues)
-- 📖 Browse the [API reference](/docs/reference/api)
+- 📖 Browse the [API reference](reference/api)
+<!-- TODO: update the link -->
 - 🎯 Check out [real-world examples](https://github.com/kserve/kserve/tree/master/docs/samples)
 
 ---
