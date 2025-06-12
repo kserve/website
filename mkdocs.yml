@@ -103,6 +103,7 @@ nav:
           - Inference Graph:
                 - Concept: modelserving/inference_graph/README.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
+                - Ensemble Learning inference graph: modelserving/inference_graph/ensemble_vote/README.md
           - Model Storage:
                 - Storage Containers: modelserving/storage/storagecontainers.md
                 - Configure CA Certificate: modelserving/certificate/kserve.md
