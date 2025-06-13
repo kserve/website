@@ -475,6 +475,13 @@ secrets:
 
 Create the inference service and configure the blob storage logger.  
 
+When specifying the logger configuration you must specify the logger format for the data that will be stored.  Valid values are:
+- `json` - The log messages will be stored as JSON files.
+
+Additional supported formats are planned for future releases, such as `parquet` and `csv`.
+
+Note: Currently the blob storage implementation is limited to S3 storage. 
+
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
