@@ -79,6 +79,19 @@ const sidebars: SidebarsConfig = {
         },
       ],
     },
+    {
+      type: 'category',
+      label: 'Model Serving',
+      items: [
+        {
+      type: 'category',
+      label: 'Generative Inference',
+      items: [
+        "model-serving/generative-inference/overview",
+      ],
+    },
+      ],
+    },
     // {
     //   type: 'category',
     //   label: 'Generative Inference',
