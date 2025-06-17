@@ -35,6 +35,12 @@ const config: Config = {
 
   staticDirectories: ['static'],
 
+  // Enable mermaid diagrams
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   presets: [
     [
       'classic',
