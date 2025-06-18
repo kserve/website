@@ -84,26 +84,54 @@ const sidebars: SidebarsConfig = {
       label: 'Model Serving',
       items: [
         {
+          type: 'category',
+          label: 'Generative Inference',
+          items: [
+            "model-serving/generative-inference/overview",
+            {
+              type: 'category',
+              label: 'Tasks',
+              items: [
+                "model-serving/generative-inference/text_generation/text_generation",
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
       type: 'category',
-      label: 'Generative Inference',
+      label: 'Administrator Guide',
       items: [
-        "model-serving/generative-inference/overview",
-      ],
-    },
-      ],
-    },
-    // {
-    //   type: 'category',
-    //   label: 'Generative Inference',
-    //   items: [
-    //   ],`
-    // },
-    // {
-    //   type: 'category',
-    //   label: 'Predictive Inference',
-    //   items: [
-    //   ],
-    // },
+        'admin-guide/overview',
+        {
+          type: 'category',
+          label: 'Generative Inference',
+          items: [
+            'admin-guide/kubernetes_deployment'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Predictive Inference',
+          items: [
+            'admin-guide/kubernetes_deployment',
+            'admin-guide/modelmesh',
+            {
+              type: 'category',
+              label: 'Serverless Deployment',
+              items: [
+                'admin-guide/serverless/serverless',
+                'admin-guide/serverless/kourier_networking/index',
+                'admin-guide/serverless/servicemesh/index'
+              ]
+            }
+          ]
+        },
+        'admin-guide/gatewayapi_migration',
+        'admin-guide/configurations',
+      ]
+    }
     // {
     //   type: 'category',
     //   label: 'Advanced Topics',
