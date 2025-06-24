@@ -2493,6 +2493,19 @@
     Deploy InferenceGraph
   </a>
   
+    <nav class="md-nav" aria-label="Deploy InferenceGraph">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inferencegraph-router-timeouts" class="md-nav__link">
+    InferenceGraph router timeouts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3230,6 +3243,19 @@
     Deploy InferenceGraph
   </a>
   
+    <nav class="md-nav" aria-label="Deploy InferenceGraph">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inferencegraph-router-timeouts" class="md-nav__link">
+    InferenceGraph router timeouts
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3398,6 +3424,46 @@ are executed in sequence: it first sends the image as request to <code>cat-dog-c
   When the condition is not matched the graph short circuits and returns the response from the previous step. Refer to <a href="https://github.com/tidwall/gjson/blob/master/SYNTAX.md">gjson syntax</a>
   for how to express the condition and currently KServe only supports this with REST protocol.</li>
 </ul>
+<h3 id="inferencegraph-router-timeouts">InferenceGraph router timeouts<a class="headerlink" href="#inferencegraph-router-timeouts" title="Permanent link">&para;</a></h3>
+<p>You can set custom timeout values for the <code>InferenceGraph</code> router.
+This is useful when <code>InferenceService</code>s are slow to start (e.g. when downloading / loading the model), or take a long time to complete.</p>
+<ul>
+<li><code>serverRead</code> specifies the number of seconds to wait before timing out a request read by the server (default is <code>60</code>).</li>
+<li><code>serverWrite</code> specifies the maximum duration in seconds before timing out writes of the response  (default is  <code>60</code>).</li>
+<li><code>serverIdle</code> specifies the maximum amount of time in seconds to wait for the next request when keep-alives are enabled (default is <code>180</code>).</li>
+<li><code>serviceClient</code> specifies a time limit in seconds for requests made to the graph components by HTTP client (uses Go's <a href="https://pkg.go.dev/net/http#DefaultTransport">DefaultTransport</a> values by default).</li>
+</ul>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s">apiVersion: &quot;serving.kserve.io/v1alpha1&quot;</span>
+<span class="s">kind: &quot;InferenceGraph&quot;</span>
+<span class="s">metadata:</span>
+<span class="s">  name: &quot;dog-breed-pipeline&quot;</span>
+<span class="s">spec:</span>
+<span class="s">  routerTimeouts:</span>
+<span class="s">    serverRead: 300</span>
+<span class="s">    serverWrite: 300</span>
+<span class="s">    serverIdle: 300</span>
+<span class="s">    serviceClient: 150</span>
+<span class="s">  nodes:</span>
+<span class="s">    root:</span>
+<span class="s">      routerType: Sequence</span>
+<span class="s">      steps:</span>
+<span class="s">      - serviceName: cat-dog-classifier</span>
+<span class="s">        name: cat_dog_classifier # step name</span>
+<span class="s">      - serviceName: dog-breed-classifier</span>
+<span class="s">        name: dog_breed_classifier</span>
+<span class="s">        data: $request</span>
+<span class="s">        condition: &quot;[@this].#(predictions.0==\&quot;dog\&quot;)&quot;</span>
+<span class="s">  resources:</span>
+<span class="s">    requests:</span>
+<span class="s">      cpu: 100m</span>
+<span class="s">      memory: 256Mi</span>
+<span class="s">    limits:</span>
+<span class="s">      cpu: 1</span>
+<span class="s">      memory: 1Gi</span>
+
+<span class="s">EOF</span>
+</code></pre></div>
 <h2 id="test-the-inferencegraph">Test the InferenceGraph<a class="headerlink" href="#test-the-inferencegraph" title="Permanent link">&para;</a></h2>
 <p>Before testing the <code>InferenceGraph</code>, first check if the graph is in the ready state and then get the router url for sending the request.
 <div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>ig<span class="w">  </span>dog-breed-pipeline
