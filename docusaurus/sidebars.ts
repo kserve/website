@@ -131,7 +131,20 @@ const sidebars: SidebarsConfig = {
         'admin-guide/gatewayapi_migration',
         'admin-guide/configurations',
       ]
-    }
+    },
+    {
+      type: 'category',
+      label: 'Developer Guide',
+      link: {
+        type: 'doc',
+        id: 'developer-guide/index',
+      },
+      items: [
+        'developer-guide/index',
+        'developer-guide/contribution',
+        'developer-guide/debugging',
+      ],
+    },
     // {
     //   type: 'category',
     //   label: 'Advanced Topics',
