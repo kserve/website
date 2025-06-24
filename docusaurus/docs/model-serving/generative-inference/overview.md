@@ -106,8 +106,16 @@ The Hugging Face runtime supports the following generative tasks:
 
 - **Text Generation**: Generation of text completions for models like LLaMA, GPT-2, and other autoregressive models
 - **Text2Text Generation**: Transformation of input text into output text for models like T5, BART, and other encoder-decoder models
+- **Embeddings**: Generation of vector embeddings for text inputs using models like Sentence Transformers
+- **Scoring**: Evaluation of text inputs to produce scores or probabilities.
 
 For a complete list of models supported by the vLLM backend, please refer to [vLLM's documentation on supported models](https://docs.vllm.ai/en/stable/models/supported_models.html).
+
+:::note
+
+The Hugging Face runtime supports other tasks such as `fill_mask`, `token_classification`, and `sequence_classification` using the Hugging Face backend. These are classified under predictive tasks rather than generative tasks.
+
+:::
 
 ## API Endpoints
 
@@ -141,6 +149,8 @@ The following examples demonstrate how to deploy and perform inference using the
 
 - [Text Generation using LLama3](text_generation/README.md)
 - [Text2Text Generation using T5](text2text_generation/README.md)
+- [Embeddings using Sentence Transformers](embeddings/README.md)
+- [Scoring using BERT](scoring/README.md)
 - [Client SDK Usage](sdk_integration/README.md)
 
 ## Environment Variables

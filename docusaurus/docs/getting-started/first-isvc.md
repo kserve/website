@@ -117,11 +117,12 @@ env:
 kubectl get inferenceservices qwen-llm -n kserve-test
 ```
 
-!!! success "Expected Output"
-    ```{ .bash .no-copy }
-    NAME       URL                                             READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
-    qwen-llm   http://qwen-llm.kserve-test.example.com         True           100                              qwen-llm-predictor-default-47q2g   7d23h
-    ```
+:::tip[Expected Output]
+```
+NAME       URL                                             READY   PREV   LATEST   PREVROLLEDOUTREVISION   LATESTREADYREVISION                AGE
+qwen-llm   http://qwen-llm.kserve-test.example.com         True           100                              qwen-llm-predictor-default-47q2g   7d23h
+```
+:::
 
 If your DNS contains example.com please consult your admin for configuring DNS or using [custom domain](https://knative.dev/docs/serving/using-a-custom-domain).
 
@@ -132,11 +133,12 @@ Execute the following command to determine if your Kubernetes cluster is running
 kubectl get svc istio-ingressgateway -n istio-system
 ```
 
-!!! success "Expected Output"
-    ```{ .bash .no-copy }
-    NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
-    istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
-    ```
+:::tip[Expected Output]
+```
+NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)   AGE
+istio-ingressgateway   LoadBalancer   172.21.109.129   130.211.10.121   ...       17h
+```
+:::
 
 <Tabs>
 <TabItem value="Load Balancer" label="Load Balancer" default>
@@ -285,6 +287,7 @@ kubectl delete inferenceservice qwen-llm -n kserve-test
 kubectl delete namespace kserve-test
 ```
 ### 7. Next Steps
+<!-- TODO: Update next steps -->
 Now that you have successfully deployed a generative AI service using KServe, you can explore more advanced features such as:
 - **Autoscaling**: Automatically scale your service based on traffic and resource usage.
 - **Canary Deployments**: Gradually roll out new model versions to test their performance before full deployment.
