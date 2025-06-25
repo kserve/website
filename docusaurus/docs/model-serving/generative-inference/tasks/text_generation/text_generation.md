@@ -3,18 +3,12 @@ title: Text Generation
 description: Learn how to deploy and serve Large Language Models (LLMs) for text generation tasks using KServe
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Text Generation with Large Language Models
 
 Text generation is a fundamental capability of Large Language Models (LLMs) that enables a wide range of applications including chatbots, content creation, summarization, and more. This guide demonstrates how to deploy Llama3, a powerful open-source LLM, using KServe's flexible inference runtimes.
-
-## Understanding Backend Options
-
-KServe supports two inference backends for serving LLMs. This guide covers two primary options:
-
-1. **vLLM Backend** (default): This is the recommended backend for serving LLMs, providing optimized performance and lower latency. It supports advanced features like model parallelism and efficient memory management.
-2. **Hugging Face Backend**: This backend uses the standard Hugging Face library. It is suitable for simpler use cases but may not perform as well as vLLM for larger models or high concurrency scenarios.
-
-Please refer to the overview of [KServe's generative inference capabilities](../../overview.md) for more details on these backends.
 
 ## Prerequisites
 
@@ -77,8 +71,19 @@ spec:
   supportedUriFormats:
     - prefix: hf://
 ```
+## Deploy Text Generation Model
 
-## Option 1: Deploy Llama3 with vLLM Backend (Recommended)
+### Understanding Backend Options
+
+KServe supports two inference backends for serving LLMs. This guide covers two primary options:
+
+1. **vLLM Backend** (default): This is the recommended backend for serving LLMs, providing optimized performance and lower latency. It supports advanced features like model parallelism and efficient memory management.
+2. **Hugging Face Backend**: This backend uses the standard Hugging Face library. It is suitable for simpler use cases but may not perform as well as vLLM for larger models or high concurrency scenarios.
+
+Please refer to the overview of [KServe's generative inference capabilities](../../overview.md) for more details on these backends.
+
+<Tabs>
+<TabItem value="vllm" label="vLLM Backend (Recommended)" default>
 
 The vLLM backend is enabled by default in KServe's Hugging Face serving runtime for optimal performance.
 
@@ -111,8 +116,8 @@ Save this to a file (e.g., `llama3-vllm.yaml`) and apply it:
 ```bash
 kubectl apply -f llama3-vllm.yaml
 ```
-
-## Option 2: Deploy Llama3 with Hugging Face Backend
+</TabItem>
+<TabItem value="huggingface" label="Hugging Face Backend">
 
 If you prefer to use the standard Hugging Face inference pipeline, specify the backend explicitly:
 
@@ -146,6 +151,8 @@ Save this to a file (e.g., `llama3-hf.yaml`) and apply it:
 ```bash
 kubectl apply -f llama3-hf.yaml
 ```
+</TabItem>
+</Tabs>
 
 ## Verifying Deployment
 
@@ -319,6 +326,8 @@ Once you've successfully deployed your text generation model, consider:
 
 - Explore [Model Caching](../../modelcache/localmodel.md)
 - Setting up [KV Cache Offloading](../../kv_cache_offloading/README.md) for faster inference
-- 
+- Explore [Auto Scaling](../../autoscaling/README.md) options for handling variable loads
+- Multi Node Inference for large models with [vLLM](../../multi-node/README.md)
+- AI Gateway for serving models with [KServe](../../ai-gateway/README.md)
 
 For more information on KServe's capabilities for generative AI, see the [generative inference overview](../../overview.md).

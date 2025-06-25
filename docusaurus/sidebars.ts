@@ -94,6 +94,8 @@ const sidebars: SidebarsConfig = {
               items: [
                 "model-serving/generative-inference/tasks/text_generation/text_generation",
                 "model-serving/generative-inference/tasks/text2text_generation/text2text_generation",
+                "model-serving/generative-inference/tasks/embedding/embedding",
+                "model-serving/generative-inference/tasks/reranking/rerank",
               ],
             },
           ],

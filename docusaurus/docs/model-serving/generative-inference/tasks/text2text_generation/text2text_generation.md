@@ -7,7 +7,50 @@ description: Learn how to deploy and serve t5 model for text-to-text generation 
 
 Text-to-text generation is a versatile NLP task where both input and output are text, enabling applications like translation, summarization, and question answering. This guide demonstrates how to deploy Google's T5 model using KServe's flexible inference runtimes.
 
-## Understanding Backend Options
+## Prerequisites
+
+Before getting started, ensure you have:
+
+- A Kubernetes cluster with [KServe installed](../../../../getting-started/quickstart-guide.md).
+- GPU resources available for model inference (this example uses NVIDIA GPUs).
+
+## Create a Hugging Face Secret (Optional)
+If you plan to use private models from Hugging Face, you need to create a Kubernetes secret containing your Hugging Face API token. This step is optional for public models.
+```bash
+kubectl create secret generic hf-secret \
+  --from-literal=HF_TOKEN=<your_huggingface_token>
+```
+
+## Create a StorageContainer (Optional)
+
+For models that require authentication, you might need to create a `ClusterStorageContainer`. While the model in this example is public, for private models you would need to configure access:
+
+```yaml title="huggingface-storage.yaml"
+apiVersion: "serving.kserve.io/v1alpha1"
+kind: ClusterStorageContainer
+metadata:
+  name: hf-hub
+spec:
+  container:
+    env:
+      - name: HF_TOKEN
+        valueFrom:
+          secretKeyRef:
+            key: HF_TOKEN
+            name: hf-secret
+    image: kserve/huggingfacehub-storage-initializer:latest
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        memory: 256Mi
+```
+<!-- TODO: FIX DOC LINK -->
+To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
+
+## Deploy T5 Model
+
+### Understanding Backend Options
 
 KServe supports two inference backends for serving text-to-text models:
 
@@ -21,14 +64,7 @@ use the Hugging Face backend to serve the model.
 
 Please refer to the overview of [KServe's generative inference capabilities](../../overview.md) for more details on these backends.
 
-## Prerequisites
-
-Before getting started, ensure you have:
-
-- A Kubernetes cluster with [KServe installed](../../../../getting-started/quickstart-guide.md)
-- GPU resources available for model inference (this example uses NVIDIA GPUs)
-
-## Deploy T5 with Hugging Face Backend
+### Deploy T5 with Hugging Face Backend
 
 Since T5 is not currently supported by vLLM, we'll use the Hugging Face backend explicitly:
 
@@ -145,3 +181,23 @@ data: {"id":"70bb8bea-57d5-4b34-aade-da38970c917c","choices":[{"finish_reason":"
 data: [DONE]
 ```
 :::
+
+## Troubleshooting
+
+Common issues and solutions:
+
+- **OOM errors**: Increase the memory allocation in the InferenceService specification
+- **Pending Deployment**: Ensure your cluster has enough GPU resources available
+- **Model not found**: Double-check your Hugging Face token and model ID
+
+## Next Steps
+
+Once you've successfully deployed your text generation model, consider:
+
+- Explore [Model Caching](../../modelcache/localmodel.md)
+- Setting up [KV Cache Offloading](../../kv_cache_offloading/README.md) for faster inference
+- Explore [Auto Scaling](../../autoscaling/README.md) options for handling variable loads
+- Multi Node Inference for large models with [vLLM](../../multi-node/README.md)
+- AI Gateway for serving models with [KServe](../../ai-gateway/README.md)
+
+For more information on KServe's capabilities for generative AI, see the [generative inference overview](../../overview.md).

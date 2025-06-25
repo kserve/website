@@ -107,7 +107,7 @@ The Hugging Face runtime supports the following generative tasks:
 - **Text Generation**: Generation of text completions for models like LLaMA, GPT-2, and other autoregressive models
 - **Text2Text Generation**: Transformation of input text into output text for models like T5, BART, and other encoder-decoder models
 - **Embeddings**: Generation of vector embeddings for text inputs using models like Sentence Transformers
-- **Scoring**: Evaluation of text inputs to produce scores or probabilities.
+- **Reranking**: Scoring and re-ranking of text inputs using models like BERT and other transformer-based models
 
 For a complete list of models supported by the vLLM backend, please refer to [vLLM's documentation on supported models](https://docs.vllm.ai/en/stable/models/supported_models.html).
 
@@ -126,11 +126,11 @@ The Hugging Face runtime provides OpenAI-compatible API endpoints for easy integ
 | Text Generation | `openai/v1/completions`      | Standard text completion (similar to GPT-3) |
 | Chat            | `openai/v1/chat/completions` | Chat completion with message history        |
 | Embeddings      | `openai/v1/embeddings`       | Vector embeddings for text                  |
-| Scoring         | `openai/v1/scoring`          | Text scoring and evaluation                 |
+| Re-rank         | `openai/v1/rerank`           | Re-ranking (scoring) of text inputs         |
 
 :::tip[OpenAI API Prefix]
 
-    KServe prefixes OpenAI API endpoints with 'openai' to prevent confusion with the [V1 API protocol](../../concepts/architecture/data_plane/v1_protocol.md). For instance, the endpoint for text generation via OpenAI's Completion API becomes `openai/v1/completions`, while the Chat Completion API is accessed at `openai/v1/chat/completions`. You can remove this prefix by setting the `KSERVE_OPENAI_ROUTE_PREFIX` environment variable to an empty string (""), or specify a custom prefix by assigning a different value to the variable.
+KServe prefixes OpenAI API endpoints with 'openai' to prevent confusion with the [V1 API protocol](../../concepts/architecture/data_plane/v1_protocol.md). For instance, the endpoint for text generation via OpenAI's Completion API becomes `openai/v1/completions`, while the Chat Completion API is accessed at `openai/v1/chat/completions`. You can remove this prefix by setting the `KSERVE_OPENAI_ROUTE_PREFIX` environment variable to an empty string (""), or specify a custom prefix by assigning a different value to the variable.
 
 :::
 
@@ -147,11 +147,11 @@ When deploying models with the Hugging Face runtime, consider the following perf
 
 The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:
 
-- [Text Generation using LLama3](text_generation/README.md)
-- [Text2Text Generation using T5](text2text_generation/README.md)
-- [Embeddings using Sentence Transformers](embeddings/README.md)
-- [Scoring using BERT](scoring/README.md)
-- [Client SDK Usage](sdk_integration/README.md)
+- [Text Generation using LLama3](tasks/text_generation/text_generation.md)
+- [Text-To-Text Generation using T5](tasks/text2text_generation/text2text_generation.md)
+- [Embeddings using Sentence Transformers](tasks/embedding/embedding.md)
+- [Reranking using BGE](tasks/reranking/rerank.md)
+- [Client SDK Usage](sdk_integration/sdk_integration.md)
 
 ## Environment Variables
 
