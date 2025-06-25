@@ -256,7 +256,7 @@ Common issues and solutions:
 Once you've successfully deployed your embedding model, consider:
 
 - Explore [Model Caching](../../modelcache/localmodel.md) for frequently accessed embeddings
-- Setting up [KV Cache Offloading](../../kv_cache_offloading/README.md) for faster inference
+- Setting up [KV Cache Offloading](../../kvcache-offloading/README.md) for faster inference
 - Explore [Auto Scaling](../../autoscaling/README.md) options for handling variable loads
 - Multi Node Inference for large models with [vLLM](../../multi-node/README.md)
 - AI Gateway for serving models with [KServe](../../ai-gateway/README.md)

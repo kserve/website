@@ -12,7 +12,7 @@ KServe-deployed LLMs can seamlessly integrate with popular LLM application frame
 
 ## Deploy a KServe LLM Inference Service
 
-First, you need a deployed LLM inference service. Follow our [Text Generation with Llama3](../tasks/text_generation/text_generation.md) guide to deploy a model. After completing the deployment, you'll have a model endpoint ready for integration.
+First, you need a deployed LLM inference service. Follow our [Text Generation with Llama3](../tasks/text-generation/text-generation.md) guide to deploy a model. After completing the deployment, you'll have a model endpoint ready for integration.
 
 ### Getting Your Model Endpoint
 
@@ -275,7 +275,7 @@ When integrating with KServe-deployed LLMs:
 After integrating your LLM with an SDK, consider exploring:
 
 1. **Advanced serving options** like [multi-node inference](../multi-node/README.md) for large models
-2. **Exploring other inference tasks** such as [text-to-text generation](../tasks/text2text_generation/text2text_generation.md) and [embeddings](../tasks/embedding/embedding.md)
-3. **Optimizing performance** with features like [model caching](../modelcache/localmodel.md) and [KV cache offloading](../kv_cache_offloading/README.md)
+2. **Exploring other inference tasks** such as [text-to-text generation](../tasks/text2text-generation/text2text-generation.md) and [embeddings](../tasks/embedding/embedding.md)
+3. **Optimizing performance** with features like [model caching](../modelcache/localmodel.md) and [KV cache offloading](../kvcache-offloading/README.md)
 
 By connecting your KServe-deployed models with these popular SDKs, you can quickly build sophisticated AI applications while maintaining control over your model infrastructure.

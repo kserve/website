@@ -17,9 +17,9 @@ KServe offers two powerful deployment modes to fit diverse operational needs:
 
 ## In This Section
 
-- **[Control Plane](control_plane.md)**: Learn how KServe manages model lifecycles, autoscaling, and orchestration
-- **[Data Plane](data_plane.md)**: Explore how inference requests are processed, including protocol support and performance optimizations
+- **[Control Plane](control-plane.md)**: Learn how KServe manages model lifecycles, autoscaling, and orchestration
+- **[Data Plane](./data-plane/data-plane.md)**: Explore how inference requests are processed, including protocol support and performance optimizations
 
 ## What's Next?
 
-Continue to the [Control Plane](control_plane.md) or [Data Plane](data_plane.md) documentation for a deeper technical dive, or explore the [Resources](../resources/) section to understand KServe's custom Kubernetes resources.
+Continue to the [Control Plane](control-plane.md) or [Data Plane](./data-plane/data-plane.md) documentation for a deeper technical dive, or explore the [Resources](../resources/) section to understand KServe's custom Kubernetes resources.

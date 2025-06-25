@@ -339,7 +339,7 @@ KServe supports two versions of its data plane for predictive models: V1 and V2 
 * V2 renamed `:predict` endpoint to `/infer`
 * V2 allows for model versions in the request path (optional)
 
-> **Note**: Detailed API references for the protocols are available in the [V1 Protocol](./v1_protocol.md) and [V2 Protocol](./v2_protocol.md) documentation.
+> **Note**: Detailed API references for the protocols are available in the [V1 Protocol](./v1-protocol.md) and [V2 Protocol](./v2-protocol/v2-protocol.md) documentation.
 
 
 ### V1 Protocol Details
@@ -409,9 +409,9 @@ The gRPC implementation offers a high-performance alternative with strong typing
 - Implement caching strategies for improved LLM performance
 
 ### For Predictive Inference
-- Review [V1 Protocol](./v1_protocol.md) and [Open Inference Protocol / V2 Protocol](./v2_protocol.md) documentation for detailed API specifications
-- Check out the [Binary Tensor Data Extension for Open Inference Protocol](./binary_tensor_data_extension.md) for high-performance tensor handling.
+- Review [V1 Protocol](./v1-protocol.md) and [Open Inference Protocol / V2 Protocol](./v2-protocol/v2-protocol.md) documentation for detailed API specifications
+- Check out the [Binary Tensor Data Extension for Open Inference Protocol](./v2-protocol/binary-tensor-data-extension.md) for high-performance tensor handling.
 
 ### General Resources
-- Explore [Control Plane](../control_plane.md) to understand service management
+- Explore [Control Plane](../control-plane.md) to understand service management
 - Learn about [Resources](../../resources/) to understand KServe custom resources

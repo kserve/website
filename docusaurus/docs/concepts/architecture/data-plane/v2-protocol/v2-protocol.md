@@ -532,11 +532,11 @@ Content-Length: <aa>
 
 The V2 Protocol supports extensions for additional functionality:
 
-- [Binary Tensor Data Extension](./binary_tensor_data_extension.md) - For high-performance data transfer
+- [Binary Tensor Data Extension](./binary-tensor-data-extension.md) - For high-performance data transfer
 - Other extensions may be proposed separately
 
 ## Next Steps
 
-- Learn about the [Binary Tensor Data Extension](./binary_tensor_data_extension.md)
-- Explore the [V1 Protocol](../v1_protocol.md) if you need the explain functionality
+- Learn about the [Binary Tensor Data Extension](./binary-tensor-data-extension.md)
+- Explore the [V1 Protocol](../v1-protocol.md) if you need the explain functionality
 - Check the [KServe website](https://kserve.github.io/website/) for more information about compatible serving runtimes

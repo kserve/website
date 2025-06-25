@@ -4,7 +4,7 @@ title: V1 Protocol
 
 # V1 Protocol
 
-KServe's V1 protocol offers a standardized prediction workflow across all model frameworks. This protocol version is still supported, but it is recommended that users migrate to the [V2 protocol](./v2_protocol.md) for better performance and standardization among serving runtimes. However, if a use case requires a more flexible schema than protocol V2 provides, the V1 protocol is still an option.
+KServe's V1 protocol offers a standardized prediction workflow across all model frameworks. This protocol version is still supported, but it is recommended that users migrate to the [V2 protocol](./v2-protocol/v2-protocol.md) for better performance and standardization among serving runtimes. However, if a use case requires a more flexible schema than protocol V2 provides, the V1 protocol is still an option.
 
 ## Overview
 
@@ -185,5 +185,5 @@ curl -X POST http://localhost:8000/v1/models/mymodel:explain \
 
 ## Next Steps
 
-- Explore the [V2 Protocol](./v2_protocol/v2_protocol.md) for improved performance and standardization
+- Explore the [V2 Protocol](./v2-protocol/v2-protocol.md) for improved performance and standardization
 

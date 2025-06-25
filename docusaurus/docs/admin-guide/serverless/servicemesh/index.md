@@ -427,8 +427,7 @@ While requests without JWT will be denied with `403` response:
 curl --header "Host: ${SERVICE_HOSTNAME}" "http://${INGRESS_HOST}:${INGRESS_PORT}/get" -v
 ```
 
-:::error
-**Expected Output:**
+:::tip[Expected Output]
 ```
 *   Trying 34.83.190.197...
 * TCP_NODELAY set

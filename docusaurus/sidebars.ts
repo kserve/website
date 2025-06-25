@@ -33,8 +33,7 @@ const sidebars: SidebarsConfig = {
       link: {
         type: 'doc',
         id: 'concepts/index',
-      },
-      items: [
+      }, items: [
         {
           type: 'category',
           label: 'Architecture',
@@ -43,20 +42,19 @@ const sidebars: SidebarsConfig = {
             id: 'concepts/architecture/index',
           },
           items: [
-            // "concepts/architecture/system-overview",
-            "concepts/architecture/control_plane",
-            "concepts/architecture/data_plane/data_plane",
-            "concepts/architecture/data_plane/v1_protocol",
+            "concepts/architecture/control-plane",
+            "concepts/architecture/data-plane/data-plane",
+            "concepts/architecture/data-plane/v1-protocol",
             {
               type: 'category',
               label: 'Open Inference Protocol (V2)',
               items: [
-                "concepts/architecture/data_plane/v2_protocol/v2_protocol",
+                "concepts/architecture/data-plane/v2-protocol/v2-protocol",
                 {
                   type: 'category',
                   label: 'Extensions',
                   items: [
-                    "concepts/architecture/data_plane/v2_protocol/binary_tensor_data_extension"
+                    "concepts/architecture/data-plane/v2-protocol/binary-tensor-data-extension"
                   ],
                 }
               ],
@@ -92,12 +90,13 @@ const sidebars: SidebarsConfig = {
               type: 'category',
               label: 'Tasks',
               items: [
-                "model-serving/generative-inference/tasks/text_generation/text_generation",
-                "model-serving/generative-inference/tasks/text2text_generation/text2text_generation",
+                "model-serving/generative-inference/tasks/text-generation/text-generation",
+                "model-serving/generative-inference/tasks/text2text-generation/text2text-generation",
                 "model-serving/generative-inference/tasks/embedding/embedding",
                 "model-serving/generative-inference/tasks/reranking/rerank",
               ],
             },
+            "model-serving/generative-inference/sdk-integration/sdk-integration",
           ],
         },
       ],
@@ -111,27 +110,27 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Generative Inference',
           items: [
-            'admin-guide/kubernetes_deployment'
+            'admin-guide/kubernetes-deployment'
           ]
         },
         {
           type: 'category',
           label: 'Predictive Inference',
           items: [
-            'admin-guide/kubernetes_deployment',
+            'admin-guide/kubernetes-deployment',
             'admin-guide/modelmesh',
             {
               type: 'category',
               label: 'Serverless Deployment',
               items: [
                 'admin-guide/serverless/serverless',
-                'admin-guide/serverless/kourier_networking/index',
+                'admin-guide/serverless/kourier-networking/index',
                 'admin-guide/serverless/servicemesh/index'
               ]
             }
           ]
         },
-        'admin-guide/gatewayapi_migration',
+        'admin-guide/gatewayapi-migration',
         'admin-guide/configurations',
       ]
     },
@@ -151,18 +150,6 @@ const sidebars: SidebarsConfig = {
     // {
     //   type: 'category',
     //   label: 'Advanced Topics',
-    //   items: [
-    //   ],
-    // },
-    // {
-    //   type: 'category',
-    //   label: 'Administration Guide',
-    //   items: [
-    //   ],
-    // },
-    // {
-    //   type: 'category',
-    //   label: 'Contributing',
     //   items: [
     //   ],
     // },

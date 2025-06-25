@@ -479,6 +479,6 @@ To add your organization, submit a PR with your logo (preferably in SVG format) 
 
 ## Community Engagement
 
-Refer to the [KServe Community](../community/get_involved.md) page for information on how to engage with the KServe community, including:
+Refer to the [KServe Community](../community/get-involved.md) page for information on how to engage with the KServe community, including:
 - Community meetings
 - Slack channels

@@ -75,7 +75,7 @@ The Raw Deployment mode offers several advantages:
 
 Unlike Serverless mode which depends on Knative for request-driven autoscaling, Raw Deployment mode can optionally use [KEDA](https://keda.sh) to enable autoscaling based on custom metrics. However, note that "Scale from Zero" is currently not supported in Raw Deployment mode for HTTP requests.
 
-[Learn more about Raw Kubernetes Deployment](./kubernetes_deployment.md)
+[Learn more about Raw Kubernetes Deployment](./kubernetes-deployment.md)
 
 ### Serverless Deployment
 
@@ -136,7 +136,7 @@ The migration process involves:
 3. Configuring Gateway and HTTPRoute resources
 4. Updating KServe to use the Gateway API
 
-[Learn more about Gateway API Migration](./gatewayapi_migration.md)
+[Learn more about Gateway API Migration](./gatewayapi-migration.md)
 
 ## Best Practices
 
@@ -163,11 +163,11 @@ When administering KServe, consider these best practices:
 Choose one of the detailed guides to proceed with KServe administration based on your inference workload:
 
 ### For Generative Inference
-- [Raw Kubernetes Deployment Guide](./kubernetes_deployment.md)
-- [Gateway API Migration Guide](./gatewayapi_migration.md)
+- [Raw Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [Gateway API Migration Guide](./gatewayapi-migration.md)
 
 ### For Predictive Inference
-- [Raw Kubernetes Deployment Guide](./kubernetes_deployment.md)
+- [Raw Kubernetes Deployment Guide](./kubernetes-deployment.md)
 - [Serverless Deployment Guide](./serverless/serverless.md)
 - [ModelMesh Deployment Guide](./modelmesh.md)
-- [Gateway API Migration Guide](./gatewayapi_migration.md)
+- [Gateway API Migration Guide](./gatewayapi-migration.md)

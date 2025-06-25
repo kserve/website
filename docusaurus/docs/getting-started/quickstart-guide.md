@@ -95,7 +95,7 @@ Once you have the prerequisites installed and a Kubernetes cluster running, you 
 
 :::warning
     
-KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin/serverless/serverless.md).
+KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin-guide/serverless/serverless.md).
 
 :::
 

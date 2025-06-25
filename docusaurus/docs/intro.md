@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+description: "KServe is a cloud-native platform for serving AI models at scale. Learn how KServe simplifies deploying and managing AI workloads across clouds and on-premises."
 ---
 
 # Welcome to KServe
@@ -88,10 +88,10 @@ Ready to deploy your first model? Choose your path:
 ### 🚀 [Get Started with KServe](./getting-started/first-isvc.md)
 Deploy your first GenAI service with Qwen LLM in minutes
 
-### 🏗️ [Installation Guide](./admin/serverless/serverless.md)  
+### 🏗️ [Installation Guide](./admin-guide/overview.md)  
 Set up KServe on your Kubernetes cluster
 
-### 📚 [Model Serving Guide](./modelserving/control_plane.md)
+### 📚 [Model Serving Guide](./concepts/architecture/control-plane.md)
 Learn about different serving patterns and frameworks
 
 ## Supported Model Frameworks
@@ -119,8 +119,8 @@ Learn about different serving patterns and frameworks
 ## What's Next?
 
 - 📖 **[First InferenceService](./getting-started/first-isvc.md)** - Deploy your first model
-- 🔧 **[Administration Guide](./admin/serverless/serverless.md)** - Install and configure KServe  
-- 🎯 **[Model Serving](./modelserving/control_plane.md)** - Learn serving patterns
+- 🔧 **[Administration Guide](./admin-guide/overview.md)** - Install and configure KServe
+- 🎯 **[Model Serving](./concepts/architecture/control-plane.md)** - Learn serving patterns
 - 🌐 **[API Reference](./reference/api.md)** - Explore the complete API
 - 👥 **[Community](./community/adopters.md)** - Join the KServe community
 
@@ -132,8 +132,8 @@ Learn about different serving patterns and frameworks
 
 ## Learning Path
 
-1. **Start Here**: [Deploy your first model](getting-started/first-isvc)
-2. **Learn the Basics**: [Model Serving Guide](modelserving/control_plane)
+1. **Start Here**: [Deploy your first model](getting-started/first-isvc.md)
+2. **Learn the Basics**: [Model Serving Guide](./concepts/architecture/control-plane.md)
 3. **API Reference**: [Complete API documentation](reference/api)
 4. **Join the Community**: [See who's using KServe](community/adopters)
 

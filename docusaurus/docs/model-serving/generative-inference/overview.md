@@ -130,7 +130,7 @@ The Hugging Face runtime provides OpenAI-compatible API endpoints for easy integ
 
 :::tip[OpenAI API Prefix]
 
-KServe prefixes OpenAI API endpoints with 'openai' to prevent confusion with the [V1 API protocol](../../concepts/architecture/data_plane/v1_protocol.md). For instance, the endpoint for text generation via OpenAI's Completion API becomes `openai/v1/completions`, while the Chat Completion API is accessed at `openai/v1/chat/completions`. You can remove this prefix by setting the `KSERVE_OPENAI_ROUTE_PREFIX` environment variable to an empty string (""), or specify a custom prefix by assigning a different value to the variable.
+KServe prefixes OpenAI API endpoints with 'openai' to prevent confusion with the [V1 API protocol](../../concepts/architecture/data-plane/v1-protocol.md). For instance, the endpoint for text generation via OpenAI's Completion API becomes `openai/v1/completions`, while the Chat Completion API is accessed at `openai/v1/chat/completions`. You can remove this prefix by setting the `KSERVE_OPENAI_ROUTE_PREFIX` environment variable to an empty string (""), or specify a custom prefix by assigning a different value to the variable.
 
 :::
 
@@ -147,11 +147,11 @@ When deploying models with the Hugging Face runtime, consider the following perf
 
 The following examples demonstrate how to deploy and perform inference using the Hugging Face runtime with different ML tasks:
 
-- [Text Generation using LLama3](tasks/text_generation/text_generation.md)
-- [Text-To-Text Generation using T5](tasks/text2text_generation/text2text_generation.md)
+- [Text Generation using LLama3](tasks/text-generation/text-generation.md)
+- [Text-To-Text Generation using T5](tasks/text2text-generation/text2text-generation.md)
 - [Embeddings using Sentence Transformers](tasks/embedding/embedding.md)
 - [Reranking using BGE](tasks/reranking/rerank.md)
-- [Client SDK Usage](sdk_integration/sdk_integration.md)
+- [Client SDK Usage](sdk-integration/sdk-integration.md)
 
 ## Environment Variables
 

@@ -56,4 +56,4 @@ Now, when you click "Try it out" and then "Execute", Swagger UI will send a `GET
 
 Similarly, we can use Swagger UI to send request to check the model metadata and make prediction using the `/v2/models/{model_name}/infer` endpoint.
 
-For more reference, please check out [Model Serving Data Plane](../modelserving/data_plane/data_plane.md) for detailed documentation on the Inference Protocol.
+For more reference, please check out [Model Serving Data Plane](../concepts/architecture/data-plane/data-plane.md) for detailed documentation on the Inference Protocol.

@@ -21,7 +21,7 @@ KServe has the following minimum requirements:
 - **Network Controller**: Choice of Gateway API (recommended) or Ingress controllers
 
 :::note
-`Gateway API` is the recommended option for KServe while Ingress API is still supported. Follow the [Gateway API migration guide](gatewayapi_migration.md) to migrate from Kubernetes Ingress to Gateway API.
+`Gateway API` is the recommended option for KServe while Ingress API is still supported. Follow the [Gateway API migration guide](gatewayapi-migration.md) to migrate from Kubernetes Ingress to Gateway API.
 :::
 
 ## Deployment Considerations
@@ -287,6 +287,6 @@ sklearn-iris  http://sklearn-iris.default.svc.cluster.local   True           100
 
 ## Next Steps
 
-- [Deploy your first InferenceService](../getting-started/first-isvc)
+- [Deploy your first InferenceService](../getting-started/first-isvc.md)
 - Configure auto-scaling for your models
 - Set up monitoring for your inference services
