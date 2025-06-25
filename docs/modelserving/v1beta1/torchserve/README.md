@@ -92,7 +92,7 @@ KServe by default selects the `TorchServe` runtime when you specify the model fo
           storageUri: gs://kfserving-examples/models/torchserve/image_classifier/v1
     ```
 
-For deploying the model on CPU, apply the following [torchserve.yaml](./torchserve.yaml) to create the `InferenceService`.
+For deploying the model on GPU, apply the following [torchserve.yaml](./torchserve.yaml) to create the `InferenceService`.
 === "kubectl"
 ```bash
 kubectl apply -f torchserve.yaml
