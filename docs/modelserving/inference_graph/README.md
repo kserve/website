@@ -7,6 +7,15 @@ For example, a face recognition pipeline may need to first locate faces in a ima
 
 KServe has unique strengths for building a distributed inference graph: an autoscaling graph router, native integration with individual `InferenceServices`, and a standard inference protocol for chaining models. KServe leverages these strengths to build an `InferenceGraph` and enable users to deploy complex ML inference pipelines to production in a declarative and scalable way.
 
+### Why Use InferenceGraph?
+
+- **Multi-stage Pipelines**: Chain models where one model's output becomes another's input
+- **Conditional Logic**: Route requests based on predictions or input characteristics
+- **Model Ensembles**: Combine predictions from multiple models
+- **A/B Testing**: Split traffic between different model versions
+- **Scalability**: Each model in the graph can scale independently
+- **Reusability**: Individual InferenceServices can be shared across multiple graphs
+
 ## Concepts
 
 ![image](images/inference_graph.png)

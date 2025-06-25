@@ -102,6 +102,7 @@ nav:
                   - ART Adversarial Detector: modelserving/detect/art/mnist/README.md
           - Inference Graph:
                 - Concept: modelserving/inference_graph/README.md
+                - Overview: modelserving/inference_graph/overview.md
                 - Image classification inference graph: modelserving/inference_graph/image_pipeline/README.md
           - Model Storage:
                 - Storage Containers: modelserving/storage/storagecontainers.md
