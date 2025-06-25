@@ -158,6 +158,7 @@ The Hugging Face runtime supports several advanced features to enhance model ser
 - [**Model Caching**](./modelcache/localmodel.md): Cache models on local storage for faster loading and reduced latency. This is particularly useful for large models that are frequently accessed.
 - [**KV Cache Offloading**](./kvcache-offloading/kvcache-offloading.md): Offload key-value caches to CPU memory to reduce GPU memory usage, allowing larger models to be served on GPUs with limited memory.
 - [**Distributed LLM Serving**](./multi-node/multi-node.md): Scale model serving across multiple nodes and GPUs for high throughput and low latency. This is useful for serving large models or handling high request volumes.
+- [**AI Gateway**](./ai-gateway/envoy-ai-gateway.md): Use the AI Gateway to manage rate-limiting based on tokens and route requests to different models, providing a unified API for various generative tasks.
 
 ## Environment Variables
 

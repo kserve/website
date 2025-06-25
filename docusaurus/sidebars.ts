@@ -100,6 +100,7 @@ const sidebars: SidebarsConfig = {
             "model-serving/generative-inference/kvcache-offloading/kvcache-offloading",
             "model-serving/generative-inference/modelcache/localmodel",
             "model-serving/generative-inference/multi-node/multi-node",
+            "model-serving/generative-inference/ai-gateway/envoy-ai-gateway",
           ],
         },
       ],
