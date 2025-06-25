@@ -153,6 +153,12 @@ The following examples demonstrate how to deploy and perform inference using the
 - [Reranking using BGE](tasks/reranking/rerank.md)
 - [Client SDK Usage](sdk-integration/sdk-integration.md)
 
+## Advanced Features
+The Hugging Face runtime supports several advanced features to enhance model serving capabilities:
+- [**Model Caching**](./modelcache/localmodel.md): Cache models on local storage for faster loading and reduced latency. This is particularly useful for large models that are frequently accessed.
+- [**KV Cache Offloading**](./kvcache-offloading/kvcache-offloading.md): Offload key-value caches to CPU memory to reduce GPU memory usage, allowing larger models to be served on GPUs with limited memory.
+- [**Distributed LLM Serving**](./multi-node/multi-node.md): Scale model serving across multiple nodes and GPUs for high throughput and low latency. This is useful for serving large models or handling high request volumes.
+
 ## Environment Variables
 
 The Hugging Face runtime image has the following environment variables set by default:
