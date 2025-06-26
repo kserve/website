@@ -1,6 +1,6 @@
 # Inference Graph Overview
 
-This page serves as a quick reference to the Inference Graph feature. It briefly shows the relevant parts of the API to configure the different graph constructs. Make sure to review the API Reference page to learn the full spec.
+This page serves as a quick reference to the Inference Graph feature. It briefly shows the relevant parts of the API to configure the different graph constructs. Make sure to review the [API Reference](../../../reference/api) page to learn the full spec.
 
 ## InferenceGraph general spec
 
