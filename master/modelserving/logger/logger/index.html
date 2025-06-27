@@ -2178,6 +2178,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#inference-logger-with-blob-storage" class="md-nav__link">
+    Inference Logger with Blob Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-service-account-and-secret" class="md-nav__link">
+    Create service account and secret
+  </a>
+  
+    <nav class="md-nav" aria-label="Create service account and secret">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-inference-service" class="md-nav__link">
+    Create the inference service
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3405,6 +3432,33 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#inference-logger-with-blob-storage" class="md-nav__link">
+    Inference Logger with Blob Storage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-service-account-and-secret" class="md-nav__link">
+    Create service account and secret
+  </a>
+  
+    <nav class="md-nav" aria-label="Create service account and secret">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-the-inference-service" class="md-nav__link">
+    Create the inference service
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3844,6 +3898,60 @@ Data,
 <span class="w">  </span><span class="o">}</span>
 </code></pre></div>
 </div>
+<h2 id="inference-logger-with-blob-storage">Inference Logger with Blob Storage<a class="headerlink" href="#inference-logger-with-blob-storage" title="Permanent link">&para;</a></h2>
+<p>The log messages can be stored directly to blob storage.  Similar to the model storage configuration the logger supports
+access to the blob storage via service account.  </p>
+<h2 id="create-service-account-and-secret">Create service account and secret<a class="headerlink" href="#create-service-account-and-secret" title="Permanent link">&para;</a></h2>
+<p>The service account must exist and contain the credentials for the blob storage.  First, create a secret with the credentials that the logger agent will use to access the blob storage.  The secret must be in the same namespace as the InferenceService.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">serving.kserve.io/s3-region</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">YOUR_REGION</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agent-logger-secret</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">AWS_ACCESS_KEY_ID</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">YOUR_ACCESS_KEY_ID</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">AWS_DEFAULT_REGION</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">YOUR_REGION</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">YOUR_SECRET_ACCESS_KEY</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>Next create a service account that provides the secret.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceAccount</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logger-sa</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="nt">secrets</span><span class="p">:</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agent-logger-secret</span>
+</code></pre></div>
+<h3 id="create-the-inference-service">Create the inference service<a class="headerlink" href="#create-the-inference-service" title="Permanent link">&para;</a></h3>
+<p>Create the inference service and configure the blob storage logger.  </p>
+<p>When specifying the logger configuration you must specify the logger format for the data that will be stored.  Valid values are:
+- <code>json</code> - The log messages will be stored as JSON files.</p>
+<p>Additional supported formats are planned for future releases, such as <code>parquet</code> and <code>csv</code>.</p>
+<p>Note: Currently the blob storage implementation is limited to S3 storage. </p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">serving.kserve.io/v1beta1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InferenceService</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn-iris</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="nt">predictor</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">logger</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3://[YOUR_BUCKET_NAME]</span>
+<span class="w">    </span><span class="nt">storage</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/logs</span>
+<span class="w">      </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s3</span>
+<span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
+<span class="w">      </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logger-credentials</span>
+<span class="w">      </span><span class="nt">serviceAccountName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logger-sa</span>
+<span class="w">    </span><span class="nt">modelFormat</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sklearn</span>
+<span class="w">    </span><span class="nt">storageUri</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gs://kfserving-examples/models/sklearn/1.0/model</span>
+</code></pre></div>
+<p>When inferences occur they will get stored as JSON files in the specified bucket.  There will be a file for the request and a file for the response, and the response will contain the actual prediction in BASE64 encoding.</p>
 
               
             </article>
