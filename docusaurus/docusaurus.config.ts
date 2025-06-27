@@ -1,6 +1,7 @@
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import rehypeExternalLinks from 'rehype-external-links'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -52,6 +53,7 @@ const config: Config = {
           editUrl:
             'https://github.com/kserve/website/tree/main/docusaurus/',
           lastVersion: 'current',
+          rehypePlugins: [rehypeExternalLinks],
         },
         blog: {
           showReadingTime: true,
@@ -88,7 +90,6 @@ const config: Config = {
       backgroundColor: '#588be8',
       textColor: '#ffffff',
     },
-
     navbar: {
       title: 'KServe',
       logo: {
@@ -114,39 +115,23 @@ const config: Config = {
           dropdownItemsAfter: [
             {
               href: 'https://kserve.github.io/archive-website/0.15/',
-              label: '0.15 (MkDocs/Mike)',
+              label: '0.15',
             },
             {
               href: 'https://kserve.github.io/archive-website/1.1/',
-              label: '0.14 (MkDocs/Mike)',
+              label: '0.14 ',
             },
             {
               href: 'https://kserve.github.io/archive-website/1.0/',
-              label: '0.13 (MkDocs/Mike)',
+              label: '0.13',
             },
             {
               href: 'https://kserve.github.io/archive-website/0.12/',
-              label: '0.12 (MkDocs/Mike)',
+              label: '0.12',
             },
             {
               href: 'https://kserve.github.io/archive-website/0.11/',
-              label: '0.11 (MkDocs/Mike)',
-            },
-            {
-              href: 'https://kserve.github.io/archive-website/0.10/',
-              label: '0.10 (MkDocs/Mike)',
-            },
-            {
-              href: 'https://kserve.github.io/archive-website/0.9/',
-              label: '0.9 (MkDocs/Mike)',
-            },
-            {
-              href: 'https://kserve.github.io/archive-website/0.8/',
-              label: '0.8 (MkDocs/Mike)',
-            },
-            {
-              href: 'https://kserve.github.io/archive-website/0.7/',
-              label: '0.7 (MkDocs/Mike)',
+              label: '0.11',
             },
           ],
         },
@@ -220,6 +205,16 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+  plugins: [
+    [
+      require.resolve('./plugins/markdown-variable-replacer/index.ts'),
+      {
+        variableMap: {
+          kserveDocsVersion: announcedVersion, // or load from file or env
+        },
+      },
+    ],
+  ],
 };
 
 export default config;
