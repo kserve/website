@@ -156,14 +156,14 @@ After the `LocalModelNodeGroup` is created, KServe creates an agent DaemonSet on
 kubectl get daemonset -n kserve workers-agent
 ```
 
-<details>
-<summary>Expected Output</summary>
+
+:::tip[Expected Output]
 
 ```bash
 NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR        AGE
 workers-agent   1         1         1       1            1           <none>               5d17h
 ```
-</details>
+:::
 
 ## Create the LocalModelCache
 
@@ -190,28 +190,26 @@ After the `LocalModelCache` is created, KServe creates download jobs on each nod
 kubectl get jobs meta-llama3-8b-instruct-kind-worker -n kserve-localmodel-jobs
 ```
 
-<details>
-<summary>Expected Output</summary>
+:::tip[Expected Output]
 
 ```bash
 NAME                                       STATUS     COMPLETIONS   DURATION   AGE
 meta-llama3-8b-instruct-gptq-kind-worker   Complete   1/1           4m21s      5d17h
 ```
-</details>
+:::
 
 The download job is created using the provisioned PV/PVC:
 ```bash
 kubectl get pvc meta-llama3-8b-instruct -n kserve-localmodel-jobs 
 ```
 
-<details>
-<summary>Expected Output</summary>
+:::tip[Expected Output]
 
 ```bash
 NAME                      STATUS   VOLUME                             CAPACITY   ACCESS MODES   STORAGECLASS    VOLUMEATTRIBUTESCLASS   AGE
 meta-llama3-8b-instruct   Bound    meta-llama3-8b-instruct-download   10Gi       RWO            local-storage   <unset>                 9h
 ```
-</details>
+:::
 
 ## Check the LocalModelCache Status
 
@@ -244,8 +242,7 @@ status:
 kubectl get localmodelnode kind-worker -oyaml
 ```
 
-<details>
-<summary>Expected Output</summary>
+:::tip[Expected Output]
 
 ```yaml
 apiVersion: serving.kserve.io/v1alpha1
@@ -260,7 +257,7 @@ status:
   modelStatus:
     meta-llama3-8b-instruct: ModelDownloaded
 ```
-</details>
+:::
 
 ## Deploy InferenceService using the LocalModelCache
 
@@ -296,6 +293,16 @@ You can deploy the InferenceService with:
 ```bash
 kubectl apply -f inferenceservice.yaml
 ```
+
+## Troubleshooting
+If you encounter issues with the model cache or download jobs, check the following:
+- Ensure the `LocalModelNodeGroup` is correctly configured and nodes are labeled as expected.
+- Verify the `LocalModelCache` status to see if the model was downloaded successfully.
+- Check the logs of the download job for any errors:
+```bash
+kubectl logs job/<job-name> -n kserve-localmodel-jobs
+```
+- Ensure PVCs are bound correctly and have sufficient storage capacity.
 
 ## Summary
 
