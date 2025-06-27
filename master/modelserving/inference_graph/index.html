@@ -2445,6 +2445,19 @@
     Motivation
   </a>
   
+    <nav class="md-nav" aria-label="Motivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-inferencegraph" class="md-nav__link">
+    Why Use InferenceGraph?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2478,6 +2491,20 @@
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="overview/" class="md-nav__link">
+        Overview
+      </a>
     </li>
   
 
@@ -3182,6 +3209,19 @@
     Motivation
   </a>
   
+    <nav class="md-nav" aria-label="Motivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-use-inferencegraph" class="md-nav__link">
+    Why Use InferenceGraph?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3233,6 +3273,15 @@
 <p>ML inference systems are getting bigger and more complex, they often consist of many models to make a single prediction. Some common use cases are image classification and natural language processing pipelines.
 For example, a face recognition pipeline may need to first locate faces in a image, then compute the features of the faces to match records in a database. An NLP pipeline needs to first run document classification, then perform named entity detection downstream based on the previous classification results.</p>
 <p>KServe has unique strengths for building a distributed inference graph: an autoscaling graph router, native integration with individual <code>InferenceServices</code>, and a standard inference protocol for chaining models. KServe leverages these strengths to build an <code>InferenceGraph</code> and enable users to deploy complex ML inference pipelines to production in a declarative and scalable way.</p>
+<h3 id="why-use-inferencegraph">Why Use InferenceGraph?<a class="headerlink" href="#why-use-inferencegraph" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Multi-stage Pipelines</strong>: Chain models where one model's output becomes another's input</li>
+<li><strong>Conditional Logic</strong>: Route requests based on predictions or input characteristics</li>
+<li><strong>Model Ensembles</strong>: Combine predictions from multiple models</li>
+<li><strong>A/B Testing</strong>: Split traffic between different model versions</li>
+<li><strong>Scalability</strong>: Each model in the graph can scale independently</li>
+<li><strong>Reusability</strong>: Individual InferenceServices can be shared across multiple graphs</li>
+</ul>
 <h2 id="concepts">Concepts<a class="headerlink" href="#concepts" title="Permanent link">&para;</a></h2>
 <p><img alt="image" src="images/inference_graph.png" /></p>
 <ul>
@@ -3315,13 +3364,13 @@ Once you update this config-map, kserve controller will automatically reconcile 
       
       
         
-        <a href="image_pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Image classification inference graph" rel="next">
+        <a href="overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Image classification inference graph
+              Overview
             </div>
           </div>
           <div class="md-footer__button md-icon">
