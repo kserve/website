@@ -435,3 +435,73 @@ kubectl logs $(kubectl get pod -l serving.knative.dev/service=message-dumper -o 
       }
     
     ```
+## Inference Logger with Blob Storage
+
+The log messages can be stored directly to blob storage.  Similar to the model storage configuration the logger supports
+access to the blob storage via service account.  
+
+## Create service account and secret
+
+The service account must exist and contain the credentials for the blob storage.  First, create a secret with the credentials that the logger agent will use to access the blob storage.  The secret must be in the same namespace as the InferenceService.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+      serving.kserve.io/s3-region: [YOUR_REGION]
+  name: agent-logger-secret
+  namespace: default
+type: Opaque
+data:
+  AWS_ACCESS_KEY_ID: [YOUR_ACCESS_KEY_ID]
+  AWS_DEFAULT_REGION: [YOUR_REGION]
+  AWS_SECRET_ACCESS_KEY: [YOUR_SECRET_ACCESS_KEY]
+```
+
+Next create a service account that provides the secret.
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: logger-sa
+  namespace: default
+secrets:
+- name: agent-logger-secret
+```
+
+### Create the inference service
+
+Create the inference service and configure the blob storage logger.  
+
+When specifying the logger configuration you must specify the logger format for the data that will be stored.  Valid values are:
+- `json` - The log messages will be stored as JSON files.
+
+Additional supported formats are planned for future releases, such as `parquet` and `csv`.
+
+Note: Currently the blob storage implementation is limited to S3 storage. 
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: sklearn-iris
+spec:
+predictor:
+  logger:
+    mode: all
+    url: s3://[YOUR_BUCKET_NAME]
+    storage:
+      path: /logs
+      parameters:
+        type: s3
+        format: json
+      key: logger-credentials
+      serviceAccountName: logger-sa
+    modelFormat:
+      name: sklearn
+    storageUri: gs://kfserving-examples/models/sklearn/1.0/model
+```
+
+When inferences occur they will get stored as JSON files in the specified bucket.  There will be a file for the request and a file for the response, and the response will contain the actual prediction in BASE64 encoding.
