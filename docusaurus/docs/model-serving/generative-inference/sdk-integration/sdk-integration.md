@@ -274,8 +274,9 @@ When integrating with KServe-deployed LLMs:
 
 After integrating your LLM with an SDK, consider exploring:
 
-1. **Advanced serving options** like [multi-node inference](../multi-node/README.md) for large models
+1. **Advanced serving options** like [multi-node inference](../multi-node/multi-node.md) for large models
 2. **Exploring other inference tasks** such as [text-to-text generation](../tasks/text2text-generation/text2text-generation.md) and [embeddings](../tasks/embedding/embedding.md)
-3. **Optimizing performance** with features like [model caching](../modelcache/localmodel.md) and [KV cache offloading](../kvcache-offloading/README.md)
+3. **Optimizing performance** with features like [model caching](../modelcache/localmodel.md) and [KV cache offloading](../kvcache-offloading/kvcache-offloading.md)
+4. **Auto-scaling** your inference services based on traffic patterns using [KServe's auto-scaling capabilities](../autoscaling/autoscaling.md) 
 
 By connecting your KServe-deployed models with these popular SDKs, you can quickly build sophisticated AI applications while maintaining control over your model infrastructure.

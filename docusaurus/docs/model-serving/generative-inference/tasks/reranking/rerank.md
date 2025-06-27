@@ -213,10 +213,10 @@ Common issues and solutions:
 
 Once you've successfully deployed your reranker model, consider:
 
-- Explore [Model Caching](../../modelcache/localmodel.md)
-- Setting up [KV Cache Offloading](../../kvcache-offloading/README.md) for faster inference
-- Explore [Auto Scaling](../../autoscaling/README.md) options for handling variable loads
-- Multi Node Inference for large models with [vLLM](../../multi-node/README.md)
-- AI Gateway for serving models with [KServe](../../ai-gateway/README.md)
+- **Advanced serving options** like [multi-node inference](../../multi-node/multi-node.md) for large models
+- **Exploring other inference tasks** such as [text-to-text generation](../text2text-generation/text2text-generation.md) and [embedding](../embedding/embedding.md)
+- **Optimizing performance** with features like [model caching](../../modelcache/localmodel.md) and [KV cache offloading](../../kvcache-offloading/kvcache-offloading.md)
+- **Auto-scaling** your inference services based on traffic patterns using [KServe's auto-scaling capabilities](../../autoscaling/autoscaling.md)
+- **Token based rate limiting** to control usage with [AI Gateway](../../ai-gateway/envoy-ai-gateway.md) for serving models.
 
 For more information on KServe's capabilities for generative AI, see the [generative inference overview](../../overview.md).
