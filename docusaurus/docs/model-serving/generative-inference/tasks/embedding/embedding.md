@@ -45,18 +45,24 @@ metadata:
   name: hf-hub
 spec:
   container:
+    name: storage-initializer
+    image: kserve/storage-initializer:latest
     env:
-      - name: HF_TOKEN
-        valueFrom:
-          secretKeyRef:
-            key: HF_TOKEN
-            name: hf-secret
-    image: kserve/huggingfacehub-storage-initializer:latest
+    - name: HF_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: hf-secret
+          key: HF_TOKEN
+          optional: false
     resources:
-      limits:
-        memory: 512Mi
       requests:
-        memory: 256Mi
+        memory: 2Gi
+        cpu: "1"
+      limits:
+        memory: 4Gi
+        cpu: "1"
+  supportedUriFormats:
+    - prefix: hf://
 ```
 <!-- TODO: FIX DOC LINK -->
 To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
@@ -245,7 +251,7 @@ You can store these embeddings in vector databases like Pinecone, Weaviate, or M
 ## Troubleshooting
 
 Common issues and solutions:
-
+- **Init:OOMKilled**: This indicates that the storage initializer exceeded the memory limits. You can try increasing the memory limits in the `ClusterStorageContainer`.
 - **OOM errors**: Increase the memory allocation in the InferenceService specification
 - **Pending Deployment**: Ensure your cluster has enough GPU resources available
 - **Model not found**: Double-check your model ID and ensure it's publicly available

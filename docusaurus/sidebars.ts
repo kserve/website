@@ -104,6 +104,145 @@ const sidebars: SidebarsConfig = {
             "model-serving/generative-inference/ai-gateway/envoy-ai-gateway",
           ],
         },
+        {
+          type: 'category',
+          label: 'Predictive Inference',
+          items: [
+            {
+              type: 'category',
+              label: 'Model Serving Runtimes',
+              items: [
+                "model-serving/predictive-inference/frameworks/overview",
+                {
+                  type: 'category',
+                  label: 'Supported Frameworks',
+                  items: [
+                    "model-serving/predictive-inference/frameworks/tensorflow/tensorflow",
+                    "model-serving/predictive-inference/frameworks/triton/torchscript/torchscript",
+                    "model-serving/predictive-inference/frameworks/sklearn/sklearn",
+                    "model-serving/predictive-inference/frameworks/xgboost/xgboost",
+                    "model-serving/predictive-inference/frameworks/pmml/pmml",
+                    "model-serving/predictive-inference/frameworks/spark-mllib/spark-mllib",
+                    "model-serving/predictive-inference/frameworks/lightgbm/lightgbm",
+                    "model-serving/predictive-inference/frameworks/paddle/paddle",
+                    "model-serving/predictive-inference/frameworks/mlflow/mlflow",
+                    "model-serving/predictive-inference/frameworks/onnx/onnx",
+                    {
+                      type: 'category',
+                      label: 'Hugging Face',
+                      items: [
+                        "model-serving/predictive-inference/frameworks/huggingface/overview",
+                        "model-serving/predictive-inference/frameworks/huggingface/token-classification/token-classification",
+                        "model-serving/predictive-inference/frameworks/huggingface/text-classification/text-classification",
+                        "model-serving/predictive-inference/frameworks/huggingface/fill-mask/fill-mask",
+                      ]
+                    },
+                  ]
+                },
+                {
+                  type: 'category',
+                  label: 'Multi-Framework Runtimes',
+                  items: [
+                    {
+                      type: 'category',
+                      label: 'Triton',
+                      items: [
+                        "model-serving/predictive-inference/frameworks/triton/torchscript/torchscript",
+                        "model-serving/predictive-inference/frameworks/triton/tensorflow/tensorflow",
+                        "model-serving/predictive-inference/frameworks/triton/huggingface/huggingface",
+                      ]
+                    },
+                  ]
+                },
+                "model-serving/predictive-inference/frameworks/custom-predictor/custom-predictor",
+              ]
+            },
+            // {
+            //   type: 'category',
+            //   label: 'Multi-Model Serving',
+            //   items: [
+            //     "model-serving/predictive-inference/multi-model/scalability",
+            //     "model-serving/predictive-inference/multi-model/modelmesh",
+            //   ]
+            // },
+            // {
+            //   type: 'category',
+            //   label: 'Transformers',
+            //   items: [
+            //     "model-serving/predictive-inference/transformers/custom-transformer",
+            //     "model-serving/predictive-inference/transformers/collocation",
+            //     "model-serving/predictive-inference/transformers/feast",
+            //   ]
+            // },
+            // {
+            //   type: 'category',
+            //   label: 'Operations',
+            //   items: [
+            //     {
+            //       type: 'category',
+            //       label: 'Rollout Strategies',
+            //       items: [
+            //         "model-serving/predictive-inference/operations/rollout/canary",
+            //         "model-serving/predictive-inference/operations/rollout/canary-example",
+            //       ]
+            //     },
+            //     {
+            //       type: 'category',
+            //       label: 'Autoscaling',
+            //       items: [
+            //         "model-serving/predictive-inference/operations/autoscaling/kpa",
+            //         "model-serving/predictive-inference/operations/autoscaling/hpa",
+            //         "model-serving/predictive-inference/operations/autoscaling/keda",
+            //       ]
+            //     },
+            //     "model-serving/predictive-inference/operations/batcher",
+            //     "model-serving/predictive-inference/operations/logger",
+            //     "model-serving/predictive-inference/operations/kafka",
+            //   ]
+            // },
+            // {
+            //   type: 'category',
+            //   label: 'Observability & Monitoring',
+            //   items: [
+            //     {
+            //       type: 'category',
+            //       label: 'Metrics & Dashboards',
+            //       items: [
+            //         "model-serving/predictive-inference/observability/metrics",
+            //         "model-serving/predictive-inference/observability/dashboards",
+            //       ]
+            //     },
+            //     {
+            //       type: 'category',
+            //       label: 'Model Explainability',
+            //       items: [
+            //         "model-serving/predictive-inference/observability/explainer/concept",
+            //         "model-serving/predictive-inference/observability/explainer/trustyai",
+            //         {
+            //           type: 'category',
+            //           label: 'Alibi Explainer',
+            //           items: [
+            //             "model-serving/predictive-inference/observability/explainer/alibi/image",
+            //             "model-serving/predictive-inference/observability/explainer/alibi/income",
+            //             "model-serving/predictive-inference/observability/explainer/alibi/text",
+            //           ]
+            //         },
+            //         "model-serving/predictive-inference/observability/explainer/aix",
+            //       ]
+            //     },
+            //     {
+            //       type: 'category',
+            //       label: 'Model Monitoring',
+            //       items: [
+            //         "model-serving/predictive-inference/observability/monitoring/alibi-detect",
+            //         "model-serving/predictive-inference/observability/monitoring/aif-bias",
+            //         "model-serving/predictive-inference/observability/monitoring/art-adversarial",
+            //       ]
+            //     }
+            //   ]
+            // }
+          ]
+        }
       ],
     },
     {
@@ -152,12 +291,6 @@ const sidebars: SidebarsConfig = {
         'developer-guide/debugging',
       ],
     },
-    // {
-    //   type: 'category',
-    //   label: 'Advanced Topics',
-    //   items: [
-    //   ],
-    // },
     // {
     //   type: 'category',
     //   label: 'API Reference',

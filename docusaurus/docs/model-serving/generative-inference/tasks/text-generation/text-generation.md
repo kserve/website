@@ -63,10 +63,10 @@ spec:
           optional: false
     resources:
       requests:
-        memory: 100Mi
-        cpu: 100m
+        memory: 2Gi
+        cpu: "1"
       limits:
-        memory: 1Gi
+        memory: 4Gi
         cpu: "1"
   supportedUriFormats:
     - prefix: hf://
@@ -316,6 +316,7 @@ data: [DONE]
 
 Common issues and solutions:
 
+- **Init:OOMKilled**: This indicates that the storage initializer exceeded the memory limits. You can try increasing the memory limits in the `ClusterStorageContainer`.
 - **OOM errors**: Increase the memory allocation in the InferenceService specification
 - **Pending Deployment**: Ensure your cluster has enough GPU resources available
 - **Model not found**: Double-check your Hugging Face token and model ID

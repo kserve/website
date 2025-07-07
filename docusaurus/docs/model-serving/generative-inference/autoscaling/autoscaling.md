@@ -19,6 +19,46 @@ InferenceService scaling can be achieved in two ways:
 
 - **Using Metrics via OpenTelemetry**: Collect pod-level metrics (including LLM metrics) using OpenTelemetry, export them to the keda-otel-add-on gRPC endpoint, and use KEDA's external scaler for autoscaling.
 
+## Create a Hugging Face Secret (Optional)
+If you plan to use private models from Hugging Face, you need to create a Kubernetes secret containing your Hugging Face API token. This step is optional for public models.
+```bash
+kubectl create secret generic hf-secret \
+  --from-literal=HF_TOKEN=<your_huggingface_token>
+```
+
+## Create a StorageContainer (Optional)
+
+For models that require authentication, you might need to create a `ClusterStorageContainer`. While the model in this example is public, for private models you would need to configure access:
+
+```yaml title="huggingface-storage.yaml"
+apiVersion: "serving.kserve.io/v1alpha1"
+kind: ClusterStorageContainer
+metadata:
+  name: hf-hub
+spec:
+  container:
+    name: storage-initializer
+    image: kserve/storage-initializer:latest
+    env:
+    - name: HF_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: hf-secret
+          key: HF_TOKEN
+          optional: false
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: "1"
+      limits:
+        memory: 4Gi
+        cpu: "1"
+  supportedUriFormats:
+    - prefix: hf://
+```
+<!-- TODO: FIX DOC LINK -->
+To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
+
 ## Autoscale based on metrics from Prometheus
 
 Scale an InferenceService in Kubernetes using LLM (Large Language Model) metrics collected in Prometheus. 
@@ -85,7 +125,7 @@ spec:
               value: "2"
 ```
 
-:::tip Expected Output
+:::tip[Expected Output]
 ```bash
 $ inferenceservice.serving.kserve.io/huggingface-qwen created
 ```
@@ -97,7 +137,7 @@ Check KEDA `ScaledObject`:
 kubectl get scaledobjects huggingface-qwen-predictor
 ```
 
-:::tip Expected Output
+:::tip[Expected Output]
 ```bash
 NAME                          SCALETARGETKIND      SCALETARGETNAME               MIN   MAX   TRIGGERS     AUTHENTICATION   READY   ACTIVE   FALLBACK   PAUSED    AGE
 huggingface-qwen-predictor   apps/v1.Deployment   huggingface-qwen-predictor   1     5     prometheus                    True    False    False      Unknown   32m
@@ -119,7 +159,7 @@ hey -z 30s -c 5 -m POST -host ${SERVICE_HOSTNAME} \
 http://${INGRESS_HOST}:${INGRESS_PORT}/openai/v1/chat/completions
 ```
 
-:::tip Expected Output
+:::tip[Expected Output]
 ```bash
 Summary:
   Total:	33.2111 secs
@@ -157,7 +197,7 @@ The period to wait after the last trigger reports active before scaling the reso
 $ kubectl get pods -lserving.kserve.io/inferenceservice=huggingface-qwen
 ```
 
-:::tip Expected Output
+:::tip[Expected Output]
 ```bash
 NAME                                                       READY        STATUS            RESTARTS   AGE
 huggingface-qwen-predictor-58f9c58b85-l69f7               1/1          Running           0          2m
@@ -238,7 +278,7 @@ Check KEDA `ScaledObject`:
 kubectl get scaledobjects huggingface-qwen-predictor
 ```
 
-:::tip Expected Output
+:::tip[Expected Output]
 ```bash
 NAME                          SCALETARGETKIND      SCALETARGETNAME               MIN   MAX   TRIGGERS     AUTHENTICATION   READY   ACTIVE   FALLBACK   PAUSED
 huggingface-qwen-predictor   apps/v1.Deployment   huggingface-qwen-predictor   1     5     opentelemetry                   True    False    False      Unknown
@@ -251,7 +291,7 @@ Check `OpenTelemetryCollector`:
 kubectl get opentelemetrycollector huggingface-qwen-predictor
 ```
 
-:::tip Expected Output
+:::tip[Expected Output]
 ```bash
 NAME                          READY   STATUS    RESTARTS   AGE
 huggingface-qwen-predictor   True    Running   0          2m
@@ -259,3 +299,7 @@ huggingface-qwen-predictor   True    Running   0          2m
 :::
 
 Now, you can send [traffic to the InferenceService](#autoscale-inferenceservice-with-concurrent-requests) and observe the autoscaling behavior based on the number of requests running.
+
+## Troubleshooting
+If you encounter issues with your autoscaling setup, consider the following:
+- **Init:OOMKilled**: This indicates that the storage initializer exceeded the memory limits. You can try increasing the memory limits in the `ClusterStorageContainer`.

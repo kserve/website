@@ -113,7 +113,7 @@ For a complete list of models supported by the vLLM backend, please refer to [vL
 
 :::note
 
-The Hugging Face runtime supports other tasks such as `fill_mask`, `token_classification`, and `sequence_classification` using the Hugging Face backend. These are classified under predictive tasks rather than generative tasks.
+The Hugging Face runtime supports other tasks such as `fill_mask`, `token_classification`, and `sequence_classification` using the Hugging Face backend. These are classified under [predictive tasks](../predictive-inference/frameworks/huggingface/overview.md) rather than generative tasks.
 
 :::
 
