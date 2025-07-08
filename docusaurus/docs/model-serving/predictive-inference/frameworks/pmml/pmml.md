@@ -41,10 +41,10 @@ To use KServe PMML server locally, install the required dependencies:
    git clone https://github.com/kserve/kserve
    ```
 
-3. Install the `pmmlserver` runtime using Poetry (ensure you have [Poetry installed](https://python-poetry.org/docs/#installation)):
+3. Install the `pmmlserver` runtime using Uv (ensure you have [Uv installed](https://docs.astral.sh/uv/getting-started/installation/)):
    ```bash
    cd python/pmmlserver
-   poetry install 
+   uv sync
    ```
 
 #### Serving the Model Locally

@@ -31,6 +31,7 @@ You must install these tools:
 4. [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/): For managing Kubernetes clusters and resources.
 5. [`pre-commit`](https://pre-commit.com/): Used to run checks on the codebase before committing changes.
 6. [`helm`](https://helm.sh/docs/intro/install/): Used to install KServe and dependencies.
+7. [`uv`](https://docs.astral.sh/uv/getting-started/installation/): Used to create and manage virtual environments.
 
 ### Setup Your Environment
 
@@ -334,7 +335,7 @@ To set up from local code:
 
 Go to `python/kserve` and install KServe Python SDK deps:
 ```bash
-poetry install --with test
+uv sync --group test --group dev
 ```
 Then go to end to end test directory
 ```shell
@@ -373,7 +374,7 @@ command automatically looks up the module containing the package and adds it to 
 - **If you want to upgrade the go dependency**, then you run the go get command e.g., `go get golang.org/x/text` to upgrade
 to the latest version, `go get golang.org/x/text@v0.3.0` to upgrade to a specific version.
 
-- **If you want to upgrade the python dependency**, then you can add the package to the respective `pyproject.toml` and run `poetry lock` to update the package version.
+- **If you want to upgrade the python dependency**, then you can add the package to the respective `pyproject.toml` and run `uv lock` to update the package version.
 
 You can run `make precommit` to make sure that your code passes all the pre-commit hooks and checks before committing.
 

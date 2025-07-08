@@ -64,10 +64,10 @@ To use KServe LightGBM server locally, install the `lgbserver` runtime package:
    git clone https://github.com/kserve/kserve
    ```
 
-2. Install the `lgbserver` runtime using Poetry (ensure you have [Poetry installed](https://python-poetry.org/docs/#installation)):
+2. Install the `lgbserver` runtime using Uv (ensure you have [Uv installed](https://docs.astral.sh/uv/getting-started/installation/)):
    ```bash
    cd python/lgbserver
-   poetry install 
+   uv sync
    ```
 
 #### Serving the Model Locally
