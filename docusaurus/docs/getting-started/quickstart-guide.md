@@ -95,25 +95,39 @@ Once you have the prerequisites installed and a Kubernetes cluster running, you 
 
 :::warning
     
-KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin-guide/serverless/serverless.md).
+KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin-guide/overview.md).
 
 :::
 
-<!-- TODO: Get the version from the current version of docs -->
+<Tabs groupId="deployment-type">
+<TabItem value="raw" label="Raw Deployment" default>
+
 ```bash
-   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-0.15/hack/quick_install.sh" | bash -r
+   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash -r
 ```
+
+</TabItem>
+<TabItem value="serverless" label="Serverless">
+
+```bash
+   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash
+```
+</TabItem>
+</Tabs>
 
 Verify the installation by checking the status of the KServe components:
 
 ```bash
 kubectl get pods -n kserve
 ```
+:::tip[Verify Installation]
 You should see the KServe controller up and running:
 ```plaintext
-NAME                                         READY   STATUS    RESTARTS   AGE
-kserve-controller-manager-7f5b6c4d8f-abcde   1/1     Running   0          2m
+NAME                                                   READY   STATUS    RESTARTS   AGE
+kserve-controller-manager-7f5b6c4d8f-abcde              1/1     Running   0          2m
+kserve-localmodel-controller-manager-5b8b6574c7-jz42m   1/1     Running   0          2m
 ```
+:::
 
 ## Next Steps
 Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models. Here are some recommended next steps:

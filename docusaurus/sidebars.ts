@@ -23,7 +23,8 @@ const sidebars: SidebarsConfig = {
       label: 'Getting Started',
       items: [
         'getting-started/quickstart-guide',
-        'getting-started/first-isvc',
+        'getting-started/genai-first-isvc',
+        'getting-started/predictive-first-isvc',
         'getting-started/swagger-ui'
       ],
     },
@@ -158,21 +159,13 @@ const sidebars: SidebarsConfig = {
               ]
             },
             // {
-            //   type: 'category',
-            //   label: 'Multi-Model Serving',
-            //   items: [
-            //     "model-serving/predictive-inference/multi-model/scalability",
-            //     "model-serving/predictive-inference/multi-model/modelmesh",
-            //   ]
-            // },
-            // {
-            //   type: 'category',
-            //   label: 'Transformers',
-            //   items: [
-            //     "model-serving/predictive-inference/transformers/custom-transformer",
-            //     "model-serving/predictive-inference/transformers/collocation",
-            //     "model-serving/predictive-inference/transformers/feast",
-            //   ]
+              // type: 'category',
+              // label: 'Transformers (Pre/Post Processing)',
+              // items: [
+              //   "model-serving/predictive-inference/transformers/custom-transformer/custom-transformer",
+                // "model-serving/predictive-inference/transformers/collocation",
+                // "model-serving/predictive-inference/transformers/feast",
+              // ]
             // },
             // {
             //   type: 'category',

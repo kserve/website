@@ -1,3 +1,7 @@
+---
+title: Deploy Your First GenAI Service
+description: Learn how to deploy your first generative AI service using KServe with the Qwen model.
+---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -11,6 +15,10 @@ Since your LLM is deployed as an InferenceService rather than a basic Kubernetes
 
 ### Prerequisites
 Before you begin, ensure you have followed the [KServe Quickstart Guide](quickstart-guide.md) to set up KServe in your Kubernetes cluster. This guide assumes you have a working KServe installation and a Kubernetes cluster ready for deployment.
+
+:::tip
+KServe recommends Raw Deployment for Generative AI use cases.
+:::
 
 ### 1. Create a namespace
 
@@ -287,11 +295,11 @@ kubectl delete inferenceservice qwen-llm -n kserve-test
 kubectl delete namespace kserve-test
 ```
 ### 7. Next Steps
-<!-- TODO: Update next steps -->
+
 Now that you have successfully deployed a generative AI service using KServe, you can explore more advanced features such as:
-- **Autoscaling**: Automatically scale your service based on traffic and resource usage.
-- **Canary Deployments**: Gradually roll out new model versions to test their performance before full deployment.
-- **Multi-model Serving**: Deploy multiple models within the same InferenceService for efficient resource utilization.
-- **Custom Runtimes**: Create custom inference runtimes to support specialized models or frameworks.
-You can also explore the [KServe documentation](https://kserve.github.io/website/) for more information on these features and how to implement them in your applications.
-```
+- 📖 **[KServe Concepts](../concepts/index.md)** - Learn about the core concepts of KServe.
+- 📖 **[Supported Tasks](../model-serving/generative-inference/overview.md#supported-generative-tasks)** - Discover the various tasks that KServe can handle.
+- 📖 **[Autoscaling](../model-serving/generative-inference/autoscaling/autoscaling.md)**: Automatically scale your service based on traffic and resource usage / metrics.
+- 📖 **[KV Cache Offloading](../model-serving/generative-inference/kvcache-offloading/kvcache-offloading.md) - Learn how to offload key-value caches to external storage for improved performance and reduced latency.
+- 📖 **[Model Caching](../model-serving/generative-inference/modelcache/localmodel.md) - Learn how to cache models for faster startup time.
+- 📖 **[Token Rate Limiting](../model-serving/generative-inference/ai-gateway/envoy-ai-gateway.md)** - Rate limit users based on token usage.
