@@ -1,3 +1,7 @@
+---
+title: Get Involved
+description: How to contribute to the KServe community
+---
 # Getting Involved with KServe
 
 Welcome to the KServe community! We're excited to have you contribute to the standard Model Inference Platform on Kubernetes.

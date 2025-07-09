@@ -1,3 +1,8 @@
+---
+title: KServe Presentations and Demos
+description: Collection of KServe presentations, demos, and talks from conferences and community events
+---
+
 # KServe Presentations and Demos
 
 This page contains a collection of presentations, demos, and talks about KServe from various conferences, meetups, and community events.

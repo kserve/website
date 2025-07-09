@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
 
 
   // KServe documentation sidebar
-  tutorialSidebar: [
+  docsSidebar: [
     'intro',
     {
       type: 'category',
@@ -303,6 +303,19 @@ const sidebars: SidebarsConfig = {
       items: [
         'reference/api',
         'reference/client',
+      ],
+    },
+  ],
+  // Community sidebar
+  // This sidebar is used for community-related documentation and links.
+  communitySidebar: [
+    {
+      type: 'category',
+      label: 'Community',
+      items: [
+        'community/get-involved',
+        'community/adopters',
+        'community/presentations',
       ],
     },
   ],

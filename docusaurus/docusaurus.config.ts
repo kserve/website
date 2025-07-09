@@ -99,7 +99,7 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docsSidebar',
           position: 'left',
           label: 'Docs',
         },
@@ -135,7 +135,12 @@ const config: Config = {
             },
           ],
         },
-        { to: '/community', label: 'Community', position: 'right' },
+        {
+          type: 'docSidebar',
+          sidebarId: 'communitySidebar',
+          position: 'right',
+          label: 'Community',
+        },
         {
           href: 'https://github.com/kserve/kserve',
           label: 'GitHub',
