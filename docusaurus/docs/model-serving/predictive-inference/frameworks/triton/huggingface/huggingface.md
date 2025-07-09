@@ -81,7 +81,7 @@ kubectl apply -f huggingface-triton.yaml
 
 ## Performing Model Inference
 
-The first step is to [determine the ingress IP and ports](../../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+The first step is to [determine the ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 ```bash
 MODEL_NAME=bert

@@ -97,7 +97,7 @@ inferenceservice.serving.kserve.io/pmml-demo created
 
 ### Running a Prediction
 
-First, determine the ingress IP and port, then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 Create a file named `iris-input.json` with the following sample input:
 
@@ -169,7 +169,7 @@ kubectl apply -f pmml-v2.yaml
 
 ## Testing the Deployed Model
 
-You can test your deployed model by sending a sample request that follows the [Open Inference Protocol](https://github.com/kserve/open-inference-protocol).
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 Create a file named `iris-input-v2.json` with the following sample input:
 
@@ -336,6 +336,8 @@ kubectl apply -f pmml-grpc.yaml
 ```
 
 ### Testing the gRPC Endpoint with grpcurl
+
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 After the gRPC `InferenceService` becomes ready, use [grpcurl](https://github.com/fullstorydev/grpcurl) to send gRPC requests:
 

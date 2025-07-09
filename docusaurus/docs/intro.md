@@ -85,7 +85,7 @@ KServe consists of two main components:
 
 Ready to deploy your first model? Choose your path:
 
-### 🚀 [Get Started with KServe](./getting-started/first-isvc.md)
+### 🚀 [Get Started with KServe](./getting-started/genai-first-isvc.md)
 Deploy your first GenAI service with Qwen LLM in minutes
 
 ### 🏗️ [Installation Guide](./admin-guide/overview.md)  
@@ -118,7 +118,9 @@ Learn about different serving patterns and frameworks
 
 ## What's Next?
 
-- 📖 **[First InferenceService](./getting-started/first-isvc.md)** - Deploy your first model
+- 📖 **[First GenAI InferenceService](./getting-started/genai-first-isvc.md)** - Deploy your first GenAI model
+- 📖 **[First Predictive InferenceService](./getting-started/predictive-first-isvc.md)** - Deploy your first predictive model
+- 📖 **[KServe Concepts](./concepts/index.md)** - Understand the core concepts of KServe
 - 🔧 **[Administration Guide](./admin-guide/overview.md)** - Install and configure KServe
 - 🎯 **[Model Serving](./concepts/architecture/control-plane.md)** - Learn serving patterns
 - 🌐 **[API Reference](./reference/api.md)** - Explore the complete API
@@ -132,19 +134,16 @@ Learn about different serving patterns and frameworks
 
 ## Learning Path
 
-1. **Start Here**: [Deploy your first model](getting-started/first-isvc.md)
-2. **Learn the Basics**: [Model Serving Guide](./concepts/architecture/control-plane.md)
-3. **API Reference**: [Complete API documentation](reference/api)
-4. **Join the Community**: [See who's using KServe](community/adopters)
+1. **Start Here**: [Deploy your first GenAI model](./getting-started/genai-first-isvc.md) or [Deploy your first predictive model](./getting-started/predictive-first-isvc.md) 
+1. **Learn the Basics**: [Model Serving Guide](./concepts/architecture/control-plane.md)
+1. **API Reference**: [Complete API documentation](./reference/api.md)
+1. **Join the Community**: [See who's using KServe](./community/get-involved.md)
 
 ## Need Help?
 
 - 💬 Join our [Slack community](https://slack.cncf.io/)
 - 🐛 Report issues on [GitHub](https://github.com/kserve/kserve/issues)
-- 📖 Browse the [API reference](reference/api)
-<!-- TODO: update the link -->
-- 🎯 Check out [real-world examples](https://github.com/kserve/kserve/tree/master/docs/samples)
-
+- 📖 Browse the [API reference](./reference/api.md)
 ---
 
 *KServe is a [CNCF](https://cncf.io) incubating project and part of the [Kubeflow](https://kubeflow.org) ecosystem.*

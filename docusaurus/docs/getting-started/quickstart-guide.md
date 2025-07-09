@@ -130,5 +130,8 @@ kserve-localmodel-controller-manager-5b8b6574c7-jz42m   1/1     Running   0     
 :::
 
 ## Next Steps
+
 Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models. Here are some recommended next steps:
-- 📖 **[First InferenceService](first-isvc.md)** - Deploy your first model using InferenceService.
+
+- 📖 **[First GenAI InferenceService](genai-first-isvc.md)** - Deploy your first GenAI model using InferenceService.
+- 📖 **[First Predictive InferenceService](predictive-first-isvc.md)** - Deploy your first predictive model using InferenceService.

@@ -287,6 +287,6 @@ sklearn-iris  http://sklearn-iris.default.svc.cluster.local   True           100
 
 ## Next Steps
 
-- [Deploy your first InferenceService](../getting-started/first-isvc.md)
-- Configure auto-scaling for your models
-- Set up monitoring for your inference services
+- [Deploy your first GenAI InferenceService](../getting-started/genai-first-isvc.md).
+- [Deploy your first Predictive InferenceService](../getting-started/predictive-first-isvc.md).
+- Configure [auto-scaling](../model-serving/generative-inference/autoscaling/autoscaling.md) for your GenAI models.

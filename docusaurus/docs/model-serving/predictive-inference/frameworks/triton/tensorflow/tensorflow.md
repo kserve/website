@@ -203,7 +203,7 @@ bert-v2-transformer-default-sd6nc   bert-v2-transformer-default   bert-v2-transf
 
 ## Running a Prediction
 
-First, determine the [ingress IP and ports](../../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+First, determine the [ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 Send a question request with the following input. The transformer expects a list of `instances` or `inputs` and preprocesses them into the expected tensor format for the Triton Inference Server:
 

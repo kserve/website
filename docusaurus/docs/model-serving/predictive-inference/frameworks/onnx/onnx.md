@@ -62,7 +62,7 @@ inferenceservice.serving.kserve.io/style-sample configured
 
 ### 1. Set Up Environment Variables
 
-First, determine the ingress IP and ports and set the necessary environment variables:
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 ```bash
 export ISVC_NAME=style-sample

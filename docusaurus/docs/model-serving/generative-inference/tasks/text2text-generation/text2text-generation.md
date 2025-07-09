@@ -51,8 +51,7 @@ spec:
   supportedUriFormats:
     - prefix: hf://
 ```
-<!-- TODO: FIX DOC LINK -->
-To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
+To know more about storage containers, refer to the [Storage Containers documentation](../../../storage/storage-containers/storage-containers.md).
 
 ## Deploy T5 Model
 
@@ -131,7 +130,7 @@ The T5 model supports the OpenAI-compatible API endpoints for inference. Set up 
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-t5 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-Determine your ingress information as per [KServe documentation](../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT` accordingly.
+Determine your ingress information as per [KServe documentation](../../../../getting-started/genai-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT` accordingly.
 
 ### Using the Completions API
 

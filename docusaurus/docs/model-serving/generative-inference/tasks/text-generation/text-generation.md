@@ -42,8 +42,7 @@ kubectl apply -f hf-secret.yaml
 
 To enable KServe to access Hugging Face models, you need to create a `ClusterStorageContainer` that uses the Hugging Face token secret. This allows KServe to authenticate and download models from the Hugging Face Hub.
 
-<!-- TODO: FIX DOC LINK -->
-To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
+To know more about storage containers, refer to the [Storage Containers documentation](../../../storage/storage-containers/storage-containers.md).
 
 ```yaml title="huggingface-storage.yaml"
 apiVersion: "serving.kserve.io/v1alpha1"
@@ -183,7 +182,7 @@ SERVICE_NAME=llama3-8b
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${SERVICE_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-Determine your ingress information as per [KServe documentation](../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports)
+Determine your ingress information as per [KServe documentation](../../../../getting-started/genai-first-isvc.md#4-determine-the-ingress-ip-and-ports)
 and set INGRESS_HOST and INGRESS_PORT accordingly.
 
 

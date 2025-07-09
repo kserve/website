@@ -73,7 +73,7 @@ spec:
             <div className={styles.quickStartCTA}>
               <Link
                 className="button button--primary button--lg"
-                to="/docs/getting-started/first-isvc">
+                to="/docs/getting-started/genai-first-isvc">
                 Detailed Guide
               </Link>
             </div>

@@ -56,8 +56,7 @@ spec:
   supportedUriFormats:
     - prefix: hf://
 ```
-<!-- TODO: FIX DOC LINK -->
-To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
+To know more about storage containers, refer to the [Storage Containers documentation](../../storage/storage-containers/storage-containers.md).
 
 ## Autoscale based on metrics from Prometheus
 
@@ -146,7 +145,7 @@ huggingface-qwen-predictor   apps/v1.Deployment   huggingface-qwen-predictor   1
 
 ### Autoscale `InferenceService` with Concurrent Requests
 
-The first step is to [determine the ingress IP and ports](../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../getting-started/genai-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 Send traffic in 30 seconds spurts maintaining 5 in-flight requests.
 

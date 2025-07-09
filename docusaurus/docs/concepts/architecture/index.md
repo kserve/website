@@ -22,4 +22,4 @@ KServe offers two powerful deployment modes to fit diverse operational needs:
 
 ## What's Next?
 
-Continue to the [Control Plane](control-plane.md) or [Data Plane](./data-plane/data-plane.md) documentation for a deeper technical dive, or explore the [Resources](../resources/) section to understand KServe's custom Kubernetes resources.
+Continue to the [Control Plane](control-plane.md) or [Data Plane](./data-plane/data-plane.md) documentation for a deeper technical dive, or explore the [Resources](../resources/index.md) section to understand KServe's custom Kubernetes resources.

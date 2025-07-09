@@ -128,7 +128,7 @@ kubectl wait --for=condition=Ready inferenceservice spark-pmml
 
 ### Running a Prediction
 
-First, determine the ingress IP and port, then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 Create a file named `iris-input.json` with the following sample input:
 
@@ -202,7 +202,7 @@ kubectl apply -f spark-iris.yaml
 
 ### Testing the Deployed Model
 
-You can test your deployed model by sending a sample request following the [Open Inference Protocol](https://github.com/kserve/open-inference-protocol).
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 Create a file named `iris-input-v2.json` with the following sample input:
 
@@ -344,6 +344,8 @@ kubectl apply -f spark-iris-grpc.yaml
 ```
 
 ### Testing the gRPC Endpoint with grpcurl
+
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 After the gRPC `InferenceService` becomes ready, use [grpcurl](https://github.com/fullstorydev/grpcurl) to send gRPC requests:
 

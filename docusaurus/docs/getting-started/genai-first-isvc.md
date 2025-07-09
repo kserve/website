@@ -106,14 +106,32 @@ kubectl create secret generic hf-secret \
 -n kserve-test
 ```
     
-Then add the environment variable to your InferenceService:
+Then create a `clusterstoragecontainer` resource with the secret reference:
 ```yaml
-env:
-  - name: HF_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: hf-secret
-        key: HF_TOKEN
+apiVersion: "serving.kserve.io/v1alpha1"
+kind: ClusterStorageContainer
+metadata:
+  name: hf-hub
+spec:
+  container:
+    name: storage-initializer
+    image: kserve/storage-initializer:latest
+    env:
+    - name: HF_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: hf-secret
+          key: HF_TOKEN
+          optional: false
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: "1"
+      limits:
+        memory: 4Gi
+        cpu: "1"
+  supportedUriFormats:
+    - prefix: hf://
 ```
 
 :::

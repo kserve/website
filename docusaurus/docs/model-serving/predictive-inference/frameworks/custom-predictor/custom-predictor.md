@@ -217,7 +217,7 @@ $ inferenceservice.serving.kserve.io/custom-model created
 :::
 
 ### Run a Prediction
-The first step is to [determine the ingress IP and ports](../../../../getting-started/first-isvc#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=custom-model
@@ -453,7 +453,7 @@ $ inferenceservice.serving.kserve.io/custom-model-grpc created
 :::
 
 ### Run a gRPC Prediction
-The first step is to [determine the ingress IP and ports](../../../../getting-started/first-isvc#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
+The first step is to [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`
 
 ```bash
 MODEL_NAME=custom-model

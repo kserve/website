@@ -124,7 +124,7 @@ Apply the YAML manifest:
 kubectl apply -f xgboost.yaml
 ```
 
-## Testing the Deployed Model
+### Testing the Deployed Model
 
 You can test your deployed model by sending a sample request that follows the [Open Inference Protocol](https://github.com/kserve/open-inference-protocol).
 
@@ -146,7 +146,7 @@ Here's an example input payload (`iris-input.json`):
 }
 ```
 
-First, determine the ingress IP and port, then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 Send the inference request:
  
@@ -241,6 +241,8 @@ kubectl apply -f xgboost-grpc.yaml
 ```
 
 ### Testing the gRPC Endpoint with grpcurl
+
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 After the gRPC `InferenceService` becomes ready, use [grpcurl](https://github.com/fullstorydev/grpcurl) to send gRPC requests:
 

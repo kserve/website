@@ -232,6 +232,22 @@ const sidebars: SidebarsConfig = {
             //   ]
             // }
           ]
+        },
+        {
+          type: 'category',
+          label: 'InferenceGraph',
+          items: [
+            'model-serving/inferencegraph/overview',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Model Storage',
+          items: [
+            'model-serving/storage/overview',
+            'model-serving/storage/storage-containers/storage-containers',
+            'model-serving/storage/hf'
+          ],
         }
       ],
     },
@@ -281,12 +297,14 @@ const sidebars: SidebarsConfig = {
         'developer-guide/debugging',
       ],
     },
-    // {
-    //   type: 'category',
-    //   label: 'API Reference',
-    //   items: [
-    //   ],
-    // },
+    {
+      type: 'category',
+      label: 'API Reference',
+      items: [
+        'reference/api',
+        'reference/client',
+      ],
+    },
   ],
 };
 

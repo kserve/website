@@ -179,7 +179,7 @@ kubectl apply -f torchscript.yaml
 
 ### Run a Prediction with curl
 
-First, determine the [ingress IP and ports](../../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+First, determine the [ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
 
 The latest Triton Inference Server uses the KServe [prediction V2 protocol](https://github.com/kserve/kserve/tree/master/docs/predict-api/v2), so the input request needs to follow the V2 schema with the specified data type and shape.
 

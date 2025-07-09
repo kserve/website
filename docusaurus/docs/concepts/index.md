@@ -17,13 +17,14 @@ KServe follows a clean separation between control plane and data plane component
 
 KServe extends Kubernetes with custom resources for declarative model serving:
 
-- **[Resources Overview](resources/)**: Complete guide to KServe custom resources and their relationships
-- **[InferenceService](resources/inference-service.md)**: The primary resource for deploying and managing model serving workloads
-- **[InferenceGraph](resources/inference-graph.md)**: Orchestrates complex multi-model inference workflows
-- **[ServingRuntime](resources/serving-runtime.md)**: Defines runtime environments for serving models
-- **[StorageContainer](resources/storage-container.md)**: Manages model storage and access patterns
+- **[InferenceService](./resources/index.md#inferenceservice)**: The primary resource for deploying and managing model serving workloads
+- **[InferenceGraph](./resources/index.md#inferencegraph)**: Orchestrates complex multi-model inference workflows
+- **[ServingRuntime](./resources/index.md#clusterservingruntime--servingruntime)**: Defines runtime environments for serving models
+- **[StorageContainer](./resources/index.md#storage-resources)**: Manages model storage and access patterns
+- **[LocalModelCache](./resources/index.md#local-model-cache-resources)**: Enables local model caching and management
+- **[Configuration Resources](./resources/index.md#configuration-resources)**: Standard Kubernetes resources used for KServe configuration
 
 ## Next Steps
 
-Ready to dive deeper? Start with the [Architecture](./architecture/index.md) section to understand how KServe works under the hood, or jump to [Resources](resources/) to learn about the specific Kubernetes resources that power KServe.
+Ready to dive deeper? Start with the [Architecture](./architecture/index.md) section to understand how KServe works under the hood, or jump to [Resources](./resources/index.md) to learn about the specific Kubernetes resources that power KServe.
 

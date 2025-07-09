@@ -199,7 +199,7 @@ Download our speaker kit for your presentations:
 Want to give a presentation about KServe or invite a speaker to your event?
 
 - **Email**: [speakers@kserve.org](mailto:speakers@kserve.org)
-- **Slack**: [#kserve](https://kubeflow.slack.com/archives/C06982X42KC) on Kubeflow Slack
+- **Slack**: [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) on CNCF Slack
 - **GitHub**: [Create an issue](https://github.com/kserve/community/issues/new)
 
 We're always happy to support community events and help spread the word about KServe!

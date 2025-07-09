@@ -57,8 +57,7 @@ spec:
   supportedUriFormats:
     - prefix: hf://
 ```
-<!-- TODO: FIX DOC LINK -->
-To know more about storage containers, refer to the [Storage Containers documentation](../../../concepts/storage_containers.md).
+To know more about storage containers, refer to the [Storage Containers documentation](../../../../storage/storage-containers/storage-containers.md).
 
 ### Deploy with the V1 Protocol
 
@@ -112,13 +111,13 @@ huggingface-bert     http://huggingface-bert.default.example.com           True 
 
 #### Perform Model Inference with V1 Protocol
 
+The first step is to [determine the ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+
 Set up the environment variables:
 
 ```bash
 MODEL_NAME=bert
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-bert -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
 ```
 
 Send a prediction request:
@@ -188,13 +187,13 @@ huggingface-bert     http://huggingface-bert.default.example.com           True 
 
 #### Perform Model Inference with V2 Protocol
 
+The first step is to [determine the ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+
 Set up the environment variables:
 
 ```bash
 MODEL_NAME=bert
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-bert -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
 ```
 
 Send a prediction request:

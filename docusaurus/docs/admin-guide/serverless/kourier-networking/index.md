@@ -115,7 +115,7 @@ inferenceservice.serving.kserve.io/pmml-demo created
 
 ### Run a Prediction
 
-Note that when setting `INGRESS_HOST` and `INGRESS_PORT` following the [determining the ingress IP and ports](../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) guide you
+Note that when setting `INGRESS_HOST` and `INGRESS_PORT` following the [determining the ingress IP and ports](../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) guide you
 need to replace `istio-ingressgateway` with `kourier-gateway`.
 
 For example if you choose to do `Port Forward` for testing you need to select the `kourier-gateway` pod as following.

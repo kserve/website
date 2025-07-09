@@ -17,7 +17,7 @@ Found a bug or have a feature request? Help us improve KServe:
 #### Getting Started
 
 1. **Fork the Repository**: [Fork KServe on GitHub](https://github.com/kserve/kserve/fork)
-2. **Set Up Development Environment**: Follow our [development guide](../developer/developer.md)
+2. **Set Up Development Environment**: Follow our [development guide](../developer-guide/index.md)
 3. **Find an Issue**: Look for [`good first issue`](https://github.com/kserve/kserve/labels/good%20first%20issue) labels
 4. **Submit a Pull Request**: Follow our contribution guidelines
 
@@ -42,7 +42,7 @@ Help make KServe more accessible:
 
 #### Join Our Discussions
 
-- **Slack**: Join [#kserve](https://kubeflow.slack.com/archives/C06982X42KC) on Kubeflow Slack
+- **Slack**: Join [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) on Kubeflow Slack
 - **Mailing List**: Subscribe to [kserve-dev@lists.lfaidata.foundation](mailto:kserve-dev@lists.lfaidata.foundation)
 - **GitHub Discussions**: Participate in [GitHub Discussions](https://github.com/kserve/kserve/discussions)
 
@@ -142,9 +142,9 @@ Experienced contributors can help newcomers:
 
 ### Documentation
 
-- **[Developer Guide](../developer/developer.md)**: Development setup and guidelines
-- **[API Reference](../reference/api)**: Complete API documentation
-- **[Architecture Guide](../modelserving/control_plane)**: Understanding KServe architecture
+- **[Developer Guide](../developer-guide/index.md)**: Development setup and guidelines
+- **[API Reference](../reference/api.md)**: Complete API documentation
+- **[Architecture Guide](../concepts/architecture/index.md)**: Understanding KServe architecture
 
 ### Tools and Infrastructure
 
@@ -177,4 +177,4 @@ KServe is licensed under the [Apache 2.0 License](https://github.com/kserve/kser
 
 Thank you for your interest in contributing to KServe! Your contributions help make model serving on Kubernetes better for everyone.
 
-Ready to get started? Check out our [developer guide](../developer/developer.md) or join our [Slack community](https://kubeflow.slack.com/archives/C06982X42KC)!
+Ready to get started? Check out our [developer guide](../developer-guide/index.md) or join our [Slack community](https://cloud-native.slack.com/archives/C06AH2C3K8B)!

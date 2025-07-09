@@ -648,6 +648,5 @@ spec:
 
 ## Next Steps
 
-- Explore the [Data Plane](data_plane/data_plane.md) to understand inference execution
-- Learn about [Resources](../resources/) to understand KServe custom resources
-- Review deployment guides for your specific environment
+- Explore the [Data Plane](./data-plane/data-plane.md) to understand inference execution.
+- Learn about [Resources](../resources/index.md) to understand KServe custom resources.

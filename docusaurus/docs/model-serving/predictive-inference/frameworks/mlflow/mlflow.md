@@ -216,7 +216,8 @@ You can test your deployed model by sending a sample request following the [Open
 
 Use our sample input file [mlflow-input.json](./mlflow-input.json) to test the model:
 
-Determine your ingress IP and port and send the inference request:
+[Determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+
 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice mlflow-v2-wine-classifier -o jsonpath='{.status.url}' | cut -d "/" -f 3)

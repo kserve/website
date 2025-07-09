@@ -414,4 +414,4 @@ The gRPC implementation offers a high-performance alternative with strong typing
 
 ### General Resources
 - Explore [Control Plane](../control-plane.md) to understand service management
-- Learn about [Resources](../../resources/) to understand KServe custom resources
+- Learn about [Resources](../../resources/index.md) to understand KServe custom resources

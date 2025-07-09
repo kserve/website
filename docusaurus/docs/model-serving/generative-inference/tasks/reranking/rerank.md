@@ -65,8 +65,7 @@ spec:
   supportedUriFormats:
     - prefix: hf://
 ```
-<!-- TODO: FIX DOC LINK -->
-To know more about storage containers, refer to the Storage Containers documentation.
+To know more about storage containers, refer to the [Storage Containers](../../../storage/storage-containers/storage-containers.md) documentation.
 
 ## Deploy Reranker Model
 
@@ -138,7 +137,7 @@ SERVICE_NAME="reranker-model"
 SERVICE_HOSTNAME=$(kubectl get inferenceservice ${SERVICE_NAME} -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-Determine your ingress information as per [KServe documentation](../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT` accordingly.
+Determine your ingress information as per [KServe documentation](../../../../getting-started/genai-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT` accordingly.
 
 ### Generating Relevance Scores
 

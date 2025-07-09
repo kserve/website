@@ -21,7 +21,7 @@ Serverless deployment is particularly well-suited for predictive inference workl
 - Knative's request-based scaling aligns with the traffic patterns of many predictive workloads
 - Canary deployments and revisions enable safe updates to predictive models
 
-For generative inference workloads that typically require GPU resources and have longer processing times, the [Raw Kubernetes Deployment](../kubernetes_deployment) approach is recommended.
+For generative inference workloads that typically require GPU resources and have longer processing times, the [Raw Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
 
 Kubernetes 1.30 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.
@@ -47,7 +47,7 @@ Knative 1.13.1 requires Istio 1.20+, gRPC routing does not work with previous Is
 
 ## 2. Install Networking Layer
 The recommended networking layer for KServe is [Istio](https://istio.io/) as currently it works best with KServe, please refer to the [Istio install guide](https://knative.dev/docs/admin/install/installing-istio).
-Alternatively you can also choose other networking layers like [Kourier](https://github.com/knative-sandbox/net-kourier) or [Contour](https://projectcontour.io/), see [how to install Kourier with KServe guide](./kourier_networking/index).
+Alternatively you can also choose other networking layers like [Kourier](https://github.com/knative-sandbox/net-kourier) or [Contour](https://projectcontour.io/), see [how to install Kourier with KServe guide](./kourier-networking/index.md).
 
 ## 3. Install Cert Manager
 The minimally required Cert Manager version is 1.15.0 and you can refer to [Cert Manager](https://cert-manager.io/docs/installation/).

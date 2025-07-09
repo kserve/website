@@ -93,7 +93,8 @@ inferenceservice.serving.kserve.io/paddle-resnet50 created
 
 ### Running a Prediction
 
-First, determine the ingress IP and port, then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+
 
 For testing the model, you'll need to prepare an image for classification. You can use the provided Python scripts img_preprocess.py and img2json.py to preprocess an image and convert it to the required JSON format:
 
@@ -234,7 +235,7 @@ kubectl apply -f paddle-v2.yaml
 
 ## Testing the Deployed Model
 
-You can test your deployed model by sending a sample request that follows the [Open Inference Protocol](https://github.com/kserve/open-inference-protocol).
+First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 Create a file named `jay-v2.json` with your sample input, or use the provided sample file [jay-v2.json](./jay-v2.json):
 
@@ -356,6 +357,9 @@ INPUT_PATH=jay-v2-grpc.json
 PROTO_FILE=open_inference_grpc.proto
 SERVICE_HOSTNAME=$(kubectl get inferenceservice paddle-v2-resnet50-grpc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
+
+[Determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+
 
 First, check if the server is ready:
 

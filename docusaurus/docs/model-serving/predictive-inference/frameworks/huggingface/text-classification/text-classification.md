@@ -110,13 +110,13 @@ huggingface-distilbert   http://huggingface-distilbert.default.example.com     T
 
 #### Perform Model Inference with V1 Protocol
 
+The first step is to [determine the ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+
 Set up the environment variables:
 
 ```bash
 MODEL_NAME=distilbert
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-distilbert -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
 ```
 
 Send a prediction request:
@@ -185,13 +185,13 @@ huggingface-distilbert   http://huggingface-distilbert.default.example.com     T
 
 #### Perform Model Inference with V2 Protocol
 
+The first step is to [determine the ingress IP and ports](../../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) and set `INGRESS_HOST` and `INGRESS_PORT`.
+
 Set up the environment variables:
 
 ```bash
 MODEL_NAME=distilbert
 SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-distilbert -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-INGRESS_HOST=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].port}')
 ```
 
 Send a prediction request:

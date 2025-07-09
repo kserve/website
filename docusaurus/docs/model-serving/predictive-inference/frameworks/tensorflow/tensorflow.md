@@ -69,11 +69,11 @@ flower-sample   http://flower-sample.default.example.com   True           100   
 ```
 :::
 
-## Running a Prediction
+### Running a Prediction
 
 To test your deployed model:
 
-1. First, [determine the ingress IP and ports](../../../../getting-started/first-isvc.md#4-determine-the-ingress-ip-and-ports) for your cluster.
+1. First, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports) for your cluster.
 2. Set the `INGRESS_HOST` and `INGRESS_PORT` environment variables accordingly.
 3. Use the following command to send a prediction request with [sample input](./input.json):
 

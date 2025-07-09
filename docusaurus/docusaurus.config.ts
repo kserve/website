@@ -23,8 +23,8 @@ const config: Config = {
   projectName: 'KServe-New-Website', // Usually your repo name.
   trailingSlash: false,
 
-  onBrokenLinks: 'warn',   // TODO: Change to 'throw' in production
-  onBrokenMarkdownLinks: 'warn', // TODO: Change to 'throw' in production
+  onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -151,15 +151,19 @@ const config: Config = {
           items: [
             {
               label: 'Get Started',
-              to: '/docs/getting-started/first-isvc',
+              to: '/docs/getting-started/quickstart-guide',
+            },
+            {
+              label: 'GenAI Model Serving Guide',
+              to: '/docs/model-serving/generative-inference/overview',
+            },
+            {
+              label: 'Predictive AI Model Serving Guide',
+              to: '/docs/model-serving/predictive-inference/frameworks/overview',
             },
             {
               label: 'API Reference',
               to: '/docs/reference/api',
-            },
-            {
-              label: 'Model Serving Guide',
-              to: '/docs/modelserving/control_plane',
             },
           ],
         },
@@ -168,11 +172,11 @@ const config: Config = {
           items: [
             {
               label: 'Slack',
-              href: 'https://kubeflow.slack.com/',
+              href: 'https://cloud-native.slack.com/archives/C06AH2C3K8B',
             },
             {
               label: 'Twitter',
-              href: 'https://twitter.com/kubeflow',
+              href: 'https://twitter.com/kserve',
             },
             {
               label: 'Adopters',
@@ -193,7 +197,7 @@ const config: Config = {
             },
             {
               label: 'Community Meetings',
-              href: 'https://github.com/kserve/website/tree/main/docs/community',
+              href: 'https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month',
             },
           ],
         },

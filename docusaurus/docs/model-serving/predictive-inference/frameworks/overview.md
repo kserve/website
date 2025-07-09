@@ -23,7 +23,7 @@ KServe supports multiple model serving runtimes including:
 - **[SKLearn ModelServer](https://github.com/kserve/kserve/tree/master/python/sklearnserver)** - Specialized for SKLearn models.
 - **[PaddlePaddle ModelServer](https://github.com/kserve/kserve/tree/master/python/paddlepaddle)** - Specialized for PaddlePaddle models.
 
-These runtimes provide out-of-the-box model serving capabilities. For more complex use cases, you can build [custom model servers](../custom-model-servers.md) using KServe's API primitives or tools like [BentoML](https://docs.bentoml.org/en/latest).
+These runtimes provide out-of-the-box model serving capabilities. For more complex use cases, you can build [custom model servers](../../predictive-inference/frameworks/custom-predictor/custom-predictor.md) using KServe's API primitives or tools like [BentoML](https://docs.bentoml.org/en/latest).
 
 ## Key Features
 

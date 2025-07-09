@@ -29,7 +29,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/getting-started/first-isvc">
+            to="/docs/getting-started/genai-first-isvc">
             Get Started
           </Link>
           <Link

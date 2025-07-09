@@ -20,13 +20,8 @@ export default function HomepageCallToAction() {
             <div className={styles.ctaButtons}>
               <Link
                 className={clsx('button button--primary button--lg', styles.ctaButton)}
-                to="/docs/getting-started/first-isvc">
+                to="/docs/getting-started/genai-first-isvc">
                 Get Started
-              </Link>
-              <Link
-                className={clsx('button button--secondary button--lg', styles.ctaButton)}
-                to="https://github.com/kserve/kserve/tree/master/docs/samples">
-                View Samples
               </Link>
               <Link
                 className={clsx('button button--outline button--lg', styles.ctaButton)}
