@@ -1,5 +1,5 @@
 ---
-title: KServe Presentations and Demos
+title: Presentations and Demos
 description: Collection of KServe presentations, demos, and talks from conferences and community events
 ---
 

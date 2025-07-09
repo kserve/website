@@ -180,8 +180,12 @@ const config: Config = {
               href: 'https://cloud-native.slack.com/archives/C06AH2C3K8B',
             },
             {
-              label: 'Twitter',
-              href: 'https://twitter.com/kserve',
+              label: 'Community Meetings',
+              href: 'https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month',
+            },
+            {
+              label: 'Get Involved',
+              to: '/docs/community/get-involved',
             },
             {
               label: 'Adopters',
@@ -197,13 +201,14 @@ const config: Config = {
               to: '/blog',
             },
             {
+              label: 'Presentations',
+              to: '/docs/community/presentations',
+            },
+            {
               label: 'GitHub',
               href: 'https://github.com/kserve/kserve',
             },
-            {
-              label: 'Community Meetings',
-              href: 'https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month',
-            },
+            
           ],
         },
       ],

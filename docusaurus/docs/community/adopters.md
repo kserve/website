@@ -2,6 +2,7 @@
 title: Adopters
 description: Organizations using KServe for ML/AI model serving
 ---
+
 # KServe Adopters
 
 KServe is trusted by organizations worldwide for production machine learning model serving. Here are some of the companies and projects using KServe to power their ML infrastructure.
