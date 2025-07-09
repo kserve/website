@@ -70,10 +70,7 @@ const sidebars: SidebarsConfig = {
             id: 'concepts/resources/index',
           },
           items: [
-            // "concepts/resources/inferenceservice",
-            // "concepts/resources/inferencegraph",
-            // "concepts/resources/servingruntime",
-            // "concepts/resources/localmodel",
+            "concepts/resources/servingruntime",
           ],
         },
       ],
