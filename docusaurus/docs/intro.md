@@ -123,7 +123,7 @@ Learn about different serving patterns and frameworks
 - 📖 **[KServe Concepts](./concepts/index.md)** - Understand the core concepts of KServe
 - 🔧 **[Administration Guide](./admin-guide/overview.md)** - Install and configure KServe
 - 🎯 **[Model Serving](./concepts/architecture/control-plane.md)** - Learn serving patterns
-- 🌐 **[API Reference](./reference/api.md)** - Explore the complete API
+- 🌐 **[API Reference](./reference/api.mdx)** - Explore the complete API
 - 👥 **[Community](./community/adopters.md)** - Join the KServe community
 
 ## Community & Support
@@ -136,14 +136,14 @@ Learn about different serving patterns and frameworks
 
 1. **Start Here**: [Deploy your first GenAI model](./getting-started/genai-first-isvc.md) or [Deploy your first predictive model](./getting-started/predictive-first-isvc.md) 
 1. **Learn the Basics**: [Model Serving Guide](./concepts/architecture/control-plane.md)
-1. **API Reference**: [Complete API documentation](./reference/api.md)
+1. **API Reference**: [Complete API documentation](./reference/api.mdx)
 1. **Join the Community**: [See who's using KServe](./community/get-involved.md)
 
 ## Need Help?
 
 - 💬 Join our [Slack community](https://slack.cncf.io/)
 - 🐛 Report issues on [GitHub](https://github.com/kserve/kserve/issues)
-- 📖 Browse the [API reference](./reference/api.md)
+- 📖 Browse the [API reference](./reference/api.mdx)
 ---
 
 *KServe is a [CNCF](https://cncf.io) incubating project and part of the [Kubeflow](https://kubeflow.org) ecosystem.*

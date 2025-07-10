@@ -15,8 +15,8 @@ KServe introduces several Custom Resource Definitions (CRDs) that allow you to d
 ### InferenceService
 The primary resource for deploying and managing model serving workloads:
 
-- **[InferenceService](../../reference/api.md#inferenceservice)**: The main abstraction for deploying models with automatic scaling, versioning, and traffic management
-- **[InferenceService Spec](../../reference/api.md#inferenceservice)**: Detailed specification reference for InferenceService configurations
+- **[InferenceService](../../reference/api.mdx#inferenceservice)**: The main abstraction for deploying models with automatic scaling, versioning, and traffic management
+- **[InferenceService Spec](../../reference/api.mdx#inferenceservice)**: Detailed specification reference for InferenceService configurations
 
 ### InferenceGraph
 Orchestrates complex multi-model inference workflows:
@@ -46,9 +46,9 @@ Manage model storage and access patterns:
 ### LocalModel & LocalModelNode
 Enables local model caching and management:
 - **[Concepts](../../model-serving/generative-inference/modelcache/localmodel.md)**: Overview of local model caching in KServe.
-- **[LocalModelCache](../../reference/api.md)**: CRD that Defines local model caching requirements and policies
-- **[LocalModelNode](../../reference/api.md)**: CRD that handles Node-level model caching management
-- **[LocalModelNodeGroup](../../reference/api.md)**: CRD for Grouping of local model nodes for management and orchestration of cached models
+- **[LocalModelCache](../../reference/api.mdx)**: CRD that Defines local model caching requirements and policies
+- **[LocalModelNode](../../reference/api.mdx)**: CRD that handles Node-level model caching management
+- **[LocalModelNodeGroup](../../reference/api.mdx)**: CRD for Grouping of local model nodes for management and orchestration of cached models
 
 ## Configuration Resources
 
@@ -80,7 +80,7 @@ Understanding how KServe resources interact with each other:
 ## API Reference
 
 For complete API specifications, see:
-- [KServe API Reference](../../reference/api.md)
+- [KServe API Reference](../../reference/api.mdx)
 
 ## Next Steps
 

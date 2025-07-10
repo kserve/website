@@ -147,7 +147,7 @@ Experienced contributors can help newcomers:
 ### Documentation
 
 - **[Developer Guide](../developer-guide/index.md)**: Development setup and guidelines
-- **[API Reference](../reference/api.md)**: Complete API documentation
+- **[API Reference](../reference/api.mdx)**: Complete API documentation
 - **[Architecture Guide](../concepts/architecture/index.md)**: Understanding KServe architecture
 
 ### Tools and Infrastructure
