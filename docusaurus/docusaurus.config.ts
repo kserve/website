@@ -2,6 +2,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import rehypeExternalLinks from 'rehype-external-links'
+import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -40,7 +41,12 @@ const config: Config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    // This theme is used to render mermaid diagrams in markdown files
+    '@docusaurus/theme-mermaid',
+    // This theme is used to render OpenAPI documentation
+    'docusaurus-theme-openapi-docs'
+  ],
 
   presets: [
     [
@@ -54,6 +60,8 @@ const config: Config = {
             'https://github.com/kserve/website/tree/main/docusaurus/',
           lastVersion: 'current',
           rehypePlugins: [rehypeExternalLinks],
+          // Used by OpenAPI Plugin for Open Inference Protocol API documentation.
+          docItemComponent: "@theme/ApiItem",
         },
         blog: {
           showReadingTime: true,
@@ -220,6 +228,7 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
+    // Custom Plugin to replace variables in markdown files
     [
       require.resolve('./plugins/markdown-variable-replacer/index.ts'),
       {
@@ -228,6 +237,26 @@ const config: Config = {
         },
       },
     ],
+    // OpenAPI Docs Plugin for Open Inference Protocol API documentation.
+    // This plugin generates API documentation from OpenAPI specs
+    // https://github.com/PaloAltoNetworks/docusaurus-openapi-docs
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: "oip", // plugin id
+        docsPluginId: "classic", // configured for preset-classic
+        config: {
+          oip: {
+            specPath: "https://raw.githubusercontent.com/kserve/open-inference-protocol/main/specification/protocol/open_inference_rest.yaml",
+            outputDir: "docs/reference/oip",
+            hideSendButton: false,
+            sidebarOptions: {
+              groupPathsBy: "tag",
+            },
+          } satisfies OpenApiPlugin.Options,
+        }
+      },
+    ]
   ],
 };
 

@@ -156,13 +156,13 @@ const sidebars: SidebarsConfig = {
               ]
             },
             // {
-              // type: 'category',
-              // label: 'Transformers (Pre/Post Processing)',
-              // items: [
-              //   "model-serving/predictive-inference/transformers/custom-transformer/custom-transformer",
-                // "model-serving/predictive-inference/transformers/collocation",
-                // "model-serving/predictive-inference/transformers/feast",
-              // ]
+            // type: 'category',
+            // label: 'Transformers (Pre/Post Processing)',
+            // items: [
+            //   "model-serving/predictive-inference/transformers/custom-transformer/custom-transformer",
+            // "model-serving/predictive-inference/transformers/collocation",
+            // "model-serving/predictive-inference/transformers/feast",
+            // ]
             // },
             // {
             //   type: 'category',
@@ -301,11 +301,83 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'API Reference',
       items: [
-        'reference/api',
-        'reference/client',
+        'reference/crd-api',
+        {
+          type: 'category',
+          label: 'Inference Client SDK',
+          items: [
+            'reference/inference-client/inference-rest-client',
+            'reference/inference-client/inference-grpc-client',
+          ],
+        },
+        'reference/pyton-runtime-sdk',
+        'reference/controlplane-client/controlplane-client-sdk',
+        {
+          type: 'category',
+          label: 'Open Inference Protocol (OIP)',
+          items: [
+            {
+              type: 'category',
+              label: 'REST API',
+              items: [
+                {
+                  type: 'doc',
+                  id: 'reference/oip/data-plane',
+                },
+                {
+                  type: 'doc',
+                  id: 'reference/oip/get-v-2-health-live',
+                  label: 'Server Live',
+                  className: 'api-method get',
+                },
+                {
+                  type: 'doc',
+                  id: 'reference/oip/get-v-2-health-ready',
+                  label: 'Server Ready',
+                  className: 'api-method get',
+                },
+                {
+                  type: 'doc',
+                  id: 'reference/oip/get-v-2-models-model-name-versions-model-version-ready',
+                  label: 'Model Ready',
+                  className: 'api-method get',
+                },
+                {
+                  type: 'doc',
+                  id: 'reference/oip/get-v-2',
+                  label: 'Server Metadata',
+                  className: 'api-method get',
+                },
+                {
+                  type: 'doc',
+                  id: 'reference/oip/get-v-2-models-model-name-versions-model-version',
+                  label: 'Model Metadata',
+                  className: 'api-method get',
+                },
+                {
+                  type: 'doc',
+                  id: 'reference/oip/post-v-2-models-model-name-versions-model-version-infer',
+                  label: 'Inference Request (POST)',
+                  className: 'api-method post'
+                }
+              ],
+            },
+            {
+              type: 'category',
+              label: 'gRPC API',
+              items: [
+                {
+                  type: 'doc',
+                  id: 'reference/oip/grpc-api',
+                },
+              ],
+            },
+          ]
+        },
       ],
     },
   ],
+
   // Community sidebar
   // This sidebar is used for community-related documentation and links.
   communitySidebar: [

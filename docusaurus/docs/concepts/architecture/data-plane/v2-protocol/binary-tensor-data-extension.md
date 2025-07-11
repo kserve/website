@@ -284,4 +284,4 @@ When using the Binary Tensor Data Extension:
 
 - Explore the [Open Inference Protocol (V2)](./v2-protocol.md) for the complete API specification
 - See the [V1 Protocol](../v1-protocol.md) for explain functionality
-- Review [KServe Client Libraries](../../../../reference/client.md) that support binary data
+- Review [KServe Client Libraries](../../../../reference/inference-client/inference-rest-client.md) that support binary data.

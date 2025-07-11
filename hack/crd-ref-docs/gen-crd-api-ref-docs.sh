@@ -9,7 +9,7 @@ set -euo pipefail # Exit on error, undefined variables, and pipe failures
 # Global variables
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly SCRIPT_DIR
-WEBSITE_ROOT="$(dirname "${SCRIPT_DIR}")"
+WEBSITE_ROOT="$(dirname "$(dirname "${SCRIPT_DIR}")")"
 readonly WEBSITE_ROOT
 TEMP_DIR="$(mktemp -d)"
 readonly TEMP_DIR
@@ -175,7 +175,7 @@ generate_crd_docs() {
 
 	# Prepare output directory
 	local output_dir="${WEBSITE_ROOT}/docusaurus/docs/reference"
-	local output_file="${output_dir}/api.mdx"
+	local output_file="${output_dir}/crd-api.mdx"
 
 	if [[ ! -d "${output_dir}" ]]; then
 		log_info "Creating output directory: ${output_dir}"
@@ -183,8 +183,8 @@ generate_crd_docs() {
 	fi
 
 	# Check if required config and templates exist
-	local config_file="${WEBSITE_ROOT}/docusaurus/crd-ref-docs/config-core.yaml"
-	local templates_dir="${WEBSITE_ROOT}/docusaurus/crd-ref-docs/templates"
+	local config_file="${WEBSITE_ROOT}/hack/crd-ref-docs/config-core.yaml"
+	local templates_dir="${WEBSITE_ROOT}/hack/crd-ref-docs/templates"
 
 	if [[ ! -f "${config_file}" ]]; then
 		log_warn "Config file not found: ${config_file}"
