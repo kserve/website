@@ -15,13 +15,13 @@ const config: Config = {
   favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
-  url: 'https://sivanantha321.github.io/',
+  url: 'https://kserve.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
-  baseUrl: '/KServe-New-Website/',
+  baseUrl: '/website/',
 
   // GitHub pages deployment config.
   organizationName: 'kserve', // Usually your GitHub org/user name.
-  projectName: 'KServe-New-Website', // Usually your repo name.
+  projectName: 'website', // Usually your repo name.
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
@@ -94,7 +94,7 @@ const config: Config = {
     ],
     announcementBar: {
       id: `announcementBar-v${announcedVersion}`,
-      content: `🎉️ <b><a target="_blank" href="https://sivanantha321.github.io/KServe-New-Website/blog/kserve-${announcedVersion}-release">KServe v${announcedVersion}</a> is out!</b> 🥳️`,
+      content: `🎉️ <b><a target="_blank" href="https://kserve.github.io/website/blog/kserve-${announcedVersion}-release">KServe v${announcedVersion}</a> is out!</b> 🥳️`,
       backgroundColor: '#588be8',
       textColor: '#ffffff',
     },
