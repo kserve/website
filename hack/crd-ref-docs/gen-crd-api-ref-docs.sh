@@ -93,8 +93,8 @@ check_prerequisites() {
 	fi
 
 	# Check if we're in the correct directory structure
-	if [[ ! -d "${WEBSITE_ROOT}/docusaurus" ]]; then
-		log_error "This script must be run from the website repository with docusaurus directory"
+	if [[ ! -d "${WEBSITE_ROOT}" ]]; then
+		log_error "This script must be run from the website repository root directory"
 		return 1
 	fi
 
@@ -174,7 +174,7 @@ generate_crd_docs() {
 	log_info "Generating CRD API reference documentation..."
 
 	# Prepare output directory
-	local output_dir="${WEBSITE_ROOT}/docusaurus/docs/reference"
+	local output_dir="${WEBSITE_ROOT}/docs/reference"
 	local output_file="${output_dir}/crd-api.mdx"
 
 	if [[ ! -d "${output_dir}" ]]; then

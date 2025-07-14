@@ -10,7 +10,7 @@ gen-oip-grpc-api-docs: open-inference-grpc
 	@bash -c ' \
 	  trap "rm -f ./open_inference_grpc.proto" EXIT; \
 	  docker run -it --user $(id -u):$(id -g) \
-	    -v $(PWD)/docusaurus/docs/reference/oip:/out \
+	    -v $(PWD)/docs/reference/oip:/out \
 	    -v $(PWD)/hack/oip-api-ref-docs:/templates \
 	    -v $(PWD):/protos \
 	    pseudomuto/protoc-gen-doc \
