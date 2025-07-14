@@ -122,23 +122,23 @@ const config: Config = {
           },
           dropdownItemsAfter: [
             {
-              href: 'https://kserve.github.io/archive-website/0.15/',
+              href: 'https://kserve.github.io/archive/0.15/',
               label: '0.15',
             },
             {
-              href: 'https://kserve.github.io/archive-website/1.1/',
+              href: 'https://kserve.github.io/archive/0.14/',
               label: '0.14 ',
             },
             {
-              href: 'https://kserve.github.io/archive-website/1.0/',
+              href: 'https://kserve.github.io/archive/0.13/',
               label: '0.13',
             },
             {
-              href: 'https://kserve.github.io/archive-website/0.12/',
+              href: 'https://kserve.github.io/archive/0.12/',
               label: '0.12',
             },
             {
-              href: 'https://kserve.github.io/archive-website/0.11/',
+              href: 'https://kserve.github.io/archive/0.11/',
               label: '0.11',
             },
           ],
@@ -176,7 +176,7 @@ const config: Config = {
             },
             {
               label: 'API Reference',
-              to: '/docs/reference/api',
+              to: '/docs/reference/crd-api',
             },
           ],
         },
@@ -190,6 +190,10 @@ const config: Config = {
             {
               label: 'Community Meetings',
               href: 'https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month',
+            },
+            {
+              label: 'Community Meetings Notes',
+              href: 'https://docs.google.com/document/d/1KZUURwr9MnHXqHA08TFbfVbM8EAJSJjmaMhnvstvi-k',
             },
             {
               label: 'Get Involved',
