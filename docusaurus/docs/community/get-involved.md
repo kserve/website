@@ -6,30 +6,57 @@ description: How to contribute to the KServe community
 
 Welcome to the KServe community! We're excited to have you contribute to the standard Model Inference Platform on Kubernetes.
 
+Join us🤝!
+
 ## Ways to Contribute
 
 ### 🐛 Report Issues
 
 Found a bug or have a feature request? Help us improve KServe:
 
-- **Bug Reports**: [Create an issue](https://github.com/kserve/kserve/issues/new?template=bug_report.md)
-- **Feature Requests**: [Request a feature](https://github.com/kserve/kserve/issues/new?template=feature_request.md)
-- **Documentation**: Help improve our docs by submitting PRs
+- **Bug Reports**: [Create an issue](https://github.com/kserve/kserve/issues/new?template=bug_report.md).
+- **Feature Requests**: [Request a feature](https://github.com/kserve/kserve/issues/new?template=feature_request.md).
+- **Documentation**: Help improve our docs by submitting [PRs](https://github.com/kserve/website/pulls).
+
+A good bug report should include:
+
+- **Description**: Clearly state what you were trying to accomplish and what behavior you observed instead
+- **Versions**: Specify the versions of relevant components:
+   - KServe version
+   - Knative version (if using Serverless)
+   - Kubeflow version (if used with Kubeflow)
+   - Kubernetes version
+   - Cloud provider details (if applicable)
+- **Relevant resource YAMLs, HTTP requests, or log lines**
+
+For documentation issues, please use the [KServe Website repository](https://github.com/kserve/website/issues/new/choose).
+
+For Open Inference Protocol (V2) related issues, please use the [Open Inference Protocol repository](https://github.com/kserve/open-inference-protocol/issues/new).
+
+### 🔒 Vulnerability Reports
+
+We strongly encourage you to report security vulnerabilities privately, before disclosing them in any public forums. Only the active maintainers and KServe security group members will receive the reported security vulnerabilities and the issues are treated as top priority.
+
+You can use the following ways to report security vulnerabilities privately:
+
+- Using the [KServe repository GitHub Security Advisory](https://github.com/kserve/kserve/security/advisories/new) (Recommended)
+- Using our private security mailing list: [kserve-security@lists.lfaidata.foundation](mailto:kserve-security@lists.lfaidata.foundation)
+
+Also read the [KServe Security Policy](https://github.com/kserve/kserve/security/policy).
 
 ### 💻 Code Contributions
 
 #### Getting Started
 
-1. **Fork the Repository**: [Fork KServe on GitHub](https://github.com/kserve/kserve/fork)
-2. **Set Up Development Environment**: Follow our [development guide](../developer-guide/index.md)
-3. **Find an Issue**: Look for [`good first issue`](https://github.com/kserve/kserve/labels/good%20first%20issue) labels
-4. **Submit a Pull Request**: Follow our contribution guidelines
+1. **Fork the Repository**: [Fork KServe on GitHub](https://github.com/kserve/kserve/fork).
+2. **Set Up Development Environment**: Follow our [developer guide](../developer-guide/index.md).
+3. **Find an Issue**: Look for [`good first issue`](https://github.com/kserve/kserve/labels/good%20first%20issue) labels.
+4. **Submit a Pull Request**: Follow our [contribution guidelines](../developer-guide/index.md).
 
 #### Areas to Contribute
 
-- **Core Platform**: Improve InferenceService controller and APIs
+- **Core Platform**: Improve controller and APIs
 - **Model Serving Runtimes**: Add support for new ML frameworks
-- **Serverless Features**: Enhance auto-scaling and networking
 - **Model Operations**: Improve monitoring, logging, and observability
 - **Documentation**: Help improve guides and examples
 
@@ -37,24 +64,36 @@ Found a bug or have a feature request? Help us improve KServe:
 
 Help make KServe more accessible:
 
-- **User Guides**: Write tutorials and how-to guides
-- **API Documentation**: Improve API reference documentation
-- **Examples**: Create example applications and use cases
-- **Translations**: Help translate documentation
+- **User Guides**: Write tutorials and how-to guides.
+- **API Documentation**: Improve API reference documentation.
+- **Examples**: Create example applications and use cases.
+- **Translations**: Help translate documentation.
 
 ### 🗣️ Community Engagement
 
 #### Join Our Discussions
 
-- **Slack**: Join [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) on Kubeflow Slack
-- **Mailing List**: Subscribe to [kserve-dev@lists.lfaidata.foundation](mailto:kserve-dev@lists.lfaidata.foundation)
+Much of the community meets on [the CNCF Slack](https://slack.cncf.io/), using the following channels:
+
+- **Slack**: 
+  - [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B): General discussion about KServe usage
+  - [#kserve-contributors](https://cloud-native.slack.com/archives/C06KZRPSDS7): Discussion for folks contributing to the KServe project
+  - [#kserve-oip-collaboration](https://cloud-native.slack.com/archives/C06P4SYCNRX): Discussion for Open Inference Protocol and API standardization
+
+To join, [create your CNCF Slack account](https://slack.cncf.io/) first.
+
 - **GitHub Discussions**: Participate in [GitHub Discussions](https://github.com/kserve/kserve/discussions)
 
 #### Community Meetings
 
-- **Weekly Community Meeting**: Wednesdays at 9:00 AM PST
-- **Special Interest Groups (SIGs)**: Join domain-specific groups
-- **Community Calendar**: [View upcoming meetings](https://github.com/kserve/community#community-meeting)
+- **KServe WG Meeting**: [Biweekly on Thursdays at 9:00 AM US/Pacific](https://zoom-lfx.platform.linuxfoundation.org/meeting/96510876294?password=feb2c41a-961a-435f-bfbd-97e2c068d401)
+- **Open Inference Protocol WG Meeting**: Monthly on Wednesdays at 10:00 AM US/Pacific
+
+Meeting agendas and notes can be accessed in:
+- [KServe WG working group document](https://docs.google.com/document/d/1KZUURwr9MnHXqHA08TFbfVbM8EAJSJjmaMhnvstvi-k)
+- [Open Inference Protocol WG working group document](https://docs.google.com/document/d/1f21bja1ejHPrZRmY5ke0UxKVD26j0VntJxx0qGN3fKE)
+
+Access recordings and stay updated with the [community calendar](https://zoom-lfx.platform.linuxfoundation.org/meetings/kserve?view=month) ([iCal export file](https://webcal.prod.itx.linuxfoundation.org/lfx/a092M00001LkOceQAF))
 
 ### 🎤 Speaking & Advocacy
 
@@ -64,25 +103,6 @@ Share your KServe experience:
 - **Blog Posts**: Write about your KServe implementations
 - **Case Studies**: Share your production use cases
 - **Social Media**: Help spread awareness about KServe
-
-## Development Process
-
-### Contribution Workflow
-
-1. **Discuss**: For major changes, discuss in issues or community meetings
-2. **Design**: Create design documents for significant features
-3. **Implement**: Write code following our style guidelines
-4. **Test**: Add comprehensive tests for your changes
-5. **Review**: Submit PR and address feedback from maintainers
-6. **Merge**: Maintainers will merge your contribution
-
-### Code Review Guidelines
-
-- Follow existing code style and conventions
-- Include comprehensive tests
-- Update documentation as needed
-- Keep PRs focused and reasonably sized
-- Be responsive to feedback
 
 ## Community Guidelines
 
@@ -97,51 +117,6 @@ We follow the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/mas
 - **Be Patient**: Remember that contributors have different experience levels
 - **Be Inclusive**: Welcome newcomers and help them get started
 
-## Recognition
-
-### Contributor Recognition
-
-We recognize and celebrate our contributors:
-
-- **Contributor of the Month**: Highlighted in community meetings
-- **Annual Awards**: Recognition at KubeCon and other events
-- **Maintainer Path**: Top contributors can become maintainers
-
-### Company Recognition
-
-Organizations using KServe in production are featured on our [adopters page](./adopters.md).
-
-## Special Interest Groups (SIGs)
-
-### Current SIGs
-
-- **SIG Architecture**: Core platform design and architecture
-- **SIG Model Serving**: Model serving patterns and runtimes
-- **SIG Security**: Security features and best practices
-- **SIG Docs**: Documentation improvements and maintenance
-
-### Join a SIG
-
-1. Attend SIG meetings (check community calendar)
-2. Introduce yourself on the SIG's communication channel
-3. Start contributing to SIG projects and discussions
-
-## Mentorship
-
-### New Contributor Mentorship
-
-- **Buddy System**: Get paired with an experienced contributor
-- **Office Hours**: Regular sessions for questions and guidance
-- **Guided Projects**: Start with mentored projects
-
-### Become a Mentor
-
-Experienced contributors can help newcomers:
-
-- Mentor new contributors on their first PRs
-- Lead SIG activities and projects
-- Help with community onboarding
-
 ## Resources
 
 ### Documentation
@@ -150,28 +125,23 @@ Experienced contributors can help newcomers:
 - **[API Reference](../reference/crd-api.mdx)**: Complete API documentation
 - **[Architecture Guide](../concepts/architecture/index.md)**: Understanding KServe architecture
 
-### Tools and Infrastructure
-
-- **GitHub**: [github.com/kserve](https://github.com/kserve)
-- **Container Registry**: [ghcr.io/kserve](https://ghcr.io/kserve)
-- **CI/CD**: GitHub Actions for automated testing
-- **Artifact Registry**: Released artifacts and images
-
 ## Getting Help
 
 ### For Contributors
 
-- **Slack**: Ask questions in #kserve channel
+- **Slack**: Ask questions in the appropriate Slack channels:
+  - [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) for general usage questions
+  - [#kserve-contributors](https://cloud-native.slack.com/archives/C06KZRPSDS7) for contribution discussions
+  - [#kserve-oip-collaboration](https://cloud-native.slack.com/archives/C06P4SYCNRX) for Open Inference Protocol discussions
 - **GitHub Issues**: Create issues for bugs or questions
-- **Community Meetings**: Get help during community meetings
-- **Mentorship**: Request a mentor for guidance
+- **Community Meetings**: Get help during our biweekly or monthly community meetings
+- **Developer Guide**: Follow our [developer guide](../developer-guide/index.md) to get started with contributions
 
 ### For Users
 
 - **Documentation**: Check our comprehensive guides
+- **Slack**: Ask questions in the `#kserve` channel
 - **GitHub Discussions**: Ask usage questions
-- **Stack Overflow**: Tag questions with `kserve`
-- **Professional Support**: Community members offer consulting services
 
 ## License
 
@@ -180,5 +150,7 @@ KServe is licensed under the [Apache 2.0 License](https://github.com/kserve/kser
 ## Thank You!
 
 Thank you for your interest in contributing to KServe! Your contributions help make model serving on Kubernetes better for everyone.
+
+Feel free to ask questions, engage in discussions, or get involved in KServe's development. KServe, as an open-source project, thrives on the active participation of its community.
 
 Ready to get started? Check out our [developer guide](../developer-guide/index.md) or join our [Slack community](https://cloud-native.slack.com/archives/C06AH2C3K8B)!
