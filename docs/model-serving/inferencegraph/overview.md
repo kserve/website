@@ -1,6 +1,12 @@
-# Inference Graph Overview
+---
+title: Overview
+description: Overview of the Inference Graph feature in KServe, including its API specification and router types.
+keywords: [Inference Graph, KServe, API Reference, router types, Sequence, Switch, Ensemble, Splitter]
+---
 
-This page serves as a quick reference to the Inference Graph feature. It briefly shows the relevant parts of the API to configure the different graph constructs. Make sure to review the [API Reference](../../reference/crd-api.mdx##inferencegraph) page to learn the full spec.
+# Overview
+
+This page serves as a quick reference to the Inference Graph feature. It briefly shows the relevant parts of the API to configure the different graph constructs. Make sure to review the [API Reference](../../reference/crd-api.mdx#inferencegraph) page to learn the full spec.
 
 ## InferenceGraph general spec
 
