@@ -1,4 +1,4 @@
 [build]
 publish = "build"
-command = "npm run build"
+command = "npm run update-preview-config && npm run build"
 environment = { NODE_VERSION = "18", NPM_VERSION = "9", NPM_FLAGS = "--no-audit --no-fund" }

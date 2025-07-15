@@ -19,7 +19,8 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "update-preview-config": "node hack/preview-config/update-preview-config.js"
   },
   "dependencies": {
     "@docusaurus/core": "^3.8.1",
