@@ -155,15 +155,15 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/frameworks/custom-predictor/custom-predictor",
               ]
             },
-            // {
-            // type: 'category',
-            // label: 'Transformers (Pre/Post Processing)',
-            // items: [
-            //   "model-serving/predictive-inference/transformers/custom-transformer/custom-transformer",
-            // "model-serving/predictive-inference/transformers/collocation",
-            // "model-serving/predictive-inference/transformers/feast",
-            // ]
-            // },
+            {
+              type: 'category',
+              label: 'Transformers (Pre/Post Processing)',
+              items: [
+                "model-serving/predictive-inference/transformers/custom-transformer/custom-transformer",
+                "model-serving/predictive-inference/transformers/collocation/collocation",
+                "model-serving/predictive-inference/transformers/feast-feature-store/feast-feature-store",
+              ]
+            },
             // {
             //   type: 'category',
             //   label: 'Operations',
