@@ -164,6 +164,32 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/transformers/feast-feature-store/feast-feature-store",
               ]
             },
+            {
+              type: 'category',
+              label: 'Model Explainability',
+              items: [
+                "model-serving/predictive-inference/explainers/overview",
+                "model-serving/predictive-inference/explainers/trustyai/trustyai",
+                {
+                  type: 'category',
+                  label: 'Alibi Explainer',
+                  items: [
+                    "model-serving/predictive-inference/explainers/alibi/image-explainer/image-explainer",
+                    "model-serving/predictive-inference/explainers/alibi/tabular-explainer/tabular-explainer",
+                    "model-serving/predictive-inference/explainers/alibi/text-explainer/text-explainer",
+                  ]
+                },
+              ]
+            },
+            {
+              type: 'category',
+              label: 'Model Monitoring',
+              items: [
+                "model-serving/predictive-inference/detect/alibi/alibi-detect",
+                "model-serving/predictive-inference/detect/aif/aif",
+                "model-serving/predictive-inference/detect/art/art",
+              ]
+            }
             // {
             //   type: 'category',
             //   label: 'Operations',
@@ -202,33 +228,6 @@ const sidebars: SidebarsConfig = {
             //         "model-serving/predictive-inference/observability/dashboards",
             //       ]
             //     },
-            //     {
-            //       type: 'category',
-            //       label: 'Model Explainability',
-            //       items: [
-            //         "model-serving/predictive-inference/observability/explainer/concept",
-            //         "model-serving/predictive-inference/observability/explainer/trustyai",
-            //         {
-            //           type: 'category',
-            //           label: 'Alibi Explainer',
-            //           items: [
-            //             "model-serving/predictive-inference/observability/explainer/alibi/image",
-            //             "model-serving/predictive-inference/observability/explainer/alibi/income",
-            //             "model-serving/predictive-inference/observability/explainer/alibi/text",
-            //           ]
-            //         },
-            //         "model-serving/predictive-inference/observability/explainer/aix",
-            //       ]
-            //     },
-            //     {
-            //       type: 'category',
-            //       label: 'Model Monitoring',
-            //       items: [
-            //         "model-serving/predictive-inference/observability/monitoring/alibi-detect",
-            //         "model-serving/predictive-inference/observability/monitoring/aif-bias",
-            //         "model-serving/predictive-inference/observability/monitoring/art-adversarial",
-            //       ]
-            //     }
             //   ]
             // }
           ]
