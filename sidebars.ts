@@ -189,6 +189,21 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/detect/aif/aif",
                 "model-serving/predictive-inference/detect/art/art",
               ]
+            },
+            {
+              type: 'category',
+              label: 'Payload Logging',
+              link: {
+                type: 'doc',
+                id: 'model-serving/predictive-inference/logger/index',
+              },
+              items: [
+                "model-serving/predictive-inference/logger/basic-logger",
+                "model-serving/predictive-inference/logger/request-header-logger",
+                "model-serving/predictive-inference/logger/tls-logger",
+                "model-serving/predictive-inference/logger/knative-eventing-logger",
+                "model-serving/predictive-inference/logger/blob-storage-logger",
+              ]
             }
             // {
             //   type: 'category',
