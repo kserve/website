@@ -35,7 +35,7 @@ KFServing was created to address the challenges of deploying and monitoring mach
 
 Over the coming weeks, we will be releasing **KServe 0.7** outside of the Kubeflow Project and will provide more details on how to migrate from KFServing to KServe with minimal disruptions. KFServing 0.5.x/0.6.x releases are still supported in next six months after KServe 0.7 release. We are also working on integrating core Kubeflow APIs and standards for [the conformance program](https://docs.google.com/document/d/1a9ufoe_6DB1eSjpE9eK5nRBoH3ItoSkbPfxRA0AjPIc).
 
-For contributors, please follow the KServe [developer](https://github.com/kserve/website/blob/main/docs/developer/developer.md) and [doc contribution](https://github.com/kserve/website/blob/main/docs/help/contributor/mkdocs-contributor-guide.md) guide to make code or doc contributions. We are excited to work with you to make KServe better and promote its adoption by more and more users!
+For contributors, please follow the KServe [developer](https://github.com/kserve/website/blob/v0.7/docs/developer/developer.md) and [doc contribution](https://github.com/kserve/website/blob/v0.7/docs/help/contributor/mkdocs-contributor-guide.md) guide to make code or doc contributions. We are excited to work with you to make KServe better and promote its adoption by more and more users!
 
 ![KServe Logo](/img/blog/2021-09-27-kfserving-transition/kserve.png)
 
@@ -75,7 +75,7 @@ We'd like to thank all the KServe contributors for this transition work!
 
 - Visit our [Website](https://kserve.github.io/website/) or [GitHub](https://github.com/kserve/kserve/)
 - Join the [Slack (#kubeflow-kfserving)](https://kubeflow.slack.com/join/shared_invite/zt-n73pfj05-l206djXlXk5qdQKs4o1Zkg#/)
-- Follow the KServe [developer](https://github.com/kserve/website/blob/main/docs/developer/developer.md) and [doc contribution](https://github.com/kserve/website/blob/main/docs/help/contributor/mkdocs-contributor-guide.md) guides to make contributions
+- Follow the KServe [developer](https://github.com/kserve/website/blob/v0.7/docs/developer/developer.md) and [doc contribution](https://github.com/kserve/website/blob/v0.7/docs/help/contributor/mkdocs-contributor-guide.md) guides to make contributions
 
 **Welcome to KServe!**
 
