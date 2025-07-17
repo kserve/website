@@ -1,0 +1,231 @@
+.whyKServe {
+  padding: 5rem 0;
+  background-color: #f8f9fa;
+  background: linear-gradient(180deg, #f8f9fa 0%, white 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.whyKServe::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  pointer-events: none;
+}
+
+/* Dark mode styles */
+:global([data-theme="dark"]) .whyKServe {
+  background-color: var(--ifm-background-color);
+  background: linear-gradient(
+    180deg,
+    var(--ifm-color-emphasis-100) 0%,
+    var(--ifm-background-color) 100%
+  );
+}
+
+:global([data-theme="dark"]) .whyKServe::after {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    var(--ifm-background-color) 100%
+  );
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: var(--ifm-color-primary-dark);
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: var(--ifm-color-primary);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+.sectionDescription {
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--ifm-color-emphasis-800);
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  font-weight: 400;
+}
+
+.benefitsContainer {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.benefitsSection {
+  margin-bottom: 0;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 0;
+}
+
+.benefitsTitle {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: var(--ifm-color-primary-dark);
+  font-weight: 700;
+  position: relative;
+}
+
+.benefitsTitle::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
+.benefitCard {
+  background: white;
+  padding: 1.8rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+}
+
+.benefitCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.benefitCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Dark mode styles for benefit cards */
+:global([data-theme="dark"]) .benefitCard {
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+:global([data-theme="dark"]) .benefitCard:hover {
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+  border-color: var(--ifm-color-primary);
+}
+
+.benefitCard h4 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--ifm-color-primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.benefitCard p {
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.7;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 996px) {
+  .benefitsContainer {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .benefitsTitle {
+    font-size: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .sectionDescription {
+    font-size: 1.1rem;
+  }
+}
+
+/* Tablet responsive styles */
+@media screen and (min-width: 768px) and (max-width: 996px) {
+  .benefitsContainer {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .benefitCard {
+    padding: 1.5rem;
+  }
+
+  .benefitsTitle {
+    font-size: 1.7rem;
+  }
+}
+
+/* Large tablet/small desktop - keep side by side but adjust gaps */
+@media screen and (min-width: 997px) and (max-width: 1200px) {
+  .benefitsContainer {
+    gap: 2rem;
+  }
+
+  .benefitsGrid {
+    gap: 1.3rem;
+  }
+
+  .benefitCard {
+    padding: 1.5rem;
+    min-height: 130px;
+  }
+
+  .benefitsTitle {
+    font-size: 1.7rem;
+    margin-bottom: 1.8rem;
+  }
+}

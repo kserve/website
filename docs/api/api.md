@@ -1,1 +1,0 @@
-# KServe API

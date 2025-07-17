@@ -1,0 +1,59 @@
+.useCases {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+.useCasesTitle {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.useCasesDescription {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.useCaseCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.useCaseCard {
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.useCaseCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.useCaseIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.useCaseCard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--ifm-color-primary);
+}
+
+.useCaseCard p {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .useCaseCards {
+    grid-template-columns: 1fr;
+  }
+}
