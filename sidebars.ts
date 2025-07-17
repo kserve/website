@@ -204,6 +204,13 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/logger/knative-eventing-logger",
                 "model-serving/predictive-inference/logger/blob-storage-logger",
               ]
+            },
+            {
+              type: 'category',
+              label: 'Request Batcher',
+              items: [
+                "model-serving/predictive-inference/batcher/batcher",
+              ]
             }
             // {
             //   type: 'category',
