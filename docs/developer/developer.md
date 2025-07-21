@@ -231,17 +231,21 @@ make test
 ```
 
 ## Run e2e tests locally
+
 To setup from local code, do:
 
- 1. `./hack/quick_install.sh`
- 2. `make undeploy`
- 3. `make deploy-dev`
+1. `./hack/quick_install.sh`
+2. `make undeploy`
+3. `make deploy-dev`
 
-Go to `python/kserve` and install kserve python sdk deps 
+Go to `python/kserve` and install kserve python sdk deps:
+
 ```bash
-pip3 install -e .[test]
+uv venv .venv
+uv sync --group test
 ```
-Then go to `test/e2e`. 
+
+Then go to `test/e2e`.
 
 Run `kubectl create namespace kserve-ci-e2e-test`
 
@@ -251,7 +255,7 @@ For KIND/minikube:
 * In a different window run `kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80`
 * Note that not all tests will pass as the pytorch test requires gpu. These will show as pending pods at the end or you can add marker to skip the test.
 
-Run `pytest > testresults.txt`
+Run `GITHUB_SHA='e2ee2e' uv run pytest > testresults.txt`
 
 Tests may not clean up. To re-run, first do `kubectl delete namespace kserve-ci-e2e-test`, recreate namespace and run again.
 
