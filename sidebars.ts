@@ -71,6 +71,7 @@ const sidebars: SidebarsConfig = {
           },
           items: [
             "concepts/resources/servingruntime",
+            "concepts/resources/inferencegraph",
           ],
         },
       ],
@@ -259,6 +260,7 @@ const sidebars: SidebarsConfig = {
           label: 'InferenceGraph',
           items: [
             'model-serving/inferencegraph/overview',
+            'model-serving/inferencegraph/image-pipeline/image-pipeline',
           ],
         },
         {

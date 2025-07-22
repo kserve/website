@@ -6,7 +6,7 @@ keywords: [Inference Graph, KServe, API Reference, router types, Sequence, Switc
 
 # Overview
 
-This page serves as a quick reference to the Inference Graph feature. It briefly shows the relevant parts of the API to configure the different graph constructs. Make sure to review the [API Reference](../../reference/crd-api.mdx#inferencegraph) page to learn the full spec.
+This page serves as a quick reference to the Inference Graph feature. It briefly shows the relevant parts of the API to configure the different graph constructs. Make sure to review the [InferenceGraph Concepts](../../concepts/resources/inferencegraph.md) and [API Reference](../../reference/crd-api.mdx#inferencegraph) page to learn the full spec.
 
 ## InferenceGraph general spec
 

@@ -21,6 +21,7 @@ The primary resource for deploying and managing model serving workloads:
 ### InferenceGraph
 Orchestrates complex multi-model inference workflows:
 
+- **[Concepts](inferencegraph.md)**: Overview of Inference Graph for building complex ML pipelines
 - **[InferenceGraph](../../model-serving/inferencegraph/overview.md)**: CRD that Defines and manages inference pipelines and model chains
 - **[Graph Routing](../../model-serving/inferencegraph/overview.md)**: Request routing and data flow within inference graphs
 
