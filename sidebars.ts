@@ -214,13 +214,13 @@ const sidebars: SidebarsConfig = {
               ]
             },
             {
-                  type: 'category',
-                  label: 'Autoscaling',
-                  items: [
-                    "model-serving/predictive-inference/autoscaling/kpa-autoscaler",
-                    "model-serving/predictive-inference/autoscaling/hpa-autoscaler",
-                    "model-serving/predictive-inference/autoscaling/keda-autoscaler",
-                  ]
+              type: 'category',
+              label: 'Autoscaling',
+              items: [
+                "model-serving/predictive-inference/autoscaling/kpa-autoscaler",
+                "model-serving/predictive-inference/autoscaling/hpa-autoscaler",
+                "model-serving/predictive-inference/autoscaling/keda-autoscaler",
+              ]
             },
             {
               type: 'category',
@@ -229,20 +229,14 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/kafka/kafka",
               ]
             },
-            // {
-            //   type: 'category',
-            //   label: 'Operations',
-            //   items: [
-            //     {
-            //       type: 'category',
-            //       label: 'Rollout Strategies',
-            //       items: [
-            //         "model-serving/predictive-inference/operations/rollout/canary",
-            //         "model-serving/predictive-inference/operations/rollout/canary-example",
-            //       ]
-            //     },
-            //   ]
-            // },
+            {
+              type: 'category',
+              label: 'Rollout Strategies',
+              items: [
+                "model-serving/predictive-inference/rollout-strategies/canary",
+                "model-serving/predictive-inference/rollout-strategies/canary-example",
+              ]
+            },
             // {
             //   type: 'category',
             //   label: 'Observability & Monitoring',
