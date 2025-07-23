@@ -143,7 +143,7 @@ sequenceDiagram
 
 The InferenceService Data Plane architecture for predictive models consists of a static graph of components which coordinate requests for a single model. Advanced features such as Ensembling, A/B testing, and Multi-Arm-Bandits can be achieved by composing InferenceServices together.
 
-![Data Plane Architecture](../../../../static/img/dataplane.jpg)
+![Data Plane Architecture](./dataplane.jpg)
 
 Note: Protocol V2 uses /infer instead of :predict
 
