@@ -5,7 +5,7 @@ For example, [Kourier](https://developers.redhat.com/blog/2020/06/30/kourier-a-l
 the following steps show how you can deploy KServe with `Kourier`.
 
 ## Install Kourier Networking Layer
-Please refer to the [Serverless Installation Guide](../serverless.md) and change the second step to install `Kourier` instead of `Istio`.
+Please refer to the [KNative Installation Guide](../knative.md) and change the second step to install `Kourier` instead of `Istio`.
 
 1. Install the Kourier networking layer:
 

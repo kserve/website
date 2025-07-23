@@ -266,7 +266,7 @@ Create the inference service yaml and expose the gRPC port, currently only one p
 !!! Note
     Currently, KServe only supports exposing either HTTP or gRPC port. By default, HTTP port is exposed.
 
-=== "Serverless"
+=== "KNative"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"
@@ -286,7 +286,7 @@ Create the inference service yaml and expose the gRPC port, currently only one p
               containerPort: 8081
     ```
 
-=== "RawDeployment"
+=== "Standard"
     ```yaml
     apiVersion: "serving.kserve.io/v1beta1"
     kind: "InferenceService"

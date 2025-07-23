@@ -35,7 +35,7 @@ KServe currently requires `Knative Serving` for auto-scaling, canary rollout, `I
 use the [Knative Operators](https://knative.dev/docs/install/operator/knative-with-operators/) to manage your installation. Observability, tracing and logging are optional but are often very valuable tools for troubleshooting difficult issues,
 they can be installed via the [directions here](https://github.com/knative/docs/blob/release-0.15/docs/serving/installing-logging-metrics-traces.md).
 
-* If you start from scratch, KServe requires Kubernetes, Knative, Istio. You can find the recommended [version matrix](../admin/serverless/serverless.md#recommended-version-matrix) in the installation documentation.
+* If you start from scratch, KServe requires Kubernetes, Knative, Istio. You can find the recommended [version matrix](../admin/serverless/knative.md#recommended-version-matrix) in the installation documentation.
 
 * If you already have `Istio` or `Knative` (e.g. from a Kubeflow install) then you don't need to install them explicitly, as long as version dependencies are satisfied.
   
