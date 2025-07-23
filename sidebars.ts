@@ -222,6 +222,13 @@ const sidebars: SidebarsConfig = {
                     "model-serving/predictive-inference/autoscaling/keda-autoscaler",
                   ]
             },
+            {
+              type: 'category',
+              label: 'kafka',
+              items: [
+                "model-serving/predictive-inference/kafka/kafka",
+              ]
+            },
             // {
             //   type: 'category',
             //   label: 'Operations',
@@ -234,18 +241,6 @@ const sidebars: SidebarsConfig = {
             //         "model-serving/predictive-inference/operations/rollout/canary-example",
             //       ]
             //     },
-            //     {
-            //       type: 'category',
-            //       label: 'Autoscaling',
-            //       items: [
-            //         "model-serving/predictive-inference/operations/autoscaling/kpa",
-            //         "model-serving/predictive-inference/operations/autoscaling/hpa",
-            //         "model-serving/predictive-inference/operations/autoscaling/keda",
-            //       ]
-            //     },
-            //     "model-serving/predictive-inference/operations/batcher",
-            //     "model-serving/predictive-inference/operations/logger",
-            //     "model-serving/predictive-inference/operations/kafka",
             //   ]
             // },
             // {
