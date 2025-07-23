@@ -212,7 +212,16 @@ const sidebars: SidebarsConfig = {
               items: [
                 "model-serving/predictive-inference/batcher/batcher",
               ]
-            }
+            },
+            {
+                  type: 'category',
+                  label: 'Autoscaling',
+                  items: [
+                    "model-serving/predictive-inference/autoscaling/kpa-autoscaler",
+                    "model-serving/predictive-inference/autoscaling/hpa-autoscaler",
+                    "model-serving/predictive-inference/autoscaling/keda-autoscaler",
+                  ]
+            },
             // {
             //   type: 'category',
             //   label: 'Operations',
