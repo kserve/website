@@ -1,17 +1,17 @@
 ## Kubernetes Autoscaler
 
-KServe supports `RawDeployment` mode to enable `InferenceService` deployment with following Kubernetes resources:
+KServe supports `Standard` mode to enable `InferenceService` deployment with following Kubernetes resources:
 
 - [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)
 - [`Service`](https://kubernetes.io/docs/concepts/services-networking/service)
 - [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress)
 - [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale)
 
-Compared to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `RawDeployment` mode.
+Compared to serverless deployment it unlocks Knative limitations such as mounting multiple volumes, on the other hand `Scale down and from Zero` is not supported in `Standard` mode.
 
 ### HPA in Raw Deployment
 
-When using KServe with the `RawDeployment` mode, Knative is not required. In this mode, if you deploy an `InferenceService`, KServe uses **Kubernetes’ Horizontal Pod Autoscaler (HPA)** for autoscaling instead of **Knative Pod Autoscaler (KPA)**. For how to use Knative Autoscaler in KServe, you can refer to the [Knative Autoscaler](https://kserve.github.io/website/master/modelserving/autoscaling/autoscaling) documentation.
+When using KServe with the `Standard` mode, Knative is not required. In this mode, if you deploy an `InferenceService`, KServe uses **Kubernetes’ Horizontal Pod Autoscaler (HPA)** for autoscaling instead of **Knative Pod Autoscaler (KPA)**. For how to use Knative Autoscaler in KServe, you can refer to the [Knative Autoscaler](https://kserve.github.io/website/master/modelserving/autoscaling/autoscaling) documentation.
 
 
 === "YAML"
@@ -23,7 +23,7 @@ When using KServe with the `RawDeployment` mode, Knative is not required. In thi
     metadata:
       name: "sklearn-iris-hpa"
       annotations:
-        serving.kserve.io/deploymentMode: RawDeployment
+        serving.kserve.io/deploymentMode: Standard
         serving.kserve.io/autoscalerClass: hpa
     spec:
       predictor:
