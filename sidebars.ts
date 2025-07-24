@@ -269,7 +269,15 @@ const sidebars: SidebarsConfig = {
             'model-serving/storage/storage-containers/storage-containers',
             'model-serving/storage/hf'
           ],
-        }
+        },
+        {
+          type: 'category',
+          label: 'Node Scheduling',
+          items: [
+           'model-serving/node-scheduling/overview',
+           'model-serving/node-scheduling/isvc-node-scheduling',
+          ],
+        },
       ],
     },
     {
