@@ -237,20 +237,6 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/rollout-strategies/canary-example",
               ]
             },
-            // {
-            //   type: 'category',
-            //   label: 'Observability & Monitoring',
-            //   items: [
-            //     {
-            //       type: 'category',
-            //       label: 'Metrics & Dashboards',
-            //       items: [
-            //         "model-serving/predictive-inference/observability/metrics",
-            //         "model-serving/predictive-inference/observability/dashboards",
-            //       ]
-            //     },
-            //   ]
-            // }
           ]
         },
         {
@@ -267,15 +253,28 @@ const sidebars: SidebarsConfig = {
           items: [
             'model-serving/storage/overview',
             'model-serving/storage/storage-containers/storage-containers',
-            'model-serving/storage/hf'
+            {
+              type: 'category',
+              label: 'Supported Providers',
+              items: [
+                'model-serving/storage/providers/hf',
+                'model-serving/storage/providers/azure',
+                'model-serving/storage/providers/s3/s3',
+                'model-serving/storage/providers/gcs',
+                'model-serving/storage/providers/uri',
+                'model-serving/storage/providers/pvc',
+                'model-serving/storage/providers/oci',
+              ],
+            },
+            'model-serving/storage/certificate/self-signed',
           ],
         },
         {
           type: 'category',
           label: 'Node Scheduling',
           items: [
-           'model-serving/node-scheduling/overview',
-           'model-serving/node-scheduling/isvc-node-scheduling',
+            'model-serving/node-scheduling/overview',
+            'model-serving/node-scheduling/isvc-node-scheduling',
           ],
         },
       ],
