@@ -288,9 +288,9 @@ With the `--return_probabilities` flag, the response will include probability sc
 }
 ```
 
-### Raw Logits with --disable_postprocess
+### Raw Logits with --return_raw_logits
 
-If you need access to the raw model outputs (logits) before post-processing, you can use the `--disable_postprocess` flag:
+If you need access to the raw model outputs (logits) before post-processing, you can use the `--return_raw_logits` flag:
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -305,7 +305,7 @@ spec:
       protocolVersion: v2
       args:
         - --model_name=distilbert
-        - --disable_postprocess
+        - --return_raw_logits
       storageUri: "hf://distilbert/distilbert-base-uncased-finetuned-sst-2-english"
       resources:
         limits:
@@ -318,7 +318,7 @@ spec:
           nvidia.com/gpu: "1"
 ```
 
-With the `--disable_postprocess` flag, the response will include raw logit values from the model's final layer:
+With the `--return_raw_logits` flag, the response will include raw logit values from the model's final layer:
 
 ```json
 {

@@ -67,7 +67,7 @@ Below is an explanation of command line arguments supported by the Hugging Face 
 - `--tensor_input_names`: The tensor input names passed to the model for triton inference server backend.
 - `--return_token_type_ids`: Return token type ids.
 - `--return_probabilities`: Return probabilities of predicted indexes. This is only applicable for tasks 'sequence_classification', 'token_classification' and 'fill_mask'.
-- `--disable_postprocess`: Disable post-processing of model outputs. This is useful for tasks where raw logits are needed. This is only applicable for tasks 'sequence_classification', 'token_classification' and 'fill_mask'.
+- `--return_raw_logits`: Return raw logits without processing. Supported only classification tasks such as token classification, text classification and fill-mask."
 - `--disable_log_requests`: Disable logging of requests.
 
 ## Next Steps

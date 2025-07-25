@@ -534,7 +534,7 @@ When working with token classification models, you have two options for accessin
 
 1. **Probabilities** (`--return_probabilities`): Normalized values between 0 and 1 that sum to 1 across all possible tags for each token. These are easier to interpret as they directly represent the model's confidence in each tag.
 
-2. **Raw Logits** (`--disable_postprocess`): Unnormalized output values directly from the model before softmax is applied. These values can range from negative to positive infinity and are harder to interpret directly, but preserve more information for specialized processing.
+2. **Raw Logits** (`--return_raw_logits`): Unnormalized output values directly from the model before softmax is applied. These values can range from negative to positive infinity and are harder to interpret directly, but preserve more information for specialized processing.
 
 #### When to Use Probabilities vs. Raw Logits
 
@@ -573,9 +573,9 @@ Raw logits can be particularly useful for:
 3. **Calibration**: Apply post-hoc calibration techniques that work directly on logits
 4. **Custom decision thresholds**: Implement specialized decision boundaries that work better with unnormalized values
 
-### Accessing Raw Logits with --disable_postprocess
+### Accessing Raw Logits with --return_raw_logits
 
-For advanced use cases requiring the raw model outputs, you can disable the post-processing step entirely using the `--disable_postprocess` flag. This returns the raw logits directly from the model:
+For advanced use cases requiring the raw model outputs, you can disable the post-processing step entirely using the `--return_raw_logits` flag. This returns the raw logits directly from the model:
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -591,7 +591,7 @@ spec:
       args:
         - --model_name=bert
         - --disable_lower_case
-        - --disable_postprocess
+        - --return_raw_logits
       storageUri: "hf://dslim/bert-base-NER"
       resources:
         limits:
@@ -604,7 +604,7 @@ spec:
           nvidia.com/gpu: "1"
 ```
 
-With `--disable_postprocess`, the response includes raw logit values before any softmax normalization:
+With `--return_raw_logits`, the response includes raw logit values before any softmax normalization:
 
 ```json
 {
@@ -682,9 +682,9 @@ for item in processed_tokens:
         print()
 ```
 
-#### When to Use --disable_postprocess
+#### When to Use --return_raw_logits
 
-The `--disable_postprocess` flag is particularly useful for:
+The `--return_raw_logits` flag is particularly useful for:
 
 1. **Advanced model analysis**: Examining raw model outputs to understand prediction behavior
 2. **Custom processing pipelines**: Implementing your own post-processing logic instead of using the default
