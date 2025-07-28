@@ -195,41 +195,45 @@ If an error occurs, the response may contain a top-level `error` field, or error
 
 ## Examples
 
+### Start Service
+```
+python -m huggingfaceserver --model_id="google/timesfm-2.0-500m-pytorch" --model_name=timesfm2 --http_port=8090
+```
+
 ### Request Example
 
 ```
-POST /v1/timeseries/forecast
-Content-Type: application/json
-
-{
-  "model": "timesfm",
-  "inputs": [
-    {
-      "type": "univariate_time_series",
-      "name": "stock_price",
-      "series": [120, 122, 125, 127, 130, 133, 135],
-      "frequency": "D",
-      "start_timestamp": "2025-06-05T13:10:00Z"
+curl -X POST "http://localhost:8090/v1/timeseries/forecast" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "timesfm2",
+    "inputs": [
+      {
+        "type": "univariate_time_series",
+        "name": "stock_price",
+        "series": [120, 122, 125, 127, 130, 133, 135],
+        "frequency": "D",
+        "start_timestamp": "2025-06-05T13:10:00Z"
+      },
+      {
+        "type": "univariate_time_series",
+        "name": "humidity",
+        "series": [33, 34, 35, 36, 37],
+        "frequency": "H",
+        "start_timestamp": "2025-06-05T13:10:00Z"
+      }
+    ],
+    "options": {
+      "horizon": 4,
+      "quantiles": [0.1, 0.5, 0.9],
+      "other_options": "value"
     },
-    {
-      "type": "univariate_time_series",
-      "name": "humidity",
-      "series": [33, 34, 35, 36, 37],
-      "frequency": "H",
-      "start_timestamp": "2025-06-05T13:10:00Z"
-    }
-  ],
-  "options": {
-    "horizon": 4,
-    "quantiles": [0.1, 0.5, 0.9],
-    "other_options": "value"
-  },
-  "metadata": {
-    "request_id": "user_defined_request_id",
-    "other_data": "value"
-  },
-  "other_properties": "value"
-}
+    "metadata": {
+      "request_id": "user_defined_request_id",
+      "other_data": "value"
+    },
+    "other_properties": "value"
+  }'
 ```
 
 
@@ -241,7 +245,7 @@ Content-Type: application/json
   "created_at": 1741476542,
   "status": "completed",
   "error": null,
-  "model": "timesfm",
+  "model": "timesfm2",
   "outputs": [
     {
       "type": "time_series_forecast",
