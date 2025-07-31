@@ -3,6 +3,11 @@ title: Python Runtime SDK API
 displayed_sidebar: docsSidebar
 ---
 # Python Runtime SDK API
+---
+title: Python Runtime SDK API
+displayed_sidebar: docsSidebar
+---
+# Python Runtime SDK API
 # Table of Contents
 
 * [kserve.model\_server](#kserve.model_server)

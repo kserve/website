@@ -30,4 +30,4 @@ Please see the [Sample for Python SDK Client](./kserve_sdk_v1beta1_sample.ipynb)
 
 ## API Reference
 
-Coming soon !
+For detailed API reference, please refer to the [Control Plane Python Client SDK API Reference](controlplane-client-api.md).

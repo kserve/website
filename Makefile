@@ -18,18 +18,18 @@ gen-oip-grpc-api-docs: open-inference-grpc
 	'
 # Generate Open Inference Protocol REST API documentation.
 gen-oip-rest-api-docs:
-	cd docusaurus && npm run docusaurus gen-api-docs oip
+	npm run docusaurus gen-api-docs oip
 	
 
 # Generate CRD API documentation for KServe master branch.
 gen-crd-api-docs:
 	./hack/crd-ref-docs/gen-crd-api-ref-docs.sh
 
-# Generate Python Runtime SDK API documentation.
-gen-py-runtime-sdk-api-docs:
-	./hack/python-runtime-sdk/generate-api-docs.sh
+# Generate Python Runtime, Control Plane SDK API documentation.
+gen-py-sdk-api-docs:
+	./hack/python-sdk-api/generate-api-docs.sh
 
 # Generate all API documentation.
-# This will generate OIP gRPC, REST, Python runtime sdk and CRD API documentation.
-gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs gen-py-runtime-sdk-api-docs
+# This will generate OIP gRPC, REST, Python SDK and CRD API documentation.
+gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs gen-py-sdk-api-docs
 	@echo "API documentation generated successfully."

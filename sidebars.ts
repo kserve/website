@@ -338,7 +338,7 @@ const sidebars: SidebarsConfig = {
             'reference/inference-client/inference-grpc-client',
           ],
         },
-        'reference/pyton-runtime-sdk',
+        'reference/python-runtime-sdk/python-runtime-sdk',
         'reference/controlplane-client/controlplane-client-sdk',
         {
           type: 'category',
@@ -348,46 +348,7 @@ const sidebars: SidebarsConfig = {
               type: 'category',
               label: 'REST API',
               items: [
-                {
-                  type: 'doc',
-                  id: 'reference/oip/data-plane',
-                },
-                {
-                  type: 'doc',
-                  id: 'reference/oip/get-v-2-health-live',
-                  label: 'Server Live',
-                  className: 'api-method get',
-                },
-                {
-                  type: 'doc',
-                  id: 'reference/oip/get-v-2-health-ready',
-                  label: 'Server Ready',
-                  className: 'api-method get',
-                },
-                {
-                  type: 'doc',
-                  id: 'reference/oip/get-v-2-models-model-name-versions-model-version-ready',
-                  label: 'Model Ready',
-                  className: 'api-method get',
-                },
-                {
-                  type: 'doc',
-                  id: 'reference/oip/get-v-2',
-                  label: 'Server Metadata',
-                  className: 'api-method get',
-                },
-                {
-                  type: 'doc',
-                  id: 'reference/oip/get-v-2-models-model-name-versions-model-version',
-                  label: 'Model Metadata',
-                  className: 'api-method get',
-                },
-                {
-                  type: 'doc',
-                  id: 'reference/oip/post-v-2-models-model-name-versions-model-version-infer',
-                  label: 'Inference Request (POST)',
-                  className: 'api-method post'
-                }
+                require('./docs/reference/oip/sidebar.ts'),
               ],
             },
             {
