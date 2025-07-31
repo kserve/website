@@ -3,7 +3,7 @@ title: Python Serving Runtime SDK
 ---
 
 # KServe Python Serving Runtime SDK
-KServe's python runtime API implements a standardized python model server API following [Open Inference Protocol](https://github.com/kserve/open-inference-protocol), [V1 protocol](../concepts/architecture/data-plane/v1-protocol.md) and [OpenAI Protocol](https://platform.openai.com/docs/api-reference/introduction) using `FastAPI`.
+KServe's python runtime API implements a standardized python model server API following [Open Inference Protocol](https://github.com/kserve/open-inference-protocol), [V1 protocol](../../concepts/architecture/data-plane/v1-protocol.md) and [OpenAI Protocol](https://platform.openai.com/docs/api-reference/introduction) using `FastAPI`.
 It encapsulates data plane API definitions and storage retrieval for models.
 
 It provides many functionalities, including among others:
@@ -34,7 +34,7 @@ uv sync
 
 ## API Reference
 
-Coming soon !
+For detailed API reference, please refer to the [Python Runtime SDK API Reference](python-runtime-sdk-api.md).
 
 ## Storage API
 

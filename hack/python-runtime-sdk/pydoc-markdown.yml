@@ -1,0 +1,22 @@
+loaders:
+  - type: python
+processors:
+  - type: filter
+    skip_empty_modules: true
+  - type: sphinx
+  - type: crossref
+renderer:
+  type: markdown
+  filename: docs/reference/python-runtime-sdk/python-runtime-sdk-api.md
+  insert_header_anchors: true
+  render_toc: true
+  descriptive_class_title: false
+  render_page_title: false
+  header_level_by_type:
+    Module: 1
+    Class: 2
+    Method: 3
+    Function: 3
+    Variable: 4
+
+

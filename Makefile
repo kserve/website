@@ -25,7 +25,11 @@ gen-oip-rest-api-docs:
 gen-crd-api-docs:
 	./hack/crd-ref-docs/gen-crd-api-ref-docs.sh
 
+# Generate Python Runtime SDK API documentation.
+gen-py-runtime-sdk-api-docs:
+	./hack/python-runtime-sdk/generate-api-docs.sh
+
 # Generate all API documentation.
-# This will generate OIP gRPC, REST and CRD API documentation.
-gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs
+# This will generate OIP gRPC, REST, Python runtime sdk and CRD API documentation.
+gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs gen-py-runtime-sdk-api-docs
 	@echo "API documentation generated successfully."
