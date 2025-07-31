@@ -17,7 +17,7 @@ This document explains three methods that can be used in KServe, described below
   
 :::note
 
-This is only available for `RawDeployment` and `ServerlessDeployment`. For ModelMesh, you should add CA bundle content into the [`certificate` parameter in `storage-config`](https://github.com/kserve/modelmesh-serving/blob/main/docs/predictors/setup-storage.md).
+This is only available for `RawDeployment` and `Serverless`. For ModelMesh, you should add CA bundle content into the [`certificate` parameter in `storage-config`](https://github.com/kserve/modelmesh-serving/blob/main/docs/predictors/setup-storage.md).
 
 :::
 

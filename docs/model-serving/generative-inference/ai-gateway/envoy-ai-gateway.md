@@ -59,7 +59,6 @@ stringData:
 Create an InferenceService in the `kserve-test` namespace with OpenAI route prefix disabled. The following example creates an InferenceService with the 'llama3.2-1B' model from Hugging Face.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
@@ -92,7 +91,6 @@ spec:
           cpu: "6"
           memory: 12Gi
           nvidia.com/gpu: "1"
-EOF
 ```
 
 ## Create BackendSecurityPolicy
@@ -102,7 +100,6 @@ You can configure the BackendSecurityPolicy for authentication and authorization
 But for simplicity, we will ignore the authentication and authorization for this example.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: aigateway.envoyproxy.io/v1alpha1
 kind: BackendSecurityPolicy
 metadata:
@@ -114,7 +111,6 @@ spec:
     secretRef:
       name: envoy-ai-gateway-openai-kserve-apikey
       namespace: default
-EOF
 ```
 
 ## Create BackendTLSPolicy
@@ -124,7 +120,6 @@ If the InferenceService is using TLS, you can create a BackendTLSPolicy to confi
 For this example, we will ignore the TLS settings.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1alpha3
 kind: BackendTLSPolicy
 metadata:
@@ -138,7 +133,6 @@ spec:
   validation:
     wellKnownCACertificates: "System"
     hostname: "llama3-1b-kserve-test.example.com"
-EOF
 ```
 
 ## Create AIServiceBackend
@@ -146,7 +140,6 @@ EOF
 Create an AIServiceBackend for the InferenceService created in the previous step. You can uncomment the `backendSecurityPolicyRef` field to use the BackendSecurityPolicy if you have configured it.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: aigateway.envoyproxy.io/v1alpha1
 kind: AIServiceBackend
 metadata:
@@ -161,13 +154,10 @@ spec:
     kind: Service
     group: ""
     port: 80
-  timeouts:
-    request: 60s
-  # backendSecurityPolicyRef:
-  #   name: envoy-ai-gateway-openai-kserve-apikey
-  #   kind: BackendSecurityPolicy
-  #   group: aigateway.envoyproxy.io
-EOF
+# backendSecurityPolicyRef:
+#   name: envoy-ai-gateway-openai-kserve-apikey
+#   kind: BackendSecurityPolicy
+#   group: aigateway.envoyproxy.io
 ```
 
 ## Create ReferenceGrant
@@ -175,7 +165,6 @@ EOF
 Since the InferenceService is in the `kserve-test` namespace and the AIServiceBacked in the `default` namespace, we need to create a `ReferenceGrant` to allow the `AIServiceBackend` to reference the InferenceService.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
@@ -189,7 +178,6 @@ spec:
   to:
   - group: ""
     kind: Service
-EOF
 ```
 
 ## Create Gateway for the AI Gateway
@@ -197,7 +185,6 @@ EOF
 Create a Gateway for the AI Gateway to route the traffic to different LLM providers.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
@@ -209,7 +196,6 @@ spec:
     - name: http
       protocol: HTTP
       port: 80
-EOF
 ```
 
 ## Create AIGatewayRoute with LLM Request Costs
@@ -217,7 +203,6 @@ EOF
 Create an `AIGatewayRoute` and configure KServe as the LLM service provider for the model `llama3-1b` using the `AIServiceBackend` created in the previous step. AI Gateway automatically tracks token usage for each request. We will configure `AIGatewayRoute` to track InputToken, OutputToken, and TotalToken usage.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: aigateway.envoyproxy.io/v1alpha1
 kind: AIGatewayRoute
 metadata:
@@ -239,6 +224,8 @@ spec:
       backendRefs:
         - name: envoy-ai-gateway-openai-kserve  # AIServiceBackend Name
           weight: 100
+      timeouts:
+        request: 60s
   llmRequestCosts:
     - metadataKey: llm_input_token
       type: InputToken    # Counts tokens in the request
@@ -246,7 +233,6 @@ spec:
       type: OutputToken   # Counts tokens in the response
     - metadataKey: llm_total_token
       type: TotalToken   # Tracks combined usage
-EOF
 ```
 
 The traffic from the Envoy AI Gateway will be routed to the InferenceService based on the `x-ai-eg-model` header value. This header is automatically set by the AI Gateway by reading the model name in the payload request.
@@ -256,7 +242,6 @@ The traffic from the Envoy AI Gateway will be routed to the InferenceService bas
 AI Gateway uses Envoy Gateway's Global Rate Limit API to configure rate limits. Rate limits should be defined using a combination of user and model identifiers to properly control costs at the model level. We will configure a rate limit of 1000 total tokens per hour per user for the model `llama3-1b` using `BackendTrafficPolicy`.
 
 ```yaml
-kubectl apply -f - <<EOF
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
@@ -291,7 +276,6 @@ spec:
               metadata:
                 namespace: io.envoy.ai_gateway
                 key: llm_total_token    # Uses total tokens from the responses
-EOF
 ```
 
 :::warning

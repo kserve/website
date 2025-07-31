@@ -45,30 +45,30 @@ To enable KServe to access Hugging Face models, you need to create a `ClusterSto
 To know more about storage containers, refer to the [Storage Containers documentation](../../../storage/storage-containers/storage-containers.md).
 
 ```yaml title="huggingface-storage.yaml"
-apiVersion: "serving.kserve.io/v1alpha1"
+apiVersion: serving.kserve.io/v1alpha1
 kind: ClusterStorageContainer
 metadata:
   name: hf-hub
 spec:
   container:
     name: storage-initializer
-    image: kserve/storage-initializer:latest
+    image: 'kserve/storage-initializer:latest'
     env:
-    - name: HF_TOKEN
-      valueFrom:
-        secretKeyRef:
-          name: hf-secret
-          key: HF_TOKEN
-          optional: false
+      - name: HF_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: hf-secret
+            key: HF_TOKEN
+            optional: false
     resources:
       requests:
         memory: 2Gi
-        cpu: "1"
+        cpu: '1'
       limits:
         memory: 4Gi
-        cpu: "1"
+        cpu: '1'
   supportedUriFormats:
-    - prefix: hf://
+    - prefix: 'hf://'
 ```
 ## Deploy Text Generation Model
 
