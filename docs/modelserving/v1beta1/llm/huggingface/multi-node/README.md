@@ -4,7 +4,7 @@ This guide provides step-by-step instructions on setting up multi-node and multi
 
 ## Restrictions
 
-- Multi-node functionality is only supported in **RawDeployment** mode.
+- Multi-node functionality is only supported in **Standard** mode.
 - **Auto-scaling is not available** for multi-node setups. 
 - A **Persistent Volume Claim (PVC)** is required for multi-node configurations, and it must support the **ReadWriteMany (RWX)** access mode.
 
@@ -123,7 +123,7 @@ kind: InferenceService
 metadata:
   name: huggingface-llama3
   annotations:
-    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/deploymentMode: Standard
     serving.kserve.io/autoscalerClass: none
 spec:
   predictor:
@@ -276,7 +276,7 @@ apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   annotations:
-    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/deploymentMode: Standard
     serving.kserve.io/autoscalerClass: none
   name: huggingface-llama3
 spec:

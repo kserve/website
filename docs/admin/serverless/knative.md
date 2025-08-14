@@ -1,5 +1,5 @@
-# Serverless Installation Guide
-KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
+# Knative Installation Guide
+KServe Knative installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
 Kubernetes 1.30 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding

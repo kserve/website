@@ -17,7 +17,7 @@ Support for LMCache with vLLM backend was added in [KServe PR #4320](https://git
 
 
 ## Prerequisites
-- A Kubernetes cluster with KServe v0.15.1 or later installed ([KServe installation guide](../../../../../admin/serverless/serverless))
+- A Kubernetes cluster with KServe v0.15.1 or later installed ([KServe installation guide](../../../../../admin/serverless/knative))
 - Huggingface vLLM backend enabled in your KServe deployment
 
 
