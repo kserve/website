@@ -10,7 +10,7 @@ This document explains three methods that can be used in KServe, described below
         - annotation
 - Skip SSL Verification
   
-(NOTE) This is only available for `Standard` and `KNative` deployment modes. For modelmesh, you should add ca bundle content into [`certificate` parameter in `storage-config`](https://github.com/kserve/modelmesh-serving/blob/bba0cec8ca8c6c6f19958696f39b27b5b49cadd8/docs/predictors/setup-storage.md?plain=1#L65)
+(NOTE) This is only available for `Standard` and `Knative` deployment modes. For modelmesh, you should add ca bundle content into [`certificate` parameter in `storage-config`](https://github.com/kserve/modelmesh-serving/blob/bba0cec8ca8c6c6f19958696f39b27b5b49cadd8/docs/predictors/setup-storage.md?plain=1#L65)
 ## Configure CA bundle for storage-initializer  
 ### Global Configuration
 

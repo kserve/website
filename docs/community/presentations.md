@@ -17,7 +17,7 @@ This page contains a list of presentations and demos. If you'd like to add a pre
 | [Platform Building Blocks: How to Build ML Infrastructure with CNCF Projects](https://sched.co/1YhIv) | Yuzhui Liu, Leon Zhou |
 | [Distributed Machine Learning Patterns from Manning Publications](https://github.com/terrytangyuan/distributed-ml-patterns) | Yuan Tang |
 | [KubeCon 2019: Introducing KFServing: Serverless Model Serving on Kubernetes](https://www.youtube.com/watch?v=saMkA4fIOH8) |Dan Sun, Ellis Tarn|
-| [KubeCon 2019: Advanced Model Inferencing Leveraging KNative, Istio & Kubeflow Serving](https://www.youtube.com/watch?v=YaGASyU88dQ) | Animesh Singh, Clive Cox|
+| [KubeCon 2019: Advanced Model Inferencing Leveraging Knative, Istio & Kubeflow Serving](https://www.youtube.com/watch?v=YaGASyU88dQ) | Animesh Singh, Clive Cox|
 | [KubeflowDojo: KFServing - Production Model Serving Platform](https://www.youtube.com/watch?v=VN2htoRSUzY) |Animesh Singh, Tommy Li|
 | [NVIDIA: Accelerate and Autoscale Deep Learning Inference on GPUs with KFServing](https://developer.nvidia.com/gtc/2020/video/s22459-vid) | Dan Sun, David Goodwin|
 | [KF Community: KFServing - Enabling Serverless Workloads Across Model Frameworks](https://www.youtube.com/watch?v=hGIvlFADMhU) |Ellis Tarn|

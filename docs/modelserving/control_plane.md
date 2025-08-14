@@ -11,7 +11,7 @@ service, ingress, HPA.
 
 - **Ingress Gateway**: Gateway for routing external or internal requests.
 
-In KNative Mode:
+In Knative Mode:
 
 - **Knative Serving Controller**: Responsible for service revision management, creating network routing resources, serverless container with queue proxy to expose traffic metrics and 
 enforce concurrency limit. 

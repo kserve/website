@@ -7,7 +7,7 @@ nav:
     - Administration Guide:
           - Install KServe:
                 - Predictive Inference:
-                  - KNative installation: admin/serverless/knative.md
+                  - Knative installation: admin/serverless/knative.md
                   - Kubernetes deployment installation: admin/kubernetes_deployment.md
                   - ModelMesh installation: admin/modelmesh.md
                   - Kourier Networking Layer: admin/serverless/kourier_networking/README.md

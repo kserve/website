@@ -1,4 +1,4 @@
-# KNative Installation Guide
+# Knative Installation Guide
 KServe Knative installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
