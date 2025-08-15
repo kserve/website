@@ -41,14 +41,14 @@ jobs:
             cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: |
-          cd docusaurus && npm install
+           npm install
       - name: Build with npm
         run: |
-          cd docusaurus && npm run build
+          npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docusaurus/build/
+          path: build/
       
       - name: Deploy to GitHub Pages
         id: deployment

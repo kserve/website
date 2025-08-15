@@ -310,7 +310,7 @@ When contributing to the documentation, follow these Docusaurus-specific best pr
 
 #### File Structure and Organization
 
-- **Place new files** in the appropriate directory under `docusaurus/docs/`
+- **Place new files** in the appropriate directory under `docs/`
 - **Use kebab-case** for file names (e.g., `my-feature-guide.md`)
 - **Include frontmatter** at the top of each document:
   ```md
@@ -384,7 +384,7 @@ When contributing to the documentation, follow these Docusaurus-specific best pr
 
 #### Images and Media
 
-- **Store images** in the `docusaurus/static/img/` directory
+- **Store images** in the `static/img/` directory
 - **Reference images** using the public URL path:
   ```md
   ![Alt text](/img/example-diagram.png)
