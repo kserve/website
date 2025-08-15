@@ -38,7 +38,7 @@ jobs:
         with:
             node-version: 22.14.x
             cache: 'npm'
-            cache-dependency-path: docusaurus/package-lock.json
+            cache-dependency-path: package-lock.json
       - name: Install dependencies
         run: |
           cd docusaurus && npm install
