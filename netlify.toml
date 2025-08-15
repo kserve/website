@@ -1,4 +1,4 @@
 [build]
-publish = "/"
-command = "sh build.sh"
-environment = { PYTHON_VERSION = "3.11" }
+publish = "build"
+command = "npm run update-preview-config && npm run build"
+environment = { NODE_VERSION = "18", NPM_VERSION = "9", NPM_FLAGS = "--no-audit --no-fund" }

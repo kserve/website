@@ -1,0 +1,75 @@
+.architecture {
+  padding: 4rem 0;
+  background-color: white;
+}
+
+/* Dark mode styles */
+:global([data-theme="dark"]) .architecture {
+  background-color: var(--ifm-background-color);
+}
+
+.architectureTitle {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.architectureDescription {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.architectureImage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.archImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.architectureFeatures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.archFeature {
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.archFeature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode styles for architecture features */
+:global([data-theme="dark"]) .archFeature {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+:global([data-theme="dark"]) .archFeature:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.archFeature h3 {
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .architectureFeatures {
+    grid-template-columns: 1fr;
+  }
+}
