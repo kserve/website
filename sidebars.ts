@@ -224,7 +224,7 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'category',
-              label: 'kafka',
+              label: 'Kafka',
               items: [
                 "model-serving/predictive-inference/kafka/kafka",
               ]
