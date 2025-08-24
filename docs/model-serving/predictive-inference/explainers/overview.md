@@ -1,5 +1,5 @@
 ---
-title: InferenceService Explainer
+title: Overview
 description: An overview of model explainability in KServe
 ---
 
