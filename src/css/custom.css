@@ -375,3 +375,17 @@
   border-color: var(--ifm-color-emphasis-400);
   color: var(--ifm-color-emphasis-600);
 }
+
+.header-github-link:before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url('/img/github-mark.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+[data-theme='dark'] .header-github-link:before {
+  background-image: url('/img/github-mark-white.svg');
+}

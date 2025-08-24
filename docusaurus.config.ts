@@ -45,7 +45,9 @@ const config: Config = {
     // This theme is used to render mermaid diagrams in markdown files
     '@docusaurus/theme-mermaid',
     // This theme is used to render OpenAPI documentation
-    'docusaurus-theme-openapi-docs'
+    'docusaurus-theme-openapi-docs',
+    // This theme is used to add a search box
+    '@orama/plugin-docusaurus-v3',
   ],
 
   presets: [
@@ -86,7 +88,6 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
     image: 'img/kserve-logo.png',
     metadata: [
       { name: 'keywords', content: 'machine learning, kubernetes, model serving, inference, AI, ML, serverless, MLOps, model inference, generative AI, LLM, AI model deployment' },
@@ -151,8 +152,9 @@ const config: Config = {
         },
         {
           href: 'https://github.com/kserve/kserve',
-          label: 'GitHub',
           position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
