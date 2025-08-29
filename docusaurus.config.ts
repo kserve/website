@@ -232,6 +232,19 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
+    // Local Search Plugin
+    // This plugin adds a search box to the navbar and generates a search index
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        hashed: true,
+        docsRouteBasePath: 'docs',
+        blogRouteBasePath: 'blog',
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+      },
+    ],
     // Custom Plugin to replace variables in markdown files
     [
       require.resolve('./plugins/markdown-variable-replacer/index.ts'),
@@ -664,16 +677,6 @@ const config: Config = {
         //   }
         //   return undefined; // Return a falsy value: no redirect created
         // },
-    // Local search plugin
-    [
-      require.resolve('@easyops-cn/docusaurus-search-local'),
-      {
-        hashed: true,
-        docsRouteBasePath: 'docs',
-        blogRouteBasePath: 'blog',
-        language: ['en'],
-        highlightSearchTermsOnTargetPage: true,
-        explicitSearchResultPath: true,
       },
     ],
   ],
