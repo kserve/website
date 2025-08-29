@@ -46,8 +46,6 @@ const config: Config = {
     '@docusaurus/theme-mermaid',
     // This theme is used to render OpenAPI documentation
     'docusaurus-theme-openapi-docs',
-    // This theme is used to add a search box
-    '@orama/plugin-docusaurus-v3',
   ],
 
   presets: [
@@ -666,6 +664,16 @@ const config: Config = {
         //   }
         //   return undefined; // Return a falsy value: no redirect created
         // },
+    // Local search plugin
+    [
+      require.resolve('@easyops-cn/docusaurus-search-local'),
+      {
+        hashed: true,
+        docsRouteBasePath: 'docs',
+        blogRouteBasePath: 'blog',
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
       },
     ],
   ],
