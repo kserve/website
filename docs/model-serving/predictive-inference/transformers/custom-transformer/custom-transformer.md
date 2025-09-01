@@ -127,7 +127,7 @@ class ImageTransformer(kserve.Model):
         return infer_response
 ```
 
-You can find the complete code example [here](https://github.com/kserve/kserve/tree/release-{{kserveDocsVersion}}/python/custom_transformer).
+You can find the complete code example [here](https://github.com/kserve/kserve/tree/release-<ActiveDocsVersion />/python/custom_transformer).
 
 ### Transformer Server Entrypoint
 
@@ -160,7 +160,7 @@ KServe allows users to override the default logger configuration of the serving 
 
 ### Build Transformer Docker Image
 
-From the `kserve/python` directory, build the transformer docker image using the [Dockerfile](https://github.com/kserve/kserve/blob/release-{{kserveDocsVersion}}/python/custom_transformer.Dockerfile):
+From the `kserve/python` directory, build the transformer docker image using the [Dockerfile](https://github.com/kserve/kserve/blob/release-<ActiveDocsVersion />/python/custom_transformer.Dockerfile):
 
 ```bash
 cd python
