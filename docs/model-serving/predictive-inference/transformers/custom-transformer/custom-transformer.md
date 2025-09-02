@@ -3,6 +3,8 @@ title: "How to write a Custom Transformer"
 description: "Deploy a custom transformer with TorchServe in KServe"
 ---
 
+import ActiveDocsVersion from '@site/src/components/ActiveDocsVersion';
+
 # Deploy Transformer with InferenceService
 
 A Transformer is an `InferenceService` component which performs pre/post processing alongside model inference. It takes raw input and transforms it into the input tensors that the model server expects. In this guide, we demonstrate running inference with a custom `Transformer` communicating using both REST and gRPC protocols.
