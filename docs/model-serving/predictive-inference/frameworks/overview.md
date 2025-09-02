@@ -5,6 +5,7 @@ description: Overview of model serving frameworks supported by KServe
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ActiveDocsVersion from '@site/src/components/ActiveDocsVersion';
 
 # Model Serving Frameworks Overview
 

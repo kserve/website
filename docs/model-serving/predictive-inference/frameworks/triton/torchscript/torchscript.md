@@ -5,6 +5,7 @@ description: Deploy TorchScript Models with Triton on KServe
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ActiveDocsVersion from '@site/src/components/ActiveDocsVersion';
 
 # Triton TorchScript Models
 
