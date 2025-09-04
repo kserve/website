@@ -120,7 +120,7 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" http:
 KServe also supports gRPC for inference requests. To create an `InferenceService` that exposes a gRPC endpoint:
 
 <Tabs groupId="deployment-type">
-<TabItem value="serverless" label="Serverless" default>
+<TabItem value="serverless" label="Knative" default>
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
@@ -147,7 +147,7 @@ spec:
 ```
 
 </TabItem>
-<TabItem value="raw" label="Raw Deployment" default>
+<TabItem value="raw" label="Standard Deployment" default>
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"

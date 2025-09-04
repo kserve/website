@@ -21,7 +21,7 @@ Serverless deployment is particularly well-suited for predictive inference workl
 - Knative's request-based scaling aligns with the traffic patterns of many predictive workloads
 - Canary deployments and revisions enable safe updates to predictive models
 
-For generative inference workloads that typically require GPU resources and have longer processing times, the [Raw Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
+For generative inference workloads that typically require GPU resources and have longer processing times, the [Standard Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
 
 Kubernetes 1.30 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.

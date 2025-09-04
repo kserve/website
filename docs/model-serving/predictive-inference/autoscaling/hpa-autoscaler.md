@@ -5,14 +5,14 @@ description: "Learn how to autoscale InferenceServices with Kubernetes Horizonta
 
 # Autoscaling with Kubernetes HPA
 
-KServe supports `RawDeployment` mode to enable `InferenceService` deployment with the following Kubernetes resources:
+KServe supports `Standard` mode to enable `InferenceService` deployment with the following Kubernetes resources:
 
 - [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment)
 - [`Service`](https://kubernetes.io/docs/concepts/services-networking/service)
 - [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress)
 - [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale)
 
-Compared to Serverless deployment, Raw deployment mode unlocks Knative limitations such as mounting multiple volumes. However, "Scale down to zero" is not supported in `RawDeployment` mode.
+Compared to Knative deployment, Raw deployment mode unlocks Knative limitations such as mounting multiple volumes. However, "Scale down to zero" is not supported in `Standard` mode.
 
 ## Prerequisites
 
@@ -23,9 +23,9 @@ Before you begin, make sure you have:
 - [Metrics Server](https://github.com/kubernetes-sigs/metrics-server) installed on your Kubernetes cluster for HPA to function properly.
 - Basic understanding of Kubernetes [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) concepts.
 
-## HPA in Raw Deployment
+## HPA in Standard Deployment
 
-When using KServe with the `RawDeployment` mode, Knative is not required. In this mode, if you deploy an `InferenceService`, KServe uses **Kubernetes' Horizontal Pod Autoscaler (HPA)** for autoscaling instead of **Knative Pod Autoscaler (KPA)**. For information on using Knative Autoscaler in KServe, you can refer to the [Knative Autoscaler](./kpa-autoscaler.md) documentation.
+When using KServe with the `Standard` mode, Knative is not required. In this mode, if you deploy an `InferenceService`, KServe uses **Kubernetes' Horizontal Pod Autoscaler (HPA)** for autoscaling instead of **Knative Pod Autoscaler (KPA)**. For information on using Knative Autoscaler in KServe, you can refer to the [Knative Autoscaler](./kpa-autoscaler.md) documentation.
 
 Here's an example of creating an InferenceService that uses HPA:
 
@@ -35,7 +35,7 @@ kind: "InferenceService"
 metadata:
   name: "sklearn-iris-hpa"
   annotations:
-    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/deploymentMode: Standard
     serving.kserve.io/autoscalerClass: hpa
 spec:
   predictor:
@@ -67,7 +67,7 @@ kubectl apply -f sklearn-iris-hpa.yaml
 
 Concurrency and RPS metrics are only supported via Knative Pod Autoscaler. You can refer to [Knative Autoscaler Metrics](./kpa-autoscaler.md) documentation for more information on those metrics.
 
-## Disable HPA in Raw Deployment
+## Disable HPA in Standard Deployment
 
 If you want to use external autoscaler tools or manage scaling manually, you can disable the Horizontal Pod Autoscaler (HPA) that KServe creates.
 

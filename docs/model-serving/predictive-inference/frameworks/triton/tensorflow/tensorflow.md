@@ -28,7 +28,7 @@ Before you begin, make sure you have:
 - Basic knowledge of TensorFlow, BERT models, and Triton Inference Server.
 - kubectl CLI tool configured with your cluster.
 
-## Setup (Serverless Mode Only)
+## Setup (Knative Mode Only)
 
 1. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires authentication to resolve Triton inference server image digest:
 
