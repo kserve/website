@@ -590,7 +590,7 @@ metadata:
 data:
   deploy: |-
     {
-      "defaultDeploymentMode": "Serverless"
+      "defaultDeploymentMode": "Knative"
     }
 ```
 </TabItem>

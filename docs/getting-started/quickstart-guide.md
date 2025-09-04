@@ -107,7 +107,7 @@ KServe Quickstart Environments are for experimentation use only. For production 
 ```
 
 </TabItem>
-<TabItem value="serverless" label="Serverless">
+<TabItem value="knative" label="Knative">
 
 ```bash
    curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash

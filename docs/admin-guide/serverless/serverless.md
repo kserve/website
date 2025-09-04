@@ -1,20 +1,20 @@
 ---
-title: "Serverless Installation Guide"
+title: "Knative Serverless Installation Guide"
 description: "Deploy KServe with request-based autoscaling and scale-to-zero capabilities for predictive inference workloads"
 ---
 
-# Serverless Installation Guide
+# Knative Installation Guide
 
 :::info
-Serverless Deployment is recommended primarily for predictive inference workloads.
+Knative serverless Deployment is recommended primarily for predictive inference workloads.
 :::
 
-KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
+KServe Knative serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
 and canary rollout based on revisions.
 
 ## Applicability for Predictive Inference
 
-Serverless deployment is particularly well-suited for predictive inference workloads because:
+Knative deployment is particularly well-suited for predictive inference workloads because:
 
 - Predictive inference typically has shorter response times that work well with Knative's concurrency model
 - CPU-based models can efficiently scale to zero when not in use
