@@ -12,11 +12,11 @@ export default function HomepageBenefits() {
               Why KServe?
             </Heading>
             <p className={styles.sectionDescription}>
-              The open source standard for self-hosted AI, providing a unified platform for Generative and Predictive AI inference on Kubernetes. Simple enough for quick deployments, yet powerful enough for advanced, enterprise-scale workloads.
-            </p>
-            <p className={styles.sectionTagline}>
-              Simple enough for quick deployments, yet powerful enough for the most demanding enterprise workloads.
-            </p>        
+              The open-source standard for self-hosted AI, providing a unified platform for both Generative and Predictive AI inference on Kubernetes.
+              <span className={styles.sectionTagline}>
+                Simple enough for quick deployments, yet powerful enough for the most demanding enterprise workloads.
+              </span>
+            </p>       
             <div className={styles.benefitsContainer}>
               <div className={styles.benefitsSection}>
                 <Heading as="h3" className={styles.benefitsTitle}>

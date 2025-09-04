@@ -68,6 +68,15 @@
   font-weight: 400;
 }
 
+.sectionTagline {
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 1.15rem; 
+  font-style: italic;
+  color: var(--ifm-color-emphasis-700);
+  font-weight: 400;
+}
+
 .benefitsContainer {
   margin-top: 4rem;
   display: grid;
