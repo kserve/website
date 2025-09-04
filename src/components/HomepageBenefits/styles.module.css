@@ -65,16 +65,16 @@
   color: var(--ifm-color-emphasis-800);
   max-width: 700px;
   margin: 0 auto 2rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .sectionTagline {
   display: block;
   margin-top: 1.5rem;
-  font-size: 1.15rem; 
+  font-size: 1.25rem; 
   font-style: italic;
-  color: var(--ifm-color-emphasis-700);
-  font-weight: 400;
+  color: var(--ifm-color-emphasis-800);
+  font-weight: 450;
 }
 
 .benefitsContainer {
