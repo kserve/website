@@ -102,6 +102,10 @@ else
   exit 1
 fi
 
+# Replace the entire sentence '<hostname>.<subdomain>.<pod namespace>.svc.<cluster domain>' with '&lt;hostname&gt;.&lt;subdomain&gt;.&lt;pod namespace&gt;.svc.&lt;cluster domain&gt;'
+find docs/reference -type f -name "*.md" -exec \
+sed -i 's|<hostname>\.<subdomain>\.<pod namespace>\.svc\.<cluster domain>|\&lt;hostname\&gt;.\&lt;subdomain\&gt;.\&lt;pod namespace\&gt;.svc.\&lt;cluster domain\&gt;|g' {} +
+
 echo "API documentation generation completed successfully."
 
 # Deactivate virtual environment
