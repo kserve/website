@@ -5,15 +5,20 @@ description: "High-scale, high-density model serving for predictive inference wo
 
 # ModelMesh Installation
 
-ModelMesh provides high-scale, high-density model serving for scenarios with frequent model changes and large numbers of models. It's designed for efficient resource utilization and intelligent model loading, making it particularly well-suited for predictive inference workloads.
+ModelMesh installation provides high-scale, high-density model serving for scenarios with frequent model changes and large numbers of models, making it particularly well-suited for predictive inference workloads.
 
-## Overview
+It uses a distributed architecture particularly designed for:
 
-:::info
-ModelMesh is optimized for predictive inference workloads with high model density requirements.
-:::
+- High-scale model serving
+- Multi-model management
+- Intelligent model loading
+- Efficient resource utilization
+- Frequent model updates
+
+## Use Cases
 
 ModelMesh is designed for predictive inference use cases where:
+
 - You have many models (hundreds to thousands)
 - Models are frequently updated or changed
 - Resource efficiency is critical

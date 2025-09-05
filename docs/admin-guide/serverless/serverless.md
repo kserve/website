@@ -9,8 +9,15 @@ description: "Deploy KServe with request-based autoscaling and scale-to-zero cap
 Serverless Deployment is recommended primarily for predictive inference workloads.
 :::
 
-KServe Serverless installation enables autoscaling based on request volume and supports scale down to and from zero. It also supports revision management
-and canary rollout based on revisions.
+KServe's Serverless deployment mode leverages Knative to provide autoscaling based on request volume and supports scale down to and from zero. It also supports revision management and canary rollout based on revisions.
+
+This mode is particularly useful for:
+
+- Cost optimization by automatically scaling resources based on demand
+- Environments with varying or unpredictable traffic patterns
+- Burst traffic scenarios where rapid scaling is required
+- Scenarios where resources should be freed when not in use
+- Managing multiple model revisions and canary deployments
 
 ## Applicability for Predictive Inference
 
@@ -20,6 +27,12 @@ Serverless deployment is particularly well-suited for predictive inference workl
 - CPU-based models can efficiently scale to zero when not in use
 - Knative's request-based scaling aligns with the traffic patterns of many predictive workloads
 - Canary deployments and revisions enable safe updates to predictive models
+
+:::info
+
+Serverless Deployment is recommended primarily for predictive inference workloads.
+
+:::
 
 For generative inference workloads that typically require GPU resources and have longer processing times, the [Raw Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
 

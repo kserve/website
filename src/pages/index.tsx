@@ -34,8 +34,8 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--outline button--lg button--secondary"
-            to="https://github.com/kserve/kserve">
-            GitHub Repository
+            to="/docs/admin-guide/overview#installation">
+            Install KServe
           </Link>
         </div>
       </div>

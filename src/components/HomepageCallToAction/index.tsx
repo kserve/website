@@ -25,8 +25,8 @@ export default function HomepageCallToAction() {
               </Link>
               <Link
                 className={clsx('button button--outline button--lg', styles.ctaButton)}
-                to="https://github.com/kserve/kserve">
-                GitHub Repository
+                to="/docs/admin-guide/overview#installation">
+                Install KServe
               </Link>
             </div>
           </div>
