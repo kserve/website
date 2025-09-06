@@ -8,9 +8,9 @@ import TabItem from '@theme/TabItem';
 
 # Kubernetes Deployment Installation
 
-KServe supports `RawDeployment` mode to enable `InferenceService` deployment for both **Predictive Inference** and **Generative Inference** workloads with **minimal dependencies** on Kubernetes resources: [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale).
+KServe supports `Standard` mode to enable `InferenceService` deployment for both **Predictive Inference** and **Generative Inference** workloads with **minimal dependencies** on Kubernetes resources: [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale).
 
-Compared to `Serverless` mode which depends on Knative for request-driven autoscaling, in `RawDeployment` mode [KEDA](https://keda.sh) can be installed optionally to enable autoscaling based on any custom metrics. Note that `Scale from Zero` is currently not supported in `RawDeployment` mode for HTTP requests.
+Compared to `Knative` mode which depends on Knative for request-driven autoscaling, in `Standard` mode [KEDA](https://keda.sh) can be installed optionally to enable autoscaling based on any custom metrics. Note that `Scale from Zero` is currently not supported in `Standard` mode for HTTP requests.
 
 ## Installation Requirements
 
@@ -27,14 +27,14 @@ KServe has the following minimum requirements:
 ## Deployment Considerations
 
 ### For Generative Inference
-Raw Kubernetes deployment is the **recommended approach** for generative inference workloads because it provides:
+Standard Kubernetes deployment is the **recommended approach** for generative inference workloads because it provides:
 - Full control over resource allocation for GPU-accelerated models
 - Better handling of long-running inference requests
 - More predictable scaling behavior for resource-intensive workloads
 - Support for streaming responses with appropriate networking configuration
 
 ### For Predictive Inference
-Raw Kubernetes deployment is suitable for predictive inference workloads when:
+Standard Kubernetes deployment is suitable for predictive inference workloads when:
 - You need direct control over Kubernetes resources
 - Your models require specific resource configurations
 - You want to use standard Kubernetes scaling mechanisms
@@ -144,7 +144,7 @@ Istio ingress is recommended, but you can choose to install with other [Ingress 
 ### 3. Install KServe
 
 :::note
-The default KServe deployment mode is `Serverless` which depends on Knative. The following step changes the default deployment mode to `RawDeployment` before installing KServe.
+The default KServe deployment mode is `Knative` which depends on Knative. The following step changes the default deployment mode to `Standard` before installing KServe.
 :::
 
 <Tabs>
@@ -158,11 +158,11 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.15.0
 
 2. Install KServe Resources
 
-Set the `kserve.controller.deploymentMode` to `RawDeployment` and configure the Gateway API:
+Set the `kserve.controller.deploymentMode` to `Standard` and configure the Gateway API:
 
 ```bash
 helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.15.0 \
-  --set kserve.controller.deploymentMode=RawDeployment \
+  --set kserve.controller.deploymentMode=Standard \
   --set kserve.controller.gateway.ingressGateway.enableGatewayApi=true \
   --set kserve.controller.gateway.ingressGateway.kserveGateway=kserve/kserve-ingress-gateway
 ```
@@ -185,10 +185,10 @@ kubectl apply --server-side -f https://github.com/kserve/kserve/releases/downloa
 
 3. Change default deployment mode and ingress option
 
-First in the ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` to `RawDeployment`:
+First in the ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` to `Standard`:
 
 ```bash
-kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'
+kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"Standard\"}"}}'
 ```
 
 Then enable Gateway API and configure the Gateway:
@@ -208,11 +208,11 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.15.0
 
 2. Install KServe Resources
 
-Set the `kserve.controller.deploymentMode` to `RawDeployment` and configure the Ingress class:
+Set the `kserve.controller.deploymentMode` to `Standard` and configure the Ingress class:
 
 ```bash
 helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.15.0 \
-  --set kserve.controller.deploymentMode=RawDeployment \
+  --set kserve.controller.deploymentMode=Standard \
   --set kserve.controller.gateway.ingressGateway.className=istio
 ```
 
@@ -234,10 +234,10 @@ kubectl apply --server-side -f https://github.com/kserve/kserve/releases/downloa
 
 3. Change default deployment mode and ingress option
 
-First in the ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` to `RawDeployment`:
+First in the ConfigMap `inferenceservice-config` modify the `defaultDeploymentMode` to `Standard`:
 
 ```bash
-kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"RawDeployment\"}"}}'
+kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{"data": {"deploy": "{\"defaultDeploymentMode\": \"Standard\"}"}}'
 ```
 
 Then configure the Ingress class:
@@ -251,9 +251,9 @@ kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{
 
 ## Features
 
-### Raw Deployment Mode
+### Standard Mode
 
-In raw deployment mode, KServe creates:
+In standard mode, KServe creates:
 - Kubernetes Deployments instead of Knative Services
 - Standard Kubernetes Services for networking
 - Ingress resources for external access

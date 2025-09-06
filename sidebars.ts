@@ -299,7 +299,7 @@ const sidebars: SidebarsConfig = {
             'admin-guide/modelmesh',
             {
               type: 'category',
-              label: 'Serverless Deployment',
+              label: 'Knative Deployment',
               items: [
                 'admin-guide/serverless/serverless',
                 'admin-guide/serverless/kourier-networking/index',

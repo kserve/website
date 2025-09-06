@@ -9,7 +9,7 @@ KServe leverages Knative Pod Autoscaler (KPA) to automatically scale your infere
 
 :::note
 
-The Knative Pod Autoscaler is only supported in Serverless deployment mode.
+The Knative Pod Autoscaler is only supported in Knative deployment mode.
 
 :::
 

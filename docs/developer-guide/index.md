@@ -148,11 +148,11 @@ For local development, we recommend using either:
 
 KServe offers two deployment modes:
 
-- **Serverless deployment** requires `Knative Serving` for request-based auto-scaling, scale-to-zero, and canary rollouts
+- **Knative deployment** requires `Knative Serving` for request-based auto-scaling, scale-to-zero, and canary rollouts
 - **Raw deployment** doesn't require Knative, suitable for generative inference workloads with stable resource allocation
 
 For networking:
-- **Serverless mode**: Requires Knative Serving; while Istio is recommended as the networking layer for Knative, you can use any ingress/networking solution supported by Knative (like Kourier or Contour)
+- **Knative mode**: Requires Knative Serving; while Istio is recommended as the networking layer for Knative, you can use any ingress/networking solution supported by Knative (like Kourier or Contour)
 - **Raw deployment**: Uses Gateway API or standard Kubernetes Ingress, compatible with various networking implementations
 
 Note that the quick install script installs Istio by default for both deployment modes for convenience.
@@ -435,7 +435,7 @@ Error: Internal error occurred: failed calling webhook "isvc.serving.kserve.io"
 - For raw mode, check Gateway resources: `kubectl get gateways,httproutes -A`
 - Verify network policies allow traffic to your services
 
-#### Slow Cold Start in Serverless Mode
+#### Slow Cold Start in Knative Mode
 - Consider setting `minScale` in your InferenceService spec to keep a minimum number of pods ready
 - Check for large container images that might be slow to pull
 - Review resource limits and requests

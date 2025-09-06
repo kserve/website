@@ -188,7 +188,7 @@ KServe currently supports exposing either HTTP or gRPC port, not both simultaneo
 :::
 
 <Tabs groupId="deployment-type">
-<TabItem value="serverless" label="Serverless" default>
+<TabItem value="serverless" label="Knative" default>
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
@@ -210,7 +210,7 @@ spec:
 ```
 
 </TabItem>
-<TabItem value="raw" label="Raw Deployment">
+<TabItem value="raw" label="Standard Deployment">
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
