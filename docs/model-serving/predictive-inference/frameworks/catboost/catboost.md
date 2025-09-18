@@ -1,6 +1,6 @@
 ---
-title: MLflow
-description: Deploy MLflow models with KServe
+title: CatBoost
+description: Deploy CatBoost models with KServe
 ---
 
 # Deploying CatBoost Models with KServe
