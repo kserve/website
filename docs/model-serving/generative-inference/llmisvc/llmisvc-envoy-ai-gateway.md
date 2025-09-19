@@ -1,11 +1,11 @@
 ---
-title: Integrating LLMInferenceService with Envoy AI Gateway
+title: LLMInferenceService with Inference Gateway Extension (IGW)
 description: How to integrate KServe LLMInferenceService with Envoy AI Gateway to manage LLM traffic and usage-based rate limits
 ---
 
-# Integrating LLMInferenceService with Envoy AI Gateway
+# LLMInferenceService with Inference Gateway Extension (IGW)
 
-This tutorial walks through deploying a KServe LLMInferenceService which implements [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/) (llm-d router + inference pool) and fronting it with Envoy AI Gateway to provide OpenAI-compatible routing, token usage accounting, and usage-based rate limiting. KServe integrates with LLM-D via a Kubernetes-native custom resource definition (LLMInferenceService) for LLMs that provisions the router and inference pool. You will create a Gateway and AIGatewayRoute that forward requests to the KServe InferencePool, enable automatic token metering (input/output/total) via llmRequestCosts, and enforce per-user, per-model quotas using BackendTrafficPolicy. KServe can run behind the AI Gateway in the same or a different cluster; for clarity, this guide uses a single-cluster setup.
+This tutorial walks through deploying a KServe LLMInferenceService that wraps [llm-d](https://llm-d.ai/) — which implements the [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/) (the llm-d router and inference pool) — and fronts it with Envoy AI Gateway to provide OpenAI-compatible routing, token usage accounting, and usage-based rate limiting. KServe integrates with llm-d via a Kubernetes-native custom resource, LLMInferenceService, which provisions the router and inference pool. You will create a Gateway and an AIGatewayRoute that forward requests to the KServe InferencePool, enable automatic token metering (input, output, and total) via llmRequestCosts, and enforce per-user, per-model quotas using a BackendTrafficPolicy. KServe can run behind the AI Gateway in the same cluster or a different one; for clarity, this guide uses a single-cluster setup.
 
 ## AI Gateway Overview
 
@@ -364,7 +364,7 @@ spec:
             memory: 16Gi
             nvidia.com/gpu: 1
           requests:
-            cpu: '100m'
+            cpu: '1'
             memory: 8Gi
             nvidia.com/gpu: 1
 ```
@@ -584,6 +584,26 @@ The response should be similar to the following:
     }
     ```
 :::
+
+Because the prefix-cache-scorer plugin is enabled, the scheduler performs prefix-aware routing and will tend to send requests with similar prompts to the same backend pod. Inspect the router-scheduler pod logs to see which endpoint handled a given request:
+
+```shell
+kubectl logs -l="app.kubernetes.io/component=llminferenceservice-router-scheduler,app.kubernetes.io/name=qwen-instruct" -n kserve-test
+```
+
+```
+{"level":"Level(-2)","ts":"2025-09-19T08:52:53Z","caller":"requestcontrol/director.go:251","msg":"Request handled","x-request-id":"4a3f6247-d02f-4a57-9a90-9b25b2daa18c","model":"Qwen/Qwen2.5-0.5B-Instruct","resolvedTargetModel":"Qwen/Qwen2.5-0.5B-Instruct","criticality":"Critical","model":"Qwen/Qwen2.5-0.5B-Instruct","targetModel":"Qwen/Qwen2.5-0.5B-Instruct",
+# highlight-next-line
+"endpoint":"{NamespacedName:kserve-test/qwen-instruct-kserve-6899dd5fb8-tqwn8 Address:10.244.1.234 Labels:map[app.kubernetes.io/component:llminferenceservice-workload app.kubernetes.io/name:qwen-instruct app.kubernetes.io/part-of:llminferenceservice kserve.io/component:workload llm-d.ai/role:both pod-template-hash:6899dd5fb8]}"}
+
+{"level":"Level(-2)","ts":"2025-09-19T08:57:11Z","caller":"requestcontrol/director.go:251","msg":"Request handled","x-request-id":"bea219be-aa44-443a-be27-75000338caf8","model":"Qwen/Qwen2.5-0.5B-Instruct","resolvedTargetModel":"Qwen/Qwen2.5-0.5B-Instruct","criticality":"Critical","model":"Qwen/Qwen2.5-0.5B-Instruct","targetModel":"Qwen/Qwen2.5-0.5B-Instruct",
+# highlight-next-line
+"endpoint":"{NamespacedName:kserve-test/qwen-instruct-kserve-6899dd5fb8-tqwn8 Address:10.244.1.234 Labels:map[app.kubernetes.io/component:llminferenceservice-workload app.kubernetes.io/name:qwen-instruct app.kubernetes.io/part-of:llminferenceservice kserve.io/component:workload llm-d.ai/role:both pod-template-hash:6899dd5fb8]}"}
+
+{"level":"Level(-2)","ts":"2025-09-19T08:57:36Z","caller":"requestcontrol/director.go:251","msg":"Request handled","x-request-id":"a6085a71-774b-4f48-89fb-79f44c212605","model":"Qwen/Qwen2.5-0.5B-Instruct","resolvedTargetModel":"Qwen/Qwen2.5-0.5B-Instruct","criticality":"Critical","model":"Qwen/Qwen2.5-0.5B-Instruct","targetModel":"Qwen/Qwen2.5-0.5B-Instruct",
+# highlight-next-line
+"endpoint":"{NamespacedName:kserve-test/qwen-instruct-kserve-6899dd5fb8-tqwn8 Address:10.244.1.234 Labels:map[app.kubernetes.io/component:llminferenceservice-workload app.kubernetes.io/name:qwen-instruct app.kubernetes.io/part-of:llminferenceservice kserve.io/component:workload llm-d.ai/role:both pod-template-hash:6899dd5fb8]}"
+```
 
 Once the token limit is reached, you will receive a 429 error response with the message `Too Many Requests`. For example:
 ```
