@@ -103,7 +103,7 @@ KServe Quickstart Environments are for experimentation use only. For production 
 <TabItem value="raw" label="Standard Deployment" default>
 
 ```bash
-   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash -r
+   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash -s -- -r
 ```
 
 </TabItem>
