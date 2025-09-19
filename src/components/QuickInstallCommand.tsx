@@ -9,12 +9,12 @@ export default function QuickInstallCommand() {
 
   return (
     <Tabs groupId="deployment-type">
-      <TabItem value="raw" label="Raw Deployment" default>
+      <TabItem value="standard" label="Standard Deployment" default>
         <pre>
-          <code className="language-bash">{`${baseCmd} | bash -r`}</code>
+          <code className="language-bash">{`${baseCmd} | bash -s -- -r`}</code>
         </pre>
       </TabItem>
-      <TabItem value="serverless" label="Serverless">
+      <TabItem value="knative" label="Knative">
         <pre>
           <code className="language-bash">{`${baseCmd} | bash`}</code>
         </pre>
