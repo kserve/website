@@ -633,7 +633,7 @@ spec:
 | **Traffic Splitting** | ✅ With Gateway API | ✅ Native support |
 | **Operational Complexity** | ✅ Standard Kubernetes | ⚠️ Additional Knative complexity |
 | **Resource Overhead** | ✅ Minimal overhead | ⚠️ Queue proxy overhead |
-| **Production Readiness** | ✅ Highly recommended for LLM Workloads, systems where more flexibility is required | ✅ Highly recommended for burst traffic scenarios, unpredictable traffic patterns and scale-to-zero requirements |
+| **Production Readiness** | ✅ Highly recommended for LLM Workloads, systems where more flexibility is required | ✅ Highly recommended for bursty traffic scenarios, unpredictable traffic patterns and scale-to-zero requirements |
 | **Queuing** | ❌ Not supported | ✅ Native support with Knative |
 
 ### Choosing the Right Mode
