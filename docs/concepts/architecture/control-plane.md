@@ -12,7 +12,7 @@ The control plane operates independently from the data plane, allowing for clean
 
 ## Architecture Diagrams
 
-### Raw Deployment Mode with Gateway API (Recommended)
+### Standard Deployment Mode with Gateway API (Recommended)
 
 ```mermaid
 graph TB
@@ -86,7 +86,7 @@ graph TB
     LController -.->|creates| PVC
     LController -.->|creates| PV
 ```          
-### Raw Deployment Mode with Kubernetes Ingress (Limited Functionality)
+### Standard Deployment Mode with Kubernetes Ingress (Limited Functionality)
 
 ```mermaid
 graph TB
@@ -168,7 +168,7 @@ graph TB
     LController -.->|creates| PV
 ```
 
-### Serverless Mode with Knative
+### Knative Mode with Knative
 
 ```mermaid
 graph TB
@@ -185,10 +185,10 @@ graph TB
     classDef modelServerStyle fill:#F5CBA7,stroke:#D35400,color:#000
     classDef featuresStyle fill:#e8f5e8,stroke:#c8e6c9,color:#000
 
-    subgraph ServerlessFeatures["Serverless Features"]
+    subgraph KnativeFeatures["Knative Features"]
         Features[✅ Scale-to-zero<br/>✅ Revision management<br/>✅ Canary deployments<br/>✅ Traffic splitting]:::featuresStyle
     end
-    style ServerlessFeatures fill:none,stroke-dasharray:5
+    style KnativeFeatures fill:none,stroke-dasharray:5
 
     subgraph "UserAppliedResources"["User Applied Resources"]
         subgraph "KServe Resources"
@@ -387,7 +387,7 @@ The KServe Controller Manager is the central component of the control plane, res
 **Architecture Integration:**
 - Operates using the Kubernetes controller pattern with watch-reconcile loops
 - Integrates with admission webhooks for validation and mutation
-- Coordinates with both Raw Deployment and Serverless deployment modes
+- Coordinates with both Standard Deployment and Knative deployment modes
 - Manages model agent containers for enhanced functionality
 
 ### LocalModel Controller (LLM Model Caching)
@@ -468,7 +468,7 @@ While supported for backward compatibility, Kubernetes Ingress has significant l
 - **Multi-Cloud Support**: Works with various cloud provider metrics
 - **Custom Resources**: Uses ScaledObject and ScaledJob custom resources
 
-#### Scale-to-Zero (Serverless Mode Only)
+#### Scale-to-Zero (Knative Mode Only)
 - **Knative Autoscaler (KPA)**: Provides scale-to-zero capabilities
 - **Activator Component**: Handles request queuing and pod activation
 - **Cold Start Optimization**: Minimizes latency when scaling from zero
@@ -512,9 +512,9 @@ While supported for backward compatibility, Kubernetes Ingress has significant l
 
 KServe supports two distinct deployment modes, each with different architectural patterns, capabilities, and use cases. The choice between modes significantly impacts the networking, autoscaling, and operational characteristics of your inference services.
 
-### Raw Deployment Mode (Recommended for LLMs)
+### Standard Deployment Mode (Recommended for LLMs)
 
-Raw Deployment mode uses standard Kubernetes resources and is recommended for most production environments.
+Standard Deployment mode uses standard Kubernetes resources and is recommended for most production environments.
 
 **Architecture Characteristics:**
 - **Standard Kubernetes Deployments**: Uses Deployment, Service, and networking resources
@@ -571,9 +571,9 @@ spec:
       storageUri: gs://kfserving-examples/models/sklearn/1.0/model
 ```
 
-### Serverless Mode (Knative-Based)
+### Knative Mode (Knative-Based)
 
-Serverless mode leverages Knative Serving for event-driven, scale-to-zero capabilities.
+Knative mode leverages Knative Serving for event-driven, scale-to-zero capabilities.
 
 **Architecture Characteristics:**
 - **Knative Service Resources**: Uses Knative Service and Revision resources
@@ -619,7 +619,7 @@ spec:
 
 ### Mode Comparison
 
-| Feature | Raw Deployment | Serverless |
+| Feature | Standard Deployment | Knative |
 |---------|----------------|------------|
 | **Networking** | Gateway API (recommended) / Ingress | Knative Gateway (Istio/Kourier) |
 | **Autoscaling** | HPA + KEDA | Knative Autoscaler (KPA) |
@@ -632,14 +632,14 @@ spec:
 
 ### Choosing the Right Mode
 
-**Choose Raw Deployment when:**
+**Choose Standard Deployment when:**
 - Running production workloads requiring high availability
 - Need predictable performance without cold starts
 - Have existing Kubernetes operational expertise
 - Require advanced networking with Gateway API
 - Need fine-grained control over pod lifecycle
 
-**Choose Serverless when:**
+**Choose Knative when:**
 - Cost optimization through scale-to-zero is important
 - Traffic patterns are variable or unpredictable
 - Development/testing environments with limited resources

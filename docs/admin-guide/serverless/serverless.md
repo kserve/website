@@ -1,15 +1,11 @@
 ---
-title: "Serverless Installation Guide"
+title: "Knative Serverless Installation Guide"
 description: "Deploy KServe with request-based autoscaling and scale-to-zero capabilities for predictive inference workloads"
 ---
 
-# Serverless Installation Guide
+# Knative mode Installation Guide
 
-:::info
-Serverless Deployment is recommended primarily for predictive inference workloads.
-:::
-
-KServe's Serverless deployment mode leverages Knative to provide autoscaling based on request volume and supports scale down to and from zero. It also supports revision management and canary rollout based on revisions.
+KServe's Knative serverless deployment mode leverages Knative to provide autoscaling based on request volume and supports scale down to and from zero. It also supports revision management and canary rollout based on revisions.
 
 This mode is particularly useful for:
 
@@ -21,7 +17,7 @@ This mode is particularly useful for:
 
 ## Applicability for Predictive Inference
 
-Serverless deployment is particularly well-suited for predictive inference workloads because:
+Knative deployment is particularly well-suited for predictive inference workloads because:
 
 - Predictive inference typically has shorter response times that work well with Knative's concurrency model
 - CPU-based models can efficiently scale to zero when not in use
@@ -30,11 +26,11 @@ Serverless deployment is particularly well-suited for predictive inference workl
 
 :::info
 
-Serverless Deployment is recommended primarily for predictive inference workloads.
+Knative serverless Deployment is recommended primarily for predictive inference workloads.
 
 :::
 
-For generative inference workloads that typically require GPU resources and have longer processing times, the [Raw Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
+For generative inference workloads that typically require GPU resources and have longer processing times, the [Standard Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
 
 Kubernetes 1.30 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.

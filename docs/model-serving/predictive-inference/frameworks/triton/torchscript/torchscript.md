@@ -20,7 +20,7 @@ Before you begin, make sure you have:
 - Basic knowledge of PyTorch, TorchScript, and Triton Inference Server.
 - kubectl CLI tool configured with your cluster.
 
-## Setup (Serverless Mode Only)
+## Setup (Knative Mode Only)
 
 1. Skip [tag resolution](https://knative.dev/docs/serving/tag-resolution/) for `nvcr.io` which requires auth to resolve Triton inference server image digest:
 
@@ -247,7 +247,7 @@ Error Set:
 
 Create the inference service YAML and expose the gRPC port. Currently, only one port is allowed to expose either HTTP or gRPC port, and by default, the HTTP port is exposed:
 <Tabs groupId="deployment-type">
-<TabItem value="serverless" label="Serverless" default>
+<TabItem value="serverless" label="Knative" default>
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -277,7 +277,7 @@ spec:
           memory: 2Gi
 ```
 </TabItem>
-<TabItem value="raw" label="Raw Deployment">
+<TabItem value="raw" label="Standard Deployment">
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1

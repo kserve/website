@@ -23,7 +23,7 @@ Before setting up inference logging, make sure you have:
 First, you need to set up a message dumper service that will receive and log the inference events.
 
 <Tabs groupId="deployment-type">
-  <TabItem value="raw" label="Raw Deployment" default>
+  <TabItem value="raw" label="Standard Deployment" default>
 
 Create a standard Kubernetes deployment and service as the message dumper:
 
@@ -61,7 +61,7 @@ spec:
 ```
 
   </TabItem>
-  <TabItem value="serverless" label="Serverless Deployment (Knative)">
+  <TabItem value="serverless" label="Knative Deployment (Knative)">
 
 Create a Knative Service as the message dumper:
 
@@ -165,7 +165,7 @@ kubectl logs $(kubectl get pod -l app=message-dumper -o jsonpath='{.items[0].met
 ```
 
   </TabItem>
-  <TabItem value="serverless" label="Serverless Deployment (Knative)">
+  <TabItem value="serverless" label="Knative Deployment (Knative)">
 
 ```bash
 kubectl logs $(kubectl get pod -l serving.knative.dev/service=message-dumper -o jsonpath='{.items[0].metadata.name}') user-container
@@ -250,7 +250,7 @@ kubectl delete svc message-dumper
 ```
 
   </TabItem>
-  <TabItem value="serverless" label="Serverless Deployment (Knative)">
+  <TabItem value="serverless" label="Knative Deployment (Knative)">
 
 ```bash
 kubectl delete isvc sklearn-iris

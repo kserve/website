@@ -34,7 +34,7 @@ Generative inference workloads involve models that generate new content (text, i
 - Process streaming responses
 - Have higher memory requirements
 
-**Recommended deployment option**: For generative inference workloads, the **Raw Kubernetes Deployment** approach is recommended as it provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
+**Recommended deployment option**: For generative inference workloads, the **Standard Kubernetes Deployment** approach is recommended as it provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
 
 ### Predictive Inference
 
@@ -47,16 +47,16 @@ Predictive inference workloads involve models that predict specific values or cl
 - Return fixed-size responses
 
 **Available deployment options**: For predictive inference workloads, KServe offers multiple deployment options:
-- **Raw Kubernetes Deployment**: For direct control over resources
-- **Serverless Deployment**: For scale to zero capabilities and cost optimization
+- **Standard Kubernetes Deployment**: For direct control over resources
+- **Knative Deployment**: For scale to zero capabilities and cost optimization
 - **ModelMesh Deployment**: For high-density, multi-model scenarios
 
 ## Installation
 
 KServe can be installed using one of three supported deployment modes. This Installation sections describe what each mode is best for, the common prerequisites, and how to choose the correct guide for your workload.
 
-- **[Install with Raw Kubernetes Deployment](./kubernetes-deployment.md)** - suitable for both generative and predictive inference workloads
-- **[Install with Serverless Deployment](./serverless/serverless.md)** - suitable for burst and unpredictable traffic workloads with scale to zero features for cost optimization.
+- **[Install with Standard Kubernetes Deployment](./kubernetes-deployment.md)** - suitable for both generative and predictive inference workloads
+- **[Install with Knative Deployment](./serverless/serverless.md)** - suitable for burst and unpredictable traffic workloads with scale to zero features for cost optimization.
 - **[Install with ModelMesh Deployment](./modelmesh.md)** - suitable for high-density, multi-model scenarios
 
 ## Networking Configuration
@@ -96,7 +96,7 @@ When administering KServe, consider these best practices:
 
 ### For Predictive Inference
 - **Autoscaling**: Configure appropriate scaling thresholds based on model performance
-- **Resource Efficiency**: Consider Serverless or ModelMesh for cost optimization
+- **Resource Efficiency**: Consider Knative or ModelMesh for cost optimization
 - **Batch Processing**: Configure batch settings for improved throughput when applicable
 
 ## Next Steps
@@ -104,11 +104,11 @@ When administering KServe, consider these best practices:
 Choose one of the detailed guides to proceed with KServe administration based on your inference workload:
 
 ### For Generative Inference
-- [Raw Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
 - [Gateway API Migration Guide](./gatewayapi-migration.md)
 
 ### For Predictive Inference
-- [Raw Kubernetes Deployment Guide](./kubernetes-deployment.md)
-- [Serverless Deployment Guide](./serverless/serverless.md)
+- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [Knative Deployment Guide](./serverless/serverless.md)
 - [ModelMesh Deployment Guide](./modelmesh.md)
 - [Gateway API Migration Guide](./gatewayapi-migration.md)

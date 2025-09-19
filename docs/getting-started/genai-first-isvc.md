@@ -17,7 +17,7 @@ Since your LLM is deployed as an InferenceService rather than a basic Kubernetes
 Before you begin, ensure you have followed the [KServe Quickstart Guide](quickstart-guide.md) to set up KServe in your Kubernetes cluster. This guide assumes you have a working KServe installation and a Kubernetes cluster ready for deployment.
 
 :::tip
-KServe recommends Raw Deployment for Generative AI use cases.
+KServe recommends Standard Deployment for Generative AI use cases.
 :::
 
 ### 1. Create a namespace
