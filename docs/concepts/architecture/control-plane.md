@@ -552,7 +552,9 @@ metadata:
     networking.kserve.io/gateway-api: "true"
 spec:
   predictor:
-    sklearn:
+    model:
+      modelFormat:
+        name: sklearn
       storageUri: gs://kfserving-examples/models/sklearn/1.0/model
 ```
 
@@ -567,7 +569,9 @@ metadata:
     networking.kserve.io/ingress-class: "nginx"
 spec:
   predictor:
-    sklearn:
+    model:
+      modelFormat:
+        name: sklearn
       storageUri: gs://kfserving-examples/models/sklearn/1.0/model
 ```
 
@@ -589,6 +593,7 @@ Knative mode leverages Knative Serving for event-driven, scale-to-zero capabilit
 - ✅ **Traffic Splitting**: Native support for canary deployments and A/B testing
 - ✅ **Resource Efficiency**: Optimal resource utilization for variable workloads
 - ✅ **Cold Start Optimization**: Knative optimizations for minimizing cold start latency
+- ✅ **Production Stability**: Battle-tested Kubernetes primitives with predictable behavior
 
 **Limitations:**
 - ⚠️ **Cold Start Latency**: Initial requests may experience higher latency
@@ -628,7 +633,8 @@ spec:
 | **Traffic Splitting** | ✅ With Gateway API | ✅ Native support |
 | **Operational Complexity** | ✅ Standard Kubernetes | ⚠️ Additional Knative complexity |
 | **Resource Overhead** | ✅ Minimal overhead | ⚠️ Queue proxy overhead |
-| **Production Readiness** | ✅ Highly recommended | ⚠️ Depends on requirements |
+| **Production Readiness** | ✅ Highly recommended for LLM Workloads, systems where more flexibility is required | ✅ Highly recommended for bursty traffic scenarios, unpredictable traffic patterns and scale-to-zero requirements |
+| **Queuing** | ❌ Not supported | ✅ Native support with Knative |
 
 ### Choosing the Right Mode
 
