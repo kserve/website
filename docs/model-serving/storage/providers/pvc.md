@@ -137,30 +137,7 @@ spec:
 
 ### PVC Volume Mount Configuration
 
-KServe supports direct PVC volume mounting, which is controlled by the `enableDirectPvcVolumeMount` configuration parameter. When enabled (default behavior), the PVC volume is directly mounted to `/mnt/models` in the user container rather than creating a symlink from `/mnt/models` to a shared volume.
-
-This can be configured in KServe's `inferenceservice-config` ConfigMap under the `storageInitializer` section:
-
-```json
-storageInitializer: |-
-    {
-        "image" : "kserve/storage-initializer:latest",
-        "memoryRequest": "100Mi",
-        "memoryLimit": "1Gi",
-        "cpuRequest": "100m",
-        "cpuLimit": "1",
-        "caBundleConfigMapName": "",
-        "caBundleVolumeMountPath": "/etc/ssl/custom-certs",
-        # highlight-next-line
-        "enableDirectPvcVolumeMount": true,
-        "enableModelcar": true,
-        "cpuModelcar": "10m",
-        "memoryModelcar": "15Mi",
-        "uidModelcar": 1010
-    }
-```
-
-When `enableDirectPvcVolumeMount` is set to `true`, KServe will directly mount the PVC volume to the container, which can improve performance and simplify the storage architecture.
+KServe uses direct PVC volume mounting, where the PVC volume is directly mounted to `/mnt/models` in the user container rather than creating a symlink from `/mnt/models` to a shared volume. This approach improves performance and simplifies the storage architecture.
 
 ## Run a prediction
 
