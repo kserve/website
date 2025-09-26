@@ -6,7 +6,7 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// TODO: Automatically update this version when releasing a new version
+// The latest announcedVersion
 const announcedVersion = '0.15';
 
 const config: Config = {
@@ -52,13 +52,14 @@ const config: Config = {
     [
       'classic',
       {
+        debug: true,
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/kserve/website/tree/main/',
-          lastVersion: 'current',
+          editUrl: 'https://github.com/kserve/website/tree/main/',
+          // TODO: Uncomment this once the 0.16 release is out
+          // lastVersion: announcedVersion,
           rehypePlugins: [rehypeExternalLinks],
           // Used by OpenAPI Plugin for Open Inference Protocol API documentation.
           docItemComponent: "@theme/ApiItem",
@@ -116,7 +117,7 @@ const config: Config = {
           position: 'left',
           versions: {
             'current': {
-              label: 'latest',
+              label: 'nightly',
             },
           },
           dropdownItemsAfter: [
@@ -243,15 +244,6 @@ const config: Config = {
         language: ['en'],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
-      },
-    ],
-    // Custom Plugin to replace variables in markdown files
-    [
-      require.resolve('./plugins/markdown-variable-replacer/index.ts'),
-      {
-        variableMap: {
-          kserveDocsVersion: announcedVersion, // or load from file or env
-        },
       },
     ],
     // OpenAPI Docs Plugin for Open Inference Protocol API documentation.
@@ -667,16 +659,6 @@ const config: Config = {
             to: '/blog/kserve-0.7-release',
           }
         ],
-        // createRedirects(existingPath) {
-        //   if (existingPath.includes('/community')) {
-        //     // Redirect from /docs/team/X to /community/X and /docs/support/X to /community/X
-        //     return [
-        //       existingPath.replace('/community', '/docs/team'),
-        //       existingPath.replace('/community', '/docs/support'),
-        //     ];
-        //   }
-        //   return undefined; // Return a falsy value: no redirect created
-        // },
       },
     ],
   ],

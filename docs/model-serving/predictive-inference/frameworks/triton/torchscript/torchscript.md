@@ -5,6 +5,7 @@ description: Deploy TorchScript Models with Triton on KServe
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ActiveDocsVersion from '@site/src/components/ActiveDocsVersion';
 
 # Triton TorchScript Models
 
@@ -469,7 +470,7 @@ class ImageTransformerV2(kserve.Model):
                 for output in results["outputs"]}
 ```
 
-You can find [the code example](https://github.com/kserve/kserve/tree/release-{{kserveDocsVersion}}/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-{{kserveDocsVersion}}/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile) in the KServe repository.
+You can find [the code example](https://github.com/kserve/kserve/tree/release-<ActiveDocsVersion />/docs/samples/v1beta1/triton/torchscript/image_transformer_v2) and [Dockerfile](https://github.com/kserve/kserve/blob/release-<ActiveDocsVersion />/docs/samples/v1beta1/triton/torchscript/transformer.Dockerfile) in the KServe repository.
 
 ### Build Transformer Docker Image
 
