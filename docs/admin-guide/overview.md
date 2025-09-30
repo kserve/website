@@ -18,6 +18,8 @@ The administrator guide helps you understand:
 - Maintenance and operational tasks
 - Integration with Kubernetes networking components
 
+If you are familiar with KServe, you can skip the introductory sections and jump directly to the relevant [deployment guides](#installation).
+
 ## Inference Types
 
 KServe supports two primary model inference types, each with specific deployment considerations:
@@ -49,74 +51,13 @@ Predictive inference workloads involve models that predict specific values or cl
 - **Knative Deployment**: For scale to zero capabilities and cost optimization
 - **ModelMesh Deployment**: For high-density, multi-model scenarios
 
-## Deployment Options
+## Installation
 
-### Standard Kubernetes Deployment
+KServe can be installed using one of three supported deployment modes. This Installation sections describe what each mode is best for, the common prerequisites, and how to choose the correct guide for your workload.
 
-:::info
-
-Standard Deployment is applicable for both predictive and generative inference workloads with minimal dependencies.
-
-:::
-
-KServe's Standard Deployment mode enables `InferenceService` deployment with minimal dependencies on Kubernetes resources. This approach uses standard Kubernetes resources:
-
-- `Deployment` for managing container instances
-- `Service` for internal communication
-- `Ingress` / `Gateway API` for external access
-- `Horizontal Pod Autoscaler` for scaling
-
-The Standard Deployment mode offers several advantages:
-
-- Minimal dependencies on external components
-- Direct use of native Kubernetes resources
-- Flexibility for various deployment scenarios
-- Support for both HTTP and gRPC protocols
-
-Unlike Knative mode which depends on Knative for request-driven autoscaling, Standard Deployment mode can optionally use [KEDA](https://keda.sh) to enable autoscaling based on custom metrics. However, note that "Scale from Zero" is currently not supported in Standard Deployment mode for HTTP requests.
-
-[Learn more about Standard Kubernetes Deployment](./kubernetes-deployment.md)
-
-### Knative Deployment
-
-:::info
-
-Knative Deployment is recommended primarily for predictive inference workloads.
-
-:::
-
-KServe's Knative deployment mode leverages Knative to provide request-based autoscaling, including the ability to scale down to zero when there's no traffic. This mode is particularly useful for:
-
-- Cost optimization by automatically scaling resources based on demand
-- Environments with varying or unpredictable traffic patterns
-- Scenarios where resources should be freed when not in use
-- Managing multiple model revisions and canary deployments
-
-The Knative deployment requires:
-- Knative Serving installed in the cluster
-- A compatible networking layer (Istio is recommended, but Kourier is also supported)
-- Cert Manager for webhook certificates
-
-[Learn more about Knative Deployment](./serverless/serverless.md)
-
-### ModelMesh Deployment
-
-:::info
-
-ModelMesh is optimized for predictive inference workloads with high model density requirements.
-
-:::
-
-ModelMesh installation enables high-scale, high-density, and frequently-changing model serving use cases. It uses a distributed architecture designed for:
-
-- High-scale model serving
-- Multi-model management
-- Efficient resource utilization
-- Frequent model updates
-
-ModelMesh is namespace-scoped, meaning all its components must exist within a single namespace, and only one instance of ModelMesh Serving can be installed per namespace.
-
-[Learn more about ModelMesh Deployment](./modelmesh.md)
+- **[Install with Standard Kubernetes Deployment](./kubernetes-deployment.md)** - suitable for both generative and predictive inference workloads
+- **[Install with Knative Deployment](./serverless/serverless.md)** - suitable for burst and unpredictable traffic workloads with scale to zero features for cost optimization.
+- **[Install with ModelMesh Deployment](./modelmesh.md)** - suitable for high-density, multi-model scenarios
 
 ## Networking Configuration
 

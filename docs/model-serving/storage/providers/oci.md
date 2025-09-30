@@ -180,7 +180,6 @@ kubectl get cm -n kserve inferenceservice-config --jsonpath "{.data.storageIniti
     "cpuLimit": "1",
     "caBundleConfigMapName": "",
     "caBundleVolumeMountPath": "/etc/ssl/custom-certs",
-    "enableDirectPvcVolumeMount": true,
     "enableModelcar": true,
     "cpuModelcar": "10m",
     "memoryModelcar": "15Mi",

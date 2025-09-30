@@ -8,9 +8,16 @@ import TabItem from '@theme/TabItem';
 
 # Kubernetes Deployment Installation
 
-KServe supports `Standard` mode to enable `InferenceService` deployment for both **Predictive Inference** and **Generative Inference** workloads with **minimal dependencies** on Kubernetes resources: [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment), [`Service`](https://kubernetes.io/docs/concepts/services-networking/service), [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) and [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale).
+KServe supports `Standard` mode to enable `InferenceService` deployment for both **Predictive Inference** and **Generative Inference** workloads with **minimal dependencies** on Kubernetes resources. 
 
-Compared to `Knative` mode which depends on Knative for request-driven autoscaling, in `Standard` mode [KEDA](https://keda.sh) can be installed optionally to enable autoscaling based on any custom metrics. Note that `Scale from Zero` is currently not supported in `Standard` mode for HTTP requests.
+ This approach uses standard Kubernetes resources:
+
+- [`Deployment`](https://kubernetes.io/docs/concepts/workloads/controllers/deployment) for managing container instances
+- [`Service`](https://kubernetes.io/docs/concepts/services-networking/service) for internal communication
+- [`Ingress`](https://kubernetes.io/docs/concepts/services-networking/ingress) / [`Gateway API`](https://kubernetes.io/docs/concepts/services-networking/gateway/) for external access
+- [`Horizontal Pod Autoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale) for scaling
+
+Compared to `Knative` mode which depends on Knative for request-driven autoscaling, in `Standard` mode [KEDA](https://keda.sh) can be installed optionally to enable autoscaling based on any custom metrics. However, note that `Scale from Zero` is currently not supported in `Standard` mode for HTTP requests.
 
 ## Installation Requirements
 
