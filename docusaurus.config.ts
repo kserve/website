@@ -7,6 +7,7 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 // TODO: Automatically update this version when releasing a new version
+// The latest announcedVersion
 const announcedVersion = '0.15';
 
 const config: Config = {
@@ -250,7 +251,7 @@ const config: Config = {
       require.resolve('./plugins/markdown-variable-replacer/index.ts'),
       {
         variableMap: {
-          kserveDocsVersion: announcedVersion, // or load from file or env
+          kserveDocsVersion: announcedVersion,
         },
       },
     ],
@@ -667,16 +668,6 @@ const config: Config = {
             to: '/blog/kserve-0.7-release',
           }
         ],
-        // createRedirects(existingPath) {
-        //   if (existingPath.includes('/community')) {
-        //     // Redirect from /docs/team/X to /community/X and /docs/support/X to /community/X
-        //     return [
-        //       existingPath.replace('/community', '/docs/team'),
-        //       existingPath.replace('/community', '/docs/support'),
-        //     ];
-        //   }
-        //   return undefined; // Return a falsy value: no redirect created
-        // },
       },
     ],
   ],

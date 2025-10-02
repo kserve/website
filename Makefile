@@ -33,3 +33,7 @@ gen-py-sdk-api-docs:
 # This will generate OIP gRPC, REST, Python SDK and CRD API documentation.
 gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs gen-py-sdk-api-docs
 	@echo "API documentation generated successfully."
+
+# Bump the version and create a new release
+bump-version:
+	./hack/release.sh
