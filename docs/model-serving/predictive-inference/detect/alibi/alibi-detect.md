@@ -13,7 +13,7 @@ components:
 - Outlier detector flags single instances which do not follow the training distribution.
 
 The architecture used is shown below and links the payload logging available within KServe with asynchronous processing of those payloads in
-KNative to detect outliers.
+Knative to detect outliers.
 
 ![Architecture](./architecture.png)
 
@@ -26,7 +26,7 @@ KNative to detect outliers.
 A [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) Outlier Detector. Run the [notebook demo](https://github.com/kserve/kserve/blob/master/docs/samples/outlier-detection/alibi-detect/cifar10/cifar10_outlier.ipynb) to test.
 
 :::tip
-The notebook requires KNative Eventing >= 0.18.
+The notebook requires Knative Eventing >= 0.18.
 :::
 
 ## CIFAR10 Drift Detector
@@ -34,5 +34,5 @@ The notebook requires KNative Eventing >= 0.18.
 A [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) Drift Detector. Run the [notebook demo](https://github.com/kserve/kserve/blob/master/docs/samples/drift-detection/alibi-detect/cifar10/cifar10_drift.ipynb) to test.
 
 :::tip
-The notebook requires KNative Eventing >= 0.18.
+The notebook requires Knative Eventing >= 0.18.
 :::

@@ -18,6 +18,8 @@ The administrator guide helps you understand:
 - Maintenance and operational tasks
 - Integration with Kubernetes networking components
 
+If you are familiar with KServe, you can skip the introductory sections and jump directly to the relevant [deployment guides](#installation).
+
 ## Inference Types
 
 KServe supports two primary model inference types, each with specific deployment considerations:
@@ -32,7 +34,7 @@ Generative inference workloads involve models that generate new content (text, i
 - Process streaming responses
 - Have higher memory requirements
 
-**Recommended deployment option**: For generative inference workloads, the **Raw Kubernetes Deployment** approach is recommended as it provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
+**Recommended deployment option**: For generative inference workloads, the **Standard Kubernetes Deployment** approach is recommended as it provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
 
 ### Predictive Inference
 
@@ -45,78 +47,17 @@ Predictive inference workloads involve models that predict specific values or cl
 - Return fixed-size responses
 
 **Available deployment options**: For predictive inference workloads, KServe offers multiple deployment options:
-- **Raw Kubernetes Deployment**: For direct control over resources
-- **Serverless Deployment**: For scale to zero capabilities and cost optimization
+- **Standard Kubernetes Deployment**: For direct control over resources
+- **Knative Deployment**: For scale to zero capabilities and cost optimization
 - **ModelMesh Deployment**: For high-density, multi-model scenarios
 
-## Deployment Options
+## Installation
 
-### Raw Kubernetes Deployment
+KServe can be installed using one of three supported deployment modes. This Installation sections describe what each mode is best for, the common prerequisites, and how to choose the correct guide for your workload.
 
-:::info
-
-Raw Deployment is applicable for both predictive and generative inference workloads with minimal dependencies.
-
-:::
-
-KServe's Raw Deployment mode enables `InferenceService` deployment with minimal dependencies on Kubernetes resources. This approach uses standard Kubernetes resources:
-
-- `Deployment` for managing container instances
-- `Service` for internal communication
-- `Ingress` / `Gateway API` for external access
-- `Horizontal Pod Autoscaler` for scaling
-
-The Raw Deployment mode offers several advantages:
-
-- Minimal dependencies on external components
-- Direct use of native Kubernetes resources
-- Flexibility for various deployment scenarios
-- Support for both HTTP and gRPC protocols
-
-Unlike Serverless mode which depends on Knative for request-driven autoscaling, Raw Deployment mode can optionally use [KEDA](https://keda.sh) to enable autoscaling based on custom metrics. However, note that "Scale from Zero" is currently not supported in Raw Deployment mode for HTTP requests.
-
-[Learn more about Raw Kubernetes Deployment](./kubernetes-deployment.md)
-
-### Serverless Deployment
-
-:::info
-
-Serverless Deployment is recommended primarily for predictive inference workloads.
-
-:::
-
-KServe's Serverless deployment mode leverages Knative to provide request-based autoscaling, including the ability to scale down to zero when there's no traffic. This mode is particularly useful for:
-
-- Cost optimization by automatically scaling resources based on demand
-- Environments with varying or unpredictable traffic patterns
-- Scenarios where resources should be freed when not in use
-- Managing multiple model revisions and canary deployments
-
-The Serverless deployment requires:
-- Knative Serving installed in the cluster
-- A compatible networking layer (Istio is recommended, but Kourier is also supported)
-- Cert Manager for webhook certificates
-
-[Learn more about Serverless Deployment](./serverless/serverless.md)
-
-### ModelMesh Deployment
-
-:::info
-
-ModelMesh is optimized for predictive inference workloads with high model density requirements.
-
-:::
-
-ModelMesh installation enables high-scale, high-density, and frequently-changing model serving use cases. It uses a distributed architecture designed for:
-
-- High-scale model serving
-- Multi-model management
-- Efficient resource utilization
-- Frequent model updates
-
-ModelMesh is namespace-scoped, meaning all its components must exist within a single namespace, and only one instance of ModelMesh Serving can be installed per namespace.
-
-[Learn more about ModelMesh Deployment](./modelmesh.md)
+- **[Install with Standard Kubernetes Deployment](./kubernetes-deployment.md)** - suitable for both generative and predictive inference workloads
+- **[Install with Knative Deployment](./serverless/serverless.md)** - suitable for burst and unpredictable traffic workloads with scale to zero features for cost optimization.
+- **[Install with ModelMesh Deployment](./modelmesh.md)** - suitable for high-density, multi-model scenarios
 
 ## Networking Configuration
 
@@ -155,7 +96,7 @@ When administering KServe, consider these best practices:
 
 ### For Predictive Inference
 - **Autoscaling**: Configure appropriate scaling thresholds based on model performance
-- **Resource Efficiency**: Consider Serverless or ModelMesh for cost optimization
+- **Resource Efficiency**: Consider Knative or ModelMesh for cost optimization
 - **Batch Processing**: Configure batch settings for improved throughput when applicable
 
 ## Next Steps
@@ -163,11 +104,11 @@ When administering KServe, consider these best practices:
 Choose one of the detailed guides to proceed with KServe administration based on your inference workload:
 
 ### For Generative Inference
-- [Raw Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
 - [Gateway API Migration Guide](./gatewayapi-migration.md)
 
 ### For Predictive Inference
-- [Raw Kubernetes Deployment Guide](./kubernetes-deployment.md)
-- [Serverless Deployment Guide](./serverless/serverless.md)
+- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [Knative Deployment Guide](./serverless/serverless.md)
 - [ModelMesh Deployment Guide](./modelmesh.md)
 - [Gateway API Migration Guide](./gatewayapi-migration.md)

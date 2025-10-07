@@ -7,9 +7,9 @@ description: Learn how to schedule InferenceService components on specific nodes
 
 KServe allows you to schedule `InferenceService` components on specific nodes in your Kubernetes cluster using standard Kubernetes scheduling features like node selectors, node affinity, and tolerations. These features are available in both deployment modes:
 
-- **Serverless Deployment**: The default mode powered by Knative, which provides scale-to-zero capabilities but requires specific Knative configurations to enable node scheduling features.
+- **Knative Deployment**: The default mode powered by Knative, which provides scale-to-zero capabilities but requires specific Knative configurations to enable node scheduling features.
   
-- **Raw Deployment**: A mode that creates standard Kubernetes resources (Deployments, Services) without Knative, which supports node scheduling by default but doesn't provide scale-to-zero capabilities.
+- **Standard Deployment**: A mode that creates standard Kubernetes resources (Deployments, Services) without Knative, which supports node scheduling by default but doesn't provide scale-to-zero capabilities.
 
 ## Setup
 
@@ -19,7 +19,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 <Tabs>
-<TabItem value="serverless" label="Serverless Deployment" default>
+<TabItem value="serverless" label="Knative Deployment" default>
 
 For serverless deployment mode, you must enable the Knative flags to support node scheduling features (see [Install Knative Serving Note](../../admin-guide/serverless/serverless.md#1-install-knative-serving)).
 
@@ -73,7 +73,7 @@ kubectl edit configmap config-features -n knative-serving
 Simply add the flags in the `data` section.
 
 </TabItem>
-<TabItem value="raw" label="Raw Deployment">
+<TabItem value="raw" label="Standard Deployment">
 
 For raw deployment mode, no special configuration is required to enable node scheduling features. Node selector, node affinity, and tolerations are supported out-of-the-box in standard Kubernetes deployments.
 
@@ -82,7 +82,7 @@ To use raw deployment mode with your `InferenceService`, simply add the followin
 ```yaml
 metadata:
   annotations:
-    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/deploymentMode: Standard
 ```
 
 </TabItem>
@@ -149,7 +149,7 @@ In this example, our `predictor` will only run on the node with the label `k8s.a
 You can learn more about recommended label names for GPU nodes when using kubernetes autoscaler by checking your cloud provider's documentation.
 
 <Tabs>
-<TabItem value="serverless" label="Serverless Deployment" default>
+<TabItem value="serverless" label="Knative Deployment" default>
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
@@ -174,7 +174,7 @@ spec:
 ```
 
 </TabItem>
-<TabItem value="raw" label="Raw Deployment">
+<TabItem value="raw" label="Standard Deployment">
 
 ```yaml
 apiVersion: "serving.kserve.io/v1beta1"
@@ -182,7 +182,7 @@ kind: "InferenceService"
 metadata:
   name: "torchscript-cifar"
   annotations:
-    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/deploymentMode: Standard
 spec:
   predictor:
     nodeSelector:

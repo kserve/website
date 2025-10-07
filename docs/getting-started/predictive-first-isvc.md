@@ -95,7 +95,7 @@ sklearn-iris   http://sklearn-iris.kserve-test.example.com         True         
 ```
 :::
 
-:::tip[Serverless Custom Domain]
+:::tip[Knative serverless Custom Domain]
 If your DNS contains example.com please consult your admin for configuring DNS or using [custom domain](https://knative.dev/docs/serving/using-a-custom-domain).
 :::
 
