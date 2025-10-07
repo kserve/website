@@ -23,7 +23,7 @@ A good bug report should include:
 - **Description**: Clearly state what you were trying to accomplish and what behavior you observed instead
 - **Versions**: Specify the versions of relevant components:
    - KServe version
-   - Knative version (if using Serverless)
+   - Knative version (if using Knative serverless deployment)
    - Kubeflow version (if used with Kubeflow)
    - Kubernetes version
    - Cloud provider details (if applicable)

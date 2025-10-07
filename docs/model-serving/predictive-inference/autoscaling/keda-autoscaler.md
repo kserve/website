@@ -32,7 +32,7 @@ kind: "InferenceService"
 metadata:
   name: "sklearn-v2-iris"
   annotations:
-    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/deploymentMode: "Standard"
     serving.kserve.io/autoscalerClass: "keda"
 spec:
   predictor:
@@ -158,7 +158,7 @@ kind: InferenceService
 metadata:
   name: huggingface-fbopt
   annotations:
-    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/deploymentMode: "Standard"
     serving.kserve.io/autoscalerClass: "keda"
     serving.kserve.io/enable-prometheus-scraping: "true"
     prometheus.io/scrape: "true"
@@ -335,7 +335,7 @@ kind: InferenceService
 metadata:
   name: huggingface-fbopt
   annotations:
-    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/deploymentMode: "Standard"
     serving.kserve.io/autoscalerClass: "keda"
     sidecar.opentelemetry.io/inject: "huggingface-fbopt-predictor"
 spec:

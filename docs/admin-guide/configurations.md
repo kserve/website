@@ -220,7 +220,6 @@ data:
         "cpuLimit": "1",
         "caBundleConfigMapName": "",
         "caBundleVolumeMountPath": "/etc/ssl/custom-certs",
-        "enableDirectPvcVolumeMount": true,
         "enableModelcar": true,
         "cpuModelcar": "10m",
         "memoryModelcar": "15Mi",
@@ -292,15 +291,6 @@ The mount point for the CA bundle ConfigMap in the storage initializer container
 - **Per-service annotation key:** Not supported  
 - **Possible values:** Valid filesystem path  
 - **Default:** `"/etc/ssl/custom-certs"`
-
-### Enable Direct PVC Volume Mount
-
-Controls whether users can mount PVC volumes directly instead of using symlinks. If a PVC volume is provided as the storage URI, then the PVC volume is directly mounted to `/mnt/models` in the user container rather than symlinked to a shared volume. For more information, see the [PVC model storage documentation](../model-serving/storage/providers/pvc.md).
-
-- **Global key:** `enableDirectPvcVolumeMount`
-- **Per-service annotation key:** Not supported  
-- **Possible values:** `true`, `false`  
-- **Default:** `true`
 
 ### Mount PVC Volume with Read-Write
 Controls whether the PVC volume is mounted with read-write permissions. If set to `false`, the PVC volume will be mounted as read-write, allowing write operations on the model storage. For more information, see the [PVC model storage documentation](../model-serving/storage/providers/pvc.md).
@@ -590,7 +580,7 @@ metadata:
 data:
   deploy: |-
     {
-      "defaultDeploymentMode": "Serverless"
+      "defaultDeploymentMode": "Knative"
     }
 ```
 </TabItem>
@@ -602,7 +592,7 @@ kind: InferenceService
 metadata:
   name: my-inferenceservice
   annotations:
-    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/deploymentMode: "Standard"
 spec:
   predictor:
     model:
@@ -619,8 +609,8 @@ The default deployment mode for KServe resources.
 
 - **Global key:** `defaultDeploymentMode`  
 - **Per-service annotation key:** `serving.kserve.io/deploymentMode`
-- **Possible values:** `"Serverless"`, `"RawDeployment"`, `"ModelMesh"`
-- **Default:** `"Serverless"`
+- **Possible values:** `"Knative"`, `"Standard"`, `"ModelMesh"`
+- **Default:** `"Knative"`
 
 ## InferenceService Configuration
 
@@ -1147,7 +1137,7 @@ Enables Prometheus scraping annotations on pods. If true, prometheus annotations
 
 ## OpenTelemetry Collector Configuration
 
-Configures OpenTelemetry metrics collection for autoscaling with KEDA in Raw deployment mode.
+Configures OpenTelemetry metrics collection for autoscaling with KEDA in Standard mode.
 For more details, see the [autoscaling with KEDA documentation](../model-serving/generative-inference/autoscaling/autoscaling.md).
 
 <Tabs>
@@ -1345,7 +1335,7 @@ data:
 
 ### Service Cluster IP None
 
-Controls whether services should have clusterIP set to None. This is useful for creating headless services where you want to manage the service endpoints manually. This configuration is only applicable to Raw deployment mode.
+Controls whether services should have clusterIP set to None. This is useful for creating headless services where you want to manage the service endpoints manually. This configuration is only applicable to Standard mode.
 
 - **Global key:** `serviceClusterIPNone`
 - **Per-service annotation key:** Not supported
@@ -1389,7 +1379,7 @@ Configures autoscaling settings for InferenceServices.
 
 ### Autoscaler Class
 
-The type of the autoscaler to use for scaling InferenceServices. This configuration is only applicable to Raw deployment mode. Prefer "none" when disabling KServe-managed autoscaling entirely. Use "external" only when another controller will manage the HPA.
+The type of the autoscaler to use for scaling InferenceServices. This configuration is only applicable to Standard mode. Prefer "none" when disabling KServe-managed autoscaling entirely. Use "external" only when another controller will manage the HPA.
 
 - **Global key:** Not supported
 - **Per-service key:** `serving.kserve.io/autoscaler-class`

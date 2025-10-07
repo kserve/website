@@ -158,7 +158,7 @@ model container.
 
 :::note
 
-In Serverless mode, specifying ports for predictor will result in isvc creation failure as specifying multiple ports
+In Knative mode, specifying ports for predictor will result in isvc creation failure as specifying multiple ports
 is not supported by knative. Due to this limitation predictor cannot be exposed outside of the cluster.
 For more info see, [knative discussion on multiple ports](https://github.com/knative/serving/issues/8471).
 
@@ -323,7 +323,7 @@ spec:
 
 :::note
 
-Do not specify ports for predictor in the serving runtime for Serverless deployment. This is not supported by knative. 
+Do not specify ports for predictor in the serving runtime for Knative deployment. This is not supported by knative. 
 For more information, please take a look at [knative discussion on multiple ports](https://github.com/knative/serving/issues/8471).
 
 :::
