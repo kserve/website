@@ -245,7 +245,7 @@ spec:
         requests:
           cpu: 6
           memory: 24Gi
-          nvidia.com.gpu: "1"
+          nvidia.com/gpu: "1"
       volumeMounts:
         - name: lmcache-config-volume
           mountPath: /lmcache

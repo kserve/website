@@ -220,7 +220,6 @@ data:
         "cpuLimit": "1",
         "caBundleConfigMapName": "",
         "caBundleVolumeMountPath": "/etc/ssl/custom-certs",
-        "enableDirectPvcVolumeMount": true,
         "enableModelcar": true,
         "cpuModelcar": "10m",
         "memoryModelcar": "15Mi",
@@ -292,15 +291,6 @@ The mount point for the CA bundle ConfigMap in the storage initializer container
 - **Per-service annotation key:** Not supported  
 - **Possible values:** Valid filesystem path  
 - **Default:** `"/etc/ssl/custom-certs"`
-
-### Enable Direct PVC Volume Mount
-
-Controls whether users can mount PVC volumes directly instead of using symlinks. If a PVC volume is provided as the storage URI, then the PVC volume is directly mounted to `/mnt/models` in the user container rather than symlinked to a shared volume. For more information, see the [PVC model storage documentation](../model-serving/storage/providers/pvc.md).
-
-- **Global key:** `enableDirectPvcVolumeMount`
-- **Per-service annotation key:** Not supported  
-- **Possible values:** `true`, `false`  
-- **Default:** `true`
 
 ### Mount PVC Volume with Read-Write
 Controls whether the PVC volume is mounted with read-write permissions. If set to `false`, the PVC volume will be mounted as read-write, allowing write operations on the model storage. For more information, see the [PVC model storage documentation](../model-serving/storage/providers/pvc.md).
