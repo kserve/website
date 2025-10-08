@@ -31,9 +31,11 @@ metadata:
     serving.kserve.io/enable-prometheus-scraping: "true"
 spec:
   predictor:
-    sklearn:
+    model:
+      modelFormat:
+        name: sklearn
       protocolVersion: v2
-      storageUri: "gs://seldon-models/sklearn/iris"
+      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
 ```
 
 The default values for `serving.kserve.io/enable-prometheus-scraping` can be set in the `inferenceservice-config` configmap. See [the docs](https://github.com/kserve/kserve/blob/master/qpext/README.md#configs) for more info.
