@@ -45,14 +45,13 @@ storageUris:
 ## Before you begin
 
 1. Your `~/.kube/config` should point to a cluster with [KServe installed](../../getting-started/quickstart-guide.md).
-2. Your cluster's Istio Ingress gateway must be [network accessible](../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports).
-3. For Knative deployments, the Knative init container feature flag must be enabled.
+2. For [Knative deployments](../../admin-guide/serverless/serverless.md), the [Knative init container feature](https://knative.dev/docs/serving/configuration/feature-flags/) flag must be enabled.
 
 ## Basic Usage
 
-### Simple Multiple URIs
+### Using Multiple URIs
 
-Create an InferenceService with multiple storage URIs:
+Create an InferenceService resource that specifies multiple storage URIs:
 
 <Tabs>
 <TabItem value="custom-paths" label="Custom Paths">
@@ -71,56 +70,30 @@ spec:
       - uri: s3://bucket/base-model
         path: /mnt/models/base
       - uri: s3://bucket/adapters
-        path: /mnt/models/adapters
-```
-
-</TabItem>
-<TabItem value="default-paths" label="Default Paths">
-
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: multi-storage-default
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: sklearn
-    storageUris:
-      - uri: s3://bucket/model
         # Downloads to /mnt/models (default)
-      - uri: s3://bucket/preprocessing
-        # Downloads to /mnt/models (default)
-```
-
-</TabItem>
-<TabItem value="mixed-paths" label="Mixed Paths">
-
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: multi-storage-mixed
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: pytorch
-    storageUris:
-      - uri: s3://bucket/base-model
-        path: /mnt/models/base
-      - uri: s3://bucket/preprocessing
-        # Uses default /mnt/models
 ```
 
 </TabItem>
 </Tabs>
 
-Apply the InferenceService:
+Apply the YAML configuration to create the InferenceService:
 ```bash
 kubectl apply -f multi-storage.yaml
 ```
+
+Wait for InferenceService to be in ready state:
+```bash
+kubectl get isvc multi-storage-example
+```
+
+:::tip[Expected Output]
+You should see output similar to:
+
+```
+NAME            URL                                        READY   PREV   LATEST   PREVROLLEDOUTREVISION        LATESTREADYREVISION                     AGE
+multi-storage-example   http://multi-storage-example.default.example.com   True           100                                   multi-storage-example-predictor-default-xxxxx   1m15s
+```
+:::
 
 ## Path Configuration
 
@@ -253,48 +226,6 @@ storageUris:
 </TabItem>
 </Tabs>
 
-## Advanced Examples
-
-### LLM with LoRA Adapter
-
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: llm-with-adapter
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: huggingface
-    storageUris:
-      - uri: hf://microsoft/DialoGPT-medium
-        path: /mnt/models/base
-      - uri: s3://my-bucket/lora-adapters/customer-service
-        path: /mnt/models/adapters
-```
-
-### Preprocessing Pipeline
-
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: preprocessing-pipeline
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: sklearn
-    storageUris:
-      - uri: s3://bucket/trained-model
-        path: /mnt/models/model
-      - uri: s3://bucket/preprocessor
-        path: /mnt/models/preprocessing
-      - uri: s3://bucket/feature-store
-        path: /mnt/models/features
-```
-
 ## Supported Storage Types
 
 Multiple storage URIs support all existing [storage providers](./overview.md) supported by KServe.
@@ -302,7 +233,7 @@ Multiple storage URIs support all existing [storage providers](./overview.md) su
 ## File Conflicts and Resolution
 
 ### Avoiding Conflicts
-When multiple URIs download to the same path, files may overwrite each other non-deterministically:
+When multiple URIs download to the same path, files may overwrite each other non-deterministically. Users are expected to manage the conflicts by manually specifying the path:
 
 <Tabs>
 <TabItem value="conflict-prone" label="⚠️ Conflict-Prone">
@@ -422,9 +353,6 @@ curl -v -H "Host: ${SERVICE_HOSTNAME}" \
 
 ### Environment Variable Support
 Multiple storage URIs using the `STORAGE_URI` environment variable is **not supported**. The `STORAGE_URI` environment variable exists for legacy transformer compatibility but is no longer needed with the `storageUris` property.
-
-### Knative Requirements
-For Knative deployments, ensure the Knative init container feature flag is enabled in your cluster configuration.
 
 ### Path Validation
 The system validates paths to prevent directory traversal attacks and ensure all paths share a common root for security and operational consistency.
