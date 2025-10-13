@@ -7,6 +7,13 @@ description: An overview of the different storage options available for model ar
 
 KServe supports various storage options for serving machine learning models, allowing you to integrate with different storage systems based on your organizational needs, security requirements, and infrastructure setup. This document provides an overview of the supported storage providers and configurations in KServe.
 
+## Storage URI Configuration
+
+KServe supports two approaches for specifying model storage:
+
+- **Single Storage URI** - The traditional `storageUri` field for single model artifacts
+- **[Multiple Storage URIs](./multiple-storage-uris.md)** - The newer `storageUris` field for fetching artifacts from multiple locations with custom mount paths
+
 ## Storage Providers
 
 KServe can serve models from various storage locations, including:
