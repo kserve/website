@@ -1,20 +1,19 @@
 ---
-title: Overview
+title: Runtime Overview
 ---
 
-# Hugging Face Runtime Overview
+# Runtime Overview
 
-The Hugging Face serving runtime in KServe is a specialized model server designed to deploy and serve Hugging Face models with high performance and scalability. It implements two backend engines:
+The Hugging Face serving runtime in KServe is a specialized model server designed to deploy and serve Hugging Face models with high performance and scalability. It uses [`vLLM`](https://github.com/vllm-project/vllm) backend engine which is optimized for Large Language Models (LLMs) with high-performance text generation capabilities.
 
-1. **vLLM Backend** (default): Optimized for Large Language Models (LLMs) with high-performance text generation capabilities
-2. **Hugging Face Backend**: Standard implementation using Hugging Face's native APIs as a fallback option
-
-KServe's Hugging Face runtime by default uses [`vLLM`](https://github.com/vllm-project/vllm) backend to serve `text generation` and `text2text generation` LLM models. This provides significant performance improvements, including:
+This provides significant performance improvements, including:
 
 - Faster time-to-first-token (TTFT)
 - Higher token generation throughput
 - Improved memory efficiency for serving large models
 - Support for continuous batching of requests
+
+It supports a variety of generative tasks, including text generation, text-to-text generation, embeddings, and reranking. The runtime provides OpenAI-compatible API endpoints for easy integration with existing applications.
 
 vLLM implements several state-of-the-art inference optimization techniques, including:
 - [PagedAttention](https://vllm.ai) for efficient key and value memory management
@@ -23,6 +22,8 @@ vLLM implements several state-of-the-art inference optimization techniques, incl
 - Chunked prefill
 - [Prefix caching](https://docs.vllm.ai/en/stable/features/automatic_prefix_caching.html)
 - Optimized CUDA kernels for faster computation
+
+While, the runtime also supports the standard Hugging Face backend for models for predictive tasks such as text classification, token classification, and fill-mask.
 
 If a model is not supported by the vLLM engine, KServe automatically falls back to the standard Hugging Face backend to ensure compatibility across a wide range of models.
 
