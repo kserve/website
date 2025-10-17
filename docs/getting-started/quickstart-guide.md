@@ -1,5 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import ActiveDocsVersion from '@site/src/components/ActiveDocsVersion';
+import QuickInstallCommand from '@site/src/components/QuickInstallCommand';
 
 # Quickstart Guide
 Welcome to the KServe Quickstart Guide! This guide will help you set up a KServe Quickstart environment for testing and experimentation. KServe Quickstart is designed to provide a simple and quick way to get started with KServe, allowing you to deploy and test machine learning models on Kubernetes with minimal setup.
@@ -99,21 +101,8 @@ KServe Quickstart Environments are for experimentation use only. For production 
 
 :::
 
-<Tabs groupId="deployment-type">
-<TabItem value="raw" label="Standard Deployment" default>
-
-```bash
-   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash -s -- -r
-```
-
-</TabItem>
-<TabItem value="knative" label="Knative">
-
-```bash
-   curl -s "https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/hack/quick_install.sh" | bash
-```
-</TabItem>
-</Tabs>
+<!-- The insturctions are defined in the QuickInstallCommand Component -->
+<QuickInstallCommand />
 
 Verify the installation by checking the status of the KServe components:
 
