@@ -101,9 +101,9 @@ spec:
       modelFormat:
         name: sklearn
       storageUri: "gs://kserve-examples/models/sklearn/1.0/model"
-  logger:
-    mode: all
-    url: http://message-dumper.default.svc.cluster.local
+    logger:
+      mode: all
+      url: http://message-dumper.default.svc.cluster.local
 ```
 
 Apply the InferenceService configuration:
