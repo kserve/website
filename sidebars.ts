@@ -252,6 +252,7 @@ const sidebars: SidebarsConfig = {
           label: 'Model Storage',
           items: [
             'model-serving/storage/overview',
+            'model-serving/storage/multiple-storage-uris',
             'model-serving/storage/storage-containers/storage-containers',
             {
               type: 'category',

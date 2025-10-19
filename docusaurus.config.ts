@@ -6,6 +6,7 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+// TODO: Automatically update this version when releasing a new version
 // The latest announcedVersion
 const announcedVersion = '0.15';
 
@@ -244,6 +245,15 @@ const config: Config = {
         language: ['en'],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
+      },
+    ],
+    // Custom Plugin to replace variables in markdown files
+    [
+      require.resolve('./plugins/markdown-variable-replacer/index.ts'),
+      {
+        variableMap: {
+          kserveDocsVersion: announcedVersion,
+        },
       },
     ],
     // OpenAPI Docs Plugin for Open Inference Protocol API documentation.
