@@ -236,7 +236,7 @@ The container image used for the storage initializer init container. This will b
 - **Global key:** `image`  
 - **Per-service annotation key:** Not supported  
 - **Possible values:** Valid container image URI  
-- **Default:** `"kserve/storage-initializer:v{{kserveDocsVersion}}.0"`
+- **Default:** `"kserve/storage-initializer:v<ActiveDocsVersion />.0"`
 
 ### Memory Request
 
@@ -738,7 +738,7 @@ The container image used for the logger sidecar.
 - **Global key:** `image`
 - **Per-service annotation key:** Not supported
 - **Possible values:** Valid container image URI
-- **Default:** `"kserve/agent:v{{kserveDocsVersion}}.0"`
+- **Default:** `"kserve/agent:v<ActiveDocsVersion />.0"`
 
 ### Logger Memory Request
 
@@ -820,7 +820,7 @@ The container image used for the batcher sidecar.
 - **Global key:** `image`
 - **Per-service annotation key:** Not supported
 - **Possible values:** Valid container image URI
-- **Default:** `"kserve/agent:v{{kserveDocsVersion}}.0"`
+- **Default:** `"kserve/agent:v<ActiveDocsVersion />.0"`
 
 ### Batcher Memory Request
 
@@ -909,7 +909,7 @@ The container image used for the KServe agent.
 - **Global key:** `image`
 - **Per-service annotation key:** Not supported
 - **Possible values:** Valid container image URI
-- **Default:** `"kserve/agent:v{{kserveDocsVersion}}.0"`
+- **Default:** `"kserve/agent:v<ActiveDocsVersion />.0"`
 
 ### Agent Memory Request
 
@@ -985,7 +985,7 @@ The container image used for the router.
 - **Global key:** `image`
 - **Per-service annotation key:** Not supported
 - **Possible values:** Valid container image URI
-- **Default:** `"kserve/router:v{{kserveDocsVersion}}.0"`
+- **Default:** `"kserve/router:v<ActiveDocsVersion />.0"`
 
 ### Router Memory Request
 
@@ -1240,7 +1240,7 @@ The default image used for download jobs.
 - **Global key:** `defaultJobImage`
 - **Per-service annotation key:** Not supported
 - **Possible values:** Valid container image URI
-- **Default:** `"kserve/storage-initializer:v{{kserveDocsVersion}}.0"`
+- **Default:** `"kserve/storage-initializer:v<ActiveDocsVersion />.0"`
 
 ### Filesystem Group
 

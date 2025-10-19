@@ -53,13 +53,14 @@ const config: Config = {
     [
       'classic',
       {
+        debug: true,
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/kserve/website/tree/main/',
-          lastVersion: 'current',
+          editUrl: 'https://github.com/kserve/website/tree/main/',
+          // TODO: Uncomment this once the 0.16 release is out
+          // lastVersion: announcedVersion,
           rehypePlugins: [rehypeExternalLinks],
           // Used by OpenAPI Plugin for Open Inference Protocol API documentation.
           docItemComponent: "@theme/ApiItem",
@@ -117,7 +118,7 @@ const config: Config = {
           position: 'left',
           versions: {
             'current': {
-              label: 'latest',
+              label: 'nightly',
             },
           },
           dropdownItemsAfter: [
@@ -244,15 +245,6 @@ const config: Config = {
         language: ['en'],
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
-      },
-    ],
-    // Custom Plugin to replace variables in markdown files
-    [
-      require.resolve('./plugins/markdown-variable-replacer/index.ts'),
-      {
-        variableMap: {
-          kserveDocsVersion: announcedVersion,
-        },
       },
     ],
     // OpenAPI Docs Plugin for Open Inference Protocol API documentation.

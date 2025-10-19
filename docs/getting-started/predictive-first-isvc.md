@@ -267,7 +267,7 @@ If you want to load test the deployed model, try deploying the following Kuberne
 
 ```bash
 # use kubectl create instead of apply because the job template is using generateName which doesn't work with kubectl apply
-kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-{{kserveDocsVersion}}/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
+kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-<ActiveDocsVersion />/docs/samples/v1beta1/sklearn/v1/perf.yaml -n kserve-test
 ```
 
 Execute the following command to view output:
