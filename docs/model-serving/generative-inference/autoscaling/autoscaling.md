@@ -5,10 +5,10 @@ description: Learn how to autoscale InferenceService in Kubernetes using KEDA wi
 
 # Autoscale InferenceService with LLM metrics
 
-[KEDA (Kubernetes Event-driven Autoscaler)](https://keda.sh) is a lightweight, open-source component that extends Kubernetes' scaling capabilities by enabling event-driven scaling for any container workload, allowing applications to scale based on external metrics such as [vLLM metrics](https://docs.vllm.ai/en/latest/serving/metrics.html) for the number of waiting requests or KV Cache usage.
+[KEDA (Kubernetes Event-driven Autoscaler)](https://keda.sh) is a lightweight, open-source component that extends Kubernetes' scaling capabilities by enabling event-driven scaling for any container workload, allowing applications to scale based on external metrics such as [vLLM metrics](https://docs.vllm.ai/en/latest/design/metrics.html) for the number of waiting requests or KV Cache usage.
 
 :::note
-Autoscaling using KEDA is only available in RawDeployment mode.
+Autoscaling using KEDA is only available in Standard mode.
 :::
 
 ## Scale using the Metrics
@@ -85,7 +85,7 @@ kind: InferenceService
 metadata:
   name: huggingface-qwen
   annotations:
-    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/deploymentMode: "Standard"
     serving.kserve.io/autoscalerClass: "keda"
     serving.kserve.io/enable-prometheus-scraping: "true"
     prometheus.io/scrape: "true"
@@ -237,7 +237,7 @@ kind: InferenceService
 metadata:
   name: huggingface-qwen
   annotations:
-    serving.kserve.io/deploymentMode: "RawDeployment"
+    serving.kserve.io/deploymentMode: "Standard"
     serving.kserve.io/autoscalerClass: "keda"
     sidecar.opentelemetry.io/inject: "huggingface-qwen-predictor"
 spec:

@@ -252,6 +252,7 @@ const sidebars: SidebarsConfig = {
           label: 'Model Storage',
           items: [
             'model-serving/storage/overview',
+            'model-serving/storage/multiple-storage-uris',
             'model-serving/storage/storage-containers/storage-containers',
             {
               type: 'category',
@@ -299,7 +300,7 @@ const sidebars: SidebarsConfig = {
             'admin-guide/modelmesh',
             {
               type: 'category',
-              label: 'Serverless Deployment',
+              label: 'Knative Deployment',
               items: [
                 'admin-guide/serverless/serverless',
                 'admin-guide/serverless/kourier-networking/index',
