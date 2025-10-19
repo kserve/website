@@ -247,15 +247,6 @@ const config: Config = {
         explicitSearchResultPath: true,
       },
     ],
-    // Custom Plugin to replace variables in markdown files
-    [
-      require.resolve('./plugins/markdown-variable-replacer/index.ts'),
-      {
-        variableMap: {
-          kserveDocsVersion: announcedVersion,
-        },
-      },
-    ],
     // OpenAPI Docs Plugin for Open Inference Protocol API documentation.
     // This plugin generates API documentation from OpenAPI specs
     // https://github.com/PaloAltoNetworks/docusaurus-openapi-docs
