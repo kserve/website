@@ -39,8 +39,6 @@ For Azure:
 apiVersion: v1
 kind: Secret
 metadata:
-  annotations:
-      serving.kserve.io/s3-region: [YOUR_REGION]
   name: agent-logger-secret
   namespace: default
 type: Opaque
@@ -55,8 +53,6 @@ For GCS:
 apiVersion: v1
 kind: Secret
 metadata:
-  annotations:
-      serving.kserve.io/s3-region: [YOUR_REGION]
   name: agent-logger-secret
   namespace: default
 type: Opaque
