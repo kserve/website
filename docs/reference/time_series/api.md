@@ -2,7 +2,9 @@
 
 ## Overview
 
-The TimeSeries LLM Forecast API enables users to perform advanced time series forecasting using transformer-based models. This API supports both univariate and multivariate time series, provides quantile forecasting, and is designed to be extensible for future enhancements. The API is compatible with standard RESTful practices and allows for flexible options and metadata handling, making it suitable for a wide range of time series applications across industries.
+A [time series](https://en.wikipedia.org/wiki/Time_series) records how a measurement changes over time, while [forecasting](https://en.wikipedia.org/wiki/Forecasting) estimates future values based on past behavior. Time series forecasting is commonly used for future-looking decisions in finance, supply chains, energy, and other operations that depend on reliable projections.
+
+To ease and standardize the deployment of time series models in the LLM era, we designed the TimeSeries LLM Forecast API in Kserve so you can run forecasts with transformer-based models. This API supports both univariate and multivariate time series, provides quantile forecasting, and is designed to be extensible for future enhancements. The API is compatible with standard RESTful practices and allows for flexible options and metadata handling, making it suitable for a wide range of time series applications across industries.
 
 ## Table of Contents
 
@@ -49,8 +51,6 @@ POST /v1/timeseries/forecast
 
 ## Request Schema
 
-All fields marked with `*` are optional. Required fields are indicated in each section.
-
 ### ForecastRequest Fields
 
 | Field               | Type                   | Required | Description                                    |
@@ -58,12 +58,12 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 | model               | string                 | Yes      | Name/ID of the model to use                    |
 | inputs              | List\[TimeSeriesInput] | Yes      | List of input time series to forecast          |
 | options             | ForecastOptions        | Yes      | Forecasting options (e.g., horizon, quantiles) |
-| metadata\*          | Metadata               | No       | Arbitrary user metadata                        |
-| other\_properties\* | any                    | No       | Additional extensible fields                   |
+| metadata            | Metadata               | No       | Arbitrary user metadata                        |
+| other\_properties   | any                    | No       | Additional extensible fields                   |
 
 #### JSON Structure
 
-```
+```json
 {
   "model": "timesfm",
   "inputs": [...],
@@ -82,7 +82,7 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 | name               | string           | Yes      | Name of the time series (unique in request)                |
 | series             | TimeSeries       | Yes      | Observed data: List\[float] or List\[List\[float]]         |
 | frequency          | Frequency        | Yes      | Frequency (see [Frequency](#frequency))                    |
-| start\_timestamp\* | string (ISO8601) | No       | Start timestamp of series (for aligning output)            |
+| start\_timestamp   | string (ISO8601) | No       | Start timestamp of series (for aligning output)            |
 | ...extra fields    | any              | No       | Additional extensible fields                               |
 
 
@@ -91,7 +91,7 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 | Field       | Type         | Required | Description                        |
 | ----------- | ------------ | -------- | ---------------------------------- |
 | horizon     | int          | Yes      | Number of steps to forecast        |
-| quantiles\* | List\[float] | No       | Quantiles (e.g., \[0.1, 0.5, 0.9]) |
+| quantiles   | List\[float] | No       | Quantiles (e.g., \[0.1, 0.5, 0.9]) |
 | ...extra    | any          | No       | Additional extensible fields       |
 
 
@@ -109,10 +109,10 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 | id          | string                | Yes      | Unique response identifier        |
 | created\_at | int (unix ts)         | Yes      | Time of response creation         |
 | status      | Status                | Yes      | Overall status of the request     |
-| error\*     | Error                 | No       | Top-level error (if any)          |
+| error       | Error                 | No       | Top-level error (if any)          |
 | model       | string                | Yes      | The model used for forecasting    |
 | outputs     | List\[ForecastOutput] | Yes      | Forecast results, one per input   |
-| usage\*     | Usage                 | No       | Token usage metrics (if relevant) |
+| usage       | Usage                 | No       | Token usage metrics (if relevant) |
 | ...extra    | any                   | No       | Additional extensible fields      |
 
 
@@ -124,7 +124,7 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 | id       | string                    | Yes      | Unique forecast output identifier             |
 | status   | Status                    | Yes      | Status of this forecast result                |
 | content  | List\[TimeSeriesForecast] | Yes      | One or more time series forecasts (per input) |
-| error\*  | Error                     | No       | Error if this forecast failed                 |
+| error    | Error                     | No       | Error if this forecast failed                 |
 | ...extra | any                       | No       | Additional extensible fields                  |
 
 
@@ -137,7 +137,7 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 | mean\_forecast   | TimeSeries             | Yes      | Mean (expected) forecast values                            |
 | frequency        | Frequency              | Yes      | Frequency of the forecasted time series                    |
 | start\_timestamp | string (ISO8601)       | Yes      | Start timestamp for the forecast horizon                   |
-| quantiles\*      | Dict\[str, TimeSeries] | No       | Map from quantile string (e.g., "0.1") to values           |
+| quantiles        | Dict\[str, TimeSeries] | No       | Map from quantile string (e.g., "0.1") to values           |
 | ...extra         | any                    | No       | Additional extensible fields                               |
 
 
@@ -155,7 +155,7 @@ All fields marked with `*` are optional. Required fields are indicated in each s
 
 If an error occurs, the response may contain a top-level `error` field, or errors may be reported per-forecast (in the corresponding output object). The structure is:
 
-```
+```json
 {
   "error": {
     "code": "<string>",
@@ -195,15 +195,39 @@ If an error occurs, the response may contain a top-level `error` field, or error
 
 ## Examples
 
-### Start Service
-```
-python -m huggingfaceserver --model_id="google/timesfm-2.0-500m-pytorch" --model_name=timesfm2 --http_port=8090
+### Deploy on KServe
+
+The steps below assume you already have a Kubernetes cluster with KServe installed and that you can pull the model weights from Hugging Face (set the `HUGGING_FACE_HUB_TOKEN` secret if the model is gated).
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: timeseries-forecast
+  namespace: kserve-demo
+spec:
+  predictor:
+    containers:
+      - name: timesfm
+        image: kserve/huggingfaceserver:latest
+        args:
+          - "--model_id=google/timesfm-2.0-500m-pytorch"
+          - "--model_name=timesfm2"
+          - "--http_port=8080"
+        resources:
+          requests:
+            cpu: "4"
+            memory: "8Gi"
+          limits:
+            cpu: "8"
+            memory: "16Gi"
+            nvidia.com/gpu: "1"
 ```
 
 ### Request Example
 
-```
-curl -X POST "http://localhost:8090/v1/timeseries/forecast" \
+```bash
+curl -X POST "${SERVICE_URL}/v1/timeseries/forecast" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "timesfm2",
@@ -239,7 +263,7 @@ curl -X POST "http://localhost:8090/v1/timeseries/forecast" \
 
 ### Response Example
 
-```
+```json
 {
   "id": "resp_67ccd2bed1ec8190b14f964abc0542670bb6a6b452d3795b",
   "created_at": 1741476542,
@@ -322,3 +346,4 @@ curl -X POST "http://localhost:8090/v1/timeseries/forecast" \
 ## Changelog
 
 * **2025-07-24**: Initial version of API documentation created.
+* **2025-10-20**: Added Kubernetes deployment example.
