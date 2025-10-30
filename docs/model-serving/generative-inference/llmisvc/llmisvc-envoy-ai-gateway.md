@@ -25,7 +25,7 @@ For more information, see the [Envoy AI Gateway documentation](https://aigateway
 
 KServe's generative inference leverages LLM-D components to scale and schedule traffic efficiently:
 
-- **Router and Scheduler**: The router exposes a stable endpoint and uses a scheduler to select the best backend replica based on via precise prefix-cache aware routing and customizable scheduling policies to decrease latency and increase throughput.
+- **Router and Scheduler**: The router exposes a stable endpoint and uses a scheduler to select the best backend replica based on precise prefix-cache aware routing and customizable scheduling policies to decrease latency and increase throughput.
 - **Inference Pool**: A group of worker pods (for example, vLLM) serving your model. The pool scales independently from the router.
 - **EndpointPickerConfig**: Configures the scheduler with pluggable scoring and picking strategies (for example, prefix-cache-scorer, load-aware-scorer).
 - **LeaderWorkerSet (LWS)**: Ensures reliable leadership and coordination for the pool in multi node setup.
@@ -40,7 +40,7 @@ Before you begin, ensure you have the following components installed and configu
 
 - A Kubernetes cluster with [KServe with Gateway API Enabled](../../../admin-guide/kubernetes-deployment.md)
 - [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/guides/) installed in your cluster
-- [Envoy Gateway with Inference Pool support enabled](https://aigateway.envoyproxy.io/docs/getting-started/prerequisites) installed in your cluster
+- [Envoy Gateway with Inference Pool support enabled prerequisites](https://aigateway.envoyproxy.io/docs/getting-started/prerequisites) installed in your cluster
 - [Envoy AI Gateway](https://aigateway.envoyproxy.io/docs/getting-started/installation) installed in your cluster
 - [LeaderWorkerSet (LWS)](https://lws.sigs.k8s.io/docs/installation/) installed in your cluster
 - Hugging Face token for accessing the LLM models (you can get a token from [Hugging Face](https://huggingface.co/settings/tokens))
@@ -104,7 +104,7 @@ About the configuration:
 
 - Plugins: Define the set of scoring, filtering, picking, and profile-handling plugins to instantiate. Each plugin can optionally be given a name, allowing multiple instances of the same plugin type (useful when you configure multiple scheduling profiles). Plugins are later referenced from scheduling profiles via pluginRef.
 - SchedulingProfiles: Specify which plugins participate when scheduling a request and with what weights. If no profile is specified on a request, a default profile named default is used and will reference all instantiated plugins unless otherwise configured.
-- Profile Handler: Determines which SchedulingProfile(s) apply to a given request (for example, based on headers or metadata). A profile handler must be specified unless the configuration contains exactly one profile, in which case SingleProfileHandler is used automatically.
+- Profile Handler: Determines which SchedulingProfile(s) applies to a given request (for example, based on headers or metadata). A profile handler must be specified unless the configuration contains exactly one profile, in which case SingleProfileHandler is used automatically.
 - Picker: After filtering and scoring, a picker chooses the actual pod. If a profile does not reference a picker, MaxScorePicker is added by default.
 
 Common plugins used in this guide:
@@ -421,7 +421,7 @@ Here's how it works:
 - **Gateway Target**: The policy applies to our `ai-gateway` via `targetRefs`
 - **User Identification**: Uses the `x-user-id` header to track usage per individual user
 - **Model-Specific Limits**: Targets our specific Qwen model via the `x-ai-eg-model` header
-- **Token-Based Counting**: Uses the `llm_total_token` metadata (from our AIGatewayRoute) to count actual token usage rather than just request count
+- **Token-Based Counting**: Uses the `llm_total_token` metadata (from our AIGatewayRoute) to count actual token usage rather than just request count.
 - **Smart Costing**: Sets request cost to 0 so only the token usage from responses counts toward the limit
 
 This example sets a limit of 1000 total tokens per hour per user for the Qwen model. Once a user hits this limit, they'll receive HTTP 429 responses until the hour resets.
@@ -636,6 +636,6 @@ done
 
 Now that you've tested the basic setup, you can:
 
-- For more rate limiter related configuration, see the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting).
+- Explore more rate limiter-related configuration at the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting).
 
 - Explore the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/) to learn more about the features and capabilities.
