@@ -87,6 +87,20 @@ const sidebars: SidebarsConfig = {
             "model-serving/generative-inference/overview",
             {
               type: 'category',
+              label: 'LLMInferenceService',
+              link: {
+                type: 'doc',
+                id: 'model-serving/generative-inference/llmisvc/llmisvc-overview',
+              },
+              items: [
+                "model-serving/generative-inference/llmisvc/llmisvc-overview",
+                "model-serving/generative-inference/llmisvc/llmisvc-architecture",
+                "model-serving/generative-inference/llmisvc/llmisvc-configuration",
+                "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
+              ],
+            },
+            {
+              type: 'category',
               label: 'Tasks',
               items: [
                 "model-serving/generative-inference/tasks/text-generation/text-generation",
