@@ -33,7 +33,12 @@ This page contains a collection of presentations, demos, and talks about KServe 
 | PlatformCon         |  Engineering Cloud Native AI Platform     | Yuan Tang              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/platform-con-2024-engineering-cloud-native-ai-platform) |
 | Open Data Science Conference         |  Highly Scalable Inference Platform for Models of Any Size     | Yuan Tang              | [Info](https://github.com/terrytangyuan/public-talks/blob/main/talks/odsc-2024-highly-scalable-inference-platform) |
 | KubeCon Europe         |  Production-Ready AI Platform on Kubernetes     | Yuan Tang              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/kubecon-europe-2024-production-ai-platform-on-k8s) |
-
+| KubeCon North America               | Engaging the KServe Community                                                         | Adam Tetelman, Taneem Ibrahim, Johnu George, Tessa Pham, Andreea Munteanu | [Video](https://www.youtube.com/watch?v=S27wzRNsStU) |
+| KubeCon Europe               | Fortifying AI Security in Kubernetes with Confidential Containers                     | Suraj Deshmukh, Pradipta Banerjee                                         | [Video](https://youtu.be/Ko0o5_hpmxI)                |
+| KubeCon Europe              | From Bash Scripts to Kubeflow and GitOps: Our Journey to Operationalizing ML at Scale | Luca Grazioli, Dennis Ohrndorf                                            | [Video](https://youtu.be/dwt-MBEUGpQ)                |
+| KubeCon North America              | Production AI at Scale: Cloudera's Journey Adopting KServe                            | Zoram Thanga, Peter Ableda                                                | [Video](https://www.youtube.com/watch?v=VnTHlo56AI4) |
+| KubeCon North America | Optimizing Load Balancing and Autoscaling for LLM Inference on Kubernetes             | David Gray                                                                | [Video](https://www.youtube.com/watch?v=TSEGAh1bs4A) |
+| KubeCon North America      | Best Practices for Deploying LLM Inference, RAG and Fine Tuning Pipelines             | Meenakshi Kaushik, Shiva Krishna Merla                                    | [Video](https://www.youtube.com/watch?v=EmGe_58524g) |
 
 ### 2023
 
@@ -43,12 +48,6 @@ This page contains a collection of presentations, demos, and talks about KServe 
 | Kubeflow Summit       | Scale your Models to Zero with Knative and KServe                                     | Jooho Lee                                                                 | [Video](https://youtu.be/j039MuKMmMQ)                |
 | Kubeflow Summit       | What to choose? ModelMesh vs Model Serving?                                           | Vaibhav Jain                                                              | [Video](https://youtu.be/Yi8Udjr9nkk)                |
 | KubeCon               | Platform Building Blocks: How to Build ML Infrastructure with CNCF Projects           | Yuzhui Liu, Leon Zhou                                                     | [Info](https://sched.co/1YhIv)                       |
-| ML Systems Conference | Optimizing Load Balancing and Autoscaling for LLM Inference on Kubernetes             | David Gray                                                                | [Video](https://www.youtube.com/watch?v=TSEGAh1bs4A) |
-| ML/AI Conference      | Best Practices for Deploying LLM Inference, RAG and Fine Tuning Pipelines             | Meenakshi Kaushik, Shiva Krishna Merla                                    | [Video](https://www.youtube.com/watch?v=EmGe_58524g) |
-| KubeCon               | Production AI at Scale: Cloudera's Journey Adopting KServe                            | Zoram Thanga, Peter Ableda                                                | [Video](https://www.youtube.com/watch?v=VnTHlo56AI4) |
-| KubeCon               | From Bash Scripts to Kubeflow and GitOps: Our Journey to Operationalizing ML at Scale | Luca Grazioli, Dennis Ohrndorf                                            | [Video](https://youtu.be/dwt-MBEUGpQ)                |
-| KubeCon               | Fortifying AI Security in Kubernetes with Confidential Containers                     | Suraj Deshmukh, Pradipta Banerjee                                         | [Video](https://youtu.be/Ko0o5_hpmxI)                |
-| KubeCon               | Engaging the KServe Community                                                         | Adam Tetelman, Taneem Ibrahim, Johnu George, Tessa Pham, Andreea Munteanu | [Video](https://www.youtube.com/watch?v=S27wzRNsStU) |
 
 ### 2022
 
