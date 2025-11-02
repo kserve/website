@@ -9,6 +9,32 @@ This page contains a collection of presentations, demos, and talks about KServe 
 
 ## Conference Talks by Year
 
+### 2025
+
+| Event           | Title                                                      | Speaker(s)                 | Resources                                            |
+|-----------------|------------------------------------------------------------|----------------------------|------------------------------------------------------|
+| Cloud Native & Kubernetes AI Day North America        |  KServe Next: Advancing Generative AI Model Serving     | Yuan Tang and Dan Sun             | [Info](https://sched.co/28D4J) |
+| KubeCon North America        |  Anchoring Trust in the Age of AI: Identities Across Humans, Machines, and Models     | Yuan Tang and Anjali Telang             | [Info](https://sched.co/27dCb) |
+| KubeCon         |    Navigating the Rapid Evolution of Large Model Inference: Where does Kubernetes Fit?   | Jiaxin Shan, Yuan Tang, Sergey Kanzhelev, Rita Zhang               | [Info](https://sched.co/27Nlv) |
+| Cloud Native & Kubernetes AI Day Europe         |  Panel: Engaging the Kubeflow Community: Building an Enterprise-Ready AI/ML Platform     | Yuan Tang, Andrey Velichkevich, Andreea Munteanu, Johnu George, Ronen Dar               | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/kubecon-europe-2025) |
+| KubeCon Europe        |  Advancements in AI/ML Inference Workloads on Kubernetes From WG Serving and Ecosystem Projects     | Yuan Tang, Eduardo Arango Gutierez              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/kubecon-europe-2025) |
+| KubeCon Europe        |  Kubeflow Ecosystem: What’s Next for Cloud Native AI/ML and LLMOps     | Johnu George, Andrey Velichkevich, Yuki Iwai, Yuan Tang, Valentina Rodriguez               | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/kubecon-europe-2025) |
+| Red Hat Summit         |  Embracing Partnership and Open Collaboration in the Cloud-Native and AI Model Serving Communities     | Yuan Tang, Adam Tetelman, Brittany Rockwell, Tyler Michael Smith              | [Info](https://github.com/terrytangyuan/public-talks/blob/main/talks/red-hat-summit-2025) |
+| IBM TechXchange         |   KServe Deep Dive: Evolving Model Serving for the Generative AI Era    | Yuan Tang              | [Info](https://github.com/terrytangyuan/public-talks/blob/main/talks/kserve-deep-dive-ibm-techxchange-2025) |
+
+### 2024
+
+| Event           | Title                                                      | Speaker(s)                 | Resources                                            |
+|-----------------|------------------------------------------------------------|----------------------------|------------------------------------------------------|
+| KubeCon North America         | Unlocking Potential of Large Models in Production  | Yuan Tang              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/kubecon-na-2024-unlocking-potential-of-large-models-in-production) |
+| Cloud Native & Kubernetes AI Day North America         | Advancing Cloud Native AI Innovation Through Open Collaboration      | Yuan Tang              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/cloud-native-ai-day-2024-keynote-advancing-cloud-native-ai-innovation-through-open-collaboration) |
+| Kubernetes Podcast from Google         |  Kubernetes Working Group Serving     | Yuan Tang, Eduardo Arango Gutierez              | [Podcast](https://kubernetespodcast.com/episode/240-wg-serving/) |
+| IBM TechXchange         |  KServe Essentials: Building a Production-Ready Cloud-Native Model Serving Platform     | Yuan Tang              | [Info](https://github.com/terrytangyuan/public-talks/blob/main/talks/kserve-essentials-ibm-techxchange-2024) |
+| PlatformCon         |  Engineering Cloud Native AI Platform     | Yuan Tang              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/platform-con-2024-engineering-cloud-native-ai-platform) |
+| Open Data Science Conference         |  Highly Scalable Inference Platform for Models of Any Size     | Yuan Tang              | [Info](https://github.com/terrytangyuan/public-talks/blob/main/talks/odsc-2024-highly-scalable-inference-platform) |
+| KubeCon Europe         |  Production-Ready AI Platform on Kubernetes     | Yuan Tang              | [Video](https://github.com/terrytangyuan/public-talks/blob/main/talks/kubecon-europe-2024-production-ai-platform-on-k8s) |
+
+
 ### 2023
 
 | Event                 | Title                                                                                 | Speaker(s)                                                                | Resources                                            |
@@ -21,9 +47,7 @@ This page contains a collection of presentations, demos, and talks about KServe 
 | ML/AI Conference      | Best Practices for Deploying LLM Inference, RAG and Fine Tuning Pipelines             | Meenakshi Kaushik, Shiva Krishna Merla                                    | [Video](https://www.youtube.com/watch?v=EmGe_58524g) |
 | KubeCon               | Production AI at Scale: Cloudera's Journey Adopting KServe                            | Zoram Thanga, Peter Ableda                                                | [Video](https://www.youtube.com/watch?v=VnTHlo56AI4) |
 | KubeCon               | From Bash Scripts to Kubeflow and GitOps: Our Journey to Operationalizing ML at Scale | Luca Grazioli, Dennis Ohrndorf                                            | [Video](https://youtu.be/dwt-MBEUGpQ)                |
-| KubeCon               | Production-Ready AI Platform on Kubernetes                                            | Yuan Tang                                                                 | [Video](https://youtu.be/_RthQ01bwU8)                |
 | KubeCon               | Fortifying AI Security in Kubernetes with Confidential Containers                     | Suraj Deshmukh, Pradipta Banerjee                                         | [Video](https://youtu.be/Ko0o5_hpmxI)                |
-| KubeCon AI Days       | Advancing Cloud Native AI Innovation Through Open Collaboration                       | Yuan Tang                                                                 | [Video](https://www.youtube.com/watch?v=kG_wqP2CXUE) |
 | KubeCon               | Engaging the KServe Community                                                         | Adam Tetelman, Taneem Ibrahim, Johnu George, Tessa Pham, Andreea Munteanu | [Video](https://www.youtube.com/watch?v=S27wzRNsStU) |
 
 ### 2022
