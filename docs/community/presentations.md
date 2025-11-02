@@ -39,15 +39,16 @@ This page contains a collection of presentations, demos, and talks about KServe 
 | KubeCon North America              | Production AI at Scale: Cloudera's Journey Adopting KServe                            | Zoram Thanga, Peter Ableda                                                | [Video](https://www.youtube.com/watch?v=VnTHlo56AI4) |
 | KubeCon North America | Optimizing Load Balancing and Autoscaling for LLM Inference on Kubernetes             | David Gray                                                                | [Video](https://www.youtube.com/watch?v=TSEGAh1bs4A) |
 | KubeCon North America      | Best Practices for Deploying LLM Inference, RAG and Fine Tuning Pipelines             | Meenakshi Kaushik, Shiva Krishna Merla                                    | [Video](https://www.youtube.com/watch?v=EmGe_58524g) |
+| KubeCon Europe               | Platform Building Blocks: How to Build ML Infrastructure with CNCF Projects           | Yuzhui Liu, Leon Zhou                                                     | [Info](https://sched.co/1YhIv)   |          
 
 ### 2023
 
 | Event                 | Title                                                                                 | Speaker(s)                                                                | Resources                                            |
 |-----------------------|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------|------------------------------------------------------|
-| KubeCon EU            | The State and Future of Cloud Native Model Serving                                    | Dan Sun, Theofilos Papapanagiotou                                         | [Video](https://youtu.be/786VaGAfm6I)                |
+| KubeCon Europe            | The State and Future of Cloud Native Model Serving                                    | Dan Sun, Theofilos Papapanagiotou                                         | [Video](https://youtu.be/786VaGAfm6I)                |
 | Kubeflow Summit       | Scale your Models to Zero with Knative and KServe                                     | Jooho Lee                                                                 | [Video](https://youtu.be/j039MuKMmMQ)                |
 | Kubeflow Summit       | What to choose? ModelMesh vs Model Serving?                                           | Vaibhav Jain                                                              | [Video](https://youtu.be/Yi8Udjr9nkk)                |
-| KubeCon               | Platform Building Blocks: How to Build ML Infrastructure with CNCF Projects           | Yuzhui Liu, Leon Zhou                                                     | [Info](https://sched.co/1YhIv)                       |
+
 
 ### 2022
 
