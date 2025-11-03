@@ -18,6 +18,7 @@ KServe offers two powerful deployment modes to fit diverse operational needs:
 ## In This Section
 
 - **[Control Plane](control-plane.md)**: Learn how KServe manages model lifecycles, autoscaling, and orchestration
+- **[Control Plane - LLMISVC](control-plane-llmisvc.md)**: Understand LLMInferenceService architecture, component interactions, and advanced patterns
 - **[Data Plane](./data-plane/data-plane.md)**: Explore how inference requests are processed, including protocol support and performance optimizations
 
 ## What's Next?

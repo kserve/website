@@ -20,7 +20,7 @@ Similar to the relationship between `InferenceService` and `ServingRuntime`, KSe
 
 ### Comparison with InferenceService & ServingRuntime
 
-![Comparison with InferenceService & ServingRuntime](./imgs/comparison_Isvc_llmisvc.png)
+<img src={require('./imgs/comparison_Isvc_llmisvc.png').default} alt="Comparison with InferenceService & ServingRuntime" style={{width: '700px', maxWidth: '100%'}} />
 
 
 ### Key Differences
@@ -173,7 +173,7 @@ spec:
 
 ### Workload Types Overview
 
-![Workload Types](./imgs/workload_types.png)
+<img src={require('./imgs/workload_types.png').default} alt="Workload Types" style={{width: '600px', maxWidth: '100%'}} />
 
 ### Workload Selection Logic
 
@@ -463,7 +463,7 @@ spec:
 ### Parallelism Types
 
 #### Tensor Parallelism (TP)
-![Tensor Parallelism (TP)](./imgs/tensor_parallelism.png)
+<img src={require('./imgs/tensor_parallelism.png').default} alt="Tensor Parallelism (TP)" style={{width: '300px', maxWidth: '100%'}} />
 
 **Use case**: Model too large for single GPU
 
@@ -476,8 +476,8 @@ spec:
 ---
 
 #### Data Parallelism (DP)
-![Data Parallelism (DP)](./imgs/data_parallelism.png)
-`
+<img src={require('./imgs/data_parallelism.png').default} alt="Data Parallelism (DP)" style={{width: '300px', maxWidth: '100%'}} />
+
 **Use case**: Increase throughput
 
 ```yaml
@@ -492,7 +492,7 @@ spec:
 
 #### Expert Parallelism (EP)
 
-![Expert Parallelism (EP)](./imgs/expert_parallelism.png)
+<img src={require('./imgs/expert_parallelism.png').default} alt="Expert Parallelism (EP)" style={{width: '300px', maxWidth: '100%'}} />
 
 **Use case**: MoE models (Mixtral, DeepSeek-R1)
 
@@ -593,5 +593,5 @@ spec:
 
 ## Next Steps
 
-- **[Architecture Guide](./llmisvc-architecture.md)**: Understand how components interact
+- **[Architecture Guide](../../../concepts/architecture/control-plane-llmisvc.md)**: Understand how components interact
 - **[Dependencies](./llmisvc-dependencies.md)**: Install required infrastructure

@@ -1,5 +1,5 @@
 ---
-sidebar_label: "Architecture"
+sidebar_label: "Control Plane - LLMISVC"
 sidebar_position: 2
 title: "LLMInferenceService Architecture Deep Dive"
 ---
@@ -8,12 +8,13 @@ title: "LLMInferenceService Architecture Deep Dive"
 
 This guide provides an in-depth look at the LLMInferenceService architecture, component interactions, and advanced patterns for production deployments.
 
-> **Prerequisites**: Familiarity with [core concepts](./llmisvc-overview.md) and [configuration](./llmisvc-configuration.md) is recommended.
+> **Prerequisites**: Familiarity with [core concepts](../../model-serving/generative-inference/llmisvc/llmisvc-overview.md) and [configuration](../../model-serving/generative-inference/llmisvc/llmisvc-configuration.md) is recommended.
 
 ---
 
 ## System Architecture Overview
-[![Architecture Overview](./imgs/architecture_overview.png)](./imgs/architecture_overview.png)
+<img src={require('../../model-serving/generative-inference/llmisvc/imgs/architecture_overview.png').default} alt="Architecture Overview" style={{width: '700px', maxWidth: '100%'}} />
+
 ---
 
 ## Gateway Architecture
@@ -102,7 +103,7 @@ spec:
 
 ### Routing Flow
 
-[![Routing Flow](./imgs/routing_flow.png)](./imgs/routing_flow.png)
+<img src={require('../../model-serving/generative-inference/llmisvc/imgs/routing_flow.png').default} alt="Routing Flow" style={{width: '700px', maxWidth: '100%'}} />
 
 ---
 
@@ -114,6 +115,24 @@ The **Scheduler** (also called **Endpoint Picker Pod - EPP**) provides intellige
 - **Prefix cache**: Routes to pods with matching KV cache blocks
 - **Load**: Balances requests across available endpoints
 - **Prefill-Decode separation**: Routes to appropriate pool
+
+### Scoring Mechanism
+
+The scheduler tracks KV cache blocks via ZMQ events from vLLM pods:
+- **BlockStored**: Cache block created (includes block hash, tokens, storage location)
+- **BlockRemoved**: Cache block evicted from memory
+
+These events populate an index mapping `{ModelName, BlockHash}` → `{PodID, DeviceTier}`, allowing the scheduler to track which pods hold which cache blocks.
+
+For each incoming request, the scheduler calculates a weighted score across all endpoints using pluggable scorers:
+
+| Scorer | Weight | Purpose |
+|--------|--------|---------|
+| **Prefix cache scorer** | 2.0 | Prioritizes pods with matching KV cache blocks |
+| **Load-aware scorer** | 1.0 | Balances requests across endpoints |
+| **Queue scorer** | (configurable) | Routes based on queue depth |
+
+The request is routed to the highest-scoring pod, optimizing for both cache hit rate and load distribution.
 
 ---
 
@@ -216,12 +235,7 @@ LLM serving requires two types of KV cache communication:
 
 - **Protocol**: ZMQ (Zero Message Queue) over TCP/IP
 - **Usage**: vLLM publishes events when cache blocks are created/evicted
-- **Consumer**: Scheduler (EPP) tracks which pods have which cache blocks
-- **Use Case**: Provides data for scheduler plugins to calculate routing scores
-  - **Prefix cache scorer**: Routes to pods with matching cache blocks (example weight: 2.0)
-  - **Load-aware scorer**: Balances load across endpoints (example weight: 1.0)
-  - **Queue scorer**: Routes based on queue depth
-  - Plugins can be combined with different weights for custom routing strategies
+- **Consumer**: Scheduler (EPP) tracks which pods have which cache blocks (see [Scoring Mechanism](#scoring-mechanism))
 
 **Configuration**:
 ```yaml
@@ -310,5 +324,5 @@ spec:
 
 ## Next Steps
 
-- **[Configuration Guide](./llmisvc-configuration.md)**: Detailed spec reference
-- **[Dependencies](./llmisvc-dependencies.md)**: Install required components
+- **[Configuration Guide](../../model-serving/generative-inference/llmisvc/llmisvc-configuration.md)**: Detailed spec reference
+- **[Dependencies](../../model-serving/generative-inference/llmisvc/llmisvc-dependencies.md)**: Install required components

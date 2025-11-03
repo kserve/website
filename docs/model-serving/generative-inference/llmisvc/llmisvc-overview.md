@@ -8,7 +8,9 @@ title: "Understanding LLMInferenceService"
 
 ## What is LLMInferenceService?
 
-**LLMInferenceService** is a Kubernetes Custom Resource Definition (CRD) introduced in KServe as part of its strategic shift towards **GenAI-first architecture**. It provides a comprehensive, production-ready platform for deploying and scaling Large Language Model (LLM) inference workloads on Kubernetes.
+**LLMInferenceService** is a Kubernetes Custom Resource Definition (CRD) introduced in KServe as part of its strategic shift towards **GenAI-first architecture**. Built on the foundation of [llm-d](https://github.com/llm-d)—a production-ready framework for scalable LLM serving—LLMInferenceService delivers enterprise-grade capabilities for deploying and managing Large Language Model inference workloads on Kubernetes.
+
+The llm-d project provides a proven architecture for high-performance LLM serving, combining vLLM's inference engine with Kubernetes orchestration and intelligent routing capabilities. Features like KV-cache aware scheduling, disaggregated prefill-decode serving, and distributed inference enable both optimal performance and cost efficiency. By integrating llm-d's architecture through a native Kubernetes CRD, KServe makes these advanced patterns accessible and easy to deploy, allowing users to achieve faster time-to-value while maintaining production-grade reliability.
 
 ### Why a Separate CRD?
 
@@ -23,7 +25,7 @@ This separation allows KServe to provide specialized features for LLM serving—
 
 ## Evolution: Dual-Track Strategy
 
-[![Dual Track Strategy](./imgs/dual_track_strategy.png)](./imgs/dual_track_strategy.png)
+<img src={require('./imgs/dual_track_strategy.png').default} alt="Dual Track Strategy" style={{width: '700px', maxWidth: '100%'}} />
 
 **Strategic Separation:**
 - **InferenceService**: Remains the standard for **Predictive AI** (classification, regression, recommendations)
@@ -74,12 +76,13 @@ Mix and match **LLMInferenceServiceConfig** resources for flexible deployment pa
 | **Multi-GPU inference** | ✅ Yes | Built-in parallelism support |
 | **High throughput requirements** | ✅ Yes | Prefill-decode separation, intelligent routing |
 | **Traditional ML models** | ❌ No | Use `InferenceService` instead |
-| **Small models (less than 1B params)** | 🟡 Optional | Either works, but `LLMInferenceService` offers more features |
+| **Small models (less than 70B params)** | 🟡 Optional | Either works, but `LLMInferenceService` offers more features |
 
 ---
 
 ## High Level Architecture Overview
-[![High Level Architecture Overview](./imgs/highlevel_arch_overview.png)](./imgs/highlevel_arch_overview.png)
+<img src={require('./imgs/highlevel_arch_overview.png').default} alt="High Level Architecture Overview" style={{width: '700px', maxWidth: '100%'}} />
+
 ---
 
 ## Core Components at a Glance
@@ -111,7 +114,7 @@ Defines traffic routing and load balancing:
 - **HTTPRoute**: Path-based routing rules
 - **Scheduler**: Intelligent endpoint selection (EPP)
 
-**Learn more**: [Architecture Guide](./llmisvc-architecture.md#router-architecture)
+**Learn more**: [Architecture Guide](../../../concepts/architecture/control-plane-llmisvc.md#gateway-architecture)
 
 ---
 
@@ -173,7 +176,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 
 ### 📚 Core Concepts
 - **[Configuration Guide](./llmisvc-configuration.md)**: Detailed spec reference and configuration patterns
-- **[Architecture Guide](./llmisvc-architecture.md)**: System architecture and component interactions
+- **[Architecture Guide](../../../concepts/architecture/control-plane-llmisvc.md)**: System architecture and component interactions
 - **[Dependencies](./llmisvc-dependencies.md)**: Required infrastructure components
 
 ### 🔧 Advanced Topics

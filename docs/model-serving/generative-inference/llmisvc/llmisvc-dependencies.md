@@ -19,7 +19,7 @@ LLMInferenceService requires several infrastructure components to function prope
 
 ## Dependency Overview Diagram
 
-![Dependency Overview Diagram](./imgs/dependency_overview_diagram.png)
+<img src={require('./imgs/dependency_overview_diagram.png').default} alt="Dependency Overview Diagram" style={{width: '700px', maxWidth: '100%'}} />
 
 ---
 
