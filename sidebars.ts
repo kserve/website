@@ -97,6 +97,7 @@ const sidebars: SidebarsConfig = {
                 "model-serving/generative-inference/llmisvc/llmisvc-architecture",
                 "model-serving/generative-inference/llmisvc/llmisvc-configuration",
                 "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
+                "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
               ],
             },
             {
