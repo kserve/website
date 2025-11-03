@@ -87,6 +87,14 @@ const sidebars: SidebarsConfig = {
             "model-serving/generative-inference/overview",
             {
               type: 'category',
+              label: 'LLMInferenceService',
+              items: [
+                "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
+              ]
+
+            },
+            {
+              type: 'category',
               label: 'Tasks',
               items: [
                 "model-serving/generative-inference/tasks/text-generation/text-generation",
