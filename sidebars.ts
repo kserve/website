@@ -44,6 +44,7 @@ const sidebars: SidebarsConfig = {
           },
           items: [
             "concepts/architecture/control-plane",
+            "concepts/architecture/control-plane-llmisvc",
             "concepts/architecture/data-plane/data-plane",
             "concepts/architecture/data-plane/v1-protocol",
             {
@@ -88,10 +89,16 @@ const sidebars: SidebarsConfig = {
             {
               type: 'category',
               label: 'LLMInferenceService',
+              link: {
+                type: 'doc',
+                id: 'model-serving/generative-inference/llmisvc/llmisvc-overview',
+              },
               items: [
+                "model-serving/generative-inference/llmisvc/llmisvc-overview",
+                "model-serving/generative-inference/llmisvc/llmisvc-configuration",
+                "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
                 "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
-              ]
-
+              ],
             },
             {
               type: 'category',
