@@ -194,16 +194,16 @@ The request is routed to the highest-scoring pod, optimizing for both cache hit 
 1. Client sends NEW request (no KV cache)
                   │
                   ▼
-2. Gateway -> HTTPRoute -> InferencePool (Prefill)
+2. Gateway -> HTTPRoute -> InferencePool
                   │
                   ▼
-3. EPP: "This is a new request" → Route to Prefill Pool
+3. EPP: "Calculate Score to decide which pod is the best to take this new request" → Route to Decode Pool
                   │
                   ▼
-4. Prefill Pod processes prompt, generates KV cache
+4. Routing container (in selected Decode Pod) forwards request to Prefill Pod, which processes prompt and generates KV cache
                   │
                   ▼
-5. KV cache transferred to Decode Pod via RDMA
+5. KV cache transferred to Decode Pod via RDMA if it needs
                   │
                   ▼
 6. Response includes KV transfer metadata
@@ -212,7 +212,7 @@ The request is routed to the highest-scoring pod, optimizing for both cache hit 
 7. Client sends CONTINUATION request (with KV cache ID)
                   │
                   ▼
-8. EPP: "This is continuation" → Route to Decode Pool
+8. EPP: Calculate score (detects KV cache match on Decode Pod, skips Prefill) → Route directly to Decode Pod
                   │
                   ▼
 9. Decode Pod uses transferred KV cache
