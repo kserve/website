@@ -56,7 +56,6 @@ Mix and match **LLMInferenceServiceConfig** resources for flexible deployment pa
 
 ### ⚡ Distributed Inference
 - **Tensor Parallelism (TP)**: Split model layers across GPUs
-- **Pipeline Parallelism (PP)**: Stage-based model distribution
 - **Data Parallelism (DP)**: Replicate models for throughput
 - **Expert Parallelism (EP)**: Distribute MoE experts across nodes
 
@@ -121,7 +120,6 @@ Defines traffic routing and load balancing:
 ### 4. Parallelism Specification (`spec.parallelism`)
 Defines distributed inference strategies:
 - Tensor Parallelism (TP)
-- Pipeline Parallelism (PP)
 - Data Parallelism (DP)
 - Expert Parallelism (EP)
 
@@ -193,7 +191,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 - ✅ **Composable Configuration**: Mix and match configs for flexible deployment
 - ✅ **Multiple Workload Patterns**: Single-node, multi-node, prefill-decode separation
 - ✅ **Advanced Routing**: Gateway API + intelligent scheduler
-- ✅ **Distributed Inference**: Tensor, pipeline, data, and expert parallelism
+- ✅ **Distributed Inference**: Tensor, data, and expert parallelism
 - ✅ **Production-Ready**: Monitoring, RBAC, storage integration, KV cache transfer
 
 This architecture enables organizations to deploy and scale LLM inference workloads efficiently on Kubernetes, with the flexibility to optimize for different model sizes, hardware configurations, and performance requirements.

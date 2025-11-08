@@ -24,6 +24,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'getting-started/quickstart-guide',
         'getting-started/genai-first-isvc',
+        'getting-started/genai-first-llmisvc',
         'getting-started/predictive-first-isvc',
         'getting-started/swagger-ui'
       ],
@@ -304,7 +305,11 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Generative Inference',
           items: [
-            'admin-guide/kubernetes-deployment'
+            {
+              type: 'doc',
+              id: 'admin-guide/kubernetes-deployment-llmisvc',
+              label: 'Kubernetes Deployment Installation Guide (LLMIsvc)',
+            }
           ]
         },
         {

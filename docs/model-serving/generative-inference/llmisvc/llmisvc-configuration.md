@@ -453,7 +453,6 @@ Defines distributed inference parallelism strategies for multi-node workloads.
 spec:
   parallelism:
     tensor: 4        # Tensor parallelism (TP)
-    pipeline: 2      # Pipeline parallelism (PP)
     data: 8          # Data parallelism (DP)
     dataLocal: 2     # Data-local parallelism (DP-local)
     expert: true     # Expert parallelism (EP)
