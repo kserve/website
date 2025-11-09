@@ -141,6 +141,7 @@ const sidebars: SidebarsConfig = {
                     "model-serving/predictive-inference/frameworks/lightgbm/lightgbm",
                     "model-serving/predictive-inference/frameworks/paddle/paddle",
                     "model-serving/predictive-inference/frameworks/mlflow/mlflow",
+                    "model-serving/predictive-inference/frameworks/catboost/catboost",
                     "model-serving/predictive-inference/frameworks/onnx/onnx",
                     {
                       type: 'category',
