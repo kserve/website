@@ -19,11 +19,11 @@ This tutorial walks through deploying a KServe LLMInferenceService that wraps [l
 
 For more information, see the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/).
 
-## LLM-D Overview
+## llm-d Overview
 
 [llm-d](https://llm-d.ai/) is a Kubernetes-native distributed inference serving stack, providing well-lit paths for anyone to serve large generative AI models at scale, with the fastest time-to-value and competitive performance per dollar for most models across most hardware accelerators.
 
-KServe's generative inference leverages LLM-D components to scale and schedule traffic efficiently:
+KServe's generative inference leverages llm-d components to scale and schedule traffic efficiently:
 
 - **Router and Scheduler**: The router exposes a stable endpoint and uses a scheduler to select the best backend replica based on precise prefix-cache aware routing and customizable scheduling policies to decrease latency and increase throughput.
 - **Inference Pool**: A group of worker pods (for example, vLLM) serving your model. The pool scales independently from the router.
