@@ -1,4 +1,4 @@
-# TimeSeries LLM Forecast API Documentation
+# TimeSeries LLM Forecast API Reference
 
 ## Overview
 
