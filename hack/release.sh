@@ -9,7 +9,7 @@ version_gt() {
   IFS='.' read -r major2 minor2 <<< "$2"
 
   # Compare major versions first, then minor versions
-  if [ "$major1" -lt "$major2" ] || { [ "$major1" -eq "$major2" ] && [ "$minor1" -lt "$minor2" ]; }; then
+  if [ "$major1" -lt "$major2" ] || { [ "$major1" -eq "$major2" ] && [ "$minor1" -le "$minor2" ]; }; then
     return 0
   else
     return 1
