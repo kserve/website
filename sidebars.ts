@@ -247,6 +247,14 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'category',
+              label: 'Inference Observability',
+              items: [
+                "model-serving/predictive-inference/observability/prometheus-metrics",
+                "model-serving/predictive-inference/observability/grafana-dashboards",
+              ]
+            },
+            {
+              type: 'category',
               label: 'Rollout Strategies',
               items: [
                 "model-serving/predictive-inference/rollout-strategies/canary",
