@@ -26,8 +26,9 @@ if ! version_gt "$current_version" "$new_version"; then
   exit 1
 fi
 
-# Update announcedVersion in docusaurus.config.ts
-sed -i "s/const announcedVersion = '[0-9]\+\.[0-9]\+'/const announcedVersion = '$new_version'/" docusaurus.config.ts
+# Set the RELEASE_VERSION environment variable which will be used in Makefile
+RELEASE_VERSION=$new_version
+export RELEASE_VERSION
 
 # generate API documentation
 make gen-api-docs
@@ -41,7 +42,7 @@ awk -v new_version="$new_version" '
   inside_versions {
     if (/}/) depth--
     # detect closing of the "current" block
-    if ($0 ~ /label:.*latest/) {
+    if ($0 ~ /label:.*nightly/) {
       print
       getline
       print $0
@@ -51,6 +52,9 @@ awk -v new_version="$new_version" '
   }
   {print}
 ' docusaurus.config.ts > temp && mv temp docusaurus.config.ts
+
+# Update announcedVersion in docusaurus.config.ts
+sed -i "s/const announcedVersion = '[0-9]\+\.[0-9]\+'/const announcedVersion = '$new_version'/" docusaurus.config.ts
 
 # Notify the user
 echo "Release process completed successfully for version $new_version."
