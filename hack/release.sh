@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail # Exit on error, undefined variables, and pipe failures
+
 # Function to compare versions
 version_gt() {
   # Split versions into major and minor components
