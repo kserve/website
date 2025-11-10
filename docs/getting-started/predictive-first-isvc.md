@@ -295,7 +295,5 @@ Now that you have successfully deployed your first Predictive InferenceService, 
 - 📖 **[GenAI InferenceService](genai-first-isvc.md)** - Deploy your first Generative AI InferenceService
 - 📖 **[KServe Concepts](../concepts/index.md)** - Learn about the core concepts of KServe.
 - 📖 **[Supported Frameworks](../model-serving/predictive-inference/frameworks/overview.md)** - Explore Supported Frameworks.
-<!-- TODO: Uncomment once the batcher docs is migrated -->
-<!-- - 📖 **[Batch InferenceService](batch-first-isvc.md)** - Deploy your first Batch InferenceService. -->
-<!-- TODO: Uncomment once the canary docs is migrated -->
-<!-- - 📖 **[Canary Deployments](../model-serving/predictive-inference/canary-deployments/canary-deployments.md)**: Gradually roll out new model versions to test their performance before full deployment. -->
+- 📖 **[Batch InferenceService](../model-serving/predictive-inference/batcher/batcher.md)** - Deploy your first Batch InferenceService.
+- 📖 **[Canary Deployments](../model-serving/predictive-inference/rollout-strategies/canary-example.md)**: Gradually roll out new model versions to test their performance before full deployment.

@@ -58,7 +58,6 @@ spec:
     - prefix: hf://
 ```
 
-<!-- TODO: Update link to refer storagecontainer docs -->
 To know more about storage containers, refer to the [Storage Containers documentation](../../../../../concepts/resources/index.md#storage-resources).
 
 ### Deploy with the V1 Protocol
