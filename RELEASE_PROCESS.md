@@ -58,12 +58,13 @@ This document outlines the steps to create a new release for the KServe document
 ### 6. Merge and Deploy
 
 1. Once the pull request is approved, merge it into the `main` branch.
-2. Deploy the changes to the production environment.
+2. The website will automatically deploy the changes upon merging using GitHub Actions.
 
 ### 7. Post-Release Tasks
 
-1. Verify the live website to ensure the changes are reflected.
-2. Announce the new release on relevant channels (e.g., Slack, mailing list).
+1. Verify the deploy GitHub Action logs to ensure the deployment was successful.
+2. Verify the live website to ensure the changes are reflected.
+3. Announce the new release on relevant channels (e.g., Slack, mailing list).
 
 ## Notes
 

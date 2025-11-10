@@ -23,7 +23,9 @@ gen-oip-rest-api-docs:
 
 # Generate CRD API documentation for KServe master branch.
 gen-crd-api-docs:
-	./hack/crd-ref-docs/gen-crd-api-ref-docs.sh
+     # Use RELEASE_VERSION environment variable to specify the release version for which CRD docs need to be generated.
+	 # This variable is set in the release.sh script during the release process.
+	./hack/crd-ref-docs/gen-crd-api-ref-docs.sh --branch release-$(RELEASE_VERSION)
 
 # Generate Python Runtime, Control Plane SDK API documentation.
 gen-py-sdk-api-docs:

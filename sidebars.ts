@@ -368,6 +368,7 @@ const sidebars: SidebarsConfig = {
           ],
         },
         'reference/python-runtime-sdk/python-runtime-sdk',
+        'reference/time_series/api',
         'reference/controlplane-client/controlplane-client-sdk',
         {
           type: 'category',

@@ -8,9 +8,7 @@ export function getActiveDocsVersion(): string {
     (version) => version.isLast
   );
   if (version.version === 'current') {
-    // TODO: Remove the hardcoded version and uncomment the line below when 0.16 release is available.
-    return '0.15';
-    // return latestVersion.label;
+    return latestVersion.label;
   } else {
     return version.label;
   }
