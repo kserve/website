@@ -6,9 +6,8 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// TODO: Automatically update this version when releasing a new version
 // The latest announcedVersion
-const announcedVersion = '0.15';
+const announcedVersion = '0.16';
 
 const config: Config = {
   title: 'KServe',
@@ -59,8 +58,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/kserve/website/tree/main/',
-          // TODO: Uncomment this once the 0.16 release is out
-          // lastVersion: announcedVersion,
+          lastVersion: announcedVersion,
           rehypePlugins: [rehypeExternalLinks],
           // Used by OpenAPI Plugin for Open Inference Protocol API documentation.
           docItemComponent: "@theme/ApiItem",
@@ -120,6 +118,7 @@ const config: Config = {
             'current': {
               label: 'nightly',
             },
+            '0.16': { label: '0.16' },
           },
           dropdownItemsAfter: [
             {

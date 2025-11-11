@@ -24,6 +24,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'getting-started/quickstart-guide',
         'getting-started/genai-first-isvc',
+        'getting-started/genai-first-llmisvc',
         'getting-started/predictive-first-isvc',
         'getting-started/swagger-ui'
       ],
@@ -44,6 +45,7 @@ const sidebars: SidebarsConfig = {
           },
           items: [
             "concepts/architecture/control-plane",
+            "concepts/architecture/control-plane-llmisvc",
             "concepts/architecture/data-plane/data-plane",
             "concepts/architecture/data-plane/v1-protocol",
             {
@@ -88,10 +90,16 @@ const sidebars: SidebarsConfig = {
             {
               type: 'category',
               label: 'LLMInferenceService',
+              link: {
+                type: 'doc',
+                id: 'model-serving/generative-inference/llmisvc/llmisvc-overview',
+              },
               items: [
+                "model-serving/generative-inference/llmisvc/llmisvc-overview",
+                "model-serving/generative-inference/llmisvc/llmisvc-configuration",
+                "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
                 "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
-              ]
-
+              ],
             },
             {
               type: 'category',
@@ -239,6 +247,14 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'category',
+              label: 'Inference Observability',
+              items: [
+                "model-serving/predictive-inference/observability/prometheus-metrics",
+                "model-serving/predictive-inference/observability/grafana-dashboards",
+              ]
+            },
+            {
+              type: 'category',
               label: 'Rollout Strategies',
               items: [
                 "model-serving/predictive-inference/rollout-strategies/canary",
@@ -297,7 +313,11 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Generative Inference',
           items: [
-            'admin-guide/kubernetes-deployment'
+            {
+              type: 'doc',
+              id: 'admin-guide/kubernetes-deployment-llmisvc',
+              label: 'Kubernetes Deployment Installation Guide (LLMIsvc)',
+            }
           ]
         },
         {
@@ -348,6 +368,7 @@ const sidebars: SidebarsConfig = {
           ],
         },
         'reference/python-runtime-sdk/python-runtime-sdk',
+        'reference/time_series/api',
         'reference/controlplane-client/controlplane-client-sdk',
         {
           type: 'category',
