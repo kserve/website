@@ -177,8 +177,8 @@ predictor:
 # OR storageUris
 predictor:
   model:
-    storageUris:
-      - uri: s3://bucket/model
+  storageUris:
+    - uri: s3://bucket/model
 ```
 
 </TabItem>
@@ -189,8 +189,8 @@ predictor:
 predictor:
   model:
     storageUri: s3://bucket/model
-    storageUris:
-      - uri: s3://bucket/other-model
+  storageUris:
+    - uri: s3://bucket/other-model
 ```
 
 </TabItem>
