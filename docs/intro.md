@@ -37,7 +37,7 @@ Enterprise authentication, network policies, and compliance features built-in. D
 ✅ **OpenAI-Compatible APIs** - Chat completion, completion, streaming, and embedding endpoints  
 ✅ **LocalModelCache for LLMs** - Cache large models locally to reduce startup time from 15-20 minutes to ~1 minute  
 ✅ **KV Cache Offloading** - Optimized memory management for long conversations and large contexts  
-✅ **Multi-node Inference** - Distributed LLM serving
+✅ **Multi-node Inference** - Distributed LLM serving  
 ✅ **Envoy AI Gateway Integration** - Enterprise-grade API management and routing for AI workloads  
 ✅ **Metric-based Autoscaling** - Scale based on token throughput, queue depth, and GPU utilization  
 ✅ **Advanced Generative Deployments** - Canary rollouts and A/B testing for LLM experiments

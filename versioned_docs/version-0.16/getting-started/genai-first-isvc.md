@@ -318,6 +318,6 @@ Now that you have successfully deployed a generative AI service using KServe, yo
 - 📖 **[KServe Concepts](../concepts/index.md)** - Learn about the core concepts of KServe.
 - 📖 **[Supported Tasks](../model-serving/generative-inference/overview.md#supported-generative-tasks)** - Discover the various tasks that KServe can handle.
 - 📖 **[Autoscaling](../model-serving/generative-inference/autoscaling/autoscaling.md)**: Automatically scale your service based on traffic and resource usage / metrics.
-- 📖 **[KV Cache Offloading](../model-serving/generative-inference/kvcache-offloading/kvcache-offloading.md) - Learn how to offload key-value caches to external storage for improved performance and reduced latency.
-- 📖 **[Model Caching](../model-serving/generative-inference/modelcache/localmodel.md) - Learn how to cache models for faster startup time.
+- 📖 **[KV Cache Offloading](../model-serving/generative-inference/kvcache-offloading/kvcache-offloading.md)** - Learn how to offload key-value caches to external storage for improved performance and reduced latency.
+- 📖 **[Model Caching](../model-serving/generative-inference/modelcache/localmodel.md)** - Learn how to cache models for faster startup time.
 - 📖 **[Token Rate Limiting](../model-serving/generative-inference/ai-gateway/envoy-ai-gateway.md)** - Rate limit users based on token usage.
