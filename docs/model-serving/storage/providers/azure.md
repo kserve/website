@@ -97,6 +97,25 @@ Apply the `sklearn-azure.yaml`.
 kubectl apply -f sklearn-azure.yaml
 ```
 
+### Configuring blob download
+
+There are a number of environment variables that allow to configure azure blob download parallelization:
+
+```yaml
+kind: ClusterStorageContainer
+spec:
+  container:
+    env:
+    - name: AZURE_MAX_FILE_CONCURRENCY
+      value: 4
+    - name: AZURE_MAX_CHUNK_CONCURRENCY
+      value: 4
+```
+(only relevant entries shown)
+
+The above example shows the default values. Together they control how many files are downloaded in parallel, and the download parallelism of each file.
+Note that each download has a buffer of 8MiB.
+
 ## Run a prediction
 
 Now, the ingress can be accessed at `${INGRESS_HOST}:${INGRESS_PORT}` or follow [this instruction](../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports)
