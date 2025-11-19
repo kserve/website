@@ -93,7 +93,7 @@ const config: Config = {
     ],
     announcementBar: {
       id: `announcementBar-v${announcedVersion}`,
-      content: `🎉️ <b><a target="_blank" href="https://kserve.github.io/website/blog/kserve-${announcedVersion}-release">KServe v${announcedVersion}</a> is out!</b> 🥳️`,
+      content: `🎉️ <b><a target="_blank" href="https://www.cncf.io/blog/2025/11/11/kserve-becomes-a-cncf-incubating-project/">KServe has joined CNCF!</a></b> 🥳️`,
       backgroundColor: '#588be8',
       textColor: '#ffffff',
     },
