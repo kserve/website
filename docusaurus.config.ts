@@ -225,7 +225,13 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} The KServe Authors. All rights reserved. <br/> The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our Trademark Usage page.`,
+      copyright: `Copyright © ${new Date().getFullYear()} The KServe Authors. All rights reserved. <br/> The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a
+            href="https://www.linuxfoundation.org/trademark-usage"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline">
+            Trademark Usage page
+          </a>.`,
     },
     prism: {
       theme: prismThemes.github,
