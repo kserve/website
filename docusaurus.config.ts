@@ -230,8 +230,8 @@ const config: Config = {
             target="_blank"
             rel="noopener noreferrer"
             className="underline">
-            Trademark Usage page
-          </a>.`,
+            Trademark Usage page.
+          </a>`,
     },
     prism: {
       theme: prismThemes.github,
