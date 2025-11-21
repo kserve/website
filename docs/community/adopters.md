@@ -63,7 +63,7 @@ Interested in joining the KServe community? Here's how to get started:
 
 If your organization is using KServe and would like to be listed here, please:
 
-1. Submit a pull request to our [website repository](https://github.com/kserve/website).
+1. Submit a pull request to our [website repository](https://github.com/kserve/website) ([adopters list in the markdown file](https://github.com/kserve/website/blob/main/docs/community/adopters.md) and [adopters list on homepage](https://github.com/kserve/website/blob/main/src/components/HomepageAdopters/index.tsx)).
 2. Include your organization name and use case.
 3. Please keep the list in alphabetical order.
 4. Provide any relevant metrics or success stories.
