@@ -275,6 +275,14 @@ const config: Config = {
         }
       },
     ],
+    // Google Analytics Plugin
+    [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: 'G-QNT38TBH1M',
+        anonymizeIP: true,
+      },
+    ],
     // Old Url Redirects
     [
       '@docusaurus/plugin-client-redirects',

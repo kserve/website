@@ -44,6 +44,7 @@ jobs:
            npm install
       - name: Build with npm
         run: |
+          export NODE_ENV=production
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
