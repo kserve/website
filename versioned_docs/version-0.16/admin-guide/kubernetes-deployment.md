@@ -23,7 +23,7 @@ Compared to `Knative` mode which depends on Knative for request-driven autoscali
 
 KServe has the following minimum requirements:
 
-- **Kubernetes**: Version 1.30+
+- **Kubernetes**: Version 1.32+
 - **Cert Manager**: Version 1.15.0+
 - **Network Controller**: Choice of Gateway API (recommended) or Ingress controllers
 
@@ -49,7 +49,7 @@ Standard Kubernetes deployment is suitable for predictive inference workloads wh
 
 ## Prerequisites
 
-- Kubernetes cluster (v1.30+)
+- Kubernetes cluster (v1.32+)
 - kubectl configured to access your cluster
 - Cluster admin permissions
 

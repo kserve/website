@@ -28,7 +28,7 @@ ModelMesh is designed for predictive inference use cases where:
 
 ## Prerequisites
 
-- Kubernetes cluster (v1.30+)
+- Kubernetes cluster (v1.32+)
 - kubectl configured to access your cluster
 - Cluster admin permissions
 

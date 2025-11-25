@@ -23,8 +23,8 @@ LLMInferenceService is designed specifically for **Generative AI** workloads (LL
 
 ### Minimum Requirements
 
-- **Kubernetes**: Version 1.30+
-- **Cert Manager**: Version 1.16.0+
+- **Kubernetes**: Version 1.32+
+- **Cert Manager**: Version 1.18.0+
 - **Gateway API**: Version 1.2.1
 - **Gateway API Inference Extension (GIE)**: Version 0.3.0
 - **Gateway Provider**: Envoy Gateway v1.5.0+ 
