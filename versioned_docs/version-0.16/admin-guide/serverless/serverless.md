@@ -32,15 +32,15 @@ Knative serverless Deployment is recommended primarily for predictive inference 
 
 For generative inference workloads that typically require GPU resources and have longer processing times, the [Standard Kubernetes Deployment](../kubernetes-deployment.md) approach is recommended.
 
-Kubernetes 1.30 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
+Kubernetes 1.32 is the minimally required version and please check the following recommended Knative, Istio versions for the corresponding
 Kubernetes version.
 
 ## Recommended Version Matrix
 | Kubernetes Version | Recommended Istio Version | Recommended Knative Version |
 |:-------------------|:--------------------------|:----------------------------|
-| 1.30               | 1.22,1.23                 | 1.15,1.16                   |
-| 1.31               | 1.24,1.25                 | 1.16,1.17                   |
-| 1.32               | 1.25,1.26                 | 1.17,1.18                   |
+| 1.32               | 1.27,1.28                 | 1.19,1.20                   |
+| 1.33               | 1.27,1.28                 | 1.19,1.20                   |
+| 1.34               | 1.28                      | 1.19,1.20                   |
 
 ## 1. Install Knative Serving
 Please refer to [Knative Serving install guide](https://knative.dev/docs/admin/install/serving/install-serving-with-yaml/).

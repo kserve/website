@@ -44,7 +44,7 @@ curl --version
 
 :::info[Version Requirements]
 
-Kubernetes version **1.30 or higher** is required.
+Kubernetes version **1.32 or higher** is required.
 
 :::
 
@@ -89,12 +89,12 @@ Verify your cluster meets the version requirements by running:
 kubectl version --output=json
 ```
 
-The server version in the output should show version 1.30 or higher:
+The server version in the output should show version 1.32 or higher:
 ```json
 {
   "serverVersion": {
     "major": "1",
-    "minor": "30",
+    "minor": "32",
     ...
   }
 }
