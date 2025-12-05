@@ -26,9 +26,9 @@ Store Large Language Models (LLMs) and LoRA adapters in separate locations for b
 ```yaml
 storageUris:
   - uri: hf://microsoft/DialoGPT-medium
-    path: /mnt/models/base
+    mountPath: /mnt/models/base
   - uri: s3://my-bucket/lora-adapters/customer-service
-    path: /mnt/models/adapters
+    mountPath: /mnt/models/adapters
 ```
 
 ### Multiple Preprocessing Artifacts
@@ -37,9 +37,9 @@ Access models and preprocessing data from different sources:
 ```yaml
 storageUris:
   - uri: s3://bucket/trained-model
-    path: /mnt/models/model
+    mountPath: /mnt/models/model
   - uri: s3://bucket/preprocessor
-    path: /mnt/models/preprocessing
+    mountPath: /mnt/models/preprocessing
 ```
 
 ## Before you begin
@@ -68,7 +68,7 @@ spec:
         name: huggingface
     storageUris:
       - uri: s3://bucket/base-model
-        path: /mnt/models/base
+        mountPath: /mnt/models/base
       - uri: s3://bucket/adapters
         # Downloads to /mnt/models (default)
 ```
@@ -112,9 +112,9 @@ Specify explicit mount paths for downloaded artifacts:
 ```yaml
 storageUris:
   - uri: s3://bucket/base-model
-    path: /mnt/models/base
+    mountPath: /mnt/models/base
   - uri: s3://bucket/preprocessing
-    path: /mnt/models/preprocessing
+    mountPath: /mnt/models/preprocessing
 ```
 
 ## Path Requirements
@@ -129,9 +129,9 @@ All custom paths must share a common root directory (excluding filesystem root):
 # Common root: /mnt/models
 storageUris:
   - uri: s3://bucket/model-a
-    path: /mnt/models/model-a
+    mountPath: /mnt/models/model-a
   - uri: s3://bucket/model-b
-    path: /mnt/models/model-b
+    mountPath: /mnt/models/model-b
 ```
 
 </TabItem>
@@ -141,9 +141,9 @@ storageUris:
 # Different roots
 storageUris:
   - uri: s3://bucket/model-a
-    path: /models/model-a     # Root: /models
+    mountPath: /models/model-a     # Root: /models
   - uri: s3://bucket/model-b
-    path: /other/model-b      # Root: /other
+    mountPath: /other/model-b      # Root: /other
 ```
 
 </TabItem>
@@ -154,10 +154,10 @@ All custom paths must be absolute paths:
 
 ```yaml
 # ✅ Valid
-path: /mnt/models/custom
+mountPath: /mnt/models/custom
 
 # ❌ Invalid
-path: models/custom
+mountPath: models/custom
 ```
 
 ## Compatibility and Migration
@@ -177,8 +177,8 @@ predictor:
 # OR storageUris
 predictor:
   model:
-    storageUris:
-      - uri: s3://bucket/model
+  storageUris:
+    - uri: s3://bucket/model
 ```
 
 </TabItem>
@@ -189,8 +189,8 @@ predictor:
 predictor:
   model:
     storageUri: s3://bucket/model
-    storageUris:
-      - uri: s3://bucket/other-model
+  storageUris:
+    - uri: s3://bucket/other-model
 ```
 
 </TabItem>
@@ -220,7 +220,7 @@ storageUris:
 ```yaml
 storageUris:
   - uri: s3://bucket/model
-    path: /mnt/models
+    mountPath: /mnt/models
 ```
 
 </TabItem>
@@ -233,7 +233,7 @@ Multiple storage URIs support all existing [storage providers](./overview.md) su
 ## File Conflicts and Resolution
 
 ### Avoiding Conflicts
-When multiple URIs download to the same path, files may overwrite each other non-deterministically. Users are expected to manage the conflicts by manually specifying the path:
+When multiple URIs download to the same path, files may overwrite each other non-deterministically. Users are expected to manage the conflicts by manually specifying the mountPath:
 
 <Tabs>
 <TabItem value="conflict-prone" label="⚠️ Conflict-Prone">
@@ -242,9 +242,9 @@ When multiple URIs download to the same path, files may overwrite each other non
 # Both contain model.pt - one will overwrite the other
 storageUris:
   - uri: s3://bucket/model-a  # Contains model.pt
-    path: /mnt/models
+    mountPath: /mnt/models
   - uri: s3://bucket/model-b  # Contains model.pt
-    path: /mnt/models
+    mountPath: /mnt/models
 ```
 
 **Result:**
@@ -260,9 +260,9 @@ storageUris:
 # Separate paths prevent conflicts
 storageUris:
   - uri: s3://bucket/model-a
-    path: /mnt/models/model-a
+    mountPath: /mnt/models/model-a
   - uri: s3://bucket/model-b
-    path: /mnt/models/model-b
+    mountPath: /mnt/models/model-b
 ```
 
 **Result:**
@@ -305,7 +305,7 @@ spec:
   predictor:
     storageUris:
       - uri: s3://bucket/predictor-model
-        path: /mnt/models/predictor
+        mountPath: /mnt/models/predictor
 ```
 
 </TabItem>
@@ -316,7 +316,7 @@ spec:
   transformer:
     storageUris:
       - uri: s3://bucket/transformer-model
-        path: /mnt/models/transformer
+        mountPath: /mnt/models/transformer
 ```
 
 </TabItem>
@@ -327,7 +327,7 @@ spec:
   explainer:
     storageUris:
       - uri: s3://bucket/explainer-model
-        path: /mnt/models/explainer
+        mountPath: /mnt/models/explainer
 ```
 
 </TabItem>
