@@ -105,7 +105,7 @@ When you discover a security vulnerability in KServe, follow this secure reporti
 #### Step 2: Report Through Proper Channels
 Use one of these secure channels to report the vulnerability:
 - [GitHub Security Advisory](https://github.com/kserve/kserve/security/advisories/new) (preferred method)
-- Email the KServe security team at [kserve-security@lists.lfaidata.foundation](mailto:kserve-security@lists.lfaidata.foundation)
+- Email the KServe security team at [kserve-security@lists.cncf.io](mailto:kserve-security@lists.cncf.io)
 
 #### Step 3: Provide Detailed Information
 Include the following information in your report:
