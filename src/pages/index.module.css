@@ -91,14 +91,13 @@
 .logoContainer {
   display: flex;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   position: relative;
   z-index: 1;
 }
 
 .logo {
-  height: 120px;
-  margin-bottom: 1rem;
+  height: 150px;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
   transition: all 0.3s ease;
   animation: logoFloat 6s ease-in-out infinite;
@@ -117,48 +116,6 @@
 .logo:hover {
   transform: translateY(-5px) scale(1.05);
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4));
-}
-
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-
-  .heroBanner h1 {
-    font-size: 2.5rem;
-  }
-
-  .heroBanner p {
-    font-size: 1.2rem;
-  }
-
-  .logo {
-    height: 70px;
-  }
-
-  .buttons {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .buttons a {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  /* Reduce animations on mobile for better performance */
-  .heroBanner::before,
-  .heroBanner::after,
-  .logo {
-    animation: none;
-  }
-}
-
-/* Large tablet/small desktop - keep side by side but adjust gaps */
-@media screen and (min-width: 997px) and (max-width: 1200px) {
-  .buttons {
-    gap: 1rem;
-  }
 }
 
 .buttons {
@@ -222,4 +179,46 @@
   z-index: 1;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   opacity: 0.95;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+
+  .heroBanner h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroBanner p {
+    font-size: 1.2rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .buttons a {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .logo {
+    height: 120px;
+  }
+
+  /* Reduce animations on mobile for better performance */
+  .heroBanner::before,
+  .heroBanner::after,
+  .logo {
+    animation: none;
+  }
+}
+
+/* Large tablet/small desktop - keep side by side but adjust gaps */
+@media screen and (min-width: 997px) and (max-width: 1200px) {
+  .buttons {
+    gap: 1rem;
+  }
 }

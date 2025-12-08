@@ -89,7 +89,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/kserve-logo.png',
+    image: 'img/kserve-logo-small.png',
     metadata: [
       { name: 'keywords', content: 'machine learning, kubernetes, model serving, inference, AI, ML, serverless, MLOps, model inference, generative AI, LLM, AI model deployment' },
       { name: 'description', content: 'KServe: A Kubernetes Custom Resource for serving ML models on Kubernetes with autoscaling and standardized inference protocols for both predictive and generative AI models' }
