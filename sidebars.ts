@@ -113,7 +113,6 @@ const sidebars: SidebarsConfig = {
             },
             "model-serving/generative-inference/sdk-integration/sdk-integration",
             "model-serving/generative-inference/kvcache-offloading/kvcache-offloading",
-            "model-serving/generative-inference/modelcache/localmodel",
             "model-serving/generative-inference/autoscaling/autoscaling",
             "model-serving/generative-inference/multi-node/multi-node",
             "model-serving/generative-inference/ai-gateway/envoy-ai-gateway",
@@ -181,6 +180,7 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/transformers/feast-feature-store/feast-feature-store",
               ]
             },
+            "model-serving/predictive-inference/modelcache/localmodel",
             {
               type: 'category',
               label: 'Model Explainability',
