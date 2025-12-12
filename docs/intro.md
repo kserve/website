@@ -35,7 +35,6 @@ Enterprise authentication, network policies, and compliance features built-in. D
 #### Generative Inference Benefits
 ✅ **LLM Multi-framework Support** - Deploy LLMs from Hugging Face, vLLM, and custom generative models  
 ✅ **OpenAI-Compatible APIs** - Chat completion, completion, streaming, and embedding endpoints  
-✅ **LocalModelCache for LLMs** - Cache large models locally to reduce startup time from 15-20 minutes to ~1 minute  
 ✅ **KV Cache Offloading** - Optimized memory management for long conversations and large contexts  
 ✅ **Multi-node Inference** - Distributed LLM serving  
 ✅ **Envoy AI Gateway Integration** - Enterprise-grade API management and routing for AI workloads  
@@ -50,6 +49,7 @@ Enterprise authentication, network policies, and compliance features built-in. D
 ✅ **Real-time Scoring** - Low-latency prediction serving for real-time applications  
 ✅ **Production ML Monitoring** - Comprehensive observability, drift detection, and explainability  
 ✅ **Standard Inference Protocols** - Support for Open Inference Protocol (V1/V2) across frameworks
+✅ **LocalModelCache for LLMs** - Cache large models locally to reduce startup time from 15-20 minutes to ~1 minute  
 
 #### Universal Benefits (Both Inference Types)
 ✅ **Serverless Inference Workloads** - Automatic scaling including scale-to-zero on both CPU and GPU  
