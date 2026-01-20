@@ -261,7 +261,7 @@ After submitting a PR:
 
 - Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guidelines
 - Use [Black](https://black.readthedocs.io/) for code formatting
-- Run `flake8` for linting
+- Run `ruff check` for linting
 - Include docstrings for all functions and classes
 
 ### Testing
