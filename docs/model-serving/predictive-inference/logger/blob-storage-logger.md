@@ -18,6 +18,7 @@ access to the blob storage via service account.
 
 The service account must exist and contain the credentials for the blob storage. First, create a secret with the credentials that the logger agent will use to access the blob storage. The secret must be in the same namespace as the InferenceService.
 
+For S3:
 ```yaml
 apiVersion: v1
 kind: Secret
@@ -32,6 +33,46 @@ data:
   AWS_DEFAULT_REGION: [YOUR_REGION]
   AWS_SECRET_ACCESS_KEY: [YOUR_SECRET_ACCESS_KEY]
 ```
+
+For Azure:
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: agent-logger-secret
+  namespace: default
+type: Opaque
+data:
+  AZURE_SERVICE_URL: [YOUR_SERVICE_URL]
+  AZURE_ACCESS_TOKEN: [YOUR_TOKEN]
+  AZURE_TENANT_ID: [YOUR_TENANT_ID]
+```
+
+For GCS:
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: agent-logger-secret
+  namespace: default
+type: Opaque
+data:
+  gcloud-application-credentials.json: |
+    {
+      "type": "service_account",
+      "project_id": "[YOUR_PROJECT_ID]",
+      "private_key_id": "[YOUR_PRIVATE_KEY_ID]",
+      "private_key": "[YOUR_PRIVATE_KEY]",
+      "client_email": "[YOUR_CLIENT_EMAIL]",
+      "client_id": "110958787537438673409",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "[YOUR_X509_CERT_URL]",
+      "universe_domain": "googleapis.com"
+    }
+```
+
 
 Next, create a service account that provides the secret.
 
@@ -49,14 +90,16 @@ secrets:
 
 Create the inference service and configure the blob storage logger.
 
+When specifying the logger configuration you must specify the bucket url for the data that will be stored. The URL protocol is used to determine the cloud storage:
+- `s3://` - S3-compatible
+- `abfs://` - Azure
+- `gs://` - Google cloud store
+
 When specifying the logger configuration you must specify the logger format for the data that will be stored. Valid values are:
 - `json` - The log messages will be stored as JSON files.
 
 Additional supported formats are planned for future releases, such as `parquet` and `csv`.
 
-:::note
-Currently, the blob storage implementation is limited to S3 storage.
-:::
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
@@ -67,7 +110,7 @@ spec:
 predictor:
   logger:
     mode: all
-    url: s3://[YOUR_BUCKET_NAME]
+    url: [YOUR_BUCKET_URL]
     storage:
       path: /logs
       parameters:
