@@ -286,6 +286,7 @@ const sidebars: SidebarsConfig = {
                 'model-serving/storage/providers/azure',
                 'model-serving/storage/providers/s3/s3',
                 'model-serving/storage/providers/gcs',
+                'model-serving/storage/providers/git',
                 'model-serving/storage/providers/uri',
                 'model-serving/storage/providers/pvc',
                 'model-serving/storage/providers/oci',
