@@ -360,6 +360,7 @@ const sidebars: SidebarsConfig = {
       label: 'API Reference',
       items: [
         'reference/crd-api',
+        'reference/integrations',
         {
           type: 'category',
           label: 'Inference Client SDK',
