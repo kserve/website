@@ -32,10 +32,6 @@ export default function HomepageBenefits() {
                     <p>High-performance serving with GPU support and optimized memory management for large models</p>
                   </div>
                   <div className={styles.benefitCard}>
-                    <h4>💾 Model Caching</h4>
-                    <p>Intelligent model caching to reduce loading times and improve response latency for frequently used models</p>
-                  </div>
-                  <div className={styles.benefitCard}>
                     <h4>🗂️ KV Cache Offloading</h4>
                     <p>Advanced memory management with KV cache offloading to CPU/disk for handling longer sequences efficiently</p>
                   </div>
@@ -70,6 +66,10 @@ export default function HomepageBenefits() {
                   <div className={styles.benefitCard}>
                     <h4>⚡ Auto-scaling</h4>
                     <p>Request-based autoscaling with scale-to-zero for predictive workloads</p>
+                  </div>
+                  <div className={styles.benefitCard}>
+                    <h4>💾 Model Caching</h4>
+                    <p>Intelligent model caching to reduce loading times and improve response latency for frequently used models</p>
                   </div>
                   <div className={styles.benefitCard}>
                     <h4>🔍 Model Explainability</h4>
