@@ -119,13 +119,13 @@ infra/manage.lws-operator.sh
 #### GatewayClass
 
 ```bash
-infra/gateway-api/managed.gateway-api-gwclass.sh
+infra/gateway-api/manage.gateway-api-gwclass.sh
 ```
 
 #### Gateway Instance
 
 ```bash
-infra/gateway-api/managed.gateway-api-gw.sh
+infra/gateway-api/manage.gateway-api-gw.sh
 ```
 
 #### Install KServe Components
