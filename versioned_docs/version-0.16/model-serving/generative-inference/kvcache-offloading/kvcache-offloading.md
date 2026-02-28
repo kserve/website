@@ -22,7 +22,7 @@ Support for LMCache with vLLM backend was added in [KServe PR #4320](https://git
 
 
 ## Prerequisites
-- A Kubernetes cluster with [KServe v0.15.1](../../../getting-started/quickstart-guide.md) or later installed.
+- A Kubernetes cluster with [KServe v0.16.0](../../../getting-started/quickstart-guide.md) or later installed.
 
 
 ## Example: End-to-End LMCache Integration with KServe and Remote Backends
@@ -149,7 +149,7 @@ spec:
     spec:
       containers:
         - name: lmcache-server
-          image: kserve/huggingfaceserver:v0.15.1-gpu
+          image: kserve/huggingfaceserver:v0.16.0-gpu
           command: ["lmcache_experimental_server"]
           args:
             - "0.0.0.0"

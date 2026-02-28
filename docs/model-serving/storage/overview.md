@@ -25,6 +25,7 @@ KServe can serve models from various storage locations, including:
 
 ### Other Storage Options
 - **[URI/HTTP(S)](./providers/uri.md)** - Serve models from HTTP or HTTPS URIs.
+- **[Git](./providers/git.md)** - Serve models from git repositories.
 - **[Persistent Volume Claims (PVC)](./providers/pvc.md)** - Use Kubernetes PVCs to store and serve models.
 - **[Hugging Face](./providers/hf.md)** - Directly serve models from the Hugging Face model hub.
 - **[OCI Images](./providers/oci.md)** - Package and serve models as OCI container images using Modelcars.

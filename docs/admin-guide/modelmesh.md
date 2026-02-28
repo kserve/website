@@ -59,7 +59,7 @@ kubectl apply -f https://raw.githubusercontent.com/kserve/modelmesh-serving/rele
 #### 3. Install KServe Controller
 
 ```bash
-kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.15.0/kserve.yaml
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve.yaml
 ```
 
 ## Configuration

@@ -71,24 +71,24 @@ Cert manager is required to provision webhook certs for production grade install
 
 Install KServe CRDs
 ```bash
-helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.12.0
+helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.16.0
 ```
 
 Install KServe Resources
 ```bash
-helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.12.0
+helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.16.0
 ```
 
 ### Install using YAML
 Install KServe CRDs and Controller, `--server-side` option is required as the InferenceService CRD is large, see [this issue](https://github.com/kserve/kserve/issues/3487) for details.
 
 ```bash
-kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve.yaml
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve.yaml
 ```
 
 Install KServe Built-in ClusterServingRuntimes
 ```bash
-kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.12.0/kserve-cluster-resources.yaml
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve-cluster-resources.yaml
 ```
 
 :::note

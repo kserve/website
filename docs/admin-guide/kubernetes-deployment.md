@@ -160,7 +160,7 @@ The default KServe deployment mode is `Knative` which depends on Knative. The fo
 1. Install KServe CRDs
 
 ```bash
-helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.15.0
+helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.16.0
 ```
 
 2. Install KServe Resources
@@ -168,7 +168,7 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.15.0
 Set the `kserve.controller.deploymentMode` to `Standard` and configure the Gateway API:
 
 ```bash
-helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.15.0 \
+helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.16.0 \
   --set kserve.controller.deploymentMode=Standard \
   --set kserve.controller.gateway.ingressGateway.enableGatewayApi=true \
   --set kserve.controller.gateway.ingressGateway.kserveGateway=kserve/kserve-ingress-gateway
@@ -181,13 +181,13 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.15.0 \
 `--server-side` option is required as the InferenceService CRD is large.
 
 ```bash
-kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.15.0/kserve.yaml
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve.yaml
 ```
 
 2. Install KServe default serving runtimes:
 
 ```bash
-kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.15.0/kserve-cluster-resources.yaml
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve-cluster-resources.yaml
 ```
 
 3. Change default deployment mode and ingress option
@@ -210,7 +210,7 @@ kubectl patch configmap/inferenceservice-config -n kserve --type=strategic -p '{
 1. Install KServe CRDs
 
 ```bash
-helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.15.0
+helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.16.0
 ```
 
 2. Install KServe Resources
@@ -218,7 +218,7 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.15.0
 Set the `kserve.controller.deploymentMode` to `Standard` and configure the Ingress class:
 
 ```bash
-helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.15.0 \
+helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.16.0 \
   --set kserve.controller.deploymentMode=Standard \
   --set kserve.controller.gateway.ingressGateway.className=istio
 ```
@@ -230,13 +230,13 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.15.0 \
 `--server-side` option is required as the InferenceService CRD is large.
 
 ```bash
-kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.15.0/kserve.yaml
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve.yaml
 ```
 
 2. Install KServe default serving runtimes:
 
 ```bash
-kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.15.0/kserve-cluster-resources.yaml
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.16.0/kserve-cluster-resources.yaml
 ```
 
 3. Change default deployment mode and ingress option

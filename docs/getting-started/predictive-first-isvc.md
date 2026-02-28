@@ -150,16 +150,6 @@ INGRESS_GATEWAY_SERVICE=$(kubectl get svc --namespace istio-system --selector="a
 kubectl port-forward --namespace istio-system svc/${INGRESS_GATEWAY_SERVICE} 8080:80
 ```
 
-Open another terminal, and enter the following to perform inference:
-
-```bash
-export INGRESS_HOST=localhost
-export INGRESS_PORT=8080
-
-SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -n kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict" -d @./iris-input.json
-```
-
 </TabItem>
 </Tabs>
 
@@ -226,6 +216,9 @@ curl -v -H "Content-Type: application/json" http://sklearn-iris.kserve-test.35.2
 If you do not have DNS, you can still curl with the ingress gateway external IP using the HOST Header.
 
 ```bash
+export INGRESS_HOST=localhost
+export INGRESS_PORT=8080
+
 SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris -n kserve-test -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v -H "Host: ${SERVICE_HOSTNAME}" -H "Content-Type: application/json" "http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/sklearn-iris:predict" -d @./iris-input.json
 ```

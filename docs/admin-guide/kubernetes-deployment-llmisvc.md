@@ -25,8 +25,8 @@ LLMInferenceService is designed specifically for **Generative AI** workloads (LL
 
 - **Kubernetes**: Version 1.32+
 - **Cert Manager**: Version 1.18.0+
-- **Gateway API**: Version 1.2.1
-- **Gateway API Inference Extension (GIE)**: Version 0.3.0
+- **Gateway API**: Version 1.3.0+
+- **Gateway API Inference Extension (GIE)**: Version 1.2.0
 - **Gateway Provider**: Envoy Gateway v1.5.0+ 
 - **LeaderWorkerSet**: Version 0.6.2+ (for multi-node deployments)
 
@@ -119,13 +119,13 @@ infra/manage.lws-operator.sh
 #### GatewayClass
 
 ```bash
-infra/gateway-api/managed.gateway-api-gwclass.sh
+infra/gateway-api/manage.gateway-api-gwclass.sh
 ```
 
 #### Gateway Instance
 
 ```bash
-infra/gateway-api/managed.gateway-api-gw.sh
+infra/gateway-api/manage.gateway-api-gw.sh
 ```
 
 #### Install KServe Components
