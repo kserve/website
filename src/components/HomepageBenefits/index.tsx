@@ -24,8 +24,12 @@ export default function HomepageBenefits() {
                 </Heading>
                 <div className={styles.benefitsGrid}>
                   <div className={styles.benefitCard}>
-                    <h4>🧠 LLM-Optimized</h4>
-                    <p>OpenAI-compatible inference protocol for seamless integration with large language models</p>
+                    <h4>🧮 Optimized Backends</h4>
+                    <p>Support for vLLM and llm-d for optimized performance for serving LLMs</p>
+                  </div>
+                  <div className={styles.benefitCard}>
+                    <h4>📌 Standardization</h4>
+                    <p>OpenAI-compatible inference protocol for seamless integration with LLMs</p>
                   </div>
                   <div className={styles.benefitCard}>
                     <h4>🚅 GPU Acceleration</h4>
