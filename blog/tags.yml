@@ -8,7 +8,7 @@ announcements:
   permalink: /announcements
   description: Project Announcements
 
-presentations:
-  label: Presentations
-  permalink: /presentations
-  description: Project Presentations
+community:
+  label: Community
+  permalink: /community
+  description: Blog Contributed by Community Members
