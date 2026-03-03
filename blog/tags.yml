@@ -9,6 +9,6 @@ announcements:
   description: Project Announcements
 
 presentations:
-  label: Presentations
-  permalink: /presentations
-  description: Project Presentations
+  label: Community
+  permalink: /community
+  description: Blog Contributed by Community Members
