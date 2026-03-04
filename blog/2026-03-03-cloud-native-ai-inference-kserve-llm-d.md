@@ -3,7 +3,7 @@ title: "Best of Both Worlds: Cloud-Native AI Inference at Scale using KServe and
 description: Learn how KServe and llm-d combine to deliver production-ready, Kubernetes-native inference platform with distributed intelligence for generative AI workloads.
 slug: cloud-native-ai-inference-kserve-llm-d
 authors: [terrytangyuan, RanPollak]
-tags: [inference, llm, generative-ai,community]
+tags: [community]
 hide_table_of_contents: false
 ---
 
