@@ -290,3 +290,4 @@ Now that you have successfully deployed your first Predictive InferenceService, 
 - 📖 **[Supported Frameworks](../model-serving/predictive-inference/frameworks/overview.md)** - Explore Supported Frameworks.
 - 📖 **[Batch InferenceService](../model-serving/predictive-inference/batcher/batcher.md)** - Deploy your first Batch InferenceService.
 - 📖 **[Canary Deployments](../model-serving/predictive-inference/rollout-strategies/canary-example.md)**: Gradually roll out new model versions to test their performance before full deployment.
+- 📖 **[Model Caching](../model-serving/predictive-inference/modelcache/localmodel.md)** - Learn how to cache models for faster startup time.

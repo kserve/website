@@ -46,7 +46,7 @@ Manage model storage and access patterns:
 
 ### LocalModel & LocalModelNode
 Enables local model caching and management:
-- **[Concepts](../../model-serving/generative-inference/modelcache/localmodel.md)**: Overview of local model caching in KServe.
+- **[Concepts](../../model-serving/predictive-inference/modelcache/localmodel.md)**: Overview of local model caching in KServe.
 - **[LocalModelCache](../../reference/crd-api.mdx)**: CRD that Defines local model caching requirements and policies
 - **[LocalModelNode](../../reference/crd-api.mdx)**: CRD that handles Node-level model caching management
 - **[LocalModelNodeGroup](../../reference/crd-api.mdx)**: CRD for Grouping of local model nodes for management and orchestration of cached models

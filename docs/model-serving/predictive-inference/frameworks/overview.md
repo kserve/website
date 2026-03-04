@@ -130,3 +130,4 @@ spec:
 - Learn about [custom model serving](https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1/custom) 
 - Check out the [sample implementations](https://github.com/kserve/kserve/tree/master/docs/samples/v1beta1) for hands-on tutorials
 - Read the [KServe developer guide](https://github.com/kserve/kserve/blob/master/docs/DEVELOPER_GUIDE.md)
+- Optimizing performance with features like [model caching](../modelcache/localmodel.md)
