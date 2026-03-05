@@ -9,10 +9,6 @@ hide_table_of_contents: false
 
 # Best of Both Worlds: Cloud-Native AI Inference at Scale using KServe and llm-d
 
-**Authors:**
-- Yuan Tang, Senior Principal Software Engineer at Red Hat
-- Ran Pollak, Engineering Manager at Red Hat
-
 Enterprises today seek to integrate generative AI (GenAI) capabilities into their applications. However, scaling large AI models introduces complexity: managing high-volume traffic from large language models (LLMs), optimizing inference performance, maintaining predictable latency, and controlling infrastructure costs.
 
 Platform engineering leaders require more than just model deployment capabilities. They need a robust, Kubernetes-native infrastructure that supports:
@@ -35,7 +31,7 @@ KServe is a Kubernetes-based model serving platform that simplifies deploying an
 
 For platform engineers, KServe acts as the model serving control plane: the layer responsible for lifecycle, scaling, and operational governance.
 
-For more details, see the [KServe Architecture documentation](https://kserve.github.io/website/docs/concepts/architecture/data-plane).
+![KServe Generative Inference Architecture](https://kserve.github.io/website/assets/images/kserve_generative_inference-21648e7df404ea6f57b9d3c83e8e0ca4.png)
 
 ### Inference as a Service
 
