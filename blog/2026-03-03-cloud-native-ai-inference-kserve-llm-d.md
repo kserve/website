@@ -35,7 +35,7 @@ KServe is a Kubernetes-based model serving platform that simplifies deploying an
 
 For platform engineers, KServe acts as the model serving control plane: the layer responsible for lifecycle, scaling, and operational governance.
 
-![KServe Architecture](https://kserve.github.io/website/docs/concepts/architecture/data-plane)
+For more details, see the [KServe Architecture documentation](https://kserve.github.io/website/docs/concepts/architecture/data-plane).
 
 ### Inference as a Service
 
@@ -162,12 +162,12 @@ Together, KServe and llm-d enable a production-ready, Kubernetes-native inferenc
 
 ## Cost Efficiency Comparison: Naive vs Optimized
 
-Serving LLMs at scale is no longer just a model problem. It is a distributed systems problem where naive load balancing leads to significant inefficiencies and wasted resources — lost cache locality, GPU imbalance, duplicate compute, high tail latency, and overprovisioned GPUs.
+Serving LLMs at scale is no longer just a model problem. It is a distributed systems problem where naive load balancing leads to significant inefficiencies and wasted resources — lost cache locality, GPU imbalance, redundant prefill processing, high tail latency, and overprovisioned GPUs.
 
 **Naive Problems:**
 - Cache locality loss
 - GPU imbalance
-- Duplicate compute
+- Redundant prefill processing
 - High tail latency
 - Overprovisioned GPUs
 
