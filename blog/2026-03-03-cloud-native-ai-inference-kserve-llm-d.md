@@ -171,6 +171,8 @@ Serving LLMs at scale is no longer just a model problem. It is a distributed sys
 
 The combined KServe and llm-d solution introduces distributed intelligence to solve the problems of naive architectures, delivering superior performance, scalability, and cost control. This optimized architecture is pluggable and extensible to work well with many AI and cloud-native technologies.
 
+![KServe Layered Architecture](https://kserve.github.io/website/img/kserve-layer.png)
+
 **Benefits:**
 - Cache reuse preserved
 - Balanced GPU utilization
