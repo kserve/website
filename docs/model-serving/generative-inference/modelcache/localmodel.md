@@ -115,6 +115,21 @@ Create the `LocalModelNodeGroup` using a local persistent volume with the specif
 - Specify `nodeAffinity` to select which nodes to use for model caching
 - Specify the local path on PV for model caching
 
+:::warning[Critical: `local.path` must match the agent DaemonSet `hostPath`]
+The `local.path` in the `persistentVolumeSpec` below specifies the **host directory** where models are stored.
+This path **must match** the `hostPath` configured in the `kserve-localmodelnode-agent` DaemonSet.
+
+- **Helm installs**: The default DaemonSet `hostPath` is `/mnt/models` (configured via the `kserve.localmodel.agent.hostPath` Helm value).
+- **Kustomize installs**: The default DaemonSet `hostPath` is `/models` (hard-coded in `config/localmodelnodes/manager.yaml`).
+
+If these paths do not match, the agent will not detect downloaded models and will repeatedly create duplicate download jobs.
+You can check the current DaemonSet `hostPath` with:
+
+```bash
+kubectl get daemonset kserve-localmodelnode-agent -n kserve -o jsonpath='{.spec.template.spec.volumes[?(@.name=="models")].hostPath.path}'
+```
+:::
+
 ```yaml title="local-model-node-group.yaml"
 apiVersion: serving.kserve.io/v1alpha1
 kind: LocalModelNodeGroup
@@ -130,7 +145,6 @@ spec:
         storage: 1700G
     storageClassName: local-storage
     volumeMode: Filesystem
-    volumeName: models
   persistentVolumeSpec:
     accessModes:
       - ReadWriteOnce
@@ -138,7 +152,7 @@ spec:
     capacity:
       storage: 1700G
     local:
-      path: /models
+      path: /mnt/models  # Must match the agent DaemonSet hostPath (default: /mnt/models for Helm installs)
     storageClassName: local-storage
     nodeAffinity:
       required:
@@ -150,18 +164,46 @@ spec:
                   - NVIDIA-A100-SXM4-80GB
 ```
 
-After the `LocalModelNodeGroup` is created, KServe creates an agent DaemonSet on each node (nodes matching the `nodeAffinity` specified in LocalModelNodeGroup) in the `kserve` namespace to monitor the local model cache lifecycle.
+:::tip[Using a custom path (e.g., a fast NVMe disk)]
+If your fast storage is mounted at a different host path (e.g., `/mnt/nvme/models`), you must update **both**:
+
+1. The `local.path` in your `LocalModelNodeGroup` (shown above)
+2. The DaemonSet `hostPath` -- for Helm installs, set `kserve.localmodel.agent.hostPath` in your Helm values; for Kustomize installs, edit `config/localmodelnodes/manager.yaml`
+
+Additionally, because Kubernetes `hostPath` volumes do **not** honor `fsGroup`, you must ensure the host directory is owned by UID/GID 1000 (the user the agent and storage-initializer run as):
 
 ```bash
-kubectl get daemonset -n kserve workers-agent
+# On each worker node where models will be cached:
+sudo chown -R 1000:1000 /mnt/nvme/models
+```
+
+Without this, the download jobs and storage-initializer will fail with permission errors.
+:::
+
+After the `LocalModelNodeGroup` is created, KServe creates an agent DaemonSet on each node (nodes matching the `nodeAffinity` specified in LocalModelNodeGroup) in the `kserve` namespace to monitor the local model cache lifecycle.
+
+:::info[DaemonSet scheduling]
+The agent DaemonSet determines **which nodes** it runs on based on its `nodeSelector` and/or `affinity` settings, which are separate from the `nodeAffinity` in the `LocalModelNodeGroup` PV spec:
+
+- **Helm installs**: By default, `nodeSelector` is empty (`{}`), so the DaemonSet will schedule on **all nodes**. To restrict it, set `kserve.localmodel.agent.nodeSelector` or `kserve.localmodel.agent.affinity` in your Helm values.
+- **Kustomize installs**: The DaemonSet has a hard-coded `nodeSelector: kserve/localmodel: worker`. You must label your target nodes explicitly:
+  ```bash
+  kubectl label node <node-name> kserve/localmodel=worker
+  ```
+
+The `nodeAffinity` in the `LocalModelNodeGroup` PV spec controls which nodes the **controller** creates `LocalModelNode` resources for, but the agent DaemonSet must also be running on those nodes to process them.
+:::
+
+```bash
+kubectl get daemonset -n kserve kserve-localmodelnode-agent
 ```
 
 
 :::tip[Expected Output]
 
 ```bash
-NAME            DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR        AGE
-workers-agent   1         1         1       1            1           <none>               5d17h
+NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR        AGE
+kserve-localmodelnode-agent    1         1         1       1            1           <none>               5d17h
 ```
 :::
 
@@ -304,6 +346,12 @@ If you encounter issues with the model cache or download jobs, check the followi
 kubectl logs job/<job-name> -n kserve-localmodel-jobs
 ```
 - Ensure PVCs are bound correctly and have sufficient storage capacity.
+- **Duplicate download jobs**: If the download job completes but a new one keeps getting created, the `local.path` in your `LocalModelNodeGroup` likely does not match the DaemonSet's `hostPath`. The agent checks for models at its own `hostPath` mount and will keep scheduling new jobs if it cannot find the downloaded files. See the [warning above](#create-the-localmodelnodegroup) for how to verify and align these paths.
+- **Permission denied errors**: If download jobs or the storage-initializer fail with permission errors (e.g., `mkdir: permission denied` or `group is not 1000`), your host directory likely has incorrect ownership. Kubernetes `hostPath` volumes do not respect `fsGroup` settings. Ensure the target directory on the host is owned by UID/GID 1000:
+  ```bash
+  sudo chown -R 1000:1000 /mnt/models
+  ```
+- **DaemonSet not running on expected nodes**: For Kustomize installs, the DaemonSet requires nodes to be labeled with `kserve/localmodel=worker`. For Helm installs, the DaemonSet runs on all nodes by default unless `kserve.localmodel.agent.nodeSelector` is configured.
 
 ## Summary
 
