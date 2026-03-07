@@ -166,7 +166,7 @@ Fine-tuning the behavior of Modelcars in KServe is possible through global confi
 To view the current configuration, use the following command:
 
 ```bash
-kubectl get cm -n kserve inferenceservice-config --jsonpath "{.data.storageInitializer}"
+kubectl get cm -n kserve inferenceservice-config -o jsonpath="{.data.storageInitializer}"
 ```
 
 :::tip[Sample Output]
