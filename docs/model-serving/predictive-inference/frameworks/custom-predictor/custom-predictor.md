@@ -194,6 +194,7 @@ python logging module). This file allows to override the default Uvicorn configu
 - `--access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
 - `enable_latency_logging`: whether to log latency metrics per request, the default is True.
 - `--enable_docs_url`: Enable docs url '/docs' to display Swagger UI.
+- `--event_loop`: Event loop implementation used by the HTTP server. default is 'auto' (use uvloop if available). Valid values are 'auto','asyncio', 'uvloop'.
 
 #### Environment Variables
 
