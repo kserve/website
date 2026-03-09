@@ -3,12 +3,15 @@ import TabItem from '@theme/TabItem';
 
 # Quickstart Guide
 
-Welcome to the KServe Quickstart Guide! This guide will help you set up a KServe Quickstart environment for testing and experimentation. KServe provides two deployment paths based on your use case:
+Welcome to the KServe Quickstart Guide! This guide will help you set up a KServe Quickstart environment for testing and experimentation.
 
-- **Generative AI (LLMInferenceService)**: For Large Language Models and generative AI workloads
-- **Predictive AI (InferenceService)**: For traditional ML models and predictive inference workloads
+By the end of this guide, you will have a fully functional KServe environment ready for experimentation.
 
-This guide will walk you through the prerequisites, installation steps, and how to verify your KServe environment is up and running. By the end of this guide, you will have a fully functional KServe environment ready for experimentation.
+:::warning
+
+KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin-guide/overview).
+
+:::
 
 ## Prerequisites
 
@@ -19,7 +22,7 @@ Before you can get started with a KServe Quickstart deployment, you will need to
 Make sure you have the following tools installed:
 - [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl) - The Kubernetes command-line tool
 - [helm](https://helm.sh/docs/intro/install/) - for installing KServe and other Kubernetes operators
-- [curl](https://curl.se/docs/install.html) - for the quickstart script and for testing API endpoints (installed by default on most systems)
+- [git](https://git-scm.com/downloads) - for cloning the KServe repository
 
 :::tip[Verify Installations]
 Run the following commands to verify that you have the required tools installed:
@@ -34,9 +37,9 @@ To verify `helm` installation, run:
 helm version
 ```
 
-To verify `curl` installation, run:
+To verify `git` installation, run:
 ```bash
-curl --version
+git --version
 ```
 :::
 
@@ -108,238 +111,250 @@ The server version in the output should show version 1.32 or higher:
 
 Once you have the prerequisites installed and a Kubernetes cluster running, you can proceed with the KServe Quickstart installation.
 
-:::warning
-
-KServe Quickstart Environments are for experimentation use only. For production installation, see our [Administrator's Guide](../admin-guide/overview.md).
-
-:::
-
-### Quick Install (Recommended)
-
-The fastest way to get started with KServe is using the quick install script.
-
-<Tabs groupId="ai-workload-type">
-<TabItem value="genai" label="Generative AI (LLMInferenceService)" default>
-
-Choose your installation option based on your needs:
-- **KServe (Standard) + LLMInferenceService**: Install both KServe (Standard) and LLMInferenceService for complete functionality
-- **LLMInferenceService Only**: Install only LLMInferenceService components without KServe (Standard)
-- **Dependencies Only**: Install infrastructure dependencies first, then customize your installation
-
-<Tabs groupId="llmisvc-install">
-<TabItem value="full-kserve" label="KServe (Standard) + LLMInferenceService" default>
-
-Install all dependencies, KServe (Standard), and LLMInferenceService:
+First, clone the KServe repository:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/master/hack/setup/quick-install/kserve-standard-mode-full-install-with-manifests.sh" | bash
+git clone https://github.com/kserve/kserve.git
+cd kserve
 ```
 
-**What gets installed**:
+Then choose your installation scenario:
 
-*Infrastructure Components for Kserve Standard:*
-1. ✅ KEDA (for Standard KServe autoscaling)
-2. ✅ KEDA OpenTelemetry Addon (for Standard KServe autoscaling)
+<Tabs groupId="installation-type">
+<TabItem value="kserve-only" label="KServe Only" default>
 
-*Infrastructure Components for LLMInferenceService:*
-1. ✅ External Load Balancer (MetalLB for local clusters)
-2. ✅ Cert Manager
-3. ✅ Gateway API CRDs
-4. ✅ Gateway API Inference Extension CRDs
-5. ✅ Envoy Gateway
-6. ✅ Envoy AI Gateway
-7. ✅ LeaderWorkerSet (multi-node deployments)
-8. ✅ GatewayClass
-9. ✅ Gateway
+Install KServe controller only without additional components.
 
-*KServe Components:*
-1. ✅ KServe CRDs and Controller (Standard)
-2. ✅ LLMInferenceService CRDs and Controller
+<details>
+<summary>Using Quick Install Script</summary>
 
-:::info[Component Versions]
-Component versions are managed via [a central place](https://github.com/kserve/kserve/blob/master/kserve-deps.env). Check this file for the latest versions used by the installation script.
-:::
+```
+# Standard mode
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-standard-mode-full-install-with-manifests.sh" | bash
 
-**Installation time**: ~5-10 minutes
+# Knative mode (serverless)
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-knative-mode-full-install-with-manifests.sh" | bash
+```
+</details>
+
+<details>
+<summary>Using kserve-install.sh</summary>
+
+**Helm Mode**:
+
+```bash
+# Standard mode
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type kserve --standard
+
+# Knative mode (serverless)
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type kserve --knative
+```
+
+**Kustomize Mode**:
+
+```bash
+# Standard mode
+./hack/kserve-install.sh --kustomize --standard
+
+# Knative mode (serverless)
+./hack/kserve-install.sh --kustomize --knative
+```
+
+</details>
 
 </TabItem>
 
-<TabItem value="llmisvc-only" label="LLMInferenceService Only">
+<TabItem value="kserve-localmodel" label="KServe + LocalModel">
 
-Install all dependencies and LLMInferenceService (without KServe Standard):
+Install KServe controller with LocalModel support for local model caching.
+
+<details>
+<summary>Using kserve-install.sh</summary>
+
+**Helm Mode**:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/master/hack/setup/quick-install/llmisvc-full-install-with-manifests.sh" | bash
+# Standard mode
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type kserve,localmodel --standard
+
+# Knative mode (serverless)
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type kserve,localmodel --knative
 ```
 
-**What gets installed**:
+**Kustomize Mode**:
 
-*Infrastructure Components:*
-1. ✅ Cert Manager
-2. ✅ External Load Balancer (MetalLB for local clusters)
+```bash
+# Standard mode
+./hack/kserve-install.sh --kustomize --standard --type kserve,localmodel
 
-*LLMInferenceService Components:*
-3. ✅ Gateway API CRDs
-4. ✅ Gateway API Inference Extension
-5. ✅ Envoy Gateway
-6. ✅ Envoy AI Gateway
-7. ✅ LeaderWorkerSet (multi-node deployments)
-8. ✅ GatewayClass
-9. ✅ Gateway
-10. ✅ LLMInferenceService CRDs and Controller
+# Knative mode (serverless)
+./hack/kserve-install.sh --kustomize --knative --type kserve,localmodel
+```
 
-:::success
-This installs only LLMInferenceService components. KServe (Standard) is not included.
-:::
+</details>
 
-**Installation time**: ~5-10 minutes
+</TabItem>
+
+<TabItem value="llmisvc-only" label="LLMIsvc Only">
+
+Install LLMInferenceService controller only for Generative AI model serving.
+
+<details>
+<summary>Using Quick Install Script</summary>
+
+```
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/llmisvc-full-install-with-manifests.sh" | bash
+```
+</details>
+
+<details>
+<summary>Using kserve-install.sh</summary>
+
+**Helm Mode**:
+
+```bash
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type llmisvc
+```
+
+**Kustomize Mode**:
+
+```bash
+# LLMIsvc
+./hack/kserve-install.sh --kustomize --type llmisvc
+```
+
+</details>
+
+</TabItem>
+
+<TabItem value="all-components" label="KServe + LLMIsvc + LocalModel">
+
+Install all KServe components together.
+
+<details>
+<summary>Using Quick Install Script</summary>
+
+**Step 1: Install KServe Dependencies (Choose ONE)**
+
+Choose either Standard mode or Knative mode:
+
+```bash
+# Option A: Standard Mode Dependencies
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-standard-mode-dependency-install.sh" | bash
+
+# OR
+
+# Option B: Knative Mode Dependencies
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-knative-mode-dependency-install.sh" | bash
+```
+
+**Step 2: Install All Components**
+
+After installing dependencies above, run these commands:
+
+```bash
+# Install LLMInferenceService Dependencies
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/llmisvc-dependency-install.sh" | bash
+
+# Install CRDs
+kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-crds.yaml
+
+# Install Controllers
+kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve.yaml
+
+# Install ClusterServingRuntimes/LLMIsvcConfigs
+kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-cluster-resources.yaml
+```
+
+</details>
+
+<details>
+<summary>Using kserve-install.sh</summary>
+
+**Helm Mode**:
+
+```bash
+# All components (Standard mode)
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type kserve,llmisvc,localmodel --standard
+
+# All components (Knative mode)
+./hack/kserve-install.sh --kserve-version v0.17.0-rc1 --type kserve,llmisvc,localmodel --knative
+```
+
+**Kustomize Mode**:
+
+```bash
+# All components (Standard mode)
+./hack/kserve-install.sh --kustomize --standard --type kserve,llmisvc,localmodel
+```
+```bash
+# All components (Knative mode)
+./hack/kserve-install.sh --kustomize --knative --type kserve,llmisvc,localmodel
+```
+</details>
 
 </TabItem>
 
 <TabItem value="dependencies" label="Dependencies Only">
 
-Install only infrastructure dependencies for LLMIsvc without any KServe components:
+Install only infrastructure dependencies without KServe components.
+
+<details>
+<summary>Using Quick Install Script</summary>
+
+**Standard Mode Dependencies**:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/master/hack/setup/quick-install/llmisvc-dependency-install.sh" | bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-standard-mode-dependency-install.sh" | bash
 ```
 
-This is useful when you want to:
-- Install LLMInferenceService controller manually later
-- Use a specific version of LLMInferenceService
-- Customize LLMInferenceService installation with specific Helm values
-
-After installing dependencies, you can install LLMInferenceService controller separately:
+**Knative Mode Dependencies**:
 
 ```bash
-# Install LLMInferenceService CRDs
-helm install kserve-llmisvc-crd oci://ghcr.io/kserve/charts/kserve-llmisvc-crd \
-  --version <version> \
-  --namespace kserve \
-  --create-namespace
-
-# Install LLMInferenceService Controller
-helm install kserve-llmisvc oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
-  --version <version> \
-  --namespace kserve
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/kserve-knative-mode-dependency-install.sh" | bash
 ```
 
-:::tip[Check Latest Version]
-Replace `<version>` with the desired version. Check available versions at [KServe Releases](https://github.com/kserve/kserve/releases) or in [kserve-deps.env](https://github.com/kserve/kserve/blob/master/kserve-deps.env).
-:::
+**LLMIsvc Dependencies**:
+
+```bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0-rc1/install/v0.17.0-rc1/llmisvc-dependency-install.sh" | bash
+```
+
+
+</details>
+
+<details>
+<summary>Using kserve-install.sh</summary>
+
+**Standard Dependencies**
+```bash
+./hack/kserve-install.sh --deps-only --standard
+```
+
+**Knative Dependencies**
+```bash
+./hack/kserve-install.sh --deps-only --knative
+```
+
+**LLMIsvc Dependencies**:
+```bash
+./hack/kserve-install.sh --deps-only --type llmisvc
+```
+</details>
 
 </TabItem>
 </Tabs>
 
-:::note[Local Development]
-The quick install script automatically configures **MetalLB** if detected (for kind, minikube), providing LoadBalancer support for local testing.
+:::info[More Installation Options]
+For detailed installation instructions, customization options, and troubleshooting:
+- [KServe Installation Guide](../install/kserve-install)
+- [LLMInferenceService Installation Guide](../install/llmisvc-install)
+- [LocalModel Installation Guide](../install/localmodel-install)
 :::
-
-</TabItem>
-<TabItem value="predictive" label="Predictive AI (InferenceService)">
-
-<Tabs groupId="deployment-type">
-<TabItem value="standard" label="Standard Deployment" default>
-
-```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/master/hack/quick_install.sh" | bash -s -- -r
-```
-
-</TabItem>
-
-<TabItem value="knative" label="Knative">
-
-```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/master/hack/quick_install.sh" | bash
-```
-
-</TabItem>
-</Tabs>
-
-</TabItem>
-</Tabs>
-
----
-
-### Verify Installation
-
-After installation, verify all components are working:
-
-<Tabs groupId="ai-workload-type">
-<TabItem value="genai" label="Generative AI (LLMInferenceService)" default>
-
-```bash
-# Check all pods are running
-kubectl get pods -n cert-manager
-kubectl get pods -n envoy-gateway-system
-kubectl get pods -n envoy-ai-gateway-system
-kubectl get pods -n lws-system
-kubectl get pods -n kserve
-
-# Check LLMInferenceService CRD
-kubectl get crd llminferenceservices.serving.kserve.io
-
-# Check Gateway status
-kubectl get gateway kserve-ingress-gateway -n kserve
-
-# Check Gateway has external IP (may take a few minutes)
-kubectl get gateway kserve-ingress-gateway -n kserve -o jsonpath='{.status.addresses[0].value}'
-```
-
-**Expected output**:
-- ✅ All pods in `Running` state
-- ✅ Gateway shows `READY: True`
-- ✅ Gateway has `EXTERNAL-IP` or `ADDRESS` assigned
-
-:::tip[Verify Installation]
-You should see the LLMInferenceService controller up and running:
-```plaintext
-NAME                                         READY   STATUS    RESTARTS   AGE
-llmisvc-controller-manager-7f5b6c4d8f-abcde   1/1     Running   0          2m
-```
-
-Gateway should have an address:
-```plaintext
-NAME                                              CLASS   ADDRESS         PROGRAMMED   AGE
-gateway.gateway.networking.k8s.io/kserve-ingress-gateway  envoy   <external-ip>   True         2m
-```
-:::
-
-</TabItem>
-<TabItem value="predictive" label="Predictive AI (InferenceService)">
-
-```bash
-kubectl get pods -n kserve
-```
-
-:::tip[Verify Installation]
-You should see the KServe controller up and running:
-```plaintext
-NAME                                                   READY   STATUS    RESTARTS   AGE
-kserve-controller-manager-7f5b6c4d8f-abcde              1/1     Running   0          2m
-kserve-localmodel-controller-manager-5b8b6574c7-jz42m   1/1     Running   0          2m
-```
-:::
-
-</TabItem>
-</Tabs>
 
 ## Next Steps
 
-Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models. Here are some recommended next steps:
+Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models:
 
-<Tabs groupId="ai-workload-type">
-<TabItem value="genai" label="Generative AI (LLMInferenceService)" default>
-
-- 📖 **[First LLMInferenceService](genai-first-llmisvc.md)** - Deploy your first LLM using LLMInferenceService
-- 📖 **[LLMInferenceService Overview](../model-serving/generative-inference/llmisvc/llmisvc-overview.md)** - Learn about LLMInferenceService architecture and features
-- 📖 **[LLMInferenceService Configuration](../model-serving/generative-inference/llmisvc/llmisvc-configuration.md)** - Explore configuration options for your LLM deployments
-
-</TabItem>
-<TabItem value="predictive" label="Predictive AI (InferenceService)">
-
-- 📖 **[First GenAI InferenceService](genai-first-isvc.md)** - Deploy your first GenAI model using InferenceService.
-- 📖 **[First Predictive InferenceService](predictive-first-isvc.md)** - Deploy your first predictive model using InferenceService.
-
-</TabItem>
-</Tabs>
+- 📖 **[First GenAI InferenceService](genai-first-isvc)** - Deploy your first GenAI model using InferenceService
+- 📖 **[First Predictive InferenceService](predictive-first-isvc)** - Deploy your first predictive model using InferenceService
