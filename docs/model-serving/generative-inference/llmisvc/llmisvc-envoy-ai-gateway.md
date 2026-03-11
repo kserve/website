@@ -1,4 +1,6 @@
 ---
+sidebar_label: "Inference Gateway Extension"
+sidebar_position: 5
 title: LLMInferenceService with Inference Gateway Extension (IGW)
 description: How to integrate KServe LLMInferenceService with Envoy AI Gateway to manage LLM traffic and usage-based rate limits
 ---
