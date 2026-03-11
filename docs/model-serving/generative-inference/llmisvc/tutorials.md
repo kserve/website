@@ -6,7 +6,21 @@ title: "LLMInferenceService Tutorials"
 
 # LLMInferenceService Tutorials
 
-There are a set of tutorial guides to deploying the KServe LLM Inference Service in a variety of configurations with a variety of models in the KServe repo.
+These are a set of tutorial guides for deploying the KServe LLM Inference Service in a variety of configurations with a variety of models. 
+
+All of the tutorials are present in the [KServe repo](https://github.com/kserve/kserve) under `samples/docs`.
+
+## End-to-end guide: Run GPT-OSS-20B with KServe and llm-d
+
+[E2E GPT OSS](https://github.com/kserve/kserve/tree/master/docs/samples/llmisvc/e2e-gpt-oss)
+
+This guide walks through deploying **RedHatAI/gpt-oss-20b** on Kubernetes using [KServe](https://kserve.github.io/website/). Steps are ordered from cluster setup through inference, AI gateway routing, optional prefix caching, and monitoring.
+
+There are 3 alternate deployments detailed here:
+
+1. default - a deployment of intelligent inference scheduling with vLLM and the llm-d scheduler
+1. precise prefix cache aware routing - an advanced configuration that takes advantage of vLLM KV-Events
+1. prefill-decode disaggregation - an advanced configuration that seperate vLLM pods for the prefill and the decode stages of inference.
 
 ## Single-Node GPU Deployment Examples
 
@@ -25,15 +39,3 @@ This contains example configurations for deploying the DeepSeek-R1-0528 model us
 [Precise Prefix KV Cache Routing](https://github.com/kserve/kserve/tree/master/docs/samples/llmisvc/precise-prefix-kv-cache-routing)
 
 This contains an example configuration demonstrating advanced KV cache routing with precise prefix matching to optimize inference performance by routing requests to instances with matching cached content.
-
-## End-to-end guide: Run GPT-OSS-20B with KServe and llm-d
-
-[E2E GPT OSS](https://github.com/kserve/kserve/tree/master/docs/samples/llmisvc/e2e-gpt-oss)
-
-This guide walks through deploying **RedHatAI/gpt-oss-20b** on Kubernetes using [KServe](https://kserve.github.io/website/). Steps are ordered from cluster setup through inference, AI gateway routing, optional prefix caching, and monitoring.
-
-There are 3 alternate deployments detailed here:
-
-1. default - a deployment of intelligent inference scheduling with vLLM and the llm-d scheduler
-1. precise prefix cache aware routing - an advanced configuration that takes advantage of vLLM KV-Events
-1. prefill-decode disaggregation - an advanced configuration that seperate vLLM pods for the prefill and the decode stages of inference.
