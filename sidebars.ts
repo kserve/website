@@ -158,6 +158,7 @@ const sidebars: SidebarsConfig = {
                 },
                 "model-serving/generative-inference/llmisvc/autoscaling/llmisvc-autoscaling",
                 "model-serving/generative-inference/llmisvc/autoscaling/llmisvc-autoscaling-examples",
+                "model-serving/generative-inference/llmisvc/tutorials",
               ],
             },
             {
