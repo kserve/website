@@ -42,16 +42,18 @@ recommend adding them to your `.bashrc`):
    `export GOPATH=...`
 2. `$GOPATH/bin` on `PATH`: This is so that tooling installed via `go get` will
    work properly.
-3. `KO_DEFAULTPLATFORMS`: If you are using M1 Mac book the value is `linux/arm64`.
-4. `KO_DOCKER_REPO`: The docker repository to which developer images should be
+3. `kserve/bin` on `PATH`: Add the bin directory in your KServe repository clone for development tools.
+4. `KO_DEFAULTPLATFORMS`: If you are using M1 Mac book the value is `linux/arm64`.
+5. `KO_DOCKER_REPO`: The docker repository to which developer images should be
    pushed (e.g. `docker.io/<username>`).
-   
+
    **Note**: Set up a docker repository for pushing images. You can use any container image registry by adjusting
    the authentication methods and repository paths mentioned in the sections below.
     * [Google Container Registry quickstart](https://cloud.google.com/container-registry/docs/pushing-and-pulling)
     * [Docker Hub quickstart](https://docs.docker.com/docker-hub/)
     * [Azure Container Registry quickstart](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal)
-      
+
+
 :::note
 If you are using Docker Hub to store your images, your `KO_DOCKER_REPO` variable should be `docker.io/<username>`.
 Currently, Docker Hub doesn't let you create subdirs under your username.
@@ -61,8 +63,24 @@ Currently, Docker Hub doesn't let you create subdirs under your username.
 
 ```shell
 export GOPATH="$HOME/go"
-export PATH="${PATH}:${GOPATH}/bin"
-export KO_DOCKER_REPO='docker.io/<username>'
+export PATH="${GOPATH}/bin:${PATH}"
+export KO_DOCKER_REPO=docker.io/<username>
+
+# Add KServe bin directory (adjust path to where you cloned kserve)
+export PATH="<path-to-cloned-kserve>/bin:${PATH}"
+```
+
+For example, if you cloned KServe to `~/projects/kserve`:
+
+```shell
+export PATH="${HOME}/projects/kserve/bin:${PATH}"
+```
+
+Alternatively, if you're working from within the KServe repository directory, you can temporarily add the bin directory:
+
+```shell
+# Run this in the kserve repository directory
+export PATH="$(pwd)/bin:${PATH}"
 ```
 
 ### Checkout Your Fork
@@ -105,6 +123,12 @@ For local development, we recommend using either:
 
 #### Using kind for Development
 
+**Using script**
+```bash
+hack/setup/dev/manage.kind-with-registry.sh
+```
+
+**Manual**
 1. **Create a cluster with required features**:
    ```bash
    cat <<EOF | kind create cluster --config=-
@@ -123,7 +147,7 @@ For local development, we recommend using either:
 2. **Configure ko for local development**:
    ```bash
    # For local development with kind
-   export KO_DOCKER_REPO=kind.local
+   export KO_DOCKER_REPO=localhost:5001
    ```
 
 #### Using minikube for Development
@@ -149,11 +173,11 @@ For local development, we recommend using either:
 KServe offers two deployment modes:
 
 - **Knative deployment** requires `Knative Serving` for request-based auto-scaling, scale-to-zero, and canary rollouts
-- **Raw deployment** doesn't require Knative, suitable for generative inference workloads with stable resource allocation
+- **Stardard deployment** doesn't require Knative, suitable for generative inference workloads with stable resource allocation
 
 For networking:
 - **Knative mode**: Requires Knative Serving; while Istio is recommended as the networking layer for Knative, you can use any ingress/networking solution supported by Knative (like Kourier or Contour)
-- **Raw deployment**: Uses Gateway API or standard Kubernetes Ingress, compatible with various networking implementations
+- **Stardard deployment**: Uses Gateway API or standard Kubernetes Ingress, compatible with various networking implementations
 
 Note that the quick install script installs Istio by default for both deployment modes for convenience.
 
@@ -166,17 +190,29 @@ For development purposes, you can use the quick install script provided in the K
 git clone https://github.com/kserve/kserve.git
 cd kserve
 
-# Run the quick install script with serverless mode (installs Knative + Istio)
-./hack/quick_install.sh -s
+# Run the quick install script with Standard deployment mode (without Knative, using Gateway API + Istio)
+./hack/kserve-install.sh -r --kustomize
 
-# For Raw deployment mode (without Knative, using Gateway API + Istio)
-./hack/quick_install.sh -r
+# Run the quick install script with Knative mode (installs Knative + Istio)
+./hack/kserve-install.sh -s --kustomize
 
-# To install only dependencies (without KServe)
-./hack/quick_install.sh -d
+# For LLMInferenceService
+./hack/kserve-install.sh --type localmodel --kustomize
+
+# For LLMInferenceService
+./hack/kserve-install.sh --type llmisvc --kustomize
+
+# To install only Standard mode dependencies (without KServe)
+./hack/kserve-install.sh -d --standard
+
+# To install only Knative mode dependencies (without KServe)
+./hack/kserve-install.sh -d --knative
+
+# To install only LLMInferenceService dependencies (without LLMInferenceService)
+./hack/kserve-install.sh -d --type llmisvc
 
 # To include KEDA (Kubernetes Event-driven Autoscaling)
-./hack/quick_install.sh -k
+./hack/kserve-install.sh -k
 ```
 
 The script installs:
@@ -188,13 +224,13 @@ The script installs:
 - Latest stable KServe CRDs and controller (configured for the selected deployment mode)
 
 :::tip
-You can check the current versions used in the script by examining the environment variables at the top of the `hack/quick_install.sh` file.
+You can check the current versions used in the script by examining the environment variables `KSERVE_VERSION` at the `kserve-deps.env` file.
 :::
 
 :::note
 To uninstall everything, run:
 ```bash
-./hack/quick_install.sh -u
+./hack/kserve-install.sh -u
 ```
 :::
 
@@ -202,21 +238,36 @@ To uninstall everything, run:
 
 If you prefer manual installation, follow the instructions from the [administrator guide](../admin-guide/overview.md).
 
-### Deploy KServe
+### Deploy KServe for Development
 
-#### Deploy KServe from Master Branch
+#### Deploy KServe with Your Own Version
 
-When deploying manually, we suggest using [cert manager](https://github.com/cert-manager/cert-manager) for provisioning the certificates for the webhook server. Other solutions should also work as long as they put the certificates in the desired location.
+Whether you used the quick install script or deployed manually, when you want to test your local code changes, you'll need to rebuild and redeploy the components you've modified.
 
-If you don't want to install cert manager, you can set the `KSERVE_ENABLE_SELF_SIGNED_CA` environment variable to true. `KSERVE_ENABLE_SELF_SIGNED_CA` will execute a script to create a self-signed CA and patch it to the webhook config.
-```bash
-export KSERVE_ENABLE_SELF_SIGNED_CA=true
+By default, `Knative mode` is used, so install its dependencies. If you are developing for `Standard mode`, update the inferenceservice-config ConfigMap using the following command:
+```
+ sed 's/Serverless/Standard/g' config/overlays/development/config/inferenceservice_patch.yaml
 ```
 
-After that, you can run the following command to deploy `KServe`. You can skip the above step if cert manager is already installed.
+Run the following command to deploy the `KServe` controller and model agent with your local changes:
+
+*on Kind*
 ```bash
-make deploy
+export KO_DOCKER_REPO=localhost:5001
+make deploy-dev
 ```
+
+To rebuild controller images
+```bash
+make redeploy-dev-image
+```
+
+
+
+:::note
+`deploy-dev` builds the image from your local code, publishes to `KO_DOCKER_REPO`, and deploys the `kserve-controller-manager` and `model agent` with the image digest to your cluster for testing.
+Please also ensure you are logged in to `KO_DOCKER_REPO` from your client machine.
+:::
 
 :::tip
 You can change CPU and memory limits when deploying `KServe`.
@@ -229,9 +280,11 @@ make deploy
 
 :::tip[Expected Output]
 ```console
-$ kubectl get pods -n kserve -l control-plane=kserve-controller-manager
-NAME                             READY   STATUS    RESTARTS   AGE
-kserve-controller-manager-0      2/2     Running   0          13m
+kubectl get pod -n kserve
+NAME                                                    READY   STATUS    RESTARTS   AGE
+kserve-controller-manager-6c5d8f4cfb-2pscf              2/2     Running   0          38s
+kserve-localmodel-controller-manager-5fddd7bf56-w2fpl   1/1     Running   0          38s
+llmisvc-controller-manager-779f4b446b-8r6dg             1/1     Running   0          38s
 ```
 :::
 
@@ -239,19 +292,7 @@ kserve-controller-manager-0      2/2     Running   0          13m
 By default, it installs to the `kserve` namespace with the published controller manager image from the master branch.
 :::
 
-#### Deploy KServe with Your Own Version
 
-Whether you used the quick install script or deployed manually, when you want to test your local code changes, you'll need to rebuild and redeploy the components you've modified.
-
-Run the following command to deploy the `KServe` controller and model agent with your local changes:
-```bash
-make deploy-dev
-```
-
-:::note
-`deploy-dev` builds the image from your local code, publishes to `KO_DOCKER_REPO`, and deploys the `kserve-controller-manager` and `model agent` with the image digest to your cluster for testing. 
-Please also ensure you are logged in to `KO_DOCKER_REPO` from your client machine.
-:::
 
 Run the following command to deploy the model server with your local changes:
 ```bash
@@ -318,11 +359,15 @@ pytest .
 
 ### Run E2E Tests Locally
 
+:::warning Work In Progress
+This section is currently not working as expected and will be updated in a future release.
+:::
+
 To set up from local code:
 
  1. Install KServe dependencies using the quick install script with the `-d` flag (installs dependencies only):
     ```bash
-    ./hack/quick_install.sh -d
+    ./hack/kserve-install.sh -d --type kserve
     ```
  2. If you already have a KServe installation, undeploy it:
     ```bash
@@ -384,7 +429,7 @@ After making your changes, you can deploy KServe with your updates:
 make deploy-dev
 ```
 
-## Contribute to the Code 
+## Contribute to the Code
 
 See the guidelines for:
 
@@ -396,7 +441,7 @@ See the guidelines for:
 
 Please check out the documentation [here](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS_v2.md) to understand the release schedule and process.
 
-## Feedback 
+## Feedback
 
 The best place to provide feedback about the KServe code is via a Github issue. See [creating a Github issue](https://github.com/kserve/community/blob/main/CONTRIBUTING.md#issues) for guidelines on submitting bugs and feature requests.
 
