@@ -20,6 +20,21 @@ const sidebars: SidebarsConfig = {
     'intro',
     {
       type: 'category',
+      label: 'Installation',
+      link: {
+        type: 'generated-index',
+      },
+      items: [
+        'install/overview',
+        'install/dependencies',
+        'install/kserve-install',
+        'install/llmisvc-install',
+        'install/localmodel-install',
+        'install/upgrade-guide',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Getting Started',
       items: [
         'getting-started/quickstart-guide',
