@@ -122,9 +122,12 @@ const config: Config = {
               label: 'nightly',
             },
             '0.17': { label: '0.17' },
-            '0.16': { label: '0.16' },
           },
           dropdownItemsAfter: [
+            {
+              href: 'https://kserve.github.io/archive/0.16/',
+              label: '0.16',
+            },
             {
               href: 'https://kserve.github.io/archive/0.15/',
               label: '0.15',

@@ -59,7 +59,13 @@ make gen-api-docs
 # Run the release command
 npm run docusaurus docs:version "$new_version"
 
+# Remove old version from versions.json
+echo "Removing version $current_version from versions.json..."
+jq --arg old_version "$current_version" 'del(.[] | select(. == $old_version))' versions.json > temp && mv temp versions.json
+echo "Version $current_version removed from versions.json successfully."
+
 # Update the docsVersionDropdown in docusaurus.config.ts
+# Step 1: Add new version to versions section
 awk -v new_version="$new_version" '
   /versions: {/ {inside_versions=1; depth=1; print; next}
   inside_versions {
@@ -75,6 +81,30 @@ awk -v new_version="$new_version" '
   }
   {print}
 ' docusaurus.config.ts > temp && mv temp docusaurus.config.ts
+
+# Step 2: Move old version from versions to archive (dropdownItemsAfter)
+echo "Moving version $current_version to archive..."
+
+awk -v old_version="$current_version" '
+  # Remove old version from versions section
+  {
+    if ($0 ~ "\\x27" old_version "\\x27: { label: \\x27" old_version "\\x27 },") {
+      next
+    }
+  }
+  # Add old version to dropdownItemsAfter (archive section)
+  /dropdownItemsAfter: \[/ {
+    print
+    print "            {"
+    print "              href: \x27https://kserve.github.io/archive/" old_version "/\x27,"
+    print "              label: \x27" old_version "\x27,"
+    print "            },"
+    next
+  }
+  {print}
+' docusaurus.config.ts > temp && mv temp docusaurus.config.ts
+
+echo "Version $current_version moved to archive successfully."
 
 # Update announcedVersion in docusaurus.config.ts
 sed -i "s/const announcedVersion = '[0-9]\+\.[0-9]\+'/const announcedVersion = '$new_version'/" docusaurus.config.ts
