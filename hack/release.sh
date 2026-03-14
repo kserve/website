@@ -32,6 +32,27 @@ fi
 RELEASE_VERSION=$new_version
 export RELEASE_VERSION
 
+# Update version numbers in documentation (before creating snapshot)
+echo "Updating version numbers in documentation from v$current_version to v$new_version..."
+
+# Update helm commands with --version flag (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|--version v$current_version\\.0|--version v$new_version.0|g" {} +
+
+# Update kubectl apply URLs (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|releases/download/v$current_version\\.0/|releases/download/v$new_version.0/|g" {} +
+
+# Update container image tags (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|\(image: kserve/[^:]*:\)v$current_version\\.0|\1v$new_version.0|g" {} +
+
+# Update "KServe v{version}" references (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|KServe v$current_version\\.0|KServe v$new_version.0|g" {} +
+
+echo "Version numbers updated successfully."
+
 # generate API documentation
 make gen-api-docs
 

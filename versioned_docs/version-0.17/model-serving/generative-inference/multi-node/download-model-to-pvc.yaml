@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: setup-llama3-8b-binary
+spec:
+  volumes:
+    - name: model-volume
+      persistentVolumeClaim:
+        claimName: llama-3-8b-pvc
+  restartPolicy: Never
+  initContainers:
+    - name: fix-volume-permissions
+      image: quay.io/quay/busybox:latest
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        allowPrivilegeEscalation: true
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      command: ["sh"]
+      args: ["-c", "chown -R 1001:1001 /mnt/models"]
+      volumeMounts:
+        - mountPath: "/mnt/models/"
+          name: model-volume
+  containers:
+    - name: download-model
+      image: registry.access.redhat.com/ubi9/python-311:latest
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        allowPrivilegeEscalation: true
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "1"
+        limits:
+          memory: "1Gi"
+          cpu: "1"
+      command: ["sh"]
+      args:
+        [
+          "-c",
+          "pip install --upgrade pip && pip install --upgrade huggingface_hub && python3 -c 'from huggingface_hub import snapshot_download\nsnapshot_download(\n repo_id=\"${MODEL}\",\nlocal_dir=\"/mnt/models/hf/8b_instruction_tuned\",local_dir_use_symlinks=False,use_auth_token=\"${HF_TEST_TOKEN}\")'",
+        ]
+      volumeMounts:
+        - mountPath: "/mnt/models/"
+          name: model-volume
+      env:
+        - name: TRANSFORMERS_CACHE
+          value: /tmp
