@@ -178,6 +178,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 - **[Dependencies](./llmisvc-dependencies.md)**: Required infrastructure components
 
 ### 🔧 Advanced Topics
+- **[Label & Annotation Propagation](./llmisvc-label-propagation.md)**: Propagate Kubernetes metadata (Kueue, Prometheus, custom labels) to workload pods
 - **Scheduler Configuration**: Prefix cache routing, load-aware scheduling
 - **Multi-Node Deployment**: LeaderWorkerSet, RDMA networking
 - **Security**: Authentication, RBAC, network policies

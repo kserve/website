@@ -594,3 +594,4 @@ spec:
 
 - **[Architecture Guide](../../../concepts/architecture/control-plane-llmisvc.md)**: Understand how components interact
 - **[Dependencies](./llmisvc-dependencies.md)**: Install required infrastructure
+- **[Label & Annotation Propagation](./llmisvc-label-propagation.md)**: Propagate Kubernetes metadata to workload pods
