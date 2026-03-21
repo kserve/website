@@ -12,6 +12,14 @@ LLMInferenceService supports propagating Kubernetes labels and annotations from 
 
 Propagation works across all deployment modes: single-node Deployments, multi-node LeaderWorkerSets, disaggregated prefill-decode workloads, and the scheduler (EPP) Deployment.
 
+:::note Compatibility note
+The top-level propagation flow (`.metadata.labels` / `.metadata.annotations` with allowlisted prefixes) is available in published CRD docs.
+
+The spec-level propagation fields documented below (`spec.labels`, `spec.annotations`, `spec.prefill.labels`, `spec.prefill.annotations`, `spec.router.scheduler.labels`, and `spec.router.scheduler.annotations`) depend on the controller/CRD version installed in your cluster. If your generated API reference only shows `template`, `worker`, `prefill`, and `router.scheduler.template`, your cluster does not yet expose these fields.
+
+To verify your installed schema, run `kubectl explain llminferenceservice.spec` and `kubectl explain llminferenceservice.spec.router.scheduler`.
+:::
+
 ---
 
 ## Two Layers of Propagation
@@ -84,6 +92,8 @@ The `kueue.x-k8s.io/queue-name` label propagates to the Deployment or LeaderWork
 For metadata that does not fall under an approved prefix — or when you need fine-grained, per-component control — use the spec-level fields. These propagate **all** keys without filtering, directly to the pod templates of the respective component.
 
 ### Available Spec-Level Fields
+
+The following fields are available when your installed LLMInferenceService CRD includes spec-level metadata propagation support:
 
 | Field | Applies to |
 |-------|------------|
