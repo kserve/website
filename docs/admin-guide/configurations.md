@@ -42,6 +42,7 @@ data:
         "urlScheme": "http",
         "disableIstioVirtualHost": false,
         "disableIngressCreation": false,
+        "disableHTTPRouteTimeout": false,
         "pathTemplate": "/serving/{{ .Namespace }}/{{ .Name }}"
     }
 ```
@@ -182,6 +183,16 @@ Controls whether to disable ingress creation for raw deployment mode.
 - **Default:** `false`
 - **Per-service label key:** `"networking.kserve.io/visibility"`
 - **Possible label values:** `""cluster-local""`
+
+### Disable HTTPRoute Timeout
+
+Controls whether to omit the `spec.rules.timeouts` field from HTTPRoute rules when using Gateway API.
+Set to `true` for Gateway controllers (e.g. GKE Gateway) that do not support the optional timeouts field,
+which would otherwise cause HTTPRoutes to be rejected with `Accepted=False/UnsupportedValue`.
+
+- **Global key:** `disableHTTPRouteTimeout`
+- **Possible values:** `true`, `false`
+- **Default:** `false`
 
 ### Path Template
 
