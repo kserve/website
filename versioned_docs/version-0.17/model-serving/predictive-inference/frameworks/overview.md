@@ -18,11 +18,11 @@ KServe supports multiple model serving runtimes including:
 - **[TensorFlow Serving](https://www.tensorflow.org/tfx/guide/serving)** - Google's serving system for TensorFlow models.
 - **[Triton Inference Server](https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs)** - NVIDIA's inference server supporting multiple frameworks
 - **[Hugging Face Server](https://github.com/kserve/kserve/tree/master/python/huggingfaceserver)** - Specialized for transformer models with Open Inference and OpenAI Protocol support with [vLLM](https://github.com/vllm-project/vllm).
-- **[LightGBM ModelServer](https://github.com/kserve/kserve/tree/master/python/lightgbmserver)** - Specialized for LightGBM models.
-- **[XGBoost ModelServer](https://github.com/kserve/kserve/tree/master/python/xgboostserver)** - Specialized for XGBoost models.
+- **[LightGBM ModelServer](https://github.com/kserve/kserve/tree/master/python/lgbserver)** - Specialized for LightGBM models.
+- **[XGBoost ModelServer](https://github.com/kserve/kserve/tree/master/python/xgbserver)** - Specialized for XGBoost models.
 - **[PMML ModelServer](https://github.com/kserve/kserve/tree/master/python/pmmlserver)** - Specialized for PMML models.
 - **[SKLearn ModelServer](https://github.com/kserve/kserve/tree/master/python/sklearnserver)** - Specialized for SKLearn models.
-- **[PaddlePaddle ModelServer](https://github.com/kserve/kserve/tree/master/python/paddlepaddle)** - Specialized for PaddlePaddle models.
+- **[PaddlePaddle ModelServer](https://github.com/kserve/kserve/tree/master/python/paddleserver)** - Specialized for PaddlePaddle models.
 
 These runtimes provide out-of-the-box model serving capabilities. For more complex use cases, you can build [custom model servers](../../predictive-inference/frameworks/custom-predictor/custom-predictor.md) using KServe's API primitives or tools like [BentoML](https://docs.bentoml.org/en/latest).
 
