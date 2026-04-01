@@ -240,12 +240,12 @@ Choose either Standard mode or Knative mode:
 
 ```bash
 # Option A: Standard Mode Dependencies
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-standard-mode-dependency-install.sh" | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.17.0/kserve-standard-mode-dependency-install.sh | bash
 
 # OR
 
 # Option B: Knative Mode Dependencies
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-knative-mode-dependency-install.sh" | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.17.0/kserve-knative-mode-dependency-install.sh | bash
 ```
 
 **Step 2: Install All Components**
@@ -254,16 +254,16 @@ After installing dependencies above, run these commands:
 
 ```bash
 # Install LLMInferenceService Dependencies
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/llmisvc-dependency-install.sh" | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.17.0/llmisvc-dependency-install.sh | bash
+
 
 # Install CRDs
-kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-crds.yaml
-
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.17.0/kserve-crds.yaml
 # Install Controllers
-kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve.yaml
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.17.0/kserve.yaml
 
 # Install ClusterServingRuntimes/LLMIsvcConfigs
-kubectl apply -f https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-cluster-resources.yaml
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.17.0/kserve-cluster-resources.yaml
 ```
 
 </details>
@@ -305,19 +305,19 @@ Install only infrastructure dependencies without KServe components.
 **Standard Mode Dependencies**:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-standard-mode-dependency-install.sh" | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.17.0/kserve-standard-mode-dependency-install.sh | bash
 ```
 
 **Knative Mode Dependencies**:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-knative-mode-dependency-install.sh" | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.17.0/kserve-knative-mode-dependency-install.sh | bash
 ```
 
 **LLMIsvc Dependencies**:
 
 ```bash
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/llmisvc-dependency-install.sh" | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.17.0/llmisvc-dependency-install.sh | bash
 ```
 
 
