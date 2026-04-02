@@ -8,7 +8,7 @@ title: "LLMInferenceService Tutorials"
 
 These are a set of tutorial guides for deploying the KServe LLM Inference Service in a variety of configurations with a variety of models. 
 
-All of the tutorials are present in the [KServe repo](https://github.com/kserve/kserve) under `samples/docs`.
+All of the tutorials are present in the [KServe repo](https://github.com/kserve/kserve/tree/master/docs/samples/llmisvc) under `docs/samples/llmisvc`.
 
 ## End-to-end guide: Run GPT-OSS-20B with KServe and llm-d
 
@@ -20,7 +20,7 @@ There are 3 alternate deployments detailed here:
 
 1. default - a deployment of intelligent inference scheduling with vLLM and the llm-d scheduler
 1. precise prefix cache aware routing - an advanced configuration that takes advantage of vLLM KV-Events
-1. prefill-decode disaggregation - an advanced configuration that seperate vLLM pods for the prefill and the decode stages of inference.
+1. prefill-decode disaggregation - an advanced configuration that separates vLLM pods for the prefill and the decode stages of inference.
 
 ## Single-Node GPU Deployment Examples
 
