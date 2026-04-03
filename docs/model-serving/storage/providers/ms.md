@@ -17,7 +17,7 @@ e.g. `ms://qwen/Qwen2-0.5B-Instruct`
 
 ## Public ModelScope Models
 
-If no credential is provided, anonymous client will be used to download the model from ModelScope repo.
+If no credential is provided, an anonymous client will be used to download the model from the ModelScope repository.
 
 ## Private ModelScope Models
 
