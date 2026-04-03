@@ -3,7 +3,7 @@ title: ModelScope
 description: Deploy InferenceService with models from ModelScope Hub in KServe, including support for both public and private models.
 ---
 
-# Deploy InferenceService with model from ModelScope Hub
+# Deploy InferenceService with models from ModelScope Hub
 
 You can specify the `storageUri` field on `InferenceService` YAML with the following format to deploy the models from ModelScope Hub.
 
