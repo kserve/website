@@ -101,7 +101,7 @@ spec:
         - name: MS_TOKEN  # Option 2 for authenticating with MS_TOKEN
           valueFrom:
             secretKeyRef:
-              name: ms-secret
+              name: storage-config
               key: MS_TOKEN
               optional: false
 ```
