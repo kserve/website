@@ -151,6 +151,7 @@ const sidebars: SidebarsConfig = {
                     "model-serving/predictive-inference/frameworks/triton/torchscript/torchscript",
                     "model-serving/predictive-inference/frameworks/sklearn/sklearn",
                     "model-serving/predictive-inference/frameworks/xgboost/xgboost",
+                    "model-serving/predictive-inference/frameworks/autogluon/autogluon",
                     "model-serving/predictive-inference/frameworks/pmml/pmml",
                     "model-serving/predictive-inference/frameworks/spark-mllib/spark-mllib",
                     "model-serving/predictive-inference/frameworks/lightgbm/lightgbm",
