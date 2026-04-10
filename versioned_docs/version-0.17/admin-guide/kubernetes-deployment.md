@@ -168,7 +168,7 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.17.0
 Set the `kserve.controller.deploymentMode` to `Standard` and configure the Gateway API:
 
 ```bash
-helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.17.0 \
+helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.17.0 \
   --set kserve.controller.deploymentMode=Standard \
   --set kserve.controller.gateway.ingressGateway.enableGatewayApi=true \
   --set kserve.controller.gateway.ingressGateway.kserveGateway=kserve/kserve-ingress-gateway
@@ -218,7 +218,7 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.17.0
 Set the `kserve.controller.deploymentMode` to `Standard` and configure the Ingress class:
 
 ```bash
-helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.17.0 \
+helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.17.0 \
   --set kserve.controller.deploymentMode=Standard \
   --set kserve.controller.gateway.ingressGateway.className=istio
 ```

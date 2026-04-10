@@ -76,7 +76,7 @@ helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd --version v0.17.0
 
 Install KServe Resources
 ```bash
-helm install kserve oci://ghcr.io/kserve/charts/kserve --version v0.17.0
+helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.17.0
 ```
 
 ### Install using YAML
