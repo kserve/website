@@ -169,6 +169,44 @@ spec:
 
 ---
 
+## LoRA Adapter Configuration
+
+LLMInferenceService supports Low-Rank Adaptation (LoRA) adapters for task-specific model fine-tuning. LoRA allows you to serve multiple adapted versions of a base model efficiently, reducing storage and memory requirements while enabling multi-tenant deployments.
+
+### Quick Example
+
+```yaml
+spec:
+  model:
+    uri: hf://Qwen/Qwen2.5-7B-Instruct
+    name: Qwen/Qwen2.5-7B-Instruct
+    lora:
+      adapters:
+        - name: sql-adapter
+          uri: hf://my-org/qwen-sql-lora
+        - name: code-adapter
+          uri: s3://my-bucket/adapters/code-lora
+        - name: domain-adapter
+          uri: pvc://adapter-pvc/domain-lora
+```
+
+### Supported URI Schemes
+
+- **`hf://`** - HuggingFace Hub adapters
+- **`s3://`** - S3-compatible storage (AWS S3, MinIO, Ceph)
+- **`pvc://`** - PersistentVolumeClaim (pre-downloaded, air-gapped)
+
+### Key Benefits
+
+- **Storage Efficiency**: 50-500MB per adapter vs 10-100GB for full models
+- **Multi-Tenancy**: Multiple task-specific models from a single deployment
+- **Dynamic Switching**: Per-request adapter selection with ~1-5ms overhead
+- **Automatic Integration**: Controller handles downloads, mounts, and vLLM configuration
+
+For detailed configuration, examples, and troubleshooting, see the **[LoRA Adapters Guide](./lora-adapters.md)**.
+
+---
+
 ## Workload Specification
 
 ### Workload Types Overview
