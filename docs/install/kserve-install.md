@@ -45,7 +45,7 @@ kubectl apply -k config/overlays/addons/kserve
 ```bash
 # Set deployment mode to Standard
 # Edit the inferenceservice ConfigMap
-vi config/default/configmap/inferenceservice.yaml
+vi config/configmap/inferenceservice.yaml
 
 # Change the deploy section to:
 # deploy: |
