@@ -78,8 +78,8 @@ const sidebars: SidebarsConfig = {
               label: 'Control Plane',
               link: { type: 'doc', id: 'concepts/architecture/control-plane' },
               items: [
-                { type: 'doc', id: 'concepts/architecture/control-plane', label: 'InferenceService (Standard & GenAI)' },
-                { type: 'doc', id: 'concepts/architecture/control-plane-llmisvc', label: 'LLMInferenceService (GenAI Advanced)' },
+                { type: 'doc', id: 'concepts/architecture/control-plane', label: 'InferenceService (Predictive & Standard LLM)' },
+                { type: 'doc', id: 'concepts/architecture/control-plane-llmisvc', label: 'LLMInferenceService (Advanced LLM)' },
               ],
             },
             "concepts/architecture/data-plane/data-plane",
