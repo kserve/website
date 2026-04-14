@@ -5,7 +5,18 @@ description: "Install, configure, and operate KServe in production environments.
 
 # KServe Administrator Guide
 
-Install, configure, and operate KServe for both generative and predictive inference workloads.
+KServe is a standard model inference platform on Kubernetes, providing high-performance, high-scale model serving solutions. This guide covers installation options, configuration settings, and best practices for managing KServe in production environments, with specific guidance for both predictive and generative inference workloads.
+
+As an administrator, you'll be responsible for:
+
+- Choosing and installing the right deployment mode
+- Configuring networking and resource settings
+- Maintaining and scaling KServe in your cluster environment
+- Integrating with Kubernetes networking components
+
+If you are familiar with KServe, you can skip the introductory sections and jump directly to the [deployment guides](#installation).
+
+---
 
 ## Which Deployment Mode Do I Need?
 
@@ -22,63 +33,98 @@ Start with **Standard Kubernetes Deployment** — it works for all workloads. Sw
 
 ---
 
-## Workload Characteristics
+## Inference Types
+
+KServe supports two primary model inference types, each with specific deployment considerations:
 
 ### 🤖 Generative Inference
 
-Models that generate content (text, images, audio) from input prompts.
+Generative inference workloads involve models that generate new content (text, images, audio, etc.) based on input prompts. These models typically:
 
-- Requires GPU acceleration and high memory
-- Long inference times with streaming responses
-- Use **Standard Kubernetes** or **LLMInferenceService**
-- Gateway API strongly recommended for streaming support
+- Require significantly more computational resources
+- Have longer inference times
+- Need GPU acceleration
+- Process streaming responses
+- Have higher memory requirements
+
+**Recommended deployment**: **Standard Kubernetes Deployment** provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
 
 ### 📊 Predictive Inference
 
-Models that classify or predict values from input data.
+Predictive inference workloads involve models that predict specific values or classifications based on input data. These models typically:
 
-- Often CPU-runnable with predictable, low-latency responses
-- Fixed-size outputs, shorter inference windows
-- Use **Standard Kubernetes**, **Knative**, or **ModelMesh**
+- Have shorter inference times
+- Can often run on CPU
+- Require less memory
+- Have more predictable resource usage patterns
+- Return fixed-size responses
+
+**Available deployment options**:
+- **Standard Kubernetes Deployment**: For direct control over resources
+- **Knative Deployment**: For scale to zero capabilities and cost optimization
+- **ModelMesh Deployment**: For high-density, multi-model scenarios
 
 ---
 
-## Installation Guides
+## Installation
 
-- **[Standard Kubernetes Deployment](./kubernetes-deployment.md)** — direct resource control for any workload
+KServe supports multiple deployment modes. Choose the guide that matches your workload:
+
+- **[Standard Kubernetes Deployment](./kubernetes-deployment.md)** — suitable for both generative and predictive inference workloads
 - **[LLMInferenceService Deployment](./kubernetes-deployment-llmisvc.md)** — advanced LLM serving with prefix-aware routing and disaggregated serving
-- **[Knative Deployment](./serverless/serverless.md)** — scale-to-zero for cost optimization
-- **[ModelMesh Deployment](./modelmesh.md)** — high-density multi-model serving
+- **[Knative Deployment](./serverless/serverless.md)** — scale-to-zero for burst and unpredictable traffic workloads
+- **[ModelMesh Deployment](./modelmesh.md)** — high-density, multi-model scenarios
 
 ---
 
-## Networking
+## Networking Configuration
 
-KServe recommends **Gateway API** over traditional Ingress resources for more flexible traffic management.
+KServe recommends using the **Gateway API** for network configuration. It provides a more flexible and standardized way to manage traffic ingress and egress compared to traditional Ingress resources.
 
 :::tip
-Gateway API is required for generative inference — it handles streaming responses and long-lived connections that Ingress cannot.
+Gateway API is particularly recommended for generative inference workloads to better handle streaming responses and long-lived connections.
 :::
 
-See the [Gateway API Migration Guide](./gatewayapi-migration.md) for step-by-step instructions.
+The migration process involves:
+1. Installing Gateway API CRDs
+2. Creating appropriate GatewayClass resources
+3. Configuring Gateway and HTTPRoute resources
+4. Updating KServe to use the Gateway API
+
+[Learn more about Gateway API Migration →](./gatewayapi-migration.md)
 
 ---
 
 ## Best Practices
 
-### Generative Inference
-- **GPU Resources**: Size node pools with sufficient GPU memory for your model
-- **Timeouts**: Increase inference timeouts to accommodate generation latency
-- **Networking**: Use Gateway API for streaming and connection management
-- **Caching**: Enable model caching to reduce cold-start times
+### For Generative Inference
+- **Resource Planning**: Ensure adequate GPU resources are available
+- **Memory Configuration**: Set higher memory limits and requests
+- **Network Configuration**: Use Gateway API for improved streaming capabilities
+- **Timeout Settings**: Configure longer timeouts to accommodate generation time
 
-### Predictive Inference
-- **Autoscaling**: Tune scaling thresholds to match model latency SLOs
-- **Cost**: Use Knative for bursty workloads to scale to zero when idle
-- **Density**: Use ModelMesh when running many small models on shared GPU/CPU pools
-- **Batching**: Enable request batching to improve throughput for high-volume workloads
+### For Predictive Inference
+- **Autoscaling**: Configure appropriate scaling thresholds based on model performance
+- **Resource Efficiency**: Consider Knative or ModelMesh for cost optimization
+- **Batch Processing**: Configure batch settings for improved throughput when applicable
 
-### All Workloads
-- **Security**: Apply network policies and authentication to inference endpoints
-- **Monitoring**: Deploy Prometheus + Grafana dashboards for model and infrastructure metrics
+### For All Workloads
+- **Security**: Use proper authentication and network policies
+- **Monitoring**: Set up monitoring for KServe components and model performance
+- **Networking**: Configure appropriate timeouts and retry strategies for model inference
 - **Configurations**: Review [KServe configurations](./configurations.md) to tune defaults for your environment
+
+---
+
+## Next Steps
+
+### For Generative Inference
+- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [LLMInferenceService Deployment Guide](./kubernetes-deployment-llmisvc.md)
+- [Gateway API Migration Guide](./gatewayapi-migration.md)
+
+### For Predictive Inference
+- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [Knative Deployment Guide](./serverless/serverless.md)
+- [ModelMesh Deployment Guide](./modelmesh.md)
+- [Gateway API Migration Guide](./gatewayapi-migration.md)

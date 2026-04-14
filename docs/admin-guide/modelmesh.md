@@ -15,6 +15,12 @@ It uses a distributed architecture particularly designed for:
 - Efficient resource utilization
 - Frequent model updates
 
+:::info When to use ModelMesh
+For generative inference (LLMs), use [Standard Kubernetes Deployment](./kubernetes-deployment.md) instead.
+:::
+
+---
+
 ## Use Cases
 
 ModelMesh is designed for predictive inference use cases where:
@@ -26,17 +32,21 @@ ModelMesh is designed for predictive inference use cases where:
 - Model inference times are relatively short
 - Models can share computational resources efficiently
 
+---
+
 ## Prerequisites
 
-- Kubernetes cluster (v1.32+)
-- kubectl configured to access your cluster
-- Cluster admin permissions
+| Requirement | Details |
+|---|---|
+| Kubernetes | v1.32+ |
+| kubectl | Configured with cluster admin access |
+| Permissions | Cluster admin |
+
+---
 
 ## Installation
 
-### Option 1: Quick Install with KServe
-
-Install KServe with ModelMesh support:
+### Option 1: Quick Install
 
 ```bash
 curl -s "https://raw.githubusercontent.com/kserve/modelmesh-serving/release-0.12.0/scripts/install.sh" | bash
@@ -44,29 +54,31 @@ curl -s "https://raw.githubusercontent.com/kserve/modelmesh-serving/release-0.12
 
 ### Option 2: Manual Installation
 
-#### 1. Install etcd (for model metadata storage)
+**Step 1 — Install etcd** (model metadata storage):
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kserve/modelmesh-serving/release-0.12.0/config/dependencies/etcd.yaml
 ```
 
-#### 2. Install ModelMesh Serving
+**Step 2 — Install ModelMesh Serving**:
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kserve/modelmesh-serving/release-0.12.0/config/default/modelmesh-serving.yaml
 ```
 
-#### 3. Install KServe Controller
+**Step 3 — Install KServe Controller**:
 
 ```bash
 kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.17.0/kserve.yaml
 ```
 
+---
+
 ## Configuration
 
 ### Enable ModelMesh Mode
 
-Configure KServe to use ModelMesh:
+Set ModelMesh as the default deployment mode in KServe:
 
 ```bash
 kubectl patch configmap inferenceservice-config -n kserve-system -p '{
@@ -78,7 +90,7 @@ kubectl patch configmap inferenceservice-config -n kserve-system -p '{
 
 ### Storage Configuration
 
-Configure storage for model repositories:
+Configure a model storage backend (example: MinIO/S3):
 
 ```yaml
 apiVersion: v1
@@ -97,6 +109,8 @@ data:
       "region": "us-south"
     }
 ```
+
+---
 
 ## Features
 
