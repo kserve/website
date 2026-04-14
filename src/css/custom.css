@@ -60,6 +60,16 @@
 
 /* Global styles */
 
+/* Navbar title color */
+.navbar__title {
+  color: #1d4bab !important;
+  font-weight: 700;
+}
+
+[data-theme='dark'] .navbar__title {
+  color: white !important;
+}
+
 /* Version Dropdown Hover */
 .dropdown__link:hover {
   background-color: rgba(51, 113, 227, 0.1);
@@ -388,4 +398,238 @@
 
 [data-theme='dark'] .header-github-link:before {
   background-image: url('/img/github-mark-white.svg');
+}
+
+/* Search bar visibility in light mode */
+.navbar__search-input {
+  border: 1.5px solid rgba(0, 0, 0, 0.25) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: var(--ifm-navbar-link-color) !important;
+}
+
+/* Hide keyboard shortcut badges on narrow screens */
+@media (max-width: 1100px) {
+  .DocSearch-Button-Keys,
+  .navbar__search-input + kbd,
+  [class*='searchBox'] kbd {
+    display: none !important;
+  }
+
+  .DocSearch-Button {
+    width: auto !important;
+    min-width: unset !important;
+    padding: 0 0.75rem !important;
+  }
+}
+
+.navbar__search-input::placeholder {
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme='dark'] .navbar__search-input {
+  border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: white !important;
+}
+
+[data-theme='dark'] .navbar__search-input::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Navbar dropdown section labels */
+.dropdown-section-label {
+  display: block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ifm-color-emphasis-600);
+  pointer-events: none;
+}
+
+/* Remove gray background boxes from mobile navbar dropdown items in dark mode */
+[data-theme='dark'] .navbar-sidebar .menu__link,
+[data-theme='dark'] .navbar-sidebar .menu__link:hover,
+[data-theme='dark'] .navbar-sidebar .menu__link--active,
+[data-theme='dark'] .navbar-sidebar .navbar__link,
+[data-theme='dark'] .navbar-sidebar .dropdown__link {
+  background-color: transparent;
+}
+
+[data-theme='dark'] .navbar-sidebar .menu__link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive grids for MDX doc pages */
+.doc-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.doc-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+@media (max-width: 996px) {
+  .doc-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .doc-grid-3,
+  .doc-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.doc-card {
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  background: var(--ifm-background-surface-color);
+}
+
+.doc-card p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+a.doc-card {
+  text-decoration: none;
+  display: block;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+a.doc-card:hover {
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  text-decoration: none;
+}
+
+/* Scale down code blocks on narrow screens */
+@media (max-width: 768px) {
+  pre, code, .theme-code-block pre {
+    font-size: 0.78rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* ─── Light mode syntax highlighting ────────────────────────────────────────
+   Override the default Prism pale-blue / light-pink palette with a
+   high-contrast VS Code "Default Light+" inspired set.
+   Only applied in light mode so dark mode is untouched.
+   ─────────────────────────────────────────────────────────────────────────── */
+[data-theme='light'] pre.prism-code,
+[data-theme='light'] .theme-code-block pre.prism-code {
+  color: #24292e;                /* base text — near-black */
+}
+
+/* YAML / JSON keys, HTML attributes */
+[data-theme='light'] .token.key,
+[data-theme='light'] .token.attr-name,
+[data-theme='light'] .token.property {
+  color: #0550ae !important;     /* dark blue — replaces light cyan */
+}
+
+/* String values */
+[data-theme='light'] .token.string,
+[data-theme='light'] .token.attr-value {
+  color: #953800 !important;     /* dark orange-brown — readable for red-green colorblind */
+}
+
+/* Comments */
+[data-theme='light'] .token.comment,
+[data-theme='light'] .token.prolog,
+[data-theme='light'] .token.doctype {
+  color: #5c6370 !important;     /* medium slate — replaces near-invisible light gray */
+  font-style: italic;
+}
+
+/* Numbers */
+[data-theme='light'] .token.number {
+  color: #0e7490 !important;     /* dark teal — distinguishable from blue and orange */
+}
+
+/* Booleans / null / important keywords */
+[data-theme='light'] .token.boolean,
+[data-theme='light'] .token.null,
+[data-theme='light'] .token.important,
+[data-theme='light'] .token.keyword {
+  color: #0033b3 !important;     /* strong blue */
+}
+
+/* Functions */
+[data-theme='light'] .token.function,
+[data-theme='light'] .token.function-name {
+  color: #795e26 !important;     /* warm brown/gold */
+}
+
+/* Types / class names */
+[data-theme='light'] .token.class-name,
+[data-theme='light'] .token.builtin {
+  color: #267f99 !important;     /* teal */
+}
+
+/* Operators */
+[data-theme='light'] .token.operator,
+[data-theme='light'] .token.entity,
+[data-theme='light'] .token.url {
+  color: #032f62 !important;     /* navy */
+}
+
+/* Punctuation */
+[data-theme='light'] .token.punctuation {
+  color: #24292e !important;     /* same as base, keep neutral */
+}
+
+/* Tag names (HTML/JSX) */
+[data-theme='light'] .token.tag .token.tag,
+[data-theme='light'] .token.tag {
+  color: #0e7490 !important;     /* dark teal — avoids red-green conflict */
+}
+
+/* Variables / symbols */
+[data-theme='light'] .token.variable,
+[data-theme='light'] .token.symbol {
+  color: #6f42c1 !important;     /* purple */
+}
+
+/* Regex literals */
+[data-theme='light'] .token.regex {
+  color: #032f62 !important;
+}
+
+/* Hide doc card icons on generated index pages */
+.cardContainer_fWXF .cardIcon,
+article.col .cardIcon,
+[class*='cardIcon'] {
+  display: none;
+}
+
+/* Footer: keep columns in a grid at all screen sizes */
+.footer__links {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.footer__col {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 480px) {
+  .footer__links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
 }

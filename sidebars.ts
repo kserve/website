@@ -25,22 +25,36 @@ const sidebars: SidebarsConfig = {
         type: 'generated-index',
       },
       items: [
-        'install/overview',
-        'install/dependencies',
-        'install/kserve-install',
-        'install/llmisvc-install',
-        'install/localmodel-install',
-        'install/upgrade-guide',
+        { type: 'doc', id: 'install/overview', label: 'Overview' },
+        { type: 'doc', id: 'install/dependencies', label: 'Prerequisites' },
+        { type: 'doc', id: 'install/kserve-install', label: 'Install KServe' },
+        { type: 'doc', id: 'install/llmisvc-install', label: 'Install LLMInferenceService' },
+        { type: 'doc', id: 'install/localmodel-install', label: 'Install Local Model Cache' },
+        { type: 'doc', id: 'install/upgrade-guide', label: 'Upgrade Guide' },
       ],
     },
     {
       type: 'category',
       label: 'Getting Started',
+      link: {
+        type: 'generated-index',
+        slug: 'getting-started',
+      },
       items: [
         'getting-started/quickstart-guide',
-        'getting-started/genai-first-isvc',
-        'getting-started/genai-first-llmisvc',
-        'getting-started/predictive-first-isvc',
+        {
+          type: 'category',
+          label: 'Deploy Your First',
+          link: {
+            type: 'doc',
+            id: 'getting-started/deploy-your-first',
+          },
+          items: [
+            { type: 'doc', id: 'getting-started/genai-first-isvc', label: 'LLM with InferenceService (Standard)' },
+            { type: 'doc', id: 'getting-started/genai-first-llmisvc', label: 'LLM with LLMInferenceService (Advanced)' },
+            { type: 'doc', id: 'getting-started/predictive-first-isvc', label: 'Predictive InferenceService' },
+          ],
+        },
         'getting-started/swagger-ui'
       ],
     },
@@ -59,13 +73,21 @@ const sidebars: SidebarsConfig = {
             id: 'concepts/architecture/index',
           },
           items: [
-            "concepts/architecture/control-plane",
-            "concepts/architecture/control-plane-llmisvc",
+            {
+              type: 'category',
+              label: 'Control Plane',
+              link: { type: 'doc', id: 'concepts/architecture/control-plane' },
+              items: [
+                { type: 'doc', id: 'concepts/architecture/control-plane', label: 'InferenceService (Standard & GenAI)' },
+                { type: 'doc', id: 'concepts/architecture/control-plane-llmisvc', label: 'LLMInferenceService (GenAI Advanced)' },
+              ],
+            },
             "concepts/architecture/data-plane/data-plane",
             "concepts/architecture/data-plane/v1-protocol",
             {
               type: 'category',
-              label: 'Open Inference Protocol (V2)',
+              label: 'Inference Protocol V2',
+              link: { type: 'doc', id: 'concepts/architecture/data-plane/v2-protocol/v2-protocol' },
               items: [
                 "concepts/architecture/data-plane/v2-protocol/v2-protocol",
                 {
@@ -100,6 +122,7 @@ const sidebars: SidebarsConfig = {
         {
           type: 'category',
           label: 'Generative Inference',
+          link: { type: 'doc', id: 'model-serving/generative-inference/overview' },
           items: [
             "model-serving/generative-inference/overview",
             {
@@ -141,6 +164,7 @@ const sidebars: SidebarsConfig = {
             {
               type: 'category',
               label: 'Model Serving Runtimes',
+              link: { type: 'doc', id: 'model-serving/predictive-inference/frameworks/overview' },
               items: [
                 "model-serving/predictive-inference/frameworks/overview",
                 {
@@ -274,6 +298,7 @@ const sidebars: SidebarsConfig = {
               items: [
                 "model-serving/predictive-inference/rollout-strategies/canary",
                 "model-serving/predictive-inference/rollout-strategies/canary-example",
+                "model-serving/predictive-inference/rollout-strategies/rollout-strategy-standard",
               ]
             },
           ]
@@ -424,6 +449,11 @@ const sidebars: SidebarsConfig = {
         'community/get-involved',
         'community/adopters',
         'community/presentations',
+        {
+          type: 'link',
+          label: 'Blog',
+          href: '/blog',
+        },
       ],
     },
   ],

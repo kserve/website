@@ -19,14 +19,14 @@ export default function HomepageCallToAction() {
             </p>
             <div className={styles.ctaButtons}>
               <Link
-                className={clsx('button button--primary button--lg', styles.ctaButton)}
-                to="/docs/getting-started/genai-first-isvc">
-                Get Started
+                className={clsx('button button--secondary button--lg', styles.ctaButton)}
+                to="/docs/getting-started/quickstart-guide">
+                Quickstart
               </Link>
               <Link
-                className={clsx('button button--outline button--lg', styles.ctaButton)}
+                className={clsx('button button--secondary button--lg', styles.ctaButton, styles.ctaInstallButton)}
                 to="/docs/admin-guide/overview#installation">
-                Install KServe
+                Install
               </Link>
             </div>
           </div>

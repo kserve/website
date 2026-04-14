@@ -354,5 +354,5 @@ For detailed installation instructions, customization options, and troubleshooti
 
 Now that you have a KServe Quickstart environment set up, you can start deploying and testing machine learning models:
 
-- 📖 **[First GenAI InferenceService](genai-first-isvc)** - Deploy your first GenAI model using InferenceService
-- 📖 **[First Predictive InferenceService](predictive-first-isvc)** - Deploy your first predictive model using InferenceService
+- 📖 **[Deploy Your First LLM with InferenceService](genai-first-isvc)** - Serve an LLM using the standard InferenceService resource
+- 📖 **[Deploy Your First Predictive InferenceService](predictive-first-isvc)** - Serve a traditional ML model using InferenceService

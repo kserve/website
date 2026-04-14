@@ -1,4 +1,10 @@
-# Deploy Your First LLM InferenceService
+# Deploy Your First LLM with LLMInferenceService
+
+:::info New to KServe?
+If this is your first time, start with [**Deploy Your First LLM with InferenceService**](./genai-first-isvc.md) instead — it uses the standard `InferenceService` resource which works for simple, standard use cases.
+
+This guide uses `LLMInferenceService`, a newer Kubernetes custom resource designed specifically for LLMs with advanced scheduling and routing capabilities. Use this if you need features like prefix-aware routing, disaggregated serving, or fine-grained GPU scheduling.
+:::
 
 Quick guide to deploy your first LLMInferenceService using a simple CPU-based example.
 
