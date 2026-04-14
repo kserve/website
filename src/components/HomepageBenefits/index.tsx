@@ -20,7 +20,7 @@ const genAIFeatures = [
     icon: '🚅',
     title: 'GPU Acceleration',
     desc: 'High-performance serving with optimized GPU memory management',
-    link: '/docs/admin-guide/overview',
+    link: '/docs/model-serving/generative-inference/multi-node/multi-node',
   },
   {
     icon: '💾',
@@ -38,7 +38,7 @@ const genAIFeatures = [
     icon: '📈',
     title: 'Autoscaling',
     desc: 'Request-based autoscaling tuned for generative workloads',
-    link: '/docs/admin-guide/overview',
+    link: '/docs/model-serving/generative-inference/autoscaling/autoscaling',
   },
   {
     icon: '🔧',
@@ -59,7 +59,7 @@ const predictiveFeatures = [
     icon: '🔀',
     title: 'Intelligent Routing',
     desc: 'Seamless routing between predictor, transformer, and explainer',
-    link: '/docs/concepts/architecture/control-plane',
+    link: '/docs/model-serving/predictive-inference/transformers/custom-transformer/custom-transformer',
   },
   {
     icon: '🔄',
@@ -89,7 +89,7 @@ const predictiveFeatures = [
     icon: '💰',
     title: 'Cost Efficient',
     desc: 'Scale-to-zero on expensive resources when not in use',
-    link: '/docs/admin-guide/overview',
+    link: '/docs/admin-guide/serverless/serverless',
   },
 ];
 
