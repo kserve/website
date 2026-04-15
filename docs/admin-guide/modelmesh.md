@@ -16,7 +16,7 @@ It uses a distributed architecture particularly designed for:
 - Frequent model updates
 
 :::info When to use ModelMesh
-For generative inference (LLMs), use [Standard Kubernetes Deployment](./kubernetes-deployment.md) instead.
+Choose ModelMesh when you have **many models that aren't all needed at the same time** — it dynamically loads and evicts models to maximize resource utilization. If you have a small number of models that are always running, standard Kubernetes deployment is simpler. For LLMs and generative inference, use [Standard Kubernetes Deployment](./kubernetes-deployment.md) instead.
 :::
 
 ---
