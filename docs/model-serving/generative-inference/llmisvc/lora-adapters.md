@@ -66,6 +66,9 @@ spec:
 | `spec.model.lora.adapters` | array | No | List of LoRA adapters to attach to the base model |
 | `spec.model.lora.adapters[].name` | string | Yes | Unique adapter name used for inference requests |
 | `spec.model.lora.adapters[].uri` | string | Yes | Adapter source URI (must use `hf://`, `s3://`, or `pvc://` scheme) |
+| `spec.model.lora.maxRank` | integer | No | Maximum LoRA rank supported by the runtime (maps to vLLM `--max-lora-rank`). If not set, vLLM's default applies (16). |
+| `spec.model.lora.maxAdapters` | integer | No | Maximum number of LoRA adapters in GPU memory simultaneously (maps to vLLM `--max-loras`). If not set, vLLM's default applies (1). |
+| `spec.model.lora.maxCpuAdapters` | integer | No | Maximum number of LoRA adapters cached in CPU memory (maps to vLLM `--max-cpu-loras`). If not set, vLLM defaults this to `maxAdapters`. |
 
 ### Constraints
 
@@ -336,8 +339,7 @@ When you configure LoRA adapters, the LLMInferenceService controller automatical
 
 3. **vLLM Configuration**:
    - Automatically adds `--enable-lora` flag
-   - Sets `--max-lora-rank=64` (configurable)
-   - Sets `--max-loras=<adapter-count>`
+   - Sets `--max-lora-rank`, `--max-loras`, `--max-cpu-loras` only when explicitly configured in `spec.model.lora`; vLLM's own defaults apply otherwise
    - Adds `--lora-modules <name>=<path> <name2>=<path2> ...`
 
 ### Path Sanitization
@@ -349,7 +351,7 @@ Adapter names are sanitized for filesystem compatibility:
 ### Resource Considerations
 
 **GPU Memory Usage**:
-- Each adapter typically requires 50-500MB GPU memory (rank=64)
+- Each adapter typically requires 50-500MB GPU memory depending on rank and model size
 - Formula: `adapter_memory ≈ rank × num_layers × hidden_dim × 2 × sizeof(fp16)`
 - All adapters are loaded simultaneously into GPU memory
 
@@ -363,17 +365,20 @@ Adapter names are sanitized for filesystem compatibility:
 
 ## Advanced Configuration
 
-### Custom vLLM Arguments
+### Tuning LoRA Runtime Parameters
 
-Override the default `--max-lora-rank` if your adapters use a different rank:
+Use the spec fields to configure vLLM's LoRA runtime settings:
 
 ```yaml
-template:
-  containers:
-    - name: main
-      env:
-        - name: VLLM_ADDITIONAL_ARGS
-          value: "--max-lora-rank=128"
+spec:
+  model:
+    lora:
+      maxRank: 128        # increase if adapters were trained with rank > 16 (vLLM default)
+      maxAdapters: 3      # max adapters in GPU memory simultaneously (vLLM default: 1)
+      maxCpuAdapters: 6   # max adapters cached in CPU memory (vLLM default: maxAdapters)
+      adapters:
+        - name: sql-adapter
+          uri: hf://my-org/qwen-sql-lora
 ```
 
 ### Manual LoRA Configuration
