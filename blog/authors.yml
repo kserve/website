@@ -95,3 +95,30 @@ RanPollak:
   socials:
     github: https://github.com/RanPollak
     linkedin: https://www.linkedin.com/in/ran-pollak-59125548
+
+cabrinha:
+  name: Scott Cabrinha
+  title: Staff Site Reliability Engineer, Tesla
+  url: https://github.com/cabrinha
+  image_url: https://github.com/cabrinha.png
+  socials:
+    github: https://github.com/cabrinha
+    linkedin: https://www.linkedin.com/in/scott-cabrinha/
+
+robertgshaw2-redhat:
+  name: Robert Shaw
+  title: Director of Engineering, Red Hat
+  url: https://github.com/robertgshaw2-redhat
+  image_url: https://avatars.githubusercontent.com/u/114415538?v=4
+  socials:
+    github: https://github.com/robertgshaw2-redhat
+    linkedin: https://www.linkedin.com/in/robert-shaw-1a01399a/
+
+skpulipaka26:
+  name: Sai Krishna
+  title: Staff Software Engineer, Tesla
+  url: https://github.com/skpulipaka26
+  image_url: https://github.com/skpulipaka26.png
+  socials:
+    github: https://github.com/skpulipaka26
+    linkedin: https://www.linkedin.com/in/sai-krishna-45372444/
