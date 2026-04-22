@@ -3,3 +3,4 @@ numpy
 pillow
 protobuf
 requests
+nbconvert>=7.17.1 # not directly required, pinned by Snyk to avoid a vulnerability
