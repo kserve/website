@@ -130,10 +130,10 @@ Install KServe controller only without additional components.
 
 ```
 # Standard mode
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-standard-mode-full-install-with-manifests.sh" | bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/heads/master/install/v0.17.0/kserve-standard-mode-full-install-with-manifests.sh" | bash
 
 # Knative mode (serverless)
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/kserve-knative-mode-full-install-with-manifests.sh" | bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/heads/master/install/v0.17.0/kserve-knative-mode-full-install-with-manifests.sh" | bash
 ```
 </details>
 
@@ -203,7 +203,7 @@ Install LLMInferenceService controller only for Generative AI model serving.
 <summary>Using Quick Install Script</summary>
 
 ```
-curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/tags/v0.17.0/install/v0.17.0/llmisvc-full-install-with-manifests.sh" | bash
+curl -s "https://raw.githubusercontent.com/kserve/kserve/refs/heads/master/install/v0.17.0/llmisvc-full-install-with-manifests.sh" | bash
 ```
 </details>
 
