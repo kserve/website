@@ -229,17 +229,7 @@ const config: Config = {
           ],
         },
       ],
-<<<<<<< HEAD
-      copyright: `Copyright © ${new Date().getFullYear()} The KServe Authors. All rights reserved. <br/> The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a
-            href="https://www.linuxfoundation.org/trademark-usage"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline">
-            Trademark Usage page.
-          </a>`,
-=======
       copyright: `Copyright © ${new Date().getFullYear()} KServe, a Series of LF Projects, LLC. For web site terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank" rel="noopener noreferrer">https://lfprojects.org/policies/</a>.`,
->>>>>>> 2ec50b6d (docs: update footer to LF Projects compliance requirements)
     },
     prism: {
       theme: prismThemes.github,
