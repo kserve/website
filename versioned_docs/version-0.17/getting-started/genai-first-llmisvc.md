@@ -103,7 +103,7 @@ Once the service is ready, test it with a completion request:
 # Get the Gateway URL if you have external LB not KIND cloud-provider
 # GATEWAY_URL=$(kubectl get llminferenceservice facebook-opt-125m-single -n llm-demo -o jsonpath='{.status.url}')
 
-kubectl port-forward $(oc get svc -n envoy-gateway-system -l serving.kserve.io/gateway=kserve-ingress-gateway --no-headers -o name)  -n envoy-gateway-system 8001:80 &
+kubectl port-forward $(kubectl get svc -n envoy-gateway-system -l serving.kserve.io/gateway=kserve-ingress-gateway --no-headers -o name)  -n envoy-gateway-system 8001:80 &
 
 # Send a completion request
 curl -sS -X POST http://localhost:8001/llm-demo/facebook-opt-125m-single/v1/completions   \
