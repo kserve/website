@@ -1,6 +1,20 @@
 # Installation Concepts
 
-This document explains the core concepts and architecture behind KServe's installation system, including component structure, deployment methods, and installation scripts.
+## Which Installation Do I Need?
+
+Choose the right setup based on your use case:
+
+| I want to... | Install | Guide |
+|---|---|---|
+| Serve **predictive models** (sklearn, XGBoost, PyTorch, etc.) | KServe only | [Install KServe](./kserve-install.md) |
+| Serve **LLMs / generative AI** (most users) | KServe + LLMInferenceService | [Install LLMInferenceService](./llmisvc-install.md) |
+| Serve LLMs **with local model caching** for faster cold starts | KServe + LLMInferenceService + LocalModel | [Install Local Model Cache](./localmodel-install.md) |
+
+:::tip Not sure which to pick?
+If you're serving LLMs or generative AI models, install **KServe + LLMInferenceService**. If you're only doing traditional ML inference (classification, regression, etc.), the standard KServe installation is sufficient.
+:::
+
+---
 
 ## KServe Components Architecture
 

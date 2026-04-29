@@ -5,7 +5,7 @@ import CodeBlock from '@theme/CodeBlock';
 
 export default function HomepageShowcase() {
   return (
-    <section className={styles.showcase}>
+    <section id="api" className={styles.showcase}>
       <div className="container">
         <div className="row">
           <div className="col col--10 col--offset-1">
@@ -41,8 +41,15 @@ export default function HomepageShowcase() {
               </div>
               
               <div className={styles.showcaseCode}>
-                <CodeBlock language="yaml">
-                  {`apiVersion: "serving.kserve.io/v1beta1"
+                <div className={styles.codeWindow}>
+                  <div className={styles.codeWindowHeader}>
+                    <span className={styles.dot} style={{background: '#ff5f57'}} />
+                    <span className={styles.dot} style={{background: '#febc2e'}} />
+                    <span className={styles.dot} style={{background: '#28c840'}} />
+                    <span className={styles.codeWindowTitle}>inferenceservice.yaml</span>
+                  </div>
+                  <CodeBlock language="yaml">
+                    {`apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "llm-service"
@@ -57,7 +64,8 @@ spec:
           memory: 24Gi
           nvidia.com/gpu: "1"
       storageUri: "hf://meta-llama/Llama-3.1-8B-Instruct"`}
-                </CodeBlock>
+                  </CodeBlock>
+                </div>
               </div>
             </div>
           </div>

@@ -1,8 +1,9 @@
 ---
-title: V1 Protocol
+title: Inference Protocol V1
+sidebar_label: "Inference Protocol V1"
 ---
 
-# V1 Protocol
+# Inference Protocol V1
 
 KServe's V1 protocol offers a standardized prediction workflow across all model frameworks. This protocol version is still supported, but it is recommended that users migrate to the [V2 protocol](./v2-protocol/v2-protocol.md) for better performance and standardization among serving runtimes. However, if a use case requires a more flexible schema than protocol V2 provides, the V1 protocol is still an option.
 

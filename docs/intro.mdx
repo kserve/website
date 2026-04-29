@@ -1,0 +1,181 @@
+---
+description: "KServe is a cloud-native platform for serving AI models at scale. Learn how KServe simplifies deploying and managing AI workloads across clouds and on-premises."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Welcome to KServe
+
+**Deploy and scale AI models effortlessly** — from cutting-edge generative AI and large language models to traditional ML models — with enterprise-grade reliability across any cloud or on-premises environment.
+
+:::tip CNCF Incubating Project
+KServe is a [CNCF](https://cncf.io) incubating project and part of the [Kubeflow](https://kubeflow.org) ecosystem.
+:::
+
+---
+
+## Why KServe?
+
+KServe eliminates the complexity of productionizing AI models. Whether you're a data scientist, DevOps engineer, or platform architect, KServe provides a unified solution that works across clouds and scales with your needs.
+
+<div className="doc-grid-3">
+  <div className="doc-card">
+    <strong>🚀 Minutes to Production</strong>
+    <p>Deploy GenAI services and ML models with simple YAML — no complex infrastructure setup required.</p>
+  </div>
+  <div className="doc-card">
+    <strong>☁️ Cloud-Agnostic</strong>
+    <p>Run anywhere: AWS, Azure, GCP, on-premises, or hybrid environments with consistent behavior.</p>
+  </div>
+  <div className="doc-card">
+    <strong>📈 Enterprise-Scale Ready</strong>
+    <p>Scale to zero when idle, handle traffic spikes automatically, and manage hundreds of models efficiently.</p>
+  </div>
+</div>
+
+---
+
+## Key Benefits
+
+<Tabs>
+  <TabItem value="genai" label="🤖 Generative AI" default>
+
+| Feature | Description |
+|---|---|
+| <a href="model-serving/generative-inference/overview">**LLM Multi-framework**</a> | Deploy LLMs from Hugging Face, vLLM, and custom generative models |
+| <a href="model-serving/generative-inference/llmisvc/llmisvc-overview">**OpenAI-Compatible APIs**</a> | Chat completion, streaming, and embedding endpoints out of the box |
+| <a href="model-serving/generative-inference/modelcache/localmodel">**LocalModelCache**</a> | Reduce LLM startup time from 15–20 minutes to ~1 minute |
+| <a href="model-serving/generative-inference/kvcache-offloading/kvcache-offloading">**KV Cache Offloading**</a> | Optimized memory management for long conversations and large contexts |
+| <a href="model-serving/generative-inference/multi-node/multi-node">**Multi-node Inference**</a> | Distributed LLM serving across multiple nodes |
+| <a href="model-serving/generative-inference/ai-gateway/envoy-ai-gateway">**Envoy AI Gateway**</a> | Enterprise-grade API management and routing for AI workloads |
+| <a href="model-serving/generative-inference/autoscaling/autoscaling">**Metric-based Autoscaling**</a> | Scale on token throughput, queue depth, and GPU utilization |
+| <a href="model-serving/predictive-inference/rollout-strategies/canary">**Canary Deployments**</a> | A/B testing and canary rollouts for LLM experiments |
+
+<a href="model-serving/generative-inference/overview">→ Full Generative AI docs</a>
+
+  </TabItem>
+  <TabItem value="predictive" label="📊 Predictive AI">
+
+| Feature | Description |
+|---|---|
+| <a href="model-serving/predictive-inference/frameworks/overview">**Multi-framework Serving**</a> | TensorFlow, PyTorch, Scikit-Learn, XGBoost, ONNX, and more |
+| <a href="model-serving/inferencegraph/overview">**InferenceGraph**</a> | Chain and ensemble multiple models for complex workflows |
+| **Batch Prediction** | Efficient large-dataset processing with batch inference |
+| <a href="model-serving/predictive-inference/transformers/custom-transformer/custom-transformer">**Pre/Post Processing**</a> | Built-in data transformation pipelines and feature engineering |
+| **Real-time Scoring** | Low-latency prediction serving for real-time applications |
+| <a href="model-serving/predictive-inference/detect/alibi/alibi-detect">**ML Monitoring**</a> | Drift detection, outlier detection, and explainability |
+| <a href="concepts/architecture/data-plane/data-plane">**Standard Protocols**</a> | Open Inference Protocol (V1/V2) support across frameworks |
+
+<a href="model-serving/predictive-inference/frameworks/overview">→ Full Predictive AI docs</a>
+
+  </TabItem>
+  <TabItem value="universal" label="⚡ Universal">
+
+| Feature | Description |
+|---|---|
+| <a href="admin-guide/serverless/serverless">**Serverless Inference**</a> | Automatic scaling including scale-to-zero on CPU and GPU |
+| **Enterprise Operations** | Production monitoring, logging, and observability out of the box |
+
+<a href="admin-guide/serverless/serverless">→ Serverless docs</a>
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Architecture Overview
+
+KServe consists of two main planes:
+
+<div className="doc-grid-2">
+  <div className="doc-card">
+    <h4 style={{marginTop: 0}}>🎛️ <a href="concepts/architecture/control-plane">Control Plane</a></h4>
+    <ul style={{margin: 0, paddingLeft: '1.25rem', fontSize: '0.9rem'}}>
+      <li><a href="concepts/resources"><strong>InferenceService CRD</strong></a> — Manages model serving lifecycle</li>
+      <li><a href="concepts/resources/inferencegraph"><strong>InferenceGraph CRD</strong></a> — Orchestrates model ensembles and chaining</li>
+      <li><a href="concepts/resources/servingruntime"><strong>Serving Runtime</strong></a> — Pluggable model runtime implementations</li>
+      <li><a href="concepts/resources/servingruntime"><strong>ClusterServingRuntime</strong></a> — Cluster-wide model runtime definitions</li>
+      <li><a href="model-serving/generative-inference/modelcache/localmodel"><strong>LocalModelCache CRD</strong></a> — Caches large models locally for fast startup</li>
+      <li><strong>Model Storage</strong> — S3, GCS, Azure, HuggingFace, PVC, and more</li>
+    </ul>
+  </div>
+  <div className="doc-card">
+    <h4 style={{marginTop: 0}}>📡 <a href="concepts/architecture/data-plane/data-plane">Data Plane</a></h4>
+    <ul style={{margin: 0, paddingLeft: '1.25rem', fontSize: '0.9rem'}}>
+      <li><a href="model-serving/predictive-inference/frameworks/overview"><strong>Predictor</strong></a> — Serves model predictions</li>
+      <li><a href="model-serving/predictive-inference/transformers/custom-transformer/custom-transformer"><strong>Transformer</strong></a> — Pre/post processing logic</li>
+      <li><a href="model-serving/predictive-inference/explainers/overview"><strong>Explainer</strong></a> — Model explanations and interpretability</li>
+    </ul>
+    <p style={{fontSize: '0.9rem', marginTop: '1rem', marginBottom: 0}}>KServe extends Kubernetes with custom resources for AI/ML workloads — handling load balancing, autoscaling, canary deployments, and monitoring automatically. Pluggable runtimes let you use the best engine per model type: <a href="model-serving/generative-inference/llmisvc/llmisvc-overview">vLLM for LLMs</a>, TorchServe for PyTorch, or custom containers.</p>
+  </div>
+</div>
+
+---
+
+## Supported Frameworks
+
+<Tabs>
+  <TabItem value="predictive-fw" label="📊 Predictive" default>
+    <div className="doc-grid-3" style={{marginTop: '1rem'}}>
+      <a href="model-serving/predictive-inference/frameworks/sklearn/sklearn" className="doc-card"><strong>Scikit-Learn</strong><p>Python-based ML models</p></a>
+      <a href="model-serving/predictive-inference/frameworks/xgboost/xgboost" className="doc-card"><strong>XGBoost</strong><p>Gradient boosting</p></a>
+      <a href="model-serving/predictive-inference/frameworks/tensorflow/tensorflow" className="doc-card"><strong>TensorFlow</strong><p>Deep learning models</p></a>
+      <a href="model-serving/predictive-inference/frameworks/triton/torchscript/torchscript" className="doc-card"><strong>PyTorch</strong><p>Via Triton server</p></a>
+      <a href="model-serving/predictive-inference/frameworks/onnx/onnx" className="doc-card"><strong>ONNX</strong><p>Open Neural Network Exchange</p></a>
+      <a href="https://developer.nvidia.com/tensorrt" className="doc-card"><strong>TensorRT</strong><p>NVIDIA optimized models</p></a>
+      <a href="model-serving/predictive-inference/frameworks/huggingface/overview" className="doc-card"><strong>Hugging Face</strong><p>Transformers and NLP</p></a>
+      <a href="model-serving/predictive-inference/frameworks/mlflow/mlflow" className="doc-card"><strong>MLflow</strong><p>MLflow packaged models</p></a>
+      <a href="model-serving/predictive-inference/frameworks/custom-predictor/custom-predictor" className="doc-card"><strong>Custom Runtimes</strong><p>Bring your own serving logic</p></a>
+    </div>
+  </TabItem>
+  <TabItem value="genai-fw" label="🤖 Generative AI">
+    <div className="doc-grid-3" style={{marginTop: '1rem'}}>
+      <a href="model-serving/generative-inference/llmisvc/llmisvc-overview" className="doc-card"><strong>vLLM</strong><p>High-throughput LLM serving</p></a>
+      <a href="model-serving/generative-inference/tasks/text-generation/text-generation" className="doc-card"><strong>Hugging Face Transformers</strong><p>Text generation models</p></a>
+      <a href="concepts/architecture/data-plane/data-plane" className="doc-card"><strong>OpenAI-Compatible APIs</strong><p>Chat completions, embeddings</p></a>
+    </div>
+  </TabItem>
+  <TabItem value="multi-fw" label="⚡ Multi-Framework">
+    <div className="doc-grid-3" style={{marginTop: '1rem'}}>
+      <a href="model-serving/predictive-inference/frameworks/triton/torchscript/torchscript" className="doc-card"><strong>NVIDIA Triton</strong><p>High-performance inference server</p></a>
+      <div className="doc-card"><strong>AMD</strong><p>Optimized inference on AMD hardware</p></div>
+    </div>
+  </TabItem>
+</Tabs>
+
+---
+
+## Get Started
+
+<div className="doc-grid-2">
+  <a href="getting-started/genai-first-isvc" className="doc-card">
+    <strong>🤖 Serve an LLM</strong>
+    <p>Deploy an LLM using InferenceService with Qwen</p>
+  </a>
+  <a href="getting-started/predictive-first-isvc" className="doc-card">
+    <strong>📊 Serve a Predictive Model</strong>
+    <p>Deploy a scikit-learn model using InferenceService</p>
+  </a>
+  <a href="admin-guide/overview" className="doc-card">
+    <strong>🏗️ Installation Guide</strong>
+    <p>Set up KServe on your Kubernetes cluster</p>
+  </a>
+  <a href="concepts/architecture/control-plane" className="doc-card">
+    <strong>📚 Core Concepts</strong>
+    <p>Learn about serving patterns, control plane, and data plane</p>
+  </a>
+</div>
+
+**Learning path:** Tutorial → <a href="concepts/index">Core concepts</a> → <a href="admin-guide/overview">Production setup</a> → <a href="reference/crd-api">API reference</a>
+
+---
+
+## Community & Support
+
+| Channel | Link |
+|---|---|
+| **GitHub** | [github.com/kserve/kserve](https://github.com/kserve/kserve) — issues, PRs, releases |
+| **Slack** | [CNCF Slack #kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) — questions and discussion |
+| **Community Meetings** | [Monthly calendar](https://github.com/kserve/community) — open to all |
+| **Adopters** | <a href="community/adopters">See who's using KServe</a> |

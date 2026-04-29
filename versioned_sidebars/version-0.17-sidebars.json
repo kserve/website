@@ -8,22 +8,32 @@
         "type": "generated-index"
       },
       "items": [
-        "install/overview",
-        "install/dependencies",
-        "install/kserve-install",
-        "install/llmisvc-install",
-        "install/localmodel-install",
-        "install/upgrade-guide"
+        { "type": "doc", "id": "install/overview", "label": "Overview" },
+        { "type": "doc", "id": "install/dependencies", "label": "Prerequisites" },
+        { "type": "doc", "id": "install/kserve-install", "label": "Install KServe" },
+        { "type": "doc", "id": "install/llmisvc-install", "label": "Install LLMInferenceService" },
+        { "type": "doc", "id": "install/localmodel-install", "label": "Install Local Model Cache" },
+        { "type": "doc", "id": "install/upgrade-guide", "label": "Upgrade Guide" }
       ]
     },
     {
       "type": "category",
       "label": "Getting Started",
+      "link": {
+        "type": "generated-index",
+        "slug": "getting-started"
+      },
       "items": [
         "getting-started/quickstart-guide",
-        "getting-started/genai-first-isvc",
-        "getting-started/genai-first-llmisvc",
-        "getting-started/predictive-first-isvc",
+        {
+          "type": "category",
+          "label": "Deploy Your First",
+          "items": [
+            { "type": "doc", "id": "getting-started/genai-first-isvc", "label": "LLM with InferenceService (Standard)" },
+            { "type": "doc", "id": "getting-started/genai-first-llmisvc", "label": "LLM with LLMInferenceService (Advanced)" },
+            { "type": "doc", "id": "getting-started/predictive-first-isvc", "label": "Predictive InferenceService" }
+          ]
+        },
         "getting-started/swagger-ui"
       ]
     },

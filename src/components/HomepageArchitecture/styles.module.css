@@ -37,21 +37,36 @@
 
 .architectureFeatures {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   margin-top: 2rem;
+}
+
+.archFeatureLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.archFeatureLink:hover {
+  text-decoration: none;
+  color: inherit;
 }
 
 .archFeature {
   padding: 1.5rem;
   border-radius: 8px;
-  background-color: #f8f9fa;
+  background-color: #f0f4ff;
+  border: 1px solid #d0d9f0;
   transition: all 0.3s ease;
+  height: 100%;
+  cursor: pointer;
 }
 
-.archFeature:hover {
+.archFeatureLink:hover .archFeature {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--ifm-color-primary);
 }
 
 /* Dark mode styles for architecture features */
@@ -59,7 +74,7 @@
   background-color: var(--ifm-color-emphasis-100);
 }
 
-:global([data-theme="dark"]) .archFeature:hover {
+:global([data-theme="dark"]) .archFeatureLink:hover .archFeature {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
