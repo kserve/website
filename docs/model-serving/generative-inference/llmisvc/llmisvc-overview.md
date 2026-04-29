@@ -91,9 +91,9 @@ Defines the LLM model source, name, and characteristics:
 - Model URI (HuggingFace, S3, PVC)
 - Model name for API requests
 - Scheduling criticality
-- LoRA adapters (optional)
+- **LoRA adapters** (optional) - Attach task-specific Low-Rank Adaptation modules for efficient multi-tenant serving
 
-**Learn more**: [Configuration Guide](./llmisvc-configuration.md#model-specification)
+**Learn more**: [Configuration Guide](./llmisvc-configuration.md#model-specification) | [LoRA Adapters](./lora-adapters.md)
 
 ---
 
