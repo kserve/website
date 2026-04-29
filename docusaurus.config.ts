@@ -111,6 +111,7 @@ const config: Config = {
           type: 'dropdown',
           label: 'Getting Started',
           position: 'left',
+          to: '/docs/getting-started/quickstart-guide',
           items: [
             {
               type: 'doc',
@@ -151,6 +152,7 @@ const config: Config = {
           type: 'dropdown',
           label: 'Docs',
           position: 'left',
+          to: '/docs/intro',
           items: [
             {
               type: 'doc',
@@ -293,6 +295,7 @@ const config: Config = {
           type: 'dropdown',
           label: 'Community',
           position: 'left',
+          to: '/docs/community/get-involved',
           items: [
             {
               type: 'doc',

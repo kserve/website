@@ -20,7 +20,7 @@ const genAIFeatures = [
     icon: '🚅',
     title: 'GPU Acceleration',
     desc: 'High-performance serving with optimized GPU memory management',
-    link: '/docs/model-serving/generative-inference/llmisvc/llmisvc-overview',
+    link: '/docs/admin-guide/kubernetes-deployment-llmisvc',
   },
   {
     icon: '💾',
@@ -38,7 +38,7 @@ const genAIFeatures = [
     icon: '📈',
     title: 'Autoscaling',
     desc: 'Request-based autoscaling tuned for generative workloads',
-    link: '/docs/model-serving/generative-inference/llmisvc/llmisvc-configuration',
+    link: '/docs/model-serving/predictive-inference/autoscaling/keda-autoscaler',
   },
   {
     icon: '🔧',
@@ -59,7 +59,7 @@ const predictiveFeatures = [
     icon: '🔀',
     title: 'Intelligent Routing',
     desc: 'Seamless routing between predictor, transformer, and explainer',
-    link: '/docs/model-serving/inferencegraph/overview',
+    link: '/docs/concepts/architecture/control-plane',
   },
   {
     icon: '🔄',

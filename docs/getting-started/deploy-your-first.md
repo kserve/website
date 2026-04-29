@@ -1,9 +1,9 @@
 ---
-title: Deploy Your First
+title: Deploy Your First Model
 description: Choose the right KServe tutorial based on what you want to serve.
 ---
 
-# Deploy Your First
+# Deploy Your First Model
 
 Choose your path based on what you want to serve:
 

@@ -20,15 +20,14 @@ If you are familiar with KServe, you can skip the introductory sections and jump
 
 ## Which Deployment Mode Do I Need?
 
-| Mode | Best For | Inference Types |
+| Resource | Best For | Inference Types |
 |---|---|---|
-| [Standard Kubernetes](./kubernetes-deployment.md) | Full resource control, GPU workloads, production | Generative + Predictive |
-| [Knative (Serverless)](./serverless/serverless.md) | Scale-to-zero, burst/unpredictable traffic | Predictive |
-| [ModelMesh](./modelmesh.md) | High-density, many models on shared infrastructure | Predictive |
-| [LLMInferenceService](./kubernetes-deployment-llmisvc.md) | Advanced LLM features (prefix routing, disaggregated serving) | Generative (LLM) |
+| **[InferenceService](./kubernetes-deployment.md)** (Standard) | Full resource control, GPU workloads, production | Generative + Predictive |
+| **[InferenceService](./serverless/serverless.md)** (Knative/Serverless) | Scale-to-zero, burst/unpredictable traffic | Predictive |
+| **[LLMInferenceService](./kubernetes-deployment-llmisvc.md)** | Advanced LLM features (prefix routing, disaggregated serving) | Generative (LLM) |
 
 :::tip Not sure which to pick?
-Start with **Standard Kubernetes Deployment** — it works for all workloads. Switch to Knative for scale-to-zero, ModelMesh for multi-model density, or LLMInferenceService for advanced LLM features.
+Start with **InferenceService** — it works for all workloads, both ML and standard LLM. Switch to LLMInferenceService for advanced LLM features.
 :::
 
 ---
@@ -47,7 +46,7 @@ Generative inference workloads involve models that generate new content (text, i
 - Process streaming responses
 - Have higher memory requirements
 
-**Recommended deployment**: **Standard Kubernetes Deployment** provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
+**Recommended deployment**: **Standard** Kubernetes Deployment provides the most control over resource allocation and scaling. Gateway API is particularly recommended for generative inference to handle streaming responses effectively.
 
 ### 📊 Predictive Inference
 
@@ -60,9 +59,8 @@ Predictive inference workloads involve models that predict specific values or cl
 - Return fixed-size responses
 
 **Available deployment options**:
-- **Standard Kubernetes Deployment**: For direct control over resources
-- **Knative Deployment**: For scale to zero capabilities and cost optimization
-- **ModelMesh Deployment**: For high-density, multi-model scenarios
+- **InferenceService (Standard)**: For direct control over resources
+- **InferenceService (Knative/Serverless)**: For scale to zero capabilities and cost optimization
 
 ---
 
@@ -70,10 +68,9 @@ Predictive inference workloads involve models that predict specific values or cl
 
 KServe supports multiple deployment modes. Choose the guide that matches your workload:
 
-- **[Standard Kubernetes Deployment](./kubernetes-deployment.md)** — suitable for both generative and predictive inference workloads
-- **[LLMInferenceService Deployment](./kubernetes-deployment-llmisvc.md)** — advanced LLM serving with prefix-aware routing and disaggregated serving
-- **[Knative Deployment](./serverless/serverless.md)** — scale-to-zero for burst and unpredictable traffic workloads
-- **[ModelMesh Deployment](./modelmesh.md)** — high-density, multi-model scenarios
+- **[InferenceService (Standard)](./kubernetes-deployment.md)** — suitable for both generative and predictive inference workloads
+- **[InferenceService (Knative/Serverless)](./serverless/serverless.md)** — scale-to-zero for burst and unpredictable traffic workloads
+- **[LLMInferenceService](./kubernetes-deployment-llmisvc.md)** — advanced LLM serving with prefix-aware routing and disaggregated serving
 
 ---
 
@@ -91,7 +88,7 @@ The migration process involves:
 3. Configuring Gateway and HTTPRoute resources
 4. Updating KServe to use the Gateway API
 
-[Learn more about Gateway API Migration →](./gatewayapi-migration.md)
+[Learn more about Gateway API Migration](./gatewayapi-migration.md)
 
 ---
 
@@ -105,7 +102,7 @@ The migration process involves:
 
 ### For Predictive Inference
 - **Autoscaling**: Configure appropriate scaling thresholds based on model performance
-- **Resource Efficiency**: Consider Knative or ModelMesh for cost optimization
+- **Resource Efficiency**: Consider Knative for cost optimization
 - **Batch Processing**: Configure batch settings for improved throughput when applicable
 
 ### For All Workloads
@@ -119,12 +116,11 @@ The migration process involves:
 ## Next Steps
 
 ### For Generative Inference
-- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
+- [InferenceService Deployment Guide](./kubernetes-deployment.md)
 - [LLMInferenceService Deployment Guide](./kubernetes-deployment-llmisvc.md)
 - [Gateway API Migration Guide](./gatewayapi-migration.md)
 
 ### For Predictive Inference
-- [Standard Kubernetes Deployment Guide](./kubernetes-deployment.md)
-- [Knative Deployment Guide](./serverless/serverless.md)
-- [ModelMesh Deployment Guide](./modelmesh.md)
+- [InferenceService (Standard) Deployment Guide](./kubernetes-deployment.md)
+- [InferenceService (Knative/Serverless) Deployment Guide](./serverless/serverless.md)
 - [Gateway API Migration Guide](./gatewayapi-migration.md)

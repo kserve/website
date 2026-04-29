@@ -366,7 +366,6 @@ const sidebars: SidebarsConfig = {
           label: 'Predictive Inference',
           items: [
             'admin-guide/kubernetes-deployment',
-            'admin-guide/modelmesh',
             {
               type: 'category',
               label: 'Knative Deployment',

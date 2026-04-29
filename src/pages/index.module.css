@@ -160,8 +160,8 @@
   font-weight: 800;
   position: relative;
   z-index: 1;
-  color: #1d4bab;
-  text-shadow: none;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes textGlow {
@@ -179,8 +179,8 @@
   margin: 1.5rem auto;
   position: relative;
   z-index: 1;
-  color: #1d4bab;
-  text-shadow: none;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   opacity: 1;
   font-weight: 600;
 }
