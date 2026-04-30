@@ -1,5 +1,5 @@
 ---
-title: Deploy Your First Predictive AI Service
+title: Deploy Your First Predictive Model with InferenceService
 description: Learn how to deploy your first Predictive InferenceService with a scikit-learn model using KServe.
 ---
 import Tabs from '@theme/Tabs';

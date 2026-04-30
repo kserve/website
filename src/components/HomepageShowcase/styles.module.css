@@ -30,6 +30,71 @@
   flex: 1;
 }
 
+.codeWindow {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.codeWindowHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #e8e8e8;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:global([data-theme="dark"]) .codeWindowHeader {
+  background: #2d2d2d;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.codeWindowTitle {
+  margin-left: 8px;
+  font-size: 0.78rem;
+  color: #888;
+  font-family: var(--ifm-font-family-monospace);
+  letter-spacing: 0.02em;
+}
+
+.codeWindow :global(.theme-code-block) {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+
+/* Boost text contrast in light mode */
+:global([data-theme='light']) .codeWindow :global(.token.plain),
+:global([data-theme='light']) .codeWindow :global(.token.string),
+:global([data-theme='light']) .codeWindow :global(.token.number),
+:global([data-theme='light']) .codeWindow :global(.token.boolean),
+:global([data-theme='light']) .codeWindow :global(.token.atrule),
+:global([data-theme='light']) .codeWindow :global(.token.attr-value) {
+  color: #b5000c !important;
+}
+
+:global([data-theme='light']) .codeWindow :global(.token.key),
+:global([data-theme='light']) .codeWindow :global(.token.attr-name),
+:global([data-theme='light']) .codeWindow :global(.token.property) {
+  color: #0060a0 !important;
+}
+
+:global([data-theme='light']) .codeWindow :global(pre.prism-code) {
+  color: #1a1a2e !important;
+}
+
+
 .showcasePoints {
   margin-top: 2rem;
 }

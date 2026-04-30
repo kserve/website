@@ -1,11 +1,11 @@
 ---
-title: Deploy Your First GenAI Service
-description: Learn how to deploy your first generative AI service using KServe with the Qwen model.
+title: Deploy Your First LLM with InferenceService
+description: Deploy a large language model using KServe's standard InferenceService resource. The simplest path to LLM serving on Kubernetes.
 ---
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Deploy Your First GenAI Service
+# Deploy Your First LLM with InferenceService
 
 In this tutorial, you will deploy a Large Language Model (LLM) using KServe's InferenceService to create a powerful generative AI service. We'll use the Qwen model, a state-of-the-art language model developed by Alibaba, capable of understanding and generating human-like text across multiple languages.
 

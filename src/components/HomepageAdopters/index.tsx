@@ -38,7 +38,7 @@ export default function HomepageAdopters() {
     },
     {
       name: 'Cloudera',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Cloudera_logo.svg/1024px-Cloudera_logo.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Cloudera_logo.svg',
       url: 'https://www.cloudera.com/'
     },
     {
@@ -58,7 +58,7 @@ export default function HomepageAdopters() {
     },
     {
       name: 'Inspur',
-      logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/73/Inspur_logo.svg/220px-Inspur_logo.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/en/7/73/Inspur_logo.svg',
       url: 'https://www.inspur.com/'
     },
     {
@@ -103,7 +103,7 @@ export default function HomepageAdopters() {
     },
     {
       name: 'Intuit',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Intuit_logo_2022.svg/2880px-Intuit_logo_2022.svg.png',
+      logo: 'https://upload.wikimedia.org/wikipedia/commons/5/57/Intuit_logo_2022.svg',
       url: 'https://www.intuit.com/'
     },
     {
@@ -114,7 +114,7 @@ export default function HomepageAdopters() {
   ];
 
   return (
-    <section className={styles.adopters}>
+    <section id="adopters" className={styles.adopters}>
       <div className="container">
         <div className="row">
           <div className="col col--10 col--offset-1">

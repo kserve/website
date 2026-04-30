@@ -4,6 +4,16 @@ title: Control Plane
 
 # Control Plane
 
+KServe has two control plane implementations depending on which resource you deploy:
+
+| | [InferenceService](control-plane) | [LLMInferenceService](control-plane-llmisvc) |
+|---|---|---|
+| **Best for** | Predictive models & standard GenAI | Advanced LLM workloads |
+| **CRD** | `InferenceService` (v1beta1) | `LLMInferenceService` (v1alpha1) |
+| **Use when** | Most use cases | You need prefix-aware routing, disaggregated serving, or fine-grained GPU scheduling |
+
+---
+
 The KServe control plane is responsible for managing the lifecycle of inference services, coordinating with Kubernetes APIs, handling resource orchestration, and providing autoscaling capabilities. It serves as the brain of the KServe platform, ensuring that model serving workloads are properly deployed, monitored, and scaled according to demand.
 
 ## Overview

@@ -108,15 +108,159 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'docsSidebar',
+          type: 'dropdown',
+          label: 'Getting Started',
           position: 'left',
-          label: 'Docs',
+          to: '/docs/getting-started/quickstart-guide',
+          items: [
+            {
+              type: 'doc',
+              docId: 'getting-started/quickstart-guide',
+              label: 'Quickstart Guide',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Tutorials</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/genai-first-isvc',
+              label: 'Serve an LLM',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/genai-first-llmisvc',
+              label: 'Serve an LLM (Advanced)',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/predictive-first-isvc',
+              label: 'Serve a Predictive Model',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/swagger-ui',
+              label: 'Swagger UI',
+            },
+          ],
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        {
+          type: 'dropdown',
+          label: 'Docs',
+          position: 'left',
+          to: '/docs/intro',
+          items: [
+            {
+              type: 'doc',
+              docId: 'intro',
+              label: 'Overview',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Concepts</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/architecture/index',
+              label: 'Architecture Overview',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/architecture/control-plane',
+              label: 'Control Plane',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/architecture/data-plane/data-plane',
+              label: 'Data Plane',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/resources/index',
+              label: 'Resources',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Model Serving</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/generative-inference/overview',
+              label: 'Generative AI Serving',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/predictive-inference/frameworks/overview',
+              label: 'Predictive AI Serving',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/inferencegraph/overview',
+              label: 'Inference Graph',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/storage/overview',
+              label: 'Model Storage',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Install & Ops</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'install/overview',
+              label: 'Installation',
+            },
+            {
+              type: 'doc',
+              docId: 'admin-guide/overview',
+              label: 'Admin Guide',
+            },
+            {
+              type: 'doc',
+              docId: 'developer-guide/index',
+              label: 'Developer Guide',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Reference</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'reference/crd-api',
+              label: 'API Reference',
+            },
+            {
+              type: 'doc',
+              docId: 'reference/integrations',
+              label: 'Integrations',
+            },
+          ],
+        },
         {
           type: 'docsVersionDropdown',
-          position: 'left',
+          position: 'right',
           versions: {
             'current': {
               label: 'nightly',
@@ -148,10 +292,31 @@ const config: Config = {
           ],
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'communitySidebar',
-          position: 'right',
+          type: 'dropdown',
           label: 'Community',
+          position: 'left',
+          to: '/docs/community/get-involved',
+          items: [
+            {
+              type: 'doc',
+              docId: 'community/get-involved',
+              label: 'Get Involved',
+            },
+            {
+              type: 'doc',
+              docId: 'community/adopters',
+              label: 'Adopters',
+            },
+            {
+              type: 'doc',
+              docId: 'community/presentations',
+              label: 'Presentations',
+            },
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
+          ],
         },
         {
           href: 'https://github.com/kserve/kserve',
@@ -168,7 +333,7 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {
-              label: 'Get Started',
+              label: 'Getting Started',
               to: '/docs/getting-started/quickstart-guide',
             },
             {

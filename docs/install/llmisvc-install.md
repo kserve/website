@@ -160,5 +160,5 @@ UNINSTALL=true ENABLE_LLMISVC=true ENABLE_KSERVE=false ./hack/setup/infra/manage
 ## Next Steps
 
 - [Install LocalModel Controller](./localmodel-install) - For model caching
-- [Getting Started with LLMInferenceService](../getting-started/genai-first-llmisvc) - Deploy your first generative AI model
+- [Deploy Your First LLM with LLMInferenceService](../getting-started/genai-first-llmisvc) - Serve an LLM using the advanced LLMInferenceService resource
 - [LLMInferenceService Configuration Guide](../model-serving/generative-inference/llmisvc/llmisvc-configuration) - Advanced configuration

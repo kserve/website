@@ -47,15 +47,30 @@
 }
 
 .ctaButton {
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 0;
   font-weight: 500;
   border-radius: 8px;
   transition: all 0.3s ease;
+  width: 160px;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .ctaButton:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.ctaInstallButton {
+  background: #1d4bab !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+.ctaInstallButton:hover {
+  background: #1a3f8f !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5) !important;
 }
 
 @media (max-width: 768px) {

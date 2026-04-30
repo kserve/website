@@ -10,6 +10,7 @@ import HomepageArchitecture from '@site/src/components/HomepageArchitecture';
 import HomepageAdopters from '@site/src/components/HomepageAdopters';
 import HomepageQuickStart from '@site/src/components/HomepageQuickStart';
 import HomepageBenefits from '@site/src/components/HomepageBenefits';
+import HomepageSectionNav from '@site/src/components/HomepageSectionNav';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
@@ -29,13 +30,13 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/getting-started/genai-first-isvc">
-            Get Started
+            to="/docs/getting-started/quickstart-guide">
+            Quickstart
           </Link>
           <Link
-            className="button button--outline button--lg button--secondary"
+            className={clsx("button button--lg", styles.installButton)}
             to="/docs/admin-guide/overview#installation">
-            Install KServe
+            Install
           </Link>
         </div>
       </div>
@@ -50,6 +51,7 @@ export default function Home(): ReactNode {
       title={siteConfig.title}
       description="KServe - A Kubernetes-native platform for serving machine learning models with standardized protocols for both predictive and generative AI. Scale to zero, GPU acceleration, and multi-framework support.">
       <HomepageHeader />
+      <HomepageSectionNav />
       <main>
         <HomepageBenefits />
         <HomepageShowcase />

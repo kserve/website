@@ -1,12 +1,12 @@
 ---
-sidebar_label: "Control Plane - LLMISVC"
+sidebar_label: "LLM Control Plane"
 sidebar_position: 2
 title: "LLMInferenceService Architecture Deep Dive"
 ---
 
 # LLMInferenceService Architecture Deep Dive
 
-This guide provides an in-depth look at the LLMInferenceService architecture, component interactions, and advanced patterns for production deployments.
+The `LLMInferenceService` CRD is purpose-built for large language model workloads. Unlike the standard `InferenceService`, it exposes primitives for KV-cache offloading, prefix-aware routing, disaggregated prefill/decode serving, and fine-grained GPU scheduling — capabilities that become critical at scale. Read this if you're running LLMs in production and need to optimize throughput, reduce latency, or manage multi-node deployments.
 
 > **Prerequisites**: Familiarity with [core concepts](../../model-serving/generative-inference/llmisvc/llmisvc-overview.md) and [configuration](../../model-serving/generative-inference/llmisvc/llmisvc-configuration.md) is recommended.
 

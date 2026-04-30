@@ -1,8 +1,9 @@
 ---
-title: Overview
+title: Inference Protocol V2
+sidebar_label: "Inference Protocol V2"
 ---
 
-# Open Inference Protocol (V2 Inference Protocol)
+# Inference Protocol V2 (Open Inference Protocol)
 
 The Open Inference Protocol, also known as KServe V2 Protocol, provides a standardized interface for model inference across different machine learning frameworks and serving systems. For an inference server to be compliant with this protocol, the server must implement the health, metadata, and inference V2 APIs.
 

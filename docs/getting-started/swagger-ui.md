@@ -4,6 +4,12 @@ KServe ModelServer is built on top of [FastAPI](https://github.com/tiangolo/fast
 
 Swagger UI allows visualizing and interacting with the KServe InferenceService API directly **in the browser**, making it easy for exploring the endpoints and validating the outputs without using any command-line tool.
 
+:::tip Want the complete API specification?
+
+This page is a hands-on tutorial for using Swagger UI to interact with a running InferenceService. For complete protocol specifications, see the [V2 Inference Protocol](../concepts/architecture/data-plane/v2-protocol/v2-protocol.md) and [Data Plane](../concepts/architecture/data-plane/data-plane.md) docs.
+
+:::
+
 ![KServe ModelServer Swagger UI](/img/swagger/kserve-swagger-ui.png)
 
 ## Enable Swagger UI
