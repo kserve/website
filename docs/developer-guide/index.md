@@ -400,6 +400,21 @@ When running tests with Gateway API, you should provide the `--networking-layer`
 
 Tests may not clean up. To re-run, first do `kubectl delete namespace kserve-ci-e2e-test`, recreate the namespace, and run again.
 
+### CI Analysis
+
+Every E2E job uploads a zip named `test-results-<suite>-<install-method>` (e.g. `test-results-predictor-kustomize`) containing two structured report files:
+
+- **`junit_e2e.xml`** -- JUnit XML (built-in pytest). Standard format consumed by most CI observability tools.
+- **`e2e_results.json`** -- JSON via [pytest-json-report](https://pypi.org/project/pytest-json-report/). Richer data including per-test timings, setup/call/teardown phases, and full tracebacks.
+
+Both files are written even when tests fail, enabling partial failure analysis.
+
+To produce these locally, set `ARTIFACT_DIR` before running the E2E script:
+
+```bash
+ARTIFACT_DIR=./results ./test/scripts/gh-actions/run-e2e-tests.sh predictor
+```
+
 ### Iterating
 
 As you make changes to the code-base, there are special cases to be aware of:
