@@ -51,6 +51,18 @@ const config: Config = {
     'docusaurus-theme-openapi-docs',
   ],
 
+  // Add kapa.ai AI assistant widget
+  scripts: [
+    {
+      src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+      'data-website-id': '054b6efc-8335-4caf-b88d-4f001355cc8d',
+      'data-project-name': 'KServe',
+      'data-project-color': '#588be8',
+      'data-project-logo': 'https://kserve.github.io/website/img/kserve-logo.png',
+      async: true,
+    },
+  ],
+
   presets: [
     [
       'classic',
