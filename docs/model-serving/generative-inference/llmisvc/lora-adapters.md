@@ -96,20 +96,25 @@ lora:
 
 **Authentication** (for private repositories):
 
-```yaml
-template:
-  containers:
-    - name: storage-initializer
-      env:
-        - name: HF_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: huggingface-secret
-              key: token
+The controller injects credentials into the storage-initializer via the Kubernetes service account.
+Create a secret with an `HF_TOKEN` key and attach it to the service account used by the
+LLMInferenceService (defaults to `default`):
+
+```bash
+kubectl create secret generic hf-token \
+  --from-literal=HF_TOKEN=<your-huggingface-token>
+
+kubectl patch serviceaccount default \
+  -p '{"secrets": [{"name": "hf-token"}]}'
 ```
 
+The controller discovers the secret from the service account and automatically injects `HF_TOKEN`
+into the storage-initializer.
+
 :::note
-HuggingFace adapters require the storage-initializer to be enabled (default behavior).
+HuggingFace adapters require the storage-initializer to be enabled (default behavior). Env vars
+cannot be added to the storage-initializer via `spec.template` — credentials must be provided
+through the service account secret mechanism described above.
 :::
 
 ---
@@ -129,26 +134,26 @@ lora:
 
 **S3 Configuration with Credentials**:
 
-```yaml
-template:
-  containers:
-    - name: storage-initializer
-      env:
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: s3-config
-              key: AWS_ACCESS_KEY_ID
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: s3-config
-              key: AWS_SECRET_ACCESS_KEY
-        - name: S3_ENDPOINT
-          value: "https://minio.example.com"
-        - name: S3_USE_HTTPS
-          value: "1"
+The controller injects S3 credentials into the storage-initializer via the Kubernetes service
+account. Create a secret using the key names the credential builder recognizes, then attach it to
+the service account:
+
+```bash
+kubectl create secret generic s3-credentials \
+  --from-literal=awsAccessKeyID=<your-access-key-id> \
+  --from-literal=awsSecretAccessKey=<your-secret-access-key>
+
+kubectl patch serviceaccount default \
+  -p '{"secrets": [{"name": "s3-credentials"}]}'
 ```
+
+For custom S3 endpoints (MinIO, Ceph, etc.) or additional S3 configuration, see the
+[KServe storage credentials documentation](https://kserve.github.io/website/latest/modelserving/storage/s3/s3/).
+
+:::note
+Env vars cannot be added to the storage-initializer via `spec.template` — credentials must be
+provided through the service account secret mechanism described above.
+:::
 
 **Supported S3-Compatible Providers**:
 - AWS S3
@@ -267,19 +272,9 @@ spec:
             nvidia.com/gpu: "1"
             cpu: "8"
             memory: 32Gi
-      - name: storage-initializer
-        env:
-          - name: AWS_ACCESS_KEY_ID
-            valueFrom:
-              secretKeyRef:
-                name: s3-config
-                key: AWS_ACCESS_KEY_ID
-          - name: AWS_SECRET_ACCESS_KEY
-            valueFrom:
-              secretKeyRef:
-                name: s3-config
-                key: AWS_SECRET_ACCESS_KEY
 ```
+
+S3 credentials for the `code-adapter` are injected via the service account (see [S3 credentials](#s3-compatible-storage-s3)).
 
 ---
 
@@ -421,7 +416,7 @@ kubectl logs <pod-name> -c main
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| **Download failure** | Invalid HF/S3 credentials | Verify `HF_TOKEN` or S3 credentials in environment variables |
+| **Download failure** | Invalid HF/S3 credentials | Verify credentials are in a secret attached to the service account (see [HF auth](#huggingface-hub-hf) or [S3 auth](#s3-compatible-storage-s3)) |
 | **PVC mount failure** | PVC doesn't exist or wrong namespace | Ensure PVC exists in same namespace as LLMInferenceService |
 | **Adapter not found at inference** | Adapter name mismatch | Use exact adapter name from `spec.model.lora.adapters[].name` in `model` parameter |
 | **OOM errors** | Too many adapters or insufficient GPU memory | Reduce number of adapters or increase GPU memory allocation |
