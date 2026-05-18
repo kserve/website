@@ -13,6 +13,12 @@ This page contains a collection of presentations, demos, and talks about KServe 
 
 | Event           | Title                                                      | Speaker(s)                 | Resources                                            |
 |-----------------|------------------------------------------------------------|----------------------------|------------------------------------------------------|
+| KubeCon Europe  | Evolving KServe: The Unified Model Inference Platform for Both Predctive and Generative AI  | JooHo Lee and Filippe Spolti  | [Slides and recording](https://kccnceu2026.sched.com/event/2EF54/evolving-kserve-the-unified-model-inference-platform-for-both-predictive-and-generative-ai-filippe-spolti-jooho-lee-red-hat)
+
+### 2025
+
+| Event           | Title                                                      | Speaker(s)                 | Resources                                            |
+|-----------------|------------------------------------------------------------|----------------------------|------------------------------------------------------|
 | Cloud Native & Kubernetes AI Day North America        |  KServe Next: Advancing Generative AI Model Serving     | Yuan Tang and Dan Sun             | [Slides and recording](https://github.com/terrytangyuan/public-talks/tree/main/talks/kubecon-na-2025#kserve-next-advancing-generative-ai-model-serving) |
 | KubeCon North America        |  Anchoring Trust in the Age of AI: Identities Across Humans, Machines, and Models     | Yuan Tang and Anjali Telang             | [Slides and recording](https://github.com/terrytangyuan/public-talks/tree/main/talks/kubecon-na-2025#keynote-anchoring-trust-in-the-age-of-ai-identities-across-humans-machines-and-models) |
 | KubeCon North America        |    Navigating the Rapid Evolution of Large Model Inference: Where does Kubernetes Fit?   | Jiaxin Shan, Yuan Tang, Sergey Kanzhelev, Rita Zhang               | [Slides and recording](https://github.com/terrytangyuan/public-talks/tree/main/talks/kubecon-na-2025#navigating-the-rapid-evolution-of-large-model-inference-where-does-kubernetes-fit) |
