@@ -9,7 +9,7 @@ This page contains a collection of presentations, demos, and talks about KServe 
 
 ## Conference Talks by Year
 
-### 2025
+### 2026
 
 | Event           | Title                                                      | Speaker(s)                 | Resources                                            |
 |-----------------|------------------------------------------------------------|----------------------------|------------------------------------------------------|
