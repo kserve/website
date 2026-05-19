@@ -13,7 +13,8 @@ This page contains a collection of presentations, demos, and talks about KServe 
 
 | Event           | Title                                                      | Speaker(s)                 | Resources                                            |
 |-----------------|------------------------------------------------------------|----------------------------|------------------------------------------------------|
-| KubeCon Europe  | Evolving KServe: The Unified Model Inference Platform for Both Predctive and Generative AI  | JooHo Lee and Filippe Spolti  | [Slides and recording](https://kccnceu2026.sched.com/event/2EF54/evolving-kserve-the-unified-model-inference-platform-for-both-predictive-and-generative-ai-filippe-spolti-jooho-lee-red-hat)
+| KubeCon Europe  | Evolving KServe: The Unified Model Inference Platform for Both Predctive and Generative AI  | JooHo Lee and Filippe Spolti  | [Slides and recording](https://kccnceu2026.sched.com/event/2EF54/evolving-kserve-the-unified-model-inference-platform-for-both-predictive-and-generative-ai-filippe-spolti-jooho-lee-red-hat) |
+| KubeCon Europe  | Project Lightning Talk: Evolving KServe: The Unified Model Inference Platform | Yuan Tang | [Slides and recording](https://github.com/terrytangyuan/public-talks/tree/main/talks/kubecon-europe-2026#project-lightning-talk-evolving-kserve-the-unified-model-inference-platform-for-both-predictive-and-generative-ai) |
 
 ### 2025
 
