@@ -155,7 +155,7 @@ Env vars cannot be added to the storage-initializer via `spec.template` — cred
 provided through the service account secret mechanism described above.
 :::
 
-**Supported S3-Compatible Providers**:
+In general, all storage schemes supported by KServe's storage-initializer work for LoRA adapters, with the exception of OCI (see [Limitations](#limitations)). S3-compatible providers include:
 - AWS S3
 - MinIO
 - Ceph Object Gateway
@@ -163,7 +163,7 @@ provided through the service account secret mechanism described above.
 - Azure Blob Storage (S3 compatibility mode)
 
 :::note
-These providers are expected to work via standard S3 API compatibility but have not been individually validated end-to-end.
+Only `hf://` has been specifically tested with LoRA adapters. S3-compatible providers are expected to work via the existing KServe storage-initializer S3 support but have not been individually validated with LoRA adapters.
 :::
 
 ---
