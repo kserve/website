@@ -27,12 +27,12 @@ LoRA adapters are loaded at service startup and vLLM can switch between them dyn
 
 Before configuring LoRA adapters, ensure:
 
-- **vLLM Runtime**: LoRA support requires vLLM (default runtime for LLMInferenceService)
+- **vLLM Runtime**: LoRA support requires vLLM (default runtime for LLMInferenceService). See the [vLLM LoRA documentation](https://docs.vllm.ai/en/latest/features/lora.html) for details.
 - **Storage Initializer**: Enabled for `hf://` and `s3://` adapters (enabled by default)
 - **Base Model Compatibility**: Your base model must be trained with the same architecture as the adapters
 - **Kubernetes Resources**: Sufficient GPU memory to load base model + all adapters
 
-> **Note**: Each adapter typically requires 50-500MB of GPU memory depending on rank and model size.
+> **Note**: Each adapter typically requires 50-500MB of GPU memory depending on rank and model size. As a rule of thumb, keep total adapter memory to roughly 1% of the model's GPU memory footprint to avoid impacting base model performance.
 
 ---
 
@@ -162,6 +162,10 @@ provided through the service account secret mechanism described above.
 - Google Cloud Storage (S3 compatibility mode)
 - Azure Blob Storage (S3 compatibility mode)
 
+:::note
+These providers are expected to work via standard S3 API compatibility but have not been individually validated end-to-end.
+:::
+
 ---
 
 ### PersistentVolumeClaim (`pvc://`)
@@ -179,8 +183,8 @@ lora:
 
 **PVC Requirements**:
 - PVC must exist in the same namespace
-- Access mode: `ReadOnlyMany` or `ReadWriteMany` (for multiple replicas)
-- Contains adapter files in safetensors or PyTorch format
+- Access mode: `ReadOnlyMany` (recommended — adapters are read-only at runtime)
+- The path specified in the URI must contain the adapter files directly in standard format: `adapter_config.json` and `adapter_model.safetensors` (or `adapter_model.bin` for PyTorch format)
 
 **Example PVC Setup**:
 
@@ -434,7 +438,7 @@ If you disable the storage-initializer (`storageInitializer.enabled: false`), `h
 
 ### Unsupported URI Schemes
 
-**OCI Registries (`oci://`)**: Currently not supported for LoRA adapters.
+**OCI Registries (`oci://`)**: Currently not supported for LoRA adapters. OCI models run as sidecar containers ("modelcars") with a shared process namespace, but only one modelcar per pod is supported. Since the base model already occupies that slot, additional modelcars cannot be used for adapters.
 
 **Workaround**: Download the adapter to a PVC manually and use `pvc://` scheme:
 
