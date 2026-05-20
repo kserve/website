@@ -194,8 +194,19 @@ Below is an explanation of command line arguments supported by the Hugging Face 
 - `--trust_remote_code`: Allow loading of models and tokenizers with custom code.
 - `--tensor_input_names`: The tensor input names passed to the model for triton inference server backend.
 - `--return_token_type_ids`: Return token type ids.
+- `--return_offsets_mapping`: Return tokenizer offset mappings in the response outputs. This is applicable to `token_classification` tasks and can be used to align predicted tokens with character spans in the original input text.
 - `--return_probabilities`: Return probabilities of predicted indexes. This is only applicable for tasks 'sequence_classification', 'token_classification' and 'fill_mask'.
 - `--disable_log_requests`: Disable logging of requests.
+
+#### Token Classification Notes
+
+For `token_classification` tasks, the runtime can use tokenizer-provided offset mappings to align predicted tokens with the original input text.
+
+- Offset mappings provide the start and end character positions of each token in the original string.
+- This is useful for named entity recognition (NER) and other span-based token classification tasks.
+- If the tokenizer does not support offset mappings, accurate character-level span alignment may not be available.
+
+Enable this behavior using the `--return_offsets_mapping` runtime argument. It is recommended to use tokenizers that support `return_offsets_mapping=True` for accurate results.
 
 ### vLLM Specific Configuration
 
