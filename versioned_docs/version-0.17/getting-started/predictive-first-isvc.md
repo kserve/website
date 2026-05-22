@@ -266,7 +266,9 @@ kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-<Activ
 Execute the following command to view output:
 
 ```bash
-kubectl logs load-test8b58n-rgfxr -n kserve-test
+# Get the job name (generated with a random suffix)
+JOB_NAME=$(kubectl get jobs -n kserve-test -o jsonpath='{.items[0].metadata.name}')
+kubectl logs job/$JOB_NAME -n kserve-test
 ```
 
 :::tip[Expected Output]
