@@ -1,5 +1,6 @@
 .PHONY: gen-api-docs open-inference-grpc gen-oip-api-docs gen-crd-api-docs
 
+ENGINE ?= docker
 PROTO_FILE_PATH := https://raw.githubusercontent.com/kserve/open-inference-protocol/refs/heads/main/specification/protocol/open_inference_grpc.proto
 
 open-inference-grpc:
@@ -9,7 +10,7 @@ open-inference-grpc:
 gen-oip-grpc-api-docs: open-inference-grpc
 	@bash -c ' \
 	  trap "rm -f ./open_inference_grpc.proto" EXIT; \
-	  docker run -it --user $(id -u):$(id -g) \
+	  $(ENGINE) run -it --user $(id -u):$(id -g) \
 	    -v $(PWD)/docs/reference/oip:/out \
 	    -v $(PWD)/hack/oip-api-ref-docs:/templates \
 	    -v $(PWD):/protos \

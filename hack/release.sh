@@ -47,6 +47,10 @@ find docs/ -type f -name "*.md" \
 find docs/ -type f -name "*.md" \
   -exec sed -i "s|\(image: kserve/[^:]*:\)v$current_version\\.0|\1v$new_version.0|g" {} +
 
+# Update kserve-install.sh --kserve-version flag (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|--kserve-version v$current_version\\.0|--kserve-version v$new_version.0|g" {} +
+
 # Update "KServe v{version}" references (including .0 patch version)
 find docs/ -type f -name "*.md" \
   -exec sed -i "s|KServe v$current_version\\.0|KServe v$new_version.0|g" {} +
