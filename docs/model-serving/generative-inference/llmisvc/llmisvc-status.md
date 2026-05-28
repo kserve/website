@@ -290,6 +290,81 @@ status:
         namespace: istio-system
 ```
 
+### Healthy service with autoscaling (HPA)
+
+Single-node deployment with WVA autoscaling via HPA. `ScalingReady` is True, indicating the HPA is reading `wva_desired_replicas` successfully and the metrics pipeline is healthy.
+
+```yaml
+status:
+  url: "https://my-llm.example.com"
+  conditions:
+    - type: Ready
+      status: "True"
+      lastTransitionTime: "2025-06-01T10:30:00Z"
+      observedGeneration: 2
+    - type: PresetsCombined
+      status: "True"
+      lastTransitionTime: "2025-06-01T10:28:00Z"
+      observedGeneration: 2
+    - type: WorkloadsReady
+      status: "True"
+      lastTransitionTime: "2025-06-01T10:30:00Z"
+      observedGeneration: 2
+    - type: MainWorkloadReady
+      status: "True"
+      lastTransitionTime: "2025-06-01T10:30:00Z"
+      observedGeneration: 2
+    - type: ScalingReady
+      status: "True"
+      lastTransitionTime: "2025-06-01T10:30:00Z"
+      observedGeneration: 2
+    - type: RouterReady
+      status: "True"
+      lastTransitionTime: "2025-06-01T10:29:00Z"
+      observedGeneration: 2
+```
+
+### Failing autoscaling (broken metrics pipeline)
+
+In this example, the HPA cannot read `wva_desired_replicas` because the Prometheus Adapter is misconfigured. The controller propagates the HPA's `FailedGetExternalMetric` reason to `ScalingReady`, which rolls up to `WorkloadsReady=False` and `Ready=False`.
+
+```yaml
+status:
+  conditions:
+    - type: Ready
+      status: "False"
+      reason: "FailedGetExternalMetric"
+      message: "the HPA was unable to compute the replica count"
+      lastTransitionTime: "2025-06-02T11:00:00Z"
+      observedGeneration: 2
+    - type: PresetsCombined
+      status: "True"
+      lastTransitionTime: "2025-06-02T10:55:00Z"
+      observedGeneration: 2
+    - type: WorkloadsReady
+      status: "False"
+      reason: "FailedGetExternalMetric"
+      message: "the HPA was unable to compute the replica count"
+      lastTransitionTime: "2025-06-02T11:00:00Z"
+      observedGeneration: 2
+    - type: MainWorkloadReady
+      status: "True"
+      lastTransitionTime: "2025-06-02T10:58:00Z"
+      observedGeneration: 2
+    - type: ScalingReady
+      status: "False"
+      reason: "FailedGetExternalMetric"
+      message: "the HPA was unable to compute the replica count: unable to get external metric kserve/wva_desired_replicas/nil: no metrics returned from external metrics API"
+      lastTransitionTime: "2025-06-02T11:00:00Z"
+      observedGeneration: 2
+    - type: RouterReady
+      status: "True"
+      lastTransitionTime: "2025-06-02T10:59:00Z"
+      observedGeneration: 2
+```
+
+Note how `MainWorkloadReady` is True (the pods are running) but `ScalingReady` is False (the autoscaler cannot function). The `FailedGetExternalMetric` reason bubbles up from the HPA through `ScalingReady` to `WorkloadsReady` and `Ready`. To fix this, install the Prometheus Adapter with the `wva_desired_replicas` external metric rule configured.
+
 ### Failing service (missing config)
 
 In this example, a referenced `LLMInferenceServiceConfig` was deleted. The controller surfaces `ConfigNotFound` on `PresetsCombined` and short-circuits before workload or router reconciliation. Note that `Ready` stays at its previous value (or `Unknown` on a new service) because `PresetsCombined` is not part of the `Ready` rollup - consumers must check `PresetsCombined` independently.
