@@ -207,6 +207,36 @@ For detailed configuration, examples, and troubleshooting, see the **[LoRA Adapt
 
 ---
 
+## Autoscaling Configuration
+
+LLMInferenceService supports intelligent autoscaling through the **Workload Variant Autoscaler (WVA)**, which scales based on inference-specific metrics like KV cache utilization and queue depth rather than generic CPU/memory metrics.
+
+### Quick Example
+
+```yaml
+spec:
+  scaling:
+    minReplicas: 1
+    maxReplicas: 5
+    wva:
+      variantCost: "10.0"
+      hpa: {}    # or keda: {}
+```
+
+### Key Features
+
+- **Two actuator backends**: HPA (simpler, requires Prometheus Adapter) or KEDA (supports idle scale-down, metric fallback, initial cooldown)
+- **Independent prefill scaling**: Disaggregated deployments can autoscale prefill and decode workloads independently via `spec.prefill.scaling`
+- **Multi-node support**: Automatically targets LeaderWorkerSet for distributed inference workloads
+
+:::tip
+`spec.scaling` and `spec.replicas` are mutually exclusive. Use `scaling` for dynamic WVA-based autoscaling or `replicas` for a fixed replica count.
+:::
+
+For detailed configuration, prerequisites, field reference, and examples, see the **[Autoscaling Guide](./autoscaling/llmisvc-autoscaling.md)**.
+
+---
+
 ## Workload Specification
 
 ### Workload Types Overview
