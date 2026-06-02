@@ -67,22 +67,12 @@ Inference Pods ──(scrape metrics)──> Prometheus
 ### Common (both actuator backends)
 
 - Kubernetes cluster with [KServe installed](../../../../getting-started/quickstart-guide.md)
-- **WVA controller** — install via Helm:
-  ```bash
-  helm install wva oci://ghcr.io/llm-d/workload-variant-autoscaler \
-    --namespace kserve --create-namespace
-  ```
+- **WVA controller** — see the [WVA installation guide](https://llm-d.ai/docs/guides/workload-autoscaling) for the latest install instructions
 - **Prometheus** — configured to scrape both inference pod metrics and the WVA controller metrics endpoint
 
 ### HPA actuator
 
-- **Prometheus Adapter** — must be installed and configured with an external metric rule for `wva_desired_replicas`:
-  ```bash
-  helm install prometheus-adapter prometheus-community/prometheus-adapter \
-    --set rules.external[0].seriesQuery='wva_desired_replicas' \
-    --set 'rules.external[0].resources.overrides.exported_namespace.resource=namespace' \
-    --set 'rules.external[0].metricsQuery=wva_desired_replicas{<<.LabelMatchers>>}'
-  ```
+- **Prometheus Adapter** — must be installed and configured with an external metric rule for `wva_desired_replicas`. See the [Prometheus Adapter documentation](https://github.com/kubernetes-sigs/prometheus-adapter#installation) for installation instructions and [custom metrics configuration](https://github.com/kubernetes-sigs/prometheus-adapter/blob/master/docs/config.md) for setting up external metric rules
 
 ### KEDA actuator
 
@@ -276,38 +266,12 @@ This configuration is not needed when using the HPA actuator. HPA reads metrics 
 
 ## Field Reference
 
-### ScalingSpec
+For the complete field definitions of the autoscaling spec types, see the [Control Plane API Reference](../../../../reference/crd-api):
 
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `minReplicas` | int32 | No | `1` | Minimum replicas during active scaling. Must be >= 1. Cannot exceed `maxReplicas` |
-| `maxReplicas` | int32 | Yes | — | Maximum replicas. Must be >= 1 |
-| `wva` | WVASpec | Yes | — | WVA configuration. Required when `scaling` is set |
-
-### WVASpec
-
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `variantCost` | string | No | `"10.0"` | Cost per replica for WVA saturation analysis. Must match `^\d+(\.\d+)?$` |
-| `hpa` | HPAScalingSpec | No | — | HPA actuator configuration. Mutually exclusive with `keda` |
-| `keda` | KEDAScalingSpec | No | — | KEDA actuator configuration. Mutually exclusive with `hpa` |
-
-### HPAScalingSpec
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `behavior` | [HorizontalPodAutoscalerBehavior](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior) | No | Scale-up and scale-down behavior policies. Controls stabilization windows and rate limits |
-
-### KEDAScalingSpec
-
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `pollingInterval` | int32 | No | KEDA default | Seconds between trigger evaluations. Must be >= 1 |
-| `cooldownPeriod` | int32 | No | KEDA default | Seconds to wait after last active trigger before scaling to `minReplicas`. 0 means scale down immediately |
-| `initialCooldownPeriod` | int32 | No | `0` | Seconds to wait after ScaledObject creation before KEDA starts evaluating triggers. Useful for LLM model loading time |
-| `idleReplicaCount` | int32 | No | unset | Replicas when no triggers are active. Must be < `minReplicas`. Requires `minReplicas` to be set |
-| `fallback` | [Fallback](https://keda.sh/docs/latest/concepts/scaling-deployments/#fallback) | No | unset | Safe replica count during metric outages |
-| `advanced` | [AdvancedConfig](https://keda.sh/docs/latest/concepts/scaling-deployments/#advanced) | No | unset | Advanced KEDA configuration including HPA behavior. `scalingModifiers` is forbidden (WVA controls the metric formula) |
+- [`ScalingSpec`](../../../../reference/crd-api#scalingspec) — top-level scaling configuration (`minReplicas`, `maxReplicas`, `wva`)
+- [`WVASpec`](../../../../reference/crd-api#wvaspec) — WVA configuration (`variantCost`, `hpa`, `keda`)
+- [`HPAScalingSpec`](../../../../reference/crd-api#hpascalingspec) — HPA actuator behavior configuration
+- [`KEDAScalingSpec`](../../../../reference/crd-api#kedascalingspec) — KEDA actuator configuration (`pollingInterval`, `cooldownPeriod`, `fallback`, etc.)
 
 ---
 
@@ -366,335 +330,25 @@ spec:
     scheduler: {}
 ```
 
-The controller creates separate `VariantAutoscaling` and actuator resources for each workload:
-
-| Resource | Decode (main) | Prefill |
-|----------|---------------|---------|
-| VariantAutoscaling | `{name}-kserve-va` | `{name}-kserve-prefill-va` |
-| HPA | `{name}-kserve-hpa` | `{name}-kserve-prefill-hpa` |
-| KEDA ScaledObject | `{name}-kserve-keda` | `{name}-kserve-prefill-keda` |
-
----
-
-## Validation Rules
-
-The following validation rules are enforced by the admission webhook:
-
-| Rule | Description |
-|------|-------------|
-| `scaling` and `replicas` are mutually exclusive | You cannot set both `spec.scaling` and `spec.replicas` on the same workload |
-| `wva` is required when `scaling` is set | The `spec.scaling.wva` field must be present whenever `spec.scaling` is configured |
-| Exactly one actuator | Either `wva.hpa` or `wva.keda` must be specified, but not both |
-| Same actuator for decode and prefill | When both `spec.scaling` and `spec.prefill.scaling` are set, they must use the same actuator backend |
-| `minReplicas` must not exceed `maxReplicas` | The minimum cannot exceed the maximum |
-| `idleReplicaCount` must be less than `minReplicas` | KEDA's idle replica count must be strictly less than `minReplicas`, and `minReplicas` must be set when `idleReplicaCount` is used |
-| `scalingModifiers` forbidden | KEDA `advanced.scalingModifiers` must not be set — WVA owns the metric formula |
-| `variantCost` pattern | Must be a non-negative numeric string matching `^\d+(\.\d+)?$` |
+The controller creates separate `VariantAutoscaling` and actuator resources for each workload. For the full naming conventions and validation rules enforced by the admission webhook, see the [Control Plane API Reference](../../../../reference/crd-api#scalingspec).
 
 ---
 
 ## Status Conditions
 
-The LLMInferenceService reports autoscaling health through two status conditions:
-
-| Condition | Scope | Description |
-|-----------|-------|-------------|
-| `ScalingReady` | Decode (main) workload | Reflects HPA or KEDA ScaledObject health for the main workload |
-| `PrefillScalingReady` | Prefill workload | Reflects HPA or KEDA ScaledObject health for the prefill workload |
-
-Both conditions roll up into `WorkloadsReady` and `Ready`.
+The LLMInferenceService reports autoscaling health through `ScalingReady` (and `PrefillScalingReady` for prefill-decode deployments) status conditions that roll up into `WorkloadsReady` and `Ready`. For the full list of conditions, reason codes, and how they compose, see the [Status Reference](../llmisvc-status.md).
 
 **Check scaling status:**
 
 ```bash
-kubectl get llminferenceservice my-llm -o jsonpath='{.status.conditions}' | jq .
+kubectl get llminferenceservice my-llm -o jsonpath='{.status.conditions[?(@.type=="ScalingReady")]}' | jq .
 ```
-
-**Common status reasons:**
-
-| Reason | Meaning |
-|--------|---------|
-| `HPAProgressing` | HPA not yet visible or conditions not yet available |
-| `ScaledObjectProgressing` | KEDA ScaledObject not yet ready |
-| `FailedGetExternalMetric` | HPA cannot read `wva_desired_replicas` — check Prometheus Adapter configuration |
-| Specific KEDA reasons | Trigger or configuration issues reported by KEDA |
 
 ---
 
 ## Complete Examples
 
-### Example 1: HPA with Deployment
-
-Single-node deployment with HPA-based autoscaling and custom scaling behavior:
-
-```yaml
-apiVersion: serving.kserve.io/v1alpha2
-kind: LLMInferenceService
-metadata:
-  name: llama-hpa
-  namespace: default
-spec:
-  model:
-    uri: hf://meta-llama/Llama-3.1-8B-Instruct
-    name: meta-llama/Llama-3.1-8B-Instruct
-
-  scaling:
-    minReplicas: 1
-    maxReplicas: 5
-    wva:
-      variantCost: "10.0"
-      hpa:
-        behavior:
-          scaleUp:
-            stabilizationWindowSeconds: 0
-          scaleDown:
-            stabilizationWindowSeconds: 300
-
-  template:
-    containers:
-      - name: main
-        image: vllm/vllm-openai:latest
-        resources:
-          limits:
-            nvidia.com/gpu: "1"
-            cpu: "8"
-            memory: 32Gi
-
-  router:
-    gateway: {}
-    route: {}
-    scheduler: {}
-```
-
-**Verify the created resources:**
-
-```bash
-# Check VariantAutoscaling
-kubectl get variantautoscalings llama-hpa-kserve-va
-
-# Check HPA
-kubectl get hpa llama-hpa-kserve-hpa
-
-# Check scaling status
-kubectl get llminferenceservice llama-hpa -o jsonpath='{.status.conditions[?(@.type=="ScalingReady")]}'
-```
-
----
-
-### Example 2: KEDA with Deployment
-
-Single-node deployment with KEDA-based autoscaling, including idle scale-down and metric fallback:
-
-```yaml
-apiVersion: serving.kserve.io/v1alpha2
-kind: LLMInferenceService
-metadata:
-  name: llama-keda
-  namespace: default
-spec:
-  model:
-    uri: hf://meta-llama/Llama-3.1-8B-Instruct
-    name: meta-llama/Llama-3.1-8B-Instruct
-
-  scaling:
-    minReplicas: 2
-    maxReplicas: 8
-    wva:
-      variantCost: "10.0"
-      keda:
-        pollingInterval: 5
-        cooldownPeriod: 120
-        initialCooldownPeriod: 60
-        idleReplicaCount: 1
-        fallback:
-          failureThreshold: 3
-          replicas: 2
-
-  template:
-    containers:
-      - name: main
-        image: vllm/vllm-openai:latest
-        resources:
-          limits:
-            nvidia.com/gpu: "1"
-            cpu: "8"
-            memory: 32Gi
-
-  router:
-    gateway: {}
-    route: {}
-    scheduler: {}
-```
-
-**Verify the created resources:**
-
-```bash
-# Check VariantAutoscaling
-kubectl get variantautoscalings llama-keda-kserve-va
-
-# Check KEDA ScaledObject
-kubectl get scaledobjects llama-keda-kserve-keda
-
-# Check scaling status
-kubectl get llminferenceservice llama-keda -o jsonpath='{.status.conditions[?(@.type=="ScalingReady")]}'
-```
-
----
-
-### Example 3: Multi-Node (LeaderWorkerSet) with HPA
-
-For multi-node deployments using LeaderWorkerSet, WVA scales the LWS resource directly:
-
-```yaml
-apiVersion: serving.kserve.io/v1alpha2
-kind: LLMInferenceService
-metadata:
-  name: llama-70b-multinode
-  namespace: default
-spec:
-  model:
-    uri: hf://meta-llama/Llama-2-70b-hf
-    name: meta-llama/Llama-2-70b-hf
-
-  parallelism:
-    tensor: 4
-    data: 8
-    dataLocal: 4
-
-  scaling:
-    minReplicas: 1
-    maxReplicas: 4
-    wva:
-      hpa: {}
-
-  template:
-    containers:
-      - name: main
-        image: vllm/vllm-openai:latest
-        args:
-          - "--model"
-          - "/mnt/models"
-          - "--tensor-parallel-size"
-          - "4"
-        resources:
-          limits:
-            nvidia.com/gpu: "4"
-            cpu: "16"
-            memory: 128Gi
-
-  worker:
-    containers:
-      - name: main
-        image: vllm/vllm-openai:latest
-        args:
-          - "--model"
-          - "/mnt/models"
-          - "--tensor-parallel-size"
-          - "4"
-        resources:
-          limits:
-            nvidia.com/gpu: "4"
-            cpu: "16"
-            memory: 128Gi
-
-  router:
-    gateway: {}
-    route: {}
-    scheduler: {}
-```
-
-:::note
-When `spec.worker` is present, WVA targets the `LeaderWorkerSet` resource instead of a `Deployment`.
-:::
-
----
-
-### Example 4: Multi-Node (LeaderWorkerSet) with KEDA
-
-Multi-node deployment with KEDA-based autoscaling, leveraging idle scale-down and initial cooldown for large model loading:
-
-```yaml
-apiVersion: serving.kserve.io/v1alpha2
-kind: LLMInferenceService
-metadata:
-  name: llama-70b-multinode-keda
-  namespace: default
-spec:
-  model:
-    uri: hf://meta-llama/Llama-2-70b-hf
-    name: meta-llama/Llama-2-70b-hf
-
-  parallelism:
-    tensor: 4
-    data: 8
-    dataLocal: 4
-
-  scaling:
-    minReplicas: 2
-    maxReplicas: 6
-    wva:
-      variantCost: "20.0"
-      keda:
-        pollingInterval: 10
-        cooldownPeriod: 300
-        initialCooldownPeriod: 120
-        idleReplicaCount: 1
-        fallback:
-          failureThreshold: 3
-          replicas: 2
-
-  template:
-    containers:
-      - name: main
-        image: vllm/vllm-openai:latest
-        args:
-          - "--model"
-          - "/mnt/models"
-          - "--tensor-parallel-size"
-          - "4"
-        resources:
-          limits:
-            nvidia.com/gpu: "4"
-            cpu: "16"
-            memory: 128Gi
-
-  worker:
-    containers:
-      - name: main
-        image: vllm/vllm-openai:latest
-        args:
-          - "--model"
-          - "/mnt/models"
-          - "--tensor-parallel-size"
-          - "4"
-        resources:
-          limits:
-            nvidia.com/gpu: "4"
-            cpu: "16"
-            memory: 128Gi
-
-  router:
-    gateway: {}
-    route: {}
-    scheduler: {}
-```
-
-**Verify the created resources:**
-
-```bash
-# Check VariantAutoscaling
-kubectl get variantautoscalings llama-70b-multinode-keda-kserve-va
-
-# Check KEDA ScaledObject (targets LeaderWorkerSet)
-kubectl get scaledobjects llama-70b-multinode-keda-kserve-keda
-
-# Check scaling status
-kubectl get llminferenceservice llama-70b-multinode-keda -o jsonpath='{.status.conditions[?(@.type=="ScalingReady")]}'
-```
-
-:::tip
-For large multi-node models, set `initialCooldownPeriod` to account for model loading time across all nodes. This prevents KEDA from making premature scaling decisions before the model is ready to serve traffic.
-:::
+For complete, ready-to-use YAML manifests covering single-node and multi-node deployments with both HPA and KEDA backends, see the [Autoscaling Examples](./llmisvc-autoscaling-examples.md).
 
 ---
 
@@ -704,7 +358,7 @@ For large multi-node models, set `initialCooldownPeriod` to account for model lo
 |-------|-------|----------|
 | `ScalingReady=False` with `FailedGetExternalMetric` | Prometheus Adapter missing or misconfigured | Install Prometheus Adapter with `wva_desired_replicas` external metric rule. See [Prerequisites](#hpa-actuator) |
 | `ScalingReady=False` with `ScaledObjectProgressing` | KEDA ScaledObject cannot connect to Prometheus | Verify `autoscaling-wva-controller-config.prometheus.url` in the `inferenceservice-config` ConfigMap |
-| VariantAutoscaling not created | WVA CRD not installed in the cluster | Install the WVA controller (`helm install wva oci://ghcr.io/llm-d/workload-variant-autoscaler`) |
+| VariantAutoscaling not created | WVA CRD not installed in the cluster | Install the WVA controller — see the [WVA installation guide](https://llm-d.ai/docs/guides/workload-autoscaling) |
 | Replicas stuck at `minReplicas` | WVA not receiving inference metrics | Ensure Prometheus is scraping inference pod metrics (check `prometheus.io/scrape` annotations on pods) |
 | Validation error: "wva is required" | `spec.scaling` set without `spec.scaling.wva` | Add `wva` with either `hpa: {}` or `keda: {}` |
 | Validation error: "scaling and replicas are mutually exclusive" | Both `spec.scaling` and `spec.replicas` set | Remove one — use `scaling` for dynamic autoscaling or `replicas` for fixed count |
@@ -719,6 +373,7 @@ When the `serving.kserve.io/stop` annotation is set on the LLMInferenceService, 
 
 ## Related Documentation
 
+- **[Autoscaling Examples](./llmisvc-autoscaling-examples.md)**: Complete YAML manifests for HPA, KEDA, single-node, and multi-node deployments
 - **[Configuration Guide](../llmisvc-configuration.md)**: Full LLMInferenceService spec reference
 - **[Status Reference](../llmisvc-status.md)**: Complete status conditions and troubleshooting
 - **[Dependencies](../llmisvc-dependencies.md)**: Required infrastructure components

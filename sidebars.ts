@@ -140,6 +140,7 @@ const sidebars: SidebarsConfig = {
                 "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
                 "model-serving/generative-inference/llmisvc/llmisvc-status",
                 "model-serving/generative-inference/llmisvc/autoscaling/llmisvc-autoscaling",
+                "model-serving/generative-inference/llmisvc/autoscaling/llmisvc-autoscaling-examples",
               ],
             },
             {
