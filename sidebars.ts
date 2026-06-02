@@ -137,6 +137,7 @@ const sidebars: SidebarsConfig = {
                 "model-serving/generative-inference/llmisvc/lora-adapters",
                 "model-serving/generative-inference/llmisvc/llmisvc-configuration",
                 "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
+                "model-serving/generative-inference/llmisvc/llmisvc-label-propagation",
                 "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
                 "model-serving/generative-inference/llmisvc/llmisvc-status",
               ],
