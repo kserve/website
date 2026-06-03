@@ -43,6 +43,8 @@ Mix and match **LLMInferenceServiceConfig** resources for flexible deployment pa
 - Router settings
 - Scheduler policies
 
+**Learn more**: [Config Composition Deep Dive](./llmisvc-config-composition.md)
+
 ### 🚀 Multiple Deployment Patterns
 - **Single-Node**: Simple deployments for small models (less than 7B parameters)
 - **Multi-Node**: Distributed inference with LeaderWorkerSet for medium-large models
@@ -189,7 +191,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 
 **LLMInferenceService** provides a comprehensive, Kubernetes-native approach to LLM serving with:
 
-- ✅ **Composable Configuration**: Mix and match configs for flexible deployment
+- ✅ **[Composable Configuration](./llmisvc-config-composition.md)**: Mix and match configs for flexible deployment
 - ✅ **Multiple Workload Patterns**: Single-node, multi-node, prefill-decode separation
 - ✅ **Advanced Routing**: Gateway API + intelligent scheduler
 - ✅ **Distributed Inference**: Tensor, data, and expert parallelism

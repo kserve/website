@@ -14,6 +14,10 @@ This guide provides detailed reference for configuring LLMInferenceService resou
 
 ## Configuration Composition Model
 
+:::tip Deep Dive
+For a detailed look at how config composition works internally - including the well-known config catalog, injection decision logic, and field provenance examples - see the [Config Composition Deep Dive](./llmisvc-config-composition.md).
+:::
+
 ### LLMInferenceService vs LLMInferenceServiceConfig
 
 Similar to the relationship between `InferenceService` and `ServingRuntime`, KServe introduces **LLMInferenceServiceConfig** to separate configuration templates from service instances. However, the relationship and purpose differ significantly:
@@ -96,56 +100,6 @@ spec:
 ```
 
 ---
-
-## Composition Merge Order
-
-The merge process follows these steps:
-
-### 1. Well-Known Configs (auto-injected)
-
-Based on workload pattern, KServe automatically injects base configs:
-- `kserve-config-llm-template` (single-node)
-- `kserve-config-llm-worker-data-parallel` (multi-node DP)
-- `kserve-config-llm-decode-template` (prefill-decode)
-- `kserve-config-llm-scheduler` (scheduler enabled)
-
-### 2. Explicit BaseRefs (user-specified)
-
-Merged in order:
-- First baseRef → Second baseRef → ... → Last baseRef
-- Later baseRefs override earlier ones
-
-### 3. LLMInferenceService Spec (highest priority)
-
-Final override, applied after all baseRefs.
-
-### Config Lookup Priority
-
-```
-getConfig(name) lookup order:
-1. LLMInferenceService.namespace (same namespace) ← HIGHEST PRIORITY
-2. constants.KServeNamespace (system namespace, e.g., "kserve")
-```
-
-### Example Merge Flow
-
-```
-Well-Known Config (auto)
-    ↓ (merge)
-BaseRef[0] (e.g., "model-llama")
-    ↓ (merge)
-BaseRef[1] (e.g., "workload-gpu")  ← overrides BaseRef[0]
-    ↓ (merge)
-BaseRef[2] (e.g., "router-managed") ← overrides BaseRef[0-1]
-    ↓ (merge)
-LLMInferenceService.spec           ← HIGHEST PRIORITY, overrides all
-```
-
-### Strategic Merge Patch
-
-- Uses Kubernetes `strategicpatch.StrategicMergePatch`
-- Only non-zero fields from override are merged
-- Zero-valued fields (e.g., empty strings) do NOT wipe out base values
 
 ---
 
