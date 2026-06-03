@@ -177,14 +177,47 @@ Each gateway entry includes:
 
 Each address carries an optional `origin` field (`ObjectReference`) identifying which Gateway produced it. This enables multi-gateway disambiguation - consumers can group endpoints by their source gateway.
 
+Each address also carries a `models[]` list that surfaces the model names served through that endpoint. This lets consumers discover which model identifiers to use when sending inference requests to a given URL - without inspecting the spec or querying the model server.
+
+| Field | Type | Description | Presence |
+|-------|------|-------------|----------|
+| `url` | `string` | Endpoint URL for inference requests | Always |
+| `name` | `string` | Address type (see below) | Always |
+| `origin` | `ObjectReference` | Gateway that produced this address | When routing is configured |
+| `models[]` | `[]ModelSourcedAddressStatus` | Model names served through this address | Always (when reconciled) |
+
+**Address types** - the `name` field indicates the kind of address:
+- `gateway-external` - public address from a Gateway's status
+- `gateway-internal` - cluster-local Gateway service URL
+- `internal` - private IP or other internal hostname
+- Addresses for model-based routing get a `-model-routing` suffix (e.g. `internal-model-routing`)
+
+**Model name formats** differ by address type:
+
+- **Model-routing addresses** list the fully-qualified routing name (`publishers/<namespace>/models/<model-name>`). LoRA adapter names also use this format.
+- **Standard addresses** list both the fully-qualified name and the short model name. LoRA adapters are listed in both formats as well.
+
 ```yaml
 addresses:
-  - url: "https://my-model.example.com/ns/my-model"
+  - name: internal-model-routing
+    models:
+      - name: publishers/default/models/facebook/opt-125m
     origin:
       group: gateway.networking.k8s.io
       kind: Gateway
-      name: inference-gateway
-      namespace: istio-system
+      name: kserve-ingress-gateway
+      namespace: kserve
+    url: http://172.18.0.3/
+  - name: internal
+    models:
+      - name: publishers/default/models/facebook/opt-125m
+      - name: facebook/opt-125m
+    origin:
+      group: gateway.networking.k8s.io
+      kind: Gateway
+      name: kserve-ingress-gateway
+      namespace: kserve
+    url: http://172.18.0.3/default/facebook-opt-125m-single
 ```
 
 ### `status.appliedConfigs`
@@ -282,7 +315,20 @@ status:
       kind: Deployment
       name: my-llm-kserve-router-scheduler
   addresses:
-    - url: "https://my-llm.example.com"
+    - name: gateway-external-model-routing
+      models:
+        - name: publishers/ml-team/models/my-llm
+      url: "https://my-llm.example.com/"
+      origin:
+        group: gateway.networking.k8s.io
+        kind: Gateway
+        name: inference-gateway
+        namespace: istio-system
+    - name: gateway-external
+      models:
+        - name: publishers/ml-team/models/my-llm
+        - name: my-llm
+      url: "https://my-llm.example.com/ml-team/my-llm"
       origin:
         group: gateway.networking.k8s.io
         kind: Gateway
@@ -433,13 +479,13 @@ kubectl get httproute -l app.kubernetes.io/name=<name>,app.kubernetes.io/compone
 
 If all conditions are True but inference requests fail, the problem is usually at a layer the controller doesn't observe - the model server itself, the networking data plane, or the scheduler.
 
-**Check connectivity and URLs:**
+**Check connectivity, URLs, and model names:**
 ```bash
 # Check the service URL
 kubectl get llmisvc <name> -o jsonpath='{.status.url}'
 
-# Check which gateway produced each address
-kubectl get llmisvc <name> -o jsonpath='{range .status.addresses[*]}{.url} (via {.origin.name}){"\n"}{end}'
+# Check which gateway produced each address and which models are served
+kubectl get llmisvc <name> -o jsonpath='{range .status.addresses[*]}{.name}: {.url} (via {.origin.name}){"\n"}  models: {.models[*].name}{"\n"}{end}'
 
 # Test connectivity
 curl -v <url>/v1/models
