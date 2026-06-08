@@ -101,6 +101,23 @@ spec:
 
 This automatic selection ensures optimal performance without requiring manual configuration of container images.
 
+### CPU Deployment Configuration
+
+When running on CPU, there are additional environment variables that control performance. Set these in the `env` section of your InferenceService predictor:
+
+| Variable | Description |
+|----------|-------------|
+| `VLLM_CPU_KVCACHE_SPACE` | Amount of memory in GiB to allocate for the KV cache. Higher values allow longer context windows. Example: `"4"` for a 0.5B model, `"8"` for a 3B model. |
+| `VLLM_CPU_OMP_THREADS_BIND` | Controls how OpenMP threads are bound to CPU cores. Set to `"auto"` to let vLLM detect the best binding. This prevents thread migration across NUMA nodes. |
+| `VLLM_ENABLE_V1_MULTIPROCESSING` | Set to `"0"` to run in single process mode. Recommended for CPU deployments to avoid inter-process communication overhead. |
+| `OMP_NUM_THREADS` | Number of OpenMP threads to use. Should match the number of CPU cores allocated to the container. |
+
+:::warning[CPU dtype]
+Use `--dtype=bfloat16` for CPU deployments. The default `float16` can cause numerical instability on CPUs without native FP16 support. If `bfloat16` is not available on your hardware, use `float32` instead.
+:::
+
+For a complete CPU deployment example, see the [text generation guide](tasks/text-generation/text-generation.md).
+
 ## Supported Generative Tasks
 
 The Hugging Face runtime supports the following generative tasks:

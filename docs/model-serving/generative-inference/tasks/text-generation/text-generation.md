@@ -8,15 +8,14 @@ import TabItem from '@theme/TabItem';
 
 # Text Generation with Large Language Models
 
-Text generation is a fundamental capability of Large Language Models (LLMs) that enables a wide range of applications including chatbots, content creation, summarization, and more. This guide demonstrates how to deploy Llama3, a powerful open-source LLM, using KServe's flexible inference runtimes.
+This guide shows how to deploy LLMs for text generation using KServe on GPU and CPU environments.
 
 ## Prerequisites
 
-Before getting started, ensure you have:
-
 - A Kubernetes cluster with [KServe installed](../../../../getting-started/quickstart-guide.md).
-- GPU resources available for model inference (this example uses NVIDIA GPUs).
-- A Hugging Face account with [access token](https://huggingface.co/docs/hub/en/security-tokens) (required for downloading Llama3 model).
+- For GPU: NVIDIA GPU resources available on your nodes.
+- For CPU: nodes with enough CPU and memory. CPUs with AVX-512 instruction support are recommended.
+- A [Hugging Face access token](https://huggingface.co/docs/hub/en/security-tokens) to download gated models like Llama3.
 
 ## Create a Hugging Face Token Secret
 
@@ -149,6 +148,65 @@ Save this to a file (e.g., `llama3-hf.yaml`) and apply it:
 
 ```bash
 kubectl apply -f llama3-hf.yaml
+```
+</TabItem>
+<TabItem value="vllm-cpu" label="vLLM Backend (CPU)">
+
+For clusters without GPUs, KServe can serve models using the vLLM CPU backend. Use a smaller model that fits in memory, such as `Qwen2-0.5B-Instruct`.
+
+:::warning[CPU Performance]
+CPU inference is slower than GPU. Expect 5 to 20 tokens per second depending on model size and hardware. Use smaller models (under 3B parameters) for acceptable latency.
+:::
+
+```yaml title="qwen-cpu.yaml"
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: qwen-cpu
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: huggingface
+      args:
+        - --model_name=qwen2
+        - --dtype=bfloat16
+        - --max-model-len=2048
+      storageUri: hf://Qwen/Qwen2-0.5B-Instruct
+      env:
+        - name: VLLM_CPU_KVCACHE_SPACE
+          value: "4"
+        - name: VLLM_CPU_OMP_THREADS_BIND
+          value: "auto"
+        - name: VLLM_ENABLE_V1_MULTIPROCESSING
+          value: "0"
+      resources:
+        requests:
+          cpu: "4"
+          memory: 8Gi
+        limits:
+          cpu: "8"
+          memory: 16Gi
+```
+
+:::note
+KServe auto-selects the CPU container image when no `nvidia.com/gpu` resource is requested. You do not need to specify the image manually.
+:::
+
+Key configuration points:
+
+| Parameter                        | Value      | Why                                                                                         |
+| -------------------------------- | ---------- | ------------------------------------------------------------------------------------------- |
+| `--dtype=bfloat16`               | bfloat16   | Stable on CPU. Do not use `float16` which can cause numerical instability without GPU.       |
+| `--max-model-len=2048`           | 2048       | Limits context window to reduce memory usage on CPU. Increase if your workload needs more.   |
+| `VLLM_CPU_KVCACHE_SPACE`        | `4`        | Allocates 4 GiB for the KV cache. Increase for longer contexts or larger models.             |
+| `VLLM_CPU_OMP_THREADS_BIND`     | `auto`     | Binds OpenMP threads to CPU cores. Prevents thread migration and NUMA contention.            |
+| `VLLM_ENABLE_V1_MULTIPROCESSING` | `0`        | Runs in single process mode. Recommended for CPU to avoid IPC overhead.                      |
+
+Save this to a file (e.g., `qwen-cpu.yaml`) and apply it:
+
+```bash
+kubectl apply -f qwen-cpu.yaml
 ```
 </TabItem>
 </Tabs>
@@ -315,10 +373,13 @@ data: [DONE]
 
 Common issues and solutions:
 
-- **Init:OOMKilled**: This indicates that the storage initializer exceeded the memory limits. You can try increasing the memory limits in the `ClusterStorageContainer`.
-- **OOM errors**: Increase the memory allocation in the InferenceService specification
-- **Pending Deployment**: Ensure your cluster has enough GPU resources available
-- **Model not found**: Double-check your Hugging Face token and model ID
+- **Init:OOMKilled**: The storage initializer ran out of memory. Increase the memory limits in the `ClusterStorageContainer`.
+- **OOM errors**: Increase the memory allocation in the InferenceService specification.
+- **Pending Deployment**: Check that your cluster has enough GPU (or CPU/memory) resources available.
+- **Model not found**: Verify your Hugging Face token and model ID.
+- **Illegal instruction (CPU)**: Your CPU does not support the required instruction set. vLLM CPU images work best with AVX-512. Check with `lscpu | grep avx512`.
+- **Slow startup (CPU)**: CPU model loading takes longer than GPU. A 0.5B model may take 1 to 2 minutes to become ready. A 3B model may take 5 minutes or more.
+- **Numerical errors (CPU)**: Make sure you set `--dtype=bfloat16`. Using `float16` on CPU can produce incorrect results.
 
 ## Next Steps
 
