@@ -363,6 +363,19 @@ spec:
     route: {}  # Auto-generated routing rules
 ```
 
+#### Referenced HTTPRoute
+
+```yaml
+spec:
+  router:
+    route:
+      http:
+        refs:
+          - name: my-custom-http-route
+```
+
+Use an existing, user-managed HTTPRoute instead of having the controller create one. The controller validates that the referenced HTTPRoute exists but does not modify it. This is useful for advanced routing setups like canary deployments or custom traffic splitting.
+
 #### Custom HTTPRoute Spec
 
 ```yaml
@@ -378,6 +391,8 @@ spec:
                 - name: my-backend-service
                   port: 8000
 ```
+
+`spec` and `refs` are mutually exclusive - use `refs` to bring your own HTTPRoute, or `spec` to have the controller create one with your custom rules.
 
 #### Real-world Use Cases
 
@@ -450,6 +465,19 @@ KServe creates:
 - Scheduler Deployment (EPP)
 - Scheduler Service
 
+#### Referenced InferencePool
+
+```yaml
+spec:
+  router:
+    scheduler:
+      pool:
+        ref:
+          name: my-existing-pool
+```
+
+Use an existing, user-managed InferencePool instead of having the controller create one. When a pool `ref` is provided, the controller does not create an EPP deployment or InferencePool - it only creates an InferenceModel pointing to the referenced pool.
+
 #### Custom Scheduler with Pool
 
 ```yaml
@@ -463,6 +491,8 @@ spec:
               app: workload
           targetPort: 8000
 ```
+
+`pool.spec` and `pool.ref` are mutually exclusive - use `ref` to bring your own InferencePool, or `spec` to have the controller create one with custom settings.
 ---
 
 ## Parallelism Specification
