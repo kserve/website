@@ -38,6 +38,25 @@
   --custom-required-badge-bg: rgba(75, 129, 230, 0.12);
   --custom-required-badge-border: #588be8;
   --custom-required-badge-text: #3371e3;
+
+  /* Config composition diagram colors */
+  --cfg-blue-header: #e3f2fd;
+  --cfg-blue-body: #f5f9ff;
+  --cfg-blue-border: #90caf9;
+  --cfg-orange-header: #fff3e0;
+  --cfg-orange-body: #fffbf5;
+  --cfg-orange-border: #ffcc80;
+  --cfg-green-header: #e8f5e9;
+  --cfg-green-body: #f5fdf5;
+  --cfg-green-border: #a5d6a7;
+  --cfg-gray-header: #fafafa;
+  --cfg-gray-body: #fff;
+  --cfg-gray-border: #e0e0e0;
+  --cfg-separator: #999;
+  --cfg-text-wellknown: #1565c0;
+  --cfg-text-baseref: #e65100;
+  --cfg-text-spec: #2e7d32;
+  --cfg-text-note: #999;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -56,6 +75,25 @@
   --kserve-gray: #444444;
   --kserve-gray-dark: #aaaaaa;
   --kserve-highlight: #61dafb;
+
+  /* Config composition diagram colors - dark mode */
+  --cfg-blue-header: #1a2744;
+  --cfg-blue-body: #151d2b;
+  --cfg-blue-border: #3b6098;
+  --cfg-orange-header: #3d2a10;
+  --cfg-orange-body: #1f1a12;
+  --cfg-orange-border: #8b6914;
+  --cfg-green-header: #1a3320;
+  --cfg-green-body: #141f16;
+  --cfg-green-border: #4a8a50;
+  --cfg-gray-header: #2d2d2d;
+  --cfg-gray-body: #1e1e1e;
+  --cfg-gray-border: #444;
+  --cfg-separator: #777;
+  --cfg-text-wellknown: #64b5f6;
+  --cfg-text-baseref: #ffb74d;
+  --cfg-text-spec: #81c784;
+  --cfg-text-note: #777;
 }
 
 /* Global styles */
@@ -666,4 +704,10 @@ footer.footer .footer__col {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+}
+
+/* Invert diagrams.net SVGs in dark mode */
+[data-theme="dark"] article svg[style*="background-color: rgb(255, 255, 255)"] {
+  filter: invert(0.88) hue-rotate(180deg);
+  border-radius: 8px;
 }

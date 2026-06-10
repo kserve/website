@@ -4,10 +4,10 @@ sidebar_position: 4
 title: "LLMInferenceService Config Composition"
 ---
 
-export const W = ({children}) => <span style={{color: '#1565c0'}}>{children}</span>;
-export const B = ({children}) => <span style={{color: '#e65100'}}>{children}</span>;
-export const S = ({children}) => <span style={{color: '#2e7d32'}}>{children}</span>;
-export const Note = ({children}) => <span style={{color: '#999', fontSize: '0.75rem'}}>{children}</span>;
+export const W = ({children}) => <span style={{color: 'var(--cfg-text-wellknown)'}}>{children}</span>;
+export const B = ({children}) => <span style={{color: 'var(--cfg-text-baseref)'}}>{children}</span>;
+export const S = ({children}) => <span style={{color: 'var(--cfg-text-spec)'}}>{children}</span>;
+export const Note = ({children}) => <span style={{color: 'var(--cfg-text-note)', fontSize: '0.75rem'}}>{children}</span>;
 
 # LLMInferenceService Config Composition
 
@@ -89,61 +89,61 @@ The sources that get merged (well-known configs are auto-injected, baseRef is re
 <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.8rem', lineHeight: '1.4', marginBottom: '0.5rem'}}>
 
 <div style={{flex: '1 1 180px', minWidth: '180px'}}>
-<div style={{background: '#e3f2fd', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid #90caf9'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-template.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed #90caf9'}}>kserve-config-llm-template</a></div>
-<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid #e3f2fd', background: '#f5f9ff', fontSize: '0.8rem', lineHeight: '1.4'}}>
+<div style={{background: 'var(--cfg-blue-header)', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid var(--cfg-blue-border)'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-template.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed var(--cfg-blue-border)'}}>kserve-config-llm-template</a></div>
+<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid var(--cfg-blue-header)', background: 'var(--cfg-blue-body)', fontSize: '0.8rem', lineHeight: '1.4'}}>
 {"template:\n  containers:\n    - name: main\n      image: llm-d-cuda:v0.6.0\n      ports:\n        - containerPort: 8000\n      livenessProbe: [...]\n      readinessProbe: [...]\n      startupProbe: [...]\n      securityContext: [...]\n  volumes: [...]"}
 </pre>
 </div>
 
-<div style={{alignSelf: 'center', fontSize: '1.2rem', fontWeight: 700, color: '#999', padding: '0 0.15rem'}}>+</div>
+<div style={{alignSelf: 'center', fontSize: '1.2rem', fontWeight: 700, color: 'var(--cfg-separator)', padding: '0 0.15rem'}}>+</div>
 
 <div style={{flex: '1 1 180px', minWidth: '180px'}}>
-<div style={{background: '#e3f2fd', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid #90caf9'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-scheduler.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed #90caf9'}}>kserve-config-llm-scheduler</a></div>
-<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid #e3f2fd', background: '#f5f9ff', fontSize: '0.8rem', lineHeight: '1.4'}}>
+<div style={{background: 'var(--cfg-blue-header)', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid var(--cfg-blue-border)'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-scheduler.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed var(--cfg-blue-border)'}}>kserve-config-llm-scheduler</a></div>
+<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid var(--cfg-blue-header)', background: 'var(--cfg-blue-body)', fontSize: '0.8rem', lineHeight: '1.4'}}>
 {"router:\n  scheduler:\n    pool:\n      spec:\n        selector: [...]\n        targetPort: 8000\n    template:\n      containers:\n        - name: epp\n          image: llm-d-inference-scheduler\n          ports: [9002]\n        - name: tokenizer\n          image: llm-d-uds-tokenizer\n          ports: [8082]"}
 </pre>
 </div>
 
-<div style={{alignSelf: 'center', fontSize: '1.2rem', fontWeight: 700, color: '#999', padding: '0 0.15rem'}}>+</div>
+<div style={{alignSelf: 'center', fontSize: '1.2rem', fontWeight: 700, color: 'var(--cfg-separator)', padding: '0 0.15rem'}}>+</div>
 
 <div style={{flex: '1 1 180px', minWidth: '180px'}}>
-<div style={{background: '#e3f2fd', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid #90caf9'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-router-route.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed #90caf9'}}>kserve-config-llm-router-route</a></div>
-<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid #e3f2fd', background: '#f5f9ff', fontSize: '0.8rem', lineHeight: '1.4'}}>
+<div style={{background: 'var(--cfg-blue-header)', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid var(--cfg-blue-border)'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-router-route.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed var(--cfg-blue-border)'}}>kserve-config-llm-router-route</a></div>
+<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid var(--cfg-blue-header)', background: 'var(--cfg-blue-body)', fontSize: '0.8rem', lineHeight: '1.4'}}>
 {"router:\n  route:\n    http:\n      spec:\n        parentRefs:  # from KServe ingress config\n          - kind: Gateway\n        rules: [...]  # 8 rules total\n          # path + model-header per endpoint\n          # URLRewrite filters\n          # catch-all -> Service"}
 </pre>
 </div>
 
 </div>
 
-<div style={{textAlign: 'center', fontSize: '1.5rem', fontWeight: 700, color: '#999', padding: '0.25rem 0'}}>+</div>
+<div style={{textAlign: 'center', fontSize: '1.5rem', fontWeight: 700, color: 'var(--cfg-separator)', padding: '0.25rem 0'}}>+</div>
 
 <div style={{display: 'flex', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.8rem', lineHeight: '1.4'}}>
 
 <div style={{flex: '1 1 250px', minWidth: '250px'}}>
-<div style={{background: '#fff3e0', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid #ffcc80'}}>baseRef: my-gpu-profile</div>
-<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid #fff3e0', background: '#fffbf5', fontSize: '0.8rem', lineHeight: '1.4'}}>
+<div style={{background: 'var(--cfg-orange-header)', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid var(--cfg-orange-border)'}}>baseRef: my-gpu-profile</div>
+<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid var(--cfg-orange-header)', background: 'var(--cfg-orange-body)', fontSize: '0.8rem', lineHeight: '1.4'}}>
 {"replicas: 2\ntemplate:\n  nodeSelector:\n    nvidia.com/gpu.product: NVIDIA-A100-PCIE-40G\n  containers:\n    - name: main\n      resources:\n        requests:\n          nvidia.com/gpu: \"4\"\n          cpu: \"8\"\n          memory: 64Gi\n        limits:\n          nvidia.com/gpu: \"4\"\n          cpu: \"16\"\n          memory: 128Gi"}
 </pre>
 </div>
 
-<div style={{alignSelf: 'center', fontSize: '1.5rem', fontWeight: 700, color: '#999', padding: '0 0.5rem'}}>+</div>
+<div style={{alignSelf: 'center', fontSize: '1.5rem', fontWeight: 700, color: 'var(--cfg-separator)', padding: '0 0.5rem'}}>+</div>
 
 <div style={{flex: '1 1 250px', minWidth: '250px'}}>
-<div style={{background: '#e8f5e9', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid #a5d6a7'}}>LLMInferenceService spec</div>
-<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid #e8f5e9', background: '#f5fdf5', fontSize: '0.8rem', lineHeight: '1.4'}}>
+<div style={{background: 'var(--cfg-green-header)', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid var(--cfg-green-border)'}}>LLMInferenceService spec</div>
+<pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid var(--cfg-green-header)', background: 'var(--cfg-green-body)', fontSize: '0.8rem', lineHeight: '1.4'}}>
 {"model:\n  uri: hf://meta-llama/Llama-3.1-8B-Instruct\n  name: meta-llama/Llama-3.1-8B-Instruct\nreplicas: 3\nrouter:\n  route: {}\n  scheduler: {}"}
 </pre>
 </div>
 
 </div>
 
-<div style={{textAlign: 'center', fontSize: '1.5rem', fontWeight: 700, color: '#999', padding: '0.5rem 0'}}>=</div>
+<div style={{textAlign: 'center', fontSize: '1.5rem', fontWeight: 700, color: 'var(--cfg-separator)', padding: '0.5rem 0'}}>=</div>
 
 **Effective merged result**:
 
-<div style={{border: '2px solid #e0e0e0', borderRadius: '8px', overflow: 'hidden'}}>
-<div style={{background: '#fafafa', padding: '0.5rem 0.75rem', fontWeight: 600, borderBottom: '1px solid #e0e0e0'}}>Effective merged configuration</div>
-<pre style={{margin: 0, padding: '0.75rem', fontSize: '0.82rem', lineHeight: '1.6', background: '#fff'}}>
+<div style={{border: '2px solid var(--cfg-gray-border)', borderRadius: '8px', overflow: 'hidden'}}>
+<div style={{background: 'var(--cfg-gray-header)', padding: '0.5rem 0.75rem', fontWeight: 600, borderBottom: '1px solid var(--cfg-gray-border)'}}>Effective merged configuration</div>
+<pre style={{margin: 0, padding: '0.75rem', fontSize: '0.82rem', lineHeight: '1.6', background: 'var(--cfg-gray-body)'}}>
 <S>{"model:\n"}</S>
 <S>{"  uri: hf://meta-llama/Llama-3.1-8B-Instruct\n"}</S>
 <S>{"  name: meta-llama/Llama-3.1-8B-Instruct\n"}</S>
@@ -210,7 +210,7 @@ The sources that get merged (well-known configs are auto-injected, baseRef is re
 <W>{"        parentRefs:  # from KServe ingress config\n          - kind: Gateway\n"}</W>
 <W>{"        rules: [...]  # 8 rules: path + model-header per endpoint, catch-all"}</W>
 </pre>
-<div style={{background: '#fafafa', padding: '0.5rem 0.75rem', borderTop: '1px solid #e0e0e0', fontSize: '0.78rem'}}>
+<div style={{background: 'var(--cfg-gray-header)', padding: '0.5rem 0.75rem', borderTop: '1px solid var(--cfg-gray-border)', fontSize: '0.78rem'}}>
   <W>{'█'}</W> Well-known config &nbsp;&nbsp;
   <B>{'█'}</B> User baseRef &nbsp;&nbsp;
   <S>{'█'}</S> LLMInferenceService spec
