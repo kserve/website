@@ -12,6 +12,8 @@ This guide shows how to deploy LLMs for text generation using KServe on GPU and 
 
 ## Prerequisites
 
+Before getting started, ensure you have:
+
 - A Kubernetes cluster with [KServe installed](../../../../getting-started/quickstart-guide.md).
 - For GPU: NVIDIA GPU resources available on your nodes.
 - For CPU: nodes with enough CPU and memory. CPUs with AVX-512 instruction support are recommended.
