@@ -948,8 +948,11 @@ TrainedModelList contains a list of TrainedModel
 - [ModelStatus](#modelstatus)
 - [NamespacedName](#namespacedname)
 - [NodeStatus](#nodestatus)
+- [ObservedGateway](#observedgateway)
+- [ObservedSchedulerStatus](#observedschedulerstatus)
 - [ParallelismSpec](#parallelismspec)
 - [RouterSpec](#routerspec)
+- [RouterStatus](#routerstatus)
 - [ScaleMetric](#scalemetric)
 - [ScalingSpec](#scalingspec)
 - [SchedulerConfigSpec](#schedulerconfigspec)
@@ -1867,6 +1870,11 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
   type="[Addressable](#addressable) array"
   required="false"
   description="Addresses is a list of addresses for different protocols (HTTP and HTTPS)<br />If Addresses is present, Address must be ignored by clients."
+/><ApiField
+  name="router"
+  type="[RouterStatus](#routerstatus)"
+  required="false"
+  description="Router records the observed networking topology for this service.<br />Nil when routing is not configured or the service is stopped."
 />
 
 
@@ -1925,7 +1933,22 @@ LoRASpec defines the configuration for LoRA adapters.
   name="adapters"
   type="[LLMModelSpec](#llmmodelspec) array"
   required="false"
-  description="Adapters is the static specification for one or more LoRA adapters.<br />Each adapter is defined by its own ModelSpec.<br />This type is recursive https://github.com/kubernetes-sigs/controller-tools/issues/585"
+  description="Adapters specifies one or more LoRA adapters to load alongside the base model.<br />Supported URI schemes: hf://, s3://, pvc://.<br />Each adapter must have a unique name that differs from the base model name.<br />This type is recursive https://github.com/kubernetes-sigs/controller-tools/issues/585"
+/><ApiField
+  name="maxRank"
+  type="integer"
+  required="false"
+  description="MaxRank is the maximum LoRA rank supported by the runtime (maps to vLLM --max-lora-rank).<br />Higher values allow adapters with higher rank but increase memory usage.<br />If not set, vLLM's default applies (16)."
+/><ApiField
+  name="maxAdapters"
+  type="integer"
+  required="false"
+  description="MaxAdapters is the maximum number of LoRA adapters that can be loaded simultaneously<br />(maps to vLLM --max-loras). Defaults to the number of configured adapters."
+/><ApiField
+  name="maxCpuAdapters"
+  type="integer"
+  required="false"
+  description="MaxCpuAdapters is the maximum number of LoRA adapters stored in CPU memory<br />(maps to vLLM --max-cpu-loras). Defaults to the number of configured adapters."
 />
 
 
@@ -1999,6 +2022,11 @@ LocalModelCacheSpec
   type="[NamespacedName](#namespacedname) array"
   required="true"
   description="Inference services using this local model"
+/><ApiField
+  name="llmInferenceServices"
+  type="[NamespacedName](#namespacedname) array"
+  required="true"
+  description="LLM inference services using this local model"
 />
 
 
@@ -2377,6 +2405,80 @@ NodeStatus enum
   required="false"
   description=""
 />
+#### ObservedGateway
+
+
+
+**Appears in:**
+- [RouterStatus](#routerstatus)
+
+ObservedGateway is a Gateway reference with the listeners and HTTPRoutes
+bound to this service through it. Used in status to record observed routing topology.
+
+##### Fields
+
+
+
+<ApiField
+  name="group"
+  type="[Group](#group)"
+  required="true"
+  description="Group is the group of the referent. For example, &quot;gateway.networking.k8s.io&quot;.<br />When set to the empty string, core API group is inferred."
+/><ApiField
+  name="kind"
+  type="[Kind](#kind)"
+  required="true"
+  description="Kind is kind of the referent. For example &quot;ConfigMap&quot; or &quot;Service&quot;."
+/><ApiField
+  name="name"
+  type="[ObjectName](#objectname)"
+  required="true"
+  description="Name is the name of the referent."
+/><ApiField
+  name="namespace"
+  type="[Namespace](#namespace)"
+  required="false"
+  description="Namespace is the namespace of the referenced object. When unspecified, the local<br />namespace is inferred.<br />Note that when a namespace different than the local namespace is specified,<br />a ReferenceGrant object is required in the referent namespace to allow that<br />namespace's owner to accept the reference. See the ReferenceGrant<br />documentation for details.<br />Support: Core"
+/><ApiField
+  name="listeners"
+  type="[SectionName](#sectionname) array"
+  required="false"
+  description="Listeners lists the SectionNames of the Gateway listeners that accepted<br />routes from this service. Nil means the route targets all listeners<br />(no SectionName was specified on the parentRef)."
+/><ApiField
+  name="httpRoutes"
+  type="[ObjectReference](#objectreference) array"
+  required="false"
+  description="HTTPRoutes lists the HTTPRoutes bound to this service through this Gateway."
+/>
+
+
+#### ObservedSchedulerStatus
+
+
+
+**Appears in:**
+- [RouterStatus](#routerstatus)
+
+ObservedSchedulerStatus records the scheduler-related resources observed
+during the last successful routing reconciliation.
+
+##### Fields
+
+
+
+<ApiField
+  name="inferencePool"
+  type="[ObjectReference](#objectreference)"
+  required="false"
+  description="InferencePool is the InferencePool observed as active for this service."
+/><ApiField
+  name="service"
+  type="[ObjectReference](#objectreference)"
+  required="false"
+  description="Service is the EPP Service observed for this service."
+/>
+
+
 #### ParallelismSpec
 
 
@@ -2458,6 +2560,34 @@ It supports Kubernetes Ingress and the Gateway API. The fields are mutually excl
   type="[SchedulerSpec](#schedulerspec)"
   required="false"
   description="Scheduler configuration for the Inference Gateway extension.<br />If this field is non-empty, an InferenceModel resource will be created to integrate with the gateway's scheduler."
+/>
+
+
+#### RouterStatus
+
+
+
+**Appears in:**
+- [LLMInferenceServiceStatus](#llminferenceservicestatus)
+
+RouterStatus records the networking resources observed during the last
+successful routing reconciliation. Nil when routing is not configured or
+the service is stopped.
+
+##### Fields
+
+
+
+<ApiField
+  name="gateways"
+  type="[ObservedGateway](#observedgateway) array"
+  required="false"
+  description="Gateways lists the Gateway resources observed as attached to this service,<br />each with the listeners and HTTPRoutes bound through them."
+/><ApiField
+  name="scheduler"
+  type="[ObservedSchedulerStatus](#observedschedulerstatus)"
+  required="false"
+  description="Scheduler records the observed scheduler topology.<br />Nil when the scheduler is not configured."
 />
 
 
@@ -2544,13 +2674,13 @@ When scaling is configured, the controller creates and manages autoscaling resou
 SchedulerSpec defines the Inference Gateway extension configuration.
 
 The SchedulerSpec configures the connection from the Gateway to the model deployment leveraging the LLM optimized
-request Scheduler, also known as the Endpoint Picker (EPP) which determines the exact pod that should handle the
-request and responds back to Envoy with the target pod, Envoy will then forward the request to the chosen pod.
+request Scheduler, also known as the Endpoint Picker (EPP). The EPP determines the exact pod that should handle the
+request and responds back to the Gateway with the target pod. The Gateway will then forward the request to the chosen pod.
 
 The Scheduler is only effective when having multiple inference pod replicas.
 
-Step 1: Gateway (Envoy) &lt;-- ExtProc --&gt; EPP (select the optimal replica to handle the request)
-Step 2: Gateway (Envoy) &lt;-- forward request --&gt; Inference Pod X
+Step 1 (endpoint selection): Gateway &lt;-- ExtProc --&gt; EPP (select the optimal replica to handle the request)
+Step 2 (endpoint routing): Gateway &lt;-- forward request/response --&gt; Inference Pod X
 
 ##### Fields
 
@@ -3433,6 +3563,8 @@ LLMInferenceServiceList is the list type for LLMInferenceService.
 
 ### Available Types
 - [ActuatorSpec](#actuatorspec)
+- [AppliedConfigRef](#appliedconfigref)
+- [AppliedConfigSource](#appliedconfigsource)
 - [GatewayObjectReference](#gatewayobjectreference)
 - [GatewayRoutesSpec](#gatewayroutesspec)
 - [GatewaySpec](#gatewayspec)
@@ -3447,15 +3579,21 @@ LLMInferenceServiceList is the list type for LLMInferenceService.
 - [LLMInferenceServiceValidator](#llminferenceservicevalidator)
 - [LLMModelSpec](#llmmodelspec)
 - [LoRASpec](#loraspec)
+- [ModelSourcedAddressStatus](#modelsourcedaddressstatus)
+- [ObservedGateway](#observedgateway)
+- [ObservedSchedulerStatus](#observedschedulerstatus)
 - [ParallelismSpec](#parallelismspec)
 - [RouterSpec](#routerspec)
+- [RouterStatus](#routerstatus)
 - [ScalingSpec](#scalingspec)
 - [SchedulerConfigSpec](#schedulerconfigspec)
 - [SchedulerSpec](#schedulerspec)
+- [SourcedAddress](#sourcedaddress)
 - [StorageInitializerSpec](#storageinitializerspec)
 - [UntypedObjectReference](#untypedobjectreference)
 - [WVASpec](#wvaspec)
 - [WorkloadSpec](#workloadspec)
+- [WorkloadStatus](#workloadstatus)
 
 ### Type Definitions
 #### ActuatorSpec
@@ -3485,6 +3623,62 @@ Exactly one of HPA or KEDA must be specified.
 />
 
 
+#### AppliedConfigRef
+
+
+
+**Appears in:**
+- [LLMInferenceServiceStatus](#llminferenceservicestatus)
+
+AppliedConfigRef identifies an LLMInferenceServiceConfig resource that contributed
+to the final merged configuration during reconciliation.
+
+##### Fields
+
+
+
+<ApiField
+  name="name"
+  type="[ObjectName](#objectname)"
+  required="true"
+  description="Name of the LLMInferenceServiceConfig resource that was applied."
+/><ApiField
+  name="namespace"
+  type="[Namespace](#namespace)"
+  required="true"
+  description="Namespace where the LLMInferenceServiceConfig was resolved from."
+/><ApiField
+  name="source"
+  type="[AppliedConfigSource](#appliedconfigsource)"
+  required="true"
+  description="Source indicates how this config was selected - either automatically injected<br />as a well-known default based on the deployment pattern, or explicitly<br />referenced via spec.baseRefs."
+/>
+
+
+#### AppliedConfigSource
+
+**Underlying type:** string
+
+**Appears in:**
+- [AppliedConfigRef](#appliedconfigref)
+
+AppliedConfigSource identifies how a configuration was selected for merging.
+
+
+
+##### Possible Values
+
+<ApiField
+  name="Preset"
+  type="enum"
+  required="false"
+  description="AppliedConfigSourcePreset indicates the config was automatically injected<br />by the controller based on the deployment pattern (single-node, multi-node,<br />disaggregated, scheduler, router).<br />"
+/><ApiField
+  name="UserRef"
+  type="enum"
+  required="false"
+  description="AppliedConfigSourceUserRef indicates the config was explicitly referenced<br />by the user via spec.baseRefs.<br />"
+/>
 #### GatewayObjectReference
 
 
@@ -3827,12 +4021,27 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
   name="address"
   type="[Addressable](#addressable)"
   required="false"
-  description="Address is a single Addressable address.<br />If Addresses is present, Address will be ignored by clients."
+  description="Deprecated: Address is retained for CRD schema compatibility.<br />It is never populated; use Addresses instead."
 /><ApiField
   name="addresses"
-  type="[Addressable](#addressable) array"
+  type="[SourcedAddress](#sourcedaddress) array"
   required="false"
-  description="Addresses is a list of addresses for different protocols (HTTP and HTTPS)<br />If Addresses is present, Address must be ignored by clients."
+  description="Addresses lists the network endpoints where the service is reachable.<br />Each address may include an origin reference identifying the networking<br />resource that produced it."
+/><ApiField
+  name="router"
+  type="[RouterStatus](#routerstatus)"
+  required="false"
+  description="Router records the observed networking topology for this service.<br />Nil when routing is not configured or the service is stopped."
+/><ApiField
+  name="workloads"
+  type="[WorkloadStatus](#workloadstatus)"
+  required="false"
+  description="Workloads records the observed workload resources for this service."
+/><ApiField
+  name="appliedConfigs"
+  type="[AppliedConfigRef](#appliedconfigref) array"
+  required="false"
+  description="AppliedConfigRefs records which LLMInferenceServiceConfig resources were applied<br />during the last successful reconciliation, in merge precedence order.<br />Well-known configs (determined by the deployment pattern) appear first with<br />lower precedence, followed by explicitly referenced baseRefs with higher<br />precedence. The service's own spec always takes the highest precedence but<br />is not listed here.<br />Atomic because the controller always writes the full list and ordering encodes merge precedence."
 />
 
 
@@ -3886,7 +4095,117 @@ LoRASpec defines the configuration for LoRA adapters.
   name="adapters"
   type="[LLMModelSpec](#llmmodelspec) array"
   required="false"
-  description="Adapters is the static specification for one or more LoRA adapters.<br />Each adapter is defined by its own ModelSpec.<br />This type is recursive https://github.com/kubernetes-sigs/controller-tools/issues/585"
+  description="Adapters is a list of LoRA (Low-Rank Adaptation) adapters to attach to the base model.<br />Each adapter is specified by name and URI (supports hf://, s3://, and pvc:// schemes).<br />The controller automatically downloads adapters and configures the runtime to use them.<br />This type is recursive https://github.com/kubernetes-sigs/controller-tools/issues/585"
+/><ApiField
+  name="maxRank"
+  type="integer"
+  required="false"
+  description="MaxRank is the maximum LoRA rank supported by the runtime (maps to vLLM --max-lora-rank).<br />Higher values allow adapters with higher rank but increase memory usage.<br />If not set, vLLM's default applies (16)."
+/><ApiField
+  name="maxAdapters"
+  type="integer"
+  required="false"
+  description="MaxAdapters is the maximum number of LoRA adapters that can be loaded simultaneously<br />(maps to vLLM --max-loras). Defaults to the number of configured adapters."
+/><ApiField
+  name="maxCpuAdapters"
+  type="integer"
+  required="false"
+  description="MaxCpuAdapters is the maximum number of LoRA adapters stored in CPU memory<br />(maps to vLLM --max-cpu-loras). Defaults to the number of configured adapters."
+/>
+
+
+#### ModelSourcedAddressStatus
+
+
+
+**Appears in:**
+- [SourcedAddress](#sourcedaddress)
+
+
+
+##### Fields
+
+
+
+<ApiField
+  name="name"
+  type="string"
+  required="true"
+  description=""
+/>
+
+
+#### ObservedGateway
+
+
+
+**Appears in:**
+- [RouterStatus](#routerstatus)
+
+ObservedGateway is a Gateway reference with the listeners and HTTPRoutes
+bound to this service through it. Used in status to record observed routing topology.
+
+##### Fields
+
+
+
+<ApiField
+  name="group"
+  type="[Group](#group)"
+  required="true"
+  description="Group is the group of the referent. For example, &quot;gateway.networking.k8s.io&quot;.<br />When set to the empty string, core API group is inferred."
+/><ApiField
+  name="kind"
+  type="[Kind](#kind)"
+  required="true"
+  description="Kind is kind of the referent. For example &quot;ConfigMap&quot; or &quot;Service&quot;."
+/><ApiField
+  name="name"
+  type="[ObjectName](#objectname)"
+  required="true"
+  description="Name is the name of the referent."
+/><ApiField
+  name="namespace"
+  type="[Namespace](#namespace)"
+  required="false"
+  description="Namespace is the namespace of the referenced object. When unspecified, the local<br />namespace is inferred.<br />Note that when a namespace different than the local namespace is specified,<br />a ReferenceGrant object is required in the referent namespace to allow that<br />namespace's owner to accept the reference. See the ReferenceGrant<br />documentation for details.<br />Support: Core"
+/><ApiField
+  name="listeners"
+  type="[SectionName](#sectionname) array"
+  required="false"
+  description="Listeners lists the SectionNames of the Gateway listeners that accepted<br />routes from this service. Nil means the route targets all listeners<br />(no SectionName was specified on the parentRef)."
+/><ApiField
+  name="httpRoutes"
+  type="[ObjectReference](#objectreference) array"
+  required="false"
+  description="HTTPRoutes lists the HTTPRoutes bound to this service through this Gateway."
+/>
+
+
+#### ObservedSchedulerStatus
+
+
+
+**Appears in:**
+- [RouterStatus](#routerstatus)
+
+ObservedSchedulerStatus records the scheduler-related resources observed
+during the last successful routing reconciliation.
+
+##### Fields
+
+
+
+<ApiField
+  name="inferencePool"
+  type="[ObjectReference](#objectreference)"
+  required="false"
+  description="InferencePool is the InferencePool observed as active for this service."
+/><ApiField
+  name="service"
+  type="[ObjectReference](#objectreference)"
+  required="false"
+  description="Service is the EPP Service observed for this service."
 />
 
 
@@ -3974,6 +4293,34 @@ It supports Kubernetes Ingress and the Gateway API. The fields are mutually excl
 />
 
 
+#### RouterStatus
+
+
+
+**Appears in:**
+- [LLMInferenceServiceStatus](#llminferenceservicestatus)
+
+RouterStatus records the networking resources observed during the last
+successful routing reconciliation. Nil when routing is not configured or
+the service is stopped.
+
+##### Fields
+
+
+
+<ApiField
+  name="gateways"
+  type="[ObservedGateway](#observedgateway) array"
+  required="false"
+  description="Gateways lists the Gateway resources observed as attached to this service,<br />each with the listeners and HTTPRoutes bound through them."
+/><ApiField
+  name="scheduler"
+  type="[ObservedSchedulerStatus](#observedschedulerstatus)"
+  required="false"
+  description="Scheduler records the observed scheduler topology.<br />Nil when the scheduler is not configured."
+/>
+
+
 #### ScalingSpec
 
 
@@ -4045,13 +4392,13 @@ When scaling is configured, the controller creates and manages autoscaling resou
 SchedulerSpec defines the Inference Gateway extension configuration.
 
 The SchedulerSpec configures the connection from the Gateway to the model deployment leveraging the LLM optimized
-request Scheduler, also known as the Endpoint Picker (EPP) which determines the exact pod that should handle the
-request and responds back to Envoy with the target pod, Envoy will then forward the request to the chosen pod.
+request Scheduler, also known as the Endpoint Picker (EPP). The EPP determines the exact pod that should handle the
+request and responds back to the Gateway with the target pod. The Gateway will then forward the request to the chosen pod.
 
 The Scheduler is only effective when having multiple inference pod replicas.
 
-Step 1: Gateway (Envoy) &lt;-- ExtProc --&gt; EPP (select the optimal replica to handle the request)
-Step 2: Gateway (Envoy) &lt;-- forward request --&gt; Inference Pod X
+Step 1 (endpoint selection): Gateway &lt;-- ExtProc --&gt; EPP (select the optimal replica to handle the request)
+Step 2 (endpoint routing): Gateway &lt;-- forward request/response --&gt; Inference Pod X
 
 ##### Fields
 
@@ -4087,6 +4434,53 @@ Step 2: Gateway (Envoy) &lt;-- forward request --&gt; Inference Pod X
   type="integer"
   required="true"
   description="Replicas is the number of replicas for the scheduler."
+/>
+
+
+#### SourcedAddress
+
+
+
+**Appears in:**
+- [LLMInferenceServiceStatus](#llminferenceservicestatus)
+
+SourcedAddress extends Addressable with the networking resource that
+produced this address, enabling consumers to select endpoints by origin.
+
+##### Fields
+
+
+
+<ApiField
+  name="name"
+  type="string"
+  required="false"
+  description="Name is the name of the address."
+/><ApiField
+  name="url"
+  type="[URL](#url)"
+  required="true"
+  description=""
+/><ApiField
+  name="CACerts"
+  type="string"
+  required="false"
+  description="CACerts is the Certification Authority (CA) certificates in PEM format<br />according to https://www.rfc-editor.org/rfc/rfc7468."
+/><ApiField
+  name="audience"
+  type="string"
+  required="false"
+  description="Audience is the OIDC audience for this address."
+/><ApiField
+  name="origin"
+  type="[ObjectReference](#objectreference)"
+  required="false"
+  description="Origin identifies the networking resource (e.g., Gateway) that<br />produced this address. Nil when the origin is unknown or when<br />the address was converted from an older API version."
+/><ApiField
+  name="models"
+  type="[ModelSourcedAddressStatus](#modelsourcedaddressstatus) array"
+  required="true"
+  description=""
 />
 
 
@@ -4232,6 +4626,44 @@ WorkloadSpec defines the configuration for a deployment workload, such as replic
   type="[PodSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podspec-v1-core)"
   required="false"
   description="Worker configuration for multi-node deployments.<br />The presence of this field triggers the creation of a multi-node (distributed) setup.<br />This spec defines the configuration for the worker pods, while the main 'Template' field defines the head pod.<br />The controller is responsible for enabling discovery between head and worker pods."
+/>
+
+
+#### WorkloadStatus
+
+
+
+**Appears in:**
+- [LLMInferenceServiceStatus](#llminferenceservicestatus)
+
+WorkloadStatus records the workload resources observed during the last
+successful reconciliation. Nil when no workload resources have been
+created yet, or when the service is stopped.
+
+##### Fields
+
+
+
+<ApiField
+  name="primary"
+  type="[TypedLocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#typedlocalobjectreference-v1-core)"
+  required="false"
+  description="Primary is the main inference workload (Deployment or LeaderWorkerSet).<br />When disaggregated serving is configured, this workload handles<br />the decode phase; otherwise it handles both prefill and decode."
+/><ApiField
+  name="prefill"
+  type="[TypedLocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#typedlocalobjectreference-v1-core)"
+  required="false"
+  description="Prefill is the prefill workload in disaggregated serving mode.<br />Nil when disaggregated serving is not configured."
+/><ApiField
+  name="service"
+  type="[TypedLocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#typedlocalobjectreference-v1-core)"
+  required="false"
+  description="Service is the Kubernetes Service fronting the primary inference workload."
+/><ApiField
+  name="scheduler"
+  type="[TypedLocalObjectReference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#typedlocalobjectreference-v1-core)"
+  required="false"
+  description="Scheduler is the EPP scheduler Deployment.<br />Nil when the scheduler is not configured."
 />
 
 
@@ -7721,6 +8153,11 @@ The following fields follow a "1-of" semantic. Users must specify exactly one sp
   type="[StorageUri](#storageuri) array"
   required="true"
   description="Spec for multiple storage uris."
+/><ApiField
+  name="storageContainerName"
+  type="string"
+  required="false"
+  description="StorageContainerName specifies the name of the ClusterStorageContainer to use<br />for downloading model artifacts. When set, this ClusterStorageContainer is used<br />instead of auto-matching based on the storage URI scheme.<br />This is similar to storageClassName on PersistentVolumeClaims."
 /><ApiField
   name="workerSpec"
   type="[WorkerSpec](#workerspec)"

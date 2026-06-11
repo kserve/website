@@ -46,7 +46,7 @@ In a _ClusterStorageContainer_ spec, you can specify credentials for cloud stora
 
 :::warning
 
-If a storage URI is supported by two or more _ClusterStorageContainer_ CRs, there is no guarantee which one will be used. **Please make sure that the URI format is only supported by one ClusterStorageContainer CR**.
+If a storage URI is supported by two or more _ClusterStorageContainer_ CRs and `storageContainerName` is not set, there is no guarantee which one will be used. Set [`spec.predictor.storageContainerName`](#explicitly-selecting-a-storage-container) on the `InferenceService` to explicitly select the one to use.
 
 :::
 
@@ -161,6 +161,41 @@ The respective secret should be created in the same namespace as the `InferenceS
 ```shell
 kubectl create secret generic hf-secret --from-literal=HF_TOKEN=<your_huggingface_token>
 ```
+
+## Explicitly Selecting a Storage Container
+
+By default, KServe selects a `ClusterStorageContainer` by matching the storage URI against each CR's `supportedUriFormats`. When more than one CR supports the same URI format, you can set `storageContainerName` on the predictor spec to explicitly select which one to use, similar to `storageClassName` on a PersistentVolumeClaim.
+
+For example, both the `default` and the `hf-hub` ClusterStorageContainers above support the `hf://` URI format. To make sure the `hf-hub` container (which carries the Hugging Face credentials) is used, reference it by name:
+
+```yaml
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: huggingface-llama3
+spec:
+  predictor:
+    storageContainerName: hf-hub
+    model:
+      modelFormat:
+        name: huggingface
+      storageUri: hf://meta-llama/meta-llama-3-8b-instruct
+```
+
+When `storageContainerName` is set, there is no fallback to auto-matching. The referenced `ClusterStorageContainer` must:
+
+- exist in the cluster,
+- not be disabled,
+- have `workloadType: initContainer` (the default),
+- support the model's `storageUri` in its `supportedUriFormats`.
+
+If any of these checks fail, the deployment fails with an error instead of falling back to another storage container.
+
+:::note
+
+`storageContainerName` is only available on the predictor spec. Explainers and transformers always use URI-based auto-matching, and `LLMInferenceService` does not support this field yet.
+
+:::
 
 ## Spec Attributes
 
