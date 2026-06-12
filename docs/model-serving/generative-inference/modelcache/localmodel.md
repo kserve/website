@@ -12,7 +12,8 @@ the local persistent volume can serve multiple pods with the warmed up model cac
 
 This feature introduces the following custom resources:
 
-- `LocalModelCache` - Specifies which model from persistent storage to cache on local storage of the Kubernetes node
+- `LocalModelCache` - Cluster-scoped resource that specifies which model from persistent storage to cache on local storage of the Kubernetes node. Cached models are available to `InferenceService` resources in any namespace.
+- `LocalModelNamespaceCache` - Namespace-scoped variant of `LocalModelCache`. Cached models are only available to `InferenceService` resources within the same namespace, enabling multi-tenancy and isolation.
 - `LocalModelNodeGroup` - Manages the node group for caching the models and the local persistent storage
 - `LocalModelNode` - Tracks the status of the models cached on a given local node
 
@@ -50,13 +51,121 @@ localModel: |-
   }
 ```
 
-## Configure Local Model Download Job Namespace
+## Configure Credentials for Model Downloads
 
-Before creating the `LocalModelCache` resource to cache the models, you need to ensure credentials are configured in the download job namespace.
-The download jobs are created in the configured namespace `kserve-localmodel-jobs`. In this example, we're caching models from the Hugging Face Hub, so the HF token secret should be created in advance in the same namespace
-along with the storage container configurations.
+Before creating a `LocalModelCache` or `LocalModelNamespaceCache` resource, you need to configure credentials so that download jobs can access the model repository (e.g., a gated Hugging Face model or a private S3 bucket).
 
-### Create the HF Hub token secret
+Download jobs run in the namespace configured by the `jobNamespace` value in the `inferenceservice-config` ConfigMap (default: `kserve-localmodel-jobs`).
+
+KServe provides two ways to configure download credentials. Both are fully supported and can coexist.
+
+:::info[Precedence]
+If a matching `ClusterStorageContainer` with `workloadType: localModelDownloadJob` exists, it takes precedence over inline credential fields on the cache resource.
+:::
+
+### Option A: Inline Credentials on the Cache Resource
+
+You can specify credentials directly on the `LocalModelCache` (or `LocalModelNamespaceCache`) resource using the same patterns as `InferenceService`. This approach eliminates the need for a separate `ClusterStorageContainer`.
+
+The download job container spec (image, CPU/memory requests and limits) is derived from the `storageInitializer` section of the `inferenceservice-config` ConfigMap.
+
+#### Using `serviceAccountName`
+
+Reference a ServiceAccount that has secrets attached containing storage credentials:
+
+```yaml title="hf-secret.yaml"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hf-secret
+  namespace: kserve-localmodel-jobs
+type: Opaque
+stringData:
+  HF_TOKEN: xxxx # fill in the hf hub token
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hf-downloader
+  namespace: kserve-localmodel-jobs
+secrets:
+  - name: hf-secret
+```
+
+Then reference the ServiceAccount in the cache resource:
+
+```yaml title="local-model-cache-sa.yaml"
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelCache
+metadata:
+  name: meta-llama3-8b-instruct
+spec:
+  sourceModelUri: "hf://meta-llama/meta-llama-3-8b-instruct"
+  modelSize: 10Gi
+  nodeGroups:
+    - workers
+  serviceAccountName: hf-downloader
+```
+
+#### Using `storage.key`
+
+Reference a specific key in the `storage-config` secret:
+
+```yaml title="storage-config-secret.yaml"
+apiVersion: v1
+kind: Secret
+metadata:
+  name: storage-config
+  namespace: kserve-localmodel-jobs
+type: Opaque
+stringData:
+  hf-credentials: |
+    {
+      "type": "hf",
+      "token": "<your-hf-token>"
+    }
+```
+
+```yaml title="local-model-cache-storage-key.yaml"
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelCache
+metadata:
+  name: meta-llama3-8b-instruct
+spec:
+  sourceModelUri: "hf://meta-llama/meta-llama-3-8b-instruct"
+  modelSize: 10Gi
+  nodeGroups:
+    - workers
+  storage:
+    key: hf-credentials
+```
+
+#### Using `storage.parameters`
+
+Provide additional storage parameters inline, for example to specify an S3 region:
+
+```yaml title="local-model-cache-s3.yaml"
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelCache
+metadata:
+  name: s3-model
+spec:
+  sourceModelUri: "s3://mybucket/mymodel"
+  modelSize: 5Gi
+  nodeGroups:
+    - workers
+  storage:
+    key: my-s3-key
+    parameters:
+      type: s3
+      region: us-west-2
+```
+
+### Option B: ClusterStorageContainer
+
+You can create a `ClusterStorageContainer` resource with `workloadType: localModelDownloadJob` to define the download container spec and credentials. This is useful when you want to centrally manage the download container image, resource limits, and credentials for all model cache download jobs matching a URI prefix.
+
+#### Create the HF Hub token secret
 
 ```yaml title="hf-secret.yaml"
 apiVersion: v1
@@ -69,15 +178,7 @@ stringData:
   HF_TOKEN: xxxx # fill in the hf hub token
 ```
 
-:::tip
-Model download job namespace can be configured in the `inferenceservice-config` ConfigMap by editing the `jobNamespace` value in the `localModel` section.
-The default namespace is `kserve-localmodel-jobs`.
-:::
-
-
-### Create the HF Hub cluster storage container
-
-Create the HF Hub cluster storage container to reference the HF Hub secret:
+#### Create the HF Hub cluster storage container
 
 ```yaml title="hf-cluster-storage-container.yaml"
 apiVersion: "serving.kserve.io/v1alpha1"
@@ -89,7 +190,7 @@ spec:
     name: storage-initializer
     image: kserve/storage-initializer:latest
     env:
-    - name: HF_TOKEN  # Option 2 for authenticating with HF_TOKEN
+    - name: HF_TOKEN
       valueFrom:
         secretKeyRef:
           name: hf-secret
@@ -213,6 +314,8 @@ Create the `LocalModelCache` to specify the source model storage URI to pre-down
 
 - `sourceModelUri` - The model persistent storage location where to download the model for local cache 
 - `nodeGroups` - Specify which nodes to cache the model
+- `serviceAccountName` *(optional)* - ServiceAccount for credential lookup (see [Configure Credentials](#configure-credentials-for-model-downloads))
+- `storage` *(optional)* - Storage key and parameters for credential configuration (see [Configure Credentials](#configure-credentials-for-model-downloads))
 
 ```yaml title="local-model-cache.yaml"
 apiVersion: serving.kserve.io/v1alpha1
@@ -336,6 +439,123 @@ You can deploy the InferenceService with:
 kubectl apply -f inferenceservice.yaml
 ```
 
+## Namespace-Scoped Model Cache (`LocalModelNamespaceCache`)
+
+The `LocalModelCache` resource is cluster-scoped, making cached models available to `InferenceService` resources in any namespace.
+For workloads that require multi-tenancy or isolation, KServe provides `LocalModelNamespaceCache` -- a namespace-scoped variant
+that restricts cached models to `InferenceService` resources within the same namespace.
+
+### Cluster-Scoped vs Namespace-Scoped
+
+| | `LocalModelCache` | `LocalModelNamespaceCache` |
+|---|---|---|
+| **Scope** | Cluster-scoped | Namespace-scoped |
+| **Availability** | Any `InferenceService` in the cluster | Only `InferenceService` resources in the same namespace |
+| **Spec fields** | `sourceModelUri`, `modelSize`, `nodeGroups`, `serviceAccountName`, `storage` | Same as `LocalModelCache` |
+| **Resolution priority** | Checked after namespace cache | Checked first for matching `InferenceService` |
+
+:::info[Resolution order]
+When an `InferenceService` requests a model, KServe checks for a matching `LocalModelNamespaceCache` in the same namespace first. If no match is found, it falls back to looking for a matching cluster-scoped `LocalModelCache`.
+:::
+
+### Create a `LocalModelNamespaceCache`
+
+The spec fields are the same as `LocalModelCache`. The resource is created in the target namespace:
+
+```yaml title="local-model-namespace-cache.yaml"
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelNamespaceCache
+metadata:
+  name: meta-llama3-8b-instruct
+  namespace: my-team
+spec:
+  sourceModelUri: "hf://meta-llama/meta-llama-3-8b-instruct"
+  modelSize: 10Gi
+  nodeGroups:
+    - workers
+  serviceAccountName: hf-downloader
+```
+
+Credentials (Secrets and ServiceAccounts) referenced by the cache resource must exist in the download job namespace configured in `inferenceservice-config`.
+
+### Check the `LocalModelNamespaceCache` Status
+
+Status reporting works the same as `LocalModelCache`:
+
+```bash
+kubectl get localmodelnamespacecache meta-llama3-8b-instruct -n my-team -oyaml
+```
+
+```yaml title="LocalModelNamespaceCache Status"
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelNamespaceCache
+metadata:
+  name: meta-llama3-8b-instruct
+  namespace: my-team
+spec:
+  sourceModelUri: "hf://meta-llama/meta-llama-3-8b-instruct"
+  modelSize: 10Gi
+  nodeGroups:
+    - workers
+  serviceAccountName: hf-downloader
+status:
+  copies:
+    available: 1
+    total: 1
+  nodeStatus:
+    kind-worker: NodeDownloaded
+```
+
+On the `LocalModelNode`, namespace-scoped models use a `namespace/modelName` key format in the status to avoid collisions with cluster-scoped models of the same name:
+
+```yaml title="LocalModelNode Status with namespace-scoped models"
+apiVersion: serving.kserve.io/v1alpha1
+kind: LocalModelNode
+metadata:
+  name: kind-worker
+spec:
+  localModels:
+    - modelName: meta-llama3-8b-instruct
+      sourceModelUri: hf://meta-llama/meta-llama-3-8b-instruct
+      namespace: my-team
+status:
+  modelStatus:
+    my-team/meta-llama3-8b-instruct: ModelDownloaded
+```
+
+### Deploy InferenceService with `LocalModelNamespaceCache`
+
+The `InferenceService` must be deployed in the same namespace as the `LocalModelNamespaceCache`. The `storageUri` must match the `sourceModelUri` of the cache resource:
+
+```yaml title="inferenceservice.yaml"
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: huggingface-llama3
+  namespace: my-team
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: huggingface
+      args:
+        - --model_name=llama3
+      storageUri: hf://meta-llama/meta-llama-3-8b-instruct
+      resources:
+        limits:
+          cpu: "6"
+          memory: 24Gi
+          nvidia.com/gpu: "1"
+        requests:
+          cpu: "6"
+          memory: 24Gi
+          nvidia.com/gpu: "1"
+```
+
+### Storage Deduplication
+
+The node agent uses a hash of the `sourceModelUri` to determine the physical storage folder on the node. If multiple cache resources (cluster-scoped or namespace-scoped) point to the same `sourceModelUri`, they share the same physical folder on disk. This avoids redundant downloads while correctly tracking status for each cache resource independently.
+
 ## Troubleshooting
 If you encounter issues with the model cache or download jobs, check the following:
 - **Init:OOMKilled**: This indicates that the storage initializer exceeded the memory limits. You can try increasing the memory limits in the `ClusterStorageContainer`.
@@ -358,10 +578,12 @@ kubectl logs job/<job-name> -n kserve-localmodel-jobs
 In this guide, you've learned how to:
 
 1. Enable the Local Model Cache feature in KServe
-2. Configure credentials for accessing models on Hugging Face Hub
-3. Create a LocalModelNodeGroup to define where models will be cached
-4. Create a LocalModelCache to specify which models to download and cache locally
-5. Check the status of cached models
-6. Deploy an InferenceService that uses the locally cached model
+2. Configure credentials for model downloads using inline credentials or `ClusterStorageContainer`
+3. Create a `LocalModelNodeGroup` to define where models will be cached
+4. Create a `LocalModelCache` to specify which models to download and cache locally
+5. Specify credentials directly on the cache resource via `serviceAccountName` or `storage` fields
+6. Check the status of cached models
+7. Deploy an `InferenceService` that uses the locally cached model
+8. Use `LocalModelNamespaceCache` for namespace-scoped model caching with multi-tenancy isolation
 
 This approach significantly improves startup time for `InferenceService` by having models pre-downloaded and cached on local node storage, especially beneficial for large language models where download times can be substantial.
