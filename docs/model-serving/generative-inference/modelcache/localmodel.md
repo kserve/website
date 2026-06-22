@@ -57,6 +57,8 @@ Before creating a `LocalModelCache` or `LocalModelNamespaceCache` resource, you 
 
 Download jobs run in the namespace configured by the `jobNamespace` value in the `inferenceservice-config` ConfigMap (default: `kserve-localmodel-jobs`).
 
+Regardless of which credential option you use, Secrets and ServiceAccounts must exist in this download job namespace. The controller injects credentials from that namespace into download jobs at runtime.
+
 KServe provides two ways to configure download credentials. Both are fully supported and can coexist.
 
 :::info[Precedence]
@@ -166,6 +168,8 @@ spec:
 You can create a `ClusterStorageContainer` resource with `workloadType: localModelDownloadJob` to define the download container spec and credentials. This is useful when you want to centrally manage the download container image, resource limits, and credentials for all model cache download jobs matching a URI prefix.
 
 #### Create the HF Hub token secret
+
+Create the secret in the download job namespace (`kserve-localmodel-jobs` by default). The controller injects credentials from this namespace into download jobs, so the secret must exist there before you create a cache resource.
 
 ```yaml title="hf-secret.yaml"
 apiVersion: v1
@@ -476,8 +480,6 @@ spec:
   serviceAccountName: hf-downloader
 ```
 
-Credentials (Secrets and ServiceAccounts) referenced by the cache resource must exist in the download job namespace configured in `inferenceservice-config`.
-
 ### Check the `LocalModelNamespaceCache` Status
 
 Status reporting works the same as `LocalModelCache`:
@@ -579,7 +581,7 @@ In this guide, you've learned how to:
 
 1. Enable the Local Model Cache feature in KServe
 2. Configure credentials for model downloads using inline credentials or `ClusterStorageContainer`
-3. Create a `LocalModelNodeGroup` to define where models will be cached
+3. Create a `LocalModelNodeGroup` to specify which nodes will store models
 4. Create a `LocalModelCache` to specify which models to download and cache locally
 5. Specify credentials directly on the cache resource via `serviceAccountName` or `storage` fields
 6. Check the status of cached models
