@@ -188,7 +188,7 @@ curl -s "https://raw.githubusercontent.com/kserve/kserve/master/hack/setup/quick
 9. ✅ Gateway
 10. ✅ LLMInferenceService CRDs and Controller
 
-:::success
+:::tip
 This installs only LLMInferenceService components. KServe (Standard) is not included.
 :::
 
