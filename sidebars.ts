@@ -135,6 +135,7 @@ const sidebars: SidebarsConfig = {
               items: [
                 "model-serving/generative-inference/llmisvc/llmisvc-overview",
                 "model-serving/generative-inference/llmisvc/lora-adapters",
+                "model-serving/generative-inference/llmisvc/kv-cache-offloading",
                 "model-serving/generative-inference/llmisvc/llmisvc-configuration",
                 "model-serving/generative-inference/llmisvc/llmisvc-config-composition",
                 "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
