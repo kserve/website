@@ -27,7 +27,7 @@ spec:
   workload:
     kvCacheOffloading:
       cpu: "10Gi"           # CPU RAM tier size
-      evictionPolicy: lru   # eviction policy (lru)
+      evictionPolicy: lru   # lru (least recently used) or arc (adaptive replacement cache)
       secondary:            # optional disk tiers
         - fileSystem:
             emptyDir:
@@ -39,13 +39,13 @@ spec:
 | Field | Type | Description |
 |---|---|---|
 | `cpu` | quantity | Size of the CPU RAM tier. Required to enable offloading. |
-| `evictionPolicy` | string | Eviction policy. Currently only `lru` is supported. |
-| `secondary` | list | Ordered list of disk tiers. Consulted in order after the CPU tier is full. |
+| `evictionPolicy` | string | Eviction policy for the CPU tier. `lru` (least recently used, default) or `arc` (adaptive replacement cache). |
+| `secondary` | list | Optional ordered list of disk tiers. When omitted, offloading stops at CPU RAM. |
 
 ## Disk tiers
 
-Each entry in `secondary` must have a `fileSystem` key with exactly one of
-`emptyDir`, `pvc.spec`, or `pvc.ref`.
+`secondary` is optional. When present, each entry must have a `fileSystem` key
+with exactly one of `emptyDir`, `pvc.spec`, or `pvc.ref`.
 
 Mount paths are assigned automatically as `/mnt/kv-cache-0`, `/mnt/kv-cache-1`,
 etc. based on position in the list.
@@ -112,18 +112,18 @@ secondary:
 
 ## Mixing tiers
 
-Multiple entries in `secondary` are allowed. vLLM consults them in order after
-the CPU tier is full. You can mix backends freely:
+Multiple entries in `secondary` are allowed. Each entry becomes an independent
+disk tier mounted at its own path. You can mix backends freely:
 
 ```yaml
 secondary:
   - fileSystem:
+      emptyDir:
+        size: "200Gi"               # tier 0: fast node-local spill
+  - fileSystem:
       pvc:
         ref:
-          name: shared-cephfs-pvc   # tier 0: shared across replicas
-  - fileSystem:
-      emptyDir:
-        size: "200Gi"               # tier 1: fast node-local spill
+          name: shared-cephfs-pvc   # tier 1: shared across replicas
 ```
 
 ## Full example
