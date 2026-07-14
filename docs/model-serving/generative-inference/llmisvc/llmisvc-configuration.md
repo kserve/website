@@ -396,9 +396,21 @@ spec:
 `spec` and `refs` are mutually exclusive - use `refs` to bring your own HTTPRoute, or `spec` to have the controller create one with your custom rules.
 :::
 
+`router.route.http.spec` is merged with the well-known router-route preset using the same [strategic merge](./llmisvc-config-composition.md#strategic-merge-patch-behavior) as other `LLMInferenceService` fields:
+
+| What you set in `spec` | Result |
+|------------------------|--------|
+| Top-level fields only (for example `hostnames`, `parentRefs`) | Preset rules and backendRefs are preserved; your fields are added/overlaid |
+| `ruleDefaults` on `router.route.http` | Defaults such as `timeouts` and `retry` overlay onto every preset rule |
+| Any non-empty `rules` list | **Replaces** the entire preset Rules list — provide a complete list |
+
+:::warning
+Supplying a partial `rules` list that includes matches, filters, or backendRefs replaces all auto-generated routes. If you only need hostnames or inherited per-rule defaults, do **not** copy a full-spec example and delete fields — use the patterns below.
+:::
+
 #### Real-world Use Cases
 
-**1. Custom Timeouts** (for long-running LLM inference):
+**1. Add hostnames** (keep auto-generated routes):
 
 ```yaml
 spec:
@@ -406,13 +418,26 @@ spec:
     route:
       http:
         spec:
-          rules:
-            - timeouts:
-                request: "300s"
-                backendRequest: "300s"
+          hostnames:
+            - my-svc.example.com
 ```
 
-**2. URL Rewrite** (multi-tenant routing):
+**2. Rule defaults** (for long-running LLM inference; overlays preset rules):
+
+```yaml
+spec:
+  router:
+    route:
+      http:
+        ruleDefaults:
+          timeouts:
+            request: "300s"
+            backendRequest: "300s"
+          retry:
+            attempts: 3
+```
+
+**3. Full custom Rules** (replaces auto-generated routes — include every match/backend you need):
 
 ```yaml
 spec:
@@ -431,17 +456,11 @@ spec:
                     path:
                       type: ReplacePrefixMatch
                       replacePrefixMatch: /v1/completions
-```
-
-**3. Service Backend** (bypass InferencePool):
-
-```yaml
-spec:
-  router:
-    route:
-      http:
-        spec:
-          rules:
+              backendRefs:
+                - group: inference.networking.k8s.io
+                  kind: InferencePool
+                  name: my-svc-inference-pool
+                  port: 8000
             - backendRefs:
                 - group: ""
                   kind: Service
@@ -672,11 +691,10 @@ spec:
     gateway: {}
     route:
       http:
-        spec:
-          rules:
-            - timeouts:
-                request: "300s"
-                backendRequest: "300s"
+        ruleDefaults:
+          timeouts:
+            request: "300s"
+            backendRequest: "300s"
     scheduler: {}
 ```
 
