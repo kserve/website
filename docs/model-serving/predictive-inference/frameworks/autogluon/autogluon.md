@@ -130,6 +130,8 @@ Sample payload:
 }
 ```
 
+Before sending the request, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
+
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice autogluon-titanic -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 curl -v \
@@ -152,6 +154,8 @@ For v2 requests, provide one input tensor per feature. Each tensor `name` must m
   ]
 }
 ```
+
+Before sending the request, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice autogluon-titanic -o jsonpath='{.status.url}' | cut -d "/" -f 3)
@@ -191,6 +195,8 @@ Sample payload:
   ]
 }
 ```
+
+Before sending the request, [determine the ingress IP and ports](../../../../getting-started/predictive-first-isvc.md#4-determine-the-ingress-ip-and-ports), then set the `INGRESS_HOST` and `INGRESS_PORT` environment variables.
 
 ```bash
 SERVICE_HOSTNAME=$(kubectl get inferenceservice autogluon-ts-forecast -o jsonpath='{.status.url}' | cut -d "/" -f 3)
