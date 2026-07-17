@@ -46,10 +46,10 @@ KServe eliminates the complexity of productionizing AI models. Whether you're a 
 | <a href="model-serving/generative-inference/overview">**LLM Multi-framework**</a> | Deploy LLMs from Hugging Face, vLLM, and custom generative models |
 | <a href="model-serving/generative-inference/llmisvc/llmisvc-overview">**OpenAI-Compatible APIs**</a> | Chat completion, streaming, and embedding endpoints out of the box |
 | <a href="model-serving/generative-inference/modelcache/localmodel">**LocalModelCache**</a> | Reduce LLM startup time from 15–20 minutes to ~1 minute |
-| <a href="model-serving/generative-inference/kvcache-offloading/kvcache-offloading">**KV Cache Offloading**</a> | Optimized memory management for long conversations and large contexts |
-| <a href="model-serving/generative-inference/multi-node/multi-node">**Multi-node Inference**</a> | Distributed LLM serving across multiple nodes |
+| <a href="model-serving/generative-inference/kvcache-offloading/">**KV Cache Offloading**</a> | Optimized memory management for long conversations and large contexts |
+| <a href="model-serving/generative-inference/multi-node/">**Multi-node Inference**</a> | Distributed LLM serving across multiple nodes |
 | <a href="model-serving/generative-inference/ai-gateway/envoy-ai-gateway">**Envoy AI Gateway**</a> | Enterprise-grade API management and routing for AI workloads |
-| <a href="model-serving/generative-inference/autoscaling/autoscaling">**Metric-based Autoscaling**</a> | Scale on token throughput, queue depth, and GPU utilization |
+| <a href="model-serving/generative-inference/autoscaling/">**Metric-based Autoscaling**</a> | Scale on token throughput, queue depth, and GPU utilization |
 | <a href="model-serving/predictive-inference/rollout-strategies/canary">**Canary Deployments**</a> | A/B testing and canary rollouts for LLM experiments |
 
 <a href="model-serving/generative-inference/overview">→ Full Generative AI docs</a>
