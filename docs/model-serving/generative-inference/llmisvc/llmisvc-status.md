@@ -36,6 +36,9 @@ Ready (= WorkloadsReady ∧ RouterReady)
       └── SchedulerWorkloadReady                  (managed scheduler only)
 
 PresetsCombined                                   (independent gate, not part of Ready rollup)
+
+GroupReady                                        (independent, only with routing group)
+GroupDegraded                                     (independent, only when group has divergent members)
 ```
 
 ---
@@ -95,6 +98,65 @@ These roll up into `RouterReady`. When no gateway or HTTP route configuration is
 | `HTTPRoutesReady` | Router reconciler | All HTTPRoute resources created and accepted by their parent Gateways | HTTPRoute not created, not accepted, or ref invalid | Only when HTTP route is configured |
 | `InferencePoolReady` | Router reconciler | InferencePool resource created and ready | Pool not found, not ready, or waiting for Gateway | Only when managed scheduler is enabled |
 | `SchedulerWorkloadReady` | Scheduler reconciler | Endpoint Picker (EPP) scheduler Deployment has desired replicas | Scheduler pods not ready | Only when managed scheduler is enabled |
+
+### Group Conditions (Traffic Splitting)
+
+These conditions are **independent** - they do not roll up into `RouterReady` or `Ready`. A broken group does not prevent the resource from serving inference individually. They are only present when the LLMInferenceService is part of a [routing group](./canary-rollout.md).
+
+| Condition | Set By | True | False | Presence |
+|-----------|--------|------|-------|----------|
+| `GroupReady` | Group reconciler | This member's sub-group is participating in weighted traffic splitting | Deletion blocked - waiting for peers to remove backendRefs (`FinalizationPending`) | Only when `spec.router.route.group` is set |
+| `GroupDegraded` | Group reconciler | Group has members with different model names or LoRA adapter sets (`MemberDivergence`). Each sub-group continues serving independently. | - | Only when divergence detected |
+
+```
+Ready (= WorkloadsReady ∧ RouterReady)
+ ├── WorkloadsReady
+ └── RouterReady
+
+GroupReady                               (independent)
+GroupDegraded                            (independent)
+```
+
+When an LLMInferenceService is part of a routing group, `.status.router.group` contains the full group topology:
+
+```yaml
+status:
+  router:
+    group:
+      name: my-model
+      members:
+        - name: my-model-v1
+          weight: 9
+          backendRef:
+            group: inference.networking.k8s.io
+            kind: InferencePool
+            name: my-model-v1-inference-pool
+            port: 8000
+        - name: my-model-v2
+          weight: 1
+          backendRef:
+            group: inference.networking.k8s.io
+            kind: InferencePool
+            name: my-model-v2-inference-pool
+            port: 8000
+```
+
+A force-stopped member stays visible with its declared weight:
+
+```yaml
+        - name: my-model-v1
+          weight: 9
+          stopped: true
+          backendRef: ...
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `group.name` | `string` | The routing group name (matches `spec.router.route.group`) |
+| `group.members[].name` | `string` | The LLMInferenceService name |
+| `group.members[].weight` | `int32` | The member's declared weight from spec |
+| `group.members[].stopped` | `bool` | True when the member has the force-stop annotation |
+| `group.members[].backendRef` | `BackendObjectReference` | The resolved backend reference used in HTTPRoute weighted routing |
 
 ---
 

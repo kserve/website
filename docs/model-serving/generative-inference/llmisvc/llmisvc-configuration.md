@@ -449,6 +449,42 @@ spec:
 
 ---
 
+### Traffic Splitting (Canary Rollout)
+
+Traffic splitting lets you run two or more versions of an LLMInferenceService side by side and shift live traffic between them. See the [Canary Rollout guide](./canary-rollout.md) for a full walkthrough.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `group` | `string` | No | Routing group name. All LLMISVCs with the same group participate in weighted traffic splitting. Members sharing the same `model.name` and LoRA adapter set participate in the same weighted split. |
+| `weight` | `int32` | No | Relative traffic share within the group (0-1,000,000). Traffic is distributed proportionally across all members' weights. A weight of `0` means the member is in the group but receives no traffic through shared model-routing paths. |
+
+```yaml
+spec:
+  router:
+    route:
+      group: my-model
+      weight: 9
+    scheduler: {}
+```
+
+**Validation rules:**
+
+| Spec | Valid? | Why |
+|------|--------|-----|
+| No `group`, no `weight` | Yes | Standard LLMISVC, no traffic splitting |
+| `weight` without `group` | No | Weight requires group |
+| `group` without `weight` | No | Group requires weight |
+| `group` + `weight` | Yes | Member joins the named group. Controller creates the HTTPRoute. |
+| `group` + `weight` + `route.http.refs` | No | Traffic splitting needs controller-managed routes, not user-managed refs |
+
+When `group` is set, the mutating webhook automatically adds a `serving.kserve.io/routing-group` label for discovery:
+
+```bash
+kubectl get llmisvc -l serving.kserve.io/routing-group=my-model
+```
+
+---
+
 ### Scheduler Configuration
 
 #### Managed Scheduler (Default)
