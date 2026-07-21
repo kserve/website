@@ -392,11 +392,35 @@ spec:
                   port: 8000
 ```
 
-`spec` and `refs` are mutually exclusive - use `refs` to bring your own HTTPRoute, or `spec` to have the controller create one with your custom rules.
+`spec` and `refs` are mutually exclusive - use `refs` to bring your own HTTPRoute, or `spec` to have the controller create and manage one.
+
+`router.route.http.spec` is merged with the well-known router-route preset using the same [strategic merge](./llmisvc-config-composition.md#strategic-merge-patch-behavior) as other `LLMInferenceService` fields:
+
+| What you set in `spec` | Result |
+|------------------------|--------|
+| Top-level fields only (for example `hostnames`, `parentRefs`) | Preset rules and backendRefs are preserved; your fields are added/overlaid |
+| `rules` with **only** `timeouts` | Timeouts overlay onto every preset rule (backendRefs/matches stay) |
+| Any other `rules` list | **Replaces** the entire preset Rules list — provide a complete list |
+
+:::warning
+Supplying a partial `rules` list that includes matches, filters, or backendRefs replaces all auto-generated routes. If you only need hostnames or timeouts, do **not** copy a full-spec example and delete fields — use the patterns below.
+:::
 
 #### Real-world Use Cases
 
-**1. Custom Timeouts** (for long-running LLM inference):
+**1. Add hostnames** (keep auto-generated routes):
+
+```yaml
+spec:
+  router:
+    route:
+      http:
+        spec:
+          hostnames:
+            - my-svc.example.com
+```
+
+**2. Custom Timeouts** (for long-running LLM inference; overlays preset rules):
 
 ```yaml
 spec:
@@ -410,7 +434,7 @@ spec:
                 backendRequest: "300s"
 ```
 
-**2. URL Rewrite** (multi-tenant routing):
+**3. Full custom Rules** (replaces auto-generated routes — include every match/backend you need):
 
 ```yaml
 spec:
@@ -429,17 +453,11 @@ spec:
                     path:
                       type: ReplacePrefixMatch
                       replacePrefixMatch: /v1/completions
-```
-
-**3. Service Backend** (bypass InferencePool):
-
-```yaml
-spec:
-  router:
-    route:
-      http:
-        spec:
-          rules:
+              backendRefs:
+                - group: inference.networking.k8s.io
+                  kind: InferencePool
+                  name: my-svc-inference-pool
+                  port: 8000
             - backendRefs:
                 - group: ""
                   kind: Service
@@ -669,6 +687,7 @@ spec:
     route:
       http:
         spec:
+          # Timeout-only rule patches overlay onto the auto-generated routes.
           rules:
             - timeouts:
                 request: "300s"
