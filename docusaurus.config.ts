@@ -7,7 +7,7 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 // The latest announcedVersion
-const announcedVersion = '0.18';
+const announcedVersion = '0.19';
 
 const config: Config = {
   title: 'KServe',
@@ -277,6 +277,7 @@ const config: Config = {
             'current': {
               label: 'nightly',
             },
+            '0.19': { label: '0.19' },
             '0.18': { label: '0.18' },
             '0.17': { label: '0.17' },
             '0.16': { label: '0.16' },
