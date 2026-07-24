@@ -121,9 +121,10 @@ paths such as `/v1/models/{model_name}:predict` with a `dict` payload, while v2
 requests call paths such as `/v2/models/{model_name}/infer` and should use
 `InferRequest`/`InferResponse` as shown in the Open(v2) example below.
 
-The `--predictor_protocol` argument, and its deprecated alias `--protocol`, are
-only used when this container calls a separate predictor, for example from a
-transformer. They do not select which REST routes the custom predictor exposes.
+The `--predictor_protocol` argument, and its deprecated alias `--protocol`,
+primarily configure the protocol used for outbound calls to a separate
+predictor, for example from a transformer. They do not select which REST routes
+the custom predictor exposes.
 :::
 
 ### Build Custom Serving Image with BuildPacks
