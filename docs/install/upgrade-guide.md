@@ -240,7 +240,7 @@ helm list -n kserve
 # - kserve-localmodel-crd (if using LocalModel)
 # - kserve-llmisvc-crd (if using LLMIsvc)
 # - kserve-runtime-configs
-# - kserve-resources
+# - kserve or kserve-resources (KServe controller/resources; release name depends on install path)
 # - kserve-localmodel-resources (if using LocalModel)
 # - kserve-llmisvc-resources (if using LLMIsvc)
 
