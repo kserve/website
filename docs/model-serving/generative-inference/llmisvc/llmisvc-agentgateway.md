@@ -1,9 +1,9 @@
 ---
-title: LLMInferenceService with AgentGateway
-description: How to integrate KServe LLMInferenceService with AgentGateway for LLM-aware routing, token tracking, and GenAI telemetry
+title: LLMInferenceService with agentgateway
+description: How to integrate KServe LLMInferenceService with agentgateway for LLM-aware routing, token tracking, and GenAI telemetry
 ---
 
-# LLMInferenceService with AgentGateway
+# LLMInferenceService with agentgateway
 
 This guide walks through integrating a KServe LLMInferenceService with [AgentGateway](https://agentgateway.dev) to enable LLM-aware routing with token tracking, GenAI telemetry (OpenTelemetry semantic conventions), and token-based rate limiting. The key mechanism is overriding the HTTPRoute `backendRef` via `LLMInferenceServiceConfig` so that KServe's auto-generated routes point to an `AgentgatewayBackend` instead of a plain `InferencePool` or `Service`.
 
@@ -383,6 +383,7 @@ This approach is generic. Any gateway that supports custom `backendRef` kinds vi
 
 ## Next Steps
 
+- Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
 - Explore the [AgentGateway documentation](https://agentgateway.dev/docs) for advanced features like content filtering and cost tracking.
 - Learn more about [LLMInferenceServiceConfig composition](./llmisvc-config-composition.md) for managing configurations across multiple services.
 - See the [LLMInferenceService Configuration Guide](./llmisvc-configuration.md) for the full `spec.router.route.http` reference.

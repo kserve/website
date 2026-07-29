@@ -1,9 +1,9 @@
 ---
-title: LLMInferenceService with Inference Gateway Extension (IGW)
+title: Gateway API Inference Extension with Envoy AI Gateway
 description: How to integrate KServe LLMInferenceService with Envoy AI Gateway to manage LLM traffic and usage-based rate limits
 ---
 
-# LLMInferenceService with Inference Gateway Extension (IGW)
+# Gateway API Inference Extension with Envoy AI Gateway
 
 This tutorial walks through deploying a KServe LLMInferenceService that wraps [llm-d](https://llm-d.ai/) — which implements the [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/) (the llm-d router and inference pool) — and fronts it with Envoy AI Gateway to provide OpenAI-compatible routing, token usage accounting, and usage-based rate limiting. KServe integrates with llm-d via a Kubernetes-native custom resource, LLMInferenceService, which provisions the router and inference pool. You will create a Gateway and an AIGatewayRoute that forward requests to the KServe InferencePool, enable automatic token metering (input, output, and total) via llmRequestCosts, and enforce per-user, per-model quotas using a BackendTrafficPolicy. KServe can run behind the AI Gateway in the same cluster or a different one; for clarity, this guide uses a single-cluster setup.
 
@@ -635,6 +635,8 @@ done
 ## Next Steps
 
 Now that you've tested the basic setup, you can:
+
+- Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
 
 - Explore more rate limiter-related configuration at the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting).
 
