@@ -1,40 +1,42 @@
 ---
 title: LLMInferenceService with agentgateway
-description: How to integrate KServe LLMInferenceService with agentgateway for LLM-aware routing, token tracking, and GenAI telemetry
+description: How to use KServe LLMInferenceService with agentgateway as an Inference Gateway and optionally apply AI policies
 ---
 
 # LLMInferenceService with agentgateway
 
-This guide walks through integrating a KServe LLMInferenceService with [agentgateway](https://agentgateway.dev) to enable LLM-aware routing with token tracking, GenAI telemetry (OpenTelemetry semantic conventions), and token-based rate limiting. The key mechanism is overriding the HTTPRoute `backendRef` via `LLMInferenceServiceConfig` so that KServe's auto-generated routes point to an `AgentgatewayBackend` instead of a plain `InferencePool` or `Service`.
+This guide walks through using [agentgateway](https://agentgateway.dev) as an
+Inference Gateway for KServe `LLMInferenceService`. agentgateway supports the
+Gateway API Inference Extension, so KServe's generated `HTTPRoute` can route
+directly to the standard `InferencePool` backend. An `AgentgatewayBackend` is
+only needed when you want to apply AI policies that require LLM-aware
+processing, such as token-based rate limiting.
 
 ## agentgateway Overview
 
 [agentgateway](https://github.com/agentgateway/agentgateway) is a Rust-based proxy under the [AI Agent Infrastructure Foundation (AAIF)](https://aaif.io) at the Linux Foundation. It implements the Kubernetes Gateway API but is LLM-aware: it parses OpenAI chat completion requests and responses, extracts token usage, emits OpenTelemetry GenAI semantic conventions, and enforces token-based rate limits and policies. Key custom resources:
 
-- **`AgentgatewayBackend`**: Declares a backend as an LLM provider so the gateway activates its LLM pipeline (token parsing, model tracking, GenAI telemetry).
+- **`InferencePool`**: Standard Gateway API Inference Extension backend supported directly by agentgateway.
+- **`AgentgatewayBackend`**: Optional backend that declares an LLM provider so the gateway can apply LLM-aware processing and AI policies.
 - **`AgentgatewayPolicy`**: Attaches governance policies such as token-based rate limiting.
-- **`HTTPRoute`**: Standard Gateway API routing — agentgateway supports `AgentgatewayBackend` as a `backendRef` kind.
+- **`HTTPRoute`**: Standard Gateway API routing that can reference either an `InferencePool` or an `AgentgatewayBackend`.
 
-For more information, see the [agentgateway documentation](https://agentgateway.dev/docs).
+For more information, see the [agentgateway KServe integration guide](https://agentgateway.dev/docs/kubernetes/main/integrations/kserve/) and the [Gateway API Inference Extension implementation list](https://gateway-api-inference-extension.sigs.k8s.io/implementations/gateways/#gateway-implementations).
 
-## Why This Integration Matters
+## Choose a Backend Type
 
-When KServe generates HTTPRoutes for an LLMInferenceService, the `backendRef` defaults to `InferencePool` (or `Service` for catch-all routes). agentgateway treats these as generic HTTP traffic — it routes requests correctly but cannot activate LLM-aware features because it doesn't know the backend serves LLM traffic.
+KServe generates `HTTPRoute` resources with an `InferencePool` backend by
+default. agentgateway supports this standard backend without any route
+override. Use `AgentgatewayBackend` only when an AI policy needs agentgateway
+to parse the LLM request or response.
 
-By overriding the `backendRef` to use `AgentgatewayBackend`, the gateway recognizes the backend as an LLM provider and activates:
-
-| Capability | Plain Service / InferencePool | AgentgatewayBackend |
-|---|---|---|
-| Routing | Yes | Yes |
-| Protocol detection | `http` (generic) | `llm` (LLM-aware) |
-| Token parsing | No | Yes (extracts `usage.input_tokens`, `usage.output_tokens` from response body) |
-| Model tracking | No | Yes (`gen_ai.request.model`, `gen_ai.response.model`) |
-| GenAI semantic conventions (OTel) | No | Yes (`gen_ai.*` attributes per [OTel GenAI spec](https://opentelemetry.io/docs/specs/semconv/gen-ai/)) |
-| Token-based rate limiting | No | Yes |
-| Cost tracking | No | Yes |
+| Backend | Use it for | Route override required |
+| --- | --- | --- |
+| `InferencePool` | Standard inference routing through the Gateway API Inference Extension | No |
+| `AgentgatewayBackend` | AI policies such as token-based rate limiting, plus LLM-aware telemetry and model tracking | Yes |
 
 :::note
-KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481) natively via `spec.tracing`, which provides request-level spans and traces. The GenAI semantic conventions listed above are complementary — they add LLM-specific attributes (token counts, model name, operation type) at the gateway level.
+KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481) natively via `spec.tracing`, which provides request-level spans and traces. The LLM-aware telemetry available through `AgentgatewayBackend` is complementary — it adds LLM-specific attributes such as token counts, model name, and operation type at the gateway level.
 :::
 
 ## Prerequisites
@@ -111,7 +113,27 @@ kubectl wait --for=condition=Ready llminferenceservice/my-model \
   -n kserve-test --timeout=300s
 ```
 
-## Configure LLM-Aware Routing
+## Use the Default InferencePool Backend
+
+The default [LLMInferenceServiceConfig route template](https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-router-route.yaml)
+generates an `HTTPRoute` that references an `InferencePool`. agentgateway
+supports this backend directly, so no `AgentgatewayBackend` or route override
+is required for standard inference routing.
+
+Verify the generated backend reference:
+
+```shell
+kubectl get httproute my-model-llminferenceservice-route \
+  -n kserve-test -o jsonpath='{.spec.rules[*].backendRefs[*]}'
+```
+
+If you do not need AI policies, continue to [Configure the gateway URL](#configure-gateway-url).
+
+## Optional: Configure an AgentgatewayBackend for AI Policies
+
+To use AI policies that require LLM-aware request or response processing,
+create an `AgentgatewayBackend` and override the generated route to reference
+it.
 
 ### Step 1: Create AgentgatewayBackend
 
@@ -279,7 +301,7 @@ spec:
 </TabItem>
 </Tabs>
 
-### Step 3: Attach Token-Based Rate Limiting (Optional)
+### Step 3: Attach Token-Based Rate Limiting
 
 Apply an `AgentgatewayPolicy` to enforce token-based rate limits on the route:
 
@@ -301,7 +323,7 @@ spec:
           unit: Hours
 ```
 
-## Configure $GATEWAY_URL
+## Configure $GATEWAY_URL {#configure-gateway-url}
 
 Check if your Gateway has an external IP address assigned:
 
@@ -341,9 +363,10 @@ curl -s "$GATEWAY_URL/v1/chat/completions" \
   }' | jq .
 ```
 
-### Verify LLM-Aware Processing
+### Verify AI Policy Processing
 
-Check the agentgateway logs to confirm the LLM pipeline is active:
+If you configured an `AgentgatewayBackend`, check the agentgateway logs to
+confirm the LLM pipeline is active:
 
 ```shell
 kubectl logs -n kserve-test deploy/agentgateway --tail=10
@@ -362,24 +385,18 @@ gen_ai.usage.input_tokens=12
 gen_ai.usage.output_tokens=15
 ```
 
-Without `AgentgatewayBackend` (plain Service or InferencePool backendRef), the same request would only show:
-
-```text
-protocol=http
-http.status=200
-```
-
 ## How It Works
 
-The default [LLMInferenceServiceConfig route template](https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-router-route.yaml) generates HTTPRoutes with `backendRef` pointing to `InferencePool` (kind: `InferencePool`, group: `inference.networking.x-k8s.io`).
+For standard inference routing, KServe generates an `HTTPRoute` whose
+`backendRef` points to `InferencePool` (kind: `InferencePool`, group:
+`inference.networking.x-k8s.io`). agentgateway implements the Gateway API
+Inference Extension and routes this traffic through the pool's endpoint picker.
 
-By overriding `spec.router.route.http` — either directly on the `LLMInferenceService` or via a reusable `LLMInferenceServiceConfig` — you change the `backendRef` to `AgentgatewayBackend` (kind: `AgentgatewayBackend`, group: `agentgateway.dev`). This leverages Gateway API's support for [arbitrary backendRef kinds (GEP-1742)](https://gateway-api.sigs.k8s.io/geps/gep-1742/).
-
-agentgateway recognizes `AgentgatewayBackend` references and activates its LLM pipeline: parsing OpenAI request/response payloads, extracting token usage, emitting GenAI telemetry, and enforcing token-based policies.
-
-:::note
-This approach is generic. Any gateway that supports custom `backendRef` kinds via Gateway API can use the same `LLMInferenceServiceConfig` override mechanism. Replace `AgentgatewayBackend` with your gateway's backend CRD.
-:::
+For AI policies, overriding `spec.router.route.http` changes the `backendRef`
+to `AgentgatewayBackend` (kind: `AgentgatewayBackend`, group:
+`agentgateway.dev`). agentgateway then recognizes the upstream as an LLM
+provider and can parse OpenAI request and response payloads, extract token
+usage, emit GenAI telemetry, and enforce token-based policies.
 
 ## Next Steps
 
