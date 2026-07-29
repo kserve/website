@@ -392,7 +392,9 @@ spec:
                   port: 8000
 ```
 
+:::tip
 `spec` and `refs` are mutually exclusive - use `refs` to bring your own HTTPRoute, or `spec` to have the controller create one with your custom rules.
+:::
 
 #### Real-world Use Cases
 
@@ -492,7 +494,9 @@ spec:
           targetPort: 8000
 ```
 
+:::tip
 `pool.spec` and `pool.ref` are mutually exclusive - use `ref` to bring your own InferencePool, or `spec` to have the controller create one with custom settings.
+:::
 ---
 
 ## Parallelism Specification
