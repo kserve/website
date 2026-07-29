@@ -540,6 +540,10 @@ const config: Config = {
             from: '/latest/admin/ai-gateway_integration/',
             to: '/docs/model-serving/generative-inference/ai-gateway/envoy-ai-gateway',
           },
+          {
+            from: '/docs/next/model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway',
+            to: '/docs/next/model-serving/generative-inference/llmisvc/llmisvc-inference-gateway-extension',
+          },
 
           // Predictive Inference Section
           {
