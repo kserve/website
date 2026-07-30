@@ -58,7 +58,14 @@ Extends Gateway API with **LLM-specific scheduling and load balancing** capabili
 LLMInferenceService creates GIE resources when scheduler is enabled.
 
 
-**Key Point**: InferencePool has `extensionRef` pointing to the EPP (Endpoint Picker) service, which runs the scheduling logic.
+**Key Point**: `InferencePool` has an `endpointPickerRef` that points to the
+llm-d Router service, which runs the scheduling logic.
+
+For current production guidance, see the
+[llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths), the
+[llm-d Router gateway guides](https://llm-d.ai/docs/infrastructure/gateway),
+and the
+[Gateway API CRD installation guide](https://llm-d.ai/docs/infrastructure/gateway/install-crds).
 
 ---
 
@@ -306,4 +313,3 @@ curl http://localhost:8080/v1/completions ...
 | **Prefill-Decode** | ✅ | ✅ (required) | ❌ (single-node) or ✅ (multi-node) | ✅ |
 | **DP+EP** | ✅ | ✅ (scheduler) | ✅ | ✅ |
 | **No Scheduler** | ✅ | ❌ | ❌ | ✅ |
-

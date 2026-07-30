@@ -22,7 +22,7 @@ processing, such as token-based rate limiting. It can wrap the generated
 - **`AgentgatewayPolicy`**: Attaches governance policies such as token-based rate limiting.
 - **`HTTPRoute`**: Standard Gateway API routing that can reference either an `InferencePool` or an `AgentgatewayBackend`.
 
-For more information, see the [agentgateway KServe integration guide](https://agentgateway.dev/docs/kubernetes/main/integrations/kserve/) and the [Gateway API Inference Extension implementation list](https://gateway-api-inference-extension.sigs.k8s.io/implementations/gateways/#gateway-implementations).
+For more information, see the [agentgateway KServe integration guide](https://agentgateway.dev/docs/kubernetes/main/integrations/kserve/), the [llm-d agentgateway guide](https://llm-d.ai/docs/infrastructure/gateway/agentgateway), and the [Gateway API Inference Extension implementation list](https://gateway-api-inference-extension.sigs.k8s.io/implementations/gateways/#gateway-implementations).
 
 ## Choose a Backend Type
 
@@ -46,7 +46,7 @@ Before you begin, ensure you have the following components installed and configu
 
 - A Kubernetes cluster with [KServe with Gateway API enabled](../../../admin-guide/kubernetes-deployment.md)
 - [agentgateway](https://agentgateway.dev/docs/kubernetes/latest/getting-started/) installed in your cluster with [Inference Extension support](https://agentgateway.dev/docs/kubernetes/latest/inference/) enabled
-- [Gateway API CRDs](https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api) installed
+- [Gateway API and Gateway API Inference Extension CRDs](https://llm-d.ai/docs/infrastructure/gateway/install-crds) installed
 - [LLMInferenceService dependencies](./llmisvc-dependencies.md) installed
 - The `kubectl` command-line tool installed and configured to access your cluster
 - Basic understanding of [KServe concepts](../../../concepts/index.md) and [LLMInferenceService](./llmisvc-overview.md)
@@ -447,6 +447,8 @@ without bypassing the endpoint picker.
 ## Next Steps
 
 - Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
+- Follow the [llm-d agentgateway guide](https://llm-d.ai/docs/infrastructure/gateway/agentgateway) for the llm-d Router and gateway infrastructure.
+- Explore the [llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths) for production deployment patterns.
 - Explore the [agentgateway documentation](https://agentgateway.dev/docs) for advanced features like content filtering and cost tracking.
 - Learn more about [LLMInferenceServiceConfig composition](./llmisvc-config-composition.md) for managing configurations across multiple services.
 - See the [LLMInferenceService Configuration Guide](./llmisvc-configuration.md) for the full `spec.router.route.http` reference.
