@@ -7,7 +7,18 @@ description: How to integrate KServe LLMInferenceService with Envoy AI Gateway t
 
 # Gateway API Inference Extension with Envoy AI Gateway
 
-This tutorial walks through deploying a KServe LLMInferenceService that wraps [llm-d](https://llm-d.ai/) — which implements the [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/) (the llm-d router and inference pool) — and fronts it with Envoy AI Gateway to provide OpenAI-compatible routing, token usage accounting, and usage-based rate limiting. KServe integrates with llm-d via a Kubernetes-native custom resource, LLMInferenceService, which provisions the router and inference pool. You will create a Gateway and an AIGatewayRoute that forward requests to the KServe InferencePool, enable automatic token metering (input, output, and total) via llmRequestCosts, and enforce per-user, per-model quotas using a BackendTrafficPolicy. KServe can run behind the AI Gateway in the same cluster or a different one; for clarity, this guide uses a single-cluster setup.
+This tutorial walks through deploying a KServe LLMInferenceService that uses
+the [llm-d Router](https://llm-d.ai/docs/infrastructure/gateway) with
+[Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/)
+resources, and fronts it with Envoy AI Gateway to provide OpenAI-compatible
+routing, token usage accounting, and usage-based rate limiting. KServe
+integrates with llm-d via a Kubernetes-native custom resource,
+LLMInferenceService, which provisions the router and inference pool. You will
+create a Gateway and an AIGatewayRoute that forward requests to the KServe
+InferencePool, enable automatic token metering (input, output, and total) via
+llmRequestCosts, and enforce per-user, per-model quotas using a
+BackendTrafficPolicy. KServe can run behind the AI Gateway in the same cluster
+or a different one; for clarity, this guide uses a single-cluster setup.
 
 ## AI Gateway Overview
 
@@ -23,7 +34,7 @@ For more information, see the [Envoy AI Gateway documentation](https://aigateway
 
 ## llm-d Overview
 
-[llm-d](https://llm-d.ai/) is a Kubernetes-native distributed inference serving stack, providing well-lit paths for anyone to serve large generative AI models at scale, with the fastest time-to-value and competitive performance per dollar for most models across most hardware accelerators.
+[llm-d](https://llm-d.ai/) is a Kubernetes-native distributed inference serving stack, providing [well-lit paths](https://llm-d.ai/docs/well-lit-paths) for anyone to serve large generative AI models at scale, with the fastest time-to-value and competitive performance per dollar for most models across most hardware accelerators.
 
 KServe's generative inference leverages llm-d components to scale and schedule traffic efficiently:
 
@@ -41,7 +52,7 @@ In this tutorial you'll deploy an `LLMInferenceService` that creates a router an
 Before you begin, ensure you have the following components installed and configured:
 
 - A Kubernetes cluster with [KServe with Gateway API Enabled](../../../admin-guide/kubernetes-deployment.md)
-- [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/guides/) installed in your cluster
+- [Gateway API and Gateway API Inference Extension CRDs](https://llm-d.ai/docs/infrastructure/gateway/install-crds) installed in your cluster
 - [Envoy Gateway with Inference Pool support enabled prerequisites](https://aigateway.envoyproxy.io/docs/getting-started/prerequisites) installed in your cluster
 - [Envoy AI Gateway](https://aigateway.envoyproxy.io/docs/getting-started/installation) installed in your cluster
 - [LeaderWorkerSet (LWS)](https://lws.sigs.k8s.io/docs/installation/) installed in your cluster
@@ -100,7 +111,11 @@ spec:
 
 ### Create EndpointPickerConfig
 
-The Endpoint Picker (EPP) or scheduler is a core component of the Gateway API Inference Extension. It is responsible for selecting the best backend endpoint (pod) from the InferencePool for each request. You can customize the scheduling behavior by defining various plugins for scoring, filtering, and picking endpoints based on your requirements.
+The llm-d Router, formerly called the Endpoint Picker (EPP), is the scheduler
+used with the Gateway API Inference Extension. It selects the best backend
+endpoint (pod) from the InferencePool for each request. You can customize the
+scheduling behavior by defining plugins for scoring, filtering, and picking
+endpoints.
 
 About the configuration:
 
@@ -152,7 +167,7 @@ In this step, you’ll define an LLMInferenceServiceConfig — a reusable templa
 
 In this example, we will configure:
 - vLLM worker defaults: image, command/args that pass the served model name, port 8000, logging level, HF cache path, liveness/readiness probes, secure pod settings, and volumes for /home, /dev/shm, model cache, and TLS certs.
-- Router and scheduler defaults: an inference scheduler (gRPC + metrics ports) configured for secure serving and wired to the EndpointPickerConfig (from the ConfigMap above) to score/pick endpoints; the pool targets port 8000 and references an internal EPP service.
+- Router and scheduler defaults: an inference scheduler (gRPC + metrics ports) configured for secure serving and wired to the EndpointPickerConfig (from the ConfigMap above) to score/pick endpoints; the pool targets port 8000 and references an internal llm-d Router service.
 - Operational safeguards: conservative timeouts and termination grace, plus readiness/liveness for safe rollouts.
 
 
@@ -639,6 +654,9 @@ done
 Now that you've tested the basic setup, you can:
 
 - Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
+- Review the [llm-d gateway guides](https://llm-d.ai/docs/infrastructure/gateway).
+- Follow the [llm-d Envoy AI Gateway guide](https://llm-d.ai/docs/infrastructure/gateway/envoy-ai-gateway).
+- Explore the [llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths) for production deployment patterns.
 
 - Explore more rate limiter-related configuration at the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting).
 
