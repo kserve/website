@@ -111,11 +111,10 @@ spec:
 
 ### Create EndpointPickerConfig
 
-The llm-d Router, formerly called the Endpoint Picker (EPP), is the scheduler
-used with the Gateway API Inference Extension. It selects the best backend
-endpoint (pod) from the InferencePool for each request. You can customize the
-scheduling behavior by defining plugins for scoring, filtering, and picking
-endpoints.
+The llm-d Router provides the Endpoint Picker (EPP) used with the Gateway API
+Inference Extension. The EPP selects the best backend endpoint from the
+`InferencePool` for each request. You can customize its behavior with plugins
+for scoring, filtering, and selecting endpoints.
 
 About the configuration:
 
@@ -126,13 +125,11 @@ About the configuration:
 
 Common plugins used in this guide:
 
-- single-profile-handler (Profile Handler): Always selects a single, primary profile. Parameters: none.
-- prefix-cache-scorer (Scorer): Increases score for pods likely to contain more of the prompt in their KV cache, improving latency and throughput. Parameters:
-  - hashBlockSize: Block size for prompt hashing (default: 64).
-  - maxPrefixBlocksToMatch: Maximum number of prefix blocks to match (default: 256).
-  - lruCapacityPerServer: LRU index capacity per server/pod (default: 31250).
-- load-aware-scorer (Scorer): Scores candidates based on current load; lower load yields a higher score. Parameters may include sensitivity controls such as threshold (example below uses threshold: 100).
-- max-score-picker (Picker): Chooses the candidate with the highest aggregate score.
+- queue-scorer: Prefers endpoints with shorter request queues.
+- kv-cache-utilization-scorer: Accounts for each endpoint's KV-cache usage.
+- prefix-cache-scorer: Prefers endpoints that already cache more of the request prefix.
+- metrics-data-source: Reads model server metrics used by scoring plugins.
+- core-metrics-extractor: Extracts the core vLLM metrics used by the router.
 
 ```yaml
 apiVersion: v1
@@ -142,23 +139,27 @@ metadata:
   namespace: kserve-test
 data:
   endpoint-picker-config.yaml: |
-    apiVersion: inference.networking.x-k8s.io/v1alpha1
+    apiVersion: llm-d.ai/v1alpha1
     kind: EndpointPickerConfig
     plugins:
-      - type: single-profile-handler
+      - type: queue-scorer
+      - type: kv-cache-utilization-scorer
       - type: prefix-cache-scorer
-      - type: load-aware-scorer
+      - type: metrics-data-source
         parameters:
-              threshold: 100
-      - type: max-score-picker
+          scheme: http
+          path: /metrics
+          insecureSkipVerify: true
+      - type: core-metrics-extractor
     schedulingProfiles:
       - name: default
         plugins:
+          - pluginRef: queue-scorer
+            weight: 2
+          - pluginRef: kv-cache-utilization-scorer
+            weight: 2
           - pluginRef: prefix-cache-scorer
-            weight: 2.0
-          - pluginRef: load-aware-scorer
-            weight: 1.0
-          - pluginRef: max-score-picker
+            weight: 3
 ```
 
 ### Create LLMInferenceServiceConfig
@@ -259,13 +260,16 @@ spec:
     scheduler:
       pool:
         spec:
-          extensionRef:
+          endpointPickerRef:
             failureMode: FailOpen
             kind: Service
             name: |-
               {{ ChildName .ObjectMeta.Name `-epp-service` }}
+            port:
+              number: 9002
           selector: { }
-          targetPortNumber: 8000
+          targetPorts:
+            - number: 8000
       template:
         containers:
           - name: main
@@ -279,13 +283,13 @@ spec:
               - containerPort: 9090
                 name: metrics
                 protocol: TCP
-            image: ghcr.io/llm-d/llm-d-inference-scheduler:v0.2.0
+            image: ghcr.io/llm-d/llm-d-router-endpoint-picker:v0.9.0
             imagePullPolicy: IfNotPresent
             livenessProbe:
               failureThreshold: 3
               grpc:
                 port: 9003
-                service: envoy.service.ext_proc.v3.ExternalProcessor
+                service: liveness
               initialDelaySeconds: 5
               periodSeconds: 10
               successThreshold: 1
@@ -294,26 +298,29 @@ spec:
               failureThreshold: 3
               grpc:
                 port: 9003
-                service: envoy.service.ext_proc.v3.ExternalProcessor
+                service: readiness
               initialDelaySeconds: 30
               periodSeconds: 10
               successThreshold: 1
               timeoutSeconds: 1
-            args:
-              - --poolName
+            command:
+              - /app/epp
+              - --pool-name
               - "{{ ChildName .ObjectMeta.Name `-inference-pool` }}"
-              - --poolNamespace
+              - --pool-namespace
               - "{{ .ObjectMeta.Namespace }}"
               - --zap-encoder
               - json
-              - --grpcPort
+              - --grpc-port
               - "9002"
-              - --grpcHealthPort
+              - --grpc-health-port
               - "9003"
-              - --secureServing
-              - --certPath
+              - --secure-serving=true
+              - --enable-cert-reload=true
+              - --model-server-metrics-scheme=https
+              - --cert-path
               - "/etc/ssl/certs"
-              - --configFile
+              - --config-file
               - "/etc/config/endpoint-picker-config.yaml"
             resources:
               requests:
@@ -416,7 +423,7 @@ spec:
               name: x-ai-eg-model
               value: Qwen/Qwen2.5-0.5B-Instruct
       backendRefs:
-        - group: inference.networking.x-k8s.io
+        - group: inference.networking.k8s.io
           kind: InferencePool
           name: qwen-instruct-inference-pool  # Route to the InferencePool created by the LLMInferenceService
       timeouts:

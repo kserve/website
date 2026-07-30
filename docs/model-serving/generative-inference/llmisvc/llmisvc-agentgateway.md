@@ -45,22 +45,76 @@ KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481
 Before you begin, ensure you have the following components installed and configured:
 
 - A Kubernetes cluster with [KServe with Gateway API enabled](../../../admin-guide/kubernetes-deployment.md)
-- [agentgateway](https://agentgateway.dev/docs/kubernetes/latest/getting-started/) installed in your cluster with [Inference Extension support](https://agentgateway.dev/docs/kubernetes/latest/inference/) enabled
-- [Gateway API and Gateway API Inference Extension CRDs](https://llm-d.ai/docs/infrastructure/gateway/install-crds) installed
+- The [Gateway API CRDs](https://gateway-api.sigs.k8s.io/guides/) installed
 - [LLMInferenceService dependencies](./llmisvc-dependencies.md) installed
 - The `kubectl` command-line tool installed and configured to access your cluster
 - Basic understanding of [KServe concepts](../../../concepts/index.md) and [LLMInferenceService](./llmisvc-overview.md)
 
-Set `AGENTGATEWAY_VERSION` to the installed chart version, then enable
-Inference Extension support in the agentgateway Helm release:
+Configure the KServe `LLMInferenceService` controller to attach generated
+routes to the shared agentgateway Gateway. During the GAIE v1 migration, KServe
+also installs transitional CRDs that its controller uses for compatibility:
 
 ```shell
-helm upgrade -i -n agentgateway-system agentgateway \
+export KSERVE_VERSION=v0.20.0-rc0
+
+helm upgrade -i kserve-llmisvc-resources \
+  oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
+  --version $KSERVE_VERSION \
+  --namespace kserve \
+  --set kserve.controller.deploymentMode=Standard \
+  --set kserve.controller.gateway.ingressGateway.enableGatewayApi=true \
+  --set kserve.controller.gateway.ingressGateway.createGateway=false \
+  --set kserve.controller.gateway.ingressGateway.kserveGateway=kserve/kserve-ingress-gateway \
+  --set kserve.controller.gateway.ingressGateway.className=agentgateway \
+  --set kserve.controller.gateway.disableIstioVirtualHost=true \
+  --set kserve.controller.gateway.disableIngressCreation=false \
+  --set kserve.controller.knativeAddressableResolver.enabled=false \
+  --set kserve.controller.gateway.localGateway.gateway="" \
+  --set kserve.controller.gateway.localGateway.gatewayService=""
+```
+
+Wait for the updated controller, then apply the final GAIE v1.5.0 CRD bundle.
+Applying the bundle after the KServe chart updates the stable API definitions
+and retains KServe's transitional CRDs:
+
+```shell
+kubectl rollout status deployment/llmisvc-controller-manager \
+  --namespace kserve \
+  --timeout=240s
+
+kubectl apply --server-side -f \
+  https://github.com/kubernetes-sigs/gateway-api-inference-extension/releases/download/v1.5.0/manifests.yaml
+```
+
+Install or upgrade agentgateway after the GAIE CRDs so that its controller
+discovers `InferencePool`, then install the matching KServe runtime
+configuration:
+
+```shell
+export AGENTGATEWAY_VERSION=v1.4.1
+
+helm upgrade -i agentgateway-crds \
+  oci://cr.agentgateway.dev/charts/agentgateway-crds \
+  --version $AGENTGATEWAY_VERSION \
+  --namespace agentgateway-system \
+  --create-namespace
+
+helm upgrade -i agentgateway \
   oci://cr.agentgateway.dev/charts/agentgateway \
   --version $AGENTGATEWAY_VERSION \
-  --set inferenceExtension.enabled=true \
-  --reuse-values
+  --namespace agentgateway-system \
+  --set inferenceExtension.enabled=true
+
+helm upgrade -i kserve-runtime-configs \
+  oci://ghcr.io/kserve/charts/kserve-runtime-configs \
+  --version $KSERVE_VERSION \
+  --namespace kserve \
+  --set kserve.llmisvcConfigs.enabled=true
 ```
+
+KServe creates the `InferencePool` and deploys the llm-d Router endpoint picker
+from its runtime configuration. Do not install the llm-d Router Helm chart
+separately for this workflow.
 
 ## Deploy LLMInferenceService
 
@@ -72,14 +126,15 @@ kubectl create namespace kserve-test
 
 ### Create Gateway
 
-Create an agentgateway Gateway resource:
+Create a shared agentgateway Gateway resource in the `kserve` namespace.
+Routes from model namespaces can attach to this Gateway:
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: agentgateway
-  namespace: kserve-test
+  name: kserve-ingress-gateway
+  namespace: kserve
 spec:
   gatewayClassName: agentgateway
   listeners:
@@ -88,7 +143,10 @@ spec:
       port: 80
       allowedRoutes:
         namespaces:
-          from: Same
+          from: All
+  infrastructure:
+    labels:
+      serving.kserve.io/gateway: kserve-ingress-gateway
 ```
 
 ### Deploy Your Model
@@ -96,7 +154,7 @@ spec:
 Deploy an LLMInferenceService. This example uses a small model for demonstration; replace with your model of choice:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: my-model
@@ -198,7 +256,7 @@ import TabItem from '@theme/TabItem';
 Override the route configuration on an individual `LLMInferenceService` using `spec.router.route.http`:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: my-model
@@ -216,8 +274,8 @@ spec:
           parentRefs:
             - group: gateway.networking.k8s.io
               kind: Gateway
-              name: agentgateway
-              namespace: kserve-test
+              name: kserve-ingress-gateway
+              namespace: kserve
           rules:
             - backendRefs:
                 - group: agentgateway.dev
@@ -257,7 +315,7 @@ spec:
 Create an `LLMInferenceServiceConfig` that overrides the route template. This can be referenced by multiple `LLMInferenceService` resources via `baseRefs`:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceServiceConfig
 metadata:
   name: agentgateway-route-config
@@ -270,8 +328,8 @@ spec:
           parentRefs:
             - group: gateway.networking.k8s.io
               kind: Gateway
-              name: agentgateway
-              namespace: kserve-test
+              name: kserve-ingress-gateway
+              namespace: kserve
           rules:
             - backendRefs:
                 - group: agentgateway.dev
@@ -300,7 +358,7 @@ spec:
 Then reference it in your LLMInferenceService:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: my-model
@@ -354,7 +412,8 @@ spec:
 Check if your Gateway has an external IP address assigned:
 
 ```shell
-kubectl get svc -n kserve-test -l gateway.networking.k8s.io/gateway-name=agentgateway
+kubectl get svc -n kserve \
+  -l gateway.networking.k8s.io/gateway-name=kserve-ingress-gateway
 ```
 
 <Tabs>
@@ -362,7 +421,7 @@ kubectl get svc -n kserve-test -l gateway.networking.k8s.io/gateway-name=agentga
     If the EXTERNAL-IP shows an actual IP address (not &lt;pending&gt;):
 
     ```shell
-    export GATEWAY_URL="http://$(kubectl get gateway -n kserve-test agentgateway \
+    export GATEWAY_URL="http://$(kubectl get gateway -n kserve kserve-ingress-gateway \
       -o jsonpath='{.status.addresses[0].value}')"
     ```
   </TabItem>
@@ -371,7 +430,7 @@ kubectl get svc -n kserve-test -l gateway.networking.k8s.io/gateway-name=agentga
 
     ```shell
     export GATEWAY_URL="http://localhost:8080"
-    kubectl port-forward -n kserve-test svc/agentgateway 8080:80
+    kubectl port-forward -n kserve svc/kserve-ingress-gateway 8080:80
     ```
   </TabItem>
 </Tabs>
@@ -414,7 +473,7 @@ If you configured an `AgentgatewayBackend`, check the agentgateway logs to
 confirm the LLM pipeline is active:
 
 ```shell
-kubectl logs -n kserve-test deploy/agentgateway --tail=10
+kubectl logs -n kserve deploy/kserve-ingress-gateway --tail=10
 ```
 
 With `AgentgatewayBackend`, you should see GenAI fields in the log:
