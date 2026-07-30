@@ -1,9 +1,9 @@
 ---
-title: Gateway API Inference Extension with Envoy AI Gateway
+title: LLMInferenceService with Envoy AI Gateway
 description: How to integrate KServe LLMInferenceService with Envoy AI Gateway to manage LLM traffic and usage-based rate limits
 ---
 
-# Gateway API Inference Extension with Envoy AI Gateway
+# LLMInferenceService with Envoy AI Gateway
 
 This tutorial walks through deploying a KServe LLMInferenceService that uses
 the [llm-d Router](https://llm-d.ai/docs/infrastructure/gateway) with

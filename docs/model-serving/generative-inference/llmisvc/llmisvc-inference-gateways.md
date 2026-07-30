@@ -15,7 +15,7 @@ gateway and LLM traffic-management features you want to use.
 | Gateway | Integration | Use this guide for |
 | --- | --- | --- |
 | [agentgateway](https://agentgateway.dev/) | [LLMInferenceService with agentgateway](./llmisvc-agentgateway.md) | Standard `InferencePool` routing with optional `AgentgatewayBackend` configuration for AI policies |
-| [Envoy AI Gateway](https://aigateway.envoyproxy.io/) | [Gateway API Inference Extension with Envoy AI Gateway](./llmisvc-inference-gateway-extension.md) | Routing to an `InferencePool` with an endpoint picker, OpenAI-compatible routing, token accounting, and usage-based rate limiting |
+| [Envoy AI Gateway](https://aigateway.envoyproxy.io/) | [LLMInferenceService with Envoy AI Gateway](./llmisvc-inference-gateway-extension.md) | Routing to an `InferencePool` with an endpoint picker, OpenAI-compatible routing, token accounting, and usage-based rate limiting |
 
 Both guides use Gateway API resources and KServe's configurable router
 templates. Their gateway-specific custom resources and supported policies are
