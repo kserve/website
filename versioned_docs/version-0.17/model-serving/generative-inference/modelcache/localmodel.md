@@ -180,16 +180,19 @@ sudo chown -R 1000:1000 /mnt/nvme/models
 Without this, the download jobs and storage-initializer will fail with permission errors.
 :::
 
-After the `LocalModelNodeGroup` is created, KServe creates an agent DaemonSet on each node (nodes matching the `nodeAffinity` specified in LocalModelNodeGroup) in the `kserve` namespace to monitor the local model cache lifecycle.
+The `kserve-localmodelnode-agent` DaemonSet is installed in the `kserve` namespace together with the Local Model components: Helm installs it through the `kserve-localmodel-resources` chart, while `config/localmodels` includes the Kustomize resources from `config/localmodelnodes`. Its pods are scheduled from the DaemonSet pod template, independently of the `nodeAffinity` in the `LocalModelNodeGroup` PV spec. When a `LocalModelCache` or `LocalModelNamespaceCache` references a node group, the controller creates `LocalModelNode` resources for Ready nodes matching that PV affinity, and the agent pods running on those nodes manage the local model cache lifecycle.
 
 :::info[DaemonSet scheduling]
 The agent DaemonSet determines **which nodes** it runs on based on its `nodeSelector` and/or `affinity` settings, which are separate from the `nodeAffinity` in the `LocalModelNodeGroup` PV spec:
 
-- **Helm installs**: By default, `nodeSelector` is empty (`{}`), so the DaemonSet will schedule on **all nodes**. To restrict it, set `kserve.localmodel.agent.nodeSelector` or `kserve.localmodel.agent.affinity` in your Helm values.
-- **Kustomize installs**: The DaemonSet has a hard-coded `nodeSelector: kserve/localmodel: worker`. You must label your target nodes explicitly:
-  ```bash
-  kubectl label node <node-name> kserve/localmodel=worker
-  ```
+- **Helm installs**: By default, the DaemonSet has `nodeSelector: kserve/localmodel: worker`, injected from the `kserve.localmodelnode.controller.nodeSelector` Helm value. To change its scheduling, set `kserve.localmodelnode.controller.nodeSelector`, `kserve.localmodelnode.controller.affinity`, or `kserve.localmodelnode.controller.tolerations`. The legacy `kserve.localmodel.agent.nodeSelector` and `kserve.localmodel.agent.affinity` values have no effect since chart v0.17.
+- **Kustomize installs**: The DaemonSet has a hard-coded `nodeSelector: kserve/localmodel: worker`.
+
+With the default scheduling settings of both install methods, you must label your target nodes explicitly:
+
+```bash
+kubectl label node <node-name> kserve/localmodel=worker
+```
 
 The `nodeAffinity` in the `LocalModelNodeGroup` PV spec controls which nodes the **controller** creates `LocalModelNode` resources for, but the agent DaemonSet must also be running on those nodes to process them.
 :::
@@ -202,8 +205,8 @@ kubectl get daemonset -n kserve kserve-localmodelnode-agent
 :::tip[Expected Output]
 
 ```bash
-NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR        AGE
-kserve-localmodelnode-agent    1         1         1       1            1           <none>               5d17h
+NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR              AGE
+kserve-localmodelnode-agent    1         1         1       1            1           kserve/localmodel=worker   5d17h
 ```
 :::
 
@@ -351,7 +354,7 @@ kubectl logs job/<job-name> -n kserve-localmodel-jobs
   ```bash
   sudo chown -R 1000:1000 /mnt/models
   ```
-- **DaemonSet not running on expected nodes**: For Kustomize installs, the DaemonSet requires nodes to be labeled with `kserve/localmodel=worker`. For Helm installs, the DaemonSet runs on all nodes by default unless `kserve.localmodel.agent.nodeSelector` is configured.
+- **DaemonSet not running on expected nodes**: With the default Helm or Kustomize scheduling settings, the DaemonSet requires nodes to be labeled with `kserve/localmodel=worker`. For Helm installs, the scheduling can be changed via the `kserve.localmodelnode.controller.nodeSelector`, `kserve.localmodelnode.controller.affinity`, and `kserve.localmodelnode.controller.tolerations` values.
 
 ## Summary
 
