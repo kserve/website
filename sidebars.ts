@@ -344,6 +344,7 @@ const sidebars: SidebarsConfig = {
               label: 'Supported Providers',
               items: [
                 'model-serving/storage/providers/hf',
+                'model-serving/storage/providers/ms',
                 'model-serving/storage/providers/azure',
                 'model-serving/storage/providers/s3/s3',
                 'model-serving/storage/providers/gcs',
