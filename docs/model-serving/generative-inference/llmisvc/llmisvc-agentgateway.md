@@ -1,40 +1,43 @@
 ---
-title: LLMInferenceService with AgentGateway
-description: How to integrate KServe LLMInferenceService with AgentGateway for LLM-aware routing, token tracking, and GenAI telemetry
+title: LLMInferenceService with agentgateway
+description: How to use KServe LLMInferenceService with agentgateway as an Inference Gateway and optionally apply AI policies
 ---
 
-# LLMInferenceService with AgentGateway
+# LLMInferenceService with agentgateway
 
-This guide walks through integrating a KServe LLMInferenceService with [AgentGateway](https://agentgateway.dev) to enable LLM-aware routing with token tracking, GenAI telemetry (OpenTelemetry semantic conventions), and token-based rate limiting. The key mechanism is overriding the HTTPRoute `backendRef` via `LLMInferenceServiceConfig` so that KServe's auto-generated routes point to an `AgentgatewayBackend` instead of a plain `InferencePool` or `Service`.
+This guide walks through using [agentgateway](https://agentgateway.dev) as an
+Inference Gateway for KServe `LLMInferenceService`. agentgateway supports the
+Gateway API Inference Extension, so KServe's generated `HTTPRoute` can route
+directly to the standard `InferencePool` backend. An `AgentgatewayBackend` is
+only needed when you want to apply AI policies that require LLM-aware
+processing, such as token-based rate limiting. It can wrap the generated
+`InferencePool` so that endpoint selection remains available.
 
-## AgentGateway Overview
+## agentgateway Overview
 
-[AgentGateway](https://github.com/agentgateway/agentgateway) is a Rust-based proxy under the [AI Agent Infrastructure Foundation (AAIF)](https://aaif.io) at the Linux Foundation. It implements the Kubernetes Gateway API but is LLM-aware: it parses OpenAI chat completion requests and responses, extracts token usage, emits OpenTelemetry GenAI semantic conventions, and enforces token-based rate limits and policies. Key custom resources:
+[agentgateway](https://github.com/agentgateway/agentgateway) is a Rust-based proxy under the [AI Agent Infrastructure Foundation (AAIF)](https://aaif.io) at the Linux Foundation. It implements the Kubernetes Gateway API but is LLM-aware: it parses OpenAI chat completion requests and responses, extracts token usage, emits OpenTelemetry GenAI semantic conventions, and enforces token-based rate limits and policies. Key custom resources:
 
-- **`AgentgatewayBackend`**: Declares a backend as an LLM provider so the gateway activates its LLM pipeline (token parsing, model tracking, GenAI telemetry).
+- **`InferencePool`**: Standard Gateway API Inference Extension backend supported directly by agentgateway.
+- **`AgentgatewayBackend`**: Optional backend that declares an LLM provider so the gateway can apply LLM-aware processing and AI policies.
 - **`AgentgatewayPolicy`**: Attaches governance policies such as token-based rate limiting.
-- **`HTTPRoute`**: Standard Gateway API routing — AgentGateway supports `AgentgatewayBackend` as a `backendRef` kind.
+- **`HTTPRoute`**: Standard Gateway API routing that can reference either an `InferencePool` or an `AgentgatewayBackend`.
 
-For more information, see the [AgentGateway documentation](https://agentgateway.dev/docs).
+For more information, see the [agentgateway KServe integration guide](https://agentgateway.dev/docs/kubernetes/main/integrations/kserve/), the [llm-d agentgateway guide](https://llm-d.ai/docs/infrastructure/gateway/agentgateway), and the [Gateway API Inference Extension implementation list](https://gateway-api-inference-extension.sigs.k8s.io/implementations/gateways/#gateway-implementations).
 
-## Why This Integration Matters
+## Choose a Backend Type
 
-When KServe generates HTTPRoutes for an LLMInferenceService, the `backendRef` defaults to `InferencePool` (or `Service` for catch-all routes). AgentGateway treats these as generic HTTP traffic — it routes requests correctly but cannot activate LLM-aware features because it doesn't know the backend serves LLM traffic.
+When the managed scheduler is enabled, KServe generates `HTTPRoute` resources
+with an `InferencePool` backend. agentgateway supports this standard backend
+without any route override. Use `AgentgatewayBackend` only when an AI policy
+needs agentgateway to parse the LLM request or response.
 
-By overriding the `backendRef` to use `AgentgatewayBackend`, the gateway recognizes the backend as an LLM provider and activates:
-
-| Capability | Plain Service / InferencePool | AgentgatewayBackend |
-|---|---|---|
-| Routing | Yes | Yes |
-| Protocol detection | `http` (generic) | `llm` (LLM-aware) |
-| Token parsing | No | Yes (extracts `usage.input_tokens`, `usage.output_tokens` from response body) |
-| Model tracking | No | Yes (`gen_ai.request.model`, `gen_ai.response.model`) |
-| GenAI semantic conventions (OTel) | No | Yes (`gen_ai.*` attributes per [OTel GenAI spec](https://opentelemetry.io/docs/specs/semconv/gen-ai/)) |
-| Token-based rate limiting | No | Yes |
-| Cost tracking | No | Yes |
+| Backend | Use it for | Route override required |
+| --- | --- | --- |
+| `InferencePool` | Standard inference routing through the Gateway API Inference Extension | No |
+| `AgentgatewayBackend` | AI policies such as token-based rate limiting, plus LLM-aware telemetry and model tracking | Yes |
 
 :::note
-KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481) natively via `spec.tracing`, which provides request-level spans and traces. The GenAI semantic conventions listed above are complementary — they add LLM-specific attributes (token counts, model name, operation type) at the gateway level.
+KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481) natively via `spec.tracing`, which provides request-level spans and traces. The LLM-aware telemetry available through `AgentgatewayBackend` is complementary — it adds LLM-specific attributes such as token counts, model name, and operation type at the gateway level.
 :::
 
 ## Prerequisites
@@ -42,11 +45,76 @@ KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481
 Before you begin, ensure you have the following components installed and configured:
 
 - A Kubernetes cluster with [KServe with Gateway API enabled](../../../admin-guide/kubernetes-deployment.md)
-- [AgentGateway](https://agentgateway.dev/docs/kubernetes/latest/getting-started/) installed in your cluster
-- [Gateway API CRDs](https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api) installed
+- The [Gateway API CRDs](https://gateway-api.sigs.k8s.io/guides/) installed
 - [LLMInferenceService dependencies](./llmisvc-dependencies.md) installed
 - The `kubectl` command-line tool installed and configured to access your cluster
 - Basic understanding of [KServe concepts](../../../concepts/index.md) and [LLMInferenceService](./llmisvc-overview.md)
+
+Configure the KServe `LLMInferenceService` controller to attach generated
+routes to the shared agentgateway Gateway. During the GAIE v1 migration, KServe
+also installs transitional CRDs that its controller uses for compatibility:
+
+```shell
+export KSERVE_VERSION=v0.20.0-rc0
+
+helm upgrade -i kserve-llmisvc-resources \
+  oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
+  --version $KSERVE_VERSION \
+  --namespace kserve \
+  --set kserve.controller.deploymentMode=Standard \
+  --set kserve.controller.gateway.ingressGateway.enableGatewayApi=true \
+  --set kserve.controller.gateway.ingressGateway.createGateway=false \
+  --set kserve.controller.gateway.ingressGateway.kserveGateway=kserve/kserve-ingress-gateway \
+  --set kserve.controller.gateway.ingressGateway.className=agentgateway \
+  --set kserve.controller.gateway.disableIstioVirtualHost=true \
+  --set kserve.controller.gateway.disableIngressCreation=false \
+  --set kserve.controller.knativeAddressableResolver.enabled=false \
+  --set kserve.controller.gateway.localGateway.gateway="" \
+  --set kserve.controller.gateway.localGateway.gatewayService=""
+```
+
+Wait for the updated controller, then apply the final GAIE v1.5.0 CRD bundle.
+Applying the bundle after the KServe chart updates the stable API definitions
+and retains KServe's transitional CRDs:
+
+```shell
+kubectl rollout status deployment/llmisvc-controller-manager \
+  --namespace kserve \
+  --timeout=240s
+
+kubectl apply --server-side -f \
+  https://github.com/kubernetes-sigs/gateway-api-inference-extension/releases/download/v1.5.0/manifests.yaml
+```
+
+Install or upgrade agentgateway after the GAIE CRDs so that its controller
+discovers `InferencePool`, then install the matching KServe runtime
+configuration:
+
+```shell
+export AGENTGATEWAY_VERSION=v1.4.1
+
+helm upgrade -i agentgateway-crds \
+  oci://cr.agentgateway.dev/charts/agentgateway-crds \
+  --version $AGENTGATEWAY_VERSION \
+  --namespace agentgateway-system \
+  --create-namespace
+
+helm upgrade -i agentgateway \
+  oci://cr.agentgateway.dev/charts/agentgateway \
+  --version $AGENTGATEWAY_VERSION \
+  --namespace agentgateway-system \
+  --set inferenceExtension.enabled=true
+
+helm upgrade -i kserve-runtime-configs \
+  oci://ghcr.io/kserve/charts/kserve-runtime-configs \
+  --version $KSERVE_VERSION \
+  --namespace kserve \
+  --set kserve.llmisvcConfigs.enabled=true
+```
+
+KServe creates the `InferencePool` and deploys the llm-d Router endpoint picker
+from its runtime configuration. Do not install the llm-d Router Helm chart
+separately for this workflow.
 
 ## Deploy LLMInferenceService
 
@@ -58,14 +126,15 @@ kubectl create namespace kserve-test
 
 ### Create Gateway
 
-Create an AgentGateway Gateway resource:
+Create a shared agentgateway Gateway resource in the `kserve` namespace.
+Routes from model namespaces can attach to this Gateway:
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: agentgateway
-  namespace: kserve-test
+  name: kserve-ingress-gateway
+  namespace: kserve
 spec:
   gatewayClassName: agentgateway
   listeners:
@@ -74,7 +143,10 @@ spec:
       port: 80
       allowedRoutes:
         namespaces:
-          from: Same
+          from: All
+  infrastructure:
+    labels:
+      serving.kserve.io/gateway: kserve-ingress-gateway
 ```
 
 ### Deploy Your Model
@@ -82,7 +154,7 @@ spec:
 Deploy an LLMInferenceService. This example uses a small model for demonstration; replace with your model of choice:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: my-model
@@ -94,6 +166,7 @@ spec:
   replicas: 1
   router:
     route: {}
+    scheduler: {}
   template:
     containers:
       - name: main
@@ -111,11 +184,35 @@ kubectl wait --for=condition=Ready llminferenceservice/my-model \
   -n kserve-test --timeout=300s
 ```
 
-## Configure LLM-Aware Routing
+## Use the Standard InferencePool Backend
+
+The managed scheduler and default
+[LLMInferenceServiceConfig route template](https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-router-route.yaml)
+generate an `InferencePool` and an `HTTPRoute` that references it. agentgateway
+supports this backend directly, so no `AgentgatewayBackend` or route override
+is required for standard inference routing.
+
+Verify the generated backend reference:
+
+```shell
+kubectl get httproute my-model-kserve-route \
+  -n kserve-test \
+  -o jsonpath='{.spec.rules[?(@.name=="v1-chat-completions-path")].backendRefs[0]}'
+```
+
+If you do not need AI policies, continue to [Configure the gateway URL](#configure-gateway-url).
+
+## Optional: Configure an AgentgatewayBackend for AI Policies
+
+To use AI policies that require LLM-aware request or response processing,
+create an `AgentgatewayBackend` and override the generated route to reference
+it.
 
 ### Step 1: Create AgentgatewayBackend
 
-Create an `AgentgatewayBackend` that declares the KServe predictor Service as an LLM provider. This tells AgentGateway to activate its LLM pipeline for traffic to this backend:
+Create an `AgentgatewayBackend` that wraps the `InferencePool` generated by
+KServe. This tells agentgateway to activate its LLM pipeline while retaining
+the pool's endpoint selection:
 
 ```yaml
 apiVersion: agentgateway.dev/v1alpha1
@@ -126,17 +223,23 @@ metadata:
 spec:
   ai:
     provider:
-      openai:
+      custom:
+        backendRef:
+          group: inference.networking.k8s.io
+          kind: InferencePool
+          name: my-model-inference-pool
         model: Qwen/Qwen2.5-0.5B-Instruct
-      host: my-model-kserve-workload-svc.kserve-test.svc.cluster.local
-      port: 8000
+        formats:
+          - type: Completions
+            path: /v1/chat/completions
 ```
 
 :::tip
-The `host` should point to the KServe workload Service. The naming convention is `{llminferenceservice-name}-kserve-workload-svc`. Verify with:
+The generated pool name is `{llminferenceservice-name}-inference-pool`.
+Verify it with:
 
 ```shell
-kubectl get svc -n kserve-test | grep workload
+kubectl get inferencepool -n kserve-test
 ```
 :::
 
@@ -153,7 +256,7 @@ import TabItem from '@theme/TabItem';
 Override the route configuration on an individual `LLMInferenceService` using `spec.router.route.http`:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: my-model
@@ -164,14 +267,15 @@ spec:
     name: Qwen/Qwen2.5-0.5B-Instruct
   replicas: 1
   router:
+    scheduler: {}
     route:
       http:
         spec:
           parentRefs:
             - group: gateway.networking.k8s.io
               kind: Gateway
-              name: agentgateway
-              namespace: kserve-test
+              name: kserve-ingress-gateway
+              namespace: kserve
           rules:
             - backendRefs:
                 - group: agentgateway.dev
@@ -211,7 +315,7 @@ spec:
 Create an `LLMInferenceServiceConfig` that overrides the route template. This can be referenced by multiple `LLMInferenceService` resources via `baseRefs`:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceServiceConfig
 metadata:
   name: agentgateway-route-config
@@ -224,8 +328,8 @@ spec:
           parentRefs:
             - group: gateway.networking.k8s.io
               kind: Gateway
-              name: agentgateway
-              namespace: kserve-test
+              name: kserve-ingress-gateway
+              namespace: kserve
           rules:
             - backendRefs:
                 - group: agentgateway.dev
@@ -254,7 +358,7 @@ spec:
 Then reference it in your LLMInferenceService:
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: my-model
@@ -266,6 +370,8 @@ spec:
   replicas: 1
   baseRefs:
     - name: agentgateway-route-config
+  router:
+    scheduler: {}
   template:
     containers:
       - name: main
@@ -279,7 +385,7 @@ spec:
 </TabItem>
 </Tabs>
 
-### Step 3: Attach Token-Based Rate Limiting (Optional)
+### Step 3: Attach Token-Based Rate Limiting
 
 Apply an `AgentgatewayPolicy` to enforce token-based rate limits on the route:
 
@@ -293,7 +399,7 @@ spec:
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: my-model-llminferenceservice-route
+      name: my-model-kserve-route
   traffic:
     rateLimit:
       local:
@@ -301,12 +407,13 @@ spec:
           unit: Hours
 ```
 
-## Configure $GATEWAY_URL
+## Configure $GATEWAY_URL {#configure-gateway-url}
 
 Check if your Gateway has an external IP address assigned:
 
 ```shell
-kubectl get svc -n kserve-test -l gateway.networking.k8s.io/gateway-name=agentgateway
+kubectl get svc -n kserve \
+  -l gateway.networking.k8s.io/gateway-name=kserve-ingress-gateway
 ```
 
 <Tabs>
@@ -314,7 +421,7 @@ kubectl get svc -n kserve-test -l gateway.networking.k8s.io/gateway-name=agentga
     If the EXTERNAL-IP shows an actual IP address (not &lt;pending&gt;):
 
     ```shell
-    export GATEWAY_URL="http://$(kubectl get gateway -n kserve-test agentgateway \
+    export GATEWAY_URL="http://$(kubectl get gateway -n kserve kserve-ingress-gateway \
       -o jsonpath='{.status.addresses[0].value}')"
     ```
   </TabItem>
@@ -323,17 +430,36 @@ kubectl get svc -n kserve-test -l gateway.networking.k8s.io/gateway-name=agentga
 
     ```shell
     export GATEWAY_URL="http://localhost:8080"
-    kubectl port-forward -n kserve-test svc/agentgateway 8080:80
+    kubectl port-forward -n kserve svc/kserve-ingress-gateway 8080:80
     ```
   </TabItem>
 </Tabs>
 
 ## Testing the Integration
 
+Set the request path for the backend you selected:
+
+<Tabs>
+<TabItem value="inference-pool-path" label="InferencePool">
+
+```shell
+export GATEWAY_PATH="/kserve-test/my-model/v1/chat/completions"
+```
+
+</TabItem>
+<TabItem value="agentgateway-backend-path" label="AgentgatewayBackend">
+
+```shell
+export GATEWAY_PATH="/v1/chat/completions"
+```
+
+</TabItem>
+</Tabs>
+
 Send a test request:
 
 ```shell
-curl -s "$GATEWAY_URL/v1/chat/completions" \
+curl -s "$GATEWAY_URL$GATEWAY_PATH" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "Qwen/Qwen2.5-0.5B-Instruct",
@@ -341,18 +467,19 @@ curl -s "$GATEWAY_URL/v1/chat/completions" \
   }' | jq .
 ```
 
-### Verify LLM-Aware Processing
+### Verify AI Policy Processing
 
-Check the AgentGateway logs to confirm the LLM pipeline is active:
+If you configured an `AgentgatewayBackend`, check the agentgateway logs to
+confirm the LLM pipeline is active:
 
 ```shell
-kubectl logs -n kserve-test deploy/agentgateway --tail=10
+kubectl logs -n kserve deploy/kserve-ingress-gateway --tail=10
 ```
 
 With `AgentgatewayBackend`, you should see GenAI fields in the log:
 
 ```text
-route=my-model-llminferenceservice-route
+route=kserve-test/my-model-kserve-route
 http.status=200
 protocol=llm
 gen_ai.operation.name=chat
@@ -362,28 +489,26 @@ gen_ai.usage.input_tokens=12
 gen_ai.usage.output_tokens=15
 ```
 
-Without `AgentgatewayBackend` (plain Service or InferencePool backendRef), the same request would only show:
-
-```text
-protocol=http
-http.status=200
-```
-
 ## How It Works
 
-The default [LLMInferenceServiceConfig route template](https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-router-route.yaml) generates HTTPRoutes with `backendRef` pointing to `InferencePool` (kind: `InferencePool`, group: `inference.networking.x-k8s.io`).
+For standard inference routing, KServe generates an `HTTPRoute` whose
+`backendRef` points to `InferencePool` (kind: `InferencePool`, group:
+`inference.networking.k8s.io`). agentgateway implements the Gateway API
+Inference Extension and routes this traffic through the pool's endpoint picker.
 
-By overriding `spec.router.route.http` — either directly on the `LLMInferenceService` or via a reusable `LLMInferenceServiceConfig` — you change the `backendRef` to `AgentgatewayBackend` (kind: `AgentgatewayBackend`, group: `agentgateway.dev`). This leverages Gateway API's support for [arbitrary backendRef kinds (GEP-1742)](https://gateway-api.sigs.k8s.io/geps/gep-1742/).
-
-AgentGateway recognizes `AgentgatewayBackend` references and activates its LLM pipeline: parsing OpenAI request/response payloads, extracting token usage, emitting GenAI telemetry, and enforcing token-based policies.
-
-:::note
-This approach is generic. Any gateway that supports custom `backendRef` kinds via Gateway API can use the same `LLMInferenceServiceConfig` override mechanism. Replace `AgentgatewayBackend` with your gateway's backend CRD.
-:::
+For AI policies, overriding `spec.router.route.http` changes the `backendRef`
+to `AgentgatewayBackend` (kind: `AgentgatewayBackend`, group:
+`agentgateway.dev`). The `AgentgatewayBackend` wraps the generated
+`InferencePool`, so agentgateway can parse OpenAI request and response payloads,
+extract token usage, emit GenAI telemetry, and enforce token-based policies
+without bypassing the endpoint picker.
 
 ## Next Steps
 
-- Explore the [AgentGateway documentation](https://agentgateway.dev/docs) for advanced features like content filtering and cost tracking.
+- Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
+- Follow the [llm-d agentgateway guide](https://llm-d.ai/docs/infrastructure/gateway/agentgateway) for the llm-d Router and gateway infrastructure.
+- Explore the [llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths) for production deployment patterns.
+- Explore the [agentgateway documentation](https://agentgateway.dev/docs) for advanced features like content filtering and cost tracking.
 - Learn more about [LLMInferenceServiceConfig composition](./llmisvc-config-composition.md) for managing configurations across multiple services.
 - See the [LLMInferenceService Configuration Guide](./llmisvc-configuration.md) for the full `spec.router.route.http` reference.
 - Follow the discussion in [kserve/kserve#5729](https://github.com/kserve/kserve/issues/5729) and [agentgateway/agentgateway#2323](https://github.com/agentgateway/agentgateway/issues/2323) for ongoing integration improvements.

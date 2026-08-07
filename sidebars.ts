@@ -141,9 +141,13 @@ const sidebars: SidebarsConfig = {
                 "model-serving/generative-inference/llmisvc/llmisvc-dependencies",
                 {
                   type: 'category',
-                  label: 'Integrations',
+                  label: 'Inference Gateways',
+                  link: {
+                    type: 'doc',
+                    id: 'model-serving/generative-inference/llmisvc/llmisvc-inference-gateways',
+                  },
                   items: [
-                    "model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway",
+                    "model-serving/generative-inference/llmisvc/llmisvc-inference-gateway-extension",
                     "model-serving/generative-inference/llmisvc/llmisvc-agentgateway",
                   ],
                 },
