@@ -465,7 +465,7 @@ If you're interested in becoming a KServe member:
 1. **Contribute regularly**: Show sustained, high-quality contributions
 2. **Help others**: Answer questions in the community channels
 3. **Review PRs**: Help review other contributors' pull requests
-4. **Follow the process**: Read the [KServe governance docs](https://github.com/kserve/community/blob/main/GOVERNANCE.md) for full details
+4. **Follow the process**: Read the [KServe governance docs](https://github.com/kserve/community) for full details
 
 ### Contributing Organizations
 
