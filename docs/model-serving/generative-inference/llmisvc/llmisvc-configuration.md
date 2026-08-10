@@ -14,6 +14,10 @@ This guide provides detailed reference for configuring LLMInferenceService resou
 
 ## Configuration Composition Model
 
+:::tip Deep Dive
+For a detailed look at how config composition works internally - including the well-known config catalog, injection decision logic, and field provenance examples - see the [Config Composition Deep Dive](./llmisvc-config-composition.md).
+:::
+
 ### LLMInferenceService vs LLMInferenceServiceConfig
 
 Similar to the relationship between `InferenceService` and `ServingRuntime`, KServe introduces **LLMInferenceServiceConfig** to separate configuration templates from service instances. However, the relationship and purpose differ significantly:
@@ -97,56 +101,6 @@ spec:
 
 ---
 
-## Composition Merge Order
-
-The merge process follows these steps:
-
-### 1. Well-Known Configs (auto-injected)
-
-Based on workload pattern, KServe automatically injects base configs:
-- `kserve-config-llm-template` (single-node)
-- `kserve-config-llm-worker-data-parallel` (multi-node DP)
-- `kserve-config-llm-decode-template` (prefill-decode)
-- `kserve-config-llm-scheduler` (scheduler enabled)
-
-### 2. Explicit BaseRefs (user-specified)
-
-Merged in order:
-- First baseRef → Second baseRef → ... → Last baseRef
-- Later baseRefs override earlier ones
-
-### 3. LLMInferenceService Spec (highest priority)
-
-Final override, applied after all baseRefs.
-
-### Config Lookup Priority
-
-```
-getConfig(name) lookup order:
-1. LLMInferenceService.namespace (same namespace) ← HIGHEST PRIORITY
-2. constants.KServeNamespace (system namespace, e.g., "kserve")
-```
-
-### Example Merge Flow
-
-```
-Well-Known Config (auto)
-    ↓ (merge)
-BaseRef[0] (e.g., "model-llama")
-    ↓ (merge)
-BaseRef[1] (e.g., "workload-gpu")  ← overrides BaseRef[0]
-    ↓ (merge)
-BaseRef[2] (e.g., "router-managed") ← overrides BaseRef[0-1]
-    ↓ (merge)
-LLMInferenceService.spec           ← HIGHEST PRIORITY, overrides all
-```
-
-### Strategic Merge Patch
-
-- Uses Kubernetes `strategicpatch.StrategicMergePatch`
-- Only non-zero fields from override are merged
-- Zero-valued fields (e.g., empty strings) do NOT wipe out base values
-
 ---
 
 ## Model Specification
@@ -166,6 +120,74 @@ spec:
 |-------|------|-------------|---------|
 | **`uri`** | string | Model location | `hf://meta-llama/Llama-3.1-8B-Instruct`<br/>`s3://my-bucket/models/llama-3`<br/>`pvc://model-pvc/llama-3` |
 | **`name`** | string | Model identifier for inference requests | `meta-llama/Llama-3.1-8B-Instruct`<br/>(defaults to metadata.name) |
+
+---
+
+## LoRA Adapter Configuration
+
+LLMInferenceService supports Low-Rank Adaptation (LoRA) adapters for task-specific model fine-tuning. LoRA allows you to serve multiple adapted versions of a base model efficiently, reducing storage and memory requirements while enabling multi-tenant deployments.
+
+### Quick Example
+
+```yaml
+spec:
+  model:
+    uri: hf://Qwen/Qwen2.5-7B-Instruct
+    name: Qwen/Qwen2.5-7B-Instruct
+    lora:
+      adapters:
+        - name: sql-adapter
+          uri: hf://my-org/qwen-sql-lora
+        - name: code-adapter
+          uri: s3://my-bucket/adapters/code-lora
+        - name: domain-adapter
+          uri: pvc://adapter-pvc/domain-lora
+```
+
+### Supported URI Schemes
+
+- **`hf://`** - HuggingFace Hub adapters
+- **`s3://`** - S3-compatible storage (AWS S3, MinIO, Ceph)
+- **`pvc://`** - PersistentVolumeClaim (pre-downloaded, air-gapped)
+
+### Key Benefits
+
+- **Storage Efficiency**: 50-500MB per adapter vs 10-100GB for full models
+- **Multi-Tenancy**: Multiple task-specific models from a single deployment
+- **Dynamic Switching**: Per-request adapter selection with ~1-5ms overhead
+- **Automatic Integration**: Controller handles downloads, mounts, and vLLM configuration
+
+For detailed configuration, examples, and troubleshooting, see the **[LoRA Adapters Guide](./lora-adapters.md)**.
+
+---
+
+## Autoscaling Configuration
+
+LLMInferenceService supports intelligent autoscaling through the **Workload Variant Autoscaler (WVA)**, which scales based on inference-specific metrics like KV cache utilization and queue depth rather than generic CPU/memory metrics.
+
+### Quick Example
+
+```yaml
+spec:
+  scaling:
+    minReplicas: 1
+    maxReplicas: 5
+    wva:
+      variantCost: "10.0"
+      hpa: {}    # or keda: {}
+```
+
+### Key Features
+
+- **Two actuator backends**: HPA (simpler, requires Prometheus Adapter) or KEDA (supports idle scale-down, metric fallback, initial cooldown)
+- **Independent prefill scaling**: Disaggregated deployments can autoscale prefill and decode workloads independently via `spec.prefill.scaling`
+- **Multi-node support**: Automatically targets LeaderWorkerSet for distributed inference workloads
+
+:::tip
+`spec.scaling` and `spec.replicas` are mutually exclusive. Use `scaling` for dynamic WVA-based autoscaling or `replicas` for a fixed replica count.
+:::
+
+For detailed configuration, prerequisites, field reference, and examples, see the **[Autoscaling Guide](./autoscaling/llmisvc-autoscaling.md)**.
 
 ---
 
@@ -341,6 +363,19 @@ spec:
     route: {}  # Auto-generated routing rules
 ```
 
+#### Referenced HTTPRoute
+
+```yaml
+spec:
+  router:
+    route:
+      http:
+        refs:
+          - name: my-custom-http-route
+```
+
+Use an existing, user-managed HTTPRoute instead of having the controller create one. The controller validates that the referenced HTTPRoute exists but does not modify it. This is useful for advanced routing setups like canary deployments or custom traffic splitting.
+
 #### Custom HTTPRoute Spec
 
 ```yaml
@@ -356,6 +391,10 @@ spec:
                 - name: my-backend-service
                   port: 8000
 ```
+
+:::tip
+`spec` and `refs` are mutually exclusive - use `refs` to bring your own HTTPRoute, or `spec` to have the controller create one with your custom rules.
+:::
 
 #### Real-world Use Cases
 
@@ -412,6 +451,42 @@ spec:
 
 ---
 
+### Traffic Splitting (Canary Rollout)
+
+Traffic splitting lets you run two or more versions of an LLMInferenceService side by side and shift live traffic between them. See the [Canary Rollout guide](./canary-rollout.md) for a full walkthrough.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `group` | `string` | No | Routing group name. All LLMISVCs with the same group participate in weighted traffic splitting. Members sharing the same `model.name` and LoRA adapter set participate in the same weighted split. |
+| `weight` | `int32` | No | Relative traffic share within the group (0-1,000,000). Traffic is distributed proportionally across all members' weights. A weight of `0` means the member is in the group but receives no traffic through shared model-routing paths. |
+
+```yaml
+spec:
+  router:
+    route:
+      group: my-model
+      weight: 9
+    scheduler: {}
+```
+
+**Validation rules:**
+
+| Spec | Valid? | Why |
+|------|--------|-----|
+| No `group`, no `weight` | Yes | Standard LLMISVC, no traffic splitting |
+| `weight` without `group` | No | Weight requires group |
+| `group` without `weight` | No | Group requires weight |
+| `group` + `weight` | Yes | Member joins the named group. Controller creates the HTTPRoute. |
+| `group` + `weight` + `route.http.refs` | No | Traffic splitting needs controller-managed routes, not user-managed refs |
+
+When `group` is set, the mutating webhook automatically adds a `serving.kserve.io/routing-group` label for discovery:
+
+```bash
+kubectl get llmisvc -l serving.kserve.io/routing-group=my-model
+```
+
+---
+
 ### Scheduler Configuration
 
 #### Managed Scheduler (Default)
@@ -428,6 +503,19 @@ KServe creates:
 - Scheduler Deployment (EPP)
 - Scheduler Service
 
+#### Referenced InferencePool
+
+```yaml
+spec:
+  router:
+    scheduler:
+      pool:
+        ref:
+          name: my-existing-pool
+```
+
+Use an existing, user-managed InferencePool instead of having the controller create one. When a pool `ref` is provided, the controller does not create an EPP deployment or InferencePool - it only creates an InferenceModel pointing to the referenced pool.
+
 #### Custom Scheduler with Pool
 
 ```yaml
@@ -441,6 +529,10 @@ spec:
               app: workload
           targetPort: 8000
 ```
+
+:::tip
+`pool.spec` and `pool.ref` are mutually exclusive - use `ref` to bring your own InferencePool, or `spec` to have the controller create one with custom settings.
+:::
 ---
 
 ## Parallelism Specification

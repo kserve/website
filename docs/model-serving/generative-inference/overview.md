@@ -101,6 +101,23 @@ spec:
 
 This automatic selection ensures optimal performance without requiring manual configuration of container images.
 
+### CPU Deployment Configuration
+
+When running on CPU, there are additional environment variables that control performance. Set these in the `env` section of your InferenceService predictor:
+
+| Variable | Description |
+|----------|-------------|
+| `VLLM_CPU_KVCACHE_SPACE` | Amount of memory in GiB to allocate for the KV cache. Higher values allow longer context windows. Example: `"4"` for a 0.5B model, `"8"` for a 3B model. |
+| `VLLM_CPU_OMP_THREADS_BIND` | Controls how OpenMP threads are bound to CPU cores. Set to `"auto"` to let vLLM detect the best binding. This prevents thread migration across NUMA nodes. |
+| `VLLM_ENABLE_V1_MULTIPROCESSING` | Set to `"0"` to run in single process mode. Recommended for CPU deployments to avoid inter-process communication overhead. |
+| `OMP_NUM_THREADS` | Number of OpenMP threads to use. Should match the number of CPU cores allocated to the container. |
+
+:::warning[CPU dtype]
+Use `--dtype=bfloat16` for CPU deployments. The default `float16` can cause numerical instability on CPUs without native FP16 support. If `bfloat16` is not available on your hardware, use `float32` instead.
+:::
+
+For a complete CPU deployment example, see the [text generation guide](tasks/text-generation/text-generation.md).
+
 ## Supported Generative Tasks
 
 The Hugging Face runtime supports the following generative tasks:
@@ -194,8 +211,19 @@ Below is an explanation of command line arguments supported by the Hugging Face 
 - `--trust_remote_code`: Allow loading of models and tokenizers with custom code.
 - `--tensor_input_names`: The tensor input names passed to the model for triton inference server backend.
 - `--return_token_type_ids`: Return token type ids.
+- `--return_offsets_mapping`: Return tokenizer offset mappings in the response outputs. This is applicable to `token_classification` tasks and can be used to align predicted tokens with character spans in the original input text.
 - `--return_probabilities`: Return probabilities of predicted indexes. This is only applicable for tasks 'sequence_classification', 'token_classification' and 'fill_mask'.
 - `--disable_log_requests`: Disable logging of requests.
+
+#### Token Classification Notes
+
+For `token_classification` tasks, the runtime can use tokenizer-provided offset mappings to align predicted tokens with the original input text.
+
+- Offset mappings provide the start and end character positions of each token in the original string.
+- This is useful for named entity recognition (NER) and other span-based token classification tasks.
+- If the tokenizer does not support offset mappings, accurate character-level span alignment may not be available.
+
+Enable this behavior using the `--return_offsets_mapping` runtime argument. It is recommended to use tokenizers that support `return_offsets_mapping=True` for accurate results.
 
 ### vLLM Specific Configuration
 

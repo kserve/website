@@ -236,6 +236,17 @@ generate_crd_docs() {
 		return 1
 	fi
 
+	# Post-process: fix duplicate ModelSpec anchor links.
+	# crd-ref-docs generates all ModelSpec links as #modelspec, but Docusaurus
+	# assigns #modelspec to the v1alpha1 definition and #modelspec-1 to the
+	# v1beta1 definition. Links in the v1beta1 section must point to #modelspec-1.
+	log_info "Post-processing: fixing ModelSpec anchor links in v1beta1 section..."
+	awk '{
+		if ($0 ~ /^## serving\.kserve\.io\/v1beta1/) in_v1beta1 = 1
+		if (in_v1beta1) gsub(/#modelspec\)/, "#modelspec-1)")
+		print
+	}' "${output_file}" > "${output_file}.tmp" && mv "${output_file}.tmp" "${output_file}"
+
 	log_success "CRD API reference documentation generated successfully"
 	log_info "Output file: ${output_file}"
 	return 0

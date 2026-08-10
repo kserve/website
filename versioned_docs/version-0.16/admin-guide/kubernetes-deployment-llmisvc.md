@@ -141,7 +141,7 @@ Install only LLMInferenceService CRDs and controller using helm:
 LLMISVC=true infra/manage.kserve-helm.sh
 ```
 
-:::success
+:::tip
 This installs only the LLMInferenceService components. InferenceService is not included.
 :::
 

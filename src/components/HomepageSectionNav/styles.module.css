@@ -1,0 +1,63 @@
+.sectionNav {
+  position: fixed;
+  top: var(--ifm-navbar-height);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  pointer-events: none;
+}
+
+:global([data-theme='dark']) .sectionNav {
+  background: rgba(24, 25, 26, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.navInner {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.4rem 1rem;
+  max-width: var(--ifm-container-width);
+  margin: 0 auto;
+}
+
+.navItem {
+  background: none;
+  border: none;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-700);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  font-family: var(--ifm-font-family-base);
+}
+
+.navItem:hover {
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-primary);
+}
+
+.active {
+  background: var(--ifm-color-primary);
+  color: white !important;
+}
+
+.active:hover {
+  background: var(--ifm-color-primary-dark);
+  color: white !important;
+}

@@ -260,7 +260,7 @@ After submitting a PR:
 ### Python Code Standards
 
 - Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guidelines
-- Use [Black](https://black.readthedocs.io/) for code formatting
+- Use [Ruff](https://docs.astral.sh/ruff/) for code formatting
 - Run `ruff check` for linting
 - Include docstrings for all functions and classes
 
@@ -465,7 +465,7 @@ If you're interested in becoming a KServe member:
 1. **Contribute regularly**: Show sustained, high-quality contributions
 2. **Help others**: Answer questions in the community channels
 3. **Review PRs**: Help review other contributors' pull requests
-4. **Follow the process**: Read the [KServe governance docs](https://github.com/kserve/community/blob/main/GOVERNANCE.md) for full details
+4. **Follow the process**: Read the [KServe governance docs](https://github.com/kserve/community) for full details
 
 ### Contributing Organizations
 

@@ -32,13 +32,39 @@ fi
 RELEASE_VERSION=$new_version
 export RELEASE_VERSION
 
+# Update version numbers in documentation (before creating snapshot)
+echo "Updating version numbers in documentation from v$current_version to v$new_version..."
+
+# Update helm commands with --version flag (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|--version v$current_version\\.0|--version v$new_version.0|g" {} +
+
+# Update kubectl apply URLs (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|releases/download/v$current_version\\.0/|releases/download/v$new_version.0/|g" {} +
+
+# Update container image tags (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|\(image: kserve/[^:]*:\)v$current_version\\.0|\1v$new_version.0|g" {} +
+
+# Update kserve-install.sh --kserve-version flag (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|--kserve-version v$current_version\\.0|--kserve-version v$new_version.0|g" {} +
+
+# Update "KServe v{version}" references (including .0 patch version)
+find docs/ -type f -name "*.md" \
+  -exec sed -i "s|KServe v$current_version\\.0|KServe v$new_version.0|g" {} +
+
+echo "Version numbers updated successfully."
+
 # generate API documentation
 make gen-api-docs
 
-# Run the release command
+# Run the release command (prepends $new_version to versions.json; prior versions stay)
 npm run docusaurus docs:version "$new_version"
 
 # Update the docsVersionDropdown in docusaurus.config.ts
+# Step 1: Add new version to versions section
 awk -v new_version="$new_version" '
   /versions: {/ {inside_versions=1; depth=1; print; next}
   inside_versions {
@@ -54,6 +80,9 @@ awk -v new_version="$new_version" '
   }
   {print}
 ' docusaurus.config.ts > temp && mv temp docusaurus.config.ts
+
+# Prior stable versions remain in versions.json and navbar; legacy MkDocs snapshots
+# stay under https://kserve.github.io/archive/ (dropdownItemsAfter) without adding new ones here.
 
 # Update announcedVersion in docusaurus.config.ts
 sed -i "s/const announcedVersion = '[0-9]\+\.[0-9]\+'/const announcedVersion = '$new_version'/" docusaurus.config.ts

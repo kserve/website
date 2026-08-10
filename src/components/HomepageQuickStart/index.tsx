@@ -6,7 +6,7 @@ import Link from '@docusaurus/Link';
 
 export default function HomepageQuickStart() {
   return (
-    <section className={styles.quickStart}>
+    <section id="quickstart" className={styles.quickStart}>
       <div className="container">
         <div className="row">
           <div className="col col--10 col--offset-1">
@@ -73,8 +73,8 @@ spec:
             <div className={styles.quickStartCTA}>
               <Link
                 className="button button--primary button--lg"
-                to="/docs/getting-started/genai-first-isvc">
-                Detailed Guide
+                to="/docs/getting-started/quickstart-guide">
+                Full Quickstart Guide
               </Link>
             </div>
           </div>

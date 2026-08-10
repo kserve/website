@@ -43,6 +43,8 @@ Mix and match **LLMInferenceServiceConfig** resources for flexible deployment pa
 - Router settings
 - Scheduler policies
 
+**Learn more**: [Config Composition Deep Dive](./llmisvc-config-composition.md)
+
 ### 🚀 Multiple Deployment Patterns
 - **Single-Node**: Simple deployments for small models (less than 7B parameters)
 - **Multi-Node**: Distributed inference with LeaderWorkerSet for medium-large models
@@ -91,9 +93,9 @@ Defines the LLM model source, name, and characteristics:
 - Model URI (HuggingFace, S3, PVC)
 - Model name for API requests
 - Scheduling criticality
-- LoRA adapters (optional)
+- **LoRA adapters** (optional) - Attach task-specific Low-Rank Adaptation modules for efficient multi-tenant serving
 
-**Learn more**: [Configuration Guide](./llmisvc-configuration.md#model-specification)
+**Learn more**: [Configuration Guide](./llmisvc-configuration.md#model-specification) | [LoRA Adapters](./lora-adapters.md)
 
 ---
 
@@ -179,6 +181,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 
 ### 🔧 Advanced Topics
 - **[Label & Annotation Propagation](./llmisvc-label-propagation.md)**: Propagate Kubernetes metadata (Kueue, Prometheus, custom labels) to workload pods
+- **[Autoscaling with WVA](./autoscaling/llmisvc-autoscaling.md)**: Inference-aware autoscaling using the Workload Variant Autoscaler
 - **Scheduler Configuration**: Prefix cache routing, load-aware scheduling
 - **Multi-Node Deployment**: LeaderWorkerSet, RDMA networking
 - **Security**: Authentication, RBAC, network policies
@@ -189,7 +192,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 
 **LLMInferenceService** provides a comprehensive, Kubernetes-native approach to LLM serving with:
 
-- ✅ **Composable Configuration**: Mix and match configs for flexible deployment
+- ✅ **[Composable Configuration](./llmisvc-config-composition.md)**: Mix and match configs for flexible deployment
 - ✅ **Multiple Workload Patterns**: Single-node, multi-node, prefill-decode separation
 - ✅ **Advanced Routing**: Gateway API + intelligent scheduler
 - ✅ **Distributed Inference**: Tensor, data, and expert parallelism

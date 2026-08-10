@@ -56,14 +56,14 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark mode styles for adopter cards */
+/* Dark mode styles for adopter cards — keep white so dark logos remain visible */
 :global([data-theme="dark"]) .adopterCard {
-  background-color: var(--ifm-background-color);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 :global([data-theme="dark"]) .adopterCard:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .adopterLogo {

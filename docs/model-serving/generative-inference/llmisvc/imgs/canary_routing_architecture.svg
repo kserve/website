@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="540" viewBox="0 0 700 540">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset dx="0" dy="1" result="shifted"/>
+      <feFlood flood-color="#000" flood-opacity="0.06" result="color"/>
+      <feComposite in="color" in2="shifted" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10z" fill="#D97706"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10z" fill="#4A7FBF"/>
+    </marker>
+    <marker id="arr-gray" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10z" fill="#8B949E"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="540" fill="#F6F8FA" rx="4"/>
+
+  <!-- Group boundary -->
+  <rect x="38" y="105" width="624" height="260" rx="12"
+        fill="#F0F6FF" stroke="#4A7FBF" stroke-width="1.2" stroke-dasharray="6,4"/>
+  <text x="350" y="122" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="11" font-weight="bold"
+        fill="#4A7FBF">group: my-model</text>
+
+  <!-- "owns" arrows (drawn early so boxes paint over crossings) -->
+
+  <!-- owns: LLMISvc v1 -> HTTPRoute v1 -->
+  <line x1="120" y1="438" x2="90" y2="252"
+        stroke="#8B949E" stroke-width="1.2" stroke-dasharray="5,3"
+        marker-end="url(#arr-gray)"/>
+  <text x="82" y="398"
+        font-family="system-ui,Arial,sans-serif" font-size="9" fill="#8B949E">owns</text>
+
+  <!-- owns: LLMISvc v1 -> Pool v1 -->
+  <line x1="220" y1="438" x2="215" y2="340"
+        stroke="#8B949E" stroke-width="1.2" stroke-dasharray="5,3"
+        marker-end="url(#arr-gray)"/>
+  <text x="224" y="398"
+        font-family="system-ui,Arial,sans-serif" font-size="9" fill="#8B949E">owns</text>
+
+  <!-- owns: LLMISvc v2 -> HTTPRoute v2 -->
+  <line x1="580" y1="438" x2="605" y2="252"
+        stroke="#8B949E" stroke-width="1.2" stroke-dasharray="5,3"
+        marker-end="url(#arr-gray)"/>
+  <text x="592" y="398"
+        font-family="system-ui,Arial,sans-serif" font-size="9" fill="#8B949E">owns</text>
+
+  <!-- owns: LLMISvc v2 -> Pool v2 -->
+  <line x1="480" y1="438" x2="485" y2="340"
+        stroke="#8B949E" stroke-width="1.2" stroke-dasharray="5,3"
+        marker-end="url(#arr-gray)"/>
+  <text x="466" y="398"
+        font-family="system-ui,Arial,sans-serif" font-size="9" fill="#8B949E">owns</text>
+
+  <!-- Gateway -->
+  <rect x="250" y="18" width="200" height="55" rx="8"
+        fill="#fff" stroke="#6B7280" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="350" y="40" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">Gateway</text>
+  <text x="350" y="55" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#6B7280">Picks oldest matching route</text>
+
+  <!-- HTTPRoute v1 (active) -->
+  <rect x="58" y="138" width="255" height="110" rx="8"
+        fill="#FAFCFF" stroke="#4A7FBF" stroke-width="1.8" filter="url(#shadow)"/>
+  <text x="185" y="158" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">HTTPRoute (v1)</text>
+  <text x="185" y="172" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#6B7280">active (oldest)</text>
+  <text x="75" y="194"
+        font-family="'Courier New',Courier,monospace" font-size="10" fill="#374151">backendRefs:</text>
+  <text x="75" y="210"
+        font-family="'Courier New',Courier,monospace" font-size="10" fill="#374151">  - v1-pool  weight: 9</text>
+  <text x="75" y="226"
+        font-family="'Courier New',Courier,monospace" font-size="10" fill="#374151">  - v2-pool  weight: 1</text>
+
+  <!-- HTTPRoute v2 (standby) -->
+  <rect x="387" y="138" width="255" height="110" rx="8"
+        fill="#fff" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="514" y="158" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">HTTPRoute (v2)</text>
+  <text x="514" y="172" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#6B7280">standby</text>
+  <text x="404" y="194"
+        font-family="'Courier New',Courier,monospace" font-size="10" fill="#374151">backendRefs:</text>
+  <text x="404" y="210"
+        font-family="'Courier New',Courier,monospace" font-size="10" fill="#374151">  - v1-pool  weight: 9</text>
+  <text x="404" y="226"
+        font-family="'Courier New',Courier,monospace" font-size="10" fill="#374151">  - v2-pool  weight: 1</text>
+
+  <!-- InferencePool v1 -->
+  <rect x="100" y="294" width="170" height="42" rx="8"
+        fill="#fff" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="185" y="319" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">v1 InferencePool</text>
+
+  <!-- InferencePool v2 -->
+  <rect x="430" y="294" width="170" height="42" rx="8"
+        fill="#fff" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="515" y="319" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">v2 InferencePool</text>
+
+  <!-- LLMInferenceService v1 -->
+  <rect x="80" y="438" width="200" height="62" rx="8"
+        fill="#F5F8FF" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="180" y="455" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#4A7FBF">LLMInferenceService</text>
+  <text x="180" y="471" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">my-model-v1</text>
+  <text x="180" y="486" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#6B7280">weight: 9</text>
+
+  <!-- LLMInferenceService v2 -->
+  <rect x="420" y="438" width="200" height="62" rx="8"
+        fill="#F5F8FF" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="520" y="455" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#4A7FBF">LLMInferenceService</text>
+  <text x="520" y="471" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="12" font-weight="bold"
+        fill="#1F2937">my-model-v2</text>
+  <text x="520" y="486" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" fill="#6B7280">weight: 1</text>
+
+  <!-- Amber arrow: Gateway -> HTTPRoute v1 (solid, active) -->
+  <line x1="305" y1="73" x2="185" y2="134"
+        stroke="#D97706" stroke-width="1.5" marker-end="url(#arr-amber)"/>
+
+  <!-- Amber arrow: Gateway -> HTTPRoute v2 (dashed, standby) -->
+  <line x1="395" y1="73" x2="514" y2="134"
+        stroke="#D97706" stroke-width="1.5" stroke-dasharray="6,4"
+        marker-end="url(#arr-amber)"/>
+
+  <!-- Blue arrow: HTTPRoute v1 -> v1 Pool (90%) -->
+  <line x1="155" y1="248" x2="165" y2="290"
+        stroke="#4A7FBF" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Blue arrow: HTTPRoute v1 -> v2 Pool (10%) -->
+  <line x1="260" y1="248" x2="480" y2="290"
+        stroke="#4A7FBF" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- 90% badge -->
+  <rect x="126" y="260" width="36" height="18" rx="9" fill="#4A7FBF"/>
+  <text x="144" y="273" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" font-weight="bold"
+        fill="#fff">90%</text>
+
+  <!-- 10% badge -->
+  <rect x="350" y="258" width="36" height="18" rx="9" fill="#4A7FBF"/>
+  <text x="368" y="271" text-anchor="middle"
+        font-family="system-ui,Arial,sans-serif" font-size="10" font-weight="bold"
+        fill="#fff">10%</text>
+</svg>

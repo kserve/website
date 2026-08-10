@@ -7,7 +7,7 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 // The latest announcedVersion
-const announcedVersion = '0.16';
+const announcedVersion = '0.19';
 
 const config: Config = {
   title: 'KServe',
@@ -49,6 +49,18 @@ const config: Config = {
     '@docusaurus/theme-mermaid',
     // This theme is used to render OpenAPI documentation
     'docusaurus-theme-openapi-docs',
+  ],
+
+  // Add kapa.ai AI assistant widget
+  scripts: [
+    {
+      src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
+      'data-website-id': '054b6efc-8335-4caf-b88d-4f001355cc8d',
+      'data-project-name': 'KServe',
+      'data-project-color': '#588be8',
+      'data-project-logo': 'https://kserve.github.io/website/img/kserve-logo.png',
+      async: true,
+    },
   ],
 
   presets: [
@@ -108,19 +120,166 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'docsSidebar',
+          type: 'dropdown',
+          label: 'Getting Started',
           position: 'left',
-          label: 'Docs',
+          to: '/docs/getting-started/quickstart-guide',
+          items: [
+            {
+              type: 'doc',
+              docId: 'getting-started/quickstart-guide',
+              label: 'Quickstart Guide',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Tutorials</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/genai-first-isvc',
+              label: 'Serve an LLM',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/genai-first-llmisvc',
+              label: 'Serve an LLM (Advanced)',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/predictive-first-isvc',
+              label: 'Serve a Predictive Model',
+            },
+            {
+              type: 'doc',
+              docId: 'getting-started/swagger-ui',
+              label: 'Swagger UI',
+            },
+          ],
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        {
+          type: 'dropdown',
+          label: 'Docs',
+          position: 'left',
+          to: '/docs/intro',
+          items: [
+            {
+              type: 'doc',
+              docId: 'intro',
+              label: 'Overview',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Concepts</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/architecture/index',
+              label: 'Architecture Overview',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/architecture/control-plane',
+              label: 'Control Plane',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/architecture/data-plane/data-plane',
+              label: 'Data Plane',
+            },
+            {
+              type: 'doc',
+              docId: 'concepts/resources/index',
+              label: 'Resources',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Model Serving</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/generative-inference/overview',
+              label: 'Generative AI Serving',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/predictive-inference/frameworks/overview',
+              label: 'Predictive AI Serving',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/inferencegraph/overview',
+              label: 'Inference Graph',
+            },
+            {
+              type: 'doc',
+              docId: 'model-serving/storage/overview',
+              label: 'Model Storage',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Install & Ops</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'install/overview',
+              label: 'Installation',
+            },
+            {
+              type: 'doc',
+              docId: 'admin-guide/overview',
+              label: 'Admin Guide',
+            },
+            {
+              type: 'doc',
+              docId: 'developer-guide/index',
+              label: 'Developer Guide',
+            },
+            {
+              type: 'html',
+              value: '<hr class="dropdown-separator" style="margin:4px 0"/>',
+            },
+            {
+              type: 'html',
+              value: '<span class="dropdown-section-label">Reference</span>',
+            },
+            {
+              type: 'doc',
+              docId: 'reference/crd-api',
+              label: 'API Reference',
+            },
+            {
+              type: 'doc',
+              docId: 'reference/integrations',
+              label: 'Integrations',
+            },
+          ],
+        },
         {
           type: 'docsVersionDropdown',
-          position: 'left',
+          position: 'right',
           versions: {
             'current': {
               label: 'nightly',
             },
+            '0.19': { label: '0.19' },
+            '0.18': { label: '0.18' },
+            '0.17': { label: '0.17' },
             '0.16': { label: '0.16' },
           },
           dropdownItemsAfter: [
@@ -147,10 +306,31 @@ const config: Config = {
           ],
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'communitySidebar',
-          position: 'right',
+          type: 'dropdown',
           label: 'Community',
+          position: 'left',
+          to: '/docs/community/get-involved',
+          items: [
+            {
+              type: 'doc',
+              docId: 'community/get-involved',
+              label: 'Get Involved',
+            },
+            {
+              type: 'doc',
+              docId: 'community/adopters',
+              label: 'Adopters',
+            },
+            {
+              type: 'doc',
+              docId: 'community/presentations',
+              label: 'Presentations',
+            },
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
+          ],
         },
         {
           href: 'https://github.com/kserve/kserve',
@@ -167,7 +347,7 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {
-              label: 'Get Started',
+              label: 'Getting Started',
               to: '/docs/getting-started/quickstart-guide',
             },
             {
@@ -228,13 +408,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} The KServe Authors. All rights reserved. <br/> The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a
-            href="https://www.linuxfoundation.org/trademark-usage"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline">
-            Trademark Usage page.
-          </a>`,
+      copyright: `Copyright © ${new Date().getFullYear()} KServe, a Series of LF Projects, LLC. For web site terms of use, trademark policy and other project policies please see <a href="https://lfprojects.org/policies/" target="_blank" rel="noopener noreferrer">https://lfprojects.org/policies/</a>.`,
     },
     prism: {
       theme: prismThemes.github,
@@ -578,10 +752,6 @@ const config: Config = {
           {
             from: '/latest/admin/kubernetes_deployment/',
             to: '/docs/admin-guide/kubernetes-deployment',
-          },
-          {
-            from: '/latest/admin/modelmesh/',
-            to: '/docs/admin-guide/modelmesh',
           },
           {
             from: '/latest/admin/serverless/kourier_networking/',

@@ -27,7 +27,7 @@ kubectl create namespace kserve-test
 ### 2. Create an `InferenceService`
 Create an InferenceService to deploy the Iris model. This model will be served using KServe's Scikit-learn runtime for optimized performance.
 
-::: warning
+:::warning
 Do not deploy `InferenceServices` in control plane namespaces (i.e. namespaces with `control-plane` label). The webhook is configured in a way to skip these namespaces to avoid any privilege escalations. Deploying InferenceServices to these namespaces will result in the storage initializer not being injected into the pod, causing the pod to fail with the error `No such file or directory: '/mnt/models'`.
 :::
 
@@ -268,7 +268,9 @@ kubectl create -f https://raw.githubusercontent.com/kserve/kserve/release-<Activ
 Execute the following command to view output:
 
 ```bash
-kubectl logs load-test8b58n-rgfxr -n kserve-test
+# Get the job name (generated with a random suffix)
+JOB_NAME=$(kubectl get jobs -n kserve-test -o jsonpath='{.items[0].metadata.name}')
+kubectl logs job/$JOB_NAME -n kserve-test
 ```
 
 :::tip[Expected Output]

@@ -4,11 +4,21 @@
     {
       "type": "category",
       "label": "Getting Started",
+      "link": {
+        "type": "generated-index",
+        "slug": "getting-started"
+      },
       "items": [
         "getting-started/quickstart-guide",
-        "getting-started/genai-first-isvc",
-        "getting-started/genai-first-llmisvc",
-        "getting-started/predictive-first-isvc",
+        {
+          "type": "category",
+          "label": "Deploy Your First",
+          "items": [
+            { "type": "doc", "id": "getting-started/genai-first-isvc", "label": "LLM with InferenceService (Standard)" },
+            { "type": "doc", "id": "getting-started/genai-first-llmisvc", "label": "LLM with LLMInferenceService (Advanced)" },
+            { "type": "doc", "id": "getting-started/predictive-first-isvc", "label": "Predictive InferenceService" }
+          ]
+        },
         "getting-started/swagger-ui"
       ]
     },
