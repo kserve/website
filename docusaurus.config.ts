@@ -541,6 +541,14 @@ const config: Config = {
             to: '/docs/model-serving/generative-inference/ai-gateway/envoy-ai-gateway',
           },
           {
+            from: '/docs/next/model-serving/generative-inference/ai-gateway/envoy-ai-gateway',
+            to: '/docs/next/model-serving/generative-inference/ai-gateway/inference-gateways',
+          },
+          {
+            from: '/docs/next/model-serving/generative-inference/llmisvc/llmisvc-inference-gateways',
+            to: '/docs/next/model-serving/generative-inference/ai-gateway/inference-gateways',
+          },
+          {
             from: '/docs/next/model-serving/generative-inference/llmisvc/llmisvc-envoy-ai-gateway',
             to: '/docs/next/model-serving/generative-inference/llmisvc/llmisvc-inference-gateway-extension',
           },

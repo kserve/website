@@ -144,7 +144,7 @@ const sidebars: SidebarsConfig = {
                   label: 'Inference Gateways',
                   link: {
                     type: 'doc',
-                    id: 'model-serving/generative-inference/llmisvc/llmisvc-inference-gateways',
+                    id: 'model-serving/generative-inference/ai-gateway/inference-gateways',
                   },
                   items: [
                     "model-serving/generative-inference/llmisvc/llmisvc-inference-gateway-extension",
@@ -180,7 +180,6 @@ const sidebars: SidebarsConfig = {
             "model-serving/generative-inference/modelcache/localmodel",
             "model-serving/generative-inference/autoscaling/autoscaling",
             "model-serving/generative-inference/multi-node/multi-node",
-            "model-serving/generative-inference/ai-gateway/envoy-ai-gateway",
           ],
         },
         {

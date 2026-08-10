@@ -660,7 +660,7 @@ done
 
 Now that you've tested the basic setup, you can:
 
-- Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
+- Compare the other [inference gateway integrations](../ai-gateway/inference-gateways.md).
 - Review the [llm-d gateway guides](https://llm-d.ai/docs/infrastructure/gateway).
 - Follow the [llm-d Envoy AI Gateway guide](https://llm-d.ai/docs/infrastructure/gateway/envoy-ai-gateway).
 - Explore the [llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths) for production deployment patterns.

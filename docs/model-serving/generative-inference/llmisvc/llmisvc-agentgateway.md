@@ -505,7 +505,7 @@ without bypassing the endpoint picker.
 
 ## Next Steps
 
-- Compare the other [inference gateway integrations](./llmisvc-inference-gateways.md).
+- Compare the other [inference gateway integrations](../ai-gateway/inference-gateways.md).
 - Follow the [llm-d agentgateway guide](https://llm-d.ai/docs/infrastructure/gateway/agentgateway) for the llm-d Router and gateway infrastructure.
 - Explore the [llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths) for production deployment patterns.
 - Explore the [agentgateway documentation](https://agentgateway.dev/docs) for advanced features like content filtering and cost tracking.
