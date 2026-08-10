@@ -13,11 +13,11 @@ LLMInferenceService supports propagating Kubernetes labels and annotations from 
 Propagation works across all deployment modes: single-node Deployments, multi-node LeaderWorkerSets, disaggregated prefill-decode workloads, and the scheduler (EPP) Deployment.
 
 :::note Compatibility note
-The top-level propagation flow (`.metadata.labels` / `.metadata.annotations` with allowlisted prefixes) is available in published CRD docs.
+The top-level propagation flow (`.metadata.labels` / `.metadata.annotations` with allowlisted prefixes) is implemented by the controller. The published CRD/API reference documents the `.metadata` schema but does not itself define or guarantee propagation behavior.
 
-The spec-level propagation fields documented below (`spec.labels`, `spec.annotations`, `spec.prefill.labels`, `spec.prefill.annotations`, `spec.router.scheduler.labels`, and `spec.router.scheduler.annotations`) depend on the controller/CRD version installed in your cluster. If your generated API reference only shows `template`, `worker`, `prefill`, and `router.scheduler.template`, your cluster does not yet expose these fields.
+The spec-level propagation fields documented below (`spec.labels`, `spec.annotations`, `spec.prefill.labels`, `spec.prefill.annotations`, `spec.router.scheduler.labels`, and `spec.router.scheduler.annotations`) depend on the controller/CRD version installed in your cluster. If your generated API reference only shows `template`, `worker`, `prefill`, and `router.scheduler.template`, your cluster does not yet expose these fields in its schema.
 
-To verify your installed schema, run `kubectl explain llminferenceservice.spec` and `kubectl explain llminferenceservice.spec.router.scheduler`.
+To verify which fields your installed CRD schema provides, run `kubectl explain llminferenceservice.spec` and `kubectl explain llminferenceservice.spec.router.scheduler`. Propagation behavior for any of these fields is handled by the controller.
 :::
 
 ---
