@@ -2,6 +2,17 @@
 
 set -euo pipefail # Exit on error, undefined variables, and pipe failures
 
+# Parse flags
+FORCE=false
+PREVIOUS_VERSION=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --force) FORCE=true; shift ;;
+    --previous-version) PREVIOUS_VERSION="$2"; shift 2 ;;
+    *) echo "Unknown option: $1"; exit 1 ;;
+  esac
+done
+
 # Function to compare versions
 version_gt() {
   # Split versions into major and minor components
@@ -22,10 +33,24 @@ current_version=$(grep -oP "const announcedVersion = '\K[0-9]+\.[0-9]+(?=')" doc
 # Prompt user for the new release version
 read -p "Enter the new release version (current: $current_version): " new_version
 
-# Validate the new version is greater than the current version
-if ! version_gt "$current_version" "$new_version"; then
-  echo "Error: New version must be greater than the current version ($current_version)."
+# Validate the new version is greater than the current version, unless --force is used to regenerate
+if ! version_gt "$current_version" "$new_version" && [ "$FORCE" = false ]; then
+  echo "Error: New version must be greater than the current version ($current_version). Use --force to regenerate."
   exit 1
+fi
+
+# When regenerating, clean up the old snapshot and temporarily update config
+if [ "$FORCE" = true ]; then
+  if [ -z "$PREVIOUS_VERSION" ]; then
+    echo "Error: --previous-version is required with --force."
+    exit 1
+  fi
+  rm -rf "versioned_docs/version-$new_version"
+  rm -f "versioned_sidebars/version-$new_version-sidebars.json"
+  sed -i "/\"$new_version\"/d" versions.json
+  # Temporarily point announcedVersion to previous version so docusaurus can validate
+  sed -i "s/const announcedVersion = '$new_version'/const announcedVersion = '$PREVIOUS_VERSION'/" docusaurus.config.ts
+  sed -i "/'$new_version': { label: '$new_version' },/d" docusaurus.config.ts
 fi
 
 # Set the RELEASE_VERSION environment variable which will be used in Makefile
@@ -57,11 +82,26 @@ find docs/ -type f -name "*.md" \
 
 echo "Version numbers updated successfully."
 
+# Pin kserve version in example requirements.txt files (before snapshot so versioned_docs inherits it)
+echo "Pinning kserve version in example requirements.txt files..."
+find docs/ -type f -name "requirements.txt" \
+  -exec sed -i "s|^kserve\(\[.*\]\)\{0,1\}\(==.*\)\{0,1\}$|kserve\1==$new_version.0|" {} +
+echo "kserve version pinned to $new_version.0 in example requirements.txt files."
+
 # generate API documentation
 make gen-api-docs
 
 # Run the release command (prepends $new_version to versions.json; prior versions stay)
 npm run docusaurus docs:version "$new_version"
+
+# When regenerating, restore the config and exit
+if [ "$FORCE" = true ]; then
+  sed -i "s/const announcedVersion = '$PREVIOUS_VERSION'/const announcedVersion = '$new_version'/" docusaurus.config.ts
+  # Re-add version to dropdown
+  sed -i "/label: 'nightly'/{n;s|$|\n            '$new_version': { label: '$new_version' },|}" docusaurus.config.ts
+  echo "Version $new_version regenerated successfully."
+  exit 0
+fi
 
 # Update the docsVersionDropdown in docusaurus.config.ts
 # Step 1: Add new version to versions section

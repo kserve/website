@@ -38,5 +38,6 @@ gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs gen-p
 	@echo "API documentation generated successfully."
 
 # Bump the version and create a new release
+# Pass ARGS="--force" to regenerate an existing version: make bump-version ARGS="--force"
 bump-version:
-	./hack/release.sh
+	./hack/release.sh $(ARGS)
