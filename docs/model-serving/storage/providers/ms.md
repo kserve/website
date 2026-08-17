@@ -8,10 +8,12 @@ description: Deploy InferenceService with models from ModelScope Hub in KServe, 
 You can specify the `storageUri` field on `InferenceService` YAML with the following format to deploy the models from ModelScope Hub.
 
 ```
-ms://${NAMESPACE}/${MODEL}:${REVISION}(optional)
+modelscope://${OWNER}/${MODEL}[:${REVISION}]
 ```
 
-e.g. `ms://qwen/Qwen2-0.5B-Instruct`
+For example, `modelscope://Qwen/Qwen2.5-0.5B-Instruct`. To download a
+specific revision, append it after a colon, for example,
+`modelscope://Qwen/Qwen2.5-0.5B-Instruct:<revision>`.
 
 [ModelScope](https://www.modelscope.cn) is one of the largest model hubs in China, hosting popular models such as Qwen, DeepSeek, and many others.
 
@@ -21,7 +23,7 @@ If no credential is provided, an anonymous client will be used to download the m
 
 ## Private ModelScope Models
 
-KServe supports authenticating with `MS_TOKEN` for downloading the model. Create a Kubernetes secret to store the ModelScope token.
+KServe supports authenticating with `MODELSCOPE_API_TOKEN` for downloading the model. Create a Kubernetes secret to store the ModelScope token.
 
 ```yaml title="yaml"
 apiVersion: v1
@@ -30,7 +32,7 @@ metadata:
   name: storage-config
 type: Opaque
 data:
-  MS_TOKEN: bXN0X1ZOVXdSV0FHQmtJeFpmTEx1a3NlR3lvVVZvbnVOaUR1VU0==
+  MODELSCOPE_API_TOKEN: bXN0X1ZOVXdSV0FHQmtJeFpmTEx1a3NlR3lvVVZvbnVOaUR1VU0==
 ```
 
 ## Deploy InferenceService with Models from ModelScope Hub
@@ -52,14 +54,14 @@ metadata:
   name: modelscope-qwen
 spec:
   predictor:
-    serviceAccountName: msserviceacc  # Option 1 for authenticating with MS_TOKEN
+    serviceAccountName: msserviceacc  # Option 1 for authenticating with MODELSCOPE_API_TOKEN
     model:
       modelFormat:
         name: huggingface
       args:
         - --model_name=qwen
         - --model_dir=/mnt/models
-      storageUri: ms://qwen/Qwen2-0.5B-Instruct
+      storageUri: modelscope://Qwen/Qwen2.5-0.5B-Instruct
       resources:
         limits:
           cpu: "6"
@@ -87,7 +89,7 @@ spec:
       args:
         - --model_name=qwen
         - --model_dir=/mnt/models
-      storageUri: ms://qwen/Qwen2-0.5B-Instruct
+      storageUri: modelscope://Qwen/Qwen2.5-0.5B-Instruct
       resources:
         limits:
           cpu: "6"
@@ -98,11 +100,11 @@ spec:
           memory: 24Gi
           nvidia.com/gpu: "1"
       env:
-        - name: MS_TOKEN  # Option 2 for authenticating with MS_TOKEN
+        - name: MODELSCOPE_API_TOKEN  # Option 2 for authenticating with MODELSCOPE_API_TOKEN
           valueFrom:
             secretKeyRef:
               name: storage-config
-              key: MS_TOKEN
+              key: MODELSCOPE_API_TOKEN
               optional: false
 ```
 
