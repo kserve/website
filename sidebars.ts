@@ -282,6 +282,7 @@ const sidebars: SidebarsConfig = {
                 "model-serving/predictive-inference/logger/tls-logger",
                 "model-serving/predictive-inference/logger/knative-eventing-logger",
                 "model-serving/predictive-inference/logger/blob-storage-logger",
+                "model-serving/predictive-inference/logger/log-all-responses",
               ]
             },
             {
