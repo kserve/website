@@ -449,3 +449,156 @@ huggingface-fbopt-predictor   sidecar   0.120.0           8h            managed
 ```
 
 :::
+
+## Per-Component Autoscaling
+
+KServe supports independent KEDA configuration for each InferenceService component — **predictor**, **transformer**, and **explainer**. The autoscaler reconciler is component-agnostic and creates a separate `ScaledObject` for each component that has KEDA scaling configured.
+
+### KEDA Default Behavior
+
+Unlike [HPA](./hpa-autoscaler.md#default-hpa-behavior), KEDA does **not** automatically create a `ScaledObject` for components that are missing an `autoScaling` configuration. Only the components that explicitly define `autoScaling` with metrics will get a KEDA `ScaledObject` created. Components without KEDA configuration will not be autoscaled by KEDA.
+
+For example, if you define an InferenceService with both a predictor and a transformer but only configure `autoScaling` on the predictor, only the predictor will have a `ScaledObject`. The transformer will run with a fixed replica count based on its `minReplicas` (defaulting to `1` if not set).
+
+### Configure Independent Scaling per Component
+
+Each component can define its own `minReplicas`, `maxReplicas`, and `autoScaling` metrics independently. This allows each component to scale based on different criteria — for example, scaling the predictor on GPU utilization via Prometheus while scaling the transformer on CPU utilization.
+
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "custom-model-keda"
+  annotations:
+    serving.kserve.io/deploymentMode: "Standard"
+    serving.kserve.io/autoscalerClass: "keda"
+spec:
+  predictor:
+    minReplicas: 1
+    maxReplicas: 5
+    autoScaling:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 50
+    model:
+      modelFormat:
+        name: sklearn
+      protocolVersion: v2
+      runtime: kserve-sklearnserver
+      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+  transformer:
+    minReplicas: 2
+    maxReplicas: 8
+    autoScaling:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 40
+    containers:
+      - image: my-custom-transformer:latest
+        name: transformer-container
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+```
+
+Apply the InferenceService:
+
+```bash
+kubectl apply -f custom-model-keda.yaml
+```
+
+:::tip[Expected Output]
+
+```
+inferenceservice.serving.kserve.io/custom-model-keda created
+```
+
+:::
+
+### Verify Independent KEDA ScaledObjects
+
+After the InferenceService is created, verify that separate `ScaledObject` resources exist for each component:
+
+```bash
+kubectl get scaledobjects
+```
+
+:::tip[Expected Output]
+
+```
+NAME                              SCALETARGETKIND      SCALETARGETNAME                    MIN   MAX   TRIGGERS   AUTHENTICATION   READY   ACTIVE   FALLBACK   PAUSED    AGE
+custom-model-keda-predictor       apps/v1.Deployment   custom-model-keda-predictor        1     5     cpu                         True    True     Unknown    Unknown   2m
+custom-model-keda-transformer     apps/v1.Deployment   custom-model-keda-transformer      2     8     cpu                         True    True     Unknown    Unknown   2m
+```
+
+:::
+
+Each `ScaledObject` targets the deployment for its respective component. Scaling events on the transformer will not affect the predictor's replica count, and vice versa.
+
+### Partial Configuration
+
+When only some components need KEDA autoscaling, you can configure `autoScaling` on only those components. Components without `autoScaling` will not have a `ScaledObject` created:
+
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "partial-keda"
+  annotations:
+    serving.kserve.io/deploymentMode: "Standard"
+    serving.kserve.io/autoscalerClass: "keda"
+spec:
+  predictor:
+    minReplicas: 1
+    maxReplicas: 5
+    autoScaling:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 50
+    model:
+      modelFormat:
+        name: sklearn
+      protocolVersion: v2
+      runtime: kserve-sklearnserver
+      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+  transformer:
+    minReplicas: 2
+    containers:
+      - image: my-custom-transformer:latest
+        name: transformer-container
+```
+
+In this example, only the predictor gets a KEDA `ScaledObject`. The transformer runs with a fixed 2 replicas and will not be autoscaled.
+
+```bash
+kubectl get scaledobjects
+```
+
+:::tip[Expected Output]
+
+```
+NAME                           SCALETARGETKIND      SCALETARGETNAME                 MIN   MAX   TRIGGERS   AUTHENTICATION   READY   ACTIVE   FALLBACK   PAUSED    AGE
+partial-keda-predictor         apps/v1.Deployment   partial-keda-predictor          1     5     cpu                         True    True     Unknown    Unknown   2m
+```
+
+:::
+
+:::note
+The transformer deployment `partial-keda-transformer` exists but has no `ScaledObject` — it will maintain its configured `minReplicas` without autoscaling.
+:::
