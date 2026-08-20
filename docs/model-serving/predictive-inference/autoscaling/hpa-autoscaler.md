@@ -95,3 +95,108 @@ metadata:
 :::tip
 **Recommendation**: Prefer `"none"` when disabling KServe-managed autoscaling entirely. Use `"external"` only when another controller will manage the HPA.
 :::
+
+## Per-Component Autoscaling
+
+KServe supports independent HPA configuration for each InferenceService component — **predictor**, **transformer**, and **explainer**. Each component gets its own `HorizontalPodAutoscaler` resource, allowing them to scale independently based on their own load characteristics.
+
+### Default HPA Behavior
+
+When using HPA as the autoscaler class, KServe automatically creates an HPA resource for **every component** defined in the InferenceService spec. If a component does not specify its own `autoScaling` configuration, KServe applies the following defaults:
+
+| Parameter | Default Value |
+|-----------|---------------|
+| `minReplicas` | `1` |
+| `maxReplicas` | `1` |
+| `scaleMetric` | `cpu` |
+| `scaleTarget` | `80` (Utilization) |
+
+This means that even if you only configure scaling for the predictor, KServe will still create HPA resources for the transformer and explainer (if they are defined in the spec) using the default values above.
+
+### Configure Independent Scaling per Component
+
+You can set `minReplicas`, `maxReplicas`, and `autoScaling` independently on each component. This is useful when different components have different resource profiles — for example, a transformer performing heavy pre-processing may need to scale more aggressively than the predictor.
+
+```yaml
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "custom-model-hpa"
+  annotations:
+    serving.kserve.io/deploymentMode: Standard
+    serving.kserve.io/autoscalerClass: hpa
+spec:
+  predictor:
+    minReplicas: 1
+    maxReplicas: 5
+    autoScaling:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 80
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "1"
+          memory: "1Gi"
+  transformer:
+    minReplicas: 2
+    maxReplicas: 10
+    autoScaling:
+      metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 60
+    containers:
+      - image: my-custom-transformer:latest
+        name: transformer-container
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "2"
+            memory: "2Gi"
+```
+
+Apply the InferenceService:
+
+```bash
+kubectl apply -f custom-model-hpa.yaml
+```
+
+### Verify Independent HPA Resources
+
+After the InferenceService is created, verify that separate HPA resources exist for each component:
+
+```bash
+kubectl get hpa
+```
+
+:::tip[Expected Output]
+
+```
+NAME                                REFERENCE                                 TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
+custom-model-hpa-predictor          Deployment/custom-model-hpa-predictor     10%/80%   1         5         1          2m
+custom-model-hpa-transformer        Deployment/custom-model-hpa-transformer   15%/60%   2         10        2          2m
+```
+
+:::
+
+Each HPA targets the deployment for its respective component and uses the scaling parameters configured in the InferenceService spec. The predictor and transformer scale independently — load on the transformer will not affect the predictor's replica count, and vice versa.
+
+:::note
+If only the predictor is specified in the InferenceService spec and no transformer or explainer is defined, only a single HPA for the predictor is created. HPA resources are only created for components that are present in the spec.
+:::
