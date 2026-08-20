@@ -55,7 +55,7 @@ routes to the shared agentgateway Gateway. During the GAIE v1 migration, KServe
 also installs transitional CRDs that its controller uses for compatibility:
 
 ```shell
-export KSERVE_VERSION=v0.20.0-rc0
+export KSERVE_VERSION=v0.20.0
 
 helm upgrade -i kserve-llmisvc-resources \
   oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \

@@ -1,5 +1,5 @@
 ---
-sidebar_label: "Inference Gateway Extension"
+sidebar_label: "Envoy AI Gateway"
 sidebar_position: 5
 title: LLMInferenceService with Envoy AI Gateway
 description: How to integrate KServe LLMInferenceService with Envoy AI Gateway to manage LLM traffic and usage-based rate limits
@@ -173,7 +173,7 @@ In this example, we will configure:
 
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceServiceConfig
 metadata:
   name: custom-config-llm-template
@@ -363,7 +363,7 @@ Now let's create the actual LLMInferenceService that will serve your model. This
 The empty braces (`{}`) you see for `router.scheduler`, `router.route`, and `router.gateway` tell the controller to auto-configure these components using the defaults from our template. You only need to specify what's unique to this particular service: the model details, replica count, and resource requirements.
 
 ```yaml
-apiVersion: serving.kserve.io/v1alpha1
+apiVersion: serving.kserve.io/v1alpha2
 kind: LLMInferenceService
 metadata:
   name: qwen-instruct
