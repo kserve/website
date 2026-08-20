@@ -111,7 +111,7 @@ When using HPA as the autoscaler class, KServe automatically creates an HPA reso
 | `scaleMetric` | `cpu` |
 | `scaleTarget` | `80` (Utilization) |
 
-This means that even if you only configure scaling for the predictor, KServe will still create HPA resources for the transformer and explainer (if they are defined in the spec) using the default values above.
+This means that even if you only configure scaling for the predictor, KServe will still create HPA resources for the transformer and explainer (if they are defined in the spec) using the default values above. Because the `minReplicas` and `maxReplicas` are equal, the resource will not actually scale up or down automatically.
 
 ### Configure Independent Scaling per Component
 
