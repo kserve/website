@@ -412,6 +412,43 @@ TLS is configured via command-line arguments or environment variables:
 
 When both are set and `--http_port` is not explicitly overridden, the server automatically switches the listen port from 8080 to 8443.
 
+### Providing Certificates to the Transformer
+
+TLS certificate and key files are provided to the transformer container by mounting a Kubernetes Secret as a volume.
+
+Create a secret from your certificate and key files:
+
+```bash
+kubectl create secret tls transformer-tls-secret \
+  --cert=/path/to/tls.crt \
+  --key=/path/to/tls.key
+```
+
+Then mount the secret and pass the file paths via command-line arguments in the transformer container spec:
+
+```yaml
+    containers:
+    - image: kserve/image-transformer:latest
+      name: kserve-container
+      args:
+        - --ssl_certfile
+        - /etc/tls/tls.crt
+        - --ssl_keyfile
+        - /etc/tls/tls.key
+      ports:
+        - containerPort: 8443
+      volumeMounts:
+        - name: tls-certs
+          mountPath: /etc/tls
+          readOnly: true
+    volumes:
+      - name: tls-certs
+        secret:
+          secretName: transformer-tls-secret
+```
+
+Alternatively, you can set the `KSERVE_TLS_CERT_FILE` and `KSERVE_TLS_KEY_FILE` environment variables instead of using command-line arguments.
+
 ### Port Behavior
 
 | SSL Config | `--http_port` | Listen Port |
