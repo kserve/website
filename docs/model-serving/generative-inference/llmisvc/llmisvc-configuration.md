@@ -533,6 +533,110 @@ spec:
 :::tip
 `pool.spec` and `pool.ref` are mutually exclusive - use `ref` to bring your own InferencePool, or `spec` to have the controller create one with custom settings.
 :::
+
+#### EndpointPickerConfig
+
+By default the controller generates an `EndpointPickerConfig` for you, picking a plugin set that matches your topology (P/D disaggregation, LoRA adapters, and so on). When you need something else - a different scorer mix, custom scheduling profiles, flow control - supply the document yourself under `scheduler.config`.
+
+There are two ways to do that, and they are mutually exclusive.
+
+**Inline** - the document lives in the LLMInferenceService:
+
+```yaml
+spec:
+  router:
+    scheduler:
+      config:
+        inline:
+          apiVersion: llm-d.ai/v1alpha1
+          kind: EndpointPickerConfig
+          plugins:
+            - type: single-profile-handler
+            - type: prefix-cache-scorer
+            - type: load-aware-scorer
+              parameters:
+                threshold: 100
+            - type: max-score-picker
+          schedulingProfiles:
+            - name: default
+              plugins:
+                - pluginRef: prefix-cache-scorer
+                  weight: 2.0
+                - pluginRef: load-aware-scorer
+                  weight: 1.0
+                - pluginRef: max-score-picker
+```
+
+**ConfigMap reference** - the document lives in a ConfigMap, and the service points at it:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-epp-config
+  namespace: my-namespace
+data:
+  epp: |
+    apiVersion: llm-d.ai/v1alpha1
+    kind: EndpointPickerConfig
+    plugins:
+      - type: single-profile-handler
+      - type: prefix-cache-scorer
+      - type: max-score-picker
+    schedulingProfiles:
+      - name: default
+        plugins:
+          - pluginRef: prefix-cache-scorer
+            weight: 2.0
+          - pluginRef: max-score-picker
+---
+apiVersion: serving.kserve.io/v1alpha1
+kind: LLMInferenceService
+metadata:
+  name: my-llm
+  namespace: my-namespace
+spec:
+  router:
+    scheduler:
+      config:
+        ref:
+          name: my-epp-config
+          key: epp
+```
+
+Both forms end up in the same place. The controller resolves `ref` into the inline document during config merge and passes the result to the EPP as `--config-text`. It also applies a few compatibility rewrites on the way through, gated on the EPP image version - deprecated plugin fields are dropped and the older `inference.networking.x-k8s.io/v1alpha1` apiVersion is rewritten to `llm-d.ai/v1alpha1` - so the config the EPP receives is not always byte-for-byte what you wrote.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `config.inline` | object | No | The `EndpointPickerConfig` document, embedded in the service spec. |
+| `config.ref.name` | `string` | Yes (with `ref`) | Name of a ConfigMap holding the document. Looked up in the LLMInferenceService's namespace. |
+| `config.ref.key` | `string` | Yes (with `ref`) | Key within the ConfigMap's `data` that holds the document. |
+
+**Things worth knowing:**
+
+- `inline` and `ref` are mutually exclusive. Setting both, or setting `config` with neither, is rejected by the validating webhook.
+- `ref.key` is required - the field is a standard `ConfigMapKeySelector` and the schema mandates it. Point it at whatever your `data` key is called; get it wrong and reconcile fails with `ConfigMap ... doesn't have key "<key>" in data`.
+- `ref.optional` exists on the selector because `ConfigMapKeySelector` carries it, but the controller ignores it. A ConfigMap that isn't there fails reconciliation either way.
+- The ConfigMap has to live in the same namespace as the LLMInferenceService. The one exception is names prefixed with `config-scheduler-`, which fall back to the KServe namespace when they aren't found locally.
+- Editing the referenced ConfigMap re-triggers reconciliation and rolls the EPP deployment. No need to touch the service.
+
+:::tip
+Prefer `ref` when the same scheduler config is shared across services or managed by a different team - it keeps the EPP document under its own review cycle instead of duplicating it into every LLMInferenceService.
+:::
+
+**Configuration precedence**
+
+If more than one source supplies a config, the first match wins:
+
+1. `scheduler.config` (`inline`, or `ref` after resolution).
+2. A `--config-text` or `--config-file` argument you set on the `main` container in `scheduler.template`.
+3. The config flag already present on the running EPP deployment - preserved so upgrades don't clobber a hand-edited config.
+4. The controller-generated default.
+
+:::warning
+Some plugins currently need `inline` and do not work through `ref`: `predicted-latency-producer` (latency-predictor sidecar injection), and `token-producer` or the legacy `precise-prefix-cache-scorer` (standalone tokenizer deployment). Plugin detection runs before ref resolution, so with `ref` the supporting preset is never merged in - the latency predictor logs a warning event and skips the sidecar, and the tokenizer fails to deploy with no diagnostic at all. Use `inline` when your config names any of them.
+:::
+
 ---
 
 ## Parallelism Specification
