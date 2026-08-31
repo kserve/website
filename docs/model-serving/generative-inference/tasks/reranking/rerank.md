@@ -223,6 +223,6 @@ Once you've successfully deployed your reranker model, consider:
 - **Exploring other inference tasks** such as [text-to-text generation](../text2text-generation/text2text-generation.md) and [embedding](../embedding/embedding.md)
 - **Optimizing performance** with features like [model caching](../../modelcache/localmodel.md) and [KV cache offloading](../../kvcache-offloading/kvcache-offloading.md)
 - **Auto-scaling** your inference services based on traffic patterns using [KServe's auto-scaling capabilities](../../autoscaling/autoscaling.md)
-- **Token based rate limiting** to control usage with [AI Gateway](../../ai-gateway/envoy-ai-gateway.md) for serving models.
+- **Inference gateway policies** with [Envoy AI Gateway or agentgateway](../../ai-gateway/inference-gateways.md) for `LLMInferenceService` workloads.
 
 For more information on KServe's capabilities for generative AI, see the [generative inference overview](../../overview.md).
