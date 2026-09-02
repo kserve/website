@@ -1104,6 +1104,32 @@ The default image version for the ART explainer.
 - **Possible values:** Valid image tag
 - **Default:** `"latest"`
 
+## Controller Metrics Security
+
+KServe controllers expose Prometheus metrics for monitoring the control plane. These endpoints can be protected by either a `kube-rbac-proxy` sidecar or the controllers' native secure metrics server.
+
+The native server is configured with command-line arguments on each controller deployment:
+
+| Argument | Description |
+| --- | --- |
+| `--metrics-secure` | Serve metrics over HTTPS and authenticate and authorize requests using the Kubernetes API. |
+| `--metrics-cert-path` | Directory containing `tls.crt` and `tls.key`. When omitted, the controller generates a self-signed certificate. |
+| `--metrics-addr` | Address and port on which the metrics server listens. |
+
+Native secure metrics are disabled by default for the KServe controller manager, LocalModel controller, and LocalModel node agent. They are enabled by default for the LLMInferenceService controller.
+
+:::warning
+
+Do not enable native secure metrics while retaining the default `kube-rbac-proxy` configuration. The proxy forwards plaintext HTTP to the controller, whereas the native secure metrics endpoint accepts HTTPS. Remove or disable the proxy sidecar and expose the controller's HTTPS metrics port directly. Although the proxy can be explicitly reconfigured with an HTTPS upstream, doing so duplicates authentication and authorization and is not recommended.
+
+:::
+
+Clients scraping a native secure metrics endpoint must:
+
+- Trust the certificate presented by the controller.
+- Present a Kubernetes bearer token.
+- Have `get` permission for the `/metrics` non-resource URL, such as through the KServe metrics reader `ClusterRole`.
+
 ## Metrics Aggregator Configuration
 
 Configures metrics collection and Prometheus scraping.
