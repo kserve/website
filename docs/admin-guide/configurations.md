@@ -43,6 +43,7 @@ data:
         "disableIstioVirtualHost": false,
         "disableIngressCreation": false,
         "disableHTTPRouteTimeout": false,
+        "pathMatchType": "",
         "pathTemplate": "/serving/{{ .Namespace }}/{{ .Name }}"
     }
 ```
@@ -193,6 +194,17 @@ which would otherwise cause HTTPRoutes to be rejected with `Accepted=False/Unsup
 - **Global key:** `disableHTTPRouteTimeout`
 - **Possible values:** `true`, `false`
 - **Default:** `false`
+
+### Path Match Type
+
+Controls the path match type used in HTTPRoute rules when using Gateway API.
+Set to `"PathPrefix"` for Gateway controllers (e.g. GKE Gateway) that do not support `RegularExpression` path matches,
+which would otherwise cause HTTPRoutes to be rejected with `GWCER104: Paths must start with '/' character`.
+When empty or unset, the default `RegularExpression` matching is used.
+
+- **Global key:** `pathMatchType`
+- **Possible values:** `""`, `"PathPrefix"`
+- **Default:** `""`
 
 ### Path Template
 
