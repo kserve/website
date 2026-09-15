@@ -83,6 +83,23 @@ service/redis-service created
 
 :::
 
+### Using Valkey instead of Redis
+
+[Valkey](https://valkey.io/) is an open source (BSD licensed), high-performance key-value datastore and a drop-in alternative to Redis, since Feast's `redis` online store type works against Valkey unmodified. A [`valkey.yaml`](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/valkey.yaml) sample is provided alongside `redis.yaml` in the code samples directory; it deploys `valkey/valkey` as a `valkey-server` Deployment and `valkey-service` Service instead of `redis-server`/`redis-service`.
+
+```bash
+kubectl apply -f valkey.yaml
+```
+
+If you use the Valkey sample, update the `connection_string` in [`feature_store_initializer_entrypoint.sh`](https://github.com/kserve/kserve/blob/master/docs/samples/v1beta1/transformer/feast/feature_store_initializer_entrypoint.sh) to point at `valkey-service.default.svc.cluster.local:6379` before building the feature store initializer image, since the `online_store.connection_string` there is hardcoded to `redis-service`. The `online_store.type` stays `redis` either way, since Feast's Redis client speaks the same protocol Valkey does.
+
+```python
+# Before (Redis):
+connection_string = "redis-service.default.svc.cluster.local:6379"
+# After (Valkey):
+connection_string = "valkey-service.default.svc.cluster.local:6379"
+```
+
 ## Create the Feast server
 
 ### Build Feature Store Initializer docker image

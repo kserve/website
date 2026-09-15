@@ -27,7 +27,7 @@ Support for LMCache with vLLM backend was added in [KServe PR #4320](https://git
 
 ## Example: End-to-End LMCache Integration with KServe and Remote Backends
 
-Below is a step-by-step guide with example Kubernetes YAML manifests to set up LMCache with the Huggingface vLLM backend in KServe. You can use either Redis or an LMCache server as the remote storage backend for the KV cache. This setup enables distributed and persistent KV cache offloading across multiple inference service instances, improving efficiency for multi-turn and high-throughput LLM workloads.
+Below is a step-by-step guide with example Kubernetes YAML manifests to set up LMCache with the Huggingface vLLM backend in KServe. You can use Redis, Valkey, or an LMCache server as the remote storage backend for the KV cache. This setup enables distributed and persistent KV cache offloading across multiple inference service instances, improving efficiency for multi-turn and high-throughput LLM workloads.
 
 ### Create Huggingface Secret (HF_TOKEN)
 If your model requires authentication (e.g., downloading from Huggingface Hub), create a Kubernetes Secret for your Huggingface token. This secret will be mounted as an environment variable in the inference container.
@@ -122,6 +122,85 @@ kubectl get pods -l app=redis
 ```sh
 NAME                     READY   STATUS    RESTARTS   AGE
 redis-ajlfsf             1/1     Running   0          5m
+```
+
+:::
+
+### Using Valkey as Remote Backend
+[Valkey](https://valkey.io/) is an open source (BSD licensed), high-performance key-value datastore and a drop-in alternative to Redis for LMCache's remote backend, since LMCache connects to it over the same wire protocol. The LMCache configuration is identical to the Redis case above, only the `remote_url` host changes.
+
+Use this ConfigMap instead of the Redis ConfigMap above; configure only one remote backend at a time. The `valkey` hostname resolves through Kubernetes same-namespace service discovery, so the Valkey Service must be in the same namespace as the KServe workload. A complete, ready-to-apply [`llmisvc-lmcache-valkey.yaml`](https://github.com/kserve/kserve/blob/master/docs/samples/llmisvc/lmcache-valkey-offloading/llmisvc-lmcache-valkey.yaml) sample combining the ConfigMap, Valkey deployment, and `LLMInferenceService` below is available in the KServe repository.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lmcache-config
+data:
+  lmcache_config.yaml: |
+    local_cpu: true  # Enable local CPU RAM cache for fast access (Recommended)
+    chunk_size: 256  # Size of cache chunks (tune for your model)
+    max_local_cpu_size: 2.0  # Max size (GB) for local CPU cache
+    remote_url: "valkey://valkey:6379"  # Valkey as remote backend
+    remote_serde: "naive"  # Serialization method for remote cache. Supported values: "naive", "cachegen"
+```
+Apply the ConfigMap:
+```sh
+kubectl apply -f lmcache_config.yaml
+```
+
+#### Deploy Valkey Backend
+Valkey is used as the remote, persistent backend for LMCache. The following manifest deploys a single Valkey instance and exposes it as a Kubernetes service.
+
+```yaml title="valkey_deployment.yaml"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valkey
+  labels:
+    app: valkey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: valkey
+  template:
+    metadata:
+      labels:
+        app: valkey
+    spec:
+      containers:
+        - name: valkey
+          image: valkey/valkey:9.1.0  # Keep the image tag pinned in production
+          ports:
+            - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey
+spec:
+  selector:
+    app: valkey
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+```
+Apply the Valkey deployment and service:
+```sh
+kubectl apply -f valkey_deployment.yaml
+```
+
+Wait for the Valkey pod to be ready:
+```sh
+kubectl get pods -l app=valkey
+```
+:::tip[Expected Output]
+
+```sh
+NAME                     READY   STATUS    RESTARTS   AGE
+valkey-ajlfsf            1/1     Running   0          5m
 ```
 
 :::
@@ -227,6 +306,7 @@ spec:
         # Uncomment the following lines and comment the above env variable to provide configuration via env variables instead of ConfigMap.
         # - name: LMCACHE_REMOTE_URL
         #   value: redis://redis.default.svc.cluster.local:6379
+        #   # or, if using Valkey: valkey://valkey.default.svc.cluster.local:6379
         # - name: LMCACHE_REMOTE_SERDE
         #   value: naive
         # - name: LMCACHE_LOCAL_CPU
@@ -365,13 +445,13 @@ kubectl logs -f <pod-name> -c kserve-container
 :::
 
 ### Other Supported Storage Backends
-LMCache supports additional remote storage backends such as MoonCake, InfiniStore, ValKey, Redis Sentinel, and more. For details and configuration examples, refer to the [official documentation](https://docs.lmcache.ai/api_reference/configurations.html) and the following links:
+LMCache supports additional remote storage backends such as MoonCake, InfiniStore, Valkey, Redis Sentinel, and more. For details and configuration examples, refer to the [official documentation](https://docs.lmcache.ai/api_reference/configurations.html) and the following links:
 
 - [Redis](https://docs.lmcache.ai/kv_cache/redis.html)
 - [Redis Sentinel](https://docs.lmcache.ai/kv_cache/redis.html#redis-sentinel)
 - [InfiniStore](https://docs.lmcache.ai/kv_cache/infinistore.html)
 - [MoonCake](https://docs.lmcache.ai/kv_cache/mooncake.html)
-- [ValKey](https://docs.lmcache.ai/kv_cache/valkey.html)
+- [Valkey](https://docs.lmcache.ai/kv_cache/storage_backends/valkey.html)
 
 ## Troubleshooting & Tips
 - See the [LMCache Troubleshoot Guide](https://docs.lmcache.ai/getting_started/troubleshoot.html) and [FAQ](https://docs.lmcache.ai/getting_started/faq.html)
