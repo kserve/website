@@ -131,6 +131,34 @@ class ImageTransformer(kserve.Model):
 
 You can find the complete code example [here](https://github.com/kserve/kserve/tree/release-<ActiveDocsVersion />/python/custom_transformer).
 
+### Forwarding caller headers
+
+Starting with KServe Python SDK v0.20, the built-in `Model.predict()` forwards these incoming headers to the predictor:
+
+| Header | Purpose |
+|--------|---------|
+| `authorization` | Caller credentials for downstream authentication |
+| `x-request-id` | Request tracing |
+| `x-b3-traceid` | Distributed tracing |
+
+HTTP predictions send them as request headers, while gRPC predictions send them as metadata.
+
+If your transformer overrides only `preprocess()` and `postprocess()`, forwarding is automatic. If you override `predict()`, accept the `headers` argument and pass it through when calling the base implementation. A custom HTTP or gRPC call must forward the headers itself; otherwise an auth-enabled downstream service may reject the request.
+
+For custom calls, `kserve.model.append_forwardable_headers()` applies the SDK's `_FORWARDABLE_HEADERS` allowlist. It starts with a copy of any supplied base headers, adds the allowed incoming headers, and skips missing headers. It does not forward incoming `host`, `cookie`, or other headers outside the allowlist. Use lowercase keys when supplying a plain headers dictionary.
+
+Inside a custom `predict()` implementation, build HTTP headers from its `headers` argument:
+
+```python
+from kserve.model import append_forwardable_headers
+
+predictor_headers: dict[str, str] = append_forwardable_headers(
+    headers=headers, base={"Content-Type": "application/json"}
+)
+```
+
+Pass `predictor_headers` to your HTTP client's request. Use the same helper for custom HTTP explanation calls. For a custom gRPC call, append `tuple(append_forwardable_headers(headers=headers).items())` to any metadata the call already requires.
+
 ### Transformer Server Entrypoint
 
 For a single model, create a transformer object and register it to the model server:
