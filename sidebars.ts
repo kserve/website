@@ -341,6 +341,7 @@ const sidebars: SidebarsConfig = {
             'model-serving/storage/overview',
             'model-serving/storage/multiple-storage-uris',
             'model-serving/storage/storage-containers/storage-containers',
+            'model-serving/storage/storage-initializer-volume',
             {
               type: 'category',
               label: 'Supported Providers',
