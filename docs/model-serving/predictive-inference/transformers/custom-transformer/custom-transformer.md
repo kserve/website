@@ -472,6 +472,114 @@ spec:
       - containerPort: 8443
 ```
 
+## Client-Side TLS (Transformer to Predictor)
+
+When the predictor serves HTTPS, the transformer must call it over TLS. Enable this with the `--predictor_use_ssl` argument so the transformer issues HTTPS requests to the predictor.
+
+To verify the predictor's certificate — for example when the predictor uses a self-signed or private CA — provide a CA bundle to the transformer container through one of the following environment variables:
+
+| Environment Variable | Purpose |
+|----------------------|---------|
+| `REQUESTS_CA_BUNDLE` | Path to a PEM CA bundle used to verify the predictor's certificate |
+| `CURL_CA_BUNDLE` | Fallback CA bundle path, used only when `REQUESTS_CA_BUNDLE` is not set |
+
+The transformer's HTTP client (`httpx`) reads these variables and uses the referenced bundle to verify the predictor's TLS certificate. If neither variable is set, the default system trust store is used.
+
+:::note
+
+`httpx` does not honor `REQUESTS_CA_BUNDLE` / `CURL_CA_BUNDLE` automatically, so KServe reads them explicitly. Point the variable at the mounted CA certificate:
+
+:::
+
+```yaml
+    containers:
+    - image: kserve/image-transformer:latest
+      name: transformer-container
+      args:
+        - --predictor_use_ssl
+      env:
+        - name: REQUESTS_CA_BUNDLE
+          value: /etc/tls/predictor-ca/ca.crt
+      volumeMounts:
+        - name: predictor-ca
+          mountPath: /etc/tls/predictor-ca
+          readOnly: true
+    volumes:
+      - name: predictor-ca
+        secret:
+          secretName: predictor-ca-bundle
+```
+
+## Credential Forwarding to the Predictor
+
+When the predictor is protected by an auth proxy (for example `kube-rbac-proxy`), the transformer must forward the caller's credentials (the `Authorization` header) to the predictor so the proxy can validate the original caller's identity. The **predictor authorizes the end user**, not the transformer's service account — the transformer is a pass-through for credentials.
+
+### SDK-based transformers (automatic)
+
+If your transformer extends `kserve.Model` and relies on the built-in `predict()` method (i.e. you override `preprocess` and/or `postprocess` but not `predict`), the KServe SDK **automatically forwards** the following headers from the incoming request to the predictor:
+
+| Header | Purpose |
+|--------|---------|
+| `Authorization` | Caller credentials for predictor auth |
+| `x-request-id` | Request tracing |
+| `x-b3-traceid` | Distributed tracing (B3/Zipkin) |
+
+No additional configuration is required:
+
+```python
+from kserve import Model, InferRequest, InferResponse
+
+class MyTransformer(Model):
+    def __init__(self, name: str):
+        super().__init__(name)
+        self.ready = True
+
+    def preprocess(self, payload: InferRequest, headers=None) -> InferRequest:
+        # Authorization header is forwarded automatically when the SDK
+        # calls predict() on the predictor.
+        return payload
+
+    def postprocess(self, result: InferResponse, headers=None) -> InferResponse:
+        return result
+```
+
+### Custom transformers (manual forwarding)
+
+If your transformer **overrides `predict()`** or makes its own HTTP calls to the predictor, you are responsible for forwarding the `Authorization` header yourself: accept the `headers` parameter, extract the header, and include it in the request to the predictor.
+
+```python
+import httpx
+from kserve import Model
+
+class MyCustomTransformer(Model):
+    def __init__(self, name: str):
+        super().__init__(name)
+        self.ready = True
+
+    async def predict(self, payload, headers=None, response_headers=None):
+        predict_headers = {"Content-Type": "application/json"}
+
+        # Forward the Authorization header for auth-enabled predictors.
+        if headers and "authorization" in headers:
+            predict_headers["authorization"] = headers["authorization"]
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"http://{self.predictor_host}/v1/models/{self.name}:predict",
+                json=payload,
+                headers=predict_headers,
+            )
+            return response.json()
+```
+
+At minimum, forward the `Authorization` header. For full observability compatibility, also forward `x-request-id` and `x-b3-traceid`.
+
+:::note
+
+Do **not** forward the incoming `Host` header — it contains the transformer's hostname, not the predictor's. When auth is enabled, the predictor's `kube-rbac-proxy` validates the bearer token in the `Authorization` header against Kubernetes RBAC.
+
+:::
+
 ## Transformer-Specific Command Line Arguments
 
 - `--predictor_protocol`: The protocol used to communicate with the predictor. The available values are "v1", "v2" and "grpc-v2". The default value is "v1".
