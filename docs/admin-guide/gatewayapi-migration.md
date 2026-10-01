@@ -291,3 +291,117 @@ curl -v \
 }
 ```
 :::
+
+## 7. Serve REST and gRPC on the Same Host
+
+In Standard mode with Gateway API enabled, an InferenceService can serve both REST and gRPC traffic behind the same hostname. When the backing Service of a component exposes both a REST port and a gRPC port, KServe generates an HTTPRoute that sends gRPC requests to the gRPC port and all other requests to the REST port. This applies to the predictor, transformer, and explainer routes.
+
+### How Ports Are Detected
+
+KServe creates the component Service from the container `ports`. The first port is exposed on Service port `80`, and any additional ports keep their container port number. A port whose name contains `grpc` or `h2c` is given `appProtocol: kubernetes.io/h2c`.
+
+When reconciling the HTTPRoute, KServe inspects the Service ports:
+
+- A port is treated as **gRPC** if its `appProtocol` is `kubernetes.io/h2c`, or if its name contains `grpc` or `h2c` (case-insensitive).
+- Any other port is treated as **REST**.
+- If more than one port matches a type, the first one is used.
+
+If the Service has both a REST and a gRPC port, the HTTPRoute contains two rules, in this order:
+
+1. **gRPC rule**: matches requests whose path matches `^/inference\.GRPCInferenceService/.*$` **and** whose `content-type` header matches `^application/grpc.*`. These requests go to the gRPC port.
+2. **REST rule**: matches all other requests (`^/.*$`) and sends them to the REST port.
+
+If only one type of port is found, KServe generates a single rule that sends all traffic to Service port `80`, as in previous releases.
+
+### Why a Single HTTPRoute
+
+Gateway API also provides a `GRPCRoute` resource, but an implementation may reject a `GRPCRoute` and an `HTTPRoute` that are attached to the same listener with overlapping hostnames. See [Cross Serving](https://gateway-api.sigs.k8s.io/reference/api-types/grpcroute/#cross-serving) in the Gateway API documentation. To serve both protocols on one hostname portably, KServe uses a single `HTTPRoute` and distinguishes gRPC requests by path and header.
+
+### Example
+
+Expose both the REST port (`8080`) and the gRPC port (`8081`) of the model server:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: "serving.kserve.io/v1beta1"
+kind: "InferenceService"
+metadata:
+  name: "sklearn-iris-dual"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+      protocolVersion: v2
+      runtime: kserve-sklearnserver
+      storageUri: "gs://kfserving-examples/models/sklearn/1.0/model"
+      ports:
+        - name: http
+          protocol: TCP
+          containerPort: 8080
+        - name: grpc-port
+          protocol: TCP
+          containerPort: 8081
+EOF
+```
+
+Check the ports of the predictor Service:
+
+```bash
+kubectl get svc sklearn-iris-dual-predictor -o jsonpath='{range .spec.ports[*]}{.name} {.port} {.appProtocol}{"\n"}{end}'
+```
+
+:::tip[Expected Output]
+```
+http 80
+grpc-port 8081 kubernetes.io/h2c
+```
+:::
+
+The generated HTTPRoute contains a gRPC rule followed by a REST rule (abridged):
+
+```bash
+kubectl get httproute sklearn-iris-dual -o yaml
+```
+
+```yaml
+spec:
+  rules:
+    - matches:
+        - path:
+            type: RegularExpression
+            value: ^/inference\.GRPCInferenceService/.*$
+          headers:
+            - type: RegularExpression
+              name: content-type
+              value: ^application/grpc.*
+      backendRefs:
+        - name: sklearn-iris-dual-predictor
+          port: 8081
+    - matches:
+        - path:
+            type: RegularExpression
+            value: ^/.*$
+      backendRefs:
+        - name: sklearn-iris-dual-predictor
+          port: 80
+```
+
+Using the `INGRESS_HOST` and `INGRESS_PORT` values from the previous section, send a REST request and a gRPC request to the same hostname:
+
+```bash
+SERVICE_HOSTNAME=$(kubectl get inferenceservice sklearn-iris-dual -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
+# REST
+curl -H "Host: ${SERVICE_HOSTNAME}" http://${INGRESS_HOST}:${INGRESS_PORT}/v2/health/ready
+
+# gRPC
+curl -O https://raw.githubusercontent.com/kserve/open-inference-protocol/main/specification/protocol/open_inference_grpc.proto
+grpcurl -plaintext -proto open_inference_grpc.proto -authority ${SERVICE_HOSTNAME} \
+  ${INGRESS_HOST}:${INGRESS_PORT} inference.GRPCInferenceService.ServerReady
+```
+
+### Limitations
+
+- Dual-protocol routing applies to Standard mode with Gateway API. It does not apply to Kubernetes Ingress or Knative (Serverless) mode.
+- Only gRPC calls to the Open Inference Protocol service (`inference.GRPCInferenceService`) are routed to the gRPC port. Other gRPC services match the REST rule.
