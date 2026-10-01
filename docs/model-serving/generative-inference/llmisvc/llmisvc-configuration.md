@@ -312,6 +312,57 @@ spec:
 
 ---
 
+### Labels and Annotations
+
+`spec.labels` and `spec.annotations` add metadata to the resources KServe generates for the workload:
+
+| Resource | Receives `spec.labels` / `spec.annotations` |
+|----------|---------------------------------------------|
+| Workload Service (`<name>-kserve-workload-svc`) | Yes |
+| Deployment pod template (single-node) | Yes |
+| LeaderWorkerSet leader and worker pod templates (multi-node) | Yes |
+
+Propagating to the workload Service lets tools that discover endpoints by Service labels, such as Prometheus `ServiceMonitor` selectors, network policies, or custom operators, find the service without knowing its generated name.
+
+```yaml
+apiVersion: serving.kserve.io/v1alpha2
+kind: LLMInferenceService
+metadata:
+  name: my-llm
+spec:
+  labels:
+    team: ml-platform
+    monitoring: enabled
+  annotations:
+    example.com/owner: ml-platform
+  # ... model, template, router
+```
+
+The labels appear on the workload Service alongside the labels KServe manages:
+
+```bash
+kubectl get svc -l monitoring=enabled
+```
+
+:::tip[Expected Output]
+
+```
+NAME                          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+my-llm-kserve-workload-svc    ClusterIP   10.96.120.15   <none>        8000/TCP   5m
+```
+
+:::
+
+:::note
+- These fields are different from `metadata.labels` and `metadata.annotations` on the `LLMInferenceService` itself, which are not copied to the workload Service.
+- The Service selector is not affected; it always uses the labels KServe manages.
+- `spec.prefill.labels` and `spec.prefill.annotations` apply to the prefill pods only. The workload Service uses the top-level `spec.labels` and `spec.annotations`.
+- KServe routing annotations (`serving.kserve.io/model-based-routing-enabled`, `serving.kserve.io/model-based-routing-only`, and `serving.kserve.io/lora-model-routing-strategy`) are read by the controller and are not copied to the Service or pods.
+- Avoid setting the `app.kubernetes.io/name`, `app.kubernetes.io/part-of`, or `app.kubernetes.io/component` keys in `spec.labels`, because they would override the values KServe sets on the Service.
+:::
+
+---
+
 ## Router Specification
 
 The router configuration defines how the service is exposed and how traffic is routed.
