@@ -128,8 +128,8 @@ cd kserve
 ./hack/setup/quick-install/kserve-knative-mode-full-install-helm.sh
 
 # Or use with-manifest version (no clone needed, includes embedded manifests)
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-full-install-with-manifests.sh
-| bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-full-install-with-manifests.sh \
+  | bash
 ```
 
 **Standard Mode**:
@@ -141,8 +141,8 @@ cd kserve
 ./hack/setup/quick-install/kserve-standard-mode-full-install-helm.sh
 
 # Or use with-manifest version (no clone needed, includes embedded manifests)
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-standard-mode-full-install-with-manifests.sh
-| bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-standard-mode-full-install-with-manifests.sh \
+  | bash
 ```
 
 ## Configuration Helm Options
@@ -178,8 +178,8 @@ kubectl delete -k config/overlays/standalone/kserve
 ./hack/setup/quick-install/kserve-knative-mode-full-install-helm.sh --uninstall
 
 # Uninstall everything(dependencies + KServe) using kustomize quick install script
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-full-install-with-manifests.sh
-| bash -s -- --uninstall
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-full-install-with-manifests.sh \
+  | bash -s -- --uninstall
 
 # Uninstall KServe by individual script
 UNINSTALL=true ./hack/setup/infra/manage.kserve-helm.sh
