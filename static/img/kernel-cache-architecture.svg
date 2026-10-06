@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1430" viewBox="0 0 2200 1430" role="img" aria-labelledby="title desc">
+<title id="title">KServe Kernel Cache architecture</title><desc id="desc">Kubernetes API resources coordinate capture, OCI artifact preparation, and reuse. An MCV sidecar in the producer Pod pushes an OCI image and reports results to KernelCacheCapture. Controllers create KernelCache. A prefetch Job makes the image available on each matching node. The DaemonSet agent updates KernelCacheNode status, and admission mounts compatible caches into new serving Pods.</desc>
+<defs><filter id="shadow" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#24416A" flood-opacity=".06"/></filter>
+<marker id="blue" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#326CE5"/></marker>
+<marker id="teal" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#07897F"/></marker>
+<marker id="purple" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#8A57C5"/></marker>
+<marker id="gray" viewBox="0 0 12 12" refX="10.5" refY="6" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L11 6 L1 11 Z" fill="#64748B"/></marker>
+</defs><g font-family="Nimbus Sans, DejaVu Sans, sans-serif">
+<rect x="0" y="0" width="2200" height="1430" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1.5" />
+<polygon points="125.18,95.00 94.00,113.00 62.82,95.00 62.82,59.00 94.00,41.00 125.18,59.00" fill="#326CE5"/>
+<path d="M94 65 l12 6.0 v13.200000000000001 l-12 6.0 l-12 -6.0 v-13.200000000000001 Z M82 71.0 l12 6.0 l12 -6.0 M94 77 v13.200000000000001" fill="none" stroke="white" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="153" y="76" font-size="48" font-weight="700" fill="#192D46" text-anchor="start" >KServe Kernel Cache</text>
+<text x="154" y="113" font-size="25" font-weight="400" fill="#64748B" text-anchor="start" >Kubernetes resources, runtime Pods, and OCI artifacts</text>
+<path d="M1260 88 h52" fill="none" stroke="#326CE5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="1330" y="95" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Coordination</text>
+<path d="M1570 88 h52" fill="none" stroke="#8A57C5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#purple)"/>
+<text x="1640" y="95" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Status</text>
+<path d="M1810 88 h52" fill="none" stroke="#07897F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<text x="1880" y="95" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Artifact / cache</text>
+<rect x="60" y="186" width="1830" height="1118" rx="23" fill="#FAFCFF" stroke="#B6CBE8" stroke-width="2" />
+<rect x="85" y="172" width="230" height="28" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1.5" />
+<text x="97" y="194" font-size="19" font-weight="700" fill="#326CE5" text-anchor="start" letter-spacing="1.4">KUBERNETES CLUSTER</text>
+<text x="105" y="239" font-size="17" font-weight="700" fill="#64748B" text-anchor="start" letter-spacing="1.8">CONFIGURATION</text>
+<text x="770" y="239" font-size="17" font-weight="700" fill="#64748B" text-anchor="start" letter-spacing="1.8">KSERVE MANAGEMENT</text>
+<rect x="740" y="280" width="1096" height="174" rx="17" fill="#EDF4FF" stroke="#DCE7F7" stroke-width="1" />
+<rect x="105" y="291" width="515" height="85" rx="14" fill="#ffffff" stroke="#C7D8ED" stroke-width="1.7" filter="url(#shadow)"/>
+<polygon points="165.65,344.50 144.00,357.00 122.35,344.50 122.35,319.50 144.00,307.00 165.65,319.50" fill="#326CE5"/>
+<text x="144" y="337" font-size="15" font-weight="700" fill="white" text-anchor="middle" >cm</text>
+<text x="183" y="332" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >InferenceService ConfigMap</text>
+<text x="183" y="363" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >Kernel Cache configuration</text>
+<rect x="105" y="394" width="515" height="85" rx="14" fill="#ffffff" stroke="#C7D8ED" stroke-width="1.7" filter="url(#shadow)"/>
+<polygon points="165.65,447.50 144.00,460.00 122.35,447.50 122.35,422.50 144.00,410.00 165.65,422.50" fill="#326CE5"/>
+<text x="144" y="440" font-size="15" font-weight="700" fill="white" text-anchor="middle" >cr</text>
+<text x="183" y="435" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >KernelCacheNodeGroup</text>
+<text x="183" y="466" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >GPU node labels → nodeSelector</text>
+<polygon points="825.65,338.50 804.00,351.00 782.35,338.50 782.35,313.50 804.00,301.00 825.65,313.50" fill="#326CE5"/>
+<text x="804" y="331" font-size="15" font-weight="700" fill="white" text-anchor="middle" >ctrl</text>
+<text x="845" y="322" font-size="27" font-weight="700" fill="#192D46" text-anchor="start" >LocalModel controller</text>
+<text x="845" y="355" font-size="21" font-weight="600" fill="#64748B" text-anchor="start" >Kernel Cache reconcilers</text>
+<text x="779" y="389" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Capture lifecycle · node preparation</text>
+<text x="779" y="423" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Configure Agent DaemonSet · create KCNs</text>
+<path d="M1250 303 V430" stroke="#CFDDEF" stroke-width="1.5"/>
+<polygon points="1331.65,338.50 1310.00,351.00 1288.35,338.50 1288.35,313.50 1310.00,301.00 1331.65,313.50" fill="#326CE5"/>
+<text x="1310" y="331" font-size="15" font-weight="700" fill="white" text-anchor="middle" >adm</text>
+<text x="1352" y="330" font-size="27" font-weight="700" fill="#192D46" text-anchor="start" >Admission webhook</text>
+<text x="1292" y="374" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Inject MCV into capture Pods</text>
+<text x="1292" y="408" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Mount compatible caches into new Pods</text>
+<path d="M620 333 H740" fill="none" stroke="#326CE5" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<path d="M620 436 H699 V409 H740" fill="none" stroke="#326CE5" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="680" y="314" font-size="17" font-weight="500" fill="#326CE5" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">settings</text>
+<text x="679" y="473" font-size="17" font-weight="500" fill="#326CE5" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">selector</text>
+<text x="105" y="527" font-size="17" font-weight="700" fill="#64748B" text-anchor="start" letter-spacing="1.8">CUSTOM RESOURCES</text>
+<rect x="160" y="558" width="430" height="108" rx="14" fill="#ffffff" stroke="#C7D8ED" stroke-width="1.7" filter="url(#shadow)"/>
+<polygon points="220.65,611.50 199.00,624.00 177.35,611.50 177.35,586.50 199.00,574.00 220.65,586.50" fill="#326CE5"/>
+<text x="199" y="604" font-size="15" font-weight="700" fill="white" text-anchor="middle" >cr</text>
+<text x="238" y="599" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >KernelCacheCapture</text>
+<text x="238" y="630" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >Runtime result · capture phase</text>
+<rect x="755" y="558" width="415" height="108" rx="14" fill="#ffffff" stroke="#C7D8ED" stroke-width="1.7" filter="url(#shadow)"/>
+<polygon points="815.65,611.50 794.00,624.00 772.35,611.50 772.35,586.50 794.00,574.00 815.65,586.50" fill="#326CE5"/>
+<text x="794" y="604" font-size="15" font-weight="700" fill="white" text-anchor="middle" >cr</text>
+<text x="833" y="599" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >KernelCache</text>
+<text x="833" y="630" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >OCI digest · identity · paths</text>
+<rect x="1390" y="558" width="430" height="108" rx="14" fill="#ffffff" stroke="#C7D8ED" stroke-width="1.7" filter="url(#shadow)"/>
+<polygon points="1450.65,611.50 1429.00,624.00 1407.35,611.50 1407.35,586.50 1429.00,574.00 1450.65,586.50" fill="#326CE5"/>
+<text x="1429" y="604" font-size="15" font-weight="700" fill="white" text-anchor="middle" >cr</text>
+<text x="1468" y="599" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >KernelCacheNode</text>
+<text x="1468" y="630" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >Node-local cache status</text>
+<path d="M385 558 V512 H803 V454" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="548" y="503" font-size="18" font-weight="500" fill="#326CE5" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">Complete</text>
+<path d="M944 454 V558" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="990" y="507" font-size="18" font-weight="500" fill="#326CE5" text-anchor="start" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">creates</text>
+<path d="M1100 558 V504 H1350 V454" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="1203" y="494" font-size="18" font-weight="500" fill="#326CE5" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">identity + paths</text>
+<path d="M1630 558 V454" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="1650" y="507" font-size="18" font-weight="500" fill="#326CE5" text-anchor="start" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">ready state</text>
+<rect x="1095" y="696" width="535" height="80" rx="12" fill="#FFFFFF" stroke="#C7D8ED" stroke-width="1.7" />
+<polygon points="1150.78,741.00 1130.00,753.00 1109.22,741.00 1109.22,717.00 1130.00,705.00 1150.78,717.00" fill="#326CE5"/>
+<text x="1130" y="734" font-size="15" font-weight="700" fill="white" text-anchor="middle" >ds</text>
+<text x="1168" y="723" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >kserve-kernelcachenode-agent</text>
+<text x="1168" y="754" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >nodeAffinity from KCNG nodeSelector</text>
+<rect x="100" y="814" width="540" height="368" rx="17" fill="#F3F6FB" stroke="#CBD8E8" stroke-width="1.7" />
+<rect x="124" y="829" width="32" height="27" rx="4" fill="none" stroke="#326CE5" stroke-width="2" />
+<rect x="124" y="861" width="32" height="14" rx="3" fill="none" stroke="#326CE5" stroke-width="2" />
+<circle cx="131" cy="838" r="2" fill="#326CE5"/>
+<circle cx="131" cy="849" r="2" fill="#326CE5"/>
+<circle cx="131" cy="868" r="2" fill="#326CE5"/>
+<path d="M139 838 h10 M139 849 h10 M139 868 h10" stroke="#326CE5" stroke-width="2"/>
+<text x="172" y="857" font-size="25" font-weight="700" fill="#192D46" text-anchor="start" >Producer GPU node</text>
+<rect x="757" y="802" width="1091" height="366" rx="17" fill="#ECF2F9" stroke="#D6E0EC" stroke-width="1.2" />
+<rect x="742" y="811" width="1091" height="371" rx="17" fill="#EFF4FA" stroke="#D0DCEB" stroke-width="1.2" />
+<rect x="725" y="822" width="1095" height="360" rx="17" fill="#F1F6FC" stroke="#B9CDE7" stroke-width="1.8" />
+<rect x="751" y="838" width="32" height="27" rx="4" fill="none" stroke="#326CE5" stroke-width="2" />
+<rect x="751" y="870" width="32" height="14" rx="3" fill="none" stroke="#326CE5" stroke-width="2" />
+<circle cx="758" cy="847" r="2" fill="#326CE5"/>
+<circle cx="758" cy="858" r="2" fill="#326CE5"/>
+<circle cx="758" cy="877" r="2" fill="#326CE5"/>
+<path d="M766 847 h10 M766 858 h10 M766 877 h10" stroke="#326CE5" stroke-width="2"/>
+<text x="799" y="861" font-size="25" font-weight="700" fill="#192D46" text-anchor="start" >Matching GPU node</text>
+<rect x="1490" y="839" width="306" height="33" rx="16" fill="#E7EFFD" stroke="none" stroke-width="1.5" />
+<text x="1643" y="862" font-size="19" font-weight="500" fill="#326CE5" text-anchor="middle" >labels match KCNG selector</text>
+<rect x="124" y="890" width="492" height="268" rx="14" fill="#FFFFFF" stroke="#AFC8E5" stroke-width="1.7" />
+<polygon points="170.32,926.00 153.00,936.00 135.68,926.00 135.68,906.00 153.00,896.00 170.32,906.00" fill="#326CE5"/>
+<path d="M153 904 l12 6.0 v13.200000000000001 l-12 6.0 l-12 -6.0 v-13.200000000000001 Z M141 910.0 l12 6.0 l12 -6.0 M153 916 v13.200000000000001" fill="none" stroke="white" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="185" y="922" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >Producer serving Pod</text>
+<text x="148" y="952" font-size="18" font-weight="400" fill="#64748B" text-anchor="start" >Webhook injects the MCV sidecar</text>
+<rect x="146" y="974" width="199" height="99" rx="10" fill="#EFF5FF" stroke="#D0DEF1" stroke-width="1.2" />
+<path d="M172 996 l13 6.5 v14.3 l-13 6.5 l-13 -6.5 v-14.3 Z M159 1002.5 l13 6.5 l13 -6.5 M172 1009 v14.3" fill="none" stroke="#326CE5" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="197" y="1017" font-size="21" font-weight="700" fill="#192D46" text-anchor="start" >vLLM runtime</text>
+<text x="167" y="1050" font-size="18" font-weight="400" fill="#64748B" text-anchor="start" >Generates cache</text>
+<rect x="391" y="974" width="203" height="99" rx="10" fill="#EAF7F4" stroke="#B9DDD7" stroke-width="1.2" />
+<path d="M417 996 l13 6.5 v14.3 l-13 6.5 l-13 -6.5 v-14.3 Z M404 1002.5 l13 6.5 l13 -6.5 M417 1009 v14.3" fill="none" stroke="#07897F" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="441" y="1017" font-size="21" font-weight="700" fill="#192D46" text-anchor="start" >MCV sidecar</text>
+<text x="413" y="1050" font-size="18" font-weight="400" fill="#64748B" text-anchor="start" >Captures output</text>
+<rect x="146" y="1115" width="448" height="28" rx="6" fill="#F4F7FA" stroke="#D8E2EC" stroke-width="1" />
+<text x="370" y="1135" font-size="18" font-weight="400" fill="#64748B" text-anchor="middle" >Shared runtime cache directory</text>
+<path d="M246 1073 V1115" fill="none" stroke="#07897F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<path d="M493 1115 V1073" fill="none" stroke="#07897F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<rect x="773" y="918" width="295" height="132" rx="15" fill="#ffffff" stroke="#B8CCE4" stroke-width="1.8" filter="url(#shadow)"/>
+<polygon points="829.92,968.50 810.00,980.00 790.08,968.50 790.08,945.50 810.00,934.00 829.92,945.50" fill="#326CE5"/>
+<path d="M810 945 l12 6.0 v13.200000000000001 l-12 6.0 l-12 -6.0 v-13.200000000000001 Z M798 951.0 l12 6.0 l12 -6.0 M810 957 v13.200000000000001" fill="none" stroke="white" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="845" y="963" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >OCI prefetch Job</text>
+<text x="795" y="1003" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >Pod · OCI image volume</text>
+<text x="795" y="1028" font-size="18" font-weight="400" fill="#64748B" text-anchor="start" >Prepares the node cache</text>
+<rect x="1125" y="918" width="285" height="132" rx="15" fill="#ffffff" stroke="#B8CCE4" stroke-width="1.8" filter="url(#shadow)"/>
+<polygon points="1181.92,968.50 1162.00,980.00 1142.08,968.50 1142.08,945.50 1162.00,934.00 1181.92,945.50" fill="#326CE5"/>
+<path d="M1162 945 l12 6.0 v13.200000000000001 l-12 6.0 l-12 -6.0 v-13.200000000000001 Z M1150 951.0 l12 6.0 l12 -6.0 M1162 957 v13.200000000000001" fill="none" stroke="white" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="1197" y="963" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >Agent Pod</text>
+<text x="1147" y="1003" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >Validates cached images</text>
+<text x="1147" y="1028" font-size="18" font-weight="400" fill="#64748B" text-anchor="start" >Reports node availability</text>
+<rect x="1466" y="918" width="325" height="132" rx="15" fill="#ffffff" stroke="#B8CCE4" stroke-width="1.8" filter="url(#shadow)"/>
+<polygon points="1522.92,968.50 1503.00,980.00 1483.08,968.50 1483.08,945.50 1503.00,934.00 1522.92,945.50" fill="#326CE5"/>
+<path d="M1503 945 l12 6.0 v13.200000000000001 l-12 6.0 l-12 -6.0 v-13.200000000000001 Z M1491 951.0 l12 6.0 l12 -6.0 M1503 957 v13.200000000000001" fill="none" stroke="white" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="1538" y="963" font-size="23" font-weight="700" fill="#192D46" text-anchor="start" >New serving Pod</text>
+<text x="1488" y="1003" font-size="19" font-weight="400" fill="#64748B" text-anchor="start" >Compatible cache mounted</text>
+<text x="1488" y="1028" font-size="18" font-weight="400" fill="#64748B" text-anchor="start" >Configured by the webhook</text>
+<rect x="773" y="1120" width="1018" height="40" rx="9" fill="#EAF6F3" stroke="#B5DAD4" stroke-width="1.4" />
+<path d="M794 1130 h16 l5 6 v13 h-21 Z" fill="none" stroke="#07897F" stroke-width="1.8"/>
+<text x="1282" y="1147" font-size="20" font-weight="500" fill="#07897F" text-anchor="middle" >NODE-LOCAL OCI CACHE   ·   artifact available for compatible Pods</text>
+<path d="M919 1050 V1120" fill="none" stroke="#07897F" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<text x="948" y="1091" font-size="18" font-weight="500" fill="#07897F" text-anchor="start" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">prepares</text>
+<path d="M1269 1120 V1050" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="1292" y="1091" font-size="18" font-weight="500" fill="#326CE5" text-anchor="start" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">observes</text>
+<path d="M1628 1120 V1050" fill="none" stroke="#07897F" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<text x="1653" y="1091" font-size="18" font-weight="500" fill="#07897F" text-anchor="start" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">mount</text>
+<path d="M494 974 V666" fill="none" stroke="#8A57C5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#purple)"/>
+<text x="514" y="732" font-size="19" font-weight="500" fill="#8A57C5" text-anchor="start" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">reports runtime result</text>
+<path d="M1080 666 V895 H1025 V918" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="1060" y="732" font-size="19" font-weight="500" fill="#326CE5" text-anchor="end" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">Controllers create</text>
+<text x="1060" y="758" font-size="19" font-weight="500" fill="#326CE5" text-anchor="end" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">a per-node Job</text>
+<path d="M1268 776 V918" fill="none" stroke="#326CE5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 7" marker-end="url(#blue)"/>
+<text x="1250" y="808" font-size="18" font-weight="500" fill="#326CE5" text-anchor="end" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">runs on each node</text>
+<path d="M1384 918 V797 H1850 V611 H1820" fill="none" stroke="#8A57C5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#purple)"/>
+<text x="1650" y="818" font-size="19" font-weight="500" fill="#8A57C5" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">updates KCN status</text>
+<text x="1960" y="895" font-size="19" font-weight="700" fill="#64748B" text-anchor="start" letter-spacing="1.4">OCI REGISTRY</text>
+<path d="M1956 947 C1956 916 2170 916 2170 947 V1064 C2170 1095 1956 1095 1956 1064 Z" fill="#E8F6F3" stroke="#54A99F" stroke-width="2.2"/>
+<ellipse cx="2063" cy="947" rx="107" ry="27" fill="#F1FBF8" stroke="#54A99F" stroke-width="2.2"/>
+<path d="M2063 978 l19 9.5 v20.900000000000002 l-19 9.5 l-19 -9.5 v-20.900000000000002 Z M2044 987.5 l19 9.5 l19 -9.5 M2063 997 v20.900000000000002" fill="none" stroke="#07897F" stroke-width="2.2" stroke-linejoin="round"/>
+<text x="2063" y="1047" font-size="22" font-weight="700" fill="#07897F" text-anchor="middle" >OCI cache image</text>
+<path d="M594 1030 H673 V1220 H1920 V998 H1956" fill="none" stroke="#07897F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<text x="1160" y="1209" font-size="21" font-weight="500" fill="#07897F" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">Push captured OCI image</text>
+<path d="M703 1233 C722 1233 722 1207 703 1207" fill="none" stroke="#FAFCFF" stroke-width="10"/>
+<path d="M2063 1090 V1263 H703 V1233 C722 1233 722 1207 703 1207 V999 H773" fill="none" stroke="#07897F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#teal)"/>
+<text x="1240" y="1292" font-size="21" font-weight="500" fill="#07897F" text-anchor="middle" paint-order="stroke" stroke="#fff" stroke-width="7" stroke-linejoin="round">Pull OCI artifact via image volume</text>
+<text x="100" y="1365" font-size="24" font-weight="400" fill="#192D46" text-anchor="start" >Each selected GPU node has an Agent Pod and a corresponding KernelCacheNode resource.</text>
+<text x="100" y="1397" font-size="21" font-weight="400" fill="#64748B" text-anchor="start" >Custom resources and the DaemonSet are shown outside the node; workload and agent Pods run inside it.</text>
+</g></svg>
