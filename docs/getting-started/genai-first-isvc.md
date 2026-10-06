@@ -320,4 +320,4 @@ Now that you have successfully deployed a generative AI service using KServe, yo
 - 📖 **[Autoscaling](../model-serving/generative-inference/autoscaling/autoscaling.md)**: Automatically scale your service based on traffic and resource usage / metrics.
 - 📖 **[KV Cache Offloading](../model-serving/generative-inference/kvcache-offloading/kvcache-offloading.md)** - Learn how to offload key-value caches to external storage for improved performance and reduced latency.
 - 📖 **[Model Caching](../model-serving/generative-inference/modelcache/localmodel.md)** - Learn how to cache models for faster startup time.
-- 📖 **[Token Rate Limiting](../model-serving/generative-inference/ai-gateway/envoy-ai-gateway.md)** - Rate limit users based on token usage.
+- 📖 **[Inference Gateways](../model-serving/generative-inference/ai-gateway/inference-gateways.md)** - Compare gateway integrations for `LLMInferenceService` routing and AI policies.

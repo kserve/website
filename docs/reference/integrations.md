@@ -173,7 +173,7 @@ spec:
 - **AI Specialization**: Built-in support for LLM-specific requirements
 - **Enterprise Features**: Advanced security and monitoring capabilities
 
-For detailed Envoy integration, see the [AI Gateway Integration Guide](../model-serving/generative-inference/ai-gateway/envoy-ai-gateway.md).
+For LLM gateway integrations, see the [Inference Gateways guide](../model-serving/generative-inference/ai-gateway/inference-gateways.md).
 
 ## ML Framework Integrations
 
