@@ -514,7 +514,7 @@ In addition to updating status conditions, the controller records a Kubernetes E
 
 Readiness events are emitted only on a transition, after the new status has been written successfully. Reconciles that leave `Ready` unchanged do not produce events. A transition from True to Unknown does not produce an `LLMInferenceServiceNotReady` event, because that event requires `Ready` to be explicitly False.
 
-The `LLMInferenceServiceNotReady` message lists the condition types that are False at the time of the transition, which tells you which branch of the [condition hierarchy](#condition-hierarchy) to inspect. The top-level `Ready` condition and informational conditions that do not affect readiness, such as `GroupReady`, are not included in the list.
+The `LLMInferenceServiceNotReady` message lists the condition types that are False at the time of the transition, which tells you which branch of the [condition hierarchy](#condition-hierarchy) to inspect. The top-level `Ready` condition itself is never included. In KServe v0.21 and earlier, every other condition that is False is listed, including conditions that do not affect readiness, such as `GroupReady`. Later versions leave out these informational conditions (`GroupReady` and `PerModelPathsDropped`), because they never cause `Ready` to become False.
 
 List the events for a service:
 
