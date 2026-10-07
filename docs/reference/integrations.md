@@ -1,6 +1,6 @@
 ---
 title: "KServe Integrations"
-description: "Comprehensive guide to KServe integrations with Istio, Knative, Envoy, vLLM, gRPC, OpenTelemetry, Kubeflow, and more"
+description: "Comprehensive guide to KServe integrations with Istio, Knative, Envoy, vLLM, SGLang, gRPC, OpenTelemetry, Kubeflow, and more"
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
@@ -226,6 +226,26 @@ spec:
 - **Multi-tenant LLM Services**: Efficiently serving multiple users and models
 
 For detailed vLLM integration, see the [Generative Inference Overview](../model-serving/generative-inference/overview.md).
+
+### LLMInferenceService Runtime Selection
+
+`LLMInferenceService` uses the default llm-d/vLLM runtime when `spec.runtime` is omitted. SGLang is available experimentally through KServe's built-in `kserve-llm-sglang` `ClusterServingRuntime` for plain single-node model serving.
+
+Select SGLang explicitly in the service:
+
+```yaml
+apiVersion: serving.kserve.io/v1alpha2
+kind: LLMInferenceService
+metadata:
+  name: sglang-model
+spec:
+  runtime: kserve-llm-sglang
+  model:
+    uri: hf://facebook/opt-125m
+    name: facebook/opt-125m
+```
+
+For runtime selection examples and the current SGLang compatibility matrix, see the [LLMInferenceService Runtime Guide](../model-serving/generative-inference/llmisvc/llmisvc-runtime.md).
 
 ### gRPC Protocol Support
 
