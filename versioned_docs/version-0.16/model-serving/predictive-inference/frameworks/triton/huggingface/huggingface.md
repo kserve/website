@@ -96,7 +96,7 @@ Perform inference using v1 REST Protocol:
 echo '{"instances": ["The capital of france is [MASK]."] }' > input.json
 
 # Use the input file for inference
-curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @[input.json](./input.json)
+curl -H "content-type:application/json" -H "Host: ${SERVICE_HOSTNAME}" -v http://${INGRESS_HOST}:${INGRESS_PORT}/v1/models/${MODEL_NAME}:predict -d @input.json
 ```
 
 :::tip[Expected Output]
