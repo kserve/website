@@ -172,7 +172,19 @@ const sidebars: SidebarsConfig = {
               ],
             },
             "model-serving/generative-inference/sdk-integration/sdk-integration",
-            "model-serving/generative-inference/kvcache-offloading/kvcache-offloading",
+            {
+              type: 'category',
+              label: 'KV Cache Offloading',
+              link: {
+                type: 'doc',
+                id: 'model-serving/generative-inference/kvcache-offloading/kvcache-offloading',
+              },
+              items: [
+                "model-serving/generative-inference/kvcache-offloading/kvcache-offloading",
+                "model-serving/generative-inference/kvcache-offloading/kvcache-offloading-manual",
+                "model-serving/generative-inference/kvcache-offloading/kvcache-offloading-operator",
+              ],
+            },
             "model-serving/generative-inference/modelcache/localmodel",
             "model-serving/generative-inference/autoscaling/autoscaling",
             "model-serving/generative-inference/multi-node/multi-node",
