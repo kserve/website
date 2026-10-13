@@ -50,7 +50,6 @@ Extends Gateway API with **LLM-specific scheduling and load balancing** capabili
 ### Why Required
 - **Intelligent Routing**: Routes requests to optimal pods based on KV cache, load, and prefill-decode separation
 - **InferencePool**: Represents a pool of inference pods with custom scheduling logic
-- **InferenceModel**: Defines model metadata and criticality for scheduling decisions
 
 ### How LLMInferenceService Uses It
 
@@ -58,7 +57,14 @@ Extends Gateway API with **LLM-specific scheduling and load balancing** capabili
 LLMInferenceService creates GIE resources when scheduler is enabled.
 
 
-**Key Point**: InferencePool has `extensionRef` pointing to the EPP (Endpoint Picker) service, which runs the scheduling logic.
+**Key Point**: `InferencePool` has an `endpointPickerRef` that points to the
+llm-d Router service, which runs the scheduling logic.
+
+For current production guidance, see the
+[llm-d well-lit paths](https://llm-d.ai/docs/well-lit-paths), the
+[llm-d Router gateway guides](https://llm-d.ai/docs/infrastructure/gateway),
+and the
+[Gateway API CRD installation guide](https://llm-d.ai/docs/infrastructure/gateway/install-crds).
 
 ---
 
@@ -145,7 +151,7 @@ Gateway API is a **specification**, not an implementation. The actual traffic ro
 
 1. **Gateway Provider Initialization**: When a Gateway Provider (e.g., Envoy Gateway, Istio) starts, it scans for available CRDs to determine which extensions to support.
 
-2. **GIE Support**: If GIE CRDs are installed **after** the Gateway Provider, the provider won't know about `InferencePool` and `InferenceModel` resources.
+2. **GIE Support**: If GIE CRDs are installed **after** the Gateway Provider, the provider might not detect `InferencePool` resources.
 
 3. **Operator Restart Required**: Installing GIE CRDs later requires restarting the Gateway Provider operator to detect the new CRDs.
 
@@ -153,17 +159,17 @@ Gateway API is a **specification**, not an implementation. The actual traffic ro
 
 ```bash
 # Step 1: Install cert-manager (required by LWS)
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.20.2/cert-manager.yaml
 
 # Step 2: Install Gateway API CRDs
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.0/standard-install.yaml
 
 # Step 3: Install GIE CRDs (BEFORE Gateway Provider!)
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api-inference-extension/releases/download/v0.3.0/install.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api-inference-extension/releases/download/v1.5.0/manifests.yaml
 
 # Step 4: Install Gateway Provider (Envoy Gateway example)
 helm install eg oci://docker.io/envoyproxy/gateway-helm \
-  --version v1.2.4 \
+  --version v1.8.3 \
   -n envoy-gateway-system --create-namespace
 
 # Step 5: Install LWS Operator (if using multi-node)
@@ -306,4 +312,3 @@ curl http://localhost:8080/v1/completions ...
 | **Prefill-Decode** | ✅ | ✅ (required) | ❌ (single-node) or ✅ (multi-node) | ✅ |
 | **DP+EP** | ✅ | ✅ (scheduler) | ✅ | ✅ |
 | **No Scheduler** | ✅ | ❌ | ❌ | ✅ |
-
