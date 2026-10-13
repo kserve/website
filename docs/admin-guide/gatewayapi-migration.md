@@ -35,7 +35,7 @@ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/downloa
 
 ## 2. Create GatewayClass
 
-Create a `GatewayClass` resource using your preferred network controller. For this example, we will use [Envoy Gateway](https://gateway.envoyproxy.io/docs/) as the network controller.
+Create a `GatewayClass` resource using your preferred network controller. For this example, we will use [Envoy Gateway](https://gateway.envoyproxy.io/docs/) as the network controller. **Note:** Kserve requires Envoy Gateway **v1.3.0**.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
