@@ -14,7 +14,11 @@ Always review the relevant release notes before upgrading in production environm
 :::info
 The upgrade methods shown below were the standard process for **versions prior to v0.17.0**.
 
-**For v0.17.0 and later**, the Helm chart architecture has been completely restructured. You **cannot** use a simple `helm upgrade` command. Instead, you must follow the specific migration steps outlined in the [v0.17.0 section](#upgrading-to-v0170) below.
+If your cluster is still on a pre-v0.17.0 Helm installation, first perform the
+one-time migration described in [Migrating from pre-v0.17.0 to the split Helm
+chart layout](#migrating-from-pre-v0170-to-the-split-helm-chart-layout). After
+that migration, routine upgrades between split-chart releases can use the
+[standard split-chart Helm upgrade process](#routine-upgrades-between-split-chart-releases).
 :::
 
 ### Using Helm (Pre-v0.17.0)
@@ -45,7 +49,12 @@ kubectl apply --server-side -k "github.com/kserve/kserve/config/default?ref=v<NE
 
 ---
 
-## Upgrading v0.16.0 to v0.17.0
+## Migrating from pre-v0.17.0 to the split Helm chart layout
+
+Use this section only for the one-time migration from the pre-v0.17.0 chart
+layout to the v0.17.0+ split chart layout. The example commands use v0.18.0 as
+the target version; replace it with the supported target version you are
+upgrading to.
 
 ### v0.17.0 Breaking Changes
 
@@ -127,7 +136,7 @@ helm upgrade -i kserve-localmodel-crd oci://ghcr.io/kserve/charts/kserve-localmo
   --namespace kserve \
   --create-namespace
 
-# 5. (Optional, if usingllmisvc) Change release ownership for LLMIsvc CRDs
+# 5. (Optional, if using LLMIsvc) Change release ownership for LLMIsvc CRDs
 for crd in $(kubectl get crd -o name | grep llmisvc); do
   kubectl annotate "$crd" meta.helm.sh/release-name=kserve-llmisvc-crd --overwrite
 done
@@ -231,7 +240,7 @@ helm list -n kserve
 # - kserve-localmodel-crd (if using LocalModel)
 # - kserve-llmisvc-crd (if using LLMIsvc)
 # - kserve-runtime-configs
-# - kserve-resources
+# - kserve or kserve-resources (KServe controller/resources; release name depends on install path)
 # - kserve-localmodel-resources (if using LocalModel)
 # - kserve-llmisvc-resources (if using LLMIsvc)
 
@@ -247,6 +256,71 @@ kubectl get clusterservingruntime
 # Verify LLMIsvcConfigs (if using LLMIsvc)
 kubectl get llminferenceserviceconfigs
 ```
+
+## Routine upgrades between split-chart releases
+
+Use this section after your cluster has already migrated to the v0.17.0+ split
+Helm chart layout. First check the release names currently installed in your
+cluster:
+
+```bash
+helm list -n kserve
+```
+
+Then upgrade the installed split charts, reusing existing values unless the
+release notes require a values change:
+
+```bash
+# Upgrade KServe CRDs
+helm upgrade kserve-crd oci://ghcr.io/kserve/charts/kserve-crd \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+
+# Upgrade KServe runtime configs
+helm upgrade kserve-runtime-configs \
+  oci://ghcr.io/kserve/charts/kserve-runtime-configs \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+
+# Upgrade KServe controller and resources
+helm upgrade kserve-resources oci://ghcr.io/kserve/charts/kserve-resources \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+
+# Optional: upgrade LocalModel charts if installed
+helm upgrade kserve-localmodel-crd \
+  oci://ghcr.io/kserve/charts/kserve-localmodel-crd \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+
+helm upgrade kserve-localmodel-resources \
+  oci://ghcr.io/kserve/charts/kserve-localmodel-resources \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+
+# Optional: upgrade LLMInferenceService charts if installed
+helm upgrade kserve-llmisvc-crd \
+  oci://ghcr.io/kserve/charts/kserve-llmisvc-crd \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+
+helm upgrade kserve-llmisvc-resources \
+  oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
+  --version <NEW_VERSION> \
+  --namespace kserve \
+  --reuse-values
+```
+
+If `helm list -n kserve` shows legacy release names because the cluster was
+migrated in place, use those existing release names when upgrading. For example,
+the migration step may keep the KServe resource release name as `kserve` while
+using the `kserve-resources` chart.
 
 ## Getting Help
 
