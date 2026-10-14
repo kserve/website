@@ -6,7 +6,7 @@ title: "LLMInferenceService Status Reference"
 
 # LLMInferenceService Status Reference
 
-This page documents the full status contract for `LLMInferenceService` (v1alpha2) - conditions, reason codes, and observed status fields. It is designed as a reference for consumers of this API - dashboards, CLIs, GitOps pipelines, or any tooling that reads LLMInferenceService status programmatically.
+This page documents the full status contract for `LLMInferenceService` (v1alpha2) - conditions, reason codes, observed status fields, and readiness events. It is designed as a reference for consumers of this API - dashboards, CLIs, GitOps pipelines, or any tooling that reads LLMInferenceService status programmatically.
 
 For background on the resource itself, see the [LLMInferenceService overview](./llmisvc-overview.md). For spec configuration, see the [configuration guide](./llmisvc-configuration.md).
 
@@ -502,6 +502,52 @@ status:
 
 ---
 
+## Kubernetes Events
+
+In addition to updating status conditions, the controller records a Kubernetes Event on the `LLMInferenceService` when its `Ready` condition changes state. These events give a timeline of when a service became available or stopped being available, without having to poll and diff the status.
+
+| Type | Reason | Trigger | Example Message |
+|------|--------|---------|-----------------|
+| `Normal` | `LLMInferenceServiceReady` | `Ready` transitions to True from any other state (False, Unknown, or not yet set) | `LLMInferenceService [my-llm] is Ready` |
+| `Warning` | `LLMInferenceServiceNotReady` | `Ready` transitions from True to False | `LLMInferenceService [my-llm] is no longer Ready because of: MainWorkloadReady, WorkloadsReady` |
+| `Warning` | `UpdateFailed` | The controller fails to write the status to the API server | `Failed to update status for LLMInferenceService "my-llm": <error>` |
+
+Readiness events are emitted only on a transition, after the new status has been written successfully. Reconciles that leave `Ready` unchanged do not produce events. A transition from True to Unknown does not produce an `LLMInferenceServiceNotReady` event, because that event requires `Ready` to be explicitly False.
+
+The `LLMInferenceServiceNotReady` message lists the condition types that are False at the time of the transition, which tells you which branch of the [condition hierarchy](#condition-hierarchy) to inspect. The top-level `Ready` condition itself is never included. In KServe v0.21 and earlier, every other condition that is False is listed, including conditions that do not affect readiness, such as `GroupReady`. Later versions leave out these informational conditions (`GroupReady` and `PerModelPathsDropped`), because they never cause `Ready` to become False.
+
+List the events for a service:
+
+```bash
+kubectl get events -n <namespace> \
+  --field-selector involvedObject.kind=LLMInferenceService,involvedObject.name=<name> \
+  --sort-by=.lastTimestamp
+```
+
+:::tip[Expected Output]
+
+```
+LAST SEEN   TYPE      REASON                        OBJECT                         MESSAGE
+12m         Normal    LLMInferenceServiceReady      llminferenceservice/my-llm     LLMInferenceService [my-llm] is Ready
+3m          Warning   LLMInferenceServiceNotReady   llminferenceservice/my-llm     LLMInferenceService [my-llm] is no longer Ready because of: MainWorkloadReady, WorkloadsReady
+```
+
+:::
+
+Show only readiness loss across a namespace:
+
+```bash
+kubectl get events -n <namespace> --field-selector reason=LLMInferenceServiceNotReady
+```
+
+Recent events are also shown at the end of `kubectl describe llmisvc <name> -n <namespace>`.
+
+:::note
+Kubernetes Events are short-lived: the API server deletes them after a retention period (one hour by default), and repeated events may be aggregated. Use events to understand *when* a transition happened. The status conditions described above remain the source of truth for the current state of the service.
+:::
+
+---
+
 ## Troubleshooting
 
 Start by checking conditions. If `PresetsCombined` is False, that's a config issue - the reconciler won't proceed to workloads or routing. If `PresetsCombined` is True but `Ready` is not, drill into `WorkloadsReady` or `RouterReady`.
@@ -575,7 +621,7 @@ kubectl logs -l app.kubernetes.io/name=<name>,app.kubernetes.io/part-of=llminfer
 kubectl logs deploy/$(kubectl get llmisvc <name> -o jsonpath='{.status.workloads.scheduler.name}') -c main --tail=100
 ```
 
-**Check namespace events** for issues that conditions don't capture:
+**Check namespace events** for issues that conditions don't capture. See [Kubernetes Events](#kubernetes-events) for the readiness events the controller emits:
 ```bash
 kubectl get events -n <namespace> --sort-by=.lastTimestamp --field-selector involvedObject.name=<name>
 ```
