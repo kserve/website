@@ -336,7 +336,7 @@ For example, `ServerReady` API can be used to check if the server is ready:
 grpcurl \
   -plaintext \
   -proto ${PROTO_FILE} \
-  -authority ${SERVICE_HOSTNAME}" \
+  -authority "${SERVICE_HOSTNAME}" \
   ${INGRESS_HOST}:${INGRESS_PORT} \
   inference.GRPCInferenceService.ServerReady
 ```
