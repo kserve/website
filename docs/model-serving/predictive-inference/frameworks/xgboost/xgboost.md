@@ -63,6 +63,7 @@ To use KServe XGBoost server locally, install the `xgbserver` runtime package:
 1. Clone the KServe repository and navigate into the directory:
    ```bash
    git clone https://github.com/kserve/kserve
+   cd kserve
    ```
 
 2. Install the `xgbserver` runtime using Uv (ensure you have [Uv installed](https://docs.astral.sh/uv/getting-started/installation/)):
@@ -82,7 +83,7 @@ The `xgbserver` package takes three arguments:
 Start your server with:
 
 ```bash
-python3 xgbserver --model_dir /path/to/model_dir --model_name xgboost-iris
+uv run python -m xgbserver --model_dir /path/to/model_dir --model_name xgboost-iris
 ```
 
 ## Deploying the Model with REST Endpoint

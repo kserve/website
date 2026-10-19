@@ -54,6 +54,7 @@ To use KServe SKLearn server locally, install the `sklearnserver` runtime packag
 1. Clone the KServe repository and navigate into the directory:
    ```bash
    git clone https://github.com/kserve/kserve
+   cd kserve
    ```
 
 2. Install the `sklearnserver` runtime using Uv (ensure you have [Uv installed](https://docs.astral.sh/uv/getting-started/installation/)):
@@ -72,7 +73,7 @@ The `sklearnserver` package takes two arguments:
 Start your server with:
 
 ```bash
-python3 sklearnserver --model_dir /path/to/model_dir --model_name sklearn-iris
+uv run python -m sklearnserver --model_dir /path/to/model_dir --model_name sklearn-iris
 ```
 
 ## Deploying the Model with REST Endpoint

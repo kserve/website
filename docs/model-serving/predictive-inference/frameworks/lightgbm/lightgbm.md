@@ -62,6 +62,7 @@ To use KServe LightGBM server locally, install the `lgbserver` runtime package:
 1. Clone the KServe repository:
    ```bash
    git clone https://github.com/kserve/kserve
+   cd kserve
    ```
 
 2. Install the `lgbserver` runtime using Uv (ensure you have [Uv installed](https://docs.astral.sh/uv/getting-started/installation/)):
@@ -81,7 +82,7 @@ The `lgbserver` package takes three arguments:
 Start your server with:
 
 ```bash
-python3 lgbserver --model_dir /path/to/model_dir --model_name lightgbm-iris
+uv run python -m lgbserver --model_dir /path/to/model_dir --model_name lightgbm-iris
 ```
 
 After the LightGBM Server is running locally, test the model by sending an inference request:

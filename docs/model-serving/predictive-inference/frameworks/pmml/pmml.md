@@ -39,6 +39,7 @@ To use KServe PMML server locally, install the required dependencies:
 2. Clone the KServe repository:
    ```bash
    git clone https://github.com/kserve/kserve
+   cd kserve
    ```
 
 3. Install the `pmmlserver` runtime using Uv (ensure you have [Uv installed](https://docs.astral.sh/uv/getting-started/installation/)):
@@ -57,7 +58,7 @@ The `pmmlserver` package takes two arguments:
 Start your server with:
 
 ```bash
-python3 pmmlserver --model_dir /path/to/model_dir --model_name pmml-iris
+uv run python -m pmmlserver --model_dir /path/to/model_dir --model_name pmml-iris
 ```
 
 :::warning[Performance Considerations]
