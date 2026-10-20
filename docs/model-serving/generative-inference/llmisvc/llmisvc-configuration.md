@@ -451,6 +451,81 @@ spec:
                   port: 8000
 ```
 
+#### Model-Based Routing Only
+
+The managed HTTPRoute gives clients two ways to reach a model: per-model paths such as `/<namespace>/<name>/v1/completions` and `/publishers/<namespace>/models/<model-name>/v1/completions`, and model-header matches on shared paths such as `/v1/completions`. If your clients always name the model in the request - in the model header, or in the body with a gateway that copies it into the header - they never use the per-model paths. Those matches still add to anything that scales with route matches, such as proxy configuration or policies rendered once per match.
+
+Setting `serving.kserve.io/model-based-routing-only` to `"true"` drops the per-model path matches and leaves model-based routing as the only way in. With the default route template, a model goes from 19 matches to 9. The setting is off by default.
+
+Model-based routing has to be active for the LLMInferenceService; see the [model-based routing prerequisites](../../../admin-guide/configurations.md#model-based-routing-prerequisites). Otherwise KServe keeps the path matches, so a route never loses both.
+
+##### Set it on an LLMInferenceService
+
+```yaml
+spec:
+  annotations:
+    serving.kserve.io/model-based-routing-only: "true"
+```
+
+Set it under `spec.annotations`, as with the other routing settings. The LLMInferenceService's own `metadata.annotations` are not read. It can also come from an `LLMInferenceServiceConfig` preset referenced by `spec.baseRefs`. A value of `"false"` keeps the path matches for that LLMInferenceService, even when its Gateways set `"true"`. Any value other than `"true"` or `"false"` is ignored, so the Gateways decide.
+
+##### Set it on a Gateway
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: my-gateway
+  namespace: istio-system
+  annotations:
+    serving.kserve.io/model-based-routing-only: "true"
+```
+
+The Gateway setting applies to LLMInferenceServices that don't set the annotation themselves. Every parent Gateway of the LLMInferenceService's HTTPRoute must set it: one route serves all of them, and one Gateway's setting should not take path URLs away from clients of another. LLMInferenceServices without `spec.router.gateway.refs` attach to the default ingress Gateway (`kserve/kserve-ingress-gateway` unless `kserveIngressGateway` says otherwise), so annotate that one. If only some parent Gateways set it, the path matches stay.
+
+##### What changes for clients
+
+Once the path matches are gone:
+
+- Per-model URLs no longer reach the model. Send requests to the shared paths, such as `/v1/completions`, with the model header.
+- Requests without the model header have no route. That includes requests without a body, such as `GET /v1/models`, so serve those some other way if your clients need them.
+- Policies that target the `v1-*-path` rules by `sectionName` have nothing left to attach to.
+- `status.url` becomes the Gateway root, and `status.addresses` lists only the `-model-routing` entries.
+
+What stays the same:
+
+- Routes referenced through `spec.router.route.http.refs` are never modified.
+- With a custom `spec.router.route.http.spec`, KServe removes only matches under the two per-model path prefixes that don't carry the model header. Rules on other paths are kept.
+- Members of a [routing group](./canary-rollout.md) keep their weighted split, even when only some of them drop their paths.
+- The annotation is not copied to pod templates, so changing it does not restart model pods.
+
+##### Check the result
+
+```bash
+MODEL_NAMESPACE=team-a
+LLMISVC_NAME=my-llm-service
+
+kubectl get llminferenceservice "$LLMISVC_NAME" -n "$MODEL_NAMESPACE" -o json |
+  jq '.status.conditions[] | select(.type == "PerModelPathsDropped")'
+```
+
+`True` means the stored route has no per-model path matches. `False` gives the [reason](./llmisvc-status.md#per-model-path-reasons-permodelpathsdropped) they were kept, and for `DisabledOnService` and `NotSetOnAllGateways` the message names the Gateways involved. No condition means neither the LLMInferenceService nor any of its parent Gateways sets the annotation.
+
+Then send a request through the shared path. Set `GATEWAY_URL` to the Gateway root from `status.url` and `MODEL_NAME` to `spec.model.name`:
+
+```bash
+GATEWAY_URL=https://inference.example.com
+MODEL_NAME=facebook/opt-125m
+
+jq -n --arg model "$MODEL_NAME" '{model: $model, prompt: "Hello", max_tokens: 8}' |
+  curl --fail-with-body -sS "$GATEWAY_URL/v1/completions" \
+    -H 'Content-Type: application/json' \
+    -H "X-Gateway-Model-Name: publishers/$MODEL_NAMESPACE/models/$MODEL_NAME" \
+    --data-binary @-
+```
+
+If your installation uses a different `modelBasedRoutingHeaderName`, use that header instead.
+
 ---
 
 ### Traffic Splitting (Canary Rollout)
