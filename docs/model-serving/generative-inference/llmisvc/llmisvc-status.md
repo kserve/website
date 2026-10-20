@@ -14,14 +14,15 @@ For background on the resource itself, see the [LLMInferenceService overview](./
 
 ## Condition Hierarchy
 
-LLMInferenceService uses status conditions to represent readiness. The top-level `Ready` condition aggregates `WorkloadsReady` and `RouterReady` via the Knative `LivingConditionSet` - it is True only when both are True.
+LLMInferenceService uses status conditions to represent readiness. The top-level `Ready` condition aggregates `PresetsCombined`, `WorkloadsReady`, and `RouterReady` via the Knative `LivingConditionSet` - it is True only when all three are True.
 
-`PresetsCombined` is **not** part of the `Ready` rollup. It is a separate gate: when config resolution fails, the reconciler short-circuits before reaching workload or router reconciliation, so `WorkloadsReady` and `RouterReady` stay at their previous values (or `Unknown` on a new service). Consumers should check `PresetsCombined` independently.
+When config resolution fails, the reconciler marks `PresetsCombined` False and short-circuits before workload or router reconciliation. This makes `Ready` False with the same reason and message, while `WorkloadsReady` and `RouterReady` remain at their previous values (or `Unknown` on a new service).
 
 Optional conditions (marked below) are only present when the corresponding feature is enabled - missing conditions do not block readiness.
 
 ```
-Ready (= WorkloadsReady ∧ RouterReady)
+Ready (= PresetsCombined ∧ WorkloadsReady ∧ RouterReady)
+ ├── PresetsCombined                              (config resolution)
  ├── WorkloadsReady                               (aggregate)
  │    ├── MainWorkloadReady                       (single-node only)
  │    ├── WorkerWorkloadReady                     (multi-node only)
@@ -33,10 +34,8 @@ Ready (= WorkloadsReady ∧ RouterReady)
       ├── GatewaysReady                           (when gateway refs configured)
       ├── HTTPRoutesReady                         (when HTTP route configured)
       ├── InferencePoolReady                      (managed scheduler only)
-      └── SchedulerWorkloadReady                  (managed scheduler only)
-
-PresetsCombined                                   (independent gate, not part of Ready rollup)
-
+      ├── SchedulerWorkloadReady                  (managed scheduler only)
+      └── TokenizerReady                          (standalone tokenizer only)
 GroupReady                                        (independent, only with routing group)
 GroupDegraded                                     (independent, only when group has divergent members)
 ```
@@ -49,7 +48,7 @@ The set of conditions and status fields that appear tells you what kind of deplo
 
 | Topology | Distinguishing signals in status |
 |----------|----------------------------------|
-| **Single-node vLLM** | `MainWorkloadReady` is present. `status.workloads.primary.kind` is `Deployment`. No `WorkerWorkloadReady`. |
+| **Single-node (vLLM or SGLang)** | `MainWorkloadReady` is present. `status.workloads.primary.kind` is `Deployment`. No `WorkerWorkloadReady`. |
 | **[Multi-node](https://llm-d.ai/docs/guides/wide-expert-parallelism) (LeaderWorkerSet)** | `WorkerWorkloadReady` is present, `MainWorkloadReady` is absent. `status.workloads.primary.kind` is `LeaderWorkerSet`. |
 | **[Prefill-decode disaggregated serving](https://llm-d.ai/docs/architecture/advanced/disaggregation)** | `PrefillWorkloadReady` is present. `status.workloads.prefill` is populated. |
 | **Multi-node prefill-decode** | Both `WorkerWorkloadReady` and `PrefillWorkerWorkloadReady` are present. |
@@ -68,8 +67,8 @@ All conditions use positive polarity - `True` means healthy.
 
 | Condition | Set By | True | False | Presence |
 |-----------|--------|------|-------|----------|
-| `Ready` | Aggregated (Knative condition set) | Both `WorkloadsReady` and `RouterReady` are True; the service is accepting traffic | At least one of `WorkloadsReady` or `RouterReady` is not True | Always |
-| `PresetsCombined` | Config reconciler | All referenced `LLMInferenceServiceConfig` resources found and merged | Config lookup or merge failed (see [Reason Codes](#reason-codes)). Blocks reconciliation but does not directly affect `Ready` | Always |
+| `Ready` | Aggregated (Knative condition set) | `PresetsCombined`, `WorkloadsReady`, and `RouterReady` are True; the service is accepting traffic | At least one of the three conditions is not True | Always |
+| `PresetsCombined` | Config reconciler | All referenced configuration resources found, merged, and checked | Config lookup, merge, or validation failed (see [Reason Codes](#reason-codes)); the failure propagates to `Ready` | Always |
 | `WorkloadsReady` | Aggregated by `DetermineWorkloadReadiness` | All workload sub-conditions that are present are True | At least one workload sub-condition is False | Always |
 | `RouterReady` | Aggregated by `DetermineRouterReadiness` | All router sub-conditions that are present are True | At least one router sub-condition is False | Always |
 
@@ -98,6 +97,7 @@ These roll up into `RouterReady`. When no gateway or HTTP route configuration is
 | `HTTPRoutesReady` | Router reconciler | All HTTPRoute resources created and accepted by their parent Gateways | HTTPRoute not created, not accepted, or ref invalid | Only when HTTP route is configured |
 | `InferencePoolReady` | Router reconciler | InferencePool resource created and ready | Pool not found, not ready, or waiting for Gateway | Only when managed scheduler is enabled |
 | `SchedulerWorkloadReady` | Scheduler reconciler | Endpoint Picker (EPP) scheduler Deployment has desired replicas | Scheduler pods not ready | Only when managed scheduler is enabled |
+| `TokenizerReady` | Tokenizer reconciler | Standalone tokenizer Deployment has desired replicas and passing readiness probes | Tokenizer pods not ready | Only when `spec.router.scheduler.tokenizer` is set |
 
 ### Group Conditions (Traffic Splitting)
 
@@ -109,7 +109,8 @@ These conditions are **independent** - they do not roll up into `RouterReady` or
 | `GroupDegraded` | Group reconciler | Group has members with different model names or LoRA adapter sets (`MemberDivergence`). Each sub-group continues serving independently. | - | Only when divergence detected |
 
 ```
-Ready (= WorkloadsReady ∧ RouterReady)
+Ready (= PresetsCombined ∧ WorkloadsReady ∧ RouterReady)
+ ├── PresetsCombined
  ├── WorkloadsReady
  └── RouterReady
 
@@ -284,10 +285,16 @@ addresses:
 
 ### `status.appliedConfigs`
 
-An ordered list of `LLMInferenceServiceConfig` references that contributed to the merged configuration. Each entry carries a `source` field distinguishing auto-injected well-known configs (`Preset`) from user-specified configs (`UserRef`).
+An ordered list of configuration sources that contributed to the merged configuration. Each entry carries a `source` field:
+
+- `ServingRuntime`: A `ServingRuntime` or `ClusterServingRuntime` selected through `spec.runtime`
+- `Preset`: An auto-injected well-known `LLMInferenceServiceConfig`
+- `UserRef`: An `LLMInferenceServiceConfig` referenced through `spec.baseRefs`
 
 ```yaml
 appliedConfigs:
+  - name: kserve-llm-sglang
+    source: ServingRuntime
   - name: multi-node-defaults
     namespace: kserve-system
     source: Preset
@@ -475,13 +482,15 @@ Note how `MainWorkloadReady` is True (the pods are running) but `ScalingReady` i
 
 ### Failing service (missing config)
 
-In this example, a referenced `LLMInferenceServiceConfig` was deleted. The controller surfaces `ConfigNotFound` on `PresetsCombined` and short-circuits before workload or router reconciliation. Note that `Ready` stays at its previous value (or `Unknown` on a new service) because `PresetsCombined` is not part of the `Ready` rollup - consumers must check `PresetsCombined` independently.
+In this example, a referenced `LLMInferenceServiceConfig` was deleted. The controller surfaces `ConfigNotFound` on `PresetsCombined`, propagates the failure to `Ready`, and short-circuits before workload or router reconciliation. `WorkloadsReady` and `RouterReady` remain at their previous values (or `Unknown` on a new service).
 
 ```yaml
 status:
   conditions:
     - type: Ready
-      status: "Unknown"
+      status: "False"
+      reason: "ConfigNotFound"
+      message: "LLMInferenceServiceConfig 'team-overrides' not found in namespaces [ml-team, kserve-system]"
       lastTransitionTime: "2025-06-02T14:05:00Z"
       observedGeneration: 4
     - type: PresetsCombined
