@@ -194,6 +194,7 @@ Workload and scaling conditions can also surface reasons propagated from underly
 | `RefsInvalid` | `GatewaysReady`, `HTTPRoutesReady` | A gateway or route reference in the spec is malformed or references an unsupported kind |
 | `GatewaysNotReady` | `GatewaysReady` | One or more referenced Gateways are not reporting ready status |
 | `GatewayPreconditionNotMet` | `HTTPRoutesReady` | Gateway preconditions not met before HTTPRoute reconciliation |
+| `RoutingPreconditionNotMet` | `HTTPRoutesReady` | The LoRA routing strategy cannot transform a model-header match. The existing route is retained; correct the spec or configuration to trigger reconciliation. See [LoRA routing troubleshooting](./lora-adapters.md#troubleshoot-and-roll-back). |
 | `HTTPRouteReconcileError` | `HTTPRoutesReady` | HTTPRoute creation or update failed |
 | `HTTPRouteFetchError` | `HTTPRoutesReady` | Failed to fetch referenced HTTPRoute resources |
 | `HTTPRoutesNotReady` | `HTTPRoutesReady` | One or more HTTPRoutes are not accepted by their parent Gateway |

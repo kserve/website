@@ -43,6 +43,7 @@ data:
         "disableIstioVirtualHost": false,
         "disableIngressCreation": false,
         "disableHTTPRouteTimeout": false,
+        "loraModelRoutingStrategy": "exact",
         "pathTemplate": "/serving/{{ .Namespace }}/{{ .Name }}"
     }
 ```
@@ -193,6 +194,120 @@ which would otherwise cause HTTPRoutes to be rejected with `Accepted=False/Unsup
 - **Global key:** `disableHTTPRouteTimeout`
 - **Possible values:** `true`, `false`
 - **Default:** `false`
+
+### LoRA Model Routing Strategy
+
+Use `regex` to let LLMInferenceServices route requests to larger sets of LoRA adapters. The default `exact` strategy adds separate matches for each adapter; `regex` groups the base model and adapter names into shared regular-expression matches in KServe-managed HTTPRoutes.
+
+- **Global key:** `loraModelRoutingStrategy` (inside the JSON stored in `data.ingress`)
+- **Helm value:** `kserve.controller.gateway.loraModelRoutingStrategy` in `kserve-resources` and `kserve-llmisvc-resources`
+- **Service override:** `spec.annotations["serving.kserve.io/lora-model-routing-strategy"]` on an LLMInferenceService, also supported through an LLMInferenceServiceConfig preset
+- **Possible values:** `exact`, `regex`
+- **Default:** `exact`; an absent or empty service override inherits the cluster setting
+
+For service configuration and an example inference request, see [Routing Many Adapters](../model-serving/generative-inference/llmisvc/lora-adapters.md#routing-many-adapters).
+
+#### Set the LoRA routing default
+
+Verify that the gateways used by your services support regex header matching before changing the default. For Helm installations, add this setting to your values file and apply it through your normal upgrade process:
+
+```yaml title="values.yaml"
+kserve:
+  controller:
+    gateway:
+      loraModelRoutingStrategy: regex
+```
+
+Both `kserve-resources` and `kserve-llmisvc-resources` expose this value. Configure the release that owns `inferenceservice-config`.
+
+For installations managed without Helm, edit the ConfigMap in your KServe installation namespace (usually `kserve`):
+
+```bash
+kubectl edit configmap inferenceservice-config -n kserve
+```
+
+In the JSON under the `ingress` entry, add or update `loraModelRoutingStrategy` while preserving the other settings:
+
+```json
+{
+  "loraModelRoutingStrategy": "regex"
+}
+```
+
+KServe watches this ConfigMap and updates applicable routes without a controller restart. A service or preset that explicitly chooses `exact` or `regex` keeps that strategy. An omitted or empty cluster value defaults to `exact`; an unsupported value prevents ingress configuration from loading.
+
+#### Model-based routing prerequisites
+
+The LoRA strategy applies when model-based routing is enabled. In the same ConfigMap's `ingress` entry, `modelBasedRoutingMode` defaults to `enabled`. Setting it to `disabled` removes model-header matches. With `enabled`, a Gateway can opt out by setting `serving.kserve.io/model-based-routing-enabled: "false"` in its `metadata.annotations`; `forced` ignores that Gateway opt-out.
+
+The service also needs `serving.kserve.io/model-based-routing-enabled: "true"` in its effective `spec.annotations`, even when the cluster mode is `forced`. The built-in workload presets supply this annotation and configure qualified model names in the runtime. With older or custom presets, ensure the runtime accepts those names before enabling model-based routing.
+
+The header name is configured by `modelBasedRoutingHeaderName` in the `ingress` entry and defaults to `X-Gateway-Model-Name`. Clients must send that header, or the gateway must be configured separately to derive it from the request body.
+
+For custom managed routes, the model-header match must be an `Exact` match on `publishers/<namespace>/models/<base-model-name>` before KServe expands it. A different value or a hand-written regex on that header results in `RoutingPreconditionNotMet`. Correct the service or configuration to trigger another reconciliation. Externally managed routes referenced through `spec.router.route.http.refs` must be updated by their owner.
+
+#### Route capacity
+
+The shipped route template uses eight model-header matches per model: four endpoint paths, each with and without a trailing slash. With `exact`, seven adapters plus the base model fit within the Gateway API limit of 64 matches per rule. With `regex`, this rule stays at eight matches as adapters are added. Custom templates can have different counts.
+
+Each generated header pattern is limited to [4096 characters by Gateway API](https://gateway-api.sigs.k8s.io/reference/api-spec/1.6/spec/#httpheadermatch). The namespace, base model, adapter names, separators, and escaping all consume that space. KServe escapes names as literals and anchors the pattern to the complete qualified name. The pattern size and the gateway's regex limits determine how many names fit; runtime adapter memory is configured separately.
+
+#### Envoy regex limits
+
+Envoy can reject a route whose regular expression exceeds `re2.max_program_size.error_level`. This limit measures compiled regex complexity, so the number and length of adapter names both matter. The `re2.max_program_size.warn_level` setting only produces warnings. See [Envoy's regex matcher reference](https://www.envoyproxy.io/docs/envoy/latest/api-v3/type/matcher/v3/regex.proto).
+
+Gateway controllers can override Envoy's defaults:
+
+| Gateway configuration | Error threshold | Warning threshold |
+|---|---|---|
+| [Envoy Gateway 1.8.1 default bootstrap](https://github.com/envoyproxy/gateway/blob/v1.8.1/internal/xds/bootstrap/bootstrap.yaml.tpl#L50) | `4294967295`, effectively disabling the check | `1000` |
+| [Istio 1.30.3 default bootstrap configuration](https://github.com/istio/istio/blob/1.30.3/pkg/bootstrap/config.go#L387) | `32768` | No override in this default configuration |
+| Envoy with no provider override | `100` | No warning threshold configured |
+
+Envoy Gateway's default configuration already raises the threshold sufficiently for LoRA routing. A custom bootstrap may use a lower limit; Envoy's own default of `100` can reject a pattern with only a few realistic adapter names. KServe does not inspect or change these settings.
+
+##### Inspect the running proxy
+
+For a standard Envoy Gateway deployment, find the proxy pod for your Gateway and forward its admin port. Adjust the namespace if your proxies run elsewhere:
+
+```bash
+ENVOY_NAMESPACE=envoy-gateway-system
+kubectl get pods -n "$ENVOY_NAMESPACE" -l app.kubernetes.io/component=proxy
+
+ENVOY_POD=replace-with-your-gateway-proxy-pod
+kubectl port-forward -n "$ENVOY_NAMESPACE" pod/"$ENVOY_POD" 19000:19000
+```
+
+In another terminal, inspect the active values through [Envoy's admin interface](https://www.envoyproxy.io/docs/envoy/latest/operations/admin#get--runtime). This command requires `jq`:
+
+```bash
+curl -fsS http://127.0.0.1:19000/runtime | jq '
+  .entries | with_entries(
+    select(.key | startswith("re2.max_program_size."))
+  )'
+```
+
+Read each entry's `final_value`. If no override appears, check the proxy version's default and bootstrap. Repeat for each gateway proxy replica. Other providers may use a different admin port, such as Istio's `15000`.
+
+##### Change a restrictive limit
+
+Set the limit through your gateway provider's persistent bootstrap or runtime configuration. Choose a threshold tested with your expected adapter names and count.
+
+For Envoy Gateway, use the `EnvoyProxy` resource referenced by your Gateway or GatewayClass, following its [bootstrap customization guide](https://gateway.envoyproxy.io/v1.8/tasks/operations/customize-envoyproxy/#customize-envoyproxy-bootstrap-config). This fragment for an existing `EnvoyProxy` sets an explicit error threshold of `32768`:
+
+```yaml
+spec:
+  bootstrap:
+    type: JSONPatch
+    jsonPatches:
+      - op: add
+        path: /layered_runtime/layers/0/static_layer/re2.max_program_size.error_level
+        value: 32768
+```
+
+The patch targets the `global_config` layer in Envoy Gateway 1.8.1's default bootstrap. Preserve existing customizations and verify the path for your version. The value `32768` is an example; standard Envoy Gateway already uses a higher threshold and needs no change. After the proxy rollout, check the active limit and send inference requests again. Increasing only `warn_level` will not resolve a rejection at `error_level`.
+
+An Envoy proxy can reject an update with an xDS NACK while the HTTPRoute still reports `Accepted=True`, leaving the previous proxy configuration active. If newly added adapters fail to route, check gateway controller and proxy logs for `RE2 program size` or NACK messages. Envoy's `re2.program_size` histogram and `re2.exceeded_warn_level` counter help track regex complexity and warnings.
 
 ### Path Template
 

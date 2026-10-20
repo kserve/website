@@ -159,6 +159,8 @@ spec:
 
 For detailed configuration, examples, and troubleshooting, see the **[LoRA Adapters Guide](./lora-adapters.md)**.
 
+To serve more adapters than the default route allows, follow [Routing Many Adapters](./lora-adapters.md#routing-many-adapters) to enable regex routing and verify requests through your gateway.
+
 ---
 
 ## Autoscaling Configuration
