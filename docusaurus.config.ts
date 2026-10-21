@@ -2,7 +2,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import rehypeExternalLinks from 'rehype-external-links'
-import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
+import type { APIOptions } from "docusaurus-plugin-openapi-docs/lib/types";
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -446,7 +446,7 @@ const config: Config = {
             sidebarOptions: {
               groupPathsBy: "tag",
             },
-          } satisfies OpenApiPlugin.Options,
+          } satisfies APIOptions,
         }
       },
     ],
