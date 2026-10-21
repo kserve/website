@@ -114,6 +114,19 @@ if __name__ == "__main__":
 `return_response_headers=True` can be added to return response headers for v1 and v2 endpoints
 :::
 
+:::note[REST protocol version]
+The Python `ModelServer` registers both REST v1 and REST v2 routes. The request
+path and handler payload type determine which protocol is used: v1 requests call
+paths such as `/v1/models/{model_name}:predict` with a `dict` payload, while v2
+requests call paths such as `/v2/models/{model_name}/infer` and should use
+`InferRequest`/`InferResponse` as shown in the Open(v2) example below.
+
+The `--predictor_protocol` argument, and its deprecated alias `--protocol`,
+primarily configure the protocol used for outbound calls to a separate
+predictor, for example from a transformer. They do not select which REST routes
+the custom predictor exposes.
+:::
+
 ### Build Custom Serving Image with BuildPacks
 [Buildpacks](https://buildpacks.io/) allows you to transform your inference code into images that can be deployed on KServe without
 needing to define the `Dockerfile`. Buildpacks automatically determines the python application and then install the dependencies from the
@@ -186,6 +199,9 @@ You can supply additional command arguments on the container spec to configure t
 - `--grpc_max_send_message_length`: The max message length for gRPC send message. Default is 8388608 bytes (8 MB).
 - `--grpc_max_receive_message_length`: The max message length for gRPC receive message. Default is 8388608 bytes (8 MB).
 - `--model_name`: The model name deployed in the model server, the default name the same as the service name.
+- `--predictor_protocol`: The inference protocol used when this container calls a separate predictor, for example from a transformer.
+  Valid values are `v1`, `v2`, and `grpc-v2`. It does not control the protocol routes exposed by the custom predictor.
+- `--protocol`: Deprecated alias for `--predictor_protocol`.
 - `--max_asyncio_workers`: Max number of workers to spawn for python async io loop, by default it is `min(32,cpu.limit + 4)`.
 - `--enable_latency_logging`: Whether to log latency metrics per request, the default is True.
 - `--configure_logging`: Whether to configure KServe and Uvicorn logging, the default is True.
@@ -202,7 +218,6 @@ You can supply additional environment variables on the container spec.
 
 - `STORAGE_URI`: load a model from a storage system supported by KServe e.g. `pvc://` `s3://`. This acts the same as `storageUri` when using a built-in predictor.
   The data will be available at `/mnt/models` in the container. For example, the following `STORAGE_URI: "pvc://my_model/model.onnx"` will be accessible at `/mnt/models/model.onnx`
-- `PROTOCOL`: specify the protocol version supported by the model e.g `V1`. This acts the same as `protocolVersion` when using a built-in predictor.
 - `KSERVE_LOGLEVEL`: sets the `kserve` and `kserve_trace`'s logger verbosity. Default is `INFO`.
 
 Apply the YAML to deploy the InferenceService on KServe
