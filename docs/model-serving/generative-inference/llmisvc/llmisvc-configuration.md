@@ -509,7 +509,7 @@ kubectl get llminferenceservice "$LLMISVC_NAME" -n "$MODEL_NAMESPACE" -o json |
   jq '.status.conditions[] | select(.type == "PerModelPathsDropped")'
 ```
 
-`True` means the stored route has no per-model path matches. `False` gives the [reason](./llmisvc-status.md#per-model-path-reasons-permodelpathsdropped) they were kept, and for `DisabledOnService` and `NotSetOnAllGateways` the message names the Gateways involved. No condition means neither the LLMInferenceService nor any of its parent Gateways sets the annotation.
+`True` means the stored route has no per-model path matches. `False` gives the [reason](./llmisvc-status.md#per-model-path-reasons-permodelpathsdropped) they were kept, and for `DisabledOnService` and `NotSetOnAllGateways` the message names the Gateways involved. The condition is absent when neither the LLMInferenceService nor any of its parent Gateways sets the annotation. It is also cleared when the LLMInferenceService is stopped or uses `spec.router.route.http.refs`.
 
 Then send a request through the shared path. Set `GATEWAY_URL` to the Gateway root from `status.url` and `MODEL_NAME` to `spec.model.name`:
 
