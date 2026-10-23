@@ -177,10 +177,12 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.20
 </TabItem>
 <TabItem value="gatewayyaml" label="Gateway API with YAML">
 
-1. Install KServe:
+1. Create the `kserve` namespace and install KServe:
+The manifest places its resources in the `kserve` namespace but does not create it, so create it first.
 `--server-side` option is required as the InferenceService CRD is large.
 
 ```bash
+kubectl create namespace kserve
 kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve.yaml
 ```
 
@@ -226,10 +228,12 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.20
 </TabItem>
 <TabItem value="ingressyaml" label="Ingress with YAML">
 
-1. Install KServe:
+1. Create the `kserve` namespace and install KServe:
+The manifest places its resources in the `kserve` namespace but does not create it, so create it first.
 `--server-side` option is required as the InferenceService CRD is large.
 
 ```bash
+kubectl create namespace kserve
 kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve.yaml
 ```
 
