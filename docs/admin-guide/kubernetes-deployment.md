@@ -63,7 +63,15 @@ The minimally required Cert Manager version is 1.15.0 and you can refer to the [
 Cert Manager is required to provision webhook certs for production-grade installation. Alternatively, you can run a self-signed certs generation script.
 :::
 
-### 2. Install Network Controller
+### 2. Create the KServe Namespace
+
+KServe's controller, and the `Gateway` created in the next step, live in the `kserve` namespace. The KServe manifests do not create it, so create it first:
+
+```bash
+kubectl create namespace kserve
+```
+
+### 3. Install Network Controller
 
 <Tabs>
 <TabItem value="gateway" label="Gateway API" default>
@@ -148,7 +156,7 @@ Istio ingress is recommended, but you can choose to install with other [Ingress 
 </TabItem>
 </Tabs>
 
-### 3. Install KServe
+### 4. Install KServe
 
 :::note
 The default KServe deployment mode is `Knative` which depends on Knative. The following step changes the default deployment mode to `Standard` before installing KServe.
@@ -177,12 +185,10 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.20
 </TabItem>
 <TabItem value="gatewayyaml" label="Gateway API with YAML">
 
-1. Create the `kserve` namespace and install KServe:
-The manifest places its resources in the `kserve` namespace but does not create it, so create it first.
+1. Install KServe:
 `--server-side` option is required as the InferenceService CRD is large.
 
 ```bash
-kubectl create namespace kserve
 kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve.yaml
 ```
 
@@ -228,12 +234,10 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.20
 </TabItem>
 <TabItem value="ingressyaml" label="Ingress with YAML">
 
-1. Create the `kserve` namespace and install KServe:
-The manifest places its resources in the `kserve` namespace but does not create it, so create it first.
+1. Install KServe:
 `--server-side` option is required as the InferenceService CRD is large.
 
 ```bash
-kubectl create namespace kserve
 kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve.yaml
 ```
 
