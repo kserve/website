@@ -118,8 +118,11 @@ spec:
 
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
-| **`uri`** | string | Model location | `hf://meta-llama/Llama-3.1-8B-Instruct`<br/>`s3://my-bucket/models/llama-3`<br/>`pvc://model-pvc/llama-3` |
+| **`uri`** | string | Model location | `hf://meta-llama/Llama-3.1-8B-Instruct`<br/>`modelscope://Qwen/Qwen3-0.6B`<br/>`s3://my-bucket/models/llama-3`<br/>`pvc://model-pvc/llama-3` |
 | **`name`** | string | Model identifier for inference requests | `meta-llama/Llama-3.1-8B-Instruct`<br/>(defaults to metadata.name) |
+
+For ModelScope deployment and private-repository credentials in the development
+version, see [ModelScope with LLMInferenceService](../../storage/providers/ms.md#deploy-llminferenceservice-with-models-from-modelscope-hub).
 
 ---
 
