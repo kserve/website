@@ -43,7 +43,7 @@ KServe eliminates the complexity of productionizing AI models. Whether you're a 
 
 | Feature | Description |
 |---|---|
-| <a href="model-serving/generative-inference/overview">**LLM Multi-framework**</a> | Deploy LLMs from Hugging Face, vLLM, and custom generative models |
+| <a href="model-serving/generative-inference/overview">**LLM Multi-framework**</a> | Deploy LLMs with Hugging Face, vLLM, SGLang, and custom generative runtimes |
 | <a href="model-serving/generative-inference/llmisvc/llmisvc-overview">**OpenAI-Compatible APIs**</a> | Chat completion, streaming, and embedding endpoints out of the box |
 | <a href="model-serving/generative-inference/modelcache/localmodel">**LocalModelCache**</a> | Reduce LLM startup time from 15–20 minutes to ~1 minute |
 | <a href="model-serving/generative-inference/kvcache-offloading/kvcache-offloading">**KV Cache Offloading**</a> | Optimized memory management for long conversations and large contexts |
@@ -93,6 +93,7 @@ KServe consists of two main planes:
     <h4 style={{marginTop: 0}}>🎛️ <a href="concepts/architecture/control-plane">Control Plane</a></h4>
     <ul style={{margin: 0, paddingLeft: '1.25rem', fontSize: '0.9rem'}}>
       <li><a href="concepts/resources"><strong>InferenceService CRD</strong></a> — Manages model serving lifecycle</li>
+      <li><a href="model-serving/generative-inference/llmisvc/llmisvc-overview"><strong>LLMInferenceService CRD</strong></a> — Manages advanced generative AI workloads</li>
       <li><a href="concepts/resources/inferencegraph"><strong>InferenceGraph CRD</strong></a> — Orchestrates model ensembles and chaining</li>
       <li><a href="concepts/resources/servingruntime"><strong>Serving Runtime</strong></a> — Pluggable model runtime implementations</li>
       <li><a href="concepts/resources/servingruntime"><strong>ClusterServingRuntime</strong></a> — Cluster-wide model runtime definitions</li>
@@ -107,7 +108,7 @@ KServe consists of two main planes:
       <li><a href="model-serving/predictive-inference/transformers/custom-transformer/custom-transformer"><strong>Transformer</strong></a> — Pre/post processing logic</li>
       <li><a href="model-serving/predictive-inference/explainers/overview"><strong>Explainer</strong></a> — Model explanations and interpretability</li>
     </ul>
-    <p style={{fontSize: '0.9rem', marginTop: '1rem', marginBottom: 0}}>KServe extends Kubernetes with custom resources for AI/ML workloads — handling load balancing, autoscaling, canary deployments, and monitoring automatically. Pluggable runtimes let you use the best engine per model type: <a href="model-serving/generative-inference/llmisvc/llmisvc-overview">vLLM for LLMs</a>, TorchServe for PyTorch, or custom containers.</p>
+    <p style={{fontSize: '0.9rem', marginTop: '1rem', marginBottom: 0}}>KServe extends Kubernetes with custom resources for AI/ML workloads — handling load balancing, autoscaling, canary deployments, and monitoring automatically. Pluggable runtimes let you use the best engine per model type: <a href="model-serving/generative-inference/llmisvc/llmisvc-overview">vLLM or SGLang for LLMs</a>, TorchServe for PyTorch, or custom containers.</p>
   </div>
 </div>
 
@@ -132,6 +133,7 @@ KServe consists of two main planes:
   <TabItem value="genai-fw" label="🤖 Generative AI">
     <div className="doc-grid-3" style={{marginTop: '1rem'}}>
       <a href="model-serving/generative-inference/llmisvc/llmisvc-overview" className="doc-card"><strong>vLLM</strong><p>High-throughput LLM serving</p></a>
+      <a href="model-serving/generative-inference/llmisvc/llmisvc-runtime" className="doc-card"><strong>LLM Runtimes</strong><p>vLLM and experimental SGLang</p></a>
       <a href="model-serving/generative-inference/tasks/text-generation/text-generation" className="doc-card"><strong>Hugging Face Transformers</strong><p>Text generation models</p></a>
       <a href="concepts/architecture/data-plane/data-plane" className="doc-card"><strong>OpenAI-Compatible APIs</strong><p>Chat completions, embeddings</p></a>
     </div>
