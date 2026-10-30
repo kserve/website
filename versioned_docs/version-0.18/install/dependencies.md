@@ -45,6 +45,10 @@ Use the pre-generated dependency installation script:
 curl -fsSL https://github.com/kserve/kserve/releases/download/v0.18.0/kserve-knative-mode-dependency-install.sh | bash
 ```
 
+:::warning
+The published v0.18.0 dependency installer uses Istio's legacy chart repository. If that repository is unavailable, download the script, replace `https://istio-release.storage.googleapis.com/charts` with `https://blob.istio.io/istio-release/charts`, and run the updated script.
+:::
+
 Or install components individually:
 
 ```bash
