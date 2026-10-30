@@ -16,13 +16,13 @@ First, you need a deployed LLM inference service. Follow our [Text Generation wi
 
 ### Getting Your Model Endpoint
 
-Once your model is deployed, you need to obtain the service hostname for API calls:
+Once your model is deployed, export the full service URL, including its `http://` or `https://` scheme, for API calls:
 
 ```bash
-SERVICE_HOSTNAME=$(kubectl get inferenceservice huggingface-llama3 -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+export SERVICE_URL=$(kubectl get inferenceservice huggingface-llama3 -o jsonpath='{.status.url}')
 ```
 
-For the Llama3 example, the model name is `llama3`. You'll need both the service hostname and model name for SDK integration.
+For the Llama3 example, the model name is `llama3`. Run the Python examples from the same shell so they can read `SERVICE_URL`. You'll need both the service URL and model name for SDK integration.
 
 ## Integration with OpenAI SDK
 
@@ -44,11 +44,13 @@ Create a Python script (`sample_openai.py`) to interact with your KServe LLM:
 <TabItem value="python" label="Python">
 
 ```python
+import os
+
 from openai import OpenAI
 
-Deployment_url = "<SERVICE_HOSTNAME>"
+service_url = os.environ["SERVICE_URL"].rstrip("/")
 client = OpenAI(
-    base_url=f"{Deployment_url}/openai/v1",
+    base_url=f"{service_url}/openai/v1",
     api_key="empty",
 )
 
@@ -106,7 +108,7 @@ Streaming chat completion response:
 
 ### Key Points
 
-- Replace `<SERVICE_HOSTNAME>` with your actual service hostname
+- Keep the full `SERVICE_URL`, including its scheme; a bare hostname is not a valid SDK base URL
 - The endpoint path `/openai/v1` routes requests through KServe's OpenAI-compatible interface
 - The `api_key="empty"` parameter is needed but authentication can be configured separately
 - The `model` parameter should match the model name from your InferenceService
@@ -131,13 +133,15 @@ Create a Python script (`sample_langchain.py`) to interact with your KServe LLM 
 <TabItem value="python" label="Python">
 
 ```python
+import os
+
 from langchain_openai import ChatOpenAI
 
-Deployment_url = "<SERVICE_HOSTNAME>"
+service_url = os.environ["SERVICE_URL"].rstrip("/")
 
 llm = ChatOpenAI(
     model_name="llama3",
-    base_url=f"{Deployment_url}/openai/v1",
+    base_url=f"{service_url}/openai/v1",
     openai_api_key="empty",
     temperature=0,
     max_tokens=256,
@@ -204,21 +208,27 @@ KServe's OpenAI-compatible endpoints allow integration with many other framework
 [LlamaIndex](https://www.llamaindex.ai/) is a data framework for LLM applications that helps with data connection and retrieval augmented generation (RAG).
 
 ```bash
-pip install llama-index-llms-openai
+pip install llama-index-llms-openai-like
 ```
 
 ```python
-from llama_index.llms.openai import OpenAI
+import os
 
-llm = OpenAI(
+from llama_index.llms.openai_like import OpenAILike
+
+service_url = os.environ["SERVICE_URL"].rstrip("/")
+llm = OpenAILike(
     model="llama3",
-    api_base=f"http://{SERVICE_HOSTNAME}/openai/v1",
-    api_key="empty"
+    api_base=f"{service_url}/openai/v1",
+    api_key="empty",
+    is_chat_model=True,
 )
 
 response = llm.complete("What is the capital of France?")
 print(response)
 ```
+
+Use `OpenAILike` for KServe model names such as `llama3`, which are not OpenAI model IDs. `is_chat_model=True` sends the request to the chat completions endpoint.
 
 ### Direct API Calls
 
@@ -228,7 +238,7 @@ For languages without specific SDKs, you can use standard HTTP clients:
 <TabItem value="curl" label="cURL">
 
 ```bash
-curl -X POST "http://${SERVICE_HOSTNAME}/openai/v1/chat/completions" \
+curl -X POST "${SERVICE_URL}/openai/v1/chat/completions" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "llama3",
@@ -241,7 +251,8 @@ curl -X POST "http://${SERVICE_HOSTNAME}/openai/v1/chat/completions" \
 <TabItem value="javascript" label="JavaScript (Fetch)">
 
 ```javascript
-const response = await fetch(`http://${serviceHostname}/openai/v1/chat/completions`, {
+const serviceUrl = "<SERVICE_URL>"; // Replace with the full URL exported above
+const response = await fetch(`${serviceUrl}/openai/v1/chat/completions`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
