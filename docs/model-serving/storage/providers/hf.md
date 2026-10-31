@@ -13,6 +13,20 @@ hf://${REPO}/${MODEL}:${HASH}(optional)
 
 e.g. ```hf://facebook/opt-125m```
 
+To download one file instead of a repository snapshot, append its relative path:
+
+```text
+hf://owner/repository[:revision]/quantized/model.gguf
+```
+
+The file keeps its repository-relative path under `/mnt/models`, so this example
+loads from `/mnt/models/quantized/model.gguf`. File paths must not contain empty,
+`.` or `..` components or backslashes. Exact file downloads do not apply snapshot
+allow/ignore patterns. This requires a storage initializer with single-file URI
+support; older versions accept only repository URIs. See
+[CPU inference with llama.cpp](../../generative-inference/llamacpp.md) for a GGUF
+deployment example.
+
 ## Public Hugging Face Models
 
 If no credential is provided, anonymous client will be used to download the model from HF repo.
