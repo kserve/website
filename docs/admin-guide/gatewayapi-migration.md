@@ -26,16 +26,16 @@ Gateway API offers several benefits that are particularly important for generati
 
 ## 1. Install Gateway API CRD
 
-The Kubernetes Gateway API is a newer, more flexible and standardized way to manage traffic ingress and egress in Kubernetes clusters. KServe implements the Gateway API version `1.2.1`.
+The Kubernetes Gateway API is a newer, more flexible and standardized way to manage traffic ingress and egress in Kubernetes clusters. KServe implements the Gateway API version `1.6.2`.
 
 The Gateway API is not part of the Kubernetes cluster, therefore it needs to be installed manually, to do this, follow the next step.
 ```shell
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.2/standard-install.yaml
 ```
 
 ## 2. Create GatewayClass
 
-Create a `GatewayClass` resource using your preferred network controller. For this example, we will use [Envoy Gateway](https://gateway.envoyproxy.io/docs/) as the network controller.
+Create a `GatewayClass` resource using your preferred network controller. For this example, we will use [Envoy Gateway](https://gateway.envoyproxy.io/docs/) as the network controller. **Note:** KServe requires Envoy Gateway **v1.8.1**.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
