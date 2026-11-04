@@ -115,6 +115,7 @@ Ready (= WorkloadsReady ∧ RouterReady)
 
 GroupReady                               (independent)
 GroupDegraded                            (independent)
+PerModelPathsDropped                     (independent)
 ```
 
 When an LLMInferenceService is part of a routing group, `.status.router.group` contains the full group topology:
@@ -157,6 +158,14 @@ A force-stopped member stays visible with its declared weight:
 | `group.members[].weight` | `int32` | The member's declared weight from spec |
 | `group.members[].stopped` | `bool` | True when the member has the force-stop annotation |
 | `group.members[].backendRef` | `BackendObjectReference` | The resolved backend reference used in HTTPRoute weighted routing |
+
+### Per-Model Path Conditions
+
+This condition is **independent** - it does not roll up into `RouterReady` or `Ready`. When the per-model path matches are kept, every client can still reach the model. It reports the outcome of [`serving.kserve.io/model-based-routing-only`](./llmisvc-configuration.md#model-based-routing-only) for the HTTPRoute as last written.
+
+| Condition | Set By | True | False | Presence |
+|-----------|--------|------|-------|----------|
+| `PerModelPathsDropped` | Router reconciler | The managed HTTPRoute has no per-model path matches (`SetOnService`, `SetOnAllGateways`) | The annotation is configured, but the per-model path matches are kept. The reason says why (see [Per-Model Path Reasons](#per-model-path-reasons-permodelpathsdropped)) | Only when the annotation is set on the LLMInferenceService or on a parent Gateway of a managed HTTPRoute. Cleared when the LLMInferenceService is stopped or uses `spec.router.route.http.refs` |
 
 ---
 
@@ -203,6 +212,25 @@ Workload and scaling conditions can also surface reasons propagated from underly
 | `InferencePoolFetchError` | `InferencePoolReady` | Failed to fetch the InferencePool resource |
 | `WaitingForGateway` | `InferencePoolReady` | InferencePool is waiting for its parent Gateway to become ready |
 | `SchedulerReconcileError` | `SchedulerWorkloadReady` | EPP scheduler Deployment creation or update failed |
+
+### Per-Model Path Reasons (PerModelPathsDropped)
+
+`True` reasons say where the setting came from:
+
+| Reason | Description |
+|--------|-------------|
+| `SetOnService` | The LLMInferenceService's `spec.annotations`, directly or through a preset, set the annotation to true |
+| `SetOnAllGateways` | Every parent Gateway of the HTTPRoute sets the annotation to true |
+
+`False` reasons say why the per-model path matches are kept. When more than one applies, the condition reports the first in this order:
+
+| Reason | Description | Action |
+|--------|-------------|--------|
+| `DisabledOnService` | The LLMInferenceService sets the annotation to false while at least one parent Gateway sets it to true. The message lists those Gateways | None if intended. Remove that value to follow the Gateways |
+| `UnrecognizedValue` | The LLMInferenceService's value is not a boolean, and not every parent Gateway sets true | Use `true` or `false` |
+| `NotSetOnAllGateways` | Some parent Gateways set the annotation to true, others don't. The message lists the ones that don't | Annotate the remaining Gateways, or set it on the LLMInferenceService |
+| `ModelBasedRoutingNotEnabled` | Model-based routing is not active for the LLMInferenceService, so there is no model-routing tree to fall back on | Check the [model-based routing prerequisites](../../../admin-guide/configurations.md#model-based-routing-prerequisites) |
+| `NoModelRoutingMatches` | The route has no model-routing matches, for example a custom `spec.router.route.http.spec` without the model header | Add model-header matches to the custom route, or remove the annotation |
 
 ---
 
@@ -254,6 +282,8 @@ Each address also carries a `models[]` list that surfaces the model names served
 - `gateway-internal` - cluster-local Gateway service URL
 - `internal` - private IP or other internal hostname
 - Addresses for model-based routing get a `-model-routing` suffix (e.g. `internal-model-routing`)
+
+When the per-model paths are dropped with [`serving.kserve.io/model-based-routing-only`](./llmisvc-configuration.md#model-based-routing-only), only the `-model-routing` addresses remain, and `status.url` is the Gateway root.
 
 **Model name formats** differ by address type:
 

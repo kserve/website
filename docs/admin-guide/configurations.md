@@ -246,6 +246,8 @@ The header name is configured by `modelBasedRoutingHeaderName` in the `ingress` 
 
 For custom managed routes, the model-header match must be an `Exact` match on `publishers/<namespace>/models/<base-model-name>` before KServe expands it. A different value or a hand-written regex on that header results in `RoutingPreconditionNotMet`. Correct the service or configuration to trigger another reconciliation. Externally managed routes referenced through `spec.router.route.http.refs` must be updated by their owner.
 
+The same prerequisites apply to `serving.kserve.io/model-based-routing-only`, which a Gateway or an LLMInferenceService sets to drop the per-model path matches and route by model header only. See [Model-Based Routing Only](../model-serving/generative-inference/llmisvc/llmisvc-configuration.md#model-based-routing-only).
+
 #### Route capacity
 
 The shipped route template uses eight model-header matches per model: four endpoint paths, each with and without a trailing slash. With `exact`, seven adapters plus the base model fit within the Gateway API limit of 64 matches per rule. With `regex`, this rule stays at eight matches as adapters are added. Custom templates can have different counts.
