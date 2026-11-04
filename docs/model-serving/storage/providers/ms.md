@@ -112,14 +112,19 @@ spec:
           nvidia.com/gpu: "1"
 ```
 
-### Option 2: Use Environment Variable with Secret Ref
-Create a Kubernetes ModelScope token secret and specify the MS token secret reference using environment variable in the `InferenceService` Spec.
+### Option 2: Use the Storage Secret Annotation
+Reference the ModelScope credential Secret directly with the
+`serving.kserve.io/storageSecretName` annotation. This takes precedence over
+ServiceAccount Secrets and injects the credentials into the storage initializer.
+The Secret must be in the same namespace as the InferenceService.
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   name: modelscope-qwen
+  annotations:
+    serving.kserve.io/storageSecretName: storage-config
 spec:
   predictor:
     model:
@@ -138,13 +143,6 @@ spec:
           cpu: "6"
           memory: 24Gi
           nvidia.com/gpu: "1"
-      env:
-        - name: MODELSCOPE_API_TOKEN  # Option 2 for authenticating with MODELSCOPE_API_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: storage-config
-              key: MODELSCOPE_API_TOKEN
-              optional: false
 ```
 
 ## Check the InferenceService status.
