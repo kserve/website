@@ -102,7 +102,6 @@ The built-in SGLang runtime:
 - Mounts the model downloaded by KServe at `/mnt/models`.
 - Uses `lmsysorg/sglang:v0.5.14` by default.
 - Maps `spec.parallelism.tensor` to the SGLang `--tp` argument.
-- Adds `--trust-remote-code` when `spec.trustRemoteCode` is available in the installed CRD and enabled.
 
 For tensor parallelism with SGLang, set only `spec.parallelism.tensor` and request the matching number of GPUs:
 
@@ -157,11 +156,11 @@ kubectl wait --for=condition=Ready \
 Inspect the generated workload if you need to confirm which server command is running:
 
 ```bash
-kubectl get deployment sglang-opt-125m-kserve-workload \
+kubectl get deployment sglang-opt-125m-kserve \
   -o jsonpath='{.spec.template.spec.containers[?(@.name=="main")].command}{" "}{.spec.template.spec.containers[?(@.name=="main")].args}{"\n"}'
 ```
 
-For SGLang, the command should start `python3 -m sglang.launch_server`. For the default path, the generated workload uses the vLLM server configured by the llm-d presets.
+For SGLang, `.command` should begin with `/bin/bash -c` and include a shell script that builds an `args` array beginning with `python3 -m sglang.launch_server` before executing it. For the default path, the generated workload uses the vLLM server configured by the llm-d presets.
 
 ## Next steps
 
