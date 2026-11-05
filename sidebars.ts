@@ -125,6 +125,7 @@ const sidebars: SidebarsConfig = {
           link: { type: 'doc', id: 'model-serving/generative-inference/overview' },
           items: [
             "model-serving/generative-inference/overview",
+            "model-serving/generative-inference/llamacpp",
             {
               type: 'category',
               label: 'LLMInferenceService',
