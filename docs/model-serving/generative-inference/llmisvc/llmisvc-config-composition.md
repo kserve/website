@@ -100,7 +100,7 @@ The sources that get merged (well-known configs are auto-injected, baseRef is re
 <div style={{flex: '1 1 180px', minWidth: '180px'}}>
 <div style={{background: 'var(--cfg-blue-header)', padding: '0.4rem 0.6rem', borderRadius: '6px 6px 0 0', fontWeight: 600, fontSize: '0.75rem', borderBottom: '2px solid var(--cfg-blue-border)'}}><a href="https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-scheduler.yaml" style={{color: 'inherit', textDecoration: 'none', borderBottom: '1px dashed var(--cfg-blue-border)'}}>kserve-config-llm-scheduler</a></div>
 <pre style={{margin: 0, padding: '0.6rem', borderRadius: '0 0 6px 6px', border: '1px solid var(--cfg-blue-header)', background: 'var(--cfg-blue-body)', fontSize: '0.8rem', lineHeight: '1.4'}}>
-{"router:\n  scheduler:\n    pool:\n      spec:\n        selector: [...]\n        targetPort: 8000\n    template:\n      containers:\n        - name: epp\n          image: llm-d-inference-scheduler\n          ports: [9002]\n        - name: tokenizer\n          image: llm-d-uds-tokenizer\n          ports: [8082]"}
+{"router:\n  scheduler:\n    pool:\n      spec:\n        selector: [...]\n        targetPorts:\n          - number: 8000\n    template:\n      containers:\n        - name: epp\n          image: llm-d-router-endpoint-picker\n          ports: [9002]\n        - name: tokenizer\n          image: llm-d-uds-tokenizer\n          ports: [8082]"}
 </pre>
 </div>
 
@@ -199,10 +199,10 @@ The sources that get merged (well-known configs are auto-injected, baseRef is re
 <W>{"    template:\n"}</W>
 <W>{"      containers:\n"}</W>
 <W>{"        - name: epp\n"}</W>
-<W>{"          image: llm-d-inference-scheduler\n"}</W>
+<W>{"          image: llm-d-router-endpoint-picker\n"}</W>
 <W>{"          ports: [9002]\n"}</W>
 <W>{"        - name: tokenizer\n"}</W>
-<W>{"          image: llm-d-inference-scheduler\n"}</W>
+<W>{"          image: llm-d-router-endpoint-picker\n"}</W>
 <W>{"          ports: [8082]\n"}</W>
 <S>{"  route:\n"}</S>
 <W>{"    http:\n"}</W>
