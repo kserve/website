@@ -11,7 +11,7 @@ export const Note = ({children}) => <span style={{color: 'var(--cfg-text-note)',
 
 # LLMInferenceService Config Composition
 
-A full LLM inference deployment touches container images, probes, security contexts, scheduler settings, routing rules, resource limits, and more. Most users should not have to care about all of that. KServe ships sensible defaults that cover common deployments out of the box - a working service needs a model URI, a reference to a accelerator config, and a few feature toggles like routing and scheduling. When you do need to change something - a different GPU type, a custom routing policy, a longer startup probe - you override only that field and the defaults you did not touch stay in place.
+A full LLM inference deployment touches container images, probes, security contexts, scheduler settings, routing rules, resource limits, and more. Most users should not have to care about all of that. KServe ships sensible defaults that cover common deployments out of the box - a working service needs a model URI, a reference to an accelerator config, and a few feature toggles like routing and scheduling. When you do need to change something - a different GPU type, a custom routing policy, a longer startup probe - you override only that field and the defaults you did not touch stay in place.
 
 When you create an LLMInferenceService, the controller does not apply your spec directly. Instead, it builds an **effective configuration** by merging multiple sources together using [Kubernetes strategic merge patch](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/). This process - config composition - determines the final shape of the resources that will be responsible for reliably serving your model.
 
@@ -23,11 +23,12 @@ Understanding composition can be of great help when you need to debug unexpected
 
 ## Configuration Sources and Merge Order
 
-Three types of configuration participate in the merge, each with a different owner and priority:
+Four types of configuration can participate in the merge, each with a different owner and priority:
 
 | Source | Owner | Purpose | Priority |
 |--------|-------|---------|----------|
-| **Well-known configs** | Platform (shipped with KServe) | Auto-injected by the controller based on the spec shape. Set up the llm-d stack: vLLM container, scheduler, routes, probes, volumes, sidecars. | Lowest |
+| **ServingRuntime / ClusterServingRuntime** | Platform or operator | Optionally selected through `spec.runtime`. Supplies the model-server container configuration and engine image. | Lowest |
+| **Well-known configs** | Platform (shipped with KServe) | Auto-injected by the controller based on the spec shape and runtime. Set up workload infrastructure, scheduler, routes, probes, volumes, and sidecars. | Low |
 | **User `baseRefs`** | User or admin | `LLMInferenceServiceConfig` resources referenced via `spec.baseRefs`. Accelerator configs (GPU types, nodeSelectors, images), org-specific defaults. | Middle (ordered) |
 | **`LLMInferenceService` spec** | User | The service itself. Model URI, replicas, field overrides. | Highest |
 
@@ -35,7 +36,8 @@ All selected configs are merged in a fixed order. Each step applies a Kubernetes
 
 ```mermaid
 flowchart LR
-    A["Well-known<br/>configs"] --> B["baseRef 0"]
+    R["ServingRuntime /<br/>ClusterServingRuntime"] --> A["Well-known<br/>configs"]
+    A --> B["baseRef 0"]
     B --> C["baseRef 1"]
     C --> D["..."]
     D --> E["LLMInferenceService<br/>spec"]
@@ -44,12 +46,12 @@ flowchart LR
     classDef baseRefNode fill:#fff3e0,stroke:#ffcc80,color:#000
     classDef specNode fill:#e8f5e9,stroke:#a5d6a7,color:#000
 
-    class A wellKnownNode
+    class R,A wellKnownNode
     class B,C,D baseRefNode
     class E specNode
 ```
 
-Well-known configs are not created by users. They are installed as part of KServe and automatically selected by the controller based on the spec shape (see [Config Injection](#config-injection) below). User `baseRefs` are `LLMInferenceServiceConfig` resources that you or a platform admin create and reference in `spec.baseRefs` - multiple `baseRefs` are merged in order, later entries override earlier ones. The `LLMInferenceService` spec itself always wins.
+When `spec.runtime` is set, the controller resolves a `ServingRuntime` in the service namespace first and then falls back to a `ClusterServingRuntime`. Its container spec is the lowest-priority layer. Well-known configs are installed as part of KServe and automatically selected by the controller based on the spec shape and runtime (see [Config Injection](#config-injection) below). User `baseRefs` are `LLMInferenceServiceConfig` resources that you or a platform admin create and reference in `spec.baseRefs` - multiple `baseRefs` are merged in order, later entries override earlier ones. The `LLMInferenceService` spec itself always wins.
 
 ---
 
@@ -79,7 +81,7 @@ spec:
 
 **Controller resolves**:
 
-1. The spec has no `prefill` and no `worker` - this is a single-node deployment, so the controller injects `kserve-config-llm-template` to provide the base vLLM container, probes, volumes, and security context.
+1. The spec has no `prefill`, `worker`, or `runtime` - this is a default single-node vLLM deployment, so the controller injects `kserve-config-llm-template` to provide the base container, probes, volumes, and security context.
 2. The spec has `router.scheduler` without an external pool ref - the controller injects `kserve-config-llm-scheduler` to create the Endpoint Picker (EPP) deployment and InferencePool that handle intelligent request routing.
 3. The spec has `router.route` without external route refs - the controller injects `kserve-config-llm-router-route` to create the HTTPRoute rules that expose the service's inference endpoints through the Gateway.
 4. The `baseRefs` reference `my-gpu-profile` - the controller fetches it from the `kserve` namespace (not found in `my-team`) to apply the GPU resources and node selector.
@@ -221,7 +223,7 @@ The sources that get merged (well-known configs are auto-injected, baseRef is re
 
 ## Config Injection
 
-The controller inspects the LLMInferenceService spec and auto-injects well-known configs based on two independent criteria: the **deployment pattern** and the **router components** you enable.
+The controller inspects the LLMInferenceService spec and auto-injects well-known configs based on three independent criteria: the selected **runtime**, the **deployment pattern**, and the **router components** you enable.
 
 ### Workload configs
 
@@ -235,7 +237,8 @@ These paths are mutually exclusive.
 
 | Your spec has... | Topology | Well-known config(s) injected |
 |---|---|---|
-| No `prefill`, no `worker` | Single-node | `kserve-config-llm-template` |
+| No `prefill`, no `worker`, runtime omitted or not SGLang | Single-node vLLM/default | `kserve-config-llm-template` |
+| No `prefill`, no `worker`, `runtime: kserve-llm-sglang` | Single-node SGLang | `kserve-config-sglang-template` |
 | No `prefill`, `worker` + DataParallel | Multi-node | `kserve-config-llm-worker-data-parallel` |
 | `prefill` defined, no `worker` | Disaggregated, single-node each | `kserve-config-llm-prefill-template` + `kserve-config-llm-decode-template` |
 | `prefill` defined, `worker` + DataParallel | Disaggregated, multi-node each | `kserve-config-llm-prefill-worker-data-parallel` + `kserve-config-llm-decode-worker-data-parallel` |
@@ -249,14 +252,14 @@ Router configs are injected independently and can combine with any workload conf
 | `router.scheduler` without external pool ref | `kserve-config-llm-scheduler` |
 | `router.route` without external route refs | `kserve-config-llm-router-route` |
 
-A single-node deployment with a managed scheduler and route will inject three configs: `kserve-config-llm-template`, `kserve-config-llm-scheduler`, and `kserve-config-llm-router-route`.
+A default single-node deployment with a managed scheduler and route injects `kserve-config-llm-template`, `kserve-config-llm-scheduler`, and `kserve-config-llm-router-route`. Selecting `runtime: kserve-llm-sglang` replaces the default workload template with `kserve-config-sglang-template`; the scheduler and route configs remain the same.
 
 
 ---
 
 ## Strategic Merge Patch Behavior
 
-The controller uses [Kubernetes strategic merge patch](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/) to combine configs. The same merge logic applies at every step in the pipeline - well-known config + `baseRef`, `baseRef` + `baseRef`, and `baseRef` + spec. Here is how it works at the field level:
+The controller uses [Kubernetes strategic merge patch](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/) to combine configs. The same merge logic applies at every step in the pipeline - runtime + well-known config, well-known config + `baseRef`, `baseRef` + `baseRef`, and `baseRef` + spec. Here is how it works at the field level:
 
 - **Non-zero fields** from the override are applied to the base. Existing base fields that the override does not mention are left untouched.
 - **Zero-valued fields** (empty string `""`, `0`, `nil`, `false`) in the override do **not** overwrite base values. This prevents a config that does not specify a port from wiping out the well-known config's port.
@@ -314,6 +317,7 @@ For each config reference (both well-known and baseRef), the controller looks up
 **Teams** can create a same-name config in their own namespace to override the shared version. For example, if the `kserve` namespace contains `my-gpu-profile` with A100 settings, a team namespace can define its own `my-gpu-profile` with H100 settings - the local version takes precedence for services in that namespace.
 
 **Debugging config resolution**: The `status.appliedConfigs` field records which configs were actually used and from where. Each entry is tagged with a `source` field:
+- `ServingRuntime` - container configuration resolved from `spec.runtime`
 - `Preset` - well-known config auto-injected by the controller
 - `UserRef` - config referenced via `spec.baseRefs`
 
@@ -340,7 +344,8 @@ The controller ships with pre-installed `LLMInferenceServiceConfig` resources in
 
 | Config Name | Injected When | What It Sets Up |
 |-------------|--------------|-----------------|
-| `kserve-config-llm-template` | Single-node (no prefill, no worker) | vLLM container, probes, volumes, TLS, security context |
+| `kserve-config-llm-template` | Single-node (no prefill, no worker), runtime omitted or not SGLang | Default vLLM container, probes, volumes, TLS, security context |
+| `kserve-config-sglang-template` | Single-node with `runtime: kserve-llm-sglang` | Experimental SGLang container, probes, volumes, and security context |
 | `kserve-config-llm-worker-data-parallel` | Multi-node + DataParallel | Leader and worker templates, DP addressing, shared memory |
 | `kserve-config-llm-prefill-template` | Disaggregated prefill (single-node) | Prefill container |
 | `kserve-config-llm-decode-template` | Disaggregated decode (single-node) | Decode container, routing sidecar |

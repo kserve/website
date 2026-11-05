@@ -10,7 +10,14 @@ title: "Understanding LLMInferenceService"
 
 **LLMInferenceService** is a Kubernetes Custom Resource Definition (CRD) introduced in KServe as part of its strategic shift towards **GenAI-first architecture**. Built on the foundation of [llm-d](https://github.com/llm-d)—a production-ready framework for scalable LLM serving—LLMInferenceService delivers enterprise-grade capabilities for deploying and managing Large Language Model inference workloads on Kubernetes.
 
-The llm-d project provides a proven architecture for high-performance LLM serving, combining vLLM's inference engine with Kubernetes orchestration and intelligent routing capabilities. Features like KV-cache aware scheduling, disaggregated prefill-decode serving, and distributed inference enable both optimal performance and cost efficiency. By integrating llm-d's architecture through a native Kubernetes CRD, KServe makes these advanced patterns accessible and easy to deploy, allowing users to achieve faster time-to-value while maintaining production-grade reliability.
+The default llm-d integration combines the vLLM inference engine with Kubernetes orchestration and intelligent routing capabilities. Features like KV-cache aware scheduling, disaggregated prefill-decode serving, and distributed inference enable both optimal performance and cost efficiency. For single-node deployments, KServe also supports SGLang through the built-in `kserve-llm-sglang` runtime. By exposing these capabilities through a native Kubernetes CRD, KServe makes advanced LLM serving patterns accessible while allowing users to select the runtime that fits their workload.
+
+### Runtime Options
+
+- **vLLM** is the default when `spec.runtime` is omitted. The default llm-d templates support single-node, distributed, and disaggregated workload patterns.
+- **SGLang** is selected with `spec.runtime: kserve-llm-sglang`. The built-in SGLang template currently supports single-node, non-disaggregated deployments with managed routing and scheduling.
+
+See the [runtime guide](./llmisvc-runtime.md) for selection details, examples, and the current SGLang compatibility matrix.
 
 ### Why a Separate CRD?
 
@@ -176,6 +183,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 
 ### 📚 Core Concepts
 - **[Configuration Guide](./llmisvc-configuration.md)**: Detailed spec reference and configuration patterns
+- **[Runtime](./llmisvc-runtime.md)**: Select vLLM or experimental single-node SGLang for LLMInferenceService
 - **[Architecture Guide](../../../concepts/architecture/control-plane-llmisvc.md)**: System architecture and component interactions
 - **[Dependencies](./llmisvc-dependencies.md)**: Required infrastructure components
 
@@ -198,4 +206,3 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 - ✅ **Production-Ready**: Monitoring, RBAC, storage integration, KV cache transfer
 
 This architecture enables organizations to deploy and scale LLM inference workloads efficiently on Kubernetes, with the flexibility to optimize for different model sizes, hardware configurations, and performance requirements.
-

@@ -4,6 +4,15 @@ title: Runtime Overview
 
 # Runtime Overview
 
+KServe provides two paths for serving generative AI models:
+
+- **`InferenceService`** uses compatible `ServingRuntime` or `ClusterServingRuntime` resources, selected explicitly or automatically.
+- **`LLMInferenceService`** uses the default llm-d/vLLM configuration, or the built-in experimental SGLang runtime for single-node deployments.
+
+For advanced LLM serving, see the [LLMInferenceService overview](./llmisvc/llmisvc-overview.md). To select vLLM or experimental SGLang, see the [LLMInferenceService runtime guide](./llmisvc/llmisvc-runtime.md).
+
+The rest of this page describes the Hugging Face runtime used with `InferenceService`.
+
 The Hugging Face serving runtime in KServe is a specialized model server designed to deploy and serve Hugging Face models with high performance and scalability. It uses [`vLLM`](https://github.com/vllm-project/vllm) backend engine which is optimized for Large Language Models (LLMs) with high-performance text generation capabilities.
 
 This provides significant performance improvements, including:
@@ -62,6 +71,29 @@ The Hugging Face runtime integrates into KServe's modular serving architecture, 
 │  • Scoring                                    │
 └───────────────────────────────────────────────┘
 ```
+
+### Generative Runtime Selection
+
+Choose the API first, then select its runtime:
+
+```mermaid
+flowchart LR
+    Start{"Which API?"}
+
+    Start --> IS["InferenceService"]
+    IS --> ISRuntime{"model.runtime set?"}
+    ISRuntime -->|Yes| Explicit["Use the named<br/>ServingRuntime"]
+    ISRuntime -->|No| Auto["Auto-select by<br/>model format"]
+    Explicit --> ISResult["Hugging Face, vLLM,<br/>or a custom runtime"]
+    Auto --> ISResult
+
+    Start --> LLMIS["LLMInferenceService"]
+    LLMIS --> LLMRuntime{"spec.runtime"}
+    LLMRuntime -->|Omitted| VLLM["llm-d with vLLM<br/>All deployment patterns"]
+    LLMRuntime -->|kserve-llm-sglang| SGLang["SGLang<br/>Single-node only"]
+```
+
+See [ServingRuntime](../../concepts/resources/servingruntime.md) for `InferenceService` runtime selection, or the [LLMInferenceService runtime guide](./llmisvc/llmisvc-runtime.md) for vLLM and experimental SGLang selection.
 
 ## Deployment Images
 

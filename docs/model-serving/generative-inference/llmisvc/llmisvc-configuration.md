@@ -12,6 +12,21 @@ This guide provides detailed reference for configuring LLMInferenceService resou
 
 ---
 
+## Runtime Selection
+
+Use `spec.runtime` to select a namespace-scoped `ServingRuntime` or cluster-scoped `ClusterServingRuntime`. The controller checks the `LLMInferenceService` namespace first and then falls back to a `ClusterServingRuntime` with the same name.
+
+When `spec.runtime` is omitted, KServe uses the default llm-d/vLLM configuration. To use the experimental built-in SGLang runtime for a plain single-node deployment, set:
+
+```yaml
+spec:
+  runtime: kserve-llm-sglang
+```
+
+The runtime supplies the model-server container configuration as the lowest-priority composition layer, so `LLMInferenceServiceConfig` resources and fields in the service spec can still override it. See the [runtime guide](./llmisvc-runtime.md) for runtime selection details and the SGLang compatibility matrix.
+
+---
+
 ## Configuration Composition Model
 
 :::tip Deep Dive
@@ -20,7 +35,7 @@ For a detailed look at how config composition works internally - including the w
 
 ### LLMInferenceService vs LLMInferenceServiceConfig
 
-Similar to the relationship between `InferenceService` and `ServingRuntime`, KServe introduces **LLMInferenceServiceConfig** to separate configuration templates from service instances. However, the relationship and purpose differ significantly:
+In addition to optional runtime selection through `spec.runtime`, KServe introduces **LLMInferenceServiceConfig** to separate reusable configuration templates from service instances. Its relationship and purpose differ from the runtime selection used by `InferenceService`:
 
 ### Comparison with InferenceService & ServingRuntime
 
