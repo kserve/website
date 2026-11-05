@@ -245,7 +245,7 @@ kubectl get pods -n kserve
 kubectl get clusterservingruntime
 
 # Verify LLMIsvcConfigs (if using LLMIsvc)
-kubectl get llminferenceserviceconfigs
+kubectl get llminferenceserviceconfigs -n kserve
 ```
 
 ## Getting Help
