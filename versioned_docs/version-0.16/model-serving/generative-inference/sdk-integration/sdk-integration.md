@@ -19,10 +19,10 @@ First, you need a deployed LLM inference service. Follow our [Text Generation wi
 Once your model is deployed, export the full service URL, including its `http://` or `https://` scheme, for API calls:
 
 ```bash
-export SERVICE_URL=$(kubectl get inferenceservice huggingface-llama3 -o jsonpath='{.status.url}')
+export SERVICE_URL=$(kubectl get inferenceservice llama3-8b -o jsonpath='{.status.url}')
 ```
 
-For the Llama3 example, the model name is `llama3`. Run the Python examples from the same shell so they can read `SERVICE_URL`. You'll need both the service URL and model name for SDK integration.
+The deployment guide names the InferenceService `llama3-8b` and sets the API model name to `llama3` with `--model_name=llama3`. Run the Python examples from the same shell so they can read `SERVICE_URL`.
 
 ## Integration with OpenAI SDK
 
