@@ -175,7 +175,7 @@ The Hugging Face runtime image has the following environment variables set by de
 
 ### Hugging Face Runtime Arguments
 
-Below is an explanation of command line arguments supported by the Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/serving/engine_args.html) can also be specified on the command line and will be parsed by the Hugging Face runtime.
+Below is an explanation of command line arguments supported by the Hugging Face runtime. [vLLM backend engine arguments](https://docs.vllm.ai/en/latest/configuration/engine_args/) can also be specified on the command line and will be parsed by the Hugging Face runtime.
 
 - `--model_name`: The name of the model used on the endpoint path.
 - `--model_dir`: The local path where the model is downloaded to. If `model_id` is provided, this argument will be ignored.

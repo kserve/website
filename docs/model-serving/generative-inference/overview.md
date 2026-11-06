@@ -227,7 +227,7 @@ Enable this behavior using the `--return_offsets_mapping` runtime argument. It i
 
 ### vLLM Specific Configuration
 
-The Hugging Face runtime supports **all** vLLM engine arguments, allowing for complete customization of the vLLM backend. These arguments can be passed directly when deploying the runtime. For a comprehensive list of available parameters, refer to [vLLM's engine arguments documentation](https://docs.vllm.ai/en/latest/serving/engine_args.html).
+The Hugging Face runtime supports **all** vLLM engine arguments, allowing for complete customization of the vLLM backend. These arguments can be passed directly when deploying the runtime. For a comprehensive list of available parameters, refer to [vLLM's engine arguments documentation](https://docs.vllm.ai/en/latest/configuration/engine_args/).
 
 Some frequently used vLLM parameters include:
 

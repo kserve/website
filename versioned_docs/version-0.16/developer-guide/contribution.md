@@ -225,7 +225,7 @@ When making code changes that affect functionality:
 4. **Use clear language**: Avoid jargon and explain complex concepts
 5. **Add examples**: Code samples help users understand concepts quickly
 6. **Preview changes**: Test documentation changes locally before submitting
-7. **Submit documentation PRs** to the [kserve/website](ghttps://github.com/kserve/website) repository.
+7. **Submit documentation PRs** to the [kserve/website](https://github.com/kserve/website) repository.
 
 Your PR should be 100% complete, including:
 - All test cases (including e2e tests for new features)
@@ -469,12 +469,12 @@ If you're interested in becoming a KServe member:
 
 ### Contributing Organizations
 
-If your organization uses KServe, consider adding it to the [adopters page](https://kserve.github.io/website/master/community/adopters). There are categories for:
+If your organization uses KServe, consider adding it to the [adopters page](../community/adopters.md). There are categories for:
 - Providers (who offer hosted/managed KServe services)
 - End users (who use and consume KServe)
 - Integrations (commercial or open source products that work with KServe)
 
-To add your organization, submit a PR with your logo (preferably in SVG format) to the [website repository](https://github.com/kserve/website/tree/main/docs/adopters).
+To add your organization, submit a PR with your logo (preferably in SVG format) to the [website repository](https://github.com/kserve/website/tree/main/static/img/adopters).
 
 
 ## Community Engagement
