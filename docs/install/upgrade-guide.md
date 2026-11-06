@@ -112,7 +112,7 @@ done
 
 # 2. Upgrade main KServe CRDs
 helm upgrade -i kserve-crd oci://ghcr.io/kserve/charts/kserve-crd \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
@@ -123,7 +123,7 @@ done
 
 # 4. Upgrade LocalModel CRDs
 helm upgrade -i kserve-localmodel-crd oci://ghcr.io/kserve/charts/kserve-localmodel-crd \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
@@ -134,7 +134,7 @@ done
 
 # 6. (Optional, if using llmisvc) Upgrade LLMIsvc CRDs
 helm upgrade -i kserve-llmisvc-crd oci://ghcr.io/kserve/charts/kserve-llmisvc-crd \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
@@ -175,7 +175,7 @@ done
 # Set llmisvcConfigs.enabled=true if you are using LLMIsvc
 helm upgrade -i kserve-runtime-configs \
   oci://ghcr.io/kserve/charts/kserve-runtime-configs \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace \
   --wait \
@@ -201,20 +201,20 @@ Finally, upgrade the controller deployments:
 # 1. Upgrade KServe controller (note: chart name changed to kserve-resources)
 # However, please use existing chart name(kserve) for upgrade.
 helm upgrade kserve oci://ghcr.io/kserve/charts/kserve-resources \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
 # 2. Upgrade LocalModel controller
 helm upgrade -i kserve-localmodel-resources oci://ghcr.io/kserve/charts/kserve-localmodel-resources \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
 # 3. (Optional if using llmisvc) Upgrade LLMIsvc controller
 # IMPORTANT: Set createSharedResources=false to avoid conflicts
 helm upgrade -i kserve-llmisvc-resources oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace \
   --set kserve.createSharedResources=false
@@ -245,7 +245,7 @@ kubectl get pods -n kserve
 kubectl get clusterservingruntime
 
 # Verify LLMIsvcConfigs (if using LLMIsvc)
-kubectl get llminferenceserviceconfigs
+kubectl get llminferenceserviceconfigs -n kserve
 ```
 
 ## Getting Help

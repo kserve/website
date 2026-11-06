@@ -916,6 +916,7 @@ TrainedModelList contains a list of TrainedModel
 - [ActuatorSpec](#actuatorspec)
 - [BuiltInAdapter](#builtinadapter)
 - [Criticality](#criticality)
+- [DirectKEDAScalingSpec](#directkedascalingspec)
 - [GatewayObjectReference](#gatewayobjectreference)
 - [GatewayRoutesSpec](#gatewayroutesspec)
 - [GatewaySpec](#gatewayspec)
@@ -957,6 +958,7 @@ TrainedModelList contains a list of TrainedModel
 - [ObservedGateway](#observedgateway)
 - [ObservedSchedulerStatus](#observedschedulerstatus)
 - [ParallelismSpec](#parallelismspec)
+- [RolloutStrategy](#rolloutstrategy)
 - [RouterSpec](#routerspec)
 - [RouterStatus](#routerstatus)
 - [ScaleMetric](#scalemetric)
@@ -973,6 +975,7 @@ TrainedModelList contains a list of TrainedModel
 - [SupportedModelFormat](#supportedmodelformat)
 - [SupportedRuntime](#supportedruntime)
 - [SupportedUriFormat](#supporteduriformat)
+- [TokenizerSpec](#tokenizerspec)
 - [TracingSpec](#tracingspec)
 - [TrainedModelSpec](#trainedmodelspec)
 - [TrainedModelStatus](#trainedmodelstatus)
@@ -1083,6 +1086,58 @@ be supported by the load balancing algorithm.
   required="false"
   description="Sheddable - Requests to this model should be shed before critical and standard traffic.<br />"
 />
+#### DirectKEDAScalingSpec
+
+
+
+**Appears in:**
+- [ScalingSpec](#scalingspec)
+
+DirectKEDAScalingSpec configures direct KEDA scaling without WVA.
+It embeds KEDAScalingSpec for shared ScaledObject settings and adds user-defined triggers.
+
+##### Fields
+
+
+
+<ApiField
+  name="pollingInterval"
+  type="integer"
+  required="false"
+  description="PollingInterval is the interval in seconds to check each trigger on.<br />Must be at least 1 second."
+/><ApiField
+  name="cooldownPeriod"
+  type="integer"
+  required="false"
+  description="CooldownPeriod is the period in seconds to wait after the last trigger reported active<br />before scaling the resource back to its minimum replica count.<br />A value of 0 means scale down immediately with no cooldown."
+/><ApiField
+  name="initialCooldownPeriod"
+  type="integer"
+  required="false"
+  description="InitialCooldownPeriod is the period in seconds to wait after the ScaledObject is created<br />before KEDA starts evaluating triggers. Useful for LLM deployments where the model<br />takes time to load before it can serve traffic, preventing premature scale-up decisions."
+/><ApiField
+  name="idleReplicaCount"
+  type="integer"
+  required="false"
+  description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />Set to 0 for true scale-to-zero: KEDA scales the resource to zero replicas when idle<br />and immediately back to minReplicas once a trigger becomes active.<br />If not set, KEDA will not scale below minReplicas."
+/><ApiField
+  name="fallback"
+  type="[Fallback](#fallback)"
+  required="false"
+  description="Fallback defines the replica count to maintain when the scaler is in a fallback state<br />(e.g., when Prometheus or WVA metrics are unavailable). This allows the deployment to<br />hold a safe replica count during metric outages rather than scaling to zero."
+/><ApiField
+  name="advanced"
+  type="[AdvancedConfig](#advancedconfig)"
+  required="false"
+  description="Advanced specifies the advanced KEDA configuration options.<br />This includes HPA behavior configuration and restore-to-original replica count settings."
+/><ApiField
+  name="triggers"
+  type="ScaleTriggers array"
+  required="true"
+  description="Triggers defines the KEDA scaling triggers.<br />At least one trigger is required."
+/>
+
+
 #### GatewayObjectReference
 
 
@@ -1724,10 +1779,13 @@ IngressSpec defines the configuration for a Kubernetes Ingress.
 
 **Appears in:**
 - [ActuatorSpec](#actuatorspec)
+- [DirectKEDAScalingSpec](#directkedascalingspec)
 - [WVASpec](#wvaspec)
 
 KEDAScalingSpec configures the KEDA ScaledObject for autoscaling.
 The fields are directly from the upstream KEDA ScaledObject API.
+Note: WVA-only restrictions on scalingModifiers live on WVASpec so direct KEDA
+(DirectKEDAScalingSpec) can use scalingModifiers when users define their own triggers.
 
 ##### Fields
 
@@ -1752,7 +1810,7 @@ The fields are directly from the upstream KEDA ScaledObject API.
   name="idleReplicaCount"
   type="integer"
   required="false"
-  description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />If not set, KEDA will not scale below minReplicas."
+  description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />Set to 0 for true scale-to-zero: KEDA scales the resource to zero replicas when idle<br />and immediately back to minReplicas once a trigger becomes active.<br />If not set, KEDA will not scale below minReplicas."
 /><ApiField
   name="fallback"
   type="[Fallback](#fallback)"
@@ -1831,7 +1889,7 @@ LLMInferenceServiceSpec defines the desired state of LLMInferenceService.
   name="scaling"
   type="[ScalingSpec](#scalingspec)"
   required="false"
-  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(VariantAutoscaling CR, ServiceMonitor, and the selected actuator — HPA or KEDA ScaledObject)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
+  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(ServiceMonitor and the selected actuator — HPA or KEDA ScaledObject, annotated for WVA discovery)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
 /><ApiField
   name="parallelism"
   type="[ParallelismSpec](#parallelismspec)"
@@ -1857,6 +1915,11 @@ LLMInferenceServiceSpec defines the desired state of LLMInferenceService.
   type="[PodSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podspec-v1-core)"
   required="false"
   description="Worker configuration for multi-node deployments.<br />The presence of this field triggers the creation of a multi-node (distributed) setup.<br />This spec defines the configuration for the worker pods, while the main 'Template' field defines the head pod.<br />The controller is responsible for enabling discovery between head and worker pods."
+/><ApiField
+  name="rolloutStrategy"
+  type="[RolloutStrategy](#rolloutstrategy)"
+  required="false"
+  description="RolloutStrategy configures how rolling updates are performed for this workload.<br />When omitted, Kubernetes/LWS defaults apply."
 /><ApiField
   name="router"
   type="[RouterSpec](#routerspec)"
@@ -2579,6 +2642,33 @@ ParallelismSpec defines the parallelism parameters for distributed inference.
 />
 
 
+#### RolloutStrategy
+
+
+
+**Appears in:**
+- [LLMInferenceServiceSpec](#llminferenceservicespec)
+- [WorkloadSpec](#workloadspec)
+
+RolloutStrategy configures the rolling update behavior for a workload.
+
+##### Fields
+
+
+
+<ApiField
+  name="maxUnavailable"
+  type="[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#intorstring-intstr-util)"
+  required="false"
+  description="MaxUnavailable specifies the maximum number of replicas that can be<br />unavailable during a rolling update. Value can be an absolute number<br />(ex: 5) or a percentage of total replicas (ex: &quot;50%&quot;)."
+/><ApiField
+  name="maxSurge"
+  type="[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#intorstring-intstr-util)"
+  required="false"
+  description="MaxSurge specifies the maximum number of replicas that can be scheduled<br />above the desired number of replicas during a rolling update. Value can<br />be an absolute number (ex: 5) or a percentage of total replicas (ex: &quot;50%&quot;)."
+/>
+
+
 #### RouterSpec
 
 
@@ -2666,7 +2756,9 @@ ScaleMetric enum
 
 ScalingSpec configures autoscaling for the LLM inference deployment.
 When scaling is configured, the controller creates and manages autoscaling resources
-(VariantAutoscaling CR, ServiceMonitor, and the selected actuator — HPA or KEDA ScaledObject).
+(ServiceMonitor and the selected actuator — HPA or KEDA ScaledObject).
+Use WVA for metric-driven scaling (actuators annotated for WVA discovery), or KEDA for direct
+scaling with user-defined triggers (no WVA required).
 
 ##### Fields
 
@@ -2688,6 +2780,11 @@ When scaling is configured, the controller creates and manages autoscaling resou
   type="[WVASpec](#wvaspec)"
   required="false"
   description="WVA configures the Workload Variant Autoscaler (WVA) for scaling.<br />WVA scales based on a variety of inference metrics (KV cache utilization, queue depth, etc.)<br />rather than traditional CPU/memory metrics."
+/><ApiField
+  name="keda"
+  type="[DirectKEDAScalingSpec](#directkedascalingspec)"
+  required="false"
+  description="KEDA configures direct KEDA scaling without WVA.<br />Users specify their own triggers (CPU, Prometheus, queue depth, etc.) and the controller<br />creates a ScaledObject with those triggers. Mutually exclusive with WVA."
 />
 
 
@@ -2769,6 +2866,11 @@ Step 2 (endpoint routing): Gateway &lt;-- forward request/response --&gt; Infere
   type="integer"
   required="true"
   description="Replicas is the number of replicas for the scheduler."
+/><ApiField
+  name="tokenizer"
+  type="[TokenizerSpec](#tokenizerspec)"
+  required="false"
+  description="Tokenizer configures a standalone tokenizer deployment that serves the<br />vLLM render endpoint (/v1/completions/render) over HTTP."
 />
 
 
@@ -2865,6 +2967,11 @@ ServerType constant for specifying the runtime name
   type="string"
   required="false"
   description="If specified, the pod will be dispatched by specified scheduler.<br />If not specified, the pod will be dispatched by default scheduler."
+/><ApiField
+  name="resourceClaims"
+  type="[PodResourceClaim](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podresourceclaim-v1-core) array"
+  required="false"
+  description="ResourceClaims defines which ResourceClaims must be allocated<br />and reserved before the Pod is allowed to start. The resources<br />will be made available to those containers which consume them<br />by name.<br />Dynamic Resource Allocation (DRA) is GA since Kubernetes 1.32<br />(beta, enabled by default, since 1.31). The cluster must support<br />DRA for these claims to take effect on created Pods.<br />Each entry may reference an existing ResourceClaim (resourceClaimName)<br />or ResourceClaimTemplate (resourceClaimTemplateName) in the same<br />namespace. KServe does not create these objects; they must exist<br />before the Pod can be scheduled.<br />Note: the resulting Pod's resourceClaims field is immutable<br />after pod creation per Kubernetes semantics."
 />
 
 
@@ -2960,6 +3067,11 @@ are hammered out.
   type="string"
   required="false"
   description="If specified, the pod will be dispatched by specified scheduler.<br />If not specified, the pod will be dispatched by default scheduler."
+/><ApiField
+  name="resourceClaims"
+  type="[PodResourceClaim](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podresourceclaim-v1-core) array"
+  required="false"
+  description="ResourceClaims defines which ResourceClaims must be allocated<br />and reserved before the Pod is allowed to start. The resources<br />will be made available to those containers which consume them<br />by name.<br />Dynamic Resource Allocation (DRA) is GA since Kubernetes 1.32<br />(beta, enabled by default, since 1.31). The cluster must support<br />DRA for these claims to take effect on created Pods.<br />Each entry may reference an existing ResourceClaim (resourceClaimName)<br />or ResourceClaimTemplate (resourceClaimTemplateName) in the same<br />namespace. KServe does not create these objects; they must exist<br />before the Pod can be scheduled.<br />Note: the resulting Pod's resourceClaims field is immutable<br />after pod creation per Kubernetes semantics."
 /><ApiField
   name="grpcEndpoint"
   type="string"
@@ -3161,6 +3273,27 @@ SupportedUriFormat can be either prefix or regex. Todo: Add validation that only
 />
 
 
+#### TokenizerSpec
+
+
+
+**Appears in:**
+- [SchedulerSpec](#schedulerspec)
+
+TokenizerSpec configures a standalone tokenizer deployment.
+
+##### Fields
+
+
+
+<ApiField
+  name="template"
+  type="[PodSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podspec-v1-core)"
+  required="false"
+  description="Template for the tokenizer pod spec. This is merged on top of the<br />well-known tokenizer config defaults (vLLM render container)."
+/>
+
+
 #### TracingSpec
 
 
@@ -3304,6 +3437,7 @@ might be inferred or is not strictly required by this controller.
 - [ScalingSpec](#scalingspec)
 
 WVASpec configures the Workload Variant Autoscaler.
+scalingModifiers under wva.keda.advanced are forbidden because WVA owns the metric formula.
 
 ##### Fields
 
@@ -3392,6 +3526,11 @@ WorkerSpec is the schema for multi-node/multi-GPU feature
   required="false"
   description="If specified, the pod will be dispatched by specified scheduler.<br />If not specified, the pod will be dispatched by default scheduler."
 /><ApiField
+  name="resourceClaims"
+  type="[PodResourceClaim](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podresourceclaim-v1-core) array"
+  required="false"
+  description="ResourceClaims defines which ResourceClaims must be allocated<br />and reserved before the Pod is allowed to start. The resources<br />will be made available to those containers which consume them<br />by name.<br />Dynamic Resource Allocation (DRA) is GA since Kubernetes 1.32<br />(beta, enabled by default, since 1.31). The cluster must support<br />DRA for these claims to take effect on created Pods.<br />Each entry may reference an existing ResourceClaim (resourceClaimName)<br />or ResourceClaimTemplate (resourceClaimTemplateName) in the same<br />namespace. KServe does not create these objects; they must exist<br />before the Pod can be scheduled.<br />Note: the resulting Pod's resourceClaims field is immutable<br />after pod creation per Kubernetes semantics."
+/><ApiField
   name="pipelineParallelSize"
   type="integer"
   required="false"
@@ -3426,7 +3565,7 @@ WorkloadSpec defines the configuration for a deployment workload, such as replic
   name="scaling"
   type="[ScalingSpec](#scalingspec)"
   required="false"
-  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(VariantAutoscaling CR, ServiceMonitor, and the selected actuator — HPA or KEDA ScaledObject)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
+  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(ServiceMonitor and the selected actuator — HPA or KEDA ScaledObject, annotated for WVA discovery)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
 /><ApiField
   name="parallelism"
   type="[ParallelismSpec](#parallelismspec)"
@@ -3452,6 +3591,11 @@ WorkloadSpec defines the configuration for a deployment workload, such as replic
   type="[PodSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podspec-v1-core)"
   required="false"
   description="Worker configuration for multi-node deployments.<br />The presence of this field triggers the creation of a multi-node (distributed) setup.<br />This spec defines the configuration for the worker pods, while the main 'Template' field defines the head pod.<br />The controller is responsible for enabling discovery between head and worker pods."
+/><ApiField
+  name="rolloutStrategy"
+  type="[RolloutStrategy](#rolloutstrategy)"
+  required="false"
+  description="RolloutStrategy configures how rolling updates are performed for this workload.<br />When omitted, Kubernetes/LWS defaults apply."
 />
 
 
@@ -3662,6 +3806,7 @@ LLMInferenceServiceList is the list type for LLMInferenceService.
 - [AppliedConfigRef](#appliedconfigref)
 - [AppliedConfigSource](#appliedconfigsource)
 - [ConfidentialSpec](#confidentialspec)
+- [DirectKEDAScalingSpec](#directkedascalingspec)
 - [EmptyDirTierSpec](#emptydirtierspec)
 - [FileSystemTierSpec](#filesystemtierspec)
 - [GatewayObjectReference](#gatewayobjectreference)
@@ -3689,6 +3834,7 @@ LLMInferenceServiceList is the list type for LLMInferenceService.
 - [PVCRefTierSpec](#pvcreftierspec)
 - [PVCTierSpec](#pvctierspec)
 - [ParallelismSpec](#parallelismspec)
+- [RolloutStrategy](#rolloutstrategy)
 - [RouterSpec](#routerspec)
 - [RouterStatus](#routerstatus)
 - [ScalingSpec](#scalingspec)
@@ -3697,6 +3843,7 @@ LLMInferenceServiceList is the list type for LLMInferenceService.
 - [SecondaryTierSpec](#secondarytierspec)
 - [SourcedAddress](#sourcedaddress)
 - [StorageInitializerSpec](#storageinitializerspec)
+- [TokenizerSpec](#tokenizerspec)
 - [TracingSpec](#tracingspec)
 - [UntypedObjectReference](#untypedobjectreference)
 - [WVASpec](#wvaspec)
@@ -3799,6 +3946,58 @@ When enabled, the storage initializer will decrypt model files using keys obtain
 from a Key Broker Service (KBS) via TEE attestation.
 
 
+
+
+#### DirectKEDAScalingSpec
+
+
+
+**Appears in:**
+- [ScalingSpec](#scalingspec)
+
+DirectKEDAScalingSpec configures direct KEDA scaling without WVA.
+It embeds KEDAScalingSpec for shared ScaledObject settings and adds user-defined triggers.
+
+##### Fields
+
+
+
+<ApiField
+  name="pollingInterval"
+  type="integer"
+  required="false"
+  description="PollingInterval is the interval in seconds to check each trigger on.<br />Must be at least 1 second."
+/><ApiField
+  name="cooldownPeriod"
+  type="integer"
+  required="false"
+  description="CooldownPeriod is the period in seconds to wait after the last trigger reported active<br />before scaling the resource back to its minimum replica count.<br />A value of 0 means scale down immediately with no cooldown."
+/><ApiField
+  name="initialCooldownPeriod"
+  type="integer"
+  required="false"
+  description="InitialCooldownPeriod is the period in seconds to wait after the ScaledObject is created<br />before KEDA starts evaluating triggers. Useful for LLM deployments where the model<br />takes time to load before it can serve traffic, preventing premature scale-up decisions."
+/><ApiField
+  name="idleReplicaCount"
+  type="integer"
+  required="false"
+  description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />Set to 0 for true scale-to-zero: KEDA scales the resource to zero replicas when idle<br />and immediately back to minReplicas once a trigger becomes active.<br />If not set, KEDA will not scale below minReplicas."
+/><ApiField
+  name="fallback"
+  type="[Fallback](#fallback)"
+  required="false"
+  description="Fallback defines the replica count to maintain when the scaler is in a fallback state<br />(e.g., when Prometheus or WVA metrics are unavailable). This allows the deployment to<br />hold a safe replica count during metric outages rather than scaling to zero."
+/><ApiField
+  name="advanced"
+  type="[AdvancedConfig](#advancedconfig)"
+  required="false"
+  description="Advanced specifies the advanced KEDA configuration options.<br />This includes HPA behavior configuration and restore-to-original replica count settings."
+/><ApiField
+  name="triggers"
+  type="ScaleTriggers array"
+  required="true"
+  description="Triggers defines the KEDA scaling triggers.<br />At least one trigger is required."
+/>
 
 
 #### EmptyDirTierSpec
@@ -4106,10 +4305,13 @@ IngressSpec defines the configuration for a Kubernetes Ingress.
 
 **Appears in:**
 - [ActuatorSpec](#actuatorspec)
+- [DirectKEDAScalingSpec](#directkedascalingspec)
 - [WVASpec](#wvaspec)
 
 KEDAScalingSpec configures the KEDA ScaledObject for autoscaling.
 The fields are directly from the upstream KEDA ScaledObject API.
+Note: WVA-only restrictions on scalingModifiers live on WVASpec so direct KEDA
+(DirectKEDAScalingSpec) can use scalingModifiers when users define their own triggers.
 
 ##### Fields
 
@@ -4134,7 +4336,7 @@ The fields are directly from the upstream KEDA ScaledObject API.
   name="idleReplicaCount"
   type="integer"
   required="false"
-  description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />If not set, KEDA will not scale below minReplicas."
+  description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />Set to 0 for true scale-to-zero: KEDA scales the resource to zero replicas when idle<br />and immediately back to minReplicas once a trigger becomes active.<br />If not set, KEDA will not scale below minReplicas."
 /><ApiField
   name="fallback"
   type="[Fallback](#fallback)"
@@ -4251,7 +4453,7 @@ LLMInferenceServiceSpec defines the desired state of LLMInferenceService.
   name="scaling"
   type="[ScalingSpec](#scalingspec)"
   required="false"
-  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(VariantAutoscaling CR, ServiceMonitor, and the selected actuator — HPA or KEDA ScaledObject)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
+  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(ServiceMonitor and the selected actuator — HPA or KEDA ScaledObject, annotated for WVA discovery)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
 /><ApiField
   name="parallelism"
   type="[ParallelismSpec](#parallelismspec)"
@@ -4282,6 +4484,11 @@ LLMInferenceServiceSpec defines the desired state of LLMInferenceService.
   type="[KVCacheOffloadingSpec](#kvcacheoffloadingspec)"
   required="false"
   description="KVCacheOffloading configures multi-tier KV cache CPU offloading for this workload.<br />The controller translates this into --kv-transfer-config for the vLLM serve command."
+/><ApiField
+  name="rolloutStrategy"
+  type="[RolloutStrategy](#rolloutstrategy)"
+  required="false"
+  description="RolloutStrategy configures how rolling updates are performed for this workload.<br />When omitted, Kubernetes/LWS defaults apply (maxUnavailable: 25%, maxSurge: 25%<br />for Deployments; maxUnavailable: 1, maxSurge: 0 for LeaderWorkerSets)."
 /><ApiField
   name="router"
   type="[RouterSpec](#routerspec)"
@@ -4671,6 +4878,35 @@ ParallelismSpec defines the parallelism parameters for distributed inference.
 />
 
 
+#### RolloutStrategy
+
+
+
+**Appears in:**
+- [LLMInferenceServiceSpec](#llminferenceservicespec)
+- [WorkloadSpec](#workloadspec)
+
+RolloutStrategy configures the rolling update behavior for a workload.
+These settings apply to both Deployment and LeaderWorkerSet resources
+created by the controller.
+
+##### Fields
+
+
+
+<ApiField
+  name="maxUnavailable"
+  type="[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#intorstring-intstr-util)"
+  required="false"
+  description="MaxUnavailable specifies the maximum number of replicas that can be<br />unavailable during a rolling update. Value can be an absolute number<br />(ex: 5) or a percentage of total replicas (ex: &quot;50%&quot;).<br />Defaults to 25% for Deployments, 1 for LeaderWorkerSets when not set."
+/><ApiField
+  name="maxSurge"
+  type="[IntOrString](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#intorstring-intstr-util)"
+  required="false"
+  description="MaxSurge specifies the maximum number of replicas that can be scheduled<br />above the desired number of replicas during a rolling update. Value can<br />be an absolute number (ex: 5) or a percentage of total replicas (ex: &quot;50%&quot;).<br />Defaults to 25% for Deployments, 0 for LeaderWorkerSets when not set."
+/>
+
+
 #### RouterSpec
 
 
@@ -4751,7 +4987,9 @@ the service is stopped.
 
 ScalingSpec configures autoscaling for the LLM inference deployment.
 When scaling is configured, the controller creates and manages autoscaling resources
-(VariantAutoscaling CR, ServiceMonitor, and the selected actuator — HPA or KEDA ScaledObject).
+(ServiceMonitor and the selected actuator — HPA or KEDA ScaledObject).
+Use WVA for metric-driven scaling (actuators annotated for WVA discovery), or KEDA for direct
+scaling with user-defined triggers (no WVA required).
 
 ##### Fields
 
@@ -4773,6 +5011,11 @@ When scaling is configured, the controller creates and manages autoscaling resou
   type="[WVASpec](#wvaspec)"
   required="false"
   description="WVA configures the Workload Variant Autoscaler (WVA) for scaling.<br />WVA scales based on a variety of inference metrics (KV cache utilization, queue depth, etc.)<br />rather than traditional CPU/memory metrics."
+/><ApiField
+  name="keda"
+  type="[DirectKEDAScalingSpec](#directkedascalingspec)"
+  required="false"
+  description="KEDA configures direct KEDA scaling without WVA.<br />Users specify their own triggers (CPU, Prometheus, queue depth, etc.) and the controller<br />creates a ScaledObject with those triggers. Mutually exclusive with WVA."
 />
 
 
@@ -4854,6 +5097,11 @@ Step 2 (endpoint routing): Gateway &lt;-- forward request/response --&gt; Infere
   type="integer"
   required="true"
   description="Replicas is the number of replicas for the scheduler."
+/><ApiField
+  name="tokenizer"
+  type="[TokenizerSpec](#tokenizerspec)"
+  required="false"
+  description="Tokenizer provides optional operational overrides for the standalone<br />tokenizer deployment that serves the vLLM render endpoint<br />(/v1/completions/render) over HTTP. The tokenizer is auto-deployed when<br />token-producer or precise-prefix-cache-scorer plugins are detected in the<br />scheduler config.inline. Use this field to customize the tokenizer pod<br />template (resources, image overrides, etc.)."
 />
 
 
@@ -4959,6 +5207,27 @@ Example - Explicitly enable (same as default):
 />
 
 
+#### TokenizerSpec
+
+
+
+**Appears in:**
+- [SchedulerSpec](#schedulerspec)
+
+TokenizerSpec configures a standalone tokenizer deployment.
+
+##### Fields
+
+
+
+<ApiField
+  name="template"
+  type="[PodSpec](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podspec-v1-core)"
+  required="false"
+  description="Template for the tokenizer pod spec. This is merged on top of the<br />well-known tokenizer config defaults (vLLM render container)."
+/>
+
+
 #### TracingSpec
 
 
@@ -5047,6 +5316,7 @@ might be inferred or is not strictly required by this controller.
 - [ScalingSpec](#scalingspec)
 
 WVASpec configures the Workload Variant Autoscaler.
+scalingModifiers under wva.keda.advanced are forbidden because WVA owns the metric formula.
 
 ##### Fields
 
@@ -5093,7 +5363,7 @@ WorkloadSpec defines the configuration for a deployment workload, such as replic
   name="scaling"
   type="[ScalingSpec](#scalingspec)"
   required="false"
-  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(VariantAutoscaling CR, ServiceMonitor, and the selected actuator — HPA or KEDA ScaledObject)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
+  description="Scaling configuration for autoscaling this workload.<br />When specified, the controller creates and manages autoscaling resources<br />(ServiceMonitor and the selected actuator — HPA or KEDA ScaledObject, annotated for WVA discovery)<br />targeting this workload.<br />Mutually exclusive with the static 'replicas' field.<br />In a disaggregated setup, each workload (decode and prefill) can have its own independent scaling configuration,<br />resulting in separate autoscaling resources per workload."
 /><ApiField
   name="parallelism"
   type="[ParallelismSpec](#parallelismspec)"
@@ -5124,6 +5394,11 @@ WorkloadSpec defines the configuration for a deployment workload, such as replic
   type="[KVCacheOffloadingSpec](#kvcacheoffloadingspec)"
   required="false"
   description="KVCacheOffloading configures multi-tier KV cache CPU offloading for this workload.<br />The controller translates this into --kv-transfer-config for the vLLM serve command."
+/><ApiField
+  name="rolloutStrategy"
+  type="[RolloutStrategy](#rolloutstrategy)"
+  required="false"
+  description="RolloutStrategy configures how rolling updates are performed for this workload.<br />When omitted, Kubernetes/LWS defaults apply (maxUnavailable: 25%, maxSurge: 25%<br />for Deployments; maxUnavailable: 1, maxSurge: 0 for LeaderWorkerSets)."
 />
 
 
@@ -5337,6 +5612,7 @@ InferenceServiceList contains a list of Service
 - [StorageUri](#storageuri)
 - [TFServingSpec](#tfservingspec)
 - [TorchServeSpec](#torchservespec)
+- [TracingSpec](#tracingspec)
 - [TransformerSpec](#transformerspec)
 - [TransitionStatus](#transitionstatus)
 - [TritonSpec](#tritonspec)
@@ -5426,7 +5702,7 @@ ARTExplainerType defines the arguments for configuring an ART Explanation Server
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -6025,7 +6301,7 @@ ExplainerExtensionSpec defines configuration shared across all explainer framewo
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -6333,6 +6609,11 @@ The following fields follow a "1-of" semantic. Users must specify exactly one sp
   type="string"
   required="false"
   description="HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod.<br />This field only specifies the pod's hostname and does not affect its DNS records.<br />When this field is set to a non-empty string:<br />- It takes precedence over the values set in `hostname` and `subdomain`.<br />- The Pod's hostname will be set to this value.<br />- `setHostnameAsFQDN` must be nil or set to false.<br />- `hostNetwork` must be set to false.<br />This field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters.<br />Requires the HostnameOverride feature gate to be enabled."
+/><ApiField
+  name="schedulingGroup"
+  type="[PodSchedulingGroup](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podschedulinggroup-v1-core)"
+  required="false"
+  description="SchedulingGroup declares the group scheduling membership of the Pod.<br />The group object referenced by this field may not exist at the time the<br />Pod is created. This field is immutable, but a group object with the same<br />name may be recreated with different policies."
 /><ApiField
   name="minReplicas"
   type="integer"
@@ -6692,7 +6973,7 @@ HuggingFaceRuntimeSpec defines arguments for configuring HuggingFace model servi
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -6796,6 +7077,11 @@ InferenceServiceSpec is the top level type for this resource
 
 
 <ApiField
+  name="tracing"
+  type="[TracingSpec](#tracingspec)"
+  required="false"
+  description="Tracing configures distributed tracing across InferenceService components.<br />When present, even as an empty object, tracing is enabled with defaults.<br />When omitted, tracing is disabled."
+/><ApiField
   name="predictor"
   type="[PredictorSpec](#predictorspec)"
   required="true"
@@ -6969,7 +7255,7 @@ LightGBMSpec defines arguments for configuring LightGBMSpec model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -7524,7 +7810,7 @@ MetricsSpec specifies how to scale based on a single metric
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -7817,7 +8103,7 @@ ONNXRuntimeSpec defines arguments for configuring ONNX model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -7984,7 +8270,7 @@ PMMLSpec defines arguments for configuring PMML model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -8150,7 +8436,7 @@ PMMLSpec defines arguments for configuring PMML model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -8530,6 +8816,11 @@ PodSpec is a description of a pod.
   type="string"
   required="false"
   description="HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod.<br />This field only specifies the pod's hostname and does not affect its DNS records.<br />When this field is set to a non-empty string:<br />- It takes precedence over the values set in `hostname` and `subdomain`.<br />- The Pod's hostname will be set to this value.<br />- `setHostnameAsFQDN` must be nil or set to false.<br />- `hostNetwork` must be set to false.<br />This field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters.<br />Requires the HostnameOverride feature gate to be enabled."
+/><ApiField
+  name="schedulingGroup"
+  type="[PodSchedulingGroup](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podschedulinggroup-v1-core)"
+  required="false"
+  description="SchedulingGroup declares the group scheduling membership of the Pod.<br />The group object referenced by this field may not exist at the time the<br />Pod is created. This field is immutable, but a group object with the same<br />name may be recreated with different policies."
 />
 
 
@@ -8639,7 +8930,7 @@ PredictorExtensionSpec defines configuration shared across all predictor framewo
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -9025,6 +9316,11 @@ The following fields follow a "1-of" semantic. Users must specify exactly one sp
   required="false"
   description="HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod.<br />This field only specifies the pod's hostname and does not affect its DNS records.<br />When this field is set to a non-empty string:<br />- It takes precedence over the values set in `hostname` and `subdomain`.<br />- The Pod's hostname will be set to this value.<br />- `setHostnameAsFQDN` must be nil or set to false.<br />- `hostNetwork` must be set to false.<br />This field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters.<br />Requires the HostnameOverride feature gate to be enabled."
 /><ApiField
+  name="schedulingGroup"
+  type="[PodSchedulingGroup](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podschedulinggroup-v1-core)"
+  required="false"
+  description="SchedulingGroup declares the group scheduling membership of the Pod.<br />The group object referenced by this field may not exist at the time the<br />Pod is created. This field is immutable, but a group object with the same<br />name may be recreated with different policies."
+/><ApiField
   name="minReplicas"
   type="integer"
   required="false"
@@ -9287,7 +9583,7 @@ SKLearnSpec defines arguments for configuring SKLearn model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -9553,7 +9849,7 @@ TFServingSpec defines arguments for configuring Tensorflow model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -9719,7 +10015,7 @@ TorchServeSpec defines arguments for configuring PyTorch model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -9805,6 +10101,44 @@ TorchServeSpec defines arguments for configuring PyTorch model serving.
   type="[ConfidentialSpec](#confidentialspec)"
   required="false"
   description="Confidential enables confidential model serving with encrypted model artifacts.<br />When enabled, the storage initializer decrypts model files using keys obtained<br />from a Key Broker Service (KBS) via TEE attestation."
+/>
+
+
+#### TracingSpec
+
+
+
+**Appears in:**
+- [InferenceServiceSpec](#inferenceservicespec)
+
+TracingSpec defines the distributed tracing configuration.
+When present (even as an empty object `{}`), tracing is enabled with defaults.
+When omitted, tracing is disabled.
+
+##### Fields
+
+
+
+<ApiField
+  name="exporterEndpoint"
+  type="string"
+  required="false"
+  description="ExporterEndpoint is the OTLP exporter endpoint.<br />Maps to the OTEL_EXPORTER_OTLP_ENDPOINT environment variable.<br />Default: &quot;http://otel-collector:4317&quot;"
+/><ApiField
+  name="sampler"
+  type="string"
+  required="false"
+  description="Sampler specifies the sampler to use for traces.<br />Maps to the OTEL_TRACES_SAMPLER environment variable.<br />Default: &quot;parentbased_traceidratio&quot;"
+/><ApiField
+  name="samplerArg"
+  type="string"
+  required="false"
+  description="SamplerArg is an argument passed to the traces sampler, such as a sampling ratio.<br />Maps to the OTEL_TRACES_SAMPLER_ARG environment variable.<br />Default: &quot;0.05&quot;"
+/><ApiField
+  name="exporter"
+  type="string"
+  required="false"
+  description="Exporter specifies which exporter is used for traces.<br />Maps to the OTEL_TRACES_EXPORTER environment variable.<br />Default: &quot;otlp&quot;"
 />
 
 
@@ -10027,6 +10361,11 @@ TransformerSpec defines transformer service for pre/post processing
   required="false"
   description="HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod.<br />This field only specifies the pod's hostname and does not affect its DNS records.<br />When this field is set to a non-empty string:<br />- It takes precedence over the values set in `hostname` and `subdomain`.<br />- The Pod's hostname will be set to this value.<br />- `setHostnameAsFQDN` must be nil or set to false.<br />- `hostNetwork` must be set to false.<br />This field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters.<br />Requires the HostnameOverride feature gate to be enabled."
 /><ApiField
+  name="schedulingGroup"
+  type="[PodSchedulingGroup](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podschedulinggroup-v1-core)"
+  required="false"
+  description="SchedulingGroup declares the group scheduling membership of the Pod.<br />The group object referenced by this field may not exist at the time the<br />Pod is created. This field is immutable, but a group object with the same<br />name may be recreated with different policies."
+/><ApiField
   name="minReplicas"
   type="integer"
   required="false"
@@ -10215,7 +10554,7 @@ TritonSpec defines arguments for configuring Triton model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
@@ -10523,6 +10862,11 @@ TritonSpec defines arguments for configuring Triton model serving.
   required="false"
   description="HostnameOverride specifies an explicit override for the pod's hostname as perceived by the pod.<br />This field only specifies the pod's hostname and does not affect its DNS records.<br />When this field is set to a non-empty string:<br />- It takes precedence over the values set in `hostname` and `subdomain`.<br />- The Pod's hostname will be set to this value.<br />- `setHostnameAsFQDN` must be nil or set to false.<br />- `hostNetwork` must be set to false.<br />This field must be a valid DNS subdomain as defined in RFC 1123 and contain at most 64 characters.<br />Requires the HostnameOverride feature gate to be enabled."
 /><ApiField
+  name="schedulingGroup"
+  type="[PodSchedulingGroup](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podschedulinggroup-v1-core)"
+  required="false"
+  description="SchedulingGroup declares the group scheduling membership of the Pod.<br />The group object referenced by this field may not exist at the time the<br />Pod is created. This field is immutable, but a group object with the same<br />name may be recreated with different policies."
+/><ApiField
   name="pipelineParallelSize"
   type="integer"
   required="false"
@@ -10612,7 +10956,7 @@ XGBoostSpec defines arguments for configuring XGBoost model serving.
   name="resizePolicy"
   type="[ContainerResizePolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerresizepolicy-v1-core) array"
   required="false"
-  description="Resources resize policy for the container."
+  description="Resources resize policy for the container.<br />This field cannot be set on ephemeral containers."
 /><ApiField
   name="restartPolicy"
   type="[ContainerRestartPolicy](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#containerrestartpolicy-v1-core)"
