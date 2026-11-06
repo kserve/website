@@ -1,9 +1,9 @@
 ---
 title: ModelScope
-description: Deploy InferenceService with models from ModelScope Hub in KServe, including support for both public and private models.
+description: Deploy InferenceService and LLMInferenceService with public or private models from ModelScope Hub.
 ---
 
-# Deploy InferenceService with models from ModelScope Hub
+# Deploy models from ModelScope Hub
 
 You can specify the `storageUri` field on `InferenceService` YAML with the following format to deploy the models from ModelScope Hub.
 
@@ -122,3 +122,86 @@ modelscope-qwen   http://modelscope-qwen.default.example.com         True       
 ```
 
 :::
+
+## Deploy LLMInferenceService with Models from ModelScope Hub
+
+:::note[Development version]
+LLMInferenceService support requires a KServe build that includes
+[kserve/kserve#6438](https://github.com/kserve/kserve/pull/6438).
+Earlier controllers reject `modelscope://` in `spec.model.uri`.
+:::
+
+Install the [LLMInferenceService dependencies](../../generative-inference/llmisvc/llmisvc-dependencies.md),
+[configure a Gateway](../../generative-inference/llmisvc/llmisvc-envoy-ai-gateway.md),
+and make an NVIDIA GPU available for the following example.
+The storage initializer needs network access to ModelScope.
+
+Set `spec.model.uri` to a ModelScope repository. The default storage initializer
+downloads the model into `/mnt/models` before the inference container starts.
+For a specific revision, use `modelscope://owner/model:revision`; omitting the
+revision uses the repository default.
+
+Save the following as `llmisvc-modelscope.yaml`:
+
+```yaml
+apiVersion: serving.kserve.io/v1alpha2
+kind: LLMInferenceService
+metadata:
+  name: qwen3-modelscope
+spec:
+  model:
+    uri: modelscope://Qwen/Qwen3-0.6B
+    name: Qwen/Qwen3-0.6B
+  replicas: 1
+  router:
+    route: {}
+    gateway: {}
+  template:
+    containers:
+      - name: main
+        resources:
+          limits:
+            cpu: "2"
+            memory: 8Gi
+            nvidia.com/gpu: "1"
+          requests:
+            cpu: "1"
+            memory: 4Gi
+            nvidia.com/gpu: "1"
+```
+
+Deploy the service and check the download:
+
+```bash
+kubectl apply -f llmisvc-modelscope.yaml
+kubectl logs deployment/qwen3-modelscope-kserve -c storage-initializer
+kubectl wait --for=condition=Ready llminferenceservice/qwen3-modelscope --timeout=15m
+```
+
+Public repositories do not require credentials. For a private repository, export
+your access token as `MODELSCOPE_API_TOKEN`, then create a Secret and a
+ServiceAccount in the same namespace as the service:
+
+```bash
+kubectl create secret generic modelscope-token \
+  --from-literal=MODELSCOPE_API_TOKEN="$MODELSCOPE_API_TOKEN"
+kubectl apply -f - <<'EOF'
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: modelscope
+secrets:
+  - name: modelscope-token
+EOF
+```
+
+Replace `spec.model.uri` with your private repository URI and set
+`spec.template.serviceAccountName: modelscope` on the LLMInferenceService.
+For a separate prefill workload, also set
+`spec.prefill.template.serviceAccountName: modelscope`. KServe injects
+`MODELSCOPE_API_TOKEN` into the storage initializer through a Secret reference.
+
+The same base-model URI works with single-node, multi-node, and prefill workloads.
+Standalone tokenizer containers download only tokenizer and configuration files.
+Setting `spec.storageInitializer.enabled: false` disables automatic downloads.
+ModelScope URIs are not supported for LoRA adapters or ModelExpress native sources.
