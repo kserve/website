@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="200" viewBox="0 0 750 200">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset dx="0" dy="1" result="shifted"/>
+      <feFlood flood-color="#000" flood-opacity="0.06" result="color"/>
+      <feComposite in="color" in2="shifted" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,1 L8,5 L0,9" fill="#9CA3AF" stroke="none"/>
+    </marker>
+    <clipPath id="c1"><rect x="30" y="50" width="105" height="82" rx="4"/></clipPath>
+    <clipPath id="c2"><rect x="175" y="50" width="105" height="82" rx="4"/></clipPath>
+    <clipPath id="c3"><rect x="320" y="50" width="105" height="82" rx="4"/></clipPath>
+    <clipPath id="c4"><rect x="465" y="50" width="105" height="82" rx="4"/></clipPath>
+    <clipPath id="c5"><rect x="610" y="50" width="105" height="82" rx="4"/></clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="750" height="200" fill="#F6F8FA" rx="4"/>
+
+  <!-- Stage 1: Deploy v1 -->
+  <text x="82" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2328">Deploy v1</text>
+  <rect x="30" y="50" width="105" height="82" rx="4" fill="#fff" stroke="#D0D7DE" stroke-width="0.75" filter="url(#shadow)"/>
+  <g clip-path="url(#c1)">
+    <rect x="30" y="50" width="105" height="82" fill="#4A7FBF"/>
+  </g>
+  <text x="82" y="95" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#fff">v1: 100%</text>
+
+  <!-- Arrow 1-2 -->
+  <line x1="143" y1="91" x2="167" y2="91" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Add v2 -->
+  <text x="227" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2328">Add v2</text>
+  <rect x="175" y="50" width="105" height="82" rx="4" fill="#fff" stroke="#D0D7DE" stroke-width="0.75" filter="url(#shadow)"/>
+  <g clip-path="url(#c2)">
+    <rect x="175" y="50" width="105" height="73.8" fill="#4A7FBF"/>
+    <rect x="175" y="123.8" width="105" height="8.2" fill="#2D8A56"/>
+  </g>
+  <text x="227" y="90" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#fff">v1: 90%</text>
+  <text x="227" y="143" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#2D8A56">v2: 10%</text>
+
+  <!-- Arrow 2-3 -->
+  <line x1="288" y1="91" x2="312" y2="91" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Validate -->
+  <text x="372" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2328">Validate</text>
+  <rect x="320" y="50" width="105" height="82" rx="4" fill="#fff" stroke="#D0D7DE" stroke-width="0.75" filter="url(#shadow)"/>
+  <g clip-path="url(#c3)">
+    <rect x="320" y="50" width="105" height="41" fill="#4A7FBF"/>
+    <rect x="320" y="91" width="105" height="41" fill="#2D8A56"/>
+  </g>
+  <text x="372" y="75" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#fff">v1: 50%</text>
+  <text x="372" y="116" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#fff">v2: 50%</text>
+
+  <!-- Arrow 3-4 -->
+  <line x1="433" y1="91" x2="457" y2="91" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: Promote -->
+  <text x="517" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2328">Promote</text>
+  <rect x="465" y="50" width="105" height="82" rx="4" fill="#fff" stroke="#D0D7DE" stroke-width="0.75" filter="url(#shadow)"/>
+  <g clip-path="url(#c4)">
+    <rect x="465" y="50" width="105" height="82" fill="#2D8A56"/>
+  </g>
+  <text x="517" y="95" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#fff">v2: 100%</text>
+
+  <!-- Arrow 4-5 -->
+  <line x1="578" y1="91" x2="602" y2="91" stroke="#9CA3AF" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: Cleanup -->
+  <text x="662" y="38" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2328">Cleanup</text>
+  <rect x="610" y="50" width="105" height="82" rx="4" fill="#fff" stroke="#D0D7DE" stroke-width="0.75" filter="url(#shadow)"/>
+  <g clip-path="url(#c5)">
+    <rect x="610" y="50" width="105" height="82" fill="#2D8A56"/>
+  </g>
+  <text x="662" y="95" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#fff">v2: 100%</text>
+  <text x="662" y="147" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="9" font-style="italic" fill="#9CA3AF">v1 stopped</text>
+
+  <!-- Legend -->
+  <rect x="620" y="170" width="10" height="10" rx="2" fill="#4A7FBF"/>
+  <text x="634" y="179" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#1F2328">v1</text>
+  <rect x="660" y="170" width="10" height="10" rx="2" fill="#2D8A56"/>
+  <text x="674" y="179" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#1F2328">v2</text>
+</svg>

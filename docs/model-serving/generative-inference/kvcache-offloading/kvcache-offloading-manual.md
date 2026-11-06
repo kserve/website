@@ -11,7 +11,7 @@ Support for LMCache with the vLLM backend was added in [KServe PR #4320](https:/
 
 ## Prerequisites
 
-- A Kubernetes cluster with [KServe v0.20.0](../../../getting-started/quickstart-guide.md) or later installed.
+- A Kubernetes cluster with [KServe v0.21.0](../../../getting-started/quickstart-guide.md) or later installed.
 
 ## Create Huggingface Secret (HF_TOKEN)
 If your model requires authentication (e.g., downloading from Huggingface Hub), create a Kubernetes Secret for your Huggingface token. This secret will be mounted as an environment variable in the inference container.
@@ -133,7 +133,7 @@ spec:
     spec:
       containers:
         - name: lmcache-server
-          image: kserve/huggingfaceserver:v0.20.0-gpu
+          image: kserve/huggingfaceserver:v0.21.0-gpu
           command: ["lmcache_experimental_server"]
           args:
             - "0.0.0.0"

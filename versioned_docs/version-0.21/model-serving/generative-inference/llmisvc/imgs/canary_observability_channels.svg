@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="205" viewBox="0 0 720 205">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset dx="0" dy="1" result="shifted"/>
+      <feFlood flood-color="#000" flood-opacity="0.06" result="color"/>
+      <feComposite in="color" in2="shifted" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10z" fill="#4A7FBF"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="205" fill="#F6F8FA" rx="4"/>
+
+  <!-- Row 1: vLLM Pods -> Prometheus -->
+  <rect x="16" y="24" width="140" height="36" rx="8" fill="#fff" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="86" y="47" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2937">vLLM Pods</text>
+
+  <line x1="156" y1="42" x2="252" y2="42" stroke="#4A7FBF" stroke-width="1.4"/>
+  <rect x="252" y="32" width="92" height="20" rx="10" fill="#EDF2F7" stroke="#4A7FBF" stroke-width="0.8"/>
+  <text x="298" y="46" text-anchor="middle" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="9" fill="#4A7FBF">llm_isvc_name</text>
+  <line x1="344" y1="42" x2="440" y2="42" stroke="#4A7FBF" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <rect x="440" y="24" width="120" height="36" rx="8" fill="#fff" stroke="#6B7280" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="500" y="47" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2937">Prometheus</text>
+
+  <text x="570" y="46" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#8B949E">PodMonitor relabeling</text>
+
+  <!-- Row 2: EPP Scheduler -> Prometheus -->
+  <rect x="16" y="79" width="140" height="36" rx="8" fill="#fff" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="86" y="102" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2937">EPP Scheduler</text>
+
+  <line x1="156" y1="97" x2="278" y2="97" stroke="#4A7FBF" stroke-width="1.4"/>
+  <rect x="278" y="87" width="40" height="20" rx="10" fill="#EDF2F7" stroke="#4A7FBF" stroke-width="0.8"/>
+  <text x="298" y="101" text-anchor="middle" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="9" fill="#4A7FBF">job</text>
+  <line x1="318" y1="97" x2="440" y2="97" stroke="#4A7FBF" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <rect x="440" y="79" width="120" height="36" rx="8" fill="#fff" stroke="#6B7280" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="500" y="102" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2937">Prometheus</text>
+
+  <text x="570" y="101" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#8B949E">ServiceMonitor</text>
+
+  <!-- Row 3: vLLM (OTEL) -> Jaeger / Tempo -->
+  <rect x="16" y="134" width="140" height="36" rx="8" fill="#fff" stroke="#4A7FBF" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="86" y="157" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2937">vLLM (OTEL)</text>
+
+  <line x1="156" y1="152" x2="255" y2="152" stroke="#4A7FBF" stroke-width="1.4"/>
+  <rect x="255" y="142" width="86" height="20" rx="10" fill="#EDF2F7" stroke="#4A7FBF" stroke-width="0.8"/>
+  <text x="298" y="156" text-anchor="middle" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="9" fill="#4A7FBF">llmisvc.name</text>
+  <line x1="341" y1="152" x2="440" y2="152" stroke="#4A7FBF" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <rect x="440" y="134" width="120" height="36" rx="8" fill="#fff" stroke="#6B7280" stroke-width="1.2" filter="url(#shadow)"/>
+  <text x="500" y="157" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="bold" fill="#1F2937">Jaeger / Tempo</text>
+
+  <text x="570" y="156" text-anchor="start" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#8B949E">spec.tracing config</text>
+</svg>

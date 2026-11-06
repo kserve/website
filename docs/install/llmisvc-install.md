@@ -53,7 +53,7 @@ kubectl apply -k config/llmisvcconfig
 ```bash
 # Using OCI registry (recommended)
 helm install kserve-llmisvc-crd oci://ghcr.io/kserve/charts/kserve-llmisvc-crd \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
@@ -68,7 +68,7 @@ helm install kserve-llmisvc-crd ./charts/kserve-llmisvc-crd \
 ```bash
 # Using OCI registry (recommended)
 helm install kserve-llmisvc-resources oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --create-namespace \
   --namespace kserve \
   --wait
@@ -84,7 +84,7 @@ helm install kserve-llmisvc-resources ./charts/kserve-llmisvc-resources \
 
 ```bash
 helm install kserve-llmisvc-resources oci://ghcr.io/kserve/charts/kserve-llmisvc-resources \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --create-namespace \
   --namespace kserve \
   --set kserve.createSharedResources=false
@@ -96,7 +96,7 @@ Install pre-configured templates for common LLM frameworks:
 
 ```bash
 helm install kserve-runtime-configs oci://ghcr.io/kserve/charts/kserve-runtime-configs \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --set kserve.llmisvcConfigs.enabled=true
 ```
@@ -151,7 +151,7 @@ kubectl delete -k config/overlays/standalone/llmisvc
 ./hack/setup/quick-install/llmisvc-full-install-helm.sh --uninstall
 
 # Uninstall everything(dependencies + LLMIsvc) using kustomize quick install script
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/llmisvc-full-install-with-manifests.sh | bash -s -- --uninstall
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/llmisvc-full-install-with-manifests.sh | bash -s -- --uninstall
 
 # Uninstall LLMIsvc by individual script
 UNINSTALL=true ENABLE_LLMISVC=true ENABLE_KSERVE=false ./hack/setup/infra/manage.kserve-helm.sh

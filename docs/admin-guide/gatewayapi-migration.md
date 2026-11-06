@@ -113,7 +113,7 @@ First, enable the Gateway API feature:
 If using Helm, set the following values:
 
 ```bash
-helm upgrade kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.20.0 \
+helm upgrade kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.21.0 \
   --set kserve.controller.gateway.ingressGateway.enableGatewayApi=true
 ```
 
@@ -130,7 +130,7 @@ Next, specify the Gateway resource name and namespace in the format `<gateway na
 If using Helm, set:
 
 ```bash
-helm upgrade kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.20.0 \
+helm upgrade kserve oci://ghcr.io/kserve/charts/kserve-resources --version v0.21.0 \
   --set kserve.controller.gateway.ingressGateway.kserveGateway=kserve/kserve-ingress-gateway
 ```
 

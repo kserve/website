@@ -42,7 +42,7 @@ Use the pre-generated dependency installation script:
 
 ```bash
 # Install dependencies for Knative mode
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-knative-mode-dependency-install.sh | bash
 ```
 
 Or install components individually:
@@ -81,7 +81,7 @@ Standard mode uses raw Kubernetes deployments without serverless features.
 
 ```bash
 # Install dependencies for Standard mode
- curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-standard-mode-dependency-install.sh | bash
+ curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-standard-mode-dependency-install.sh | bash
 ```
 
 Or install cert-manager directly:
@@ -118,7 +118,7 @@ LLMIsvc mode is optimized for large language model serving with Gateway API inte
 
 ```bash
 # Install dependencies for LLMIsvc mode
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/llmisvc-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/llmisvc-dependency-install.sh | bash
 ```
 
 Or install components individually:
@@ -175,7 +175,7 @@ KEDA enables event-driven autoscaling based on custom metrics and external trigg
 
 ```bash
 # Install KEDA and dependencies
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/keda-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/keda-dependency-install.sh | bash
 ```
 
 Or individually:
