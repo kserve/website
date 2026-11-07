@@ -193,7 +193,7 @@ By integrating llm-d's cache-aware routing, prefill and decode disaggregation, a
 | Token Throughput | ~4,400 tokens/sec (baseline test cluster) | ~8,730 tokens/sec (~2× improvement) | [llm-d blog](https://llm-d.ai/blog/kvcache-wins-you-can-see) |
 | Throughput at Scale | Degrades under multi-tenant load | Sustained 4.5k–11k tokens/sec | [llm-d blog](https://llm-d.ai/blog/llm-d-v0.5-sustaining-performance-at-scale) |
 | Tail Latency (P95/P99) | Higher tail latency due to stragglers & imbalance | ~50% tail latency reduction (reported tests) | [Red Hat Developers](https://developers.redhat.com/articles/2025/05/20/llm-d-kubernetes-native-distributed-inferencing) |
-| GPU Utilization | Uneven utilization, idle GPUs possible | Improved effective utilization via routing intelligence | [llm-d docs](https://llm-d.ai/docs/guide/Installation/inference-scheduling) |
+| GPU Utilization | Uneven utilization, idle GPUs possible | Improved effective utilization via routing intelligence | [llm-d docs](https://llm-d.ai/docs/well-lit-paths/foundations/optimized-baseline) |
 | Autoscaling Control | Scale reacts to load only | Works with KServe autoscaling + routing intelligence | [KServe docs](https://kserve.github.io/website/docs/model-serving/predictive-inference/autoscaling/kpa-autoscaler) |
 
 Modern GenAI platforms require cache locality awareness, phase-aware scheduling, distributed intelligence, and composable Kubernetes-native design. This combination ensures a production-ready system that meets the demands of large-scale production workloads.
@@ -205,5 +205,5 @@ Explore detailed project documentation:
 - [llm-d](https://llm-d.ai/)
 
 Engage with community resources and Slack channels to stay updated and contribute to ongoing developments:
-- [KServe community](https://kserve.github.io/website/community/get_involved/)
-- [llm-d community](https://llm-d.ai/community/)
+- [KServe community](/docs/community/get-involved)
+- [llm-d community](https://llm-d.ai/community)

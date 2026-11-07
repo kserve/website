@@ -50,11 +50,11 @@ The set of conditions and status fields that appear tells you what kind of deplo
 | Topology | Distinguishing signals in status |
 |----------|----------------------------------|
 | **Single-node vLLM** | `MainWorkloadReady` is present. `status.workloads.primary.kind` is `Deployment`. No `WorkerWorkloadReady`. |
-| **[Multi-node](https://llm-d.ai/docs/guides/wide-expert-parallelism) (LeaderWorkerSet)** | `WorkerWorkloadReady` is present, `MainWorkloadReady` is absent. `status.workloads.primary.kind` is `LeaderWorkerSet`. |
-| **[Prefill-decode disaggregated serving](https://llm-d.ai/docs/architecture/advanced/disaggregation)** | `PrefillWorkloadReady` is present. `status.workloads.prefill` is populated. |
+| **[Multi-node](https://llm-d.ai/docs/well-lit-paths/foundations/wide-expert-parallelism) (LeaderWorkerSet)** | `WorkerWorkloadReady` is present, `MainWorkloadReady` is absent. `status.workloads.primary.kind` is `LeaderWorkerSet`. |
+| **[Prefill-decode disaggregated serving](https://llm-d.ai/docs/architecture/disaggregation)** | `PrefillWorkloadReady` is present. `status.workloads.prefill` is populated. |
 | **Multi-node prefill-decode** | Both `WorkerWorkloadReady` and `PrefillWorkerWorkloadReady` are present. |
-| **With [llm-d scheduler](https://llm-d.ai/docs/architecture/core/router/epp)** | `SchedulerWorkloadReady` and `InferencePoolReady` are present. `status.router.scheduler` and `status.workloads.scheduler` are populated. Only for managed schedulers (not external pool refs). |
-| **With [autoscaling](https://llm-d.ai/docs/architecture/advanced/autoscaling)** | `ScalingReady` (and/or `PrefillScalingReady` for prefill-decode) is present. |
+| **With [llm-d scheduler](https://llm-d.ai/docs/architecture/router/epp)** | `SchedulerWorkloadReady` and `InferencePoolReady` are present. `status.router.scheduler` and `status.workloads.scheduler` are populated. Only for managed schedulers (not external pool refs). |
+| **With [autoscaling](https://llm-d.ai/docs/architecture/autoscaling)** | `ScalingReady` (and/or `PrefillScalingReady` for prefill-decode) is present. |
 
 These signals compose - a multi-node deployment with scheduler will show `WorkerWorkloadReady`, `SchedulerWorkloadReady`, and `InferencePoolReady` all at once.
 

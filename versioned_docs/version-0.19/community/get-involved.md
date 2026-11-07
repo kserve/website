@@ -12,7 +12,7 @@ Join us🤝!
 
 ### 🗣️ Join Our Discussions
 
-Whether you're evaluating KServe, have questions, or are just curious about the project — you're welcome here. Feel free to drop a message in [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) on Slack or join a [community meeting](#community-meetings) to get support and explore whether KServe meets your use case and needs.
+Whether you're evaluating KServe, have questions, or are just curious about the project — you're welcome here. Feel free to drop a message in [#kserve](https://cloud-native.slack.com/archives/C06AH2C3K8B) on Slack or join a [community meeting](#-community-meetings) to get support and explore whether KServe meets your use case and needs.
 
 Join us on [CNCF Slack](https://slack.cncf.io/) in the following channels:
 
@@ -48,7 +48,7 @@ Meeting agendas and notes:
   - [#kserve-contributors](https://cloud-native.slack.com/archives/C06KZRPSDS7) for contribution discussions
   - [#kserve-oip-collaboration](https://cloud-native.slack.com/archives/C06P4SYCNRX) for Open Inference Protocol discussions
 - **[GitHub Issues](https://github.com/kserve/kserve/issues)**: Create issues for bugs or questions
-- **Community Meetings**: Join our [community meetings](#community-meetings) to get help, ask questions, and connect with maintainers
+- **Community Meetings**: Join our [community meetings](#-community-meetings) to get help, ask questions, and connect with maintainers
 - **Developer Guide**: Follow our [developer guide](../developer-guide/index.md) to get started with contributions
 
 ## Ways to Contribute

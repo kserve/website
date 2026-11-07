@@ -213,7 +213,7 @@ spec:
 ```
 
 The `InferenceService` request routes to the `Istio Ingress Gateway` by matching the host and port from the URL. By default, HTTP is configured, but you can [configure
-HTTPS with TLS certificates](https://knative.dev/docs/serving/using-a-tls-cert).
+HTTPS with TLS certificates](https://knative.dev/docs/serving/encryption/external-domain-tls/).
  
 ### 2. KServe `Istio Virtual Service` to Route for Predictor, Transformer, Explainer
 

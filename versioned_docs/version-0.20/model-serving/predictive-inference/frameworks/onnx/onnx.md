@@ -14,7 +14,7 @@ This guide demonstrates how to deploy an ONNX model using KServe's `InferenceSer
 
 Before you begin, make sure you have:
 
-- A Kubernetes cluster with KServe installed. If not, follow the [KServe installation guide](https://kserve.github.io/website/master/admin/serverless/serverless/).
+- A Kubernetes cluster with KServe installed. If not, follow the [KServe installation guide](../../../../admin-guide/serverless/serverless.md).
 - `kubectl` CLI configured to communicate with your cluster.
 
 ## Create the InferenceService

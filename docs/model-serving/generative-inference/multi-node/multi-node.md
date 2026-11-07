@@ -104,13 +104,13 @@ Even if the `ServingRuntime` is properly configured with `workerSpec`, multi-nod
 ## Key Configurations
 
 The `huggingface-server-multinode` `ServingRuntime` leverages the distributed inference capability provided by vLLM.  
-However, the official [vLLM documentation](https://docs.vllm.ai/en/latest/serving/distributed_serving.html) describes distributed inference based on a **physical environment**. In contrast, **Kubernetes** works quite differently. Therefore, it's important to understand how GPU allocation works in **KServe** when using this `ServingRuntime`.
+However, the official [vLLM documentation](https://docs.vllm.ai/en/latest/serving/parallelism_scaling/) describes distributed inference based on a **physical environment**. In contrast, **Kubernetes** works quite differently. Therefore, it's important to understand how GPU allocation works in **KServe** when using this `ServingRuntime`.
 
 When using the `huggingface-server-multinode` `ServingRuntime`, there are two critical configurations to understand:
 
 
 1. **`workerSpec.tensorParallelSize`**  
-   From the [vLLM documentation](https://docs.vllm.ai/en/latest/serving/distributed_serving.html):  
+   From the [vLLM documentation](https://docs.vllm.ai/en/latest/serving/parallelism_scaling/):
    > The tensor parallel size is the number of GPUs you want to use in each node
 
     In **KServe**, `tensorParallelSize` does **not** directly map to the number of GPUs.  
@@ -118,7 +118,7 @@ When using the `huggingface-server-multinode` `ServingRuntime`, there are two cr
 
 
 2. **`workerSpec.pipelineParallelSize`**  
-   From the [vLLM documentation](https://docs.vllm.ai/en/latest/serving/distributed_serving.html):  
+   From the [vLLM documentation](https://docs.vllm.ai/en/latest/serving/parallelism_scaling/):
    > The pipeline parallel size is the number of nodes
 
     In **KServe**, `pipelineParallelSize` also does **not** correspond 1:1 with the number of Kubernetes nodes.  

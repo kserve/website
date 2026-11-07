@@ -4,11 +4,12 @@
 
 #### {{ $type.Name }}
 
-{{ if $type.IsAlias }}**Underlying type:** {{ markdownRenderTypeLink $type.UnderlyingType  }}{{ end }}
+{{/* Anonymous structs and types that markdownShouldRenderType skips have no section to link to. */ -}}
+{{ if $type.IsAlias }}**Underlying type:** {{ if hasPrefix "struct{" $type.UnderlyingType.Name }}`{{ $type.UnderlyingType.Name }}`{{ else }}{{ markdownRenderTypeLink $type.UnderlyingType  }}{{ end }}{{ end }}
 {{ if $type.References }}
 **Appears in:**
 {{- range $type.SortedReferences }}
-- {{ markdownRenderTypeLink . }}
+- {{ if markdownShouldRenderType . }}{{ markdownRenderTypeLink . }}{{ else }}{{ .Name }}{{ end }}
 {{- end }}
 {{- end }}
 
