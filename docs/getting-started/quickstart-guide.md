@@ -130,10 +130,10 @@ Install KServe controller only without additional components.
 
 ```
 # Standard mode
-curl -sL "https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-standard-mode-full-install-with-manifests.sh" | bash
+curl -sL "https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-standard-mode-full-install-with-manifests.sh" | bash
 
 # Knative mode (serverless)
-curl -sL "https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-full-install-with-manifests.sh" | bash
+curl -sL "https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-knative-mode-full-install-with-manifests.sh" | bash
 ```
 </details>
 
@@ -144,10 +144,10 @@ curl -sL "https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knat
 
 ```bash
 # Standard mode
-./hack/kserve-install.sh --kserve-version v0.20.0 --type kserve --standard
+./hack/kserve-install.sh --kserve-version v0.21.0 --type kserve --standard
 
 # Knative mode (serverless)
-./hack/kserve-install.sh --kserve-version v0.20.0 --type kserve --knative
+./hack/kserve-install.sh --kserve-version v0.21.0 --type kserve --knative
 ```
 
 **Kustomize Mode**:
@@ -175,10 +175,10 @@ Install KServe controller with LocalModel support for local model caching.
 
 ```bash
 # Standard mode
-./hack/kserve-install.sh --kserve-version v0.20.0 --type kserve,localmodel --standard
+./hack/kserve-install.sh --kserve-version v0.21.0 --type kserve,localmodel --standard
 
 # Knative mode (serverless)
-./hack/kserve-install.sh --kserve-version v0.20.0 --type kserve,localmodel --knative
+./hack/kserve-install.sh --kserve-version v0.21.0 --type kserve,localmodel --knative
 ```
 
 **Kustomize Mode**:
@@ -203,7 +203,7 @@ Install LLMInferenceService controller only for Generative AI model serving.
 <summary>Using Quick Install Script</summary>
 
 ```
-curl -sL "https://github.com/kserve/kserve/releases/download/v0.20.0/llmisvc-full-install-with-manifests.sh" | bash
+curl -sL "https://github.com/kserve/kserve/releases/download/v0.21.0/llmisvc-full-install-with-manifests.sh" | bash
 ```
 </details>
 
@@ -213,7 +213,7 @@ curl -sL "https://github.com/kserve/kserve/releases/download/v0.20.0/llmisvc-ful
 **Helm Mode**:
 
 ```bash
-./hack/kserve-install.sh --kserve-version v0.20.0 --type llmisvc
+./hack/kserve-install.sh --kserve-version v0.21.0 --type llmisvc
 ```
 
 **Kustomize Mode**:
@@ -240,12 +240,12 @@ Choose either Standard mode or Knative mode:
 
 ```bash
 # Option A: Standard Mode Dependencies
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-standard-mode-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-standard-mode-dependency-install.sh | bash
 
 # OR
 
 # Option B: Knative Mode Dependencies
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-knative-mode-dependency-install.sh | bash
 ```
 
 **Step 2: Install All Components**
@@ -254,16 +254,16 @@ After installing dependencies above, run these commands:
 
 ```bash
 # Install LLMInferenceService Dependencies
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/llmisvc-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/llmisvc-dependency-install.sh | bash
 
 
 # Install CRDs
-kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-crds.yaml
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-crds.yaml
 # Install Controllers
-kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve.yaml
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.21.0/kserve.yaml
 
 # Install ClusterServingRuntimes/LLMIsvcConfigs
-kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-cluster-resources.yaml
+kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-cluster-resources.yaml
 ```
 
 </details>
@@ -275,10 +275,10 @@ kubectl apply -f https://github.com/kserve/kserve/releases/download/v0.20.0/kser
 
 ```bash
 # All components (Standard mode)
-./hack/kserve-install.sh --kserve-version v0.20.0 --type kserve,llmisvc,localmodel --standard
+./hack/kserve-install.sh --kserve-version v0.21.0 --type kserve,llmisvc,localmodel --standard
 
 # All components (Knative mode)
-./hack/kserve-install.sh --kserve-version v0.20.0 --type kserve,llmisvc,localmodel --knative
+./hack/kserve-install.sh --kserve-version v0.21.0 --type kserve,llmisvc,localmodel --knative
 ```
 
 **Kustomize Mode**:
@@ -305,19 +305,19 @@ Install only infrastructure dependencies without KServe components.
 **Standard Mode Dependencies**:
 
 ```bash
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-standard-mode-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-standard-mode-dependency-install.sh | bash
 ```
 
 **Knative Mode Dependencies**:
 
 ```bash
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-knative-mode-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/kserve-knative-mode-dependency-install.sh | bash
 ```
 
 **LLMIsvc Dependencies**:
 
 ```bash
-curl -fsSL https://github.com/kserve/kserve/releases/download/v0.20.0/llmisvc-dependency-install.sh | bash
+curl -fsSL https://github.com/kserve/kserve/releases/download/v0.21.0/llmisvc-dependency-install.sh | bash
 ```
 </details>
 

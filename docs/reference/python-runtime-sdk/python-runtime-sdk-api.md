@@ -19,6 +19,7 @@ displayed_sidebar: docsSidebar
     * [default\_exception\_handler](#kserve.model_server.ModelServer.default_exception_handler)
     * [register\_model](#kserve.model_server.ModelServer.register_model)
 * [kserve.model](#kserve.model)
+  * [append\_forwardable\_headers](#kserve.model.append_forwardable_headers)
   * [BaseKServeModel](#kserve.model.BaseKServeModel)
     * [\_\_init\_\_](#kserve.model.BaseKServeModel.__init__)
     * [healthy](#kserve.model.BaseKServeModel.healthy)
@@ -121,7 +122,9 @@ def __init__(http_port: int = args.http_port,
              event_loop: str = args.event_loop,
              timeout_keep_alive: int = args.timeout_keep_alive,
              grace_period: int = 30,
-             predictor_config: Optional[PredictorConfig] = None)
+             predictor_config: Optional[PredictorConfig] = None,
+             ssl_certfile: Optional[str] = args.ssl_certfile,
+             ssl_keyfile: Optional[str] = args.ssl_keyfile)
 ```
 
 KServe ModelServer Constructor
@@ -147,6 +150,10 @@ ASGI specs that don't describe how access logging should be implemented in detai
 - `timeout_keep_alive`: Timeout for keep-alive connections in seconds. Default: ``65``.
 - `grace_period`: The grace period in seconds to wait for the server to stop. Default: ``30``.
 - `predictor_config`: Optional configuration for the predictor. Default: ``None``.
+- `ssl_certfile`: Path to the SSL certificate file for serving HTTPS. Default: ``None``.
+Falls back to KSERVE_TLS_CERT_FILE env var.
+- `ssl_keyfile`: Path to the SSL private key file for serving HTTPS. Default: ``None``.
+Falls back to KSERVE_TLS_KEY_FILE env var.
 
 <a id="kserve.model_server.ModelServer.start"></a>
 
@@ -229,6 +236,27 @@ additional names for the same model.
 <a id="kserve.model"></a>
 
 # kserve.model
+
+<a id="kserve.model.append_forwardable_headers"></a>
+
+### append\_forwardable\_headers
+
+```python
+def append_forwardable_headers(
+        headers: Optional[Dict[str, str]],
+        base: Optional[Dict[str, str]] = None) -> Dict[str, str]
+```
+
+Build a header dict by forwarding allowed headers from the incoming request.
+
+**Arguments**:
+
+- `headers`: Incoming request headers (may be None).
+- `base`: Base headers to include (e.g. Content-Type). Defaults to empty dict.
+
+**Returns**:
+
+Dict containing base headers plus any forwardable headers found in the input.
 
 <a id="kserve.model.BaseKServeModel"></a>
 
