@@ -14,7 +14,7 @@ This page explains what each one does, what changes for workloads that relied on
 
 ## Pod Security Standards for LLMInferenceService
 
-The well-known `LLMInferenceServiceConfig` templates installed with KServe, such as `kserve-config-llm-template` and its prefill, decode and data parallel variants, run the model server container with a restricted security context:
+The well-known `LLMInferenceServiceConfig` templates installed with KServe, such as [`kserve-config-llm-template`](https://github.com/kserve/kserve/blob/master/config/llmisvcconfig/config-llm-template.yaml) and its prefill, decode and data parallel variants, run the model server container with a restricted security context:
 
 ```yaml
 securityContext:
