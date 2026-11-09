@@ -41,7 +41,7 @@ kubectl apply -k config/overlays/addons/localmodel
 ```bash
 # Using OCI registry (recommended)
 helm install kserve-localmodel-crd oci://ghcr.io/kserve/charts/kserve-localmodel-crd \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --namespace kserve \
   --create-namespace
 
@@ -56,7 +56,7 @@ helm install kserve-localmodel-crd ./charts/kserve-localmodel-crd \
 ```bash
 # Using OCI registry (recommended)
 helm install kserve-localmodel-resources oci://ghcr.io/kserve/charts/kserve-localmodel-resources \
-  --version v0.20.0 \
+  --version v0.21.0 \
   --create-namespace \
   --namespace kserve \
   --wait
