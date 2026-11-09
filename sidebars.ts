@@ -434,6 +434,7 @@ const sidebars: SidebarsConfig = {
         'admin-guide/gatewayapi-migration',
         'admin-guide/configurations',
         'admin-guide/secure-controller-metrics',
+        'admin-guide/security-hardening',
       ]
     },
     {
