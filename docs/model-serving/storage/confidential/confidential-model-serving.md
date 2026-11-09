@@ -67,7 +67,7 @@ Model files must be encrypted as JWE compact serialization. The storage initiali
 
 JWE compression (`zip`) and `crit` headers are not supported. These limits come from the streaming decryptor in the nightly storage initializer. v0.21 and earlier decrypt each file fully in memory with jwcrypto and are not limited to this list, so give the storage initializer enough memory for your largest file there.
 
-The following script uses [jwcrypto](https://jwcrypto.readthedocs.io/) to create a 256-bit key, save it as a JWK, and encrypt each file it is given with `A256KW` and `A256GCM`. Each `<file>` is replaced by `<file>.jwe`.
+The following script uses [jwcrypto](https://jwcrypto.readthedocs.io/) to encrypt each file it is given with `A256KW` and `A256GCM`, writing `<file>.jwe` next to it. On the first run it creates a 256-bit key and saves it as `model-key.jwk`. Later runs reuse that key, so every file of a model can be decrypted with the same key.
 
 ```python title="encrypt_model.py"
 import json
@@ -76,8 +76,12 @@ import sys
 
 from jwcrypto import jwe, jwk
 
-key = jwk.JWK.generate(kty="oct", size=256)
-pathlib.Path("model-key.jwk").write_text(key.export())
+key_file = pathlib.Path("model-key.jwk")
+if key_file.exists():
+    key = jwk.JWK.from_json(key_file.read_text())
+else:
+    key = jwk.JWK.generate(kty="oct", size=256)
+    key_file.write_text(key.export())
 
 for name in sys.argv[1:]:
     src = pathlib.Path(name)
@@ -87,13 +91,14 @@ for name in sys.argv[1:]:
     )
     token.add_recipient(key)
     pathlib.Path(f"{src}.jwe").write_text(token.serialize(compact=True))
-    src.unlink()
 ```
+
+Encrypt the model file and upload the encrypted copy, leaving out the plaintext original:
 
 ```bash
 pip install jwcrypto
 python encrypt_model.py model/model.joblib
-aws s3 cp model/ s3://my-bucket/encrypted-model/ --recursive
+aws s3 cp model/ s3://my-bucket/encrypted-model/ --recursive --exclude "model.joblib"
 ```
 
 This script reads each file into memory, which is fine for most models. For very large weights, any tool that writes standard compact JWE with the algorithms above works too.
