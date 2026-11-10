@@ -172,8 +172,38 @@ const sidebars: SidebarsConfig = {
               ],
             },
             "model-serving/generative-inference/sdk-integration/sdk-integration",
-            "model-serving/generative-inference/kvcache-offloading/kvcache-offloading",
+            {
+              type: 'category',
+              label: 'KV Cache Offloading',
+              link: {
+                type: 'doc',
+                id: 'model-serving/generative-inference/kvcache-offloading/kvcache-offloading',
+              },
+              items: [
+                "model-serving/generative-inference/kvcache-offloading/kvcache-offloading",
+                "model-serving/generative-inference/kvcache-offloading/kvcache-offloading-manual",
+                "model-serving/generative-inference/kvcache-offloading/kvcache-offloading-operator",
+              ],
+            },
             "model-serving/generative-inference/modelcache/localmodel",
+            {
+              type: 'category',
+              label: 'Kernel Cache',
+              link: {
+                type: 'doc',
+                id: 'model-serving/generative-inference/modelcache/kernel-cache/overview',
+              },
+              items: [
+                "model-serving/generative-inference/modelcache/kernel-cache/overview",
+                "model-serving/generative-inference/modelcache/kernel-cache/getting-started",
+                "model-serving/generative-inference/modelcache/kernel-cache/registry-authentication",
+                "model-serving/generative-inference/modelcache/kernel-cache/node-groups",
+                "model-serving/generative-inference/modelcache/kernel-cache/capture-lifecycle",
+                "model-serving/generative-inference/modelcache/kernel-cache/identity-and-selection",
+                "model-serving/generative-inference/modelcache/kernel-cache/artifact-security",
+                "model-serving/generative-inference/modelcache/kernel-cache/troubleshooting",
+              ],
+            },
             "model-serving/generative-inference/autoscaling/autoscaling",
             "model-serving/generative-inference/multi-node/multi-node",
             "model-serving/generative-inference/ai-gateway/envoy-ai-gateway",
@@ -403,6 +433,7 @@ const sidebars: SidebarsConfig = {
         },
         'admin-guide/gatewayapi-migration',
         'admin-guide/configurations',
+        'admin-guide/secure-controller-metrics',
       ]
     },
     {

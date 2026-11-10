@@ -402,6 +402,125 @@ When you manually specify `--lora-modules`, the controller skips automatic LoRA 
 
 ---
 
+## Routing Many Adapters
+
+As you add adapters for different tasks or tenants, you can run into a routing limit: with KServe's default route template, the eighth adapter exceeds the HTTPRoute limit of 64 matches per rule. Enabling `regex` routing lets a larger collection of adapters share the same route matches. Clients continue to use the same model names and request format.
+
+The default strategy is `exact`, so regex routing is an opt-in. It applies to adapters declared in `spec.model.lora.adapters`; configure how many the model server can load using the [LoRA runtime parameters](#tuning-lora-runtime-parameters).
+
+### Enable it for your service
+
+Start with a working [LoRA-enabled service](#configuration) that uses model-based routing and a KServe-managed HTTPRoute. Your gateway must support regular-expression header matching. For Envoy deployments, check the [gateway limits](#check-gateway-limits) below before enabling it. If you use custom workload or route presets, check the [model-based routing setup](../../../admin-guide/configurations.md#model-based-routing-prerequisites) as well.
+
+Save this patch as `lora-routing-patch.yaml`:
+
+```yaml title="lora-routing-patch.yaml"
+spec:
+  annotations:
+    serving.kserve.io/lora-model-routing-strategy: regex
+```
+
+Apply it to your existing service, replacing the name and namespace:
+
+```bash
+MODEL_NAMESPACE=team-a
+LLMISVC_NAME=my-llm-service
+
+kubectl patch llminferenceservice "$LLMISVC_NAME" -n "$MODEL_NAMESPACE" \
+  --type=merge --patch-file=lora-routing-patch.yaml
+```
+
+Keep the annotation under **`spec.annotations`** as shown. KServe updates the existing HTTPRoute to include the base model and declared adapters in regex matches. If you manage the route yourself through `spec.router.route.http.refs`, update that route directly; this setting only changes routes KServe generates.
+
+To reuse the setting across services, add the same annotation to an `LLMInferenceServiceConfig` preset referenced by `spec.baseRefs`. To make regex routing the cluster default, set `loraModelRoutingStrategy` to `regex` in the `ingress` entry of the `inferenceservice-config` ConfigMap; see the [cluster configuration examples](../../../admin-guide/configurations.md#set-the-lora-routing-default). A service's own setting takes precedence over its presets, and a preset takes precedence over the cluster default.
+
+### Try an adapter
+
+Send a request for one of your declared adapters through the gateway. The model header directs the request to your service, and `model` in the body tells the runtime which adapter to use. This example sends both explicitly and uses `jq` to build the request.
+
+Set `GATEWAY_URL` to your gateway's address without a service-specific path, and replace `ADAPTER_NAME` with one of your adapter names. If your installation uses a different model header, change `MODEL_HEADER` too. Include any Host header or credentials your gateway requires.
+
+```bash
+GATEWAY_URL=https://inference.example.com
+ADAPTER_NAME=sql-adapter
+MODEL_HEADER=X-Gateway-Model-Name
+
+jq -n --arg model "$ADAPTER_NAME" \
+  '{model: $model, prompt: "Hello", max_tokens: 8}' |
+  curl --fail-with-body -sS "$GATEWAY_URL/v1/completions" \
+    -H 'Content-Type: application/json' \
+    -H "$MODEL_HEADER: publishers/$MODEL_NAMESPACE/models/$ADAPTER_NAME" \
+    --data-binary @-
+```
+
+Repeat the request for the base model and the adapters you intend to serve. Keep using the same request format as you add adapters to the service. If your gateway already derives the model header from the request body, that setup continues to apply; enabling regex routing does not configure body processing.
+
+<details>
+<summary>Check the generated route</summary>
+
+Inspect the model-header matches:
+
+```bash
+kubectl get httproute "${LLMISVC_NAME}-kserve-route" -n "$MODEL_NAMESPACE" -o json |
+  jq --arg header "$MODEL_HEADER" '
+    [.spec.rules[].matches[]?.headers[]?
+     | select((.name | ascii_downcase) == ($header | ascii_downcase))
+     | {type, value, characters: (.value | length)}] | unique'
+```
+
+Expect `type: RegularExpression` and a pattern containing your base model and adapter names, for example:
+
+```text
+^publishers/team-a/models/(base-model|code-adapter|sql-adapter)$
+```
+
+KServe escapes the names and matches each complete name, so an adapter name cannot act as a wildcard. With no declared adapters, the base-model matches stay `Exact`.
+
+If the route has not updated, check the service and gateway conditions:
+
+```bash
+kubectl get llminferenceservice "$LLMISVC_NAME" -n "$MODEL_NAMESPACE" -o json |
+  jq '.status.conditions[] | select(.type == "HTTPRoutesReady")'
+
+kubectl get httproute "${LLMISVC_NAME}-kserve-route" -n "$MODEL_NAMESPACE" -o json |
+  jq '.status.parents'
+```
+
+Check that `observedGeneration` reflects the current resource generation. Always verify inference traffic too: an Envoy proxy can reject a route update even when the HTTPRoute reports `Accepted=True`.
+
+</details>
+
+### Enable it across a cluster
+
+Once you have verified routing on the gateways your services use, you can make `regex` the default for services without an override. Set `loraModelRoutingStrategy` to `regex` in the `ingress` entry of the `inferenceservice-config` ConfigMap. Helm installations expose the same choice as `kserve.controller.gateway.loraModelRoutingStrategy`.
+
+See [setting the cluster default](../../../admin-guide/configurations.md#set-the-lora-routing-default) for the ConfigMap and Helm examples. KServe picks up the change without a controller restart. Individual services can still choose `exact` or `regex` through `spec.annotations`.
+
+### Check gateway limits
+
+Your gateway must support [regular-expression header matching](https://gateway-api.sigs.k8s.io/reference/api-spec/1.6/spec/#httpheadermatch). For Envoy-based gateways, the main setting to check is `re2.max_program_size.error_level`: Envoy rejects expressions above this compiled-size limit. The [Envoy Gateway 1.8.1 defaults](https://github.com/envoyproxy/gateway/blob/v1.8.1/internal/xds/bootstrap/bootstrap.yaml.tpl#L50) already raise it sufficiently for this use; custom bootstrap settings or other Envoy deployments may need adjustment.
+
+Ask your gateway operator to [check the running proxy's limit](../../../admin-guide/configurations.md#envoy-regex-limits) if requests to newly added adapters fail. KServe does not change Envoy settings. For services using an `InferencePool` with Envoy Gateway, also complete the [Envoy AI Gateway integration](./llmisvc-envoy-ai-gateway.md).
+
+Regex routing still has a size limit: the generated header pattern can contain at most [4096 characters](https://gateway-api.sigs.k8s.io/reference/api-spec/1.6/spec/#httpheadermatch). Longer names leave room for fewer adapters. If you reach that limit, shorten the names or split the adapters across services. Continue to size the runtime's adapter memory separately.
+
+### Troubleshoot and roll back
+
+| Symptom | What to check |
+|---|---|
+| The route still uses `Exact` matches | Confirm the annotation is under `spec.annotations`, adapters are declared, and KServe manages the route. Check the [model-based routing setup](../../../admin-guide/configurations.md#model-based-routing-prerequisites). |
+| `HTTPRoutesReady=False` with `RoutingPreconditionNotMet` | Check custom route rules: the model-header match must start as an `Exact` match for the qualified base-model name. Use the standard route preset or correct the custom match, then apply the change. |
+| `HTTPRoutesReady=False` with `HTTPRouteReconcileError` mentioning length or match count | For a pattern-length error, shorten names or reduce the adapter set. For too many exact matches, check that regex routing is enabled. |
+| The route is accepted, but new adapters fail to route | Check gateway logs for `RE2 program size` or NACK messages and [inspect the Envoy limit](../../../admin-guide/configurations.md#envoy-regex-limits). The proxy may still be serving its previous route configuration. |
+
+If KServe cannot generate or save the updated route, it retains the previous HTTPRoute. Requests may therefore use an older adapter set until you correct the configuration. Deleting the route will not fix the underlying error.
+
+To return to `exact`, first reduce the declared adapter set to fit the route: at most seven adapters with the default template. Verify those adapters while still using regex, then change the annotation in the patch above to `exact` and apply it again. Switching while too many adapters remain causes the route update to fail.
+
+Removing the annotation makes the service inherit its preset or cluster setting, which may still be `regex`. Use an explicit `exact` value when you want to override that default, and verify requests after the change.
+
+---
+
 ## Monitoring and Troubleshooting
 
 ### Verification

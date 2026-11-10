@@ -6,7 +6,7 @@ title: "LLMInferenceService Status Reference"
 
 # LLMInferenceService Status Reference
 
-This page documents the full status contract for `LLMInferenceService` (v1alpha2) - conditions, reason codes, and observed status fields. It is designed as a reference for consumers of this API - dashboards, CLIs, GitOps pipelines, or any tooling that reads LLMInferenceService status programmatically.
+This page documents the full status contract for `LLMInferenceService` (v1alpha2) - conditions, reason codes, observed status fields, and readiness events. It is designed as a reference for consumers of this API - dashboards, CLIs, GitOps pipelines, or any tooling that reads LLMInferenceService status programmatically.
 
 For background on the resource itself, see the [LLMInferenceService overview](./llmisvc-overview.md). For spec configuration, see the [configuration guide](./llmisvc-configuration.md).
 
@@ -115,6 +115,7 @@ Ready (= WorkloadsReady ∧ RouterReady)
 
 GroupReady                               (independent)
 GroupDegraded                            (independent)
+PerModelPathsDropped                     (independent)
 ```
 
 When an LLMInferenceService is part of a routing group, `.status.router.group` contains the full group topology:
@@ -158,6 +159,14 @@ A force-stopped member stays visible with its declared weight:
 | `group.members[].stopped` | `bool` | True when the member has the force-stop annotation |
 | `group.members[].backendRef` | `BackendObjectReference` | The resolved backend reference used in HTTPRoute weighted routing |
 
+### Per-Model Path Conditions
+
+This condition is **independent** - it does not roll up into `RouterReady` or `Ready`. When the per-model path matches are kept, every client can still reach the model. It reports the outcome of [`serving.kserve.io/model-based-routing-only`](./llmisvc-configuration.md#model-based-routing-only) for the HTTPRoute as last written.
+
+| Condition | Set By | True | False | Presence |
+|-----------|--------|------|-------|----------|
+| `PerModelPathsDropped` | Router reconciler | The managed HTTPRoute has no per-model path matches (`SetOnService`, `SetOnAllGateways`) | The annotation is configured, but the per-model path matches are kept. The reason says why (see [Per-Model Path Reasons](#per-model-path-reasons-permodelpathsdropped)) | Only when the annotation is set on the LLMInferenceService or on a parent Gateway of a managed HTTPRoute. Cleared when the LLMInferenceService is stopped or uses `spec.router.route.http.refs` |
+
 ---
 
 ## Reason Codes
@@ -194,6 +203,7 @@ Workload and scaling conditions can also surface reasons propagated from underly
 | `RefsInvalid` | `GatewaysReady`, `HTTPRoutesReady` | A gateway or route reference in the spec is malformed or references an unsupported kind |
 | `GatewaysNotReady` | `GatewaysReady` | One or more referenced Gateways are not reporting ready status |
 | `GatewayPreconditionNotMet` | `HTTPRoutesReady` | Gateway preconditions not met before HTTPRoute reconciliation |
+| `RoutingPreconditionNotMet` | `HTTPRoutesReady` | The LoRA routing strategy cannot transform a model-header match. The existing route is retained; correct the spec or configuration to trigger reconciliation. See [LoRA routing troubleshooting](./lora-adapters.md#troubleshoot-and-roll-back). |
 | `HTTPRouteReconcileError` | `HTTPRoutesReady` | HTTPRoute creation or update failed |
 | `HTTPRouteFetchError` | `HTTPRoutesReady` | Failed to fetch referenced HTTPRoute resources |
 | `HTTPRoutesNotReady` | `HTTPRoutesReady` | One or more HTTPRoutes are not accepted by their parent Gateway |
@@ -202,6 +212,25 @@ Workload and scaling conditions can also surface reasons propagated from underly
 | `InferencePoolFetchError` | `InferencePoolReady` | Failed to fetch the InferencePool resource |
 | `WaitingForGateway` | `InferencePoolReady` | InferencePool is waiting for its parent Gateway to become ready |
 | `SchedulerReconcileError` | `SchedulerWorkloadReady` | EPP scheduler Deployment creation or update failed |
+
+### Per-Model Path Reasons (PerModelPathsDropped)
+
+`True` reasons say where the setting came from:
+
+| Reason | Description |
+|--------|-------------|
+| `SetOnService` | The LLMInferenceService's `spec.annotations`, directly or through a preset, set the annotation to true |
+| `SetOnAllGateways` | Every parent Gateway of the HTTPRoute sets the annotation to true |
+
+`False` reasons say why the per-model path matches are kept. When more than one applies, the condition reports the first in this order:
+
+| Reason | Description | Action |
+|--------|-------------|--------|
+| `DisabledOnService` | The LLMInferenceService sets the annotation to false while at least one parent Gateway sets it to true. The message lists those Gateways | None if intended. Remove that value to follow the Gateways |
+| `UnrecognizedValue` | The LLMInferenceService's value is not a boolean, and not every parent Gateway sets true | Use `true` or `false` |
+| `NotSetOnAllGateways` | Some parent Gateways set the annotation to true, others don't. The message lists the ones that don't | Annotate the remaining Gateways, or set it on the LLMInferenceService |
+| `ModelBasedRoutingNotEnabled` | Model-based routing is not active for the LLMInferenceService, so there is no model-routing tree to fall back on | Check the [model-based routing prerequisites](../../../admin-guide/configurations.md#model-based-routing-prerequisites) |
+| `NoModelRoutingMatches` | The route has no model-routing matches, for example a custom `spec.router.route.http.spec` without the model header | Add model-header matches to the custom route, or remove the annotation |
 
 ---
 
@@ -253,6 +282,8 @@ Each address also carries a `models[]` list that surfaces the model names served
 - `gateway-internal` - cluster-local Gateway service URL
 - `internal` - private IP or other internal hostname
 - Addresses for model-based routing get a `-model-routing` suffix (e.g. `internal-model-routing`)
+
+When the per-model paths are dropped with [`serving.kserve.io/model-based-routing-only`](./llmisvc-configuration.md#model-based-routing-only), only the `-model-routing` addresses remain, and `status.url` is the Gateway root.
 
 **Model name formats** differ by address type:
 
@@ -502,6 +533,52 @@ status:
 
 ---
 
+## Kubernetes Events
+
+In addition to updating status conditions, the controller records a Kubernetes Event on the `LLMInferenceService` when its `Ready` condition changes state. These events give a timeline of when a service became available or stopped being available, without having to poll and diff the status.
+
+| Type | Reason | Trigger | Example Message |
+|------|--------|---------|-----------------|
+| `Normal` | `LLMInferenceServiceReady` | `Ready` transitions to True from any other state (False, Unknown, or not yet set) | `LLMInferenceService [my-llm] is Ready` |
+| `Warning` | `LLMInferenceServiceNotReady` | `Ready` transitions from True to False | `LLMInferenceService [my-llm] is no longer Ready because of: MainWorkloadReady, WorkloadsReady` |
+| `Warning` | `UpdateFailed` | The controller fails to write the status to the API server | `Failed to update status for LLMInferenceService "my-llm": <error>` |
+
+Readiness events are emitted only on a transition, after the new status has been written successfully. Reconciles that leave `Ready` unchanged do not produce events. A transition from True to Unknown does not produce an `LLMInferenceServiceNotReady` event, because that event requires `Ready` to be explicitly False.
+
+The `LLMInferenceServiceNotReady` message lists the condition types that are False at the time of the transition, which tells you which branch of the [condition hierarchy](#condition-hierarchy) to inspect. The top-level `Ready` condition itself is never included. In KServe v0.21 and earlier, every other condition that is False is listed, including conditions that do not affect readiness, such as `GroupReady`. Later versions leave out these informational conditions (`GroupReady` and `PerModelPathsDropped`), because they never cause `Ready` to become False.
+
+List the events for a service:
+
+```bash
+kubectl get events -n <namespace> \
+  --field-selector involvedObject.kind=LLMInferenceService,involvedObject.name=<name> \
+  --sort-by=.lastTimestamp
+```
+
+:::tip[Expected Output]
+
+```
+LAST SEEN   TYPE      REASON                        OBJECT                         MESSAGE
+12m         Normal    LLMInferenceServiceReady      llminferenceservice/my-llm     LLMInferenceService [my-llm] is Ready
+3m          Warning   LLMInferenceServiceNotReady   llminferenceservice/my-llm     LLMInferenceService [my-llm] is no longer Ready because of: MainWorkloadReady, WorkloadsReady
+```
+
+:::
+
+Show only readiness loss across a namespace:
+
+```bash
+kubectl get events -n <namespace> --field-selector reason=LLMInferenceServiceNotReady
+```
+
+Recent events are also shown at the end of `kubectl describe llmisvc <name> -n <namespace>`.
+
+:::note
+Kubernetes Events are short-lived: the API server deletes them after a retention period (one hour by default), and repeated events may be aggregated. Use events to understand *when* a transition happened. The status conditions described above remain the source of truth for the current state of the service.
+:::
+
+---
+
 ## Troubleshooting
 
 Start by checking conditions. If `PresetsCombined` is False, that's a config issue - the reconciler won't proceed to workloads or routing. If `PresetsCombined` is True but `Ready` is not, drill into `WorkloadsReady` or `RouterReady`.
@@ -575,7 +652,7 @@ kubectl logs -l app.kubernetes.io/name=<name>,app.kubernetes.io/part-of=llminfer
 kubectl logs deploy/$(kubectl get llmisvc <name> -o jsonpath='{.status.workloads.scheduler.name}') -c main --tail=100
 ```
 
-**Check namespace events** for issues that conditions don't capture:
+**Check namespace events** for issues that conditions don't capture. See [Kubernetes Events](#kubernetes-events) for the readiness events the controller emits:
 ```bash
 kubectl get events -n <namespace> --sort-by=.lastTimestamp --field-selector involvedObject.name=<name>
 ```

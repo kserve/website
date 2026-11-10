@@ -69,40 +69,19 @@ spec:
           nvidia.com/gpu: "1"
 ```
 
-### Option 2: Use Environment Variable with Secret Ref
-Create a Kubernete HF token and specify the HF token secret reference using environment variable in the `InferenceService` Spec.
+### Configure the storage initializer with a ClusterStorageContainer
 
-```yaml
-apiVersion: serving.kserve.io/v1beta1
-kind: InferenceService
-metadata:
-  name: huggingface-llama3
-spec:
-  predictor:
-    model:
-      modelFormat:
-        name: huggingface
-      args:
-        - --model_name=llama3
-        - --model_dir=/mnt/models
-      storageUri: hf://meta-llama/meta-llama-3-8b-instruct
-      resources:
-        limits:
-          cpu: "6"
-          memory: 24Gi
-          nvidia.com/gpu: "1"
-        requests:
-          cpu: "6"
-          memory: 24Gi
-          nvidia.com/gpu: "1"
-      env:
-        - name: HF_TOKEN  # Option 2 for authenticating with HF_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: hf-secret
-              key: HF_TOKEN
-              optional: false
-```
+If you need to set `HF_TOKEN` directly on the storage-initializer container, define a
+`ClusterStorageContainer` with:
+
+- `workloadType: initContainer`;
+- a supported URI format with the `hf://` prefix; and
+- a Secret-backed `HF_TOKEN` environment variable.
+
+The `ClusterStorageContainer` is cluster-scoped, but the referenced Secret must be in
+the same namespace as the `InferenceService`. See [Providing Credentials with a
+ClusterStorageContainer](../storage-containers/storage-containers.md#providing-credentials)
+for a complete example.
 
 ## Check the InferenceService status.
 

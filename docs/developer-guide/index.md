@@ -25,7 +25,7 @@ Before submitting a PR, see also [the contribution guidelines](https://github.co
 
 You must install these tools:
 
-1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires Go 1.24.1+.
+1. [`go`](https://golang.org/doc/install): KServe controller is written in Go and requires the Go version set by the `go` directive in [`go.mod`](https://github.com/kserve/kserve/blob/master/go.mod).
 2. [`git`](https://help.github.com/articles/set-up-git/): For source control.
 3. [`ko`](https://github.com/google/ko): For development and building container images without a Dockerfile.
 4. [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/): For managing Kubernetes clusters and resources.
@@ -173,13 +173,13 @@ hack/setup/dev/manage.kind-with-registry.sh
 KServe offers two deployment modes:
 
 - **Knative deployment** requires `Knative Serving` for request-based auto-scaling, scale-to-zero, and canary rollouts
-- **Stardard deployment** doesn't require Knative, suitable for generative inference workloads with stable resource allocation
+- **Standard deployment** doesn't require Knative, suitable for generative inference workloads with stable resource allocation
 
 For networking:
 - **Knative mode**: Requires Knative Serving; while Istio is recommended as the networking layer for Knative, you can use any ingress/networking solution supported by Knative (like Kourier or Contour)
-- **Stardard deployment**: Uses Gateway API or standard Kubernetes Ingress, compatible with various networking implementations
+- **Standard deployment**: Uses Gateway API or standard Kubernetes Ingress, compatible with various networking implementations
 
-Note that the quick install script installs Istio by default for both deployment modes for convenience.
+Note that the quick install script installs Istio only for Knative mode. Standard mode installs no networking layer: the `InferenceService` is reachable inside the cluster through its predictor `Service` (for example with `kubectl port-forward`), and you can install a Gateway API implementation or an Ingress controller if you need external access.
 
 ### Quick Installation (Recommended for Development)
 
@@ -190,13 +190,13 @@ For development purposes, you can use the quick install script provided in the K
 git clone https://github.com/kserve/kserve.git
 cd kserve
 
-# Run the quick install script with Standard deployment mode (without Knative, using Gateway API + Istio)
+# Run the quick install script with Standard deployment mode (without Knative or a networking layer)
 ./hack/kserve-install.sh -r --kustomize
 
 # Run the quick install script with Knative mode (installs Knative + Istio)
 ./hack/kserve-install.sh -s --kustomize
 
-# For LLMInferenceService
+# For LocalModel
 ./hack/kserve-install.sh --type localmodel --kustomize
 
 # For LLMInferenceService
@@ -216,10 +216,9 @@ cd kserve
 ```
 
 The script installs:
-- Gateway API CRDs (used by both deployment modes)
-- Istio (installed by default for both modes, but not strictly required)
 - Cert Manager (for webhook certificates)
-- Knative Operator and Serving (only when using serverless mode with `-s` flag)
+- Istio and Knative Operator and Serving (only in Knative mode, which is the default or selected with the `-s` flag)
+- Gateway API CRDs, Envoy Gateway, Envoy AI Gateway and the LWS operator (only with `--type llmisvc`)
 - Optionally KEDA for event-driven autoscaling (with `-k` flag)
 - Latest stable KServe CRDs and controller (configured for the selected deployment mode)
 
@@ -244,9 +243,9 @@ If you prefer manual installation, follow the instructions from the [administrat
 
 Whether you used the quick install script or deployed manually, when you want to test your local code changes, you'll need to rebuild and redeploy the components you've modified.
 
-By default, `Knative mode` is used, so install its dependencies. If you are developing for `Standard mode`, update the inferenceservice-config ConfigMap using the following command:
-```
- sed 's/Serverless/Standard/g' -i config/overlays/development/config/inferenceservice_patch.yaml
+By default, `Knative mode` is used, so install its dependencies. If you are developing for `Standard mode`, set `DEPLOYMENT_MODE=Standard` when you run `make deploy-dev`, which sets `defaultDeploymentMode` in the `inferenceservice-config` ConfigMap:
+```bash
+DEPLOYMENT_MODE=Standard make deploy-dev
 ```
 
 Run the following command to deploy the `KServe` controller and model agent with your local changes:
@@ -256,6 +255,13 @@ Run the following command to deploy the `KServe` controller and model agent with
 export KO_DOCKER_REPO=localhost:5001
 make deploy-dev
 ```
+
+:::note
+If KServe is already installed, for example by the quick install script, `make deploy-dev` builds your images but skips installing them and keeps the existing controller running. Set `FORCE_UPGRADE=true` to apply your local build over the existing installation:
+```bash
+FORCE_UPGRADE=true make deploy-dev
+```
+:::
 
 To rebuild controller images
 ```bash
@@ -300,18 +306,13 @@ make deploy-dev-sklearn
 make deploy-dev-huggingface
 ```
 
-Run the following command to deploy the explainer with your local changes:
-```bash
-make deploy-dev-alibi
-```
-
 Run the following command to deploy the storage initializer with your local changes:
 ```bash
 make deploy-dev-storageInitializer
 ```
 
 :::warning
-The `deploy` command publishes the image to `KO_DOCKER_REPO` with the version `latest` and changes the `InferenceService` configmap or the respective `ServingRuntime` to point to the newly built image SHA. It is recommended to first build and deploy the controller and model agent with `make deploy-dev` before deploying the model server, explainer, or storage initializer using respective `deploy-dev-<component>` commands.
+The `deploy` command publishes the image to `KO_DOCKER_REPO` with the version `latest` and changes the `InferenceService` configmap or the respective `ServingRuntime` to point to the newly built image SHA. It is recommended to first build and deploy the controller and model agent with `make deploy-dev` before deploying the model server or storage initializer using respective `deploy-dev-<component>` commands.
 
 The built image is only for development and testing purposes. The current limitation is that it changes the impacted image and resets all other images, including the
 `kserve-controller-manager`, to use the default ones.
@@ -339,7 +340,7 @@ flower-sample-default-htz8r-deployment-8fd979f9b-w2qbv   3/3     Running   0    
 
 ### Running Unit/Integration Tests
 
-`kserver-controller-manager` has a few integration tests which require mock apiserver
+`kserve-controller-manager` has a few integration tests which require mock apiserver
 and etcd; they get installed along with [`kubebuilder`](https://book.kubebuilder.io/quick-start.html#installation).
 
 To run all unit/integration tests:

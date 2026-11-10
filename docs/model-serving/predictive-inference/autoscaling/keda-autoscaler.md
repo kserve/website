@@ -460,6 +460,16 @@ Unlike [HPA](./hpa-autoscaler.md#default-hpa-behavior), KEDA does **not** automa
 
 For example, if you define an InferenceService with both a predictor and a transformer but only configure `autoScaling` on the predictor, only the predictor will have a `ScaledObject`. The transformer will run with a fixed replica count based on its `minReplicas` (defaulting to `1` if not set).
 
+:::warning
+
+Because KEDA only scales components that declare an `autoScaling` spec, KServe rejects an InferenceService at admission time if `autoscalerClass: keda` is set but **no** component declares an `autoScaling` spec — otherwise the InferenceService would deploy silently with no autoscaling at all. The webhook returns an error such as:
+
+> autoscalerClass "keda" requires at least one component (predictor, transformer, or explainer) to have an autoScaling spec
+
+Ensure at least one of the predictor, transformer, or explainer defines `autoScaling` when using the KEDA autoscaler class.
+
+:::
+
 ### Configure Independent Scaling per Component
 
 Each component can define its own `minReplicas`, `maxReplicas`, and `autoScaling` metrics independently. This allows each component to scale based on different criteria — for example, scaling the predictor on GPU utilization via Prometheus while scaling the transformer on CPU utilization.
