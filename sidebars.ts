@@ -387,6 +387,7 @@ const sidebars: SidebarsConfig = {
               ],
             },
             'model-serving/storage/certificate/self-signed',
+            'model-serving/storage/confidential/confidential-model-serving',
           ],
         },
         {
