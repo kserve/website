@@ -50,6 +50,25 @@ spec:
 
 Create a `Gateway` resource to expose the `InferenceService`. In this example, you will use the `envoy` `GatewayClass` that we created above.
 
+The `https` listener in the `Gateway` below references a TLS `Secret` through `certificateRefs`. This `Secret` must exist in the referenced namespace **before** you create the `Gateway`. Otherwise the `https` listener is reported as invalid (`InvalidCertificateRef`, `Secret kserve/my-secret does not exist`), the gateway pod and service are not created, and the verification commands in this guide return nothing.
+
+For testing, create a self-signed certificate and store it as a `kubernetes.io/tls` Secret:
+
+```bash
+openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
+  -keyout tls.key -out tls.crt \
+  -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com,DNS:*.example.com"
+
+kubectl create namespace kserve --dry-run=client -o yaml | kubectl apply -f -
+kubectl create secret tls my-secret --cert=tls.crt --key=tls.key -n kserve
+```
+
+:::note
+Replace `example.com` with the domain you use to access your `InferenceService`. For production, use a certificate issued by a trusted CA, for example with [cert-manager](https://cert-manager.io/docs/usage/certificate/) by creating a `Certificate` whose `secretName` is `my-secret` in the `kserve` namespace. If you do not need HTTPS, remove the `https` listener from the `Gateway`.
+:::
+
+Then create the `Gateway`:
+
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -81,6 +100,14 @@ spec:
     labels:
       serving.kserve.io/gateway: kserve-ingress-gateway
 ```
+
+Check that every listener is programmed and its references are resolved:
+
+```bash
+kubectl get gateway kserve-ingress-gateway -n kserve -o jsonpath='{range .status.listeners[*]}{.name}{"\t"}{range .conditions[*]}{.type}={.status} {end}{"\n"}{end}'
+```
+
+If the `https` listener reports `ResolvedRefs=False`, check that the `Secret` named in `certificateRefs` exists in the expected namespace.
 
 This should create a gateway instance pod and a LoadBalancer service:
 
