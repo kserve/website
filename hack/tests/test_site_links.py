@@ -291,6 +291,8 @@ class AnchorTests(unittest.TestCase):
                 "ghttps://github.com/kserve/website",
                 "ghttps://github.com/kserve/kserve",
                 "http://[::1/docs",
+                "https://host.invalid:99999/doc",
+                "https://host.invalid:abc/doc",
             )
         }
         with checkout(pages) as head:
@@ -302,10 +304,12 @@ class AnchorTests(unittest.TestCase):
                 "site:/x#ghttps://github.com/kserve/website": "Unsupported URL scheme ghttps:",
                 "site:/x#ghttps://github.com/kserve/kserve": "Unsupported URL scheme ghttps:",
                 "site:/x#http://[::1/docs": "Malformed URL",
+                "site:/x#https://host.invalid:99999/doc": "Malformed URL",
+                "site:/x#https://host.invalid:abc/doc": "Malformed URL",
             },
         )
         self.assertEqual(facts["external"], {})
-        self.assertEqual(len(report["observations"]), 3)
+        self.assertEqual(len(report["observations"]), 5)
 
 
 class TargetEncodingTests(unittest.TestCase):

@@ -402,12 +402,15 @@ class Site:
         """
         absolute = "https:" + href if href.startswith("//") else href
         try:
-            scheme = urlsplit(absolute).scheme
+            parts = urlsplit(absolute)
+            scheme = parts.scheme
             if scheme not in ("", "http", "https"):
                 # A typo such as ghttps:// leads nowhere.
                 return None, None, "missing", f"Unsupported URL scheme {scheme}:", None
+            # Read the port now: github_target reads it later, outside this handler.
+            parts.port
             target = self.join(route, absolute)
-        except ValueError:  # e.g. an unclosed IPv6 bracket in the host
+        except ValueError:  # e.g. an unclosed IPv6 bracket or a port like :99999
             return None, None, "missing", "Malformed URL", None
         path = self.on_site(target)
         if path is None:
