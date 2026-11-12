@@ -122,6 +122,10 @@ spec:
 ```
 
 :::note
+The `https` listener requires the TLS `Secret` referenced in `certificateRefs` (`my-secret` above) to exist in the `kserve` namespace, otherwise the listener is invalid and the gateway is not provisioned. See [Create Gateway](./gatewayapi-migration.md#3-create-gateway) for how to create it.
+:::
+
+:::note
 KServe can automatically create a default `Gateway` named `kserve-ingress-gateway` during installation if the Helm value `kserve.controller.gateway.ingressGateway.createGateway` is set to `true`. If you choose to use this default gateway, you can skip creating your own gateway.
 :::
 
