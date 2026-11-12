@@ -41,7 +41,7 @@ In this tutorial you'll deploy an `LLMInferenceService` that creates a router an
 Before you begin, ensure you have the following components installed and configured:
 
 - A Kubernetes cluster with [KServe with Gateway API Enabled](../../../admin-guide/kubernetes-deployment.md)
-- [Gateway API Inference Extension](https://gateway-api-inference-extension.sigs.k8s.io/guides/) installed in your cluster
+- [Gateway API Inference Extension](../../../admin-guide/kubernetes-deployment-llmisvc.md#gateway-api--inference-extension-crds) installed in your cluster
 - [Envoy Gateway with Inference Pool support enabled prerequisites](https://aigateway.envoyproxy.io/docs/getting-started/prerequisites) installed in your cluster
 - [Envoy AI Gateway](https://aigateway.envoyproxy.io/docs/getting-started/installation) installed in your cluster
 - [LeaderWorkerSet (LWS)](https://lws.sigs.k8s.io/docs/installation/) installed in your cluster
@@ -638,6 +638,6 @@ done
 
 Now that you've tested the basic setup, you can:
 
-- Explore more rate limiter-related configuration at the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting).
+- Explore more rate limiter-related configuration at the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/traffic/usage-based-ratelimiting).
 
 - Explore the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/) to learn more about the features and capabilities.

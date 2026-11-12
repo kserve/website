@@ -17,7 +17,7 @@ This guide provides comprehensive instructions for setting up a development envi
 
 Follow the instructions below to set up your development environment. Once you
 meet these requirements, you can make changes and
-[deploy your own version of KServe](#deploy-kserve)!
+[deploy your own version of KServe](#deploy-kserve-for-development)!
 
 Before submitting a PR, see also [the contribution guidelines](https://github.com/kserve/community/blob/main/CONTRIBUTING.md).
 
@@ -439,7 +439,7 @@ See the guidelines for:
 
 ## Releases
 
-Please check out the documentation [here](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS_v2.md) to understand the release schedule and process.
+Please check out the documentation [here](https://github.com/kserve/kserve/blob/master/RELEASES.md) to understand the release schedule and process.
 
 ## Feedback
 

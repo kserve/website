@@ -394,7 +394,7 @@ See the guidelines for:
 
 ## Releases
 
-Please check out the documentation [here](https://github.com/kserve/kserve/blob/master/release/RELEASE_PROCESS_v2.md) to understand the release schedule and process.
+Please check out the documentation [here](https://github.com/kserve/kserve/blob/master/RELEASES.md) to understand the release schedule and process.
 
 ## Feedback 
 

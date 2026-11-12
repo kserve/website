@@ -166,7 +166,7 @@ Controls whether to use Istio as the network layer for serverless deployment.
 By default istio is used as the network layer. When DisableIstioVirtualHost is true, KServe does not
 create the top level virtual service thus Istio is no longer required for serverless mode.
 By setting this field to true, user can use other networking layers supported by knative.
-For more info https://github.com/kserve/kserve/pull/2380, https://kserve.github.io/website/master/admin/serverless/kourier_networking/.
+For more info https://github.com/kserve/kserve/pull/2380, [Kourier networking](./serverless/kourier-networking/index.md).
 
 - **Global key:** `disableIstioVirtualHost`
 - **Per-service annotation key:** Not supported

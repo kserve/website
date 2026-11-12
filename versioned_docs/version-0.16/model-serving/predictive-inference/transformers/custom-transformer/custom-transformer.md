@@ -3,7 +3,7 @@ title: "How to write a Custom Transformer"
 description: "Deploy a custom transformer with TorchServe in KServe"
 ---
 
-import ActiveDocsVersion from '@site/src/components/ActiveDocsVersion';
+import KServeReleaseLink from '@site/src/components/KServeReleaseLink';
 
 # Deploy Transformer with InferenceService
 
@@ -129,7 +129,7 @@ class ImageTransformer(kserve.Model):
         return infer_response
 ```
 
-You can find the complete code example [here](https://github.com/kserve/kserve/tree/release-<ActiveDocsVersion />/python/custom_transformer).
+You can find the complete code example <KServeReleaseLink path="python/custom_transformer">here</KServeReleaseLink>.
 
 ### Transformer Server Entrypoint
 
@@ -162,7 +162,7 @@ KServe allows users to override the default logger configuration of the serving 
 
 ### Build Transformer Docker Image
 
-From the `kserve/python` directory, build the transformer docker image using the [Dockerfile](https://github.com/kserve/kserve/blob/release-<ActiveDocsVersion />/python/custom_transformer.Dockerfile):
+From the `kserve/python` directory, build the transformer docker image using the <KServeReleaseLink kind="blob" path="python/custom_transformer.Dockerfile">Dockerfile</KServeReleaseLink>:
 
 ```bash
 cd python

@@ -14,7 +14,7 @@ Always review the relevant release notes before upgrading in production environm
 :::info
 The upgrade methods shown below were the standard process for **versions prior to v0.17.0**.
 
-**For v0.17.0 and later**, the Helm chart architecture has been completely restructured. You **cannot** use a simple `helm upgrade` command. Instead, you must follow the specific migration steps outlined in the [v0.17.0 section](#upgrading-to-v0170) below.
+**For v0.17.0 and later**, the Helm chart architecture has been completely restructured. You **cannot** use a simple `helm upgrade` command. Instead, you must follow the specific migration steps outlined in the [v0.17.0 section](#upgrading-v0160-to-v0170) below.
 :::
 
 ### Using Helm (Pre-v0.17.0)

@@ -42,7 +42,7 @@ KServe supports [distributed tracing](https://github.com/kserve/kserve/pull/5481
 Before you begin, ensure you have the following components installed and configured:
 
 - A Kubernetes cluster with [KServe with Gateway API enabled](../../../admin-guide/kubernetes-deployment.md)
-- [AgentGateway](https://agentgateway.dev/docs/kubernetes/latest/getting-started/) installed in your cluster
+- [AgentGateway](https://agentgateway.dev/docs/kubernetes/latest/documentation/quickstart/) installed in your cluster
 - [Gateway API CRDs](https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api) installed
 - [LLMInferenceService dependencies](./llmisvc-dependencies.md) installed
 - The `kubectl` command-line tool installed and configured to access your cluster
