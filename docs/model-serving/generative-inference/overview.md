@@ -27,6 +27,12 @@ While, the runtime also supports the standard Hugging Face backend for models fo
 
 If a model is not supported by the vLLM engine, KServe automatically falls back to the standard Hugging Face backend to ensure compatibility across a wide range of models.
 
+:::tip[Standalone vLLM runtime]
+
+Since KServe v0.20, vLLM is also available as a dedicated serving runtime, selected with `modelFormat.name: vLLM`, which runs the upstream vLLM server without the Hugging Face runtime. See [vLLM Serving Runtime](./vllm/vllm-runtime.md) for the differences and when to use each.
+
+:::
+
 ## Architecture
 
 The Hugging Face runtime integrates into KServe's modular serving architecture, handling model loading, inference, and serving through standardized APIs:
