@@ -148,6 +148,7 @@ const sidebars: SidebarsConfig = {
                   ],
                 },
                 "model-serving/generative-inference/llmisvc/llmisvc-status",
+                "model-serving/generative-inference/llmisvc/graceful-shutdown",
                 {
                   type: 'category',
                   label: 'Traffic Management',
