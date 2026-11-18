@@ -349,13 +349,11 @@ To run all unit/integration tests:
 make test
 ```
 
-To run servingruntime tests:
-
-Go to the respective runtime directory, e.g., `python/huggingface`, and run:
+Run the scikit-learn serving runtime tests from the root of the KServe source checkout.
 
 ```bash
-make dev_install
-pytest .
+cd python/sklearnserver
+uv run --locked --group test pytest .
 ```
 
 ### Run E2E Tests Locally
