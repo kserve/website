@@ -35,6 +35,45 @@ data:
   MODELSCOPE_API_TOKEN: bXN0X1ZOVXdSV0FHQmtJeFpmTEx1a3NlR3lvVVZvbnVOaUR1VU0==
 ```
 
+## Private endpoints and mirrors
+
+For a private ModelScope-compatible hub or mirror, add `MODELSCOPE_ENDPOINT` to
+the credential Secret referenced by the predictor's ServiceAccount. Keep the model
+URI as `modelscope://owner/model[:revision]`:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: storage-config
+type: Opaque
+stringData:
+  MODELSCOPE_ENDPOINT: "https://models.internal.example"
+  # Omit this key for an anonymous mirror.
+  MODELSCOPE_API_TOKEN: "replace-with-your-token"
+```
+
+Use the ServiceAccount and `spec.predictor.serviceAccountName` configuration in
+[Option 1](#option-1-use-service-account-with-secret-ref) below. The Secret,
+ServiceAccount, and InferenceService must share a namespace. Alternatively, set
+`serving.kserve.io/storageSecretName: storage-config` in the InferenceService
+annotations; this takes precedence over ServiceAccount Secrets.
+
+KServe injects the endpoint and optional token into the storage initializer using
+Secret references. The ModelScope SDK uses them for repository metadata and file
+downloads. Without an endpoint, the public ModelScope endpoint remains the
+default. Setting `spec.predictor.model.env` configures the serving container and
+does not configure the storage initializer.
+
+The endpoint must implement the ModelScope Hub APIs, and any returned file URLs
+must be reachable from the initializer. For HTTPS, the initializer must trust the
+server's certificate chain.
+
+:::note[Development version]
+Endpoint injection from credential Secrets requires the controller change tracked
+in [kserve/kserve#6498](https://github.com/kserve/kserve/issues/6498).
+:::
+
 ## Deploy InferenceService with Models from ModelScope Hub
 
 ### Option 1: Use Service Account with Secret Ref
@@ -73,14 +112,19 @@ spec:
           nvidia.com/gpu: "1"
 ```
 
-### Option 2: Use Environment Variable with Secret Ref
-Create a Kubernetes ModelScope token secret and specify the MS token secret reference using environment variable in the `InferenceService` Spec.
+### Option 2: Use the Storage Secret Annotation
+Reference the ModelScope credential Secret directly with the
+`serving.kserve.io/storageSecretName` annotation. This takes precedence over
+ServiceAccount Secrets and injects the credentials into the storage initializer.
+The Secret must be in the same namespace as the InferenceService.
 
 ```yaml
 apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   name: modelscope-qwen
+  annotations:
+    serving.kserve.io/storageSecretName: storage-config
 spec:
   predictor:
     model:
@@ -99,13 +143,6 @@ spec:
           cpu: "6"
           memory: 24Gi
           nvidia.com/gpu: "1"
-      env:
-        - name: MODELSCOPE_API_TOKEN  # Option 2 for authenticating with MODELSCOPE_API_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: storage-config
-              key: MODELSCOPE_API_TOKEN
-              optional: false
 ```
 
 ## Check the InferenceService status.
