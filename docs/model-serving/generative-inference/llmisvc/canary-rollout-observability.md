@@ -233,6 +233,8 @@ Queue time >> prefill+decode time = need more replicas. Prefill or decode time h
 
 ## Distributed Tracing
 
+For the separate `InferenceService` resource, see [InferenceService distributed tracing](../../predictive-inference/observability/distributed-tracing.md).
+
 LLMInferenceService has a declarative tracing API - add `spec.tracing` to enable OpenTelemetry instrumentation without manually wiring env vars. The same tracing config applies to both the inference server and the scheduler.
 
 ```yaml

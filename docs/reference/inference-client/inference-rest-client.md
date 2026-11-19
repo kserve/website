@@ -89,6 +89,26 @@ The inference response, either as an InferResponse object or a dictionary
 
 `HTTPStatusError`: If the response status code indicates an error.
 
+### Trace Context
+
+To send an existing W3C trace context, include `traceparent` and, when needed, `tracestate` in `headers`. Within an instrumented application, use OpenTelemetry's `propagate.inject(headers)` to populate them from the active span.
+
+Pass a dictionary through `response_headers` to capture the runtime's trace context:
+
+```python
+response_headers = {}
+result = await client.infer(
+    base_url,
+    data,
+    model_name=model_name,
+    headers=headers,
+    response_headers=response_headers,
+)
+print(response_headers.get("traceparent"))
+```
+
+Response trace headers depend on runtime instrumentation and any intervening proxies. See [InferenceService distributed tracing](../../model-serving/predictive-inference/observability/distributed-tracing.md#connected-traces-and-limitations) for automatic HTTP propagation availability and limitations.
+
 ## explain()
 
 > explain(base_url, model_name, data, headers=None, timeout) ~async~

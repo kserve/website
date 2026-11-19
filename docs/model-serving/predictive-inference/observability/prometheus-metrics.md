@@ -5,6 +5,8 @@ description: Learn how to expose and configure Prometheus metrics for KServe inf
 
 # Prometheus Metrics 
 
+Metrics summarize runtime behavior across requests. To investigate individual requests using OpenTelemetry spans, see [Distributed Tracing](distributed-tracing.md). Trace collection is configured separately from Prometheus scraping.
+
 ## Exposing a Prometheus metrics port
 
 All supported serving runtimes support exporting prometheus metrics on a specified port in the inference service's pod. The appropriate port for the model server is defined in the [kserve/config/runtimes](https://github.com/kserve/kserve/tree/master/config/runtimes) YAML files. For example, torchserve defines its prometheus port as `8082` in `kserve-torchserve.yaml`. 

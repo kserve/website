@@ -343,6 +343,7 @@ const sidebars: SidebarsConfig = {
               items: [
                 "model-serving/predictive-inference/observability/prometheus-metrics",
                 "model-serving/predictive-inference/observability/grafana-dashboards",
+                "model-serving/predictive-inference/observability/distributed-tracing",
               ]
             },
             {
