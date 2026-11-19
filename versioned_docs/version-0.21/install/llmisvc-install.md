@@ -17,6 +17,8 @@ Required infrastructure:
 - LWS Operator (LeaderWorkerSet)
 - External Load Balancer (for local clusters)
 
+For weighted canary rollouts, check the [gateway compatibility requirements](../model-serving/generative-inference/llmisvc/canary-rollout.md#prerequisites) before choosing a gateway version.
+
 ## Overview
 
 LLMInferenceService provides optimized serving for generative AI models with features
