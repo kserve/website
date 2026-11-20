@@ -418,6 +418,6 @@ Once the token limit is reached, you will receive a 429 error response with the 
 
 Now that you've tested the basic setup, you can:
 
-- For more rate limiter related configuration, see the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/usage-based-ratelimiting).
+- For more rate limiter related configuration, see the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/capabilities/traffic/usage-based-ratelimiting).
 
 - Explore the [Envoy AI Gateway documentation](https://aigateway.envoyproxy.io/docs/) to learn more about the features and capabilities.

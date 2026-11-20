@@ -68,7 +68,7 @@ KServe controller will take care of properly injecting your container image and 
 
 :::
 
-A more concrete example can be found in [Kubeflow model registry](https://github.com/kubeflow/model-registry/tree/main/csi#model-registry-custom-storage-initializer), where the storage initializer query an existing `model registry` service in order to retrieve the original location of the model that the user requested to deploy.
+A more concrete example can be found in [Kubeflow model registry](https://github.com/kubeflow/model-registry/tree/main/cmd/csi#model-registry-custom-storage-initializer), where the storage initializer query an existing `model registry` service in order to retrieve the original location of the model that the user requested to deploy.
 
 ###  Create the `ClusterStorageContainer` CR
 

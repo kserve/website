@@ -28,7 +28,7 @@ kubectl create namespace user1
 - When activator is on the request path, the rule checks the source namespace `knative-serving` namespace as the request is proxied through activator.
 
 :::warning
-Currently when activator is on the request path, it is not able to check the originated namespace or original identity due to the [net-istio issue](https://github.com/knative-sandbox/net-istio/issues/554).
+Currently when activator is on the request path, it is not able to check the originated namespace or original identity due to the [net-istio issue](https://github.com/knative-extensions/net-istio/issues/554).
 :::
 
 ```yaml
@@ -56,7 +56,7 @@ spec:
             namespaces: ["user1"]
     # 2. mTLS for service from source "user1" namespace to destination service with activator on the path
     # Source Service from "user1" namespace -> Activator(Knative Serving namespace) -> Destination service in "user1" namespace
-    # unfortunately currently we could not lock down the source namespace as Activator does not capture the source namespace when proxying the request, see https://github.com/knative-sandbox/net-istio/issues/554.
+    # unfortunately currently we could not lock down the source namespace as Activator does not capture the source namespace when proxying the request, see https://github.com/knative-extensions/net-istio/issues/554.
     - from:
         - source:
             namespaces: ["knative-serving"]

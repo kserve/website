@@ -26,3 +26,7 @@ yarn-error.log*
 # editor
 .vscode
 .idea
+
+# Link check tools and reports
+/bin/
+__pycache__/

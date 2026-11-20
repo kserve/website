@@ -200,5 +200,5 @@ Now that LLMInferenceService is installed, you can:
 3. **Explore Configuration Options**: Check [LLMInferenceService Configuration](../model-serving/generative-inference/llmisvc/llmisvc-configuration.md)
 4. **Learn Advanced Features**:
    - [Multi-Node Deployments](https://github.com/kserve/kserve/tree/master/docs/samples/llmisvc/dp-ep) - Data/Expert parallelism
-   - [Prefill-Decode Separation](../concepts/architecture/control-plane-llmisvc.md#prefill-decode-separation) - Performance optimization
+   - [Prefill-Decode Separation](../concepts/architecture/control-plane-llmisvc.md#prefill-decode-request-flow) - Performance optimization
 ---

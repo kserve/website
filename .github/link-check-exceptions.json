@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "exceptions": [
+    {
+      "url": "site:/docs/{v}/reference/oip/get-v-2#server-metadata-response-json-error-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/get-v-2#server-metadata-response-json-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/get-v-2-models-model-name-versions-model-version#model-metadata-response-json-error-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/get-v-2-models-model-name-versions-model-version#model-metadata-response-json-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/post-v-2-models-model-name-versions-model-version-infer#inference-request-examples",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/post-v-2-models-model-name-versions-model-version-infer#inference-request-json-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/post-v-2-models-model-name-versions-model-version-infer#inference-response-json-error-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    },
+    {
+      "url": "site:/docs/{v}/reference/oip/post-v-2-models-model-name-versions-model-version-infer#inference-response-json-object",
+      "reason": "Generated from the upstream Open Inference Protocol spec (open_inference_rest.yaml lines 80, 104 and 138 at open-inference-protocol main@d49cc23f), which links inference_rest.md sections as same-page anchors. Remove once the spec links inference_rest.md absolutely and the pages are regenerated.",
+      "expires": "2027-05-06"
+    }
+  ]
+}

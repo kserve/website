@@ -388,7 +388,7 @@ KServe integrates seamlessly with the Kubeflow ML platform, providing end-to-end
 - **Research and Development**: Experimental ML workflows
 - **Production ML Operations**: Operational ML model management
 
-For detailed Kubeflow integration, see the [Kubeflow Documentation](https://www.kubeflow.org/docs/external-add-ons/kserve/introduction/).
+For detailed Kubeflow integration, see the [Kubeflow Documentation](https://www.kubeflow.org/docs/ecosystem/kserve/introduction/).
 
 ### Kubernetes Native Integration
 

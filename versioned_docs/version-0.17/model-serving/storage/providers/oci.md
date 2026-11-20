@@ -200,7 +200,7 @@ The output is a JSON string representing the configuration. For Modelcars, sever
 
 ## References
 
-* [Modelcar Design document](https://docs.google.com/document/d/1Bs4fnP8rhPMaoPoLSYVvuRq-z9vkGPQ0rKbmfH4I7js/edit#heading=h.xw1gqgyqs5b)
+* [Modelcar Design document (archived)](https://web.archive.org/web/20241118173548if_/https://docs.google.com/document/d/1Bs4fnP8rhPMaoPoLSYVvuRq-z9vkGPQ0rKbmfH4I7js/edit)
 * [Original GitHub issue](https://github.com/kserve/kserve/issues/3043) (discusses also some alternative solutions)
 * [12-minute demo](https://www.youtube.com/watch?v=KzWH8v6CcR0)
 * [Code walkthrough](https://www.youtube.com/watch?v=axegGpQ6nHs) showing the implementation of Modelcars in KServe (for background information)

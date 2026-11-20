@@ -12,8 +12,73 @@ processor:
 render:
   # Version of Kubernetes to use when generating links to Kubernetes API documentation.
   kubernetesVersion: 1.31
+  # Field types from outside pkg/apis/serving get no section on the page, yet crd-ref-docs
+  # links them to one (#addressable). Covers what release-0.16 through master reference.
   knownTypes:
-   
+    - name: Addressable
+      package: knative.dev/pkg/apis/duck/v1
+      link: https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable
+    - name: Conditions
+      package: knative.dev/pkg/apis/duck/v1
+      link: https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions
+    - name: URL
+      package: knative.dev/pkg/apis
+      link: https://pkg.go.dev/knative.dev/pkg/apis#URL
+    - name: TrafficTarget
+      package: knative.dev/serving/pkg/apis/serving/v1
+      link: https://pkg.go.dev/knative.dev/serving/pkg/apis/serving/v1#TrafficTarget
+    - name: BackendObjectReference
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#BackendObjectReference
+    - name: Group
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Group
+    - name: HTTPRouteSpec
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#HTTPRouteSpec
+    - name: Kind
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Kind
+    - name: Namespace
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace
+    - name: ObjectName
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName
+    - name: ObjectReference
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference
+    - name: SectionName
+      package: sigs.k8s.io/gateway-api/apis/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#SectionName
+    - name: InferencePoolSpec
+      package: sigs.k8s.io/gateway-api-inference-extension/api/v1
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api-inference-extension/api/v1#InferencePoolSpec
+    - name: InferencePoolSpec
+      package: sigs.k8s.io/gateway-api-inference-extension/api/v1alpha2
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api-inference-extension/api/v1alpha2#InferencePoolSpec
+    - name: Criticality
+      package: sigs.k8s.io/gateway-api-inference-extension/api/v1alpha2
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api-inference-extension/api/v1alpha2#Criticality
+    # Pinned: later releases dropped InferencePoolSpec from apix/v1alpha2.
+    - name: InferencePoolSpec
+      package: sigs.k8s.io/gateway-api-inference-extension/apix/v1alpha2
+      link: https://pkg.go.dev/sigs.k8s.io/gateway-api-inference-extension@v1.3.1/apix/v1alpha2#InferencePoolSpec
+    - name: AdvancedConfig
+      package: github.com/kedacore/keda/v2/apis/keda/v1alpha1
+      link: https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#AdvancedConfig
+    - name: Fallback
+      package: github.com/kedacore/keda/v2/apis/keda/v1alpha1
+      link: https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#Fallback
+    - name: ScaleTriggers
+      package: github.com/kedacore/keda/v2/apis/keda/v1alpha1
+      link: https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#ScaleTriggers
+    - name: InferenceServiceProtocol
+      package: github.com/kserve/kserve/pkg/constants
+      link: https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol
+    - name: InferencePoolSpec
+      package: github.com/kserve/kserve/pkg/apis/gie/v1alpha2pool
+      link: https://pkg.go.dev/github.com/kserve/kserve/pkg/apis/gie/v1alpha2pool#InferencePoolSpec
 
 navigation:
   includeTOC: true
