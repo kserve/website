@@ -580,6 +580,29 @@ Do **not** forward the incoming `Host` header — it contains the transformer's 
 
 :::
 
+## Distributed Tracing
+
+Set the top-level `spec.tracing` field to configure both the transformer and predictor. Each receives a distinct service name and component resource attributes. See [InferenceService distributed tracing](../../observability/distributed-tracing.md) for configuration and runtime requirements.
+
+Legacy header forwarding, such as `x-b3-traceid`, is separate from W3C trace context propagation. For a custom HTTP call, inject the active OpenTelemetry context into the outgoing headers rather than copying the incoming `traceparent` unchanged:
+
+```python
+from opentelemetry import propagate
+
+predict_headers = {"Content-Type": "application/json"}
+if headers and "authorization" in headers:
+    predict_headers["authorization"] = headers["authorization"]
+propagate.inject(predict_headers)
+
+response = await http_client.post(
+    predictor_url,
+    json=payload,
+    headers=predict_headers,
+)
+```
+
+Run this code inside an instrumented request handler, where the server span is active. Context injection connects downstream spans but does not create an HTTP client span; use client instrumentation if you also need that span. For the built-in HTTP forwarding path, check the guide's [current propagation limitations](../../observability/distributed-tracing.md#connected-traces-and-limitations).
+
 ## Transformer-Specific Command Line Arguments
 
 - `--predictor_protocol`: The protocol used to communicate with the predictor. The available values are "v1", "v2" and "grpc-v2". The default value is "v1".
