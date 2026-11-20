@@ -95,11 +95,16 @@ helm install kserve-llmisvc-resources oci://ghcr.io/kserve/charts/kserve-llmisvc
 Install pre-configured templates for common LLM frameworks:
 
 ```bash
-helm install kserve-runtime-configs oci://ghcr.io/kserve/charts/kserve-runtime-configs \
+helm upgrade --install kserve-runtime-configs oci://ghcr.io/kserve/charts/kserve-runtime-configs \
   --version v0.19.0 \
   --namespace kserve \
+  --reuse-values \
   --set kserve.llmisvcConfigs.enabled=true
 ```
+
+`kserve-runtime-configs` is shared with KServe's serving runtimes. Using
+`--reuse-values` preserves any existing serving runtimes and custom release
+values when adding LLMInferenceService after KServe.
 
 ### Method 3: Installation Scripts
 

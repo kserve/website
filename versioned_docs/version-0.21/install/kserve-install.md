@@ -115,6 +115,27 @@ helm install kserve-resources oci://ghcr.io/kserve/charts/kserve-resources \
   --wait
 ```
 
+#### Install ClusterServingRuntimes
+
+The `kserve-resources` chart installs the controller but does not install the
+default `ClusterServingRuntime` resources. Install them separately before
+deploying an `InferenceService` that uses a supported model format:
+
+```bash
+helm upgrade --install kserve-runtime-configs oci://ghcr.io/kserve/charts/kserve-runtime-configs \
+  --version v0.21.0 \
+  --namespace kserve \
+  --reuse-values \
+  --set kserve.servingruntime.enabled=true \
+  --wait
+```
+
+Use the same chart version as the KServe components installed above.
+`--reuse-values` preserves the existing release's configuration when adding
+KServe to an existing LLMInferenceService installation, including
+`kserve.llmisvcConfigs.enabled=true`. On a fresh installation, LLMInferenceService
+configs remain disabled.
+
 ### Method 3: Installation Scripts
 
 #### Quick Install (All-in-One)
