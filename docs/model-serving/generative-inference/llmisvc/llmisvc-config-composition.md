@@ -261,6 +261,7 @@ The controller uses [Kubernetes strategic merge patch](https://kubernetes.io/doc
 - **Non-zero fields** from the override are applied to the base. Existing base fields that the override does not mention are left untouched.
 - **Zero-valued fields** (empty string `""`, `0`, `nil`, `false`) in the override do **not** overwrite base values. This prevents a config that does not specify a port from wiping out the well-known config's port.
 - **Containers** are merged by name - the `main` container from different sources merges into a single `main` container rather than creating duplicates. Note that each pod spec (`template`, `worker`, `prefill`) has its own `main` container - these are separate and do not merge with each other. The merge only happens within the same pod spec across config layers. Other list fields like `volumes` and `env` follow standard Kubernetes strategic merge patch behavior.
+- **`router.route.http.spec`**: top-level fields such as `hostnames` and `parentRefs` merge onto the well-known router-route preset without dropping preset `rules`. Gateway API `rules` lists are atomic under strategic merge, so a non-empty `rules` override **replaces** the entire preset list. To overlay per-rule defaults such as timeouts onto preset rules without replacing them, use `router.route.http.ruleDefaults`. See [Custom HTTPRoute Spec](./llmisvc-configuration.md#custom-httproute-spec).
 
 ### Example: Adding Resources Without Losing Existing Fields
 
