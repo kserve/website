@@ -32,7 +32,7 @@
 {{- $isKind = true }}
 {{- end }}
 {{- end }}
-{{- if not $isKind }}
+{{- if and (not $isKind) (markdownShouldRenderType .) }}
 - {{ markdownRenderTypeLink . }}
 {{- end }}
 {{- end }}

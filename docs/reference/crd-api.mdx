@@ -925,7 +925,6 @@ TrainedModelList contains a list of TrainedModel
 - [InfereceGraphRouterTimeouts](#inferecegraphroutertimeouts)
 - [InferenceGraphSpec](#inferencegraphspec)
 - [InferenceGraphStatus](#inferencegraphstatus)
-- [InferenceGraphValidator](#inferencegraphvalidator)
 - [InferencePoolSpec](#inferencepoolspec)
 - [InferenceRouter](#inferencerouter)
 - [InferenceRouterType](#inferenceroutertype)
@@ -935,10 +934,8 @@ TrainedModelList contains a list of TrainedModel
 - [IngressSpec](#ingressspec)
 - [KEDAScalingSpec](#kedascalingspec)
 - [LLMInferenceServiceConfigStatus](#llminferenceserviceconfigstatus)
-- [LLMInferenceServiceConfigValidator](#llminferenceserviceconfigvalidator)
 - [LLMInferenceServiceSpec](#llminferenceservicespec)
 - [LLMInferenceServiceStatus](#llminferenceservicestatus)
-- [LLMInferenceServiceValidator](#llminferenceservicevalidator)
 - [LLMModelSpec](#llmmodelspec)
 - [LoRASpec](#loraspec)
 - [LocalModelCacheSpec](#localmodelcachespec)
@@ -973,13 +970,11 @@ TrainedModelList contains a list of TrainedModel
 - [StorageHelper](#storagehelper)
 - [StorageInitializerSpec](#storageinitializerspec)
 - [SupportedModelFormat](#supportedmodelformat)
-- [SupportedRuntime](#supportedruntime)
 - [SupportedUriFormat](#supporteduriformat)
 - [TokenizerSpec](#tokenizerspec)
 - [TracingSpec](#tracingspec)
 - [TrainedModelSpec](#trainedmodelspec)
 - [TrainedModelStatus](#trainedmodelstatus)
-- [TrainedModelValidator](#trainedmodelvalidator)
 - [UntypedObjectReference](#untypedobjectreference)
 - [WVASpec](#wvaspec)
 - [WorkerSpec](#workerspec)
@@ -1154,17 +1149,17 @@ It extends UntypedObjectReference with Gateway-specific fields.
 
 <ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name of the referenced object."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="true"
   description="Namespace of the referenced object."
 /><ApiField
   name="sectionName"
-  type="[SectionName](#sectionname)"
+  type="[SectionName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#SectionName)"
   required="false"
   description="SectionName is the name of a section within the target resource. When<br />set on a Gateway reference, it targets a specific listener by name.<br />When unset, the route is attached to all listeners on the referenced<br />Gateway that support the route type."
 />
@@ -1266,7 +1261,7 @@ HTTPRouteSpec defines configurations for a Gateway API HTTPRoute.
   description="Refs provides references to existing, user-managed HTTPRoute objects (&quot;Bring Your Own&quot; route).<br />The controller will validate the existence of these routes but will not modify them."
 /><ApiField
   name="spec"
-  type="[HTTPRouteSpec](#httproutespec)"
+  type="[HTTPRouteSpec](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#HTTPRouteSpec)"
   required="false"
   description="Spec allows for providing a custom specification for an HTTPRoute.<br />If provided, the controller will create and manage an HTTPRoute with this specification."
 />
@@ -1409,7 +1404,7 @@ InferenceGraphStatus defines the InferenceGraph conditions and status
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -1419,7 +1414,7 @@ InferenceGraphStatus defines the InferenceGraph conditions and status
   description="Annotations is additional Status fields for the Resource to save some<br />additional State as well as convey more information to the user. This is<br />roughly akin to Annotations on any k8s resource, just the reconciler conveying<br />richer information outwards."
 /><ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="Url for the InferenceGraph"
 /><ApiField
@@ -1447,7 +1442,7 @@ InferencePoolSpec defines the configuration for an InferencePool.
 
 <ApiField
   name="spec"
-  type="[InferencePoolSpec](#inferencepoolspec)"
+  type="[InferencePoolSpec](https://pkg.go.dev/github.com/kserve/kserve/pkg/apis/gie/v1alpha2pool#InferencePoolSpec)"
   required="false"
   description="Spec defines an inline InferencePool specification."
 /><ApiField
@@ -1813,12 +1808,12 @@ Note: WVA-only restrictions on scalingModifiers live on WVASpec so direct KEDA
   description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />Set to 0 for true scale-to-zero: KEDA scales the resource to zero replicas when idle<br />and immediately back to minReplicas once a trigger becomes active.<br />If not set, KEDA will not scale below minReplicas."
 /><ApiField
   name="fallback"
-  type="[Fallback](#fallback)"
+  type="[Fallback](https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#Fallback)"
   required="false"
   description="Fallback defines the replica count to maintain when the scaler is in a fallback state<br />(e.g., when Prometheus or WVA metrics are unavailable). This allows the deployment to<br />hold a safe replica count during metric outages rather than scaling to zero."
 /><ApiField
   name="advanced"
-  type="[AdvancedConfig](#advancedconfig)"
+  type="[AdvancedConfig](https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#AdvancedConfig)"
   required="false"
   description="Advanced specifies the advanced KEDA configuration options.<br />This includes HPA behavior configuration and restore-to-original replica count settings."
 />
@@ -1844,7 +1839,7 @@ LLMInferenceServiceConfigStatus defines the observed state of LLMInferenceServic
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -1958,7 +1953,7 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
 
 <ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="URL is the primary address for accessing the service.<br />It is set to an external (public) address when available, otherwise<br />it is promoted from the first discovered address (which may be<br />cluster-local or private) for easy discovery."
 /><ApiField
@@ -1968,7 +1963,7 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -1978,12 +1973,12 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
   description="Annotations is additional Status fields for the Resource to save some<br />additional State as well as convey more information to the user. This is<br />roughly akin to Annotations on any k8s resource, just the reconciler conveying<br />richer information outwards."
 /><ApiField
   name="address"
-  type="[Addressable](#addressable)"
+  type="[Addressable](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable)"
   required="false"
   description="Address is a single Addressable address.<br />If Addresses is present, Address will be ignored by clients."
 /><ApiField
   name="addresses"
-  type="[Addressable](#addressable) array"
+  type="[Addressable](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable) array"
   required="false"
   description="Addresses is a list of addresses for different protocols (HTTP and HTTPS)<br />If Addresses is present, Address must be ignored by clients."
 /><ApiField
@@ -2011,7 +2006,7 @@ LLMModelSpec defines the model source and its characteristics.
 
 <ApiField
   name="uri"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="true"
   description="URI of the model, specifying its location, e.g., hf://meta-llama/Llama-4-Scout-17B-16E-Instruct<br />The storage-initializer init container uses this URI to download the model."
 /><ApiField
@@ -2537,32 +2532,32 @@ bound to this service through it. Used in status to record observed routing topo
 
 <ApiField
   name="group"
-  type="[Group](#group)"
+  type="[Group](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Group)"
   required="true"
   description="Group is the group of the referent. For example, &quot;gateway.networking.k8s.io&quot;.<br />When set to the empty string, core API group is inferred."
 /><ApiField
   name="kind"
-  type="[Kind](#kind)"
+  type="[Kind](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Kind)"
   required="true"
   description="Kind is kind of the referent. For example &quot;ConfigMap&quot; or &quot;Service&quot;."
 /><ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name is the name of the referent."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="false"
   description="Namespace is the namespace of the referenced object. When unspecified, the local<br />namespace is inferred.<br />Note that when a namespace different than the local namespace is specified,<br />a ReferenceGrant object is required in the referent namespace to allow that<br />namespace's owner to accept the reference. See the ReferenceGrant<br />documentation for details.<br />Support: Core"
 /><ApiField
   name="listeners"
-  type="[SectionName](#sectionname) array"
+  type="[SectionName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#SectionName) array"
   required="false"
   description="Listeners lists the SectionNames of the Gateway listeners that accepted<br />routes from this service. Nil means the route targets all listeners<br />(no SectionName was specified on the parentRef)."
 /><ApiField
   name="httpRoutes"
-  type="[ObjectReference](#objectreference) array"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference) array"
   required="false"
   description="HTTPRoutes lists the HTTPRoutes bound to this service through this Gateway."
 />
@@ -2584,12 +2579,12 @@ during the last successful routing reconciliation.
 
 <ApiField
   name="inferencePool"
-  type="[ObjectReference](#objectreference)"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference)"
   required="false"
   description="InferencePool is the InferencePool observed as active for this service."
 /><ApiField
   name="service"
-  type="[ObjectReference](#objectreference)"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference)"
   required="false"
   description="Service is the EPP Service observed for this service."
 />
@@ -2982,7 +2977,7 @@ ServerType constant for specifying the runtime name
 **Appears in:**
 - [ClusterServingRuntime](#clusterservingruntime)
 - [ServingRuntime](#servingruntime)
-- [SupportedRuntime](#supportedruntime)
+- SupportedRuntime
 
 ServingRuntimeSpec defines the desired state of ServingRuntime. This spec is currently provisional
 and are subject to change as details regarding single-model serving and multi-model serving
@@ -3009,7 +3004,7 @@ are hammered out.
   description="Set to true to disable use of this runtime"
 /><ApiField
   name="protocolVersions"
-  type="InferenceServiceProtocol array"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol) array"
   required="false"
   description="Supported protocol versions (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -3378,7 +3373,7 @@ TrainedModelStatus defines the observed state of TrainedModel
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -3388,12 +3383,12 @@ TrainedModelStatus defines the observed state of TrainedModel
   description="Annotations is additional Status fields for the Resource to save some<br />additional State as well as convey more information to the user. This is<br />roughly akin to Annotations on any k8s resource, just the reconciler conveying<br />richer information outwards."
 /><ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="true"
   description="URL holds the url that will distribute traffic over the provided traffic targets.<br />For v1: http[s]://\{route-name\}.\{route-namespace\}.\{cluster-level-suffix\}/v1/models/&lt;trainedmodel&gt;:predict<br />For v2: http[s]://\{route-name\}.\{route-namespace\}.\{cluster-level-suffix\}/v2/models/&lt;trainedmodel&gt;/infer"
 /><ApiField
   name="address"
-  type="[Addressable](#addressable)"
+  type="[Addressable](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable)"
   required="true"
   description="Addressable endpoint for the deployed trained model<br />http://&lt;inferenceservice.metadata.name&gt;/v1/models/&lt;trainedmodel&gt;.metadata.name"
 />
@@ -3418,12 +3413,12 @@ might be inferred or is not strictly required by this controller.
 
 <ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name of the referenced object."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="true"
   description="Namespace of the referenced object."
 />
@@ -3821,10 +3816,8 @@ LLMInferenceServiceList is the list type for LLMInferenceService.
 - [KEDAScalingSpec](#kedascalingspec)
 - [KVCacheOffloadingSpec](#kvcacheoffloadingspec)
 - [LLMInferenceServiceConfigStatus](#llminferenceserviceconfigstatus)
-- [LLMInferenceServiceConfigValidator](#llminferenceserviceconfigvalidator)
 - [LLMInferenceServiceSpec](#llminferenceservicespec)
 - [LLMInferenceServiceStatus](#llminferenceservicestatus)
-- [LLMInferenceServiceValidator](#llminferenceservicevalidator)
 - [LLMModelSpec](#llmmodelspec)
 - [LoRASpec](#loraspec)
 - [ModelSourcedAddressStatus](#modelsourcedaddressstatus)
@@ -3894,12 +3887,12 @@ to the final merged configuration during reconciliation.
 
 <ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name of the LLMInferenceServiceConfig resource that was applied."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="true"
   description="Namespace where the LLMInferenceServiceConfig was resolved from."
 /><ApiField
@@ -4064,17 +4057,17 @@ It extends UntypedObjectReference with Gateway-specific fields.
 
 <ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name of the referenced object."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="true"
   description="Namespace of the referenced object."
 /><ApiField
   name="sectionName"
-  type="[SectionName](#sectionname)"
+  type="[SectionName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#SectionName)"
   required="false"
   description="SectionName is the name of a section within the target resource. When<br />set on a Gateway reference, it targets a specific listener by name.<br />When unset, the route is attached to all listeners on the referenced<br />Gateway that support the route type."
 />
@@ -4162,7 +4155,7 @@ GroupMemberStatus reports the observed state of a single group member.
   description="Stopped is true when the member has the force-stop annotation set.<br />A stopped member remains in the group but receives no traffic (weight<br />is overridden to 0 regardless of the spec value)."
 /><ApiField
   name="backendRef"
-  type="[BackendObjectReference](#backendobjectreference)"
+  type="[BackendObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#BackendObjectReference)"
   required="false"
   description="BackendRef is the resolved backend for this member<br />(InferencePool or Service)."
 />
@@ -4245,7 +4238,7 @@ HTTPRouteSpec defines configurations for a Gateway API HTTPRoute.
   description="Refs provides references to existing, user-managed HTTPRoute objects (&quot;Bring Your Own&quot; route).<br />The controller will validate the existence of these routes but will not modify them."
 /><ApiField
   name="spec"
-  type="[HTTPRouteSpec](#httproutespec)"
+  type="[HTTPRouteSpec](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#HTTPRouteSpec)"
   required="false"
   description="Spec allows for providing a custom specification for an HTTPRoute.<br />If provided, the controller will create and manage an HTTPRoute with this specification."
 />
@@ -4267,7 +4260,7 @@ InferencePoolSpec defines the configuration for an InferencePool.
 
 <ApiField
   name="spec"
-  type="[InferencePoolSpec](#inferencepoolspec)"
+  type="[InferencePoolSpec](https://pkg.go.dev/sigs.k8s.io/gateway-api-inference-extension/api/v1#InferencePoolSpec)"
   required="false"
   description="Spec defines an inline InferencePool specification."
 /><ApiField
@@ -4339,12 +4332,12 @@ Note: WVA-only restrictions on scalingModifiers live on WVASpec so direct KEDA
   description="IdleReplicaCount is the number of replicas KEDA will scale the resource down to<br />when there are no triggers active. This must be less than minReplicas.<br />Set to 0 for true scale-to-zero: KEDA scales the resource to zero replicas when idle<br />and immediately back to minReplicas once a trigger becomes active.<br />If not set, KEDA will not scale below minReplicas."
 /><ApiField
   name="fallback"
-  type="[Fallback](#fallback)"
+  type="[Fallback](https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#Fallback)"
   required="false"
   description="Fallback defines the replica count to maintain when the scaler is in a fallback state<br />(e.g., when Prometheus or WVA metrics are unavailable). This allows the deployment to<br />hold a safe replica count during metric outages rather than scaling to zero."
 /><ApiField
   name="advanced"
-  type="[AdvancedConfig](#advancedconfig)"
+  type="[AdvancedConfig](https://pkg.go.dev/github.com/kedacore/keda/v2/apis/keda/v1alpha1#AdvancedConfig)"
   required="false"
   description="Advanced specifies the advanced KEDA configuration options.<br />This includes HPA behavior configuration and restore-to-original replica count settings."
 />
@@ -4403,7 +4396,7 @@ LLMInferenceServiceConfigStatus defines the observed state of LLMInferenceServic
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -4527,7 +4520,7 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
 
 <ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="URL is the primary address for accessing the service.<br />It is set to an external (public) address when available, otherwise<br />it is promoted from the first discovered address (which may be<br />cluster-local or private) for easy discovery."
 /><ApiField
@@ -4537,7 +4530,7 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -4547,7 +4540,7 @@ LLMInferenceServiceStatus defines the observed state of LLMInferenceService.
   description="Annotations is additional Status fields for the Resource to save some<br />additional State as well as convey more information to the user. This is<br />roughly akin to Annotations on any k8s resource, just the reconciler conveying<br />richer information outwards."
 /><ApiField
   name="address"
-  type="[Addressable](#addressable)"
+  type="[Addressable](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable)"
   required="false"
   description="Deprecated: Address is retained for CRD schema compatibility.<br />It is never populated; use Addresses instead."
 /><ApiField
@@ -4590,7 +4583,7 @@ LLMModelSpec defines the model source and its characteristics.
 
 <ApiField
   name="uri"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="true"
   description="URI of the model, specifying its location, e.g., hf://meta-llama/Llama-4-Scout-17B-16E-Instruct<br />The storage-initializer init container uses this URI to download the model."
 /><ApiField
@@ -4684,32 +4677,32 @@ bound to this service through it. Used in status to record observed routing topo
 
 <ApiField
   name="group"
-  type="[Group](#group)"
+  type="[Group](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Group)"
   required="true"
   description="Group is the group of the referent. For example, &quot;gateway.networking.k8s.io&quot;.<br />When set to the empty string, core API group is inferred."
 /><ApiField
   name="kind"
-  type="[Kind](#kind)"
+  type="[Kind](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Kind)"
   required="true"
   description="Kind is kind of the referent. For example &quot;ConfigMap&quot; or &quot;Service&quot;."
 /><ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name is the name of the referent."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="false"
   description="Namespace is the namespace of the referenced object. When unspecified, the local<br />namespace is inferred.<br />Note that when a namespace different than the local namespace is specified,<br />a ReferenceGrant object is required in the referent namespace to allow that<br />namespace's owner to accept the reference. See the ReferenceGrant<br />documentation for details.<br />Support: Core"
 /><ApiField
   name="listeners"
-  type="[SectionName](#sectionname) array"
+  type="[SectionName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#SectionName) array"
   required="false"
   description="Listeners lists the SectionNames of the Gateway listeners that accepted<br />routes from this service. Nil means the route targets all listeners<br />(no SectionName was specified on the parentRef)."
 /><ApiField
   name="httpRoutes"
-  type="[ObjectReference](#objectreference) array"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference) array"
   required="false"
   description="HTTPRoutes lists the HTTPRoutes bound to this service through this Gateway."
 />
@@ -4731,12 +4724,12 @@ during the last successful routing reconciliation.
 
 <ApiField
   name="inferencePool"
-  type="[ObjectReference](#objectreference)"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference)"
   required="false"
   description="InferencePool is the InferencePool observed as active for this service."
 /><ApiField
   name="service"
-  type="[ObjectReference](#objectreference)"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference)"
   required="false"
   description="Service is the EPP Service observed for this service."
 />
@@ -5148,7 +5141,7 @@ produced this address, enabling consumers to select endpoints by origin.
   description="Name is the name of the address."
 /><ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="true"
   description=""
 /><ApiField
@@ -5163,7 +5156,7 @@ produced this address, enabling consumers to select endpoints by origin.
   description="Audience is the OIDC audience for this address."
 /><ApiField
   name="origin"
-  type="[ObjectReference](#objectreference)"
+  type="[ObjectReference](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectReference)"
   required="false"
   description="Origin identifies the networking resource (e.g., Gateway) that<br />produced this address. Nil when the origin is unknown or when<br />the address was converted from an older API version."
 /><ApiField
@@ -5297,12 +5290,12 @@ might be inferred or is not strictly required by this controller.
 
 <ApiField
   name="name"
-  type="[ObjectName](#objectname)"
+  type="[ObjectName](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#ObjectName)"
   required="true"
   description="Name of the referenced object."
 /><ApiField
   name="namespace"
-  type="[Namespace](#namespace)"
+  type="[Namespace](https://pkg.go.dev/sigs.k8s.io/gateway-api/apis/v1#Namespace)"
   required="true"
   description="Namespace of the referenced object."
 />
@@ -5539,20 +5532,13 @@ InferenceServiceList contains a list of Service
 - [ARTExplainerType](#artexplainertype)
 - [AuthenticationRef](#authenticationref)
 - [AutoScalingSpec](#autoscalingspec)
-- [AutoscalerConfig](#autoscalerconfig)
 - [Batcher](#batcher)
 - [CanarySpec](#canaryspec)
 - [CanaryStatus](#canarystatus)
-- [Component](#component)
 - [ComponentExtensionSpec](#componentextensionspec)
-- [ComponentImplementation](#componentimplementation)
 - [ComponentStatusSpec](#componentstatusspec)
 - [ComponentType](#componenttype)
 - [ConfidentialSpec](#confidentialspec)
-- [CustomExplainer](#customexplainer)
-- [CustomPredictor](#custompredictor)
-- [CustomTransformer](#customtransformer)
-- [DeployConfig](#deployconfig)
 - [DeploymentRolloutStrategy](#deploymentrolloutstrategy)
 - [ExplainerConfig](#explainerconfig)
 - [ExplainerExtensionSpec](#explainerextensionspec)
@@ -5564,14 +5550,9 @@ InferenceServiceList contains a list of Service
 - [FailureInfo](#failureinfo)
 - [FailureReason](#failurereason)
 - [HuggingFaceRuntimeSpec](#huggingfaceruntimespec)
-- [InferenceServiceDefaulter](#inferenceservicedefaulter)
 - [InferenceServiceSpec](#inferenceservicespec)
 - [InferenceServiceStatus](#inferenceservicestatus)
-- [InferenceServiceValidator](#inferenceservicevalidator)
-- [InferenceServicesConfig](#inferenceservicesconfig)
-- [IngressConfig](#ingressconfig)
 - [LightGBMSpec](#lightgbmspec)
-- [LocalModelConfig](#localmodelconfig)
 - [LoggerSpec](#loggerspec)
 - [LoggerStorageSpec](#loggerstoragespec)
 - [LoggerType](#loggertype)
@@ -5588,9 +5569,7 @@ InferenceServiceList contains a list of Service
 - [ModelState](#modelstate)
 - [ModelStatus](#modelstatus)
 - [ModelStorageSpec](#modelstoragespec)
-- [MultiNodeConfig](#multinodeconfig)
 - [ONNXRuntimeSpec](#onnxruntimespec)
-- [OtelCollectorConfig](#otelcollectorconfig)
 - [PMMLSpec](#pmmlspec)
 - [PaddleServerSpec](#paddleserverspec)
 - [PodMetricSource](#podmetricsource)
@@ -5598,7 +5577,6 @@ InferenceServiceList contains a list of Service
 - [PodSpec](#podspec)
 - [PodsMetricsBackend](#podsmetricsbackend)
 - [PredictorExtensionSpec](#predictorextensionspec)
-- [PredictorImplementation](#predictorimplementation)
 - [PredictorSpec](#predictorspec)
 - [ResourceConfig](#resourceconfig)
 - [ResourceMetric](#resourcemetric)
@@ -5606,8 +5584,6 @@ InferenceServiceList contains a list of Service
 - [RolloutSpec](#rolloutspec)
 - [SKLearnSpec](#sklearnspec)
 - [ScaleMetric](#scalemetric)
-- [SecurityConfig](#securityconfig)
-- [ServiceConfig](#serviceconfig)
 - [StorageSpec](#storagespec)
 - [StorageUri](#storageuri)
 - [TFServingSpec](#tfservingspec)
@@ -6079,27 +6055,27 @@ ComponentStatusSpec describes the state of the component
   description="Latest revision name that is rolled out with 100 percent traffic"
 /><ApiField
   name="traffic"
-  type="TrafficTarget array"
+  type="[TrafficTarget](https://pkg.go.dev/knative.dev/serving/pkg/apis/serving/v1#TrafficTarget) array"
   required="false"
   description="Traffic holds the configured traffic distribution for latest ready revision and previous rolled out revision."
 /><ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="URL holds the primary url that will distribute traffic over the provided traffic targets.<br />This will be one the REST or gRPC endpoints that are available.<br />It generally has the form http[s]://\{route-name\}.\{route-namespace\}.\{cluster-level-suffix\}"
 /><ApiField
   name="restUrl"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="REST endpoint of the component if available."
 /><ApiField
   name="grpcUrl"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="gRPC endpoint of the component if available."
 /><ApiField
   name="address"
-  type="[Addressable](#addressable)"
+  type="[Addressable](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable)"
   required="false"
   description="Addressable endpoint for the InferenceService"
 />
@@ -6182,7 +6158,7 @@ from a Key Broker Service (KBS) via TEE attestation.
 
 
 **Appears in:**
-- [DeployConfig](#deployconfig)
+- DeployConfig
 
 DeploymentRolloutStrategy defines the rollout strategy configuration for deployments
 
@@ -6697,7 +6673,7 @@ The following fields follow a "1-of" semantic. Users must specify exactly one sp
 
 
 **Appears in:**
-- [InferenceServicesConfig](#inferenceservicesconfig)
+- InferenceServicesConfig
 
 
 
@@ -6921,7 +6897,7 @@ HuggingFaceRuntimeSpec defines arguments for configuring HuggingFace model servi
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -7124,7 +7100,7 @@ InferenceServiceStatus defines the observed state of InferenceService
   description="ObservedGeneration is the 'Generation' of the Service that<br />was last processed by the controller."
 /><ApiField
   name="conditions"
-  type="[Conditions](#conditions)"
+  type="[Conditions](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Conditions)"
   required="false"
   description="Conditions the latest available observations of a resource's current state."
 /><ApiField
@@ -7134,12 +7110,12 @@ InferenceServiceStatus defines the observed state of InferenceService
   description="Annotations is additional Status fields for the Resource to save some<br />additional State as well as convey more information to the user. This is<br />roughly akin to Annotations on any k8s resource, just the reconciler conveying<br />richer information outwards."
 /><ApiField
   name="address"
-  type="[Addressable](#addressable)"
+  type="[Addressable](https://pkg.go.dev/knative.dev/pkg/apis/duck/v1#Addressable)"
   required="false"
   description="Addressable endpoint for the InferenceService"
 /><ApiField
   name="url"
-  type="[URL](#url)"
+  type="[URL](https://pkg.go.dev/knative.dev/pkg/apis#URL)"
   required="false"
   description="URL holds the url that will distribute traffic over the provided traffic targets.<br />It generally has the form http[s]://\{route-name\}.\{route-namespace\}.\{cluster-level-suffix\}"
 /><ApiField
@@ -7203,7 +7179,7 @@ LightGBMSpec defines arguments for configuring LightGBMSpec model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -7758,7 +7734,7 @@ MetricsSpec specifies how to scale based on a single metric
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -8051,7 +8027,7 @@ ONNXRuntimeSpec defines arguments for configuring ONNX model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -8218,7 +8194,7 @@ PMMLSpec defines arguments for configuring PMML model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -8384,7 +8360,7 @@ PMMLSpec defines arguments for configuring PMML model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -8878,7 +8854,7 @@ PredictorExtensionSpec defines configuration shared across all predictor framewo
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -9398,8 +9374,8 @@ The following fields follow a "1-of" semantic. Users must specify exactly one sp
 
 
 **Appears in:**
-- [InferenceServicesConfig](#inferenceservicesconfig)
-- [OtelCollectorConfig](#otelcollectorconfig)
+- InferenceServicesConfig
+- OtelCollectorConfig
 
 
 
@@ -9531,7 +9507,7 @@ SKLearnSpec defines arguments for configuring SKLearn model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -9797,7 +9773,7 @@ TFServingSpec defines arguments for configuring Tensorflow model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -9963,7 +9939,7 @@ TorchServeSpec defines arguments for configuring PyTorch model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -10502,7 +10478,7 @@ TritonSpec defines arguments for configuring Triton model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField
@@ -10904,7 +10880,7 @@ XGBoostSpec defines arguments for configuring XGBoost model serving.
   description="Runtime version of the predictor docker image"
 /><ApiField
   name="protocolVersion"
-  type="[InferenceServiceProtocol](#inferenceserviceprotocol)"
+  type="[InferenceServiceProtocol](https://pkg.go.dev/github.com/kserve/kserve/pkg/constants#InferenceServiceProtocol)"
   required="false"
   description="Protocol version to use by the predictor (i.e. v1 or v2 or grpc-v1 or grpc-v2)"
 /><ApiField

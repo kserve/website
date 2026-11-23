@@ -70,4 +70,4 @@ The work described here is just one example of what becomes possible when a comm
 - **Attend community calls** → All meetings are open! Add our [public calendar](https://red.ht/llm-d-public-calendar) (Wednesdays 12:30pm ET) and join the conversation
 - **Follow project updates** → Stay current on [Twitter/X](https://twitter.com/_llm_d_), [Bluesky](https://bsky.app/profile/llm-d.ai), and [LinkedIn](https://www.linkedin.com/company/llm-d)
 - **Watch demos and recordings** → Subscribe to the [llm-d YouTube channel](https://www.youtube.com/@llm-d-project) for community call recordings and feature walkthroughs
-- **Read the docs** → Visit our [community page](https://llm-d.ai/docs/community) to find SIGs, contribution guides, and upcoming events
+- **Read the docs** → Visit our [community page](https://llm-d.ai/community) to find SIGs, contribution guides, and upcoming events

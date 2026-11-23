@@ -74,4 +74,4 @@ For more information on how to export metrics, see [Queue Proxy Extension](https
 
 ## Knative/Queue-Proxy metrics 
 
-Queue proxy emits metrics by default on port 9091. If aggregation metrics are set up with the queue proxy extension, the default port for the aggregated metrics will be 9088. See the [Knative documentation](https://knative.dev/development/serving/services/service-metrics/) (and [additional metrics defined in the code](https://github.com/vagababov/serving/blob/master/pkg/queue/prometheus_stats_reporter.go#L118)) for more information about the metrics queue-proxy exposes.
+Queue proxy emits metrics by default on port 9091. If aggregation metrics are set up with the queue proxy extension, the default port for the aggregated metrics will be 9088. See the [Knative documentation](https://knative.dev/docs/serving/observability/metrics/serving-metrics/) (and [additional metrics defined in the code](https://github.com/vagababov/serving/blob/master/pkg/queue/prometheus_stats_reporter.go#L118)) for more information about the metrics queue-proxy exposes.

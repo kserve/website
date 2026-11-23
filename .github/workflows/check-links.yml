@@ -1,0 +1,246 @@
+name: Documentation links
+
+on:
+  pull_request:
+  merge_group:
+    types: [checks_requested]
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Update the aggregate issue and nightly history (default branch only)
+        type: boolean
+        default: false
+  schedule:
+    # Nightly observations allow escalation after a measured week of downtime.
+    - cron: '23 2 * * *'
+
+permissions:
+  contents: read
+
+# Reports use artifacts; no job saves a cache.
+cache-mode: none
+
+concurrency:
+  # New PR and merge queue runs supersede old ones. Events get separate groups:
+  # a group keeps only its newest pending run, so a manual dispatch would
+  # otherwise cancel a queued nightly audit. The triage job orders state writes.
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' || github.event_name == 'merge_group' }}
+
+jobs:
+  build:
+    name: Build and scan the ${{ matrix.side }} site
+    if: github.event_name != 'schedule' || github.repository == 'kserve/website'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # No run of this job saves a cache, whatever the event, so nothing it
+    # builds can reach the Pages deployment. PR builds restore the npm cache
+    # that the deployment saves on the default branch; audits restore none.
+    cache-mode: read
+    strategy:
+      fail-fast: false
+      matrix:
+        # PRs compare against a build of their base. Audits check the head only.
+        side: ${{ fromJSON((github.event_name == 'pull_request' || github.event_name == 'merge_group') && '["head","base"]' || '["head"]') }}
+    # The build runs PR code. Its token is read-only, and the checkouts keep
+    # no credentials.
+    steps:
+      - name: Checkout link checker from the proposed changes
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          path: tools
+          persist-credentials: false
+
+      - name: Checkout the ${{ matrix.side }} site
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ matrix.side == 'base' && (github.event.pull_request.base.sha || github.event.merge_group.base_sha) || '' }}
+          path: site
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.14.x
+          cache: ${{ (github.event_name == 'pull_request' || github.event_name == 'merge_group') && 'npm' || '' }}
+          cache-dependency-path: site/package-lock.json
+
+      - name: Build the site as the Pages deployment does
+        working-directory: site
+        run: |
+          npm ci
+          NODE_ENV=production npx docusaurus build
+
+      - name: Install pinned link checker
+        working-directory: tools
+        run: make lychee
+
+      # The head scanner reads both builds, so a scanner change applies to the
+      # baseline too and cannot report pre-existing failures as new.
+      - name: Record links of the ${{ matrix.side }} build
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          CHECKOUT_BRANCH: ${{ github.event.pull_request.base.ref || github.event.merge_group.base_ref || github.event.repository.default_branch }}
+        run: >-
+          python3 tools/hack/check-links.py scan
+          --lychee tools/bin/lychee --site site/build --root site
+          --output facts/facts.json
+
+      - name: Upload link facts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: link-facts-${{ matrix.side }}
+          path: facts/
+          retention-days: 7
+          if-no-files-found: error
+
+  check-links:
+    name: Check documentation links
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      audit-url: ${{ steps.report.outputs.artifact-url }}
+    steps:
+      - name: Checkout proposed changes
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          path: head
+          persist-credentials: false
+
+      - name: Install pinned link checker
+        working-directory: head
+        run: make lychee
+
+      - name: Test link-check policy
+        working-directory: head
+        run: python3 -m unittest discover -s hack/tests -p 'test*link*.py'
+
+      # By name into fixed paths: with pattern:, a single match is extracted
+      # into path itself, so the layout would depend on how many sides built.
+      - name: Download head link facts
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: link-facts-head
+          path: facts/link-facts-head
+
+      - name: Download base link facts
+        if: github.event_name == 'pull_request' || github.event_name == 'merge_group'
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: link-facts-base
+          path: facts/link-facts-base
+
+      - name: Check for regressions or audit existing links
+        working-directory: head
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          CHECKOUT_BRANCH: ${{ github.event.pull_request.base.ref || github.event.merge_group.base_ref || github.event.repository.default_branch }}
+        run: |
+          args=(--lychee bin/lychee --facts ../facts/link-facts-head/facts.json)
+          if [[ "$EVENT_NAME" == pull_request || "$EVENT_NAME" == merge_group ]]; then
+            args+=(--base-facts ../facts/link-facts-base/facts.json)
+          else
+            # The scanner records all outcomes. A separate, trusted job below
+            # applies history and escalation without giving the scanner write access.
+            args+=(--advisory)
+          fi
+          python3 hack/check-links.py gate "${args[@]}"
+
+      - name: Upload link reports
+        id: report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: link-check-report
+          path: head/bin/link-check/
+          retention-days: 30
+          if-no-files-found: warn
+
+  triage:
+    name: Track failures and update the documentation issue
+    needs: check-links
+    if: >-
+      github.repository == 'kserve/website' &&
+      (github.event_name == 'schedule' ||
+       (github.event_name == 'workflow_dispatch' &&
+        github.ref == format('refs/heads/{0}', github.event.repository.default_branch)))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # History and issue writes run one at a time, and queue: max keeps every
+    # pending run instead of only the newest.
+    concurrency:
+      group: ${{ github.workflow }}-triage
+      queue: max
+    permissions:
+      contents: read
+      # Read only successful default-branch history artifacts.
+      actions: read
+      # Only this trusted publisher updates the single bot-owned issue. It runs
+      # default-branch code at github.sha and reads the scanner's output only as
+      # size-capped, schema-checked JSON, so no PR code runs with this token.
+      issues: write
+    steps:
+      - name: Checkout trusted publisher at the audited revision
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Download this run's completed audit
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: link-check-report
+          path: bin/link-check/input
+
+      - name: Locate the latest trusted history artifact
+        id: previous
+        env:
+          PYTHONPATH: hack
+          GITHUB_TOKEN: ${{ github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: python3 -m linkcheck.persistence
+
+      - name: Recover history from the previous trusted audit
+        if: steps.previous.outputs.run_id != ''
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: link-triage-report
+          path: bin/link-check/previous
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ steps.previous.outputs.run_id }}
+
+      - name: Restore the recovered registry
+        if: steps.previous.outputs.run_id != ''
+        run: cp bin/link-check/previous/state.json bin/link-check/state.json
+
+      - name: Reconcile history and preview or publish the issue
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PUBLISH: ${{ github.event_name == 'schedule' || inputs.publish }}
+          AUDIT_SHA: ${{ github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          AUDIT_URL: ${{ needs.check-links.outputs.audit-url }}
+        run: |
+          args=(--report bin/link-check/input/observations.json --sha "$AUDIT_SHA" --run-url "$RUN_URL" --audit-url "$AUDIT_URL")
+          if [[ "$PUBLISH" == true ]]; then
+            args+=(--publish)
+          fi
+          python3 hack/triage-doc-links.py "${args[@]}"
+
+      - name: Upload triage history and issue preview
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          # Dry-run previews never become authoritative history for later audits.
+          name: ${{ (github.event_name == 'schedule' || inputs.publish) && 'link-triage-report' || 'link-triage-preview' }}
+          path: |
+            bin/link-check/state.json
+            bin/link-check/issue-plan.json
+            bin/link-check/issue-preview.md
+          retention-days: 30
+          if-no-files-found: warn

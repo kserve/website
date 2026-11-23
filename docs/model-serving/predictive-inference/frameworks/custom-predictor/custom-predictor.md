@@ -191,7 +191,7 @@ You can supply additional command arguments on the container spec to configure t
 - `--configure_logging`: Whether to configure KServe and Uvicorn logging, the default is True.
 - `--log_config_file`: The path of the Python config file configuration to use (can be a json, a yaml file or any other supported file format by 
 python logging module). This file allows to override the default Uvicorn configuration shipped with KServe. The default is None.
-- `--access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/encode/uvicorn/issues/527) for more info). By default is None.
+- `--access_log_format`: A string representing the access log format configuration to use. The functionality is provided by the `asgi-logger` library and it allows to override only the `uvicorn.access`'s format configuration with a richer set of fields (output hardcoded to `stdout`). This limitation is currently due to the ASGI specs that don't describe how access logging should be implemented in detail (please refer to this Uvicorn [github issue](https://github.com/Kludex/uvicorn/issues/527) for more info). By default is None.
 - `enable_latency_logging`: whether to log latency metrics per request, the default is True.
 - `--enable_docs_url`: Enable docs url '/docs' to display Swagger UI.
 - `--event_loop`: Event loop implementation used by the HTTP server. default is 'auto' (use uvloop if available). Valid values are 'auto','asyncio', 'uvloop'.
@@ -461,7 +461,7 @@ MODEL_NAME=custom-model
 SERVICE_HOSTNAME=$(kubectl get inferenceservice custom-model-grpc -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 ```
 
-Send an inference request to the gRPC service using `InferenceServerClient` [grpc_client.py](https://github.com/kserve/website/tree/main/docs/modelserving/v1beta1/custom/custom_model/grpc/grpc_client.py).
+Send an inference request to the gRPC service using `InferenceServerClient` [grpc_client.py](https://github.com/kserve/website/tree/main/docs/model-serving/predictive-inference/frameworks/custom-predictor/grpc/grpc_client.py).
 
 ```bash
 python grpc_client.py

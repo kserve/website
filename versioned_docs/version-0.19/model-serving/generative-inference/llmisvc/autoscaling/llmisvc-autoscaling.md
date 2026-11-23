@@ -67,7 +67,7 @@ Inference Pods ──(scrape metrics)──> Prometheus
 ### Common (both actuator backends)
 
 - Kubernetes cluster with [KServe installed](../../../../getting-started/quickstart-guide.md)
-- **WVA controller** — see the [WVA installation guide](https://llm-d.ai/docs/guides/workload-autoscaling) for the latest install instructions
+- **WVA controller** — see the [WVA installation guide](https://github.com/llm-d/llm-d/tree/v1.0.0/guides/workload-autoscaling/wva) for the latest install instructions
 - **Prometheus** — configured to scrape both inference pod metrics and the WVA controller metrics endpoint
 
 ### HPA actuator
@@ -358,7 +358,7 @@ For complete, ready-to-use YAML manifests covering single-node and multi-node de
 |-------|-------|----------|
 | `ScalingReady=False` with `FailedGetExternalMetric` | Prometheus Adapter missing or misconfigured | Install Prometheus Adapter with `wva_desired_replicas` external metric rule. See [Prerequisites](#hpa-actuator) |
 | `ScalingReady=False` with `ScaledObjectProgressing` | KEDA ScaledObject cannot connect to Prometheus | Verify `autoscaling-wva-controller-config.prometheus.url` in the `inferenceservice-config` ConfigMap |
-| VariantAutoscaling not created | WVA CRD not installed in the cluster | Install the WVA controller — see the [WVA installation guide](https://llm-d.ai/docs/guides/workload-autoscaling) |
+| VariantAutoscaling not created | WVA CRD not installed in the cluster | Install the WVA controller — see the [WVA installation guide](https://github.com/llm-d/llm-d/tree/v1.0.0/guides/workload-autoscaling/wva) |
 | Replicas stuck at `minReplicas` | WVA not receiving inference metrics | Ensure Prometheus is scraping inference pod metrics (check `prometheus.io/scrape` annotations on pods) |
 | Validation error: "wva is required" | `spec.scaling` set without `spec.scaling.wva` | Add `wva` with either `hpa: {}` or `keda: {}` |
 | Validation error: "scaling and replicas are mutually exclusive" | Both `spec.scaling` and `spec.replicas` set | Remove one — use `scaling` for dynamic autoscaling or `replicas` for fixed count |

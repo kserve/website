@@ -41,3 +41,5 @@ gen-api-docs: gen-oip-grpc-api-docs gen-oip-rest-api-docs gen-crd-api-docs gen-p
 # Pass ARGS="--force" to regenerate an existing version: make bump-version ARGS="--force"
 bump-version:
 	./hack/release.sh $(ARGS)
+
+include hack/linkcheck/linkcheck.mk
