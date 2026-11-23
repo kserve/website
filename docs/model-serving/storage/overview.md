@@ -56,4 +56,5 @@ When accessing storage providers that require authentication, KServe supports va
 For advanced use cases, KServe offers two main customization paths:
 
 1. **[Storage Containers](./storage-containers/storage-containers.md)** - Define custom initialization logic using the ClusterStorageContainer CRD
-2. **Storage Credentials** - Configure storage credentials using Kubernetes secrets
+2. **[Storage Initializer Volume](./storage-initializer-volume.md)** - Configure the staging volume used between the storage initializer and the model server
+3. **Storage Credentials** - Configure storage credentials using Kubernetes secrets
