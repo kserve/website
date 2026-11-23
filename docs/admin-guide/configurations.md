@@ -1097,7 +1097,7 @@ data:
         "cpuRequest": "100m",
         "cpuLimit": "1",
         "headers": {
-          "propagate": ["Authorization", ".*Trace-Id.*"]
+          "propagate": ["Authorization", ".*Trace-Id.*", "(?i)^(traceparent|tracestate|baggage)$"]
         },
         "imagePullPolicy": "IfNotPresent",
         "imagePullSecrets": ["docker-secret"]
@@ -1155,7 +1155,7 @@ The CPU limit for the router container.
 
 Specifies which HTTP headers should be propagated to all steps in an InferenceGraph. You can list specific header names (like "Authorization") or use [Go regular expressions](https://pkg.go.dev/regexp/syntax#hdr-Syntax) (like `.*Trace-Id.*`) to match multiple headers. These are regular expressions, not shell globs: `*Trace-Id*` is invalid. Headers not in this list will be filtered out when requests are forwarded between graph components.
 
-To forward W3C trace context, explicitly include `traceparent`, `tracestate`, and `baggage` as needed; they are not matched by `.*Trace-Id.*`. Header propagation alone does not create router spans or instrument graph components. See [InferenceService distributed tracing](../model-serving/predictive-inference/observability/distributed-tracing.md) for runtime instrumentation.
+Matching is case-sensitive, and Go canonicalizes incoming names (for example, `traceparent` becomes `Traceparent`). Use `(?i)^(traceparent|tracestate|baggage)$` to forward W3C context regardless of case; `.*Trace-Id.*` does not match these headers. Header propagation does not create router spans or instrument graph components; see the [central tracing guide](../model-serving/observability/distributed-tracing.md).
 
 - **Global key:** `headers.propagate`
 - **Per-service annotation key:** Not supported

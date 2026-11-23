@@ -582,7 +582,7 @@ Do **not** forward the incoming `Host` header — it contains the transformer's 
 
 ## Distributed Tracing
 
-Set the top-level `spec.tracing` field to configure both the transformer and predictor. Each receives a distinct service name and component resource attributes. See [InferenceService distributed tracing](../../observability/distributed-tracing.md) for configuration and runtime requirements.
+Use the [central tracing guide](../../../observability/distributed-tracing.md) for configuration and [InferenceService tracing](../../observability/distributed-tracing.md#component-identity-and-overrides) for transformer/predictor identities.
 
 Legacy header forwarding, such as `x-b3-traceid`, is separate from W3C trace context propagation. For a custom HTTP call, inject the active OpenTelemetry context into the outgoing headers rather than copying the incoming `traceparent` unchanged:
 
@@ -590,8 +590,6 @@ Legacy header forwarding, such as `x-b3-traceid`, is separate from W3C trace con
 from opentelemetry import propagate
 
 predict_headers = {"Content-Type": "application/json"}
-if headers and "authorization" in headers:
-    predict_headers["authorization"] = headers["authorization"]
 propagate.inject(predict_headers)
 
 response = await http_client.post(
@@ -601,7 +599,7 @@ response = await http_client.post(
 )
 ```
 
-Run this code inside an instrumented request handler, where the server span is active. Context injection connects downstream spans but does not create an HTTP client span; use client instrumentation if you also need that span. For the built-in HTTP forwarding path, check the guide's [current propagation limitations](../../observability/distributed-tracing.md#connected-traces-and-limitations).
+Run this inside an instrumented handler with an active span. Built-in SDK forwarding already propagates trace context and authorization; custom HTTP clients must also follow [authorization forwarding](#custom-transformers-manual-forwarding). Context injection does not create an HTTP client span; add client instrumentation if needed.
 
 ## Transformer-Specific Command Line Arguments
 

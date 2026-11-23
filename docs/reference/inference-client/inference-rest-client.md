@@ -91,7 +91,7 @@ The inference response, either as an InferResponse object or a dictionary
 
 ### Trace Context
 
-To send an existing W3C trace context, include `traceparent` and, when needed, `tracestate` in `headers`. Within an instrumented application, use OpenTelemetry's `propagate.inject(headers)` to populate them from the active span.
+See the [central propagation guidance](../../model-serving/observability/distributed-tracing.md#connected-traces-and-limitations) for active-span injection. To supply external W3C context when no span is active, pass `traceparent` and, when needed, `tracestate` in `headers`.
 
 Pass a dictionary through `response_headers` to capture the runtime's trace context:
 
@@ -107,7 +107,7 @@ result = await client.infer(
 print(response_headers.get("traceparent"))
 ```
 
-Response trace headers depend on runtime instrumentation and any intervening proxies. See [InferenceService distributed tracing](../../model-serving/predictive-inference/observability/distributed-tracing.md#connected-traces-and-limitations) for automatic HTTP propagation availability and limitations.
+Response trace headers depend on runtime instrumentation and any intervening proxies; see the [Python SDK response-header reference](../python-runtime-sdk/python-runtime-sdk.md#response-headers-and-log-correlation).
 
 ## explain()
 

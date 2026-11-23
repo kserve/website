@@ -5,7 +5,7 @@ description: Learn how to expose and configure Prometheus metrics for KServe inf
 
 # Prometheus Metrics 
 
-Metrics summarize runtime behavior across requests. To investigate individual requests using OpenTelemetry spans, see [Distributed Tracing](distributed-tracing.md). Trace collection is configured separately from Prometheus scraping.
+Metrics summarize runtime behavior across requests. To investigate individual requests using OpenTelemetry spans, see [Distributed Tracing](../../observability/distributed-tracing.md). Trace collection is configured separately from Prometheus scraping.
 
 ## Exposing a Prometheus metrics port
 

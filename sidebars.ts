@@ -119,6 +119,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Model Serving',
       items: [
+        "model-serving/observability/distributed-tracing",
         {
           type: 'category',
           label: 'Generative Inference',

@@ -194,7 +194,7 @@ Or individually:
 
 ### Trace Collection
 
-[InferenceService distributed tracing](../model-serving/predictive-inference/observability/distributed-tracing.md) requires an OTLP-compatible receiver when exporting spans over OTLP. KServe does not install a tracing backend. You can use an existing collector or backend without an OpenTelemetry Operator. A KEDA metrics pipeline does not collect traces unless a traces pipeline is also configured.
+For receiver/backend requirements and the distinction between metrics and traces pipelines, see the [central tracing prerequisites](../model-serving/observability/distributed-tracing.md#prerequisites), shared by InferenceService and LLMInferenceService.
 
 ## Custom Dependency Scripts
 
