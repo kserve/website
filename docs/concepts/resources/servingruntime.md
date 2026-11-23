@@ -56,6 +56,7 @@ Several out-of-the-box _ClusterServingRuntimes_ are provided with KServe so that
 | kserve-tritonserver       | TensorFlow, ONNX, PyTorch, TensorRT |
 | kserve-xgbserver          | XGBoost                             |
 | kserve-huggingfaceserver  | Hugging Face Transformer Models     |
+| kserve-llamacpp           | GGUF (CPU, OpenAI-compatible API)    |
 
 In addition to these included runtimes, you can extend your KServe installation by adding custom runtimes.
 
