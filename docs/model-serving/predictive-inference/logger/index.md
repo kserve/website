@@ -24,5 +24,6 @@ KServe offers several configurations for logging inference data:
 3. [TLS Enabled Logger](./tls-logger.md) - Secure your logs with TLS encryption
 4. [Payload Logger with Knative Eventing](./knative-eventing-logger.md) - Log through Knative Eventing infrastructure
 5. [Store Logs in Blob Storage](./blob-storage-logger.md) - Store logs in cloud blob storage
+6. [Log All Responses](./log-all-responses.md) - Log responses regardless of their status code
 
 Each configuration has its own use cases, advantages, and requirements. Choose the most suitable one based on your specific needs.
