@@ -64,7 +64,7 @@ kubectl create secret tls my-secret --cert=tls.crt --key=tls.key -n kserve
 ```
 
 :::note
-Replace `example.com` with the domain you use to access your `InferenceService`. For production, use a certificate issued by a trusted CA, for example with [cert-manager](https://cert-manager.io/docs/usage/certificate/) by creating a `Certificate` whose `secretName` is `my-secret` in the `kserve` namespace. If you do not need HTTPS, remove the `https` listener from the `Gateway`.
+Replace `example.com` with the domain you use to access your `InferenceService`. For production, use a certificate issued by a trusted CA, for example with [cert-manager](https://cert-manager.io/docs/usage/certificate/) by creating a `Certificate` whose `secretName` is `my-secret` in the `kserve` namespace. If you do not need HTTPS, remove the `https` listener from the `Gateway`. See the Gateway API [TLS guide](https://gateway-api.sigs.k8s.io/guides/user-guides/tls/) for more details on configuring TLS on a listener.
 :::
 
 Then create the `Gateway`:
