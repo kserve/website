@@ -233,6 +233,8 @@ Queue time >> prefill+decode time = need more replicas. Prefill or decode time h
 
 ## Distributed Tracing
 
+See the [central tracing guide](../../observability/distributed-tracing.md) for prerequisites, shared configuration, sampling, and troubleshooting, or [InferenceService tracing](../../predictive-inference/observability/distributed-tracing.md) for ISVC runtimes and examples.
+
 LLMInferenceService has a declarative tracing API - add `spec.tracing` to enable OpenTelemetry instrumentation without manually wiring env vars. The same tracing config applies to both the inference server and the scheduler.
 
 ```yaml
@@ -251,22 +253,9 @@ The controller auto-injects OTEL environment variables into both the vLLM contai
 
 ### Tracing configuration
 
-| Field | Default | Description |
-|-------|---------|-------------|
-| `exporterEndpoint` | `http://otel-collector:4317` | OTLP gRPC endpoint for trace export |
-| `exporter` | `otlp` | Trace exporter type |
-| `sampler` | `parentbased_traceidratio` | Sampling strategy - see below |
-| `samplerArg` | `"0.05"` | Argument for ratio-based samplers (e.g. `"0.05"` for 5%) |
+Use the shared [`spec.tracing` field reference](../../observability/distributed-tracing.md#enable-tracing) and [sampling guidance](../../observability/distributed-tracing.md#sampling); runtime support determines which settings take effect.
 
 Defaults are provided by the well-known config during config merge. When `spec.tracing` is omitted entirely, no tracing instrumentation is injected.
-
-**Samplers:**
-
-| Sampler | When to use |
-|---------|-------------|
-| `always_on` | Canary validation - capture every request. High trace volume. |
-| `parentbased_traceidratio` | Production steady state - sample a fraction of requests (set `samplerArg` to the rate) |
-| `parentbased_always_off` | Disable tracing while keeping the config in place |
 
 :::tip
 For canary validation, set `sampler: "always_on"` temporarily on both versions. Switch back to `parentbased_traceidratio` for steady-state production.

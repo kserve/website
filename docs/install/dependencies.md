@@ -192,6 +192,10 @@ Or individually:
 ```
 
 
+### Trace Collection
+
+For receiver/backend requirements and the distinction between metrics and traces pipelines, see the [central tracing prerequisites](../model-serving/observability/distributed-tracing.md#prerequisites), shared by InferenceService and LLMInferenceService.
+
 ## Custom Dependency Scripts
 
 You can create custom installation scripts for specific dependency combinations.

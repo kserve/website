@@ -36,6 +36,18 @@ uv sync
 
 For detailed API reference, please refer to the [Python Runtime SDK API Reference](python-runtime-sdk-api.md).
 
+## Distributed Tracing
+
+The Python ModelServer supports OpenTelemetry REST/gRPC server instrumentation; dependencies are included in `kserve` without a tracing extra. Use the [central tracing guide](../../model-serving/observability/distributed-tracing.md#python-runtime-configuration) for exporters, sampling, environment variables, transport, and standalone SDK configuration. For a runnable deployment, follow the [Scikit-learn walkthrough](../../model-serving/predictive-inference/observability/distributed-tracing.md#try-tracing-with-a-python-runtime).
+
+### Response Headers and Log Correlation
+
+With [tracing enabled](../../model-serving/observability/distributed-tracing.md#python-runtime-configuration) and valid active REST trace context, the runtime returns W3C `traceparent` and, when available, `tracestate` response headers. This includes exporter `none`, but not unconfigured, disabled, or invalid tracing. Customize response names with `TRACE_RESPONSE_HEADER_NAME` and `TRACE_RESPONSE_TRACESTATE_HEADER_NAME`; incoming propagation names are unchanged.
+
+The default KServe log format includes `trace_id` as a 32-character hexadecimal value, or `none` when no valid trace context is active. Custom logging configurations that use `%(trace_id)s` must attach the `kserve.logging.TraceIdFilter` filter to their handlers.
+
+Instrumentation excludes selected non-inference routes, including REST `/`, `/metrics`, `/v2/health/live`, and `/v2/health/ready`, and the gRPC `ServerLive`, `ServerReady`, and `ModelReady` methods. Server instrumentation does not automatically instrument custom downstream clients or each application function.
+
 ## Storage API
 
 ### kserve-storage

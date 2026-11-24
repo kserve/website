@@ -89,6 +89,26 @@ The inference response, either as an InferResponse object or a dictionary
 
 `HTTPStatusError`: If the response status code indicates an error.
 
+### Trace Context
+
+See the [central propagation guidance](../../model-serving/observability/distributed-tracing.md#connected-traces-and-limitations) for active-span injection. To supply external W3C context when no span is active, pass `traceparent` and, when needed, `tracestate` in `headers`.
+
+Pass a dictionary through `response_headers` to capture the runtime's trace context:
+
+```python
+response_headers = {}
+result = await client.infer(
+    base_url,
+    data,
+    model_name=model_name,
+    headers=headers,
+    response_headers=response_headers,
+)
+print(response_headers.get("traceparent"))
+```
+
+Response trace headers depend on runtime instrumentation and any intervening proxies; see the [Python SDK response-header reference](../python-runtime-sdk/python-runtime-sdk.md#response-headers-and-log-correlation).
+
 ## explain()
 
 > explain(base_url, model_name, data, headers=None, timeout) ~async~

@@ -43,7 +43,7 @@ When you deploy models with InferenceService, you automatically get these server
 
 ### Observability
 - **Request/Response Logging** - Comprehensive logging capabilities
-- **Distributed Tracing** - End-to-end request tracing
+- **[Distributed Tracing](../observability/distributed-tracing.md)** - OpenTelemetry request tracing for supported runtimes and components
 - **Out-of-the-box Metrics** - Built-in monitoring and metrics
 
 ### Security

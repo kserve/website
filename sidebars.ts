@@ -119,6 +119,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Model Serving',
       items: [
+        "model-serving/observability/distributed-tracing",
         {
           type: 'category',
           label: 'Generative Inference',
@@ -343,6 +344,7 @@ const sidebars: SidebarsConfig = {
               items: [
                 "model-serving/predictive-inference/observability/prometheus-metrics",
                 "model-serving/predictive-inference/observability/grafana-dashboards",
+                "model-serving/predictive-inference/observability/distributed-tracing",
               ]
             },
             {
