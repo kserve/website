@@ -73,9 +73,17 @@ The safer pattern is to deploy at `weight: 1` so the backend is warmed from the 
 ### Prerequisites
 
 - A running KServe installation with the LLMInferenceService controller
-- A Gateway API implementation with support for weighted `backendRef`s
+- A Gateway API implementation that supports weighted `backendRef`s to multiple `InferencePool`s in one `HTTPRoute` rule
 - `kubectl` configured with cluster access
 - Familiarity with [LLMInferenceService basics](./llmisvc-overview.md)
+
+:::warning Envoy AI Gateway v1.1.0
+Envoy AI Gateway v1.1.0 [rejects more than one `InferencePool` in a route rule](https://github.com/theagentrouter/agent-router/blob/v1.1.0/internal/extensionserver/post_cluster_modify.go#L49-L51). With KServe v0.21.0 and Envoy Gateway v1.8.1, the proxy can keep its previous configuration and send all traffic to the original pool, even when the `HTTPRoute` reports `Accepted=True` and `ResolvedRefs=True`.
+
+Before increasing a canary's weight, verify that the proxy applies the updated route and that both pools receive traffic. See the [reported limitation](https://github.com/theagentrouter/agent-router/issues/3050) for details.
+:::
+
+The [KServe v0.21.0 end-to-end workflow](https://github.com/kserve/kserve/blob/v0.21.0/.github/workflows/e2e-test-llmisvc.yaml#L414-L448) uses Istio 1.29.6 for its weighted InferencePool traffic tests.
 
 ### Step 1: Deploy the Production Version (v1)
 
