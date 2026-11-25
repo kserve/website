@@ -416,6 +416,58 @@ spec:
     route: {}  # Auto-generated routing rules
 ```
 
+#### Inference API Endpoints
+
+The default managed HTTPRoute sends these text inference endpoints through the InferencePool, so the scheduler can select a model pod:
+
+| Endpoint | API |
+|----------|-----|
+| `/v1/completions` | OpenAI-compatible Completions |
+| `/v1/chat/completions` | OpenAI-compatible Chat Completions |
+| `/v1/responses` | OpenAI-compatible Responses (KServe v0.18 and later) |
+| `/v1/messages` | Anthropic-compatible Messages (KServe v0.20 and later) |
+
+For each endpoint, the route provides a service-specific path, `/<namespace>/<llmisvc-name>/v1/...`, and a publisher path, `/publishers/<namespace>/models/<model-name>/v1/...`. The gateway rewrites either prefix to the runtime's `/v1/...` endpoint. For example, `/default/my-llm-service/v1/responses` is forwarded as `/v1/responses`.
+
+When [model-based routing is enabled](../../../admin-guide/configurations.md#model-based-routing-prerequisites), KServe also includes matches for the shared `/v1/...` paths, with and without a trailing slash. Clients select the model with the configured model-routing header, which defaults to `X-Gateway-Model-Name`, and the value `publishers/<namespace>/models/<model-name>`. The model name comes from `spec.model.name`, not the LLMInferenceService's `metadata.name`.
+
+Routing a request does not add API support to the model server. The serving runtime and model must support the selected API and its request fields. The default route forwards requests without translating a Messages payload into a Chat Completions payload, for example. If you replace the default rules or reference a user-managed HTTPRoute, include the corresponding matches and backend references in that route.
+
+##### Responses and Messages Requests
+
+For an existing, ready LLMInferenceService with model-based routing enabled, set the reachable Gateway root URL (without a service-specific path), namespace, and service name. These examples use `kubectl`, `jq`, and `curl`, and the default model-routing header:
+
+```bash
+GATEWAY_URL=https://inference.example.com
+MODEL_NAMESPACE=default
+LLMISVC_NAME=my-llm-service
+MODEL_NAME=$(kubectl get llmisvc "$LLMISVC_NAME" -n "$MODEL_NAMESPACE" -o jsonpath='{.spec.model.name}')
+```
+
+Send an OpenAI-compatible Responses request:
+
+```bash
+jq -n --arg model "$MODEL_NAME" \
+  '{model: $model, input: "Say hello.", max_output_tokens: 32}' |
+  curl --fail-with-body -sS "${GATEWAY_URL%/}/v1/responses" \
+    -H 'Content-Type: application/json' \
+    -H "X-Gateway-Model-Name: publishers/$MODEL_NAMESPACE/models/$MODEL_NAME" \
+    --data-binary @-
+```
+
+For an Anthropic-compatible Messages request, use the Messages payload and endpoint:
+
+```bash
+jq -n --arg model "$MODEL_NAME" \
+  '{model: $model, max_tokens: 32, messages: [{role: "user", content: "Say hello."}]}' |
+  curl --fail-with-body -sS "${GATEWAY_URL%/}/v1/messages" \
+    -H 'Content-Type: application/json' \
+    -H "X-Gateway-Model-Name: publishers/$MODEL_NAMESPACE/models/$MODEL_NAME" \
+    --data-binary @-
+```
+
+Add authentication headers required by your gateway or runtime. If your installation changes `modelBasedRoutingHeaderName`, replace `X-Gateway-Model-Name` in both requests. A `404` or unsupported-operation response can indicate that the selected runtime does not implement the endpoint; check the generated HTTPRoute and the model server logs to distinguish routing and runtime failures.
+
 #### Referenced HTTPRoute
 
 ```yaml
