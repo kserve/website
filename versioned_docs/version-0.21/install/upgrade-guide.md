@@ -36,11 +36,29 @@ helm upgrade kserve oci://ghcr.io/kserve/charts/kserve \
 
 ### Using Kustomize
 
-To upgrade KServe using Kustomize:
+For a Kustomize-managed installation, update both the KServe resource reference
+and the controller image in your existing overlay. Changing the Git ref alone
+does not pin the image. For example, the v0.21.0 base still uses
+`kserve/kserve-controller:latest`.
+
+This example pins the core KServe base and controller image to v0.21.0. Keep any
+other resources and customizations from your existing overlay.
+
+```yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - https://github.com/kserve/kserve//config/default?ref=v0.21.0
+images:
+  - name: kserve/kserve-controller
+    newTag: v0.21.0
+```
+
+Follow the target release notes for any separately managed CRDs and optional
+components. Apply your updated overlay:
 
 ```bash
-# Update the version in your kustomization.yaml or use the new release URL
-kubectl apply --server-side -k "github.com/kserve/kserve/config/default?ref=v<NEW_VERSION>"
+kubectl apply --server-side -k ./path/to/overlay
 ```
 
 ---
