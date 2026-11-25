@@ -424,7 +424,8 @@
           ]
         },
         "admin-guide/gatewayapi-migration",
-        "admin-guide/configurations"
+        "admin-guide/configurations",
+        "admin-guide/security-hardening"
       ]
     },
     {
