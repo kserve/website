@@ -176,6 +176,7 @@ This overview provides a high-level introduction to LLMInferenceService. For det
 
 ### 📚 Core Concepts
 - **[Configuration Guide](./llmisvc-configuration.md)**: Detailed spec reference and configuration patterns
+- **[Inference API Endpoints](./llmisvc-configuration.md#inference-api-endpoints)**: Completions, Chat Completions, Responses, and Messages routing
 - **[Architecture Guide](../../../concepts/architecture/control-plane-llmisvc.md)**: System architecture and component interactions
 - **[Dependencies](./llmisvc-dependencies.md)**: Required infrastructure components
 
